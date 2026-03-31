@@ -99,8 +99,17 @@ libPBU2_gs_CurateHeroSelectionUI libPBU2_gv_curateHeroSelectionUI;
 libPBU2_gs_CurateHeroSelectionSetting libPBU2_gv_curateHeroSelectionSetting;
 trigger libPBU2_gv_curateHeroSelectionUIHeroListInitCallback;
 
+trigger libPBU2_DifficultyDialogTrigger;
+
 int libPBU2_Cho;
 int libPBU2_Gall;
+
+int libPBU2_difficultyDialogLabel;
+int libPBU2_difficultyDialogEasy;
+int libPBU2_difficultyDialogNormal;
+int libPBU2_difficultyDialogHard;
+
+int libPBU2_difficulty;
 
 // Function Declarations
 void libPBU2_gf_CurateHSUIInitialize ();

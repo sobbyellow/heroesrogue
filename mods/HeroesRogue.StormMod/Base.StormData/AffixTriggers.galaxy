@@ -1,7 +1,8 @@
 
 include "LibAffx_h"
 
-const int manyRitualsStacks = 30;
+const int manyRitualsStacks = 20;
+const int manyRitualsStacksInitial = 40;
 const fixed zombieHandlerRange = 12;
 const fixed zombieHandlerChance = 0.5;
 const fixed nanoBoostCDR = 0.75;
@@ -12,7 +13,7 @@ const int buddyIdleState = 1;
 const int buddyLeashingState = 2;
 const int buddyMovingState = 3;
 const int buddyCirclingState = 4;
-const fixed buddyDamage = 177;
+const fixed buddyDamage = 142;
 const fixed buddyHealing = 154;
 const fixed deathTimerModifier = 0.5;
 const fixed enemySpeedCDR = 0.25;
@@ -106,11 +107,13 @@ bool libAffx_BlessingoftheDragonsBehaviorChange (bool testConds, bool runActions
 // ---------------------------------------------------------------
 bool libAffx_BuddyAI (bool testConds, bool runActions) {
     unit ownerUnit;
+    unit oldUnit;
     unit buddyUnit;
     int ownerPlayer;
     int currentState;
     fixed circleAngle;
     ownerUnit = EventPlayerEffectUsedUnit(c_effectUnitCaster);
+    oldUnit = ownerUnit;
     if (testConds) {
         if (UnitGetType(ownerUnit) == "HeroLostVikingsController") {
             return false;
@@ -129,6 +132,16 @@ bool libAffx_BuddyAI (bool testConds, bool runActions) {
         circleAngle += 2.15;
         if (circleAngle >= 360) {
             circleAngle -= 360;
+        }
+        if (libGame_gv_players[ownerPlayer].lv_activeVehicle != null) {
+            ownerUnit = libGame_gv_players[ownerPlayer].lv_activeVehicle;
+        } else {
+            ownerUnit = oldUnit;
+        }
+        while (UnitHasBehaviorWithCategoryFlag(ownerUnit, c_behaviorCategoryTimeStop)) {
+            UnitGroupRemove(libGame_gv_players[ownerPlayer].lv_summonedUnitGroup, buddyUnit);
+            UnitKill(buddyUnit);
+            Wait(0.0625, c_timeGame);
         }
         // Heal owner
         if (UnitGroupCount(UnitGetTrackedUnitGroup(buddyUnit, "AffixBuddyHealUnitTracker"), c_unitCountAll) <= 0) {
@@ -239,8 +252,8 @@ bool libAffx_ManyRituals (bool testConds, bool runActions) {
     }
     heroUnit = libGame_gv_players[libAffx_player].lv_heroUnit;
     
-    UnitSetTokenCount(heroUnit, "WitchDoctorVoodooRitual", UnitGetTokenCount(heroUnit, "WitchDoctorVoodooRitual") + manyRitualsStacks * stacks, heroUnit);
-    UnitSetTokenCount(heroUnit, "WitchDoctorThingOfTheDeepQuestToken", UnitGetTokenCount(heroUnit, "WitchDoctorThingOfTheDeepQuestToken") + manyRitualsStacks * stacks, heroUnit);
+    UnitSetTokenCount(heroUnit, "WitchDoctorVoodooRitual", UnitGetTokenCount(heroUnit, "WitchDoctorVoodooRitual") + manyRitualsStacksInitial + (manyRitualsStacks * (stacks - 1)), heroUnit);
+    UnitSetTokenCount(heroUnit, "WitchDoctorThingOfTheDeepQuestToken", UnitGetTokenCount(heroUnit, "WitchDoctorThingOfTheDeepQuestToken") + manyRitualsStacksInitial + (manyRitualsStacks * (stacks - 1)), heroUnit);
     
     return true;
 }
@@ -1623,6 +1636,103 @@ bool libAffx_SpecializedVikingsExecute (bool testConds, bool runActions) {
         }
     }
     
+    return true;
+}
+// ---------------------------------------------------------------
+// Passive Advantage
+// ---------------------------------------------------------------
+bool libAffx_PassiveAdvantageExecute (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+
+    libGame_teamChaosXPModTrickle = 0.5;
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Convenient Portals
+// ---------------------------------------------------------------
+bool libAffx_ConvenientPortalsExecute (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    CatalogFieldValueModify(c_gameCatalogBehavior, "MedivhPortalTimedLife", "Duration", libAffx_teamOrder, "-1", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogEffect, "MedivhPortalDirectionSearch", "AreaArray[0].Radius", libAffx_teamOrder, "500", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogEffect, "MedivhPortalCreationDirectionSearch", "AreaArray[0].Radius", libAffx_teamOrder, "500", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogEffect, "MedivhPortalDirectionDummy", "Chance", libAffx_teamOrder, "0", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogActor, "MedivhPortalRealUnit", "CustomUnitStatusFrame", libAffx_teamOrder, "", c_upgradeOperationSet);
+    while (!libAffx_GateIsOpen()) {
+        Wait(1, c_timeGame);
+    }
+    if (libAffx_currentMap == libAffx_mapCursedHollow) {
+        UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libAffx_teamOrder, Point(122, 166), 0, null);
+        UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libAffx_teamOrder, Point(125, 49), 0, null);
+    } else if (libAffx_currentMap == libAffx_mapShrines) {
+        UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libAffx_teamOrder, Point(124.3, 151.26), 0, null);
+        UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libAffx_teamOrder, Point(124.05, 40.19), 0, null);
+    } else if (libAffx_currentMap == libAffx_mapCrypts) {
+        UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libAffx_teamOrder, Point(124.08, 140), 0, null);
+        UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libAffx_teamOrder, Point(124.14, 45.11), 0, null);
+    } else if (libAffx_currentMap == libAffx_mapDragonShire) {
+        UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libAffx_teamOrder, Point(124.15, 146.24), 0, null);
+        UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libAffx_teamOrder, Point(123.96, 53.97), 0, null);
+    }
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Periodic Regen Globes
+// ---------------------------------------------------------------
+int perRegenGlobeIndex;
+bool libAffx_PeriodicRegenGlobesAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    perRegenGlobeIndex = libAffx_EventAffix("PeriodicRegenGlobes");
+
+    CatalogFieldValueModify(c_gameCatalogBehavior, "RegenGlobeTimedLifeInitial", "Duration", libAffx_teamOrder, "6", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogBehavior, "RegenGlobeTimedLifeInitial", "Period", libAffx_teamOrder, "4.5", c_upgradeOperationSet);
+
+    return true;
+}
+bool libAffx_PeriodicRegenGlobesPeriodic (bool testConds, bool runActions) {
+    int unitCount;
+    int random;
+    unit unitVar;
+    if (testConds) {
+        if (libAffx_gamePaused) {
+            return false;
+        }
+        if (perRegenGlobeIndex == 0) {
+            return false;
+        }
+        if (!libAffx_GateIsOpen()) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+
+    if (libAffx_affixes[perRegenGlobeIndex].cooldown <= 0) {
+        random = RandomInt(1, 6);
+        if (random == 6) {
+            random = 1;
+        }
+        unitCount = UnitGroupCount(libGame_gv_players[random].lv_heroUnitGroup, c_unitCountAll);
+        for (;; unitCount -= 1) {
+            unitVar = UnitGroupUnitFromEnd(libGame_gv_players[random].lv_heroUnitGroup, unitCount);
+            if (UnitIsAlive(unitVar) && UnitGetType(unitVar) != "HeroLostVikingsController") {
+                UnitCreate(1, "RegenGlobe", c_unitCreateIgnorePlacement, libAffx_teamOrder, PointWithOffset(UnitGetPosition(unitVar), 2 * (RandomInt(0, 1) * 2) - 1, 2 * (RandomInt(0, 1) * 2) - 1), 0, null);
+                libAffx_affixes[perRegenGlobeIndex].cooldown = 12 - 2 * libAffx_affixes[perRegenGlobeIndex].count;
+            }
+            if (unitCount <= 0) { break; }
+        }
+    } else {
+        libAffx_affixes[perRegenGlobeIndex].cooldown -= 0.0625;
+    }
+
     return true;
 }
 

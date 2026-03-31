@@ -362,20 +362,56 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
   <CBehaviorBuff id="AffixOlaf" parent="StormArmorPermanent">
     <ArmorModification>
-      <AllArmorBonus value="50" />
+      <AllArmorBonus value="40" />
     </ArmorModification>
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixBaleog" parent="CarryBehaviorParent">
     <Modification>
-      <AdditiveAttackSpeedFactor value="0.75" />
+      <AdditiveAttackSpeedFactor value="0.4" />
     </Modification>
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixErik" parent="CarryBehaviorParent">
     <Modification>
-      <WeaponRange value="6.5" />
-      <WeaponScanBonus value="6.5" />
+      <WeaponRange value="5.5" />
+      <WeaponScanBonus value="5.5" />
     </Modification>
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixButtonMasher" parent="CarryBehaviorParent" />
+
+  
+<CBehaviorBuff id="AffixDifficultyBuff" parent="CarryBehaviorParent">
+  <Modification>
+    <DamageDealtFraction index="Ability" value="0.05" />
+    <DamageDealtFraction index="Basic" value="0.05" />
+    <VitalMaxFractionArray index="Life" value="0.05" />
+    <VitalRegenMultiplier index="Life" value="0.05" />
+  </Modification>
+</CBehaviorBuff>
+  
+<CBehaviorBuff id="AffixSlowStart" parent="StormTimeStopParent">
+  <BehaviorCategories index="Restorable" value="1" />
+  <Duration value="60" />
+  <DisplayDuration index="Self" value="1" />
+  <DisplayDuration index="Ally" value="1" />
+  <DisplayDuration index="Neutral" value="1" />
+  <DisplayDuration index="Enemy" value="1" />
+  <InfoFlags index="AlwaysUseGameText" value="1" />
+  <DisplayPriority value="1001" />
+</CBehaviorBuff>
+
+
+<CBehaviorBuff id="AffixAmplifiedHealing" parent="CarryBehaviorParent">
+  <Modification>
+    <HealTakenAdditiveMultiplier index="Life" value="0.3" />
+    <VitalRegenMultiplier index="Life" value="0.3" />
+  </Modification>
+</CBehaviorBuff>
+<CBehaviorBuff id="AffixGatheringPower" parent="CarryBehaviorParent">
+  <Modification>
+    <HealDealtAdditiveMultiplier index="Life" value="0.15" />
+    <HealDealtAdditiveMultiplier index="Shields" value="0.15" />
+    <DamageDealtFraction index="Ability" value="0.15" />
+  </Modification>
+</CBehaviorBuff>
   
 </Catalog>

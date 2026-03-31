@@ -405,10 +405,11 @@ void libAffx_CreateAffixDialogItem(int buttonIndex, int affix, int xOffset) {
     int affixWindowX = 190;
     
     libNtve_gf_CreateDialogItemImage(libAffx_dialogAffixSelection, 366, 816, c_anchorTop, xOffset, affixWindowX, null, "Assets/Textures/affix_bg.dds", c_triggerImageTypeNormal, false, Color(100, 100, 100), c_triggerBlendModeNormal);
-    libNtve_gf_CreateDialogItemImage(libAffx_dialogAffixSelection, 366, 816, c_anchorTop, xOffset, affixWindowX, null, "Assets/Textures/affix_bg" + libAffx_GetAffixSuffix(affix) + ".dds", c_triggerImageTypeNormal, false, Color(100, 100, 100), c_triggerBlendModeNormal);
     if (affix == 0) {
+        libNtve_gf_CreateDialogItemImage(libAffx_dialogAffixSelection, 366, 816, c_anchorTop, xOffset, affixWindowX, null, "Assets/Textures/affix_bg_none.dds", c_triggerImageTypeNormal, false, Color(100, 100, 100), c_triggerBlendModeNormal);
         return;
     }
+    libNtve_gf_CreateDialogItemImage(libAffx_dialogAffixSelection, 366, 816, c_anchorTop, xOffset, affixWindowX, null, "Assets/Textures/affix_bg" + libAffx_GetAffixSuffix(affix) + ".dds", c_triggerImageTypeNormal, false, Color(100, 100, 100), c_triggerBlendModeNormal);
     DialogControlCreateFromTemplate(libAffx_dialogAffixSelection, c_triggerControlTypeButton, "StandardTemplates/StandardButtonTemplate");
     libAffx_dialogAffixSelectionButton[buttonIndex] = DialogControlLastCreated();
     libNtve_gf_SetDialogItemText(libAffx_dialogAffixSelectionButton[buttonIndex], StringExternal("Button/Name/PickAffix"), PlayerGroupAll());
@@ -1021,10 +1022,10 @@ void libAffx_ApplyCatalogModifications(int affix, int amount) {
                 catalogValueString = FixedToString(catalogValue, c_fixedPrecisionAny);
             }
             if (catalogPlayer == 0) {
-                for (i2 = 1; i2 <= libCore_gv_bALMaxEnginePlayerCount; i2 += 1) {
+                for (i2 = 1; i2 <= 12; i2 += 1) {
                     CatalogReferenceModify(catalogReference, i2, catalogValueString, catalogOperation);
                 }
-            } else if (catalogPlayer >= 1 && catalogPlayer <= libCore_gv_bALMaxEnginePlayerCount) {
+            } else if (catalogPlayer >= 1 && catalogPlayer <= 12) {
                 CatalogReferenceModify(catalogReference, catalogPlayer, catalogValueString, catalogOperation);
             }
         }
@@ -1171,6 +1172,7 @@ void libAffx_BankSave() {
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "ObjectiveCounter", libAffx_objectivesWonCounter);
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "SkipCurseCounter", libAffx_skipCurseCounter);
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "Rerolls", libAffx_rerolls);
+    BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "Difficulty", libAffx_difficulty);
     for (i = 1; i <= libAffx_registeredAffixes; i += 1) {
         affixName = libAffx_affixes[i].name;
         if (libAffx_affixes[i].quest.isQuest) {
@@ -1211,6 +1213,9 @@ void libAffx_BankLoad() {
     }
     if (BankKeyExists(BankLastCreated(), libAffx_BankSection, "Rerolls")) {
         libAffx_rerolls += BankValueGetAsInt(BankLastCreated(), libAffx_BankSection, "Rerolls");
+    }
+    if (BankKeyExists(BankLastCreated(), libAffx_BankSection, "Difficulty")) {
+        libAffx_difficulty = BankValueGetAsInt(BankLastCreated(), libAffx_BankSection, "Difficulty");
     }
 
     for (i = 1; i <= libAffx_registeredAffixes; i += 1) {
@@ -1321,6 +1326,9 @@ bool libAffx_AffixLogicUnitCreatedTrigger_Func (bool testConds, bool runActions)
         //UISetGameMenuItemVisible(PlayerGroupAll(), c_gameMenuDialogLoadButton, true);
         DialogSetVisible(libAffx_dialogAffixesButton, PlayerGroupAll(), true);
         libGame_gv_players[libAffx_player].lv_heroIndex = libAffx_playerHeroIndex;
+        if (libAffx_currentRun <= 1) {
+            libAffx_difficulty = libPBU2_difficulty;
+        }
     }
 
     return true;
@@ -1474,9 +1482,7 @@ int libAffx_RollAffix(int rarity, bool negative, int level) {
         // Upgrade rarity if no affixes are found, and then downgrade if no upgraded rarity affixes are found
         if (slotRarity < libAffx_rarityLegendary && upgradeRarity) {
             slotRarity += 1;
-            if (upgradeCount >= 1) {
-                upgradeRarity = false;
-            }
+            upgradeRarity = false;
             upgradeCount += 1;
         } else if (upgradeRarity) {
             upgradeCount += 1;
@@ -1843,6 +1849,28 @@ void libAffx_QueueAffixCommandTrigger_Init () {
     TriggerAddEventChatMessage(libAffx_QueueAffixCommandTrigger, c_playerAny, "afxq", false);
 }
 
+void libAffx_ApplyDifficulty () {
+    fixed modifier;
+
+    if (libAffx_difficulty == 3) {
+        modifier = 0.04;
+    } else if (libAffx_difficulty == 2) {
+        modifier = 0.04;
+    } else {
+        modifier = 0;
+    }
+    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixDifficultyBuff", "Modification.DamageDealtFraction[Ability]", modifier * (libAffx_currentRun - 1));
+    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixDifficultyBuff", "Modification.DamageDealtFraction[Basic]", modifier * (libAffx_currentRun - 1));
+    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixDifficultyBuff", "Modification.VitalMaxFractionArray[Life]", modifier * (libAffx_currentRun - 1));
+    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixDifficultyBuff", "Modification.VitalRegenMultiplier[Life]", modifier * (libAffx_currentRun - 1));
+
+    libAffx_AddBehavior(6, "AffixDifficultyBuff", 1, true);
+    libAffx_AddBehavior(7, "AffixDifficultyBuff", 1, true);
+    libAffx_AddBehavior(8, "AffixDifficultyBuff", 1, true);
+    libAffx_AddBehavior(9, "AffixDifficultyBuff", 1, true);
+    libAffx_AddBehavior(10, "AffixDifficultyBuff", 1, true);
+}
+
 bool libAffx_LevelUpTrigger_Func (bool testConds, bool runActions) {
     int player;
     int level;
@@ -1868,7 +1896,15 @@ bool libAffx_LevelUpTrigger_Func (bool testConds, bool runActions) {
     if (player == libAffx_enemy) {
         if (level == 1) {
             libAffx_Wait(libAffx_gameStartDelay, c_timeGame);
-            libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1);
+            if (libAffx_difficulty == 3) {
+                libAffx_ApplyDifficulty();
+                libAffx_QueueAffix(libAffx_rarityCommon, true, level, 2);
+            } else if (libAffx_difficulty == 2) {
+                libAffx_ApplyDifficulty();
+                libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1);
+            } else {
+                libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1);
+            }
         } else if (level == 4) {
             libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1);
         } else if (level == 7) {

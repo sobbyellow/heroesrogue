@@ -980,6 +980,21 @@
             <String String="Assets/Textures/storm_ui_icon_epicmount.dds">
                 <Field Id="Icon"/>
             </String>
+            <String String="1 1 Set Effect,DismountModifyCooldown,Cost[0].CooldownTimeUse 2">
+                <Field Id="CatalogModification" Index="5"/>
+            </String>
+            <String String="2 1 Set Effect,DismountModifyCooldown,Cost[0].CooldownTimeUse 2">
+                <Field Id="CatalogModification" Index="6"/>
+            </String>
+            <String String="3 1 Set Effect,DismountModifyCooldown,Cost[0].CooldownTimeUse 2">
+                <Field Id="CatalogModification" Index="7"/>
+            </String>
+            <String String="4 1 Set Effect,DismountModifyCooldown,Cost[0].CooldownTimeUse 2">
+                <Field Id="CatalogModification" Index="8"/>
+            </String>
+            <String String="5 1 Set Effect,DismountModifyCooldown,Cost[0].CooldownTimeUse 2">
+                <Field Id="CatalogModification" Index="9"/>
+            </String>
         </Instances>
         <Instances Id="GladiatorsMedallion">
             <String String="Epic">
@@ -1404,26 +1419,26 @@
             </String>
         </Instances>
         <Instances Id="ByeBye">
-            <Int Int="1">
-                <Field Id="Negative"/>
-            </Int>
             <String String="Assets/Textures/storm_ui_icon_chromie_poof.dds">
                 <Field Id="Icon"/>
             </String>
-            <String String="6 1 Multiply Abil,Hearthstone,CastIntroTime 0.1">
+            <String String="1 1 Multiply Abil,Hearthstone,CastIntroTime 0.25">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="7 1 Multiply Abil,Hearthstone,CastIntroTime 0.1">
+            <String String="2 1 Multiply Abil,Hearthstone,CastIntroTime 0.25">
                 <Field Id="CatalogModification" Index="1"/>
             </String>
-            <String String="8 1 Multiply Abil,Hearthstone,CastIntroTime 0.1">
+            <String String="3 1 Multiply Abil,Hearthstone,CastIntroTime 0.25">
                 <Field Id="CatalogModification" Index="2"/>
             </String>
-            <String String="9 1 Multiply Abil,Hearthstone,CastIntroTime 0.1">
+            <String String="4 1 Multiply Abil,Hearthstone,CastIntroTime 0.25">
                 <Field Id="CatalogModification" Index="3"/>
             </String>
-            <String String="10 1 Multiply Abil,Hearthstone,CastIntroTime 0.1">
+            <String String="5 1 Multiply Abil,Hearthstone,CastIntroTime 0.25">
                 <Field Id="CatalogModification" Index="4"/>
+            </String>
+            <String String="Uncommon">
+                <Field Id="Rarity"/>
             </String>
         </Instances>
         <Instances Id="EnemyAllStats">
@@ -1606,14 +1621,110 @@
             <String String="LostVikingsMasteryLargeAndInCharge">
                 <Field Id="TalentsAdd"/>
             </String>
-            <String String="1 1 Set Abil,LostVikingsLargeAndInChargeCharge,Cost.Cooldown.TimeUse 4">
+            <String String="1 1 Set Abil,LostVikingsLargeAndInChargeCharge,Cost.Cooldown.TimeUse 6">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="1 1 Set Effect,LostVikingsOlafChargeSetCooldown,Cost.Cooldown.TimeUse 4">
+            <String String="1 1 Set Effect,LostVikingsOlafChargeSetCooldown,Cost.Cooldown.TimeUse 6">
                 <Field Id="CatalogModification" Index="1"/>
             </String>
-            <String String="1 1 Set Effect,LostVikingsOlafChargeModifyCooldown,Cost.Cooldown.TimeUse -4">
+            <String String="1 1 Set Effect,LostVikingsOlafChargeModifyCooldown,Cost.Cooldown.TimeUse -6">
                 <Field Id="CatalogModification" Index="2"/>
+            </String>
+        </Instances>
+        <Instances Id="SlowStart">
+            <Int Int="5000">
+                <Field Id="Weight"/>
+            </Int>
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <Int Int="1">
+                <Field Id="LevelMax"/>
+            </Int>
+            <Int Int="1">
+                <Field Id="LevelMin"/>
+            </Int>
+            <Int Int="3">
+                <Field Id="Max"/>
+            </Int>
+            <String String="Assets/Textures/storm_ui_icon_chromie_timetrap_a.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="2 0 AffixSlowStart">
+                <Field Id="Behavior"/>
+            </String>
+            <String String="3 0 AffixSlowStart">
+                <Field Id="Behavior" Index="1"/>
+            </String>
+            <String String="4 0 AffixSlowStart">
+                <Field Id="Behavior" Index="2"/>
+            </String>
+            <String String="5 0 AffixSlowStart">
+                <Field Id="Behavior" Index="3"/>
+            </String>
+            <String String="0 2 Set Behavior,AffixSlowStart,Duration 60">
+                <Field Id="CatalogModification"/>
+            </String>
+        </Instances>
+        <Instances Id="PassiveAdvantage">
+            <Int Int="1">
+                <Field Id="Negative"/>
+            </Int>
+            <String String="Execute libAffx_PassiveAdvantageExecute">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="Assets/Textures/affix_icon_passive_advantage.dds">
+                <Field Id="Icon"/>
+            </String>
+        </Instances>
+        <Instances Id="AmplifiedHealing">
+            <String String="Assets/Textures/storm_ui_icon_talent_amplifiedhealing.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="1 0 AffixAmplifiedHealing">
+                <Field Id="Behavior"/>
+            </String>
+            <String String="Uncommon">
+                <Field Id="Rarity"/>
+            </String>
+        </Instances>
+        <Instances Id="GatheringPower">
+            <String String="Uncommon">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_talent_gatheringpower.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="1 0 AffixGatheringPower">
+                <Field Id="Behavior"/>
+            </String>
+        </Instances>
+        <Instances Id="ConvenientPortals">
+            <String String="Rare">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_medivh_portal_a.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Execute libAffx_ConvenientPortalsExecute">
+                <Field Id="Trigger"/>
+            </String>
+        </Instances>
+        <Instances Id="PeriodicRegenGlobes">
+            <Int Int="3">
+                <Field Id="Max"/>
+            </Int>
+            <String String="Assets/Textures/affix_icon_globes.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="P libAffx_PeriodicRegenGlobesPeriodic">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="AA libAffx_PeriodicRegenGlobesAffixAdded">
+                <Field Id="Trigger" Index="1"/>
+            </String>
+            <String String="Rare">
+                <Field Id="Rarity"/>
             </String>
         </Instances>
     </CUser>

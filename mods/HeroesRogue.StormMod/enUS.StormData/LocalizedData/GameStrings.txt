@@ -55,6 +55,14 @@ Message/CurseToBoon=<c val="FFDE36">The next Curse you obtain will become a Boon
 Message/CurseSkipped=<c val="FFDE36">Curse skipped.</c>
 Message/GoldenBorder=Golden Heroes have unique starter boons.
 
+Label/Name/Difficulty=Difficulty
+Button/Name/Easy=Normal
+Button/Name/Normal=Heroic
+Button/Name/Hard=Mythic
+Button/Tooltip/Easy=No changes.
+Button/Tooltip/Normal=• Increases maximum Health and damage dealt of enemy Heroes by <c val="#TooltipNumbers">4%</c> every game.
+Button/Tooltip/Hard=• Increases maximum Health and damage dealt of enemy Heroes by <c val="#TooltipNumbers">4%</c> every game.<n/>• Obtain an additional Curse at level <c val="#TooltipNumbers">1</c>.
+
 Button/Name/WitchDoctorWidowmakers2=Widowmakers II
 Button/SimpleDisplayText/WitchDoctorWidowmakers2=Increases Slow and duration
 Button/Tooltip/WitchDoctorWidowmakers2=Increases Corpse Spiders' Slow from <c val="#TooltipNumbers">25%</c> to <c val="#TooltipNumbers">35%</c> and the Slow duration from <c val="#TooltipNumbers">1</c> second to <c val="#TooltipNumbers">3</c> seconds.
@@ -101,7 +109,7 @@ Affix/Tooltip/Buddy=A friendly Drone follows you around, healing you for <c val=
 Affix/Name/BuddyAll=Army of BUDDYs
 Affix/Tooltip/BuddyAll=Your allied Heroes gain their own BUDDYs with <c val="#TooltipNumbers">50%</c> damage and healing.
 Affix/Name/ManyRituals=Many Rituals
-Affix/Tooltip/ManyRituals=Gain <c val="#TooltipNumbers">30</c> Voodoo Ritual stacks now and at the start of every game.
+Affix/Tooltip/ManyRituals=Gain <c val="#TooltipNumbers">40</c> Voodoo Ritual stacks now and at the start of every game.<n/><n/>Additional stacks increase Voodoo Ritual stacks by an additional <c val="#TooltipNumbers">20</c>.
 Affix/Name/NimbleLegs=Nimble Legs
 Affix/Tooltip/NimbleLegs=Increases Movement Speed of Corpse Spiders by <c val="#TooltipNumbers">20%</c>.
 Affix/Name/FastUproot=Fast Uproot
@@ -157,7 +165,17 @@ Affix/Tooltip/ButtonMasher=Gain the benefits of the following talents: Viking Br
 Affix/Name/GreatVikingHoard=Great Viking Hoard
 Affix/Tooltip/GreatVikingHoard=Viking Hoard grants <c val="#TooltipNumbers">0.5%</c> Attack Damage, Spell Power, Movement Speed, and maximum Health per Regeneration Globe.
 Affix/Name/SpecializedVikings=Specialized Vikings
-Affix/Tooltip/SpecializedVikings=Olaf gains the benefit of the Large and In Charge talent, <c val="#TooltipNumbers">50</c> permanent Armor, and reduces Olaf's Charge cooldown by <c val="#TooltipNumbers">50%</c>.<n/><n/>Increases Baleog's Attack Speed by <c val="#TooltipNumbers">75%</c>.<n/><n/>Increases Erik's Attack Range by <c val="#TooltipNumbers">6.5</c>.
+Affix/Tooltip/SpecializedVikings=Olaf gains the benefit of the Large and In Charge talent, <c val="#TooltipNumbers">40</c> permanent Armor, and reduces Olaf's Charge cooldown by <c val="#TooltipNumbers">25%</c>.<n/><n/>Increases Baleog's Attack Speed by <c val="#TooltipNumbers">40%</c>.<n/><n/>Increases Erik's Attack Range by <c val="#TooltipNumbers">5.5</c>.
+Affix/Name/ByeBye=Bye Bye!
+Affix/Tooltip/ByeBye=Reduces your Team's Hearthstone cast time by <c val="#TooltipNumbers">75%</c>.
+Affix/Name/AmplifiedHealing=Amplified Healing
+Affix/Tooltip/AmplifiedHealing=Increases regeneration effects and all healing received by <c val="#TooltipNumbers">30%</c>.
+Affix/Name/GatheringPower=Gathering Power
+Affix/Tooltip/GatheringPower=Increases Spell Power by <c val="#TooltipNumbers">15%</c>.
+Affix/Name/ConvenientPortals=Convenient Portals
+Affix/Tooltip/ConvenientPortals=Creates a permanent allied Portal between the top lane and the bottom lane.
+Affix/Name/PeriodicRegenGlobes=Globe Huffer
+Affix/Tooltip/PeriodicRegenGlobes=Spawns a Regeneration Globe near a random allied Hero every <c val="#TooltipNumbers">10</c> seconds, with you twice as likely to be chosen.<n/><n/>Allied Regeneration Globes take <c val="#TooltipNumbers">100%</c> longer to turn Neutral.<n/><n/>Additional stacks reduce the cooldown by <c val="#TooltipNumbers">2</c> seconds.
 
 Affix/Name/Conversion=Possession
 Affix/Tooltip/Conversion=Enemy leader Minions convert a nearby allied Minion to their side every <c val="#TooltipNumbers">30</c> seconds.<n/><n/>Additional stacks reduce the cooldown by <c val="#TooltipNumbers">10</c> seconds.
@@ -201,8 +219,6 @@ Affix/Name/Trapped=Toxic Field
 Affix/Tooltip/Trapped=Spawns <c val="#TooltipNumbers">2</c> Toxic Nests per second at random locations on the map. Toxic Nests last for <c val="#TooltipNumbers">90</c> seconds.<n/><n/>Additional stacks increase the spawn rate of Toxic Nests by <c val="#TooltipNumbers">2</c> per second.
 Affix/Name/ShieldedCore=Overcharged Shields
 Affix/Tooltip/ShieldedCore=Increases the maximum Shields of the enemy's Core by <c val="#TooltipNumbers">50%</c> and the recharge rate by <c val="#TooltipNumbers">15%</c>.
-Affix/Name/ByeBye=Bye Bye!
-Affix/Tooltip/ByeBye=Reduces Hearthstone's cast time of enemy Heroes by <c val="#TooltipNumbers">90%</c>.
 Affix/Name/EnemyAllStats=All-Rounder
 Affix/Tooltip/EnemyAllStats=Increases the Attack Speed, maximum Health, and damage dealt of enemy Heroes by <c val="#TooltipNumbers">25%</c>.<n/><n/><c val="FFDE36">Skips the next Curse.</c>
 Affix/Name/Cloned=Doppelganger
@@ -211,3 +227,7 @@ Affix/Name/StructureAmmo=Ammunition
 Affix/Tooltip/StructureAmmo=Allied Towers, Forts, and Keeps have limited Ammunition, with each attack consuming one ammo. Once a structure runs out of ammo, it will be unable to attack.<n/><n/>Structures replenish <c val="#TooltipNumbers">2</c> ammo every <c val="#TooltipNumbers">30</c> seconds.
 Affix/Name/Grenadier=Grenadier
 Affix/Tooltip/Grenadier=Grants the ability to throw a Frag Grenade, Particle Grenade, or a Biotic Grenade every <c val="#TooltipNumbers">6</c> seconds to a random enemy Hero.</n></n>Additional stacks grant this effect to <c val="#TooltipNumbers">1</c> additional enemy Hero.
+Affix/Name/SlowStart=Slow Start
+Affix/Tooltip/SlowStart=Your allied Heroes are Time Stopped for <c val="#TooltipNumbers">60</c> seconds.
+Affix/Name/PassiveAdvantage=Passive Advantage
+Affix/Tooltip/PassiveAdvantage=Increases passive Experience for the enemy Team by <c val="#TooltipNumbers">50%</c>.

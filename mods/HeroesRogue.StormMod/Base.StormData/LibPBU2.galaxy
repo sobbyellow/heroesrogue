@@ -178,6 +178,47 @@ void libPBU2_InitVariables () {
     libPBU2_gv_curateHeroSelectionSetting.lv_countdownTimer = TimerCreate();
 }
 
+bool libPBU2_DifficultyDialog_Func (bool testConds, bool runActions) {
+    bool test;
+    int dialog = EventDialogControl();
+    if (testConds) {
+        if (dialog == libPBU2_difficultyDialogEasy || dialog == libPBU2_difficultyDialogNormal || dialog == libPBU2_difficultyDialogHard) {
+            test = true;
+        }
+        if (!test) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    if (dialog == libPBU2_difficultyDialogEasy) {
+        libPBU2_difficulty = 1;
+        DialogControlSetEnabled(libPBU2_difficultyDialogEasy, PlayerGroupAll(), false);
+        DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), true);
+        DialogControlSetEnabled(libPBU2_difficultyDialogHard, PlayerGroupAll(), true);
+    } else if (dialog == libPBU2_difficultyDialogNormal) {
+        libPBU2_difficulty = 2;
+        DialogControlSetEnabled(libPBU2_difficultyDialogEasy, PlayerGroupAll(), true);
+        DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), false);
+        DialogControlSetEnabled(libPBU2_difficultyDialogHard, PlayerGroupAll(), true);
+    } else if (dialog == libPBU2_difficultyDialogHard) {
+        libPBU2_difficulty = 3;
+        DialogControlSetEnabled(libPBU2_difficultyDialogEasy, PlayerGroupAll(), true);
+        DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), true);
+        DialogControlSetEnabled(libPBU2_difficultyDialogHard, PlayerGroupAll(), false);
+    }
+
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libPBU2_DifficultyDialog_Init () {
+    libPBU2_DifficultyDialogTrigger = TriggerCreate("libPBU2_DifficultyDialog_Func");
+    TriggerAddEventDialogControl(libPBU2_DifficultyDialogTrigger, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
+}
+
 // Presets
 // Functions
 void libPBU2_gf_CurateHSUIInitialize () {
@@ -239,6 +280,7 @@ void libPBU2_gf_CurateHSUIInitialize () {
     libPBU2_gv_curateHeroSelectionUI.lv_dialog = DialogLastCreated();
     DialogSetImageVisible(DialogLastCreated(), false);
     DialogSetFullscreen(DialogLastCreated(), true);
+
     DialogControlCreateFromTemplate(DialogLastCreated(), c_triggerControlTypePanel, "PVEBrawlCurateHeroSelection/CurateHeroSelectionPanelTemplate");
     libPBU2_gv_curateHeroSelectionUI.lv_mainPanel = DialogControlLastCreated();
     lv_currentPanelLayer += 1;
@@ -445,6 +487,35 @@ void libPBU2_gf_CurateHSUIInitialize () {
         lv_currentPanelLayer -= 1;
     }
     lv_currentPanelLayer -= 1;
+
+    libNtve_gf_CreateDialogItemLabel(DialogLastCreated(), 270, 55, c_anchorCenter, 0, 0, StringExternal("Label/Name/Difficulty"), ColorWithAlpha(0, 0, 0, 0), false, 0);
+    libPBU2_difficultyDialogLabel = DialogControlLastCreated();
+    libNtve_gf_SetDialogItemStyle(libPBU2_difficultyDialogLabel, "CurateHeroSelection_Title", PlayerGroupAll());
+    DialogControlSetPosition(libPBU2_difficultyDialogLabel, PlayerGroupAll(), c_anchorCenter, 500, -430);
+
+    DialogControlCreateFromTemplate(DialogLastCreated(), c_triggerControlTypeButton, "StandardTemplates/StandardButtonTemplate");
+    libPBU2_difficultyDialogEasy = DialogControlLastCreated();
+    libNtve_gf_SetDialogItemText(libPBU2_difficultyDialogEasy, StringExternal("Button/Name/Easy"), PlayerGroupAll());
+    DialogControlSetPosition(libPBU2_difficultyDialogEasy, PlayerGroupAll(), c_anchorCenter, 340, -370);
+    DialogControlSetSize(libPBU2_difficultyDialogEasy, PlayerGroupAll(), 190, 90);
+    libNtve_gf_SetDialogItemTooltip(libPBU2_difficultyDialogEasy, StringExternal("Button/Tooltip/Easy"), PlayerGroupAll());
+
+    DialogControlCreateFromTemplate(DialogLastCreated(), c_triggerControlTypeButton, "StandardTemplates/StandardButtonTemplate");
+    libPBU2_difficultyDialogNormal = DialogControlLastCreated();
+    libNtve_gf_SetDialogItemText(libPBU2_difficultyDialogNormal, StringExternal("Button/Name/Normal"), PlayerGroupAll());
+    DialogControlSetPosition(libPBU2_difficultyDialogNormal, PlayerGroupAll(), c_anchorCenter, 500, -370);
+    DialogControlSetSize(libPBU2_difficultyDialogNormal, PlayerGroupAll(), 190, 90);
+    libNtve_gf_SetDialogItemTooltip(libPBU2_difficultyDialogNormal, StringExternal("Button/Tooltip/Normal"), PlayerGroupAll());
+
+    DialogControlCreateFromTemplate(DialogLastCreated(), c_triggerControlTypeButton, "StandardTemplates/StandardButtonTemplate");
+    libPBU2_difficultyDialogHard = DialogControlLastCreated();
+    libNtve_gf_SetDialogItemText(libPBU2_difficultyDialogHard, StringExternal("Button/Name/Hard"), PlayerGroupAll());
+    DialogControlSetPosition(libPBU2_difficultyDialogHard, PlayerGroupAll(), c_anchorCenter, 660, -370);
+    DialogControlSetSize(libPBU2_difficultyDialogHard, PlayerGroupAll(), 190, 90);
+    libNtve_gf_SetDialogItemTooltip(libPBU2_difficultyDialogHard, StringExternal("Button/Tooltip/Hard"), PlayerGroupAll());
+
+    libPBU2_difficulty = 1;
+    DialogControlSetEnabled(libPBU2_difficultyDialogEasy, PlayerGroupAll(), false);
 }
 
 trigger auto_libPBU2_gf_CurateHSUIUpdateTimerUI_Trigger = null;
@@ -1285,6 +1356,10 @@ void libPBU2_gf_CurateHSUIShowFinalCountDownHeroCutscene () {
     DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_abilitiesInfoButton, PlayerGroupAll(), false);
     DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_talentsInfoButton, PlayerGroupAll(), false);
     DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_brawlInfoButton, PlayerGroupAll(), false);
+    DialogControlSetVisible(libPBU2_difficultyDialogLabel, PlayerGroupAll(), false);
+    DialogControlSetVisible(libPBU2_difficultyDialogEasy, PlayerGroupAll(), false);
+    DialogControlSetVisible(libPBU2_difficultyDialogNormal, PlayerGroupAll(), false);
+    DialogControlSetVisible(libPBU2_difficultyDialogHard, PlayerGroupAll(), false);
     autoEDEF42E9_g = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
     lv_itPlayer = -1;
     while (true) {
@@ -1710,6 +1785,7 @@ void libPBU2_InitTriggers () {
     libPBU2_gt_CurateHSUIButtonClicked_Init();
     libPBU2_gt_CurateHSUICountdownTimerExpires_Init();
     libPBU2_gt_CurateHSUIForceSelection_Init();
+    libPBU2_DifficultyDialog_Init();
 }
 
 //--------------------------------------------------------------------------------------------------

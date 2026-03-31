@@ -152,7 +152,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ImpactLocation Value="TargetPoint" />
   </CEffectEnumArea>
   <CEffectDamage id="AffixBuddyDroneMissileDamage" parent="StormWeapon">
-    <Amount value="177" />
+    <Amount value="142" />
     <Kind value="Ability" />
   </CEffectDamage>
 

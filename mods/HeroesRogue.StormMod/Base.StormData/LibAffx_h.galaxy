@@ -88,7 +88,7 @@ const int libAffx_teamChaosIndex = libGame_gv_teamChaosIndex_C;
 
 const int libAffx_maxAffixesFromObjectives = 1; // Maximum affixes that can be gained from winning objectives.
 const int libAffx_rerollsPerGame = 1; // How many rerolls are added at the start of every game.
-const int libAffx_rerollsStart = 3; // How many rerolls the player starts with.
+const int libAffx_rerollsStart = 2; // How many rerolls the player starts with.
 
 // Unit filters
 
@@ -102,7 +102,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const fixed libAffx_version = 0.4;
+const fixed libAffx_version = 0.5;
 
 
 struct libAffx_CatalogModification {
@@ -216,6 +216,8 @@ int libAffx_upgradedRarity;
 int libAffx_executingAffix;
 int libAffx_executingAffixCount;
 
+int libAffx_difficulty = 1;
+
 // Triggers
 trigger libAffx_HeroSelectionTrigger;
 trigger libAffx_HeroSelectedTrigger;
@@ -240,7 +242,7 @@ trigger libAffx_ObjectiveWonTrigger;
 trigger libAffx_AffixRerollTrigger;
 
 // Debug options
-bool libAffx_cheatCommands = false; // Enables cheat/debug commands
+bool libAffx_cheatCommands = true; // Enables cheat/debug commands
 bool libAffx_debugPrint = false; // Enables debug logging
 bool libAffx_skipIntro = false; // Skips the Hero selection.
 bool libAffx_pauseDisabled = false; // Disables pause features

@@ -10409,8 +10409,14 @@ void libGame_gf_GrantXPToPlayer (fixed lp_incomingXP, int lp_player, int lp_sour
 
     if (lp_player >= 1 && lp_player <= 5) {
         lv_xP = lv_xP * (1 + libGame_teamOrderXPMod);
+        if (lp_source == libGame_ge_XPSources_Trickle) {
+            lv_xP = lv_xP * (1 + libGame_teamOrderXPModTrickle);
+        }
     } else if (lp_player >= 6 && lp_player <= 10) {
         lv_xP = lv_xP * (1 + libGame_teamChaosXPMod);
+        if (lp_source == libGame_ge_XPSources_Trickle) {
+            lv_xP = lv_xP * (1 + libGame_teamChaosXPModTrickle);
+        }
     }
 
     UnitXPAddXP(lv_heroUnit, null, lv_xP);
