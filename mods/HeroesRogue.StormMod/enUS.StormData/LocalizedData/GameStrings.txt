@@ -60,8 +60,8 @@ Button/Name/Easy=Normal
 Button/Name/Normal=Heroic
 Button/Name/Hard=Mythic
 Button/Tooltip/Easy=No changes.
-Button/Tooltip/Normal=• Increases maximum Health and damage dealt of enemy Heroes by <c val="#TooltipNumbers">4%</c> every game.
-Button/Tooltip/Hard=• Increases maximum Health and damage dealt of enemy Heroes by <c val="#TooltipNumbers">4%</c> every game.<n/>• Obtain an additional Curse at level <c val="#TooltipNumbers">1</c>.
+Button/Tooltip/Normal=• Increases maximum Health and damage dealt of enemy Heroes by <c val="#TooltipNumbers">3%</c> every game.
+Button/Tooltip/Hard=• Increases maximum Health and damage dealt of enemy Heroes by <c val="#TooltipNumbers">3%</c> every game.<n/>• Obtain an additional Curse at level <c val="#TooltipNumbers">1</c>.
 
 Button/Name/WitchDoctorWidowmakers2=Widowmakers II
 Button/SimpleDisplayText/WitchDoctorWidowmakers2=Increases Slow and duration
@@ -133,7 +133,7 @@ Affix/Tooltip/KillContract=<img path="@UI/StormTalentInTextQuestIcon" alignment=
 Button/Name/AffixKillContractQuestToken=Kill Contract
 Button/Tooltip/AffixKillContractQuestToken=<c val="#TooltipQuest">Takedowns: <c val="#TooltipNumbers" validator="AffixKillContractQuestNotComplete"><d ref="$BehaviorStackCount:AffixKillContractQuestToken$"/> / <d ref="Behavior,AffixKillContractQuestToken,Max"/></c>
 Affix/Name/StructureQuest=Destruction
-Affix/Tooltip/StructureQuest=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Destroy enemy Forts or Keeps.<n/><n/><c val="#TooltipQuest">Reward:</c> After destroying <c val="#TooltipNumbers">6</c> Forts and Keeps, gain <c val="#TooltipNumbers">1</c> common Boon.<n/><n/><c val="#TooltipQuest">Reward:</c> After destroying <c val="#TooltipNumbers">12</c> Forts and Keeps, gain <c val="#TooltipNumbers">1</c> uncommon Boon.<n/><n/><c val="#TooltipQuest">Reward:</c> After destroying <c val="#TooltipNumbers">24</c> Forts and Keeps, gain <c val="#TooltipNumbers">1</c> rare Boon.</n></n>Quest progress is retained after winning a game.
+Affix/Tooltip/StructureQuest=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Destroy enemy Forts or Keeps.<n/><n/><c val="#TooltipQuest">Reward:</c> After destroying <c val="#TooltipNumbers">6</c> Forts and Keeps, gain <c val="#TooltipNumbers">1</c> common Boon.<n/><n/><c val="#TooltipQuest">Reward:</c> After destroying <c val="#TooltipNumbers">12</c> Forts and Keeps, gain <c val="#TooltipNumbers">1</c> uncommon Boon.<n/><n/><c val="#TooltipQuest">Reward:</c> After destroying <c val="#TooltipNumbers">24</c> Forts and Keeps, gain <c val="#TooltipNumbers">1</c> rare Boon.</n></n>Retain Quest progress after winning a game.
 Button/Name/AffixStructureQuestToken=Destruction
 Button/Tooltip/AffixStructureQuestToken=<c val="#TooltipQuest">Forts/Keeps destroyed: <c val="#TooltipNumbers" validator="AffixStructureQuestNotComplete"><d ref="$BehaviorStackCount:AffixStructureQuestToken$"/> / <d ref="Behavior,AffixStructureQuestToken,Max"/></c>
 Affix/Name/AASpeed=Nexus Frenzy
@@ -175,7 +175,15 @@ Affix/Tooltip/GatheringPower=Increases Spell Power by <c val="#TooltipNumbers">1
 Affix/Name/ConvenientPortals=Convenient Portals
 Affix/Tooltip/ConvenientPortals=Creates a permanent allied Portal between the top lane and the bottom lane.
 Affix/Name/PeriodicRegenGlobes=Globe Huffer
-Affix/Tooltip/PeriodicRegenGlobes=Spawns a Regeneration Globe near a random allied Hero every <c val="#TooltipNumbers">10</c> seconds, with you twice as likely to be chosen.<n/><n/>Allied Regeneration Globes take <c val="#TooltipNumbers">100%</c> longer to turn Neutral.<n/><n/>Additional stacks reduce the cooldown by <c val="#TooltipNumbers">2</c> seconds.
+Affix/Tooltip/PeriodicRegenGlobes=Spawns a Regeneration Globe near a random allied Hero every <c val="#TooltipNumbers">12</c> seconds, with you twice as likely to be chosen.<n/><n/>Allied Regeneration Globes take <c val="#TooltipNumbers">100%</c> longer to turn Neutral.<n/><n/>Additional stacks reduce the cooldown by <c val="#TooltipNumbers">4</c> seconds.
+Affix/Name/UnendingHatred=True Unending Hatred
+Affix/Tooltip/UnendingHatred=Gain the benefits of the Unending Hatred talent and increase Quest stacks obtained from all sources by <c val="#TooltipNumbers">50%</c>.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning a game.
+Affix/Name/BurningBlades=Burning Blades
+Affix/Tooltip/BurningBlades=Basic Attacks increases Attack Speed by <c val="#TooltipNumbers">1%</c> for <c val="#TooltipNumbers">2</c> seconds, up to <c val="#TooltipNumbers">800%</c>.
+Button/Name/AffixBurningBladesTokenCounter=Burning Blades
+Button/Tooltip/AffixBurningBladesTokenCounter=<c val="#TooltipQuest">Bonus Attack Speed: <c val="#TooltipNumbers"><d ref="$BehaviorTokenCount:AffixBurningBladesTokenCounter$*(100*Accumulator,AffixBurningBladesAccumulator,Scale)" precision="2"/>%</c>
+Affix/Name/Evasive=Evasive
+Affix/Tooltip/Evasive=Evasion is permanently active.<n/><n/>Reduces Illidan's Spell Armor by <c val="#TooltipNumbers">75</c>.
 
 Affix/Name/Conversion=Possession
 Affix/Tooltip/Conversion=Enemy leader Minions convert a nearby allied Minion to their side every <c val="#TooltipNumbers">30</c> seconds.<n/><n/>Additional stacks reduce the cooldown by <c val="#TooltipNumbers">10</c> seconds.
@@ -198,7 +206,7 @@ Affix/Tooltip/BackdoorProtection=Enemy Keeps and Keep Towers have <c val="#Toolt
 Affix/Name/RavenLordsFavor=Raven Lord's Favor
 Affix/Tooltip/RavenLordsFavor=Reduces the number of tributes required for a curse for the enemy team by <c val="#TooltipNumbers">1</c>.<n/><n/>Your team is cursed for <c val="#TooltipNumbers">50%</c> longer.
 Affix/Name/UltimatePunishment=Infernal Punishment
-Affix/Tooltip/UltimatePunishment=Reduces the number of Shrine minions required to summon a Punisher for the enemy team by <c val="#TooltipNumbers">20</c>.<n/><n/>Enemy Punisher gains Arcane, Frozen, and Mortar Abilities and deals <c val="#TooltipNumbers">25%</c> increased damage.
+Affix/Tooltip/UltimatePunishment=Reduces the number of Shrine minions required to summon a Punisher for the enemy team by <c val="#TooltipNumbers">15</c>.<n/><n/>Enemy Punisher gains Arcane, Frozen, and Mortar Abilities and deals <c val="#TooltipNumbers">25%</c> increased damage.
 Affix/Name/NeithisWrath=Neithis's Wrath
 Affix/Tooltip/NeithisWrath=Reduces the number of gems required to summon Webweavers for the enemy team by <c val="#TooltipNumbers">20</c> and turn-in cost no longer increases.<n/><n/>Enemy Webweavers cast Abilities <c val="#TooltipNumbers">75%</c> faster and summon <c val="#TooltipNumbers">2</c> additional spiders.
 Affix/Name/RaenaKnight=Raena's Knight
@@ -226,8 +234,8 @@ Affix/Tooltip/Cloned=Spawns a clone of an enemy Hero every <c val="#TooltipNumbe
 Affix/Name/StructureAmmo=Ammunition
 Affix/Tooltip/StructureAmmo=Allied Towers, Forts, and Keeps have limited Ammunition, with each attack consuming one ammo. Once a structure runs out of ammo, it will be unable to attack.<n/><n/>Structures replenish <c val="#TooltipNumbers">2</c> ammo every <c val="#TooltipNumbers">30</c> seconds.
 Affix/Name/Grenadier=Grenadier
-Affix/Tooltip/Grenadier=Grants the ability to throw a Frag Grenade, Particle Grenade, or a Biotic Grenade every <c val="#TooltipNumbers">6</c> seconds to a random enemy Hero.</n></n>Additional stacks grant this effect to <c val="#TooltipNumbers">1</c> additional enemy Hero.
+Affix/Tooltip/Grenadier=Grants the ability to throw a Frag Grenade, Particle Grenade, or a Biotic Grenade every <c val="#TooltipNumbers">8</c> seconds to a random enemy Hero.</n></n>Additional stacks grant this effect to <c val="#TooltipNumbers">1</c> additional enemy Hero.
 Affix/Name/SlowStart=Slow Start
 Affix/Tooltip/SlowStart=Your allied Heroes are Time Stopped for <c val="#TooltipNumbers">60</c> seconds.
 Affix/Name/PassiveAdvantage=Passive Advantage
-Affix/Tooltip/PassiveAdvantage=Increases passive Experience for the enemy Team by <c val="#TooltipNumbers">50%</c>.
+Affix/Tooltip/PassiveAdvantage=Increases passive Experience for the enemy Team by <c val="#TooltipNumbers">30%</c>.

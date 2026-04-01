@@ -28,4 +28,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Icon value="Assets\Textures\storm_ui_icon_trinket_medallion.dds" />
 </CButton>
 
+<CButton id="AffixBurningBladesTokenCounter" parent="StormButtonParent">
+  <Icon value="Assets\Textures\storm_ui_icon_illidan_sweepingstrike_b.dds" />
+</CButton>
+
 </Catalog>

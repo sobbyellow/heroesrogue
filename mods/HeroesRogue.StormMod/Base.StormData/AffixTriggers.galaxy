@@ -1471,9 +1471,8 @@ bool libAffx_ClonedPeriodic (bool testConds, bool runActions) {
     }
     if (libAffx_affixes[clonedIndex].cooldown <= 0) {
         random = RandomInt(6, 10);
-        random = 6;
         unitVar = libGame_gv_players[random].lv_heroUnit;
-        if (UnitGetType(unitVar) != "HeroLostVikingsController" && UnitGetType(unitVar) != "Medivh") {
+        if (UnitGetType(unitVar) != "HeroLostVikingsController" && UnitGetType(unitVar) != "Medivh" && UnitGetType(unitVar) != "Leoric") {
             libNtve_gf_CreateUnitsAtPoint2(1, UnitGetType(unitVar), 0, random, libGame_gv_players[random].lv_spawnPoint, null);
             libNtve_gf_SendActorMessageToUnit(UnitLastCreated(), "SetTintColor 135,135,255");
             libNtve_gf_SendActorMessageToUnit(UnitLastCreated(), "SetOpacity 0.6");
@@ -1493,9 +1492,9 @@ bool libAffx_ClonedPeriodic (bool testConds, bool runActions) {
         libAffx_Wait(1, c_timeGame);
     } else {
         if (clones > 0) {
-            libAffx_affixes[clonedIndex].cooldown -= 0.125;
-        } else {
             libAffx_affixes[clonedIndex].cooldown -= 0.0625;
+        } else {
+            libAffx_affixes[clonedIndex].cooldown -= 0.125;
         }
     }
     return true;
@@ -1646,7 +1645,7 @@ bool libAffx_PassiveAdvantageExecute (bool testConds, bool runActions) {
         return true;
     }
 
-    libGame_teamChaosXPModTrickle = 0.5;
+    libGame_teamChaosXPModTrickle = 0.3;
 
     return true;
 }
@@ -1725,7 +1724,7 @@ bool libAffx_PeriodicRegenGlobesPeriodic (bool testConds, bool runActions) {
             unitVar = UnitGroupUnitFromEnd(libGame_gv_players[random].lv_heroUnitGroup, unitCount);
             if (UnitIsAlive(unitVar) && UnitGetType(unitVar) != "HeroLostVikingsController") {
                 UnitCreate(1, "RegenGlobe", c_unitCreateIgnorePlacement, libAffx_teamOrder, PointWithOffset(UnitGetPosition(unitVar), 2 * (RandomInt(0, 1) * 2) - 1, 2 * (RandomInt(0, 1) * 2) - 1), 0, null);
-                libAffx_affixes[perRegenGlobeIndex].cooldown = 12 - 2 * libAffx_affixes[perRegenGlobeIndex].count;
+                libAffx_affixes[perRegenGlobeIndex].cooldown = 16 - 4 * libAffx_affixes[perRegenGlobeIndex].count;
             }
             if (unitCount <= 0) { break; }
         }
@@ -1733,6 +1732,48 @@ bool libAffx_PeriodicRegenGlobesPeriodic (bool testConds, bool runActions) {
         libAffx_affixes[perRegenGlobeIndex].cooldown -= 0.0625;
     }
 
+    return true;
+}
+// ---------------------------------------------------------------
+// Unending Hatred
+// ---------------------------------------------------------------
+bool libAffx_UnendingHatredExecute (bool testConds, bool runActions) {
+    fixed token;
+    if (!runActions) {
+        return true;
+    }
+    token = libAffx_BankLoadValueFixed("IllidanUnendingHatredTokenCounter");
+    if (token > 0) {
+        libAffx_ModifyTokenCount(libAffx_player, FixedToInt(token), "IllidanUnendingHatredTokenCounter");
+    }
+    return true;
+}
+bool libAffx_UnendingHatredWin (bool testConds, bool runActions) {
+    fixed token;
+    if (!runActions) {
+        return true;
+    }
+    token = UnitGetTokenCount(libGame_gv_players[libAffx_player].lv_heroUnit, "IllidanUnendingHatredTokenCounter");
+    if (token > 0) {
+        libAffx_BankSaveValueFixed("IllidanUnendingHatredTokenCounter", token * 0.5);
+    }
+    return true;
+}
+// ---------------------------------------------------------------
+// Evasive
+// ---------------------------------------------------------------
+bool libAffx_EvasiveUnitCreated (bool testConds, bool runActions) {
+    int player = UnitGetOwner(EventUnit());
+    if (testConds) {
+        if (player != libAffx_player) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_AddBehavior(libAffx_player, "IllidanEvasion", 1, true);
+    libAffx_AddBehavior(libAffx_player, "IllidanEvasionSpellArmor", 1, true);
     return true;
 }
 

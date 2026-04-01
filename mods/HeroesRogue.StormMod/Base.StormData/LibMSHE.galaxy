@@ -44,7 +44,7 @@ bool libMSHE_ApplyUltimatePunishment_Func(bool testConds, bool runActions) {
         return true;
     }
 
-    libMSHE_gv_mMDiabloShrineCursedEventTotal_Enemy = 20;
+    libMSHE_gv_mMDiabloShrineCursedEventTotal_Enemy = 15;
     libMSHE_applyAllPowers = true;
 
     return true;

@@ -322,7 +322,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <DisableValidatorArray value="CasterNotDead" />
     <DisableValidatorArray value="CasterDoesNotHaveAffixGrenadierReady" />
     <PeriodicEffect value="AffixGrenadierApplyReady" />
-    <Period value="6" />
+    <Period value="8" />
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixGrenadierReady" parent="CarryBehaviorParent">
     <Period value="0.0625" />
@@ -412,6 +412,54 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <HealDealtAdditiveMultiplier index="Shields" value="0.15" />
     <DamageDealtFraction index="Ability" value="0.15" />
   </Modification>
+</CBehaviorBuff>
+
+<CBehaviorTokenCounter id="AffixBurningBladesTokenCounter" parent="StormQuestToken">
+  <IncreaseEvents index="0" EventId="" />
+  <DecreaseEvents index="0" EventId="" />
+  <AtMinEvents index="0" EventId="" />
+  <SortIndex value="1" />
+  <Face value="AffixBurningBladesTokenCounter" />
+  <Max value="800" />
+  <DisplayDurationProxyBehavior value="AffixBurningBlades" />
+</CBehaviorTokenCounter>
+
+<CBehaviorBuff id="AffixBurningBlades">
+  <BuffFlags index="RefreshStack" value="1" />
+  <Duration value="2" />
+  <InitialEffect value="AffixBurningBladesTokenCounterModify" />
+  <RefreshEffect value="AffixBurningBladesTokenCounterModify" />
+  <FinalEffect value="AffixBurningBladesTokenCounterReset" />
+  <Modification>
+    <AdditiveAttackSpeedFactor value="0">
+      <AccumulatorArray value="AffixBurningBladesAccumulator" />
+    </AdditiveAttackSpeedFactor>
+  </Modification>
+  <SortIndex value="100" />
+  <DisplayDuration index="Self" value="1" />
+</CBehaviorBuff>
+
+<CBehaviorBuff id="IllidanEvasionSpellArmor" parent="StormArmor">
+  <ArmorModification>
+    <ArmorSet index="Hero">
+      <ArmorMitigationTable index="Ability" value="-75" />
+    </ArmorSet>
+    <ArmorSet index="Merc">
+      <ArmorMitigationTable index="Ability" value="-75" />
+    </ArmorSet>
+    <ArmorSet index="Monster">
+      <ArmorMitigationTable index="Ability" value="-75" />
+    </ArmorSet>
+    <ArmorSet index="Summon">
+      <ArmorMitigationTable index="Ability" value="-75" />
+    </ArmorSet>
+    <ArmorSet index="Structure">
+      <ArmorMitigationTable index="Ability" value="-75" />
+    </ArmorSet>
+    <ArmorSet index="Minion">
+      <ArmorMitigationTable index="Ability" value="-75" />
+    </ArmorSet>
+  </ArmorModification>
 </CBehaviorBuff>
   
 </Catalog>

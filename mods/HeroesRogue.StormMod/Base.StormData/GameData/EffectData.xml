@@ -368,4 +368,32 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <AttributeFactor index="Structure" value="-0.5" />
   </CEffectDamage>
 
+  <CEffectSet id="IllidanWeaponPostImpactSet">
+    <EffectArray value="IllidanApplyAffixBurningBlades" />
+  </CEffectSet>
+  <CEffectSet id="IllidanEvasionInitialSet">
+    <EffectArray value="IllidanEvasionEvasiveApplyBehavior" />
+  </CEffectSet>
+
+  <CEffectApplyBehavior id="IllidanEvasionEvasiveApplyBehavior">
+    <WhichUnit Value="Caster" />
+    <Behavior value="IllidanEvasionSpellArmor" />
+    <Chance value="0" />
+  </CEffectApplyBehavior>
+
+  <CEffectApplyBehavior id="IllidanApplyAffixBurningBlades">
+    <ValidatorArray index="0" value="CasterNotBlindedAndTargetNotEvading" />
+    <WhichUnit Value="Caster" />
+    <Behavior value="AffixBurningBlades" />
+    <Chance value="0" />
+  </CEffectApplyBehavior>
+  <CEffectModifyTokenCount id="AffixBurningBladesTokenCounterModify" parent="BaseEffectModifyTokenCount">
+    <TokenId value="AffixBurningBladesTokenCounter" />
+  </CEffectModifyTokenCount>
+  <CEffectModifyTokenCount id="AffixBurningBladesTokenCounterReset" parent="BaseEffectModifyTokenCount">
+    <TokenId value="AffixBurningBladesTokenCounter" />
+    <Operation value="Set" />
+    <Value value="0" />
+  </CEffectModifyTokenCount>
+
 </Catalog>

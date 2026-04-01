@@ -1063,9 +1063,6 @@
             <Int Int="1">
                 <Field Id="Negative"/>
             </Int>
-            <Int Int="3">
-                <Field Id="Max"/>
-            </Int>
             <Int Int="26">
                 <Field Id="LevelMax"/>
             </Int>
@@ -1725,6 +1722,75 @@
             </String>
             <String String="Rare">
                 <Field Id="Rarity"/>
+            </String>
+        </Instances>
+        <Instances Id="UnendingHatred">
+            <String String="IllidanUnendingHatredPassive">
+                <Field Id="TalentsAdd"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_talent_seasonedmarksman.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Starter">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Illidan">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Execute libAffx_UnendingHatredExecute">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="Win libAffx_UnendingHatredWin">
+                <Field Id="Trigger" Index="1"/>
+            </String>
+            <String String="1 1 Multiply Effect,IllidanUnendingHatredMinionKillIncreaseQuestToken,Value 1.5">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="1 1 Multiply Effect,IllidanUnendingHatredHeroKillIncreaseQuestToken,Value 1.5">
+                <Field Id="CatalogModification" Index="1"/>
+            </String>
+        </Instances>
+        <Instances Id="BurningBlades">
+            <String String="1 0 Set Effect,IllidanApplyAffixBurningBlades,Chance 1">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="Starter">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Illidan">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_illidan_sweepingstrike_b.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="1 0 AffixBurningBladesTokenCounter">
+                <Field Id="Behavior"/>
+            </String>
+        </Instances>
+        <Instances Id="Evasive">
+            <String String="Starter">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Illidan">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_illidan_betrayersthirst_a.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="1 1 Set Behavior,IllidanEvasion,Duration 0">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="1 1 Set Effect,IllidanEvasionEvasiveApplyBehavior,Chance 1">
+                <Field Id="CatalogModification" Index="1"/>
+            </String>
+            <String String="1 0 IllidanEvasion">
+                <Field Id="Behavior"/>
+            </String>
+            <String String="UC libAffx_EvasiveUnitCreated">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="1 0 IllidanEvasionSpellArmor">
+                <Field Id="Behavior" Index="1"/>
             </String>
         </Instances>
     </CUser>

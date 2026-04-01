@@ -16925,6 +16925,10 @@ bool libGame_gt_DetermineWinningTeam_Func (bool testConds, bool runActions) {
         }
     }
 
+    if (lv_winningTeam == libGame_gv_teamOrderIndex_C) {
+        TriggerSendEvent("GameWonEvent");
+    }
+
     TriggerExecute(libSprt_gt_DEBUGInspectTheBalanceProbebalanceprobe, true, false);
     Wait(libGame_gv_gameOver_CameraPanTime_C, c_timeGame);
     Wait(libGame_gv_gameOver_CoreAnimationWaitTime_C, c_timeGame);

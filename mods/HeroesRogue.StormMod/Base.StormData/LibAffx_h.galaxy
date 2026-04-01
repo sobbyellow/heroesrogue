@@ -40,7 +40,8 @@ const int libAffx_triggerQuest                   =   10;    // Executes immediat
 const int libAffx_triggerUnitChangeOwner         =   11;    // Executes on unit ownership change.
 const int libAffx_triggerBehaviorChangeCategory  =   12;    // Executes on behavior added/removed based on category.
 const int libAffx_triggerPeriodic                =   13;    // Executes every game tick.
-const int libAffx_triggerExecuteOnce             =   14;     // Executes immediately but only once.
+const int libAffx_triggerExecuteOnce             =   14;    // Executes immediately but only once.
+const int libAffx_triggerWin                     =   15;    // Executes when enemy core dies.
 
 
 const string libAffx_eventID = "EventAffix";
@@ -102,7 +103,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const fixed libAffx_version = 0.5;
+const fixed libAffx_version = 0.6;
 
 
 struct libAffx_CatalogModification {
