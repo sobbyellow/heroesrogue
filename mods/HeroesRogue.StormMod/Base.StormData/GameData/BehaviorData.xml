@@ -436,7 +436,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     </AdditiveAttackSpeedFactor>
   </Modification>
   <SortIndex value="100" />
-  <DisplayDuration index="Self" value="1" />
+  <DisplayDuration index="Self" value="0" />
 </CBehaviorBuff>
 
 <CBehaviorBuff id="IllidanEvasionSpellArmor" parent="StormArmor">
@@ -478,6 +478,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
       <OverrideMinCap index="Ability" value="1"/>
     </ArmorSet>
   </ArmorModification>
+  <DisplayDuration index="Self" value="0" />
+  <InfoFlags index="Hidden" value="1" />
 </CBehaviorBuff>
   
 </Catalog>
