@@ -1296,11 +1296,13 @@ void libAffx_BankLoad() {
         } else {
             libAffx_affixes[i].count = 0;
         }
-        if (libAffx_affixes[i].quest.isQuest && BankKeyExists(BankLastCreated(), libAffx_BankSection, affixName + "_QuestDone")) {
-            if (BankValueGetAsInt(BankLastCreated(), libAffx_BankSection, affixName + "_QuestDone") == 1) {
-                libAffx_affixes[i].quest.questDone = true;
-            } else {
-                libAffx_affixes[i].quest.questDone = false;
+        if (libAffx_affixes[i].quest.isQuest) {
+            if (BankKeyExists(BankLastCreated(), libAffx_BankSection, affixName + "_QuestDone")) {
+                if (BankValueGetAsInt(BankLastCreated(), libAffx_BankSection, affixName + "_QuestDone") == 1) {
+                    libAffx_affixes[i].quest.questDone = true;
+                } else {
+                    libAffx_affixes[i].quest.questDone = false;
+                }
             }
             if (libAffx_affixes[i].quest.questProgressPersists) {
                 libAffx_affixes[i].quest.questProgress = BankValueGetAsInt(BankLastCreated(), libAffx_BankSection, affixName + "_QuestProgress");
@@ -1769,7 +1771,7 @@ bool libAffx_ResetCommandTrigger_Func (bool testConds, bool runActions) {
 
     // Conditions
     if (testConds) {
-        if (StringWord(EventChatMessage(false), 1) != "resetgame" && StringWord(EventChatMessage(false), 1) != "gg") {
+        if (StringWord(EventChatMessage(false), 1) != "resetgame") {
             return false;
         }
     }
@@ -1789,7 +1791,6 @@ bool libAffx_ResetCommandTrigger_Func (bool testConds, bool runActions) {
 void libAffx_ResetCommandTrigger_Init () {
     libAffx_ResetCommandTrigger = TriggerCreate("libAffx_ResetCommandTrigger_Func");
     TriggerAddEventChatMessage(libAffx_ResetCommandTrigger, c_playerAny, "resetgame", false);
-    TriggerAddEventChatMessage(libAffx_ResetCommandTrigger, c_playerAny, "gg", false);
 }
 
 bool libAffx_TestCommandTrigger_Func (bool testConds, bool runActions) {

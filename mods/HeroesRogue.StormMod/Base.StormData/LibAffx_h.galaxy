@@ -104,7 +104,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const fixed libAffx_version = 0.7;
+const fixed libAffx_version = 0.71;
 
 
 struct libAffx_CatalogModification {
@@ -250,7 +250,7 @@ trigger libAffx_AffixRerollTrigger;
 
 // Debug options
 bool libAffx_cheatCommands = true; // Enables cheat/debug commands
-bool libAffx_debugPrint = false; // Enables debug logging
+bool libAffx_debugPrint = true; // Enables debug logging
 bool libAffx_skipIntro = false; // Skips the Hero selection.
 bool libAffx_pauseDisabled = false; // Disables pause features
 bool libAffx_ignoreMap = false; // Ignores the saved map.
