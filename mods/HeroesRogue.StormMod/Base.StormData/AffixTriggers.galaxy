@@ -1482,8 +1482,8 @@ bool libAffx_ClonedPeriodic (bool testConds, bool runActions) {
     if (libAffx_affixes[clonedIndex].cooldown <= 0) {
         random = RandomInt(6, 10);
         unitVar = libGame_gv_players[random].lv_heroUnit;
-        // Block Leoric and Medivh clones due to issues with clones
-        if (UnitGetType(unitVar) != "HeroLostVikingsController" && UnitGetType(unitVar) != "HeroMedivh" && UnitGetType(unitVar) != "HeroLeoric") {
+        // Block Leoric, Medivh, Rexxar due to issues with clones
+        if (UnitGetType(unitVar) != "HeroLostVikingsController" && UnitGetType(unitVar) != "HeroMedivh" && UnitGetType(unitVar) != "HeroLeoric" && UnitGetType(unitVar) != "HeroRexxar") {
             libNtve_gf_CreateUnitsAtPoint2(1, UnitGetType(unitVar), 0, random, libGame_gv_players[random].lv_spawnPoint, null);
             libNtve_gf_SendActorMessageToUnit(UnitLastCreated(), "SetTintColor 135,135,255");
             libNtve_gf_SendActorMessageToUnit(UnitLastCreated(), "SetOpacity 0.6");
@@ -1571,7 +1571,11 @@ bool libAffx_GrenadierAffixAdded (bool testConds, bool runActions) {
     for (i = 1; i <= amount; i += 1) {
         if (grenadierPlayers[i] == 0) {
             grenadierPlayers[i] = 5 + i;
-            libAffx_AddBehavior(5 + i, "AffixGrenadier", 1, true);
+            if (UnitGetType(libGame_gv_players[5 + i].lv_heroUnit) == "HeroDVaPilot" || UnitGetType(libGame_gv_players[5 + i].lv_heroUnit) == "HeroDVaMech") {
+                libAffx_AddBehavior(5 + i, "AffixGrenadier", 1, false);
+            } else {
+                libAffx_AddBehavior(5 + i, "AffixGrenadier", 1, true);
+            }
         }
     }
     return true;

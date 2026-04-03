@@ -60,7 +60,7 @@ const fixed libAffx_uncommonToEpic      =   0.05;
 const fixed libAffx_uncommonToLegendary =   0.005;
 const fixed libAffx_rareToEpic          =   0.1;
 const fixed libAffx_rareToLegendary     =   0.01;
-const fixed libAffx_epicToLegendary     =   0.01;
+const fixed libAffx_epicToLegendary     =   0.015;
 const fixed libAffx_negativeUpgrade     =   0.30; // Additional chance for higher rarity negative affixes
 const fixed libAffx_negativeUpgradeHigh =   0.35; // Additional chance for epic and legendary negative affixes
 
@@ -90,7 +90,7 @@ const int libAffx_teamChaosIndex = libGame_gv_teamChaosIndex_C;
 
 const int libAffx_maxAffixesFromObjectives = 1; // Maximum affixes that can be gained from winning objectives.
 const int libAffx_rerollsPerGame = 1; // How many rerolls are added at the start of every game.
-const int libAffx_rerollsStart = 2; // How many rerolls the player starts with.
+const int libAffx_rerollsStart = 3; // How many rerolls the player starts with.
 
 // Unit filters
 
@@ -104,7 +104,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const fixed libAffx_version = 0.71;
+const fixed libAffx_version = 0.72;
 
 
 struct libAffx_CatalogModification {
@@ -225,6 +225,8 @@ int libAffx_executingAffixCount;
 
 int libAffx_difficulty = 1;
 
+fixed libAffx_processQueueTimeElapsed;
+
 // Triggers
 trigger libAffx_HeroSelectionTrigger;
 trigger libAffx_HeroSelectedTrigger;
@@ -247,10 +249,11 @@ trigger libAffx_pauseMSOC;
 trigger libAffx_AffixHotkeyPressedTrigger;
 trigger libAffx_ObjectiveWonTrigger;
 trigger libAffx_AffixRerollTrigger;
+trigger libAffx_ProcessQueueTimeElapsedTrigger;
 
 // Debug options
 bool libAffx_cheatCommands = true; // Enables cheat/debug commands
-bool libAffx_debugPrint = true; // Enables debug logging
+bool libAffx_debugPrint = false; // Enables debug logging
 bool libAffx_skipIntro = false; // Skips the Hero selection.
 bool libAffx_pauseDisabled = false; // Disables pause features
 bool libAffx_ignoreMap = false; // Ignores the saved map.

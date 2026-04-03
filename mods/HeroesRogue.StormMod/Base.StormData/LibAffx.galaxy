@@ -1323,7 +1323,7 @@ void libAffx_BankLoad() {
             libAffx_ApplyAffix(i, libAffx_affixes[i].count);
         }
     }
-    libAffx_DebugPrint("Affixes loaded!");
+    libAffx_DebugPrint("Boons & Curses loaded!");
 }
 void libAffx_BankReset() {
     string affixName;
@@ -1576,10 +1576,26 @@ int libAffx_RollAffix(int rarity, bool negative, int level) {
     return 0;
 }
 
+bool libAffx_ProcessQueueTimeElapsed_Func (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    if (libAffx_processQueueTimeElapsed < 600) {
+        libAffx_processQueueTimeElapsed += 0.0625;
+    }
+    return true;
+}
+void libAffx_ProcessQueueTimeElapsed_Init() {
+    libAffx_ProcessQueueTimeElapsedTrigger = TriggerCreate("libAffx_ProcessQueueTimeElapsed_Func");
+    TriggerAddEventTimePeriodic(libAffx_ProcessQueueTimeElapsedTrigger, 0.0625, c_timeGame);
+}
+
 void libAffx_ChooseAffixes(int rarity, bool negative, int level) {
     int slot;
     int rolledRarity;
     int totalRarity;
+
+    libAffx_processQueueTimeElapsed = 0;
 
     for (slot = 1; slot <= libAffx_affixSelectionMax; slot += 1) {
         libAffx_rolledAffixes[slot] = 0;
@@ -1601,24 +1617,8 @@ void libAffx_ChooseAffixes(int rarity, bool negative, int level) {
 
 }
 
-void libAffx_ProcessQueue() {
+void libAffx_MoveQueue() {
     int i;
-    if (libAffx_queueActive || libAffx_queueCount <= 0 || libGame_gv_gameOver) {
-        return;
-    }
-    if (libAffx_objectivesWonCounter > 0 && libAffx_queueAffixNegative[1] && !libAffx_debugCommandsAddAll) {
-        libAffx_queueActive = true;
-        libAffx_objectivesWonCounter -= 1;
-        libAffx_ChooseAffixes(libAffx_rarityCommon, false, libAffx_queueAffixLevel[1]);
-    } else if (libAffx_skipCurseCounter > 0 && libAffx_queueAffixNegative[1] && !libAffx_debugCommandsAddAll) {
-        libAffx_queueActive = false;
-        libAffx_skipCurseCounter -= 1;
-        UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/CurseSkipped"));
-    } else {
-        libAffx_queueActive = true;
-        libAffx_ChooseAffixes(libAffx_queueAffixRarity[1], libAffx_queueAffixNegative[1], libAffx_queueAffixLevel[1]);
-    }
-
     for (i = 1; i <= libAffx_queueCount; i += 1) {
         libAffx_queueAffixRarity[i] = libAffx_queueAffixRarity[i + 1];
         libAffx_queueAffixNegative[i] = libAffx_queueAffixNegative[i + 1];
@@ -1626,6 +1626,28 @@ void libAffx_ProcessQueue() {
     }
     
     libAffx_queueCount = MaxI(0, libAffx_queueCount - 1);
+}
+
+void libAffx_ProcessQueue() {
+    if (libAffx_queueActive || libAffx_queueCount <= 0 || libGame_gv_gameOver) {
+        return;
+    }
+    if (libAffx_objectivesWonCounter > 0 && libAffx_queueAffixNegative[1] && !libAffx_debugCommandsAddAll) {
+        libAffx_queueActive = true;
+        libAffx_objectivesWonCounter -= 1;
+        libAffx_ChooseAffixes(libAffx_rarityCommon, false, libAffx_queueAffixLevel[1]);
+        libAffx_MoveQueue();
+    } else if (libAffx_skipCurseCounter > 0 && libAffx_queueAffixNegative[1] && !libAffx_debugCommandsAddAll) {
+        libAffx_queueActive = false;
+        libAffx_skipCurseCounter -= 1;
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/CurseSkipped"));
+        libAffx_MoveQueue();
+        libAffx_ProcessQueue();
+    } else {
+        libAffx_queueActive = true;
+        libAffx_ChooseAffixes(libAffx_queueAffixRarity[1], libAffx_queueAffixNegative[1], libAffx_queueAffixLevel[1]);
+        libAffx_MoveQueue();
+    }
 }
 
 void libAffx_QueueAffix(int rarity, bool negative, int level, int amount) {
@@ -1661,6 +1683,9 @@ bool libAffx_AffixHotkeyPressedTrigger_Func (bool testConds, bool runActions) {
         if (!libAffx_queueActive){
             return false;
         }
+        if (libAffx_processQueueTimeElapsed < 1) {
+            return false;
+        }
     }
     if (!runActions) {
         return true;
@@ -1688,6 +1713,9 @@ bool libAffx_AffixSelectedTrigger_Func (bool testConds, bool runActions) {
     int i;
 
     if (testConds) {
+        if (libAffx_processQueueTimeElapsed < 1) {
+            return false;
+        }
         testForButton = false;
         for (i = 1; i <= libAffx_affixSelectionMax; i += 1) {
             if (EventDialogControl() == libAffx_dialogAffixSelectionButton[i]) {
@@ -2276,6 +2304,7 @@ void libAffx_InitTriggers () {
     libAffx_AffixHotkeyPressedTrigger_Init();
     libAffx_ObjectiveWonTrigger_Init();
     libAffx_AffixRerollTrigger_Init();
+    libAffx_ProcessQueueTimeElapsed_Init();
 
     TriggerEnable(libGDHL_gt_HeroSylvanasPossessionRewire, true);
     libAffx_pauseVLSK = TriggerCreate("libVLSK_PauseTrigger_Func");
