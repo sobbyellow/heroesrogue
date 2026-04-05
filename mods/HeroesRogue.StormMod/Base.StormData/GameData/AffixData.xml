@@ -2184,6 +2184,9 @@
             <String String="MuradinDwarfTossTokenCounter 0.5">
                 <Field Id="QuestRetain"/>
             </String>
+            <String String="MuradinExtraCharges">
+                <Field Id="TalentsAdd" Index="3"/>
+            </String>
         </Instances>
         <Instances Id="UnstoppableAvatar">
             <String String="Muradin">
