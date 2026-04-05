@@ -104,7 +104,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.8.0";
+const string libAffx_version = "0.8.1";
 
 struct libAffx_CatalogModification {
     int player;

@@ -565,7 +565,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <BehaviorLinkDisableArray value="AffixAutoPalm" />
   </Modification>
 </CBehaviorBuff>
-<CBehaviorBuff id="AffixPermanentCloak" parent="StormPersistentCloak">
-</CBehaviorBuff>
+<CBehaviorBuff id="AffixPermanentCloak" parent="StormPersistentCloak" />
+<CBehaviorBuff id="AffixPermanentCloakDisableController" parent="StormPersistentCloakController" />
   
 </Catalog>

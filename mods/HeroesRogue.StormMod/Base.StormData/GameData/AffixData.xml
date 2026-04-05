@@ -2473,6 +2473,21 @@
             <String String="Assets/Textures/storm_ui_icon_nova_personalcloaking.dds">
                 <Field Id="Icon"/>
             </String>
+            <String String="6 0 AffixPermanentCloakDisableController">
+                <Field Id="Behavior" Index="5"/>
+            </String>
+            <String String="7 0 AffixPermanentCloakDisableController">
+                <Field Id="Behavior" Index="6"/>
+            </String>
+            <String String="8 0 AffixPermanentCloakDisableController">
+                <Field Id="Behavior" Index="7"/>
+            </String>
+            <String String="9 0 AffixPermanentCloakDisableController">
+                <Field Id="Behavior" Index="8"/>
+            </String>
+            <String String="10 0 AffixPermanentCloakDisableController">
+                <Field Id="Behavior" Index="9"/>
+            </String>
         </Instances>
     </CUser>
 </Catalog>
