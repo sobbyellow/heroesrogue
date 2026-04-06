@@ -500,41 +500,27 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorBuff id="MuradinPermanentSecondWind" parent="CarryBehaviorParent" />
 
-<CBehaviorBuff id="MuradinSecondWind">
+<CBehaviorBuff id="MuradinSecondWindPermanent">
   <Alignment value="Positive" />
   <BehaviorFlags index="Permanent" value="1" />
   <BehaviorFlags index="EnabledWhileDead" value="1" />
   <InfoIcon value="Assets\Textures\storm_btn_d3_barbarian_ignorepain.dds" />
   <DisableValidatorArray value="CasterLifeNotFull" />
-  <DisableValidatorArray value="MuradinNotCriticallyHealing" />
+  <DisableValidatorArray value="MuradinDoesNotHaveImprovedSecondWindActivePermanent" />
   <DisableValidatorArray value="MuradinNotStoneforming" />
-  <DisableValidatorArray value="CasterNotInCombat4AndDoesNotHavePermanentSecondWind" />
   <Period value="1" />
-  <PeriodicEffect value="MuradinSecondWindHealSwitch" />
+  <PeriodicEffect value="MuradinSecondWindImprovedCreateHealerPermanent" />
   <Face value="MuradinSecondWind" />
 </CBehaviorBuff>
-<CBehaviorBuff id="MuradinSecondWindActive">
-  <Alignment value="Positive" />
-  <BehaviorFlags index="Permanent" value="1" />
-  <InfoIcon value="Assets\Textures\storm_btn_d3_barbarian_ignorepain.dds" />
-  <DisableValidatorArray value="MuradinSecondWindLifeValidator" />
-  <DisableValidatorArray value="MuradinNoPassiveWeaponBuff" />
-  <DisableValidatorArray value="MuradinNotStoneforming" />
-  <DisableValidatorArray value="CasterNotInCombat4AndDoesNotHavePermanentSecondWind" />
-  <Period value="1" />
-  <PeriodicEffect value="MuradinSecondWindCriticalCreateHealer" />
-  <Face value="MuradinSecondWind" />
-</CBehaviorBuff>
-<CBehaviorBuff id="MuradinSecondWindActiveImproved">
+<CBehaviorBuff id="MuradinSecondWindActiveImprovedPermanent">
   <Alignment value="Positive" />
   <BehaviorFlags index="Permanent" value="1" />
   <InfoIcon value="Assets\Textures\storm_btn_d3_barbarian_ignorepain.dds" />
   <DisableValidatorArray value="MuradinSecondWindImprovedLifeValidator" />
   <DisableValidatorArray value="MuradinHasPassiveWeaponBuff" />
   <DisableValidatorArray value="MuradinNotStoneforming" />
-  <DisableValidatorArray value="CasterNotInCombat4AndDoesNotHavePermanentSecondWind" />
   <Period value="1" />
-  <PeriodicEffect value="MuradinSecondWindImprovedCriticalCreateHealer" />
+  <PeriodicEffect value="MuradinSecondWindImprovedCriticalCreateHealerPermanent" />
   <Face value="MuradinSecondWind" />
 </CBehaviorBuff>
 
@@ -560,7 +546,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </DamageResponse>
 </CBehaviorBuff>
 <CBehaviorBuff id="AffixAutoPalmCooldown">
-  <Duration value="60" />
+  <Duration value="180" />
   <Modification>
     <BehaviorLinkDisableArray value="AffixAutoPalm" />
   </Modification>

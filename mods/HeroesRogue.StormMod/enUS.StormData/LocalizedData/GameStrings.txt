@@ -147,7 +147,7 @@ Affix/Tooltip/EmergencyMeasure=On fatal damage, your teammates gain a Shield equ
 Affix/Name/CriticalMass=Critical Mass
 Affix/Tooltip/CriticalMass=Getting a Takedown will refresh the cooldown on all of your Abilities.
 Affix/Name/Tantrum=Tantrum
-Affix/Tooltip/Tantrum=Reduces Gargantuan's Stomp's cooldown by <c val="#TooltipNumbers">3</c> seconds and increases its damage by <c val="#TooltipNumbers">25%</c>.
+Affix/Tooltip/Tantrum=Reduces Gargantuan's Stomp's cooldown by <c val="#TooltipNumbers">3</c> seconds and increases the stomp damage by <c val="#TooltipNumbers">25%</c>.
 Affix/Name/QuickScare=Quick Scare
 Affix/Tooltip/QuickScare=Increases Ravenous Spirit's duration by <c val="#TooltipNumbers">2</c> seconds and Movement Speed by <c val="#TooltipNumbers">15%</c>.
 Affix/Name/ResurgenceoftheStorm=Resurgence of the Storm
@@ -207,7 +207,7 @@ Affix/Tooltip/BigStar=Increases Lunar Flare's radius by <c val="#TooltipNumbers"
 Affix/Name/ElunesReach=Elune's Reach
 Affix/Tooltip/ElunesReach=Increases Light of Elune's range by <c val="#TooltipNumbers">50%</c>.
 Affix/Name/Jumper=Jumper
-Affix/Tooltip/Jumper=Gain the benefits of all Dwarf Toss talents. Increases Dwarf Toss's range by <c val="#TooltipNumbers">100%</c> and gain Unstoppable for the jump duration.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Hitting enemy Heroes with Dwarf Toss increases its damage by <c val="#TooltipNumbers">10%</c>.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
+Affix/Tooltip/Jumper=Gain the benefits of all Dwarf Toss talents and gain Unstoppable during the jump.<n/><n/>Increases Dwarf Toss's range and radius by <c val="#TooltipNumbers">100%</c>.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Hitting enemy Heroes with Dwarf Toss increases its damage by <c val="#TooltipNumbers">10%</c>.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
 Button/Name/MuradinDwarfTossTokenCounter=Jumper
 Button/Tooltip/MuradinDwarfTossTokenCounter=<c val="#TooltipQuest">Bonus damage: <c val="#TooltipNumbers"><d ref="$BehaviorTokenCount:MuradinDwarfTossTokenCounter$*100*(Accumulator,MuradinDwarfTossAccumulator,Scale)" precision="0"/>%</c>
 Affix/Name/UnstoppableAvatar=Unstoppable Avatar
@@ -298,6 +298,6 @@ Affix/Tooltip/ExplosiveEnd=Upon dying, enemy Heroes drop <c val="#TooltipNumbers
 Affix/Name/LavaWave=Lava Waves
 Affix/Tooltip/LavaWave=Every <c val="#TooltipNumbers">120</c> seconds, the enemy Team releases a Lava Wave in a random lane, dealing <d ref="Effect,RagnarosLavaWaveDamage,Amount * (1 / Effect,RagnarosLavaWaveTrail,Marker.Duration )" player="12"/></c> damage per second to non-Structure enemies in its path and instantly killing enemy Minions. Damage increased by <c val="#TooltipNumbers"><d ref="Effect,RagnarosLavaWaveDamage,AttributeFactor[Heroic] * 100"/>%</c> versus Heroes.
 Affix/Name/DivineIntervention=Divine Intervention
-Affix/Tooltip/DivineIntervention=Divine Palm is cast on enemy Heroes when their Health drops below <c val="#TooltipNumbers">25%</c>.<n/><n/>This effect has a <c val="#TooltipNumbers">60</c> second cooldown per enemy Hero.
+Affix/Tooltip/DivineIntervention=Divine Palm is cast on enemy Heroes when their Health drops below <c val="#TooltipNumbers">25%</c>.<n/><n/>This effect has a <c val="#TooltipNumbers">180</c> second cooldown per enemy Hero.<n/><n/>Additional stacks reduce the cooldown by <c val="#TooltipNumbers">60</c> seconds.
 Affix/Name/MassCloak=Mass Cloak
 Affix/Tooltip/MassCloak=Enemy Heroes gain Stealth when out of combat for <c val="#TooltipNumbers">3</c> seconds.

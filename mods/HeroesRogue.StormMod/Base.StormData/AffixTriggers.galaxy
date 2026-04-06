@@ -887,86 +887,91 @@ bool libAffx_StructureQuest12 (bool testConds, bool runActions) {
 // Fortifications
 // ---------------------------------------------------------------
 int fortificationsIndex;
-void libAffx_FortificationsCreateTower(string unitName, point location, fixed rotation) {
-    UnitCreate(1, unitName, c_unitCreateIgnorePlacement, libAffx_teamChaos, location, rotation, null);
-    UnitBehaviorAdd(UnitLastCreated(), "AffixFortificationsTowerReveal", UnitLastCreated(), 1);
-    ActorSend(libNtve_gf_MainActorofUnit(UnitLastCreated()), "Signal PlayBuild");
+bool[12] fortificationsSpawned;
+void libAffx_FortificationsCreateTower(int id, string unitName, point location, fixed rotation) {
+    if (fortificationsSpawned[id] == false) {
+        fortificationsSpawned[id] = true;
+        UnitCreate(1, unitName, c_unitCreateIgnorePlacement, libAffx_teamChaos, location, rotation, null);
+        UnitBehaviorAdd(UnitLastCreated(), "AffixFortificationsTowerReveal", UnitLastCreated(), 1);
+        ActorSend(libNtve_gf_MainActorofUnit(UnitLastCreated()), "Signal PlayBuild");
+    }
 }
 bool libAffx_FortificationsAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
     fortificationsIndex = libAffx_EventAffix("Fortifications");
+    if (libAffx_currentMap == libAffx_mapCursedHollow) {
+        libAffx_FortificationsCreateTower(1, "TownCannonTowerL2", Point(133, 155), 135);
+        libAffx_FortificationsCreateTower(2, "TownCannonTowerL2", Point(144, 140), 225);
+        libAffx_FortificationsCreateTower(3, "TownCannonTowerL2", Point(134, 70), 225);
+        libAffx_FortificationsCreateTower(4, "TownCannonTowerL3", Point(196, 117), 135);
+        libAffx_FortificationsCreateTower(5, "TownCannonTowerL3", Point(198, 106), 225);
+        if (libAffx_affixes[fortificationsIndex].count >= 2) {
+            libAffx_FortificationsCreateTower(6, "TownCannonTowerL2", Point(143, 92), 225);
+            libAffx_FortificationsCreateTower(7, "TownCannonTowerL2", Point(158, 139), 45);
+            libAffx_FortificationsCreateTower(8, "TownCannonTowerL2", Point(178, 76), 225);
+        }
+        if (libAffx_affixes[fortificationsIndex].count >= 3) {
+            libAffx_FortificationsCreateTower(9, "TownCannonTowerL2", Point(144, 123), 90);
+            libAffx_FortificationsCreateTower(10, "TownCannonTowerL2", Point(159, 85), 225);
+            libAffx_FortificationsCreateTower(11, "TownCannonTowerL2", Point(132, 79), 135);
+        }
+    } else if (libAffx_currentMap == libAffx_mapShrines) {
+        libAffx_FortificationsCreateTower(1, "TownCannonTowerL2", Point(132, 165), 180);
+        libAffx_FortificationsCreateTower(2, "TownCannonTowerL2", Point(132, 122), 225);
+        libAffx_FortificationsCreateTower(3, "TownCannonTowerL2", Point(132, 74), 225);
+        libAffx_FortificationsCreateTower(4, "TownCannonTowerL3", Point(199, 97), 135);
+        libAffx_FortificationsCreateTower(5, "TownCannonTowerL3", Point(201, 86), 225);
+        if (libAffx_affixes[fortificationsIndex].count >= 2) {
+            libAffx_FortificationsCreateTower(6, "TownCannonTowerL2", Point(171, 74), 225);
+            libAffx_FortificationsCreateTower(7, "TownCannonTowerL2", Point(154, 75), 225);
+            libAffx_FortificationsCreateTower(8, "TownCannonTowerL2", Point(151, 116), 225);
+        }
+        if (libAffx_affixes[fortificationsIndex].count >= 3) {
+            libAffx_FortificationsCreateTower(9, "TownCannonTowerL2", Point(128, 37), 135);
+            libAffx_FortificationsCreateTower(10, "TownCannonTowerL2", Point(170, 116), 225);
+            libAffx_FortificationsCreateTower(11, "TownCannonTowerL2", Point(136, 110), 180);
+        }
+    } else if (libAffx_currentMap == libAffx_mapCrypts) {
+        libAffx_FortificationsCreateTower(1, "TownCannonTowerL2", Point(132, 115), 180);
+        libAffx_FortificationsCreateTower(2, "TownCannonTowerL2", Point(132, 83), 180);
+        libAffx_FortificationsCreateTower(3, "TownCannonTowerL3", Point(192, 120), 135);
+        libAffx_FortificationsCreateTower(4, "TownCannonTowerL3", Point(195, 108), 225);
+        if (libAffx_affixes[fortificationsIndex].count >= 2) {
+            libAffx_FortificationsCreateTower(5, "TownCannonTowerL2", Point(150, 84), 180);
+            libAffx_FortificationsCreateTower(6, "TownCannonTowerL2", Point(144, 121), 180);
+            libAffx_FortificationsCreateTower(7, "TownCannonTowerL2", Point(135, 151), 225);
+        }
+        if (libAffx_affixes[fortificationsIndex].count >= 3) {
+            libAffx_FortificationsCreateTower(8, "TownCannonTowerL2", Point(166, 129), 225);
+            libAffx_FortificationsCreateTower(9, "TownCannonTowerL2", Point(169, 84), 180);
+            libAffx_FortificationsCreateTower(10, "TownCannonTowerL2", Point(170, 63), 135);
+            libAffx_FortificationsCreateTower(11, "TownCannonTowerL2", Point(132, 45), 135);
+        }
+    } else if (libAffx_currentMap == libAffx_mapDragonShire) {
+        libAffx_FortificationsCreateTower(1, "TownCannonTowerL2", Point(131, 157), 180);
+        libAffx_FortificationsCreateTower(2, "TownCannonTowerL2", Point(135, 124), 225);
+        libAffx_FortificationsCreateTower(3, "TownCannonTowerL2", Point(133, 76), 225);
+        libAffx_FortificationsCreateTower(4, "TownCannonTowerL3", Point(193, 96), 135);
+        libAffx_FortificationsCreateTower(5, "TownCannonTowerL3", Point(194, 86), 225);
+        if (libAffx_affixes[fortificationsIndex].count >= 2) {
+            libAffx_FortificationsCreateTower(6, "TownCannonTowerL2", Point(155, 113), 225);
+            libAffx_FortificationsCreateTower(7, "TownCannonTowerL2", Point(165, 76), 225);
+            libAffx_FortificationsCreateTower(8, "TownCannonTowerL2", Point(134, 43), 135);
+        }
+        if (libAffx_affixes[fortificationsIndex].count >= 3) {
+            libAffx_FortificationsCreateTower(9, "TownCannonTowerL2", Point(148, 124), 225);
+            libAffx_FortificationsCreateTower(10, "TownCannonTowerL2", Point(139, 111), 135);
+            libAffx_FortificationsCreateTower(11, "TownCannonTowerL2", Point(152, 70), 135);
+        }
+    }
+
     return true;
 }
 bool libAffx_Fortifications (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
-    }
-    if (libAffx_currentMap == libAffx_mapCursedHollow) {
-        libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(133, 155), 135);
-        libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(144, 140), 225);
-        libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(134, 70), 225);
-        libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(196, 117), 135);
-        libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(198, 106), 225);
-        if (libAffx_affixes[fortificationsIndex].count >= 2) {
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(143, 92), 225);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(158, 139), 45);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(178, 76), 225);
-        }
-        if (libAffx_affixes[fortificationsIndex].count >= 3) {
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(144, 123), 90);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(159, 85), 225);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(132, 79), 135);
-        }
-    } else if (libAffx_currentMap == libAffx_mapShrines) {
-        libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(132, 165), 180);
-        libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(132, 122), 225);
-        libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(132, 74), 225);
-        libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(199, 97), 135);
-        libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(201, 86), 225);
-        if (libAffx_affixes[fortificationsIndex].count >= 2) {
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(171, 74), 225);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(154, 75), 225);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(151, 116), 225);
-        }
-        if (libAffx_affixes[fortificationsIndex].count >= 3) {
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(128, 37), 135);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(170, 116), 225);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(136, 110), 180);
-        }
-    } else if (libAffx_currentMap == libAffx_mapCrypts) {
-        libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(132, 115), 180);
-        libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(132, 83), 180);
-        libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(192, 120), 135);
-        libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(195, 108), 225);
-        if (libAffx_affixes[fortificationsIndex].count >= 2) {
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(150, 84), 180);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(144, 121), 180);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(135, 151), 225);
-        }
-        if (libAffx_affixes[fortificationsIndex].count >= 3) {
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(166, 129), 225);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(169, 84), 180);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(170, 63), 135);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(132, 45), 135);
-        }
-    } else if (libAffx_currentMap == libAffx_mapDragonShire) {
-        libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(131, 157), 180);
-        libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(135, 124), 225);
-        libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(133, 76), 225);
-        libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(193, 96), 135);
-        libAffx_FortificationsCreateTower("TownCannonTowerL3", Point(194, 86), 225);
-        if (libAffx_affixes[fortificationsIndex].count >= 2) {
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(155, 113), 225);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(165, 76), 225);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(134, 43), 135);
-        }
-        if (libAffx_affixes[fortificationsIndex].count >= 3) {
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(148, 124), 225);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(139, 111), 135);
-            libAffx_FortificationsCreateTower("TownCannonTowerL2", Point(152, 70), 135);
-        }
     }
     
     return true;
@@ -1209,7 +1214,7 @@ bool libAffx_TrappedPeriodic (bool testConds, bool runActions) {
     for (i = 1; i <= trapAmount; i += 1) {
         trapPoint = RegionRandomPoint(RegionEntireMap());
         random = RandomInt(1, 100);
-        UnitCreateEffectPoint(libGame_gv_teams[libAffx_teamChaosIndex].lv_core, "AbathurToxicNestInitialSet", trapPoint);
+        PlayerCreateEffectPoint(libAffx_teamChaos, "AbathurToxicNestInitialSet", trapPoint);
     }
     return true;
 }
@@ -1898,32 +1903,38 @@ bool libAffx_EnemyBlockExecute (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 // Unstoppable Avatar
 // ---------------------------------------------------------------
-bool libAffx_UnstoppableAvatarUnitCreated (bool testConds, bool runActions) {
+bool libAffx_UnstoppableAvatarRespawn (bool testConds, bool runActions) {
+    unit respawnedUnit = libGame_gf_HeroRespawnUnit();
     if (testConds) {
-        if (EventUnitCreatedUnit() != libGame_gv_players[libAffx_player].lv_heroUnit) {
-            return false;
-        }
-        if (UnitGetType(EventUnitCreatedUnit()) != "HeroMuradin") {
+        if (UnitGetOwner(respawnedUnit) != libAffx_player) {
             return false;
         }
     }
     if (!runActions) {
         return true;
     }
-    libAffx_AddBehavior(libAffx_player, "MuradinAvatarInitialDelay", 1, false);
-    libAffx_RemoveBehavior(libAffx_player, "Ultimate1Unlocked", 1, false);
-    CatalogFieldValueSet(c_gameCatalogBehavior, "MuradinAvatarHealthBuff", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player, CatalogFieldValueGet(c_gameCatalogBehavior, "MuradinAvatar", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player));
-    UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "MuradinAvatarApplyBehaviorsSet", libGame_gv_players[libAffx_player].lv_heroUnit);
+    libAffx_AddBehavior(libAffx_player, "MuradinAvatarInitialDelay", 1, true);
+    UnitCreateEffectUnit(respawnedUnit, "MuradinAvatarApplyBehaviorsSet", respawnedUnit);
+    
+    libAffx_RemoveBehavior(libAffx_player, "Ultimate1Unlocked", 1, true);
+    libAffx_RemoveBehavior(libAffx_player, "MuradinSecondWind", 1, true);
+    libAffx_RemoveBehavior(libAffx_player, "MuradinSecondWindActiveImproved", 1, true);
     return true;
 }
 bool libAffx_UnstoppableAvatarExecute (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_AddBehavior(libAffx_player, "MuradinAvatarInitialDelay", 1, false);
-    libAffx_RemoveBehavior(libAffx_player, "Ultimate1Unlocked", 1, false);
+    libAffx_LevelUpScaling(c_gameCatalogEffect, "MuradinSecondWindImprovedCreateHealerPermanent", "RechargeVitalRate", libAffx_player);
+    libAffx_LevelUpScaling(c_gameCatalogEffect, "MuradinSecondWindImprovedCriticalCreateHealerPermanent", "RechargeVitalRate", libAffx_player);
     CatalogFieldValueSet(c_gameCatalogBehavior, "MuradinAvatarHealthBuff", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player, CatalogFieldValueGet(c_gameCatalogBehavior, "MuradinAvatar", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player));
+    
+    libAffx_AddBehavior(libAffx_player, "MuradinAvatarInitialDelay", 1, true);
     UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "MuradinAvatarApplyBehaviorsSet", libGame_gv_players[libAffx_player].lv_heroUnit);
+
+    libAffx_RemoveBehavior(libAffx_player, "Ultimate1Unlocked", 1, true);
+    libAffx_RemoveBehavior(libAffx_player, "MuradinSecondWind", 1, true);
+    libAffx_RemoveBehavior(libAffx_player, "MuradinSecondWindActiveImproved", 1, true);
     return true;
 }
 bool libAffx_UnstoppableAvatarLevelUp (bool testConds, bool runActions) {
@@ -1937,6 +1948,8 @@ bool libAffx_UnstoppableAvatarLevelUp (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
+    libAffx_LevelUpScaling(c_gameCatalogEffect, "MuradinSecondWindImprovedCreateHealerPermanent", "RechargeVitalRate", libAffx_player);
+    libAffx_LevelUpScaling(c_gameCatalogEffect, "MuradinSecondWindImprovedCriticalCreateHealerPermanent", "RechargeVitalRate", libAffx_player);
     CatalogFieldValueSet(c_gameCatalogBehavior, "MuradinAvatarHealthBuff", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player, CatalogFieldValueGet(c_gameCatalogBehavior, "MuradinAvatar", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player));
     return true;
 }
@@ -2060,6 +2073,13 @@ bool libAffx_LavaWaveLevelUp (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 // Divine Intervention
 // ---------------------------------------------------------------
+bool libAffx_DivineInterventionAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixAutoPalmCooldown", "Duration", 240 - 60 * libAffx_EventAffixCount("DivineIntervention"));
+    return true;
+}
 bool libAffx_DivineInterventionExecute (bool testConds, bool runActions) {
     int i;
     if (!runActions) {

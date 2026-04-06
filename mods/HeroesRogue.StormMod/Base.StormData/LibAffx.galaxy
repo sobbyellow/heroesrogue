@@ -525,7 +525,7 @@ void libAffx_CreateAffixesOwnedDialogItem(int affix, int offsetX, int offsetY) {
     libNtve_gf_CreateDialogItemImage(libAffx_dialogOwnedAffixes, affixWidth, affixHeight, c_anchorCenter, offsetX, offsetY, StringExternal("<c val=\"#TooltipNumbers\">") + StringExternal("Affix/Name/" + libAffx_affixes[affix].name) + StringExternal("</c><n/><n/>") + StringExternal("Affix/Tooltip/" + libAffx_affixes[affix].name), libAffx_affixes[affix].icon, c_triggerImageTypeNormal, false, Color(100, 100, 100), c_triggerBlendModeNormal);
     libNtve_gf_CreateDialogItemImage(libAffx_dialogOwnedAffixes, affixWidth + 8, affixHeight + 8, c_anchorCenter, offsetX, offsetY, null, "Assets/Textures/icon_overlay" + libAffx_GetAffixSuffix(affix) + ".dds", c_triggerImageTypeNormal, false, Color(100, 100, 100), c_triggerBlendModeNormal);
 
-    libNtve_gf_CreateDialogItemLabel(libAffx_dialogOwnedAffixes, affixWidth + 39, affixHeight - 50, c_anchorCenter, offsetX, offsetY + 75, StringExternal(questIcon) + StringExternal("Affix/Name/" + libAffx_affixes[affix].name) + StringToText(libAffx_CountToString(libAffx_affixes[affix].count, libAffx_affixes[affix].max)), libAffx_GetAffixColor(affix), false, 1.0);
+    libNtve_gf_CreateDialogItemLabel(libAffx_dialogOwnedAffixes, affixWidth + 40, affixHeight - 50, c_anchorCenter, offsetX, offsetY + 75, StringExternal(questIcon) + StringExternal("Affix/Name/" + libAffx_affixes[affix].name) + StringToText(libAffx_CountToString(libAffx_affixes[affix].count, libAffx_affixes[affix].max)), libAffx_GetAffixColor(affix), false, 1.0);
     label = DialogControlLastCreated();
     libNtve_gf_SetDialogItemStyle(label, "Affix_Owned", PlayerGroupAll());
 
@@ -1006,6 +1006,15 @@ void libAffx_UnitCreateEffectUnit (int player, string effect) {
     }
 }
 
+// Modify catalog with specified scaling scaling
+void libAffx_LevelUpScaling2(int catalog, string entry, string fieldPath, int player, fixed scaling) {
+    CatalogFieldValueSetFixed(catalog, entry, fieldPath, player, StringToFixed(CatalogFieldValueGet(catalog, entry, fieldPath, 0)) * Pow(scaling, UnitLevel(libGame_gv_players[player].lv_heroUnit)));
+}
+
+// Modify catalog with default 4% scaling
+void libAffx_LevelUpScaling(int catalog, string entry, string fieldPath, int player) {
+    libAffx_LevelUpScaling2(catalog, entry, fieldPath, player, 1.04);
+}
 
 // --------------------------------------------------------------------------------
 // Affix effects
@@ -1127,6 +1136,8 @@ void libAffx_ApplyTriggers(int affix, int amount) {
                     libGame_gf_HeroParticipatedInTakedown(libAffx_affixes[affix].createdTriggers[i]);
                 } else if (triggerType == libAffx_triggerUnitCreated) {
                     TriggerAddEventUnitCreated(libAffx_affixes[affix].createdTriggers[i], null, null, null);
+                } else if (triggerType == libAffx_triggerRespawn) {
+                    libGame_gf_HeroRespawn(libAffx_affixes[affix].createdTriggers[i]);
                 } else if (triggerType == libAffx_triggerBehaviorChange) {
                     if (triggerArg1 != "") {
                         TriggerAddEventUnitBehaviorChange(libAffx_affixes[affix].createdTriggers[i], null, triggerArg1, c_unitBehaviorChangeActivate);
@@ -2072,10 +2083,12 @@ bool libAffx_LevelUpTrigger_Func (bool testConds, bool runActions) {
             } else {
                 libAffx_QueueAffix(libAffx_rarityRare, false, level, 1, false);
             }
+        } else if (level == 4) {
+            libAffx_QueueAffix(libAffx_rarityCommon, false, level, 1, false);
+        } else if (level == 7) {
+            libAffx_QueueAffix(libAffx_rarityCommon, false, level, 1, false);
         } else if (level == 10) {
             libAffx_QueueAffix(libAffx_rarityCommon, false, level, libAffx_boonsLevel10, false);
-        } else if (level == 20) {
-            libAffx_QueueAffix(libAffx_rarityUncommon, false, level, 1, false);
         }
     }
     if (player == libAffx_enemy) {
@@ -2902,6 +2915,8 @@ void libAffx_InitAffixes () {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerPeriodic;
                     } else if (affixTrigger1 == "win" || affixTrigger1 == "w") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerWin;
+                    } else if (affixTrigger1 == "herorespawn" || affixTrigger1 == "respawn" || affixTrigger1 == "r") {
+                        libAffx_affixes[i].triggers[i2].type = libAffx_triggerRespawn;
                     } else {
                         libAffx_affixes[i].triggers[i2].type = 0;
                     }

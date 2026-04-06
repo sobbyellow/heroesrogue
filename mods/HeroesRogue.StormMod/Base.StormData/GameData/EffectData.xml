@@ -488,35 +488,23 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <MultiplicativeModifierArray index="LunarBlaze" Accumulator="MuradinDwarfTossAccumulator" />
   </CEffectDamage>
   
-  <CEffectCreateHealer id="MuradinSecondWindCreateHealer" parent="StormSelfOnlyHealingSpell">
-    <ImpactUnit Value="Caster" />
-    <ValidatorArray value="CasterNotInCombat4OrHasPermanentSecondWind" />
-    <ValidatorArray value="TargetLifeNotFull" />
-    <RechargeVitalRate value="55.3" />
-  </CEffectCreateHealer>
-  <CEffectCreateHealer id="MuradinSecondWindCriticalCreateHealer" parent="StormSelfOnlyHealingSpell">
-    <ValidatorArray value="CasterNotInCombat4OrHasPermanentSecondWind" />
-    <ValidatorArray value="TargetLifeNotFull" />
-    <ImpactUnit Value="Caster" />
-    <RechargeVitalRate value="110.6" />
-  </CEffectCreateHealer>
-  <CEffectCreateHealer id="MuradinSecondWindImprovedCriticalCreateHealer" parent="StormSelfOnlyHealingSpell">
-    <ValidatorArray value="CasterNotInCombat4OrHasPermanentSecondWind" />
-    <ValidatorArray value="TargetLifeNotFull" />
-    <ImpactUnit Value="Caster" />
-    <RechargeVitalRate value="180" />
-  </CEffectCreateHealer>
-  <CEffectCreateHealer id="MuradinSecondWindImprovedCreateHealer" parent="StormSelfOnlyHealingSpell">
-    <ValidatorArray value="CasterNotInCombat4OrHasPermanentSecondWind" />
+  <CEffectCreateHealer id="MuradinSecondWindImprovedCreateHealerPermanent" parent="StormSelfOnlyHealingSpell">
     <ValidatorArray value="TargetLifeNotFull" />
     <ImpactUnit Value="Caster" />
     <RechargeVitalRate value="90" />
   </CEffectCreateHealer>
+  <CEffectCreateHealer id="MuradinSecondWindImprovedCriticalCreateHealerPermanent" parent="StormSelfOnlyHealingSpell">
+    <ValidatorArray value="TargetLifeNotFull" />
+    <ImpactUnit Value="Caster" />
+    <RechargeVitalRate value="180" />
+  </CEffectCreateHealer>
   
-  <CEffectDamage id="MuradinWeaponDamage" parent="StormWeapon">
-    <Amount value="88" />
-    <FlatModifierArray index="MuradinWeaponDamage" Validator="CasterHasPermanentSecondWind" Accumulator="MuradinCurrentHealthAccumulator" />
-    <MultiplicativeModifierArray index="SkullcrackerCrit" Validator="MuradinSkullcrackerDamageValidator" Modifier="0.9" Crit="1" />
+  <CEffectSet id="MuradinHeroWeaponImpactSet">
+    <EffectArray value="MuradinWeaponHealthDamage" />
+  </CEffectSet>
+  <CEffectDamage id="MuradinWeaponHealthDamage" parent="StormWeapon">
+    <Chance value="0" />
+    <FlatModifierArray index="MuradinWeaponHealthDamage" Accumulator="MuradinCurrentHealthAccumulator" />
   </CEffectDamage>
   <CEffectDamage id="StormBoltHammererDamage" parent="StormSpellPercentDamage">
     <ValidatorArray value="TargetIsHero" />

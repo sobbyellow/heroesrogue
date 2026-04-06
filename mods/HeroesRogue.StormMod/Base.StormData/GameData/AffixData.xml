@@ -2187,6 +2187,12 @@
             <String String="MuradinExtraCharges">
                 <Field Id="TalentsAdd" Index="3"/>
             </String>
+            <String String="1 3 Multiply Effect,MuradinDwarfTossDamageSearch,AreaArray[0].Radius 2">
+                <Field Id="CatalogModification" Index="5"/>
+            </String>
+            <String String="1 3 Multiply Effect,MuradinDwarfTossDamageSearchDwarfLaunch,AreaArray[0].Radius 2">
+                <Field Id="CatalogModification" Index="6"/>
+            </String>
         </Instances>
         <Instances Id="UnstoppableAvatar">
             <String String="Muradin">
@@ -2216,7 +2222,7 @@
             <String String="1 1 Set Behavior,MuradinAvatarHealthBuff,Duration 0">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="UC libAffx_UnstoppableAvatarUnitCreated">
+            <String String="R libAffx_UnstoppableAvatarRespawn">
                 <Field Id="Trigger"/>
             </String>
             <String String="Execute libAffx_UnstoppableAvatarExecute">
@@ -2227,6 +2233,15 @@
             </String>
             <String String="1 1 Set Behavior,MuradinAvatarUnstoppableForceTalentArmorBuff,Duration 0">
                 <Field Id="CatalogModification" Index="1"/>
+            </String>
+            <String String="1 0 MuradinSecondWindPermanent">
+                <Field Id="Behavior" Index="1"/>
+            </String>
+            <String String="1 0 MuradinSecondWindActiveImprovedPermanent">
+                <Field Id="Behavior" Index="2"/>
+            </String>
+            <String String="1 1 Set Effect,MuradinWeaponHealthDamage,Chance 1">
+                <Field Id="CatalogModification" Index="2"/>
             </String>
         </Instances>
         <Instances Id="HammerTime">
@@ -2423,6 +2438,9 @@
             <Int Int="1">
                 <Field Id="Negative"/>
             </Int>
+            <Int Int="3">
+                <Field Id="Max"/>
+            </Int>
             <String String="Assets/Textures/storm_ui_icon_monk_divinepalm.dds">
                 <Field Id="Icon"/>
             </String>
@@ -2449,6 +2467,9 @@
             </String>
             <String String="LU libAffx_DivineInterventionLevelUp">
                 <Field Id="Trigger" Index="1"/>
+            </String>
+            <String String="AA libAffx_DivineInterventionAffixAdded">
+                <Field Id="Trigger" Index="2"/>
             </String>
         </Instances>
         <Instances Id="MassCloak">

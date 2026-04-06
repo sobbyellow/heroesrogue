@@ -63,6 +63,6 @@
   <Style name="CurateHeroSelection_CountdownLabel" template="HeaderExtendedTemplate" height="50" hjustify="Center" styleflags="Glow" textcolor="#ColorObsWhiteBlueGradient" glowcolor="#GlowColorMediumBlue" />
   <Style name="CurateHeroSelection_CountdownLabelWarning" template="CurateHeroSelection_CountdownLabel" textcolor="#ColorObsLightRed" glowcolor="#GlowColorObsLightRed" />
 
-  <Style name="Affix_Owned" template="HeaderExtendedTemplate" height="16" vjustify="Middle" hjustify="Center" textcolor="#ColorWhite" fontflags="!Outline" styleflags="Shadow"  />
+  <Style name="Affix_Owned" template="HeaderExtendedTemplate" height="15" vjustify="Middle" hjustify="Center" textcolor="#ColorWhite" fontflags="!Outline" styleflags="Shadow"  />
   
 </StyleFile>

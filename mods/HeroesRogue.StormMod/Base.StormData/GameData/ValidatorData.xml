@@ -99,7 +99,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CombineArray value="CasterDoesNotHavePermanentSecondWind" />
 </CValidatorCombine>
 <CValidatorCombine id="CasterNotInCombat4OrHasPermanentSecondWind">
-  <Type value="Or" />
   <CombineArray value="CasterNotInCombat4" />
   <CombineArray value="CasterHasPermanentSecondWind" />
 </CValidatorCombine>
@@ -110,8 +109,11 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 </CValidatorUnitCompareBehaviorCount>
 <CValidatorUnitCompareBehaviorCount id="CasterDoesNotHavePermanentSecondWind">
   <WhichUnit Value="Caster" />
-  <Value value="0" />
   <Behavior value="MuradinPermanentSecondWind" />
+</CValidatorUnitCompareBehaviorCount>
+<CValidatorUnitCompareBehaviorCount id="MuradinDoesNotHaveImprovedSecondWindActivePermanent">
+  <WhichUnit Value="Caster" />
+  <Behavior value="MuradinSecondWindActiveImprovedPermanent" />
 </CValidatorUnitCompareBehaviorCount>
 
 </Catalog>
