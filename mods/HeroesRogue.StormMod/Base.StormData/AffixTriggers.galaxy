@@ -743,8 +743,8 @@ bool libAffx_KillContractQuestComplete (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_QueueAffix(libAffx_rarityCommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, false);
-    libAffx_QueueAffix(libAffx_rarityUncommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, false);
+    libAffx_QueueAffix(libAffx_rarityCommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, true);
+    libAffx_QueueAffix(libAffx_rarityUncommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, true);
     libAffx_affixes[killContract].quest.questDone = true;
     
     return true;
@@ -853,7 +853,7 @@ bool libAffx_StructureQuestComplete (bool testConds, bool runActions) {
         return true;
     }
     libAffx_affixes[structureQuestIndex].quest.questDone = true;
-    libAffx_QueueAffix(libAffx_rarityRare, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, false);
+    libAffx_QueueAffix(libAffx_rarityRare, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, true);
     
     return true;
 }
@@ -866,7 +866,7 @@ bool libAffx_StructureQuest6 (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_QueueAffix(libAffx_rarityCommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, false);
+    libAffx_QueueAffix(libAffx_rarityCommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, true);
     
     return true;
 }
@@ -879,7 +879,7 @@ bool libAffx_StructureQuest12 (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_QueueAffix(libAffx_rarityUncommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, false);
+    libAffx_QueueAffix(libAffx_rarityUncommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, true);
     
     return true;
 }

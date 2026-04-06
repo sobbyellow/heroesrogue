@@ -50,7 +50,8 @@ Label/Name/PickAffixNegative=Choose a Curse!
 Button/Name/ShowAffixes=Boons & Curses
 Label/Name/ShowAffixes=Boons & Curses
 Button/Name/Reroll=Reroll
-Label/Name/Reroll=Rerolls available: 
+Label/Name/Reroll=Boon rerolls available: 
+Label/Name/RerollCurse=Curse rerolls available: 
 Message/CurseToBoon=<c val="FFDE36">The next Curse you obtain will become a Boon!</c>
 Message/CurseSkipped=<c val="FFDE36">Curse skipped.</c>
 Message/GoldenBorder=Golden Heroes have unique starter boons.
@@ -99,7 +100,7 @@ Affix/Tooltip/NanoBoost=Increases Spell Power by <c val="#TooltipNumbers">15%</c
 Affix/Name/NanoBoostNoMana=Nano Boost
 Affix/Tooltip/NanoBoostNoMana=Increases Spell Power by <c val="#TooltipNumbers">15%</c> and recharge Basic Abilities <c val="#TooltipNumbers"><d ref="$GalaxyVar:nanoBoostCDR$*100"precision="1"/>%</c> faster.
 Affix/Name/BlessingoftheDragons=Blessing of the Dragons
-Affix/Tooltip/BlessingoftheDragons=Your teammates gain <c val="#TooltipNumbers">500</c> maximum Health and <c val="#TooltipNumbers">20%</c> Movement Speed, and Basic Abilities recharge <c val="#TooltipNumbers"><d ref="$GalaxyVar:blessingoftheDragonsCDR$*100"precision="1"/>%</c> faster.
+Affix/Tooltip/BlessingoftheDragons=Your AI teammates gain <c val="#TooltipNumbers">500</c> maximum Health and <c val="#TooltipNumbers">20%</c> Movement Speed, and Basic Abilities recharge <c val="#TooltipNumbers"><d ref="$GalaxyVar:blessingoftheDragonsCDR$*100"precision="1"/>%</c> faster.
 Affix/Name/AARange=Nexus Range
 Affix/Tooltip/AARange=Increases Attack Range by <c val="#TooltipNumbers">1.1</c>.
 Affix/Name/AASearing=Searing Attacks
@@ -107,7 +108,7 @@ Affix/Tooltip/AASearing=Increases Attack Damage by <c val="#TooltipNumbers">25%<
 Affix/Name/Buddy=BUDDY
 Affix/Tooltip/Buddy=A friendly Drone follows you around, healing you for <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreateHealer,RechargeVitalRate" player="1" precision="0"/></c> Health every <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreatePersistent,PeriodicPeriodArray[0]"precision="1"/></c> seconds.<n/><n/>BUDDY shoots a missile every <c val="#TooltipNumbers"><d ref="Behavior,AffixBuddyDroneController,Period"precision="1"/></c> seconds at the nearest enemy, dealing <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyDroneMissileDamage,Amount" player="1" precision="0"/></c> damage in the area.
 Affix/Name/BuddyAll=Army of BUDDYs
-Affix/Tooltip/BuddyAll=Your teammates gain their own BUDDYs with <c val="#TooltipNumbers">50%</c> damage and healing.
+Affix/Tooltip/BuddyAll=Your AI teammates gain their own BUDDYs with <c val="#TooltipNumbers">50%</c> damage and healing.
 Affix/Name/ManyRituals=Many Rituals
 Affix/Tooltip/ManyRituals=Gain <c val="#TooltipNumbers">40</c> Voodoo Ritual stacks now and at the start of every game.<n/><n/>Additional stacks increase Voodoo Ritual stacks by an additional <c val="#TooltipNumbers">20</c>.
 Affix/Name/NimbleLegs=Nimble Legs
@@ -119,13 +120,13 @@ Affix/Tooltip/JarofFrogs=Increases maximum charges of Plague of Toads by <c val=
 Affix/Name/RegenerativeCore=Regenerative Core
 Affix/Tooltip/RegenerativeCore=Your Core regenerates <c val="#TooltipNumbers">1%</c> of maximum Health per second while its Shield is active.
 Affix/Name/AllyDamage=Powerful
-Affix/Tooltip/AllyDamage=Increases Spell Power and Attack Damage of all allies by <c val="#TooltipNumbers">5%</c>.
+Affix/Tooltip/AllyDamage=Increases Spell Power and Attack Damage of ALL allies by <c val="#TooltipNumbers">5%</c>.
 Affix/Name/AllyHealth=Endurance
-Affix/Tooltip/AllyHealth=Increases maximum Health of all allies by <c val="#TooltipNumbers">7%</c>.
+Affix/Tooltip/AllyHealth=Increases maximum Health of ALL allies by <c val="#TooltipNumbers">7%</c>.
 Affix/Name/AllySpeed=Fast Feet
-Affix/Tooltip/AllySpeed=Increases Movement Speed of all allies by <c val="#TooltipNumbers">6%</c>.
+Affix/Tooltip/AllySpeed=Increases Movement Speed of ALL allies by <c val="#TooltipNumbers">6%</c>.
 Affix/Name/MountSpeed=Quick Mount
-Affix/Tooltip/MountSpeed=Increases the Movement Speed bonus of Summon Mount by <c val="#TooltipNumbers">30%</c> and reduces cooldown by <c val="#TooltipNumbers">2</c> seconds for all allies.
+Affix/Tooltip/MountSpeed=Increases the Movement Speed bonus of Summon Mount by <c val="#TooltipNumbers">30%</c> and reduces the cast time by <c val="#TooltipNumbers">50%</c> for all allies.
 Affix/Name/Experienced=Experienced
 Affix/Tooltip/Experienced=Increases all Experience gain by <c val="#TooltipNumbers">20%</c>.
 Affix/Name/KillContract=Kill Contract
@@ -143,7 +144,7 @@ Affix/Tooltip/GladiatorsMedallion=<c val="#TooltipNumbers">Cooldown: 60 seconds<
 Button/Name/AffixMedallion=Gladiator's Medallion
 Button/Tooltip/AffixMedallion=Activate to become Unstoppable for <c val="#TooltipNumbers">2</c> seconds.
 Affix/Name/EmergencyMeasure=Emergency Measure
-Affix/Tooltip/EmergencyMeasure=On fatal damage, your teammates gain a Shield equal to <c val="#TooltipNumbers">50%</c> of Maximum Health for <c val="#TooltipNumbers">4</c> seconds.<n/><n/>This effect has a <c val="#TooltipNumbers">60</c> second cooldown per Hero.
+Affix/Tooltip/EmergencyMeasure=On fatal damage, your AI teammates gain a Shield equal to <c val="#TooltipNumbers">50%</c> of Maximum Health for <c val="#TooltipNumbers">4</c> seconds.<n/><n/>This effect has a <c val="#TooltipNumbers">60</c> second cooldown per Hero.
 Affix/Name/CriticalMass=Critical Mass
 Affix/Tooltip/CriticalMass=Getting a Takedown will refresh the cooldown on all of your Abilities.
 Affix/Name/Tantrum=Tantrum
@@ -260,7 +261,7 @@ Affix/Tooltip/RaenaKnight=Shrines under your team's control become neutral after
 Affix/Name/Fortifications=Fortifications
 Affix/Tooltip/Fortifications=Several enemy Towers appear around the map. These Towers reveal everything in range.<n/><n/>Additional stacks increases the amount of Towers on the map.
 Affix/Name/DoubleUlt=Dual Heroics
-Affix/Tooltip/DoubleUlt=Enemy Heroes gain access to all their Heroic Abilities.
+Affix/Tooltip/DoubleUlt=Enemy Heroes gain access to all their Heroic Abilities.<n/><n/><c val="FFDE36">Skips the next Curse.</c>
 Affix/Name/AffixCCIncrease=Chained Down
 Affix/Tooltip/AffixCCIncrease=Increases the duration of ALL Stuns, Slows, Roots, and Silences against you and allied Heroes by <c val="#TooltipNumbers">25%</c>.
 Affix/Name/EnemyLevel=Overleveled
@@ -282,7 +283,7 @@ Affix/Tooltip/StructureAmmo=Allied Towers, Forts, and Keeps have limited Ammunit
 Affix/Name/Grenadier=Grenadier
 Affix/Tooltip/Grenadier=Grants the ability to throw a Frag Grenade, Particle Grenade, or a Biotic Grenade every <c val="#TooltipNumbers">8</c> seconds to a random enemy Hero.</n></n>Additional stacks grant this effect to <c val="#TooltipNumbers">1</c> additional enemy Hero.
 Affix/Name/SlowStart=Slow Start
-Affix/Tooltip/SlowStart=Your teammates are Time Stopped for <c val="#TooltipNumbers">60</c> seconds.
+Affix/Tooltip/SlowStart=Your AI teammates are Time Stopped for <c val="#TooltipNumbers">60</c> seconds.
 Affix/Name/PassiveAdvantage=Passive Advantage
 Affix/Tooltip/PassiveAdvantage=Increases passive Experience for the enemy Team by <c val="#TooltipNumbers">30%</c>.
 Affix/Name/NoMinimapDLC=No Minimap DLC

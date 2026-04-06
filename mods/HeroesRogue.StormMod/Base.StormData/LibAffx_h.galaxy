@@ -54,14 +54,15 @@ const string libAffx_eventParam2 = "AmountAdded";
 
 const fixed libAffx_commonToUncommon    =   0.25;
 const fixed libAffx_commonToRare        =   0.05;
-const fixed libAffx_commonToEpic        =   0.0175;
-const fixed libAffx_commonToLegendary   =   0.005;
-const fixed libAffx_uncommonToRare      =   0.10;
-const fixed libAffx_uncommonToEpic      =   0.05;
-const fixed libAffx_uncommonToLegendary =   0.005;
-const fixed libAffx_rareToEpic          =   0.1;
-const fixed libAffx_rareToLegendary     =   0.01;
-const fixed libAffx_epicToLegendary     =   0.015;
+const fixed libAffx_commonToEpic        =   0.025;
+const fixed libAffx_commonToLegendary   =   0.01;
+const fixed libAffx_uncommonToRare      =   0.125;
+const fixed libAffx_uncommonToEpic      =   0.075;
+const fixed libAffx_uncommonToLegendary =   0.015;
+const fixed libAffx_rareToEpic          =   0.15;
+const fixed libAffx_rareToLegendary     =   0.02;
+const fixed libAffx_epicToLegendary     =   0.04;
+
 const fixed libAffx_negativeUpgrade     =   0.30; // Additional chance for higher rarity negative affixes
 const fixed libAffx_negativeUpgradeHigh =   0.35; // Additional chance for epic and legendary negative affixes
 
@@ -105,7 +106,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.8.3";
+const string libAffx_version = "0.8.4";
 
 struct libAffx_CatalogModification {
     int player;
@@ -174,6 +175,8 @@ struct libAffx_AffixData {
     string cooldownLink;
     fixed cooldown;
 
+    int lastSeen;
+
     int count; // Current number of stacks of the affix.
     int max; // Maximum amount allowed. 0 = Infinite
 };
@@ -197,6 +200,7 @@ int libAffx_queueCount; // Number of affixes in the queue.
 bool libAffx_queueActive; // Whether the affix queue is currently active.
 
 int libAffx_rerolls; // Number of rerolls available.
+int libAffx_rerollsCurse; // Rerolls for curses.
 
 int libAffx_dialogAffixSelection;
 int libAffx_dialogAffixSelectionLabel;
