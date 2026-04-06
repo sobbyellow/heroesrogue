@@ -13,7 +13,7 @@ Singleplayer rogue-like mod for Heroes of the Storm.
 
 **Info:**
 
-- You gain permanent benefits or buffs called boons when reaching level 1, level 10, and level 20. Choose one of three options or reroll if you do not like what you see.
+- You gain permanent benefits or buffs called boons when reaching level 1, 4, 7, and 10. Choose one of three options or reroll if you do not like what you see.
 
 - Curses are permanent downsides that increases the difficulty of the game. You obtain curses every time the enemy Team reaches a talent tier, as well as at level 24, level 27, and level 30.
 
