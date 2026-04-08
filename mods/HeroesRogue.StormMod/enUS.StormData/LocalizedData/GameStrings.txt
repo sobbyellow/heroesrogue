@@ -107,7 +107,7 @@ Affix/Tooltip/AARange=Increases Attack Range by <c val="#TooltipNumbers">1.1</c>
 Affix/Name/AASearing=Searing Attacks
 Affix/Tooltip/AASearing=Increases Attack Damage by <c val="#TooltipNumbers">25%</c>.<n/><n/>Additional stacks increase Attack Damage by <c val="#TooltipNumbers">10%</c>.
 Affix/Name/Buddy=BUDDY
-Affix/Tooltip/Buddy=A friendly Drone follows you around, healing you for <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreateHealer,RechargeVitalRate" player="1" precision="0"/></c> Health every <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreatePersistent,PeriodicPeriodArray[0]"precision="1"/></c> seconds.<n/><n/>BUDDY shoots a missile every <c val="#TooltipNumbers"><d ref="Behavior,AffixBuddyDroneController,Period"precision="1"/></c> seconds at the nearest enemy, dealing <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyDroneMissileDamage,Amount" player="1" precision="0"/></c> damage in the area.<n/><n/>Additional stacks reduce BUDDY's missile cooldown by <c val="#TooltipNumbers">1</c> second.
+Affix/Tooltip/Buddy=A friendly Drone follows you around, healing you for <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreateHealer,RechargeVitalRate" player="1" precision="0"/></c> Health every <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreatePersistent,PeriodicPeriodArray[0]"precision="1"/></c> seconds.<n/><n/>BUDDY shoots a missile every <c val="#TooltipNumbers"><d ref="Behavior,AffixBuddyDroneController,Period"precision="1"/></c> seconds at the nearest enemy, dealing <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyDroneMissileDamage,Amount" player="1" precision="0"/></c> damage in the area.<n/><n/>Additional stacks reduce BUDDY's missile cooldown by <c val="#TooltipNumbers">1</c> second and healing beam cooldown by <c val="#TooltipNumbers">0.5</c>.
 Affix/Name/BuddyAll=Army of BUDDYs
 Affix/Tooltip/BuddyAll=Your AI teammates gain their own BUDDYs with <c val="#TooltipNumbers">50%</c> damage and healing.
 Affix/Name/ManyRituals=Many Rituals
@@ -330,7 +330,7 @@ Affix/Tooltip/ExplosiveEnd=Upon dying, enemy Heroes drop <c val="#TooltipNumbers
 Affix/Name/LavaWave=Lava Waves
 Affix/Tooltip/LavaWave=Every <c val="#TooltipNumbers">120</c> seconds, the enemy Team releases a Lava Wave in a random lane, dealing <d ref="Effect,RagnarosLavaWaveDamage,Amount * (1 / Effect,RagnarosLavaWaveTrail,Marker.Duration )" player="12"/></c> damage per second to non-Structure enemies in its path and instantly killing enemy Minions. Damage increased by <c val="#TooltipNumbers"><d ref="Effect,RagnarosLavaWaveDamage,AttributeFactor[Heroic] * 100"/>%</c> versus Heroes.
 Affix/Name/DivineIntervention=Divine Intervention
-Affix/Tooltip/DivineIntervention=Divine Palm is cast on enemy Heroes when their Health drops below <c val="#TooltipNumbers">25%</c>.<n/><n/>This effect has a <c val="#TooltipNumbers">180</c> second cooldown per enemy Hero.<n/><n/>Additional stacks reduce the cooldown by <c val="#TooltipNumbers">60</c> seconds.
+Affix/Tooltip/DivineIntervention=Divine Palm is cast on enemy Heroes when their Health drops below <c val="#TooltipNumbers">25%</c>.<n/><n/>This effect has a <c val="#TooltipNumbers">300</c> second cooldown per enemy Hero.<n/><n/>Additional stacks reduce the cooldown by <c val="#TooltipNumbers">60</c> seconds.
 Affix/Name/MassCloak=Mass Cloak
 Affix/Tooltip/MassCloak=Enemy Heroes gain Stealth when out of combat for <c val="#TooltipNumbers">3</c> seconds.
 Affix/Name/TalentDisadvantage=Talent Disadvantage

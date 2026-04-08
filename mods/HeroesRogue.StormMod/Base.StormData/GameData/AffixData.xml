@@ -2493,7 +2493,7 @@
             <Int Int="1">
                 <Field Id="Negative"/>
             </Int>
-            <Int Int="3">
+            <Int Int="4">
                 <Field Id="Max"/>
             </Int>
             <String String="Assets/Textures/storm_ui_icon_monk_divinepalm.dds">

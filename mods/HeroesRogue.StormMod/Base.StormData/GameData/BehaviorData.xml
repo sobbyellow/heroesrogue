@@ -583,7 +583,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </DamageResponse>
 </CBehaviorBuff>
 <CBehaviorBuff id="AffixAutoPalmCooldown">
-  <Duration value="180" />
+  <Duration value="300" />
   <Modification>
     <BehaviorLinkDisableArray value="AffixAutoPalm" />
   </Modification>
