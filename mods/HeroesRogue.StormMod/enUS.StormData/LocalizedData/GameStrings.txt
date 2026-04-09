@@ -131,7 +131,7 @@ Affix/Tooltip/MountSpeed=Increases the Movement Speed bonus of Summon Mount by <
 Affix/Name/Experienced=Experienced
 Affix/Tooltip/Experienced=Increases your team's experience gain by <c val="#TooltipNumbers">20%</c>.
 Affix/Name/KillContract=Kill Contract
-Affix/Tooltip/KillContract=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Get <c val="#TooltipNumbers"><d ref="Behavior,AffixKillContractQuestToken,Max"/></c> Hero Takedowns.<n/><n/><c val="#TooltipQuest">Reward:</c> Gain <c val="#TooltipNumbers">1</c> common and <c val="#TooltipNumbers">1</c> uncommon Boon.
+Affix/Tooltip/KillContract=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Get <c val="#TooltipNumbers"><d ref="Behavior,AffixKillContractQuestToken,Max"/></c> Hero Takedowns. Progress is lost between rounds.<n/><n/><c val="#TooltipQuest">Reward:</c> Gain <c val="#TooltipNumbers">1</c> common and <c val="#TooltipNumbers">1</c> uncommon Boon.
 Button/Name/AffixKillContractQuestToken=Kill Contract
 Button/Tooltip/AffixKillContractQuestToken=<c val="#TooltipQuest">Takedowns: <c val="#TooltipNumbers" validator="AffixKillContractQuestNotComplete"><d ref="$BehaviorStackCount:AffixKillContractQuestToken$"/> / <d ref="Behavior,AffixKillContractQuestToken,Max"/></c>
 Affix/Name/StructureQuest=Destruction
