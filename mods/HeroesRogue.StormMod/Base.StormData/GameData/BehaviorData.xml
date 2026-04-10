@@ -20,8 +20,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixStructureHealthBuff" parent="CarryBehaviorParent">
     <Modification>
-      <VitalMaxFractionArray index="Life" value="0.1" />
-      <VitalRegenMultiplier index="Life" value="0.1" />
+      <VitalMaxFractionArray index="Life" value="0.15" />
+      <VitalRegenMultiplier index="Life" value="0.15" />
     </Modification>
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixOutdatedCatapultsDebuff" parent="CarryBehaviorParent">
@@ -86,8 +86,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CBehaviorBuff>  
   <CBehaviorBuff id="AffixBloodlust" parent="CarryBehaviorParent">
     <Modification>
-      <UnifiedMoveSpeedFactor value="0.2" />
-      <AdditiveAttackSpeedFactor value="0.25" />
+      <UnifiedMoveSpeedFactor value="0.175" />
+      <AdditiveAttackSpeedFactor value="0.2" />
       <VitalDamageLeechArray index="Life">
         <KindArray index="Basic" value="0.3" />
       </VitalDamageLeechArray>
@@ -227,6 +227,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CBehaviorBuff>
 
   <CBehaviorBuff id="AffixAASpeed" parent="CarryBehaviorParent">
+    <BuffFlags index="RefreshStack" value="1" />
     <Modification>
       <AdditiveAttackSpeedFactor value="0.15" />
     </Modification>
@@ -234,14 +235,17 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CBehaviorBuff id="AffixMount" parent="CarryBehaviorParent">
     <DisableValidatorArray value="IsMounted" />
     <Modification>
-      <UnifiedMoveSpeedFactor value="0.6" />
+      <UnifiedMoveSpeedFactor value="0.4" />
     </Modification>
   </CBehaviorBuff>
   <CBehaviorAbility id="AffixMedallion">
     <Buttons Face="AffixMedallion" Type="AbilCmd" AbilCmd="AffixMedallion,Execute" />
   </CBehaviorAbility>
   <CBehaviorBuff id="AffixCCIncrease" parent="CarryBehaviorParent">
-    <MaxStackCount value="3" />
+    <MaxStackCount value="4" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixCCDecrease" parent="CarryBehaviorParent">
+    <MaxStackCount value="5" />
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixEfficientGuns" parent="CarryBehaviorParent">
     <Modification>
@@ -341,10 +345,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
   <CBehaviorBuff id="AffixEnemyAllStats" parent="CarryBehaviorParent">
     <Modification>
-      <AdditiveAttackSpeedFactor value="0.25" />
-      <DamageDealtFraction index="Basic" value="0.25" />
-      <DamageDealtFraction index="Ability" value="0.25" />
-      <VitalMaxFractionArray index="Life" value="0.25" />
+      <AdditiveAttackSpeedFactor value="0.15" />
+      <DamageDealtFraction index="Basic" value="0.15" />
+      <DamageDealtFraction index="Ability" value="0.15" />
+      <VitalMaxFractionArray index="Life" value="0.15" />
     </Modification>
   </CBehaviorBuff>
 
@@ -459,7 +463,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorBuff id="AffixBurningBlades" parent="CarryBehaviorParent">
   <BuffFlags index="RefreshStack" value="1" />
-  <Duration value="2.25" />
+  <Duration value="2.5" />
   <InitialEffect value="AffixBurningBladesRefreshSet" />
   <RefreshEffect value="AffixBurningBladesRefreshSet" />
   <FinalEffect value="AffixBurningBladesDecaySet" />
@@ -474,6 +478,55 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CBehaviorBuff id="AffixBurningBladesDecay" parent="CarryBehaviorParent">
   <Period value="0.0625" />
   <PeriodicEffect value="AffixBurningBladesDecaySwitch" />
+</CBehaviorBuff>
+
+<CBehaviorBuff id="AffixSpellArmor" parent="StormArmor">
+  <BehaviorFlags index="Permanent" value="1" />
+  <BehaviorFlags index="EnabledWhileDead" value="1" />
+  <ArmorModification>
+    <ArmorSet index="Hero">
+      <ArmorMitigationTable index="Ability" value="10" />
+    </ArmorSet>
+    <ArmorSet index="Merc">
+      <ArmorMitigationTable index="Ability" value="10" />
+    </ArmorSet>
+    <ArmorSet index="Monster">
+      <ArmorMitigationTable index="Ability" value="10" />
+    </ArmorSet>
+    <ArmorSet index="Summon">
+      <ArmorMitigationTable index="Ability" value="10" />
+    </ArmorSet>
+    <ArmorSet index="Structure">
+      <ArmorMitigationTable index="Ability" value="10" />
+    </ArmorSet>
+    <ArmorSet index="Minion">
+      <ArmorMitigationTable index="Ability" value="10" />
+    </ArmorSet>
+  </ArmorModification>
+</CBehaviorBuff>
+<CBehaviorBuff id="AffixPhysicalArmor" parent="StormArmor">
+  <BehaviorFlags index="Permanent" value="1" />
+  <BehaviorFlags index="EnabledWhileDead" value="1" />
+  <ArmorModification>
+    <ArmorSet index="Hero">
+      <ArmorMitigationTable index="Basic" value="10" />
+    </ArmorSet>
+    <ArmorSet index="Merc">
+      <ArmorMitigationTable index="Basic" value="10" />
+    </ArmorSet>
+    <ArmorSet index="Monster">
+      <ArmorMitigationTable index="Basic" value="10" />
+    </ArmorSet>
+    <ArmorSet index="Summon">
+      <ArmorMitigationTable index="Basic" value="10" />
+    </ArmorSet>
+    <ArmorSet index="Structure">
+      <ArmorMitigationTable index="Basic" value="10" />
+    </ArmorSet>
+    <ArmorSet index="Minion">
+      <ArmorMitigationTable index="Basic" value="10" />
+    </ArmorSet>
+  </ArmorModification>
 </CBehaviorBuff>
 
 <CBehaviorBuff id="IllidanEvasionSpellArmor" parent="StormArmor">
@@ -582,8 +635,9 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ValidatorArray value="SourceLifeLT25Percent"/>
   </DamageResponse>
 </CBehaviorBuff>
-<CBehaviorBuff id="AffixAutoPalmCooldown">
+<CBehaviorBuff id="AffixAutoPalmCooldown" parent="CarryBehaviorParent">
   <Duration value="300" />
+  <ExpireEffect value="AffixAutoPalmCooldownRemove" />
   <Modification>
     <BehaviorLinkDisableArray value="AffixAutoPalm" />
   </Modification>
@@ -638,6 +692,135 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CBehaviorBuff id="AffixInjury3" parent="CarryBehaviorParent">
   <Modification>
     <VitalRegenArray index="Life" value="0" />
+  </Modification>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="TassadarAAFix" parent="StormDamageReductionAttackSpeedSlow">
+  <Duration value="0.0625" />
+  <Modification>
+    <AdditiveAttackSpeedFactor value="-0.1" />
+  </Modification>
+</CBehaviorBuff>
+
+
+<CBehaviorBuff id="AffixSuperiority" parent="StormArmorPermanent">
+  <ArmorModification>
+    <ArmorSet index="Merc">
+      <ArmorMitigationTable index="Basic" value="10" />
+      <ArmorMitigationTable index="Ability" value="10" />
+    </ArmorSet>
+    <ArmorSet index="Monster">
+      <ArmorMitigationTable index="Basic" value="10" />
+      <ArmorMitigationTable index="Ability" value="10" />
+    </ArmorSet>
+    <ArmorSet index="Summon">
+      <ArmorMitigationTable index="Basic" value="10" />
+      <ArmorMitigationTable index="Ability" value="10" />
+    </ArmorSet>
+    <ArmorSet index="Structure">
+      <ArmorMitigationTable index="Basic" value="10" />
+      <ArmorMitigationTable index="Ability" value="10" />
+    </ArmorSet>
+    <ArmorSet index="Minion">
+      <ArmorMitigationTable index="Basic" value="10" />
+      <ArmorMitigationTable index="Ability" value="10" />
+    </ArmorSet>
+  </ArmorModification>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="AffixMercenaryLord" parent="CarryBehaviorParent">
+  <Period value="0.5" />
+  <PeriodicEffect value="MercenaryLordPeriodicSearch" />
+  <DisableValidatorArray value="TargetNotUsingVehicle" />
+</CBehaviorBuff>
+
+<CBehaviorBuff id="AffixBesieger" parent="CarryBehaviorParent">
+  <Modification>
+    <DamageDealtAttributeMultiplier index="Structure" value="0.15" />
+  </Modification>
+</CBehaviorBuff>
+<CBehaviorBuff id="AffixMinionKiller" parent="CarryBehaviorParent">
+  <Modification>
+    <DamageDealtAttributeMultiplier index="Minion" value="0.15" />
+    <DamageDealtAttributeMultiplier index="Merc" value="0.15" />
+  </Modification>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="AffixFirstAid" parent="CarryBehaviorParent">
+  <Period value="0.5" />
+  <PeriodicEffect value="AffixFirstAidCreateHealer" />
+</CBehaviorBuff>
+
+<CBehaviorBuff id="AffixPromoteDamage" parent="CarryBehaviorParent">
+  <DamageResponse>
+    <Chance value="1" />
+    <TargetFilters value="-;Heroic" />
+    <Location value="Attacker" />
+    <ModifyFraction value="1.5" />
+    <ValidatorArray value="TargetNotSummonedOrSummonedForNPC" />
+  </DamageResponse>
+</CBehaviorBuff>
+<CBehaviorBuff id="AffixPromoteDamageReduction" parent="CarryBehaviorParent">
+  <DamageResponse Chance="1" TargetFilters="-;Heroic" ModifyFraction="0.75">
+    <ValidatorArray value="TargetNotSummonedOrSummonedForNPC" />
+  </DamageResponse>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="AffixDodge" parent="CarryBehaviorParent">
+  <DamageResponse Chance="0.02" TargetFilters="-;-" ModifyFraction="0" />
+</CBehaviorBuff>
+
+<CBehaviorBuff id="AffixExpensiveAttacks" parent="CarryBehaviorParent" />
+
+<CBehaviorBuff id="RegenerativeWalls" parent="CarryBehaviorParent">
+  <Modification>
+    <VitalRegenArray index="Life" value="50" />
+  </Modification>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="AffixSpellLeech" parent="CarryBehaviorParent">
+  <Modification>
+    <VitalDamageLeechArray index="Life">
+      <KindArray index="Ability" value="0.1" />
+    </VitalDamageLeechArray>
+    <VitalDamageLeechScoreArray Value="Healing" />
+  </Modification>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="AffixShieldCarry" parent="CarryBehaviorParent">
+  <DisableValidatorArray value="CasterNotInCombat5AndAffixShieldNotFull" />
+  <Period value="1" />
+  <PeriodicEffect value="AffixShieldApplyStack" />
+  <EnableEffect value="AffixShieldApplyStack" />
+</CBehaviorBuff>
+<CBehaviorBuff id="AffixShield" parent="StormShield">
+  <BehaviorFlags index="Permanent" value="1" />
+  <BehaviorFlags index="EnabledWhileDead" value="1" />
+  <MaxStackCount value="5" />
+  <DamageResponse Priority="40">
+    <ModifyLimitVitalMaxFractionArray index="Life" value="0.05" />
+  </DamageResponse>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="AffixRegenRing" parent="CarryBehaviorParent">
+  <Modification>
+    <VitalRegenArray index="Life" value="5" />
+  </Modification>
+</CBehaviorBuff>
+<CBehaviorBuff id="AffixRingofMagic" parent="CarryBehaviorParent" />
+
+<CBehaviorBuff id="AffixLastMoments" parent="CarryBehaviorParent">
+  <DamageResponse>
+    <Chance value="1" />
+    <Handled value="AffixLastMomentsSet" />
+    <ValidatorArray value="SourceLifeLT35Percent"/>
+  </DamageResponse>
+</CBehaviorBuff>
+<CBehaviorBuff id="AffixLastMomentsCooldown" parent="CarryBehaviorParent">
+  <Duration value="300" />
+  <ExpireEffect value="AffixLastMomentsRemoveCooldown" />
+  <Modification>
+    <BehaviorLinkDisableArray value="AffixLastMoments" />
   </Modification>
 </CBehaviorBuff>
   

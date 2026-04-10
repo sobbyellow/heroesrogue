@@ -125,7 +125,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CEffectIssueOrder>
 
   <CEffectEnumArea id="AffixBuddyDroneControllerSearchEnemy">
-    <SearchFilters value="Visible;Self,Player,Ally,Neutral,ImmuneToAOE,NoMinionAggro,Missile,Stasis,Dead,Hidden,Invulnerable" />
+    <SearchFilters value="Visible;Self,Benign,Player,Ally,Neutral,ImmuneToAOE,NoMinionAggro,Missile,Stasis,Dead,Hidden,Invulnerable" />
     <AreaArray MaxCount="1" Effect="AffixBuddyDroneLaunchMissile">
       <Radius value="15.5" />
     </AreaArray>
@@ -410,7 +410,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CEffectModifyTokenCount id="AffixBurningBladesTokenCounterDecay" parent="BaseEffectModifyTokenCount">
     <TokenId value="AffixBurningBladesTokenCounter" />
     <Operation value="Add" />
-    <Value value="-10" />
+    <Value value="-5" />
   </CEffectModifyTokenCount>
   <CEffectApplyBehavior id="IllidanApplyBurningBladesDecay">
     <WhichUnit Value="Caster" />
@@ -629,6 +629,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <WhichUnit Value="Source" />
     <Behavior value="AffixAutoPalmCooldown" />
   </CEffectApplyBehavior>
+  <CEffectRemoveBehavior id="AffixAutoPalmCooldownRemove">
+    <WhichUnit Value="Caster" />
+    <BehaviorLink value="AffixAutoPalmCooldown" />
+  </CEffectRemoveBehavior>
   
   <CEffectApplyBehavior id="ApplyNightElfBondMalfurion">
     <Behavior value="NightElfBondMalfurion" />
@@ -724,6 +728,54 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Chance value="0" />
     <InitialEffect value="CorpseSpidersSpawnSpider"/>
   </CEffectCreatePersistent>
+
+  
+  <CEffectCreateHealer id="AffixFirstAidCreateHealer" parent="StormSelfOnlyHealingSpellPercent">
+    <FloaterCreation value="Suppress" />
+    <ImpactUnit Value="Caster" />
+    <RechargeVitalFraction value="0.005" />
+    <SourceButtonFace value="AffixFirstAid" />
+  </CEffectCreateHealer>
+
+  <CEffectSet id="UniversalWeaponImpact">
+    <EffectArray value="HeroExpensiveAttacksSet" />
+  </CEffectSet>
+
+  <CEffectSet id="HeroExpensiveAttacksSet">
+    <ValidatorArray value="CasterHasExpensiveAttacks" />
+    <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
+    <EffectArray value="AffixExpensiveAttacksEffect" />
+  </CEffectSet>
+
+  <CEffectModifyUnit id="AffixExpensiveAttacksEffect">
+    <ImpactUnit Value="Caster" />
+    <VitalArray index="Energy">
+      <ChangeFraction value="-0.01" />
+    </VitalArray>
+  </CEffectModifyUnit>
+  
+  <CEffectApplyBehavior id="AffixShieldApplyStack">
+    <WhichUnit Value="Caster" />
+    <Behavior value="AffixShield" />
+  </CEffectApplyBehavior>
+
+  
+  <CEffectSet id="AffixLastMomentsSet">
+    <EffectArray value="AffixLastMomentsPersistent" />
+    <EffectArray value="AffixLastMomentsApplyCooldown" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="AffixLastMomentsPersistent">
+    <WhichLocation Value="SourceUnit" />
+    <InitialEffect value="MalthaelLastRitesInitialSet" />
+  </CEffectCreatePersistent>
+  <CEffectApplyBehavior id="AffixLastMomentsApplyCooldown">
+    <WhichUnit Value="Source" />
+    <Behavior value="AffixLastMomentsCooldown" />
+  </CEffectApplyBehavior>
+  <CEffectRemoveBehavior id="AffixLastMomentsRemoveCooldown">
+    <WhichUnit Value="Caster" />
+    <BehaviorLink value="AffixLastMomentsCooldown" />
+  </CEffectRemoveBehavior>
   
 
 

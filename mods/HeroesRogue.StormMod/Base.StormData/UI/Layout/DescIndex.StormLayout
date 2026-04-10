@@ -6,4 +6,5 @@
     <Include path="UI/Layout/LoadingScreens/Loading_InfernalShrines.StormLayout" />
     <Include path="UI/Layout/LoadingScreens/TomboftheSpiderQueen_Loading.StormLayout" />
     <Include path="UI/Layout/UI/AffixUI.StormLayout" />
+    <Include path="UI/Layout/UI/GameMenuDialog.StormLayout" />
 </Desc>

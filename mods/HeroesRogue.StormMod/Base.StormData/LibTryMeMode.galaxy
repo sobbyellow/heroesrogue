@@ -12,6 +12,8 @@ trigger libTRYM_gt_MapInit;
 trigger libTRYM_gt_Greetings;
 trigger libTRYM_gt_ForceBackslashKeySyncQACheat;
 
+bool libTRYM_loadTryMeMode = true;
+
 //--------------------------------------------------------------------------------------------------
 // Library: Try Mode 2.0
 //--------------------------------------------------------------------------------------------------
@@ -117,6 +119,9 @@ bool libTRYM_InitLib_completed = false;
 
 void libTRYM_InitLib () {
     if (libTRYM_InitLib_completed) {
+        return;
+    }
+    if (!libTRYM_loadTryMeMode) {
         return;
     }
 

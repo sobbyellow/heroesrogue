@@ -178,6 +178,25 @@ void libPBU2_InitVariables () {
     libPBU2_gv_curateHeroSelectionSetting.lv_countdownTimer = TimerCreate();
 }
 
+void libPBU2_SetDifficulty (int difficulty) {
+    if (difficulty == 2) {
+        libPBU2_difficulty = 2;
+        DialogControlSetEnabled(libPBU2_difficultyDialogEasy, PlayerGroupAll(), true);
+        DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), false);
+        DialogControlSetEnabled(libPBU2_difficultyDialogHard, PlayerGroupAll(), true);
+    } else if (difficulty == 3) {
+        libPBU2_difficulty = 3;
+        DialogControlSetEnabled(libPBU2_difficultyDialogEasy, PlayerGroupAll(), true);
+        DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), true);
+        DialogControlSetEnabled(libPBU2_difficultyDialogHard, PlayerGroupAll(), false);
+    } else {
+        libPBU2_difficulty = 1;
+        DialogControlSetEnabled(libPBU2_difficultyDialogEasy, PlayerGroupAll(), false);
+        DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), true);
+        DialogControlSetEnabled(libPBU2_difficultyDialogHard, PlayerGroupAll(), true);
+    }
+}
+
 bool libPBU2_DifficultyDialog_Func (bool testConds, bool runActions) {
     bool test;
     int dialog = EventDialogControl();
@@ -192,23 +211,9 @@ bool libPBU2_DifficultyDialog_Func (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    if (dialog == libPBU2_difficultyDialogEasy) {
-        libPBU2_difficulty = 1;
-        DialogControlSetEnabled(libPBU2_difficultyDialogEasy, PlayerGroupAll(), false);
-        DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), true);
-        DialogControlSetEnabled(libPBU2_difficultyDialogHard, PlayerGroupAll(), true);
-    } else if (dialog == libPBU2_difficultyDialogNormal) {
-        libPBU2_difficulty = 2;
-        DialogControlSetEnabled(libPBU2_difficultyDialogEasy, PlayerGroupAll(), true);
-        DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), false);
-        DialogControlSetEnabled(libPBU2_difficultyDialogHard, PlayerGroupAll(), true);
-    } else if (dialog == libPBU2_difficultyDialogHard) {
-        libPBU2_difficulty = 3;
-        DialogControlSetEnabled(libPBU2_difficultyDialogEasy, PlayerGroupAll(), true);
-        DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), true);
-        DialogControlSetEnabled(libPBU2_difficultyDialogHard, PlayerGroupAll(), false);
-    }
-
+    if (dialog == libPBU2_difficultyDialogEasy) { libPBU2_SetDifficulty(1); }
+    if (dialog == libPBU2_difficultyDialogNormal) { libPBU2_SetDifficulty(2); }
+    if (dialog == libPBU2_difficultyDialogHard) { libPBU2_SetDifficulty(3); }
 
     return true;
 }
@@ -514,8 +519,8 @@ void libPBU2_gf_CurateHSUIInitialize () {
     DialogControlSetSize(libPBU2_difficultyDialogHard, PlayerGroupAll(), 190, 90);
     libNtve_gf_SetDialogItemTooltip(libPBU2_difficultyDialogHard, StringExternal("Button/Tooltip/Hard"), PlayerGroupAll());
 
-    libPBU2_difficulty = 1;
     DialogControlSetEnabled(libPBU2_difficultyDialogEasy, PlayerGroupAll(), false);
+
 }
 
 trigger auto_libPBU2_gf_CurateHSUIUpdateTimerUI_Trigger = null;

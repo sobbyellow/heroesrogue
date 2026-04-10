@@ -147,4 +147,30 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <TokenId value="AffixBurningBladesTokenCounter" />
 </CValidatorUnitCompareTokenCount>
 
+
+<CValidatorUnitCompareBehaviorCount id="CasterHasExpensiveAttacks">
+  <WhichUnit Value="Caster" />
+  <Compare value="GT" />
+  <Behavior value="AffixExpensiveAttacks" />
+</CValidatorUnitCompareBehaviorCount>
+
+<CValidatorCombine id="CasterNotInCombat5AndAffixShieldNotFull">
+  <Type value="And" />
+  <CombineArray value="CasterNotInCombat5" />
+  <CombineArray value="AffixShieldNotFull" />
+</CValidatorCombine>
+<CValidatorUnitCompareBehaviorCount id="AffixShieldNotFull">
+  <WhichUnit Value="Caster" />
+  <Compare value="LT" />
+  <Value value="5" />
+  <Behavior value="AffixShield" />
+</CValidatorUnitCompareBehaviorCount>
+
+<CValidatorUnitCompareVital id="SourceLifeLT35Percent">
+  <WhichUnit Value="Source" />
+  <Compare value="LT" />
+  <Type value="Fraction" />
+  <Value value="0.35" />
+</CValidatorUnitCompareVital>
+
 </Catalog>

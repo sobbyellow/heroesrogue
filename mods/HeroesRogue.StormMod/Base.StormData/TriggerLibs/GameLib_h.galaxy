@@ -1918,7 +1918,7 @@ fixed libGame_teamChaosXPModTrickle = 0;
 void libGame_AddAbilityEffectMapping (string abil, string effect);
 string libGame_GetAblilityEffectMapping (string effect);
 
-const int libGame_abilityEffectMapMax = 10;
+const int libGame_abilityEffectMapMax = 100;
 int libGame_abilityEffectMapIndex;
 struct EffectAbilityMap {
     string effect;

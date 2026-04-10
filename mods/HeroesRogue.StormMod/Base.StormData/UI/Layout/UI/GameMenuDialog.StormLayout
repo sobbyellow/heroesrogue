@@ -1,0 +1,702 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc locked="true">
+  <Constant name="LeftNavVerticalSpacing" val="-35" />
+  <Frame type="Frame" name="StandardGamePanelTemplate">
+    <Anchor relative="$parent" />
+  </Frame>
+  <Frame type="Frame" name="GameMenuButtonTemplate">
+    <Anchor side="Left" relative="$parent" pos="Min" offset="0" />
+    <Anchor side="Right" relative="$parent" pos="Max" offset="0" />
+    <Width val="400" />
+    <Height val="90" />
+    <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+      <Anchor relative="$parent" />
+      <Unclipped val="true" />
+    </Frame>
+  </Frame>
+  <Frame type="Frame" name="GameMenuDialogPanelTemplate" template="GameMenuDialog/StandardGamePanelTemplate">
+    <Frame type="Image" name="BackgroundFrame">
+      <Anchor side="Top" relative="$parent/TopButtonAnchor" pos="Min" offset="-30" />
+      <Anchor side="Bottom" relative="$parent/BottomButtonAnchor" pos="Max" offset="40" />
+      <Anchor side="Left" relative="$parent" pos="Min" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Max" offset="0" />
+      <LayerColor val="000000" />
+      <Alpha val="120" />
+      <Animation name="DialogAnimation">
+        <Event event="OnShown" action="DirectionForward,Play" frame="$parent" />
+        <Event event="DialogDismissed" action="DirectionReverse,Play" frame="$parent" />
+        <Controller type="Anchor" end="Pause" side="Top" relative="true">
+          <Key type="Curve" time="0" value="-20" inout="Linear,Slow" />
+          <Key type="Curve" time=".2" value="0" inout="Slow,Linear" />
+        </Controller>
+        <Controller type="Anchor" end="Pause" side="Bottom" relative="true">
+          <Key type="Curve" time="0" value="40" inout="Linear,Slow" />
+          <Key type="Curve" time=".2" value="0" inout="Slow,Linear" />
+        </Controller>
+      </Animation>
+    </Frame>
+    <Frame type="Image" name="GlowTop">
+      <Anchor side="Bottom" relative="$parent/BackgroundFrame" pos="Min" offset="0" />
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <LayerColor val="00a8ff" />
+      <Texture val="@UI/Storm_Standard_DialogBox_Glow" />
+      <Width val="1327" />
+      <Height val="271" />
+      <TextureCoords top="1.0" left="0.0" bottom="0.0" right="1.0" />
+      <Alpha val="80" />
+    </Frame>
+    <Frame type="Image" name="GlowBottom">
+      <Anchor side="Top" relative="$parent/BackgroundFrame" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <LayerColor val="580090" />
+      <Texture val="@UI/Storm_Standard_DialogBox_Glow" />
+      <Width val="1327" />
+      <Height val="271" />
+      <Alpha val="150" />
+    </Frame>
+    <Frame type="Image" name="BackgroundGlowTop">
+      <Anchor side="Top" relative="$parent" pos="Min" offset="0" />
+      <Anchor side="Bottom" relative="$parent/BackgroundFrame" pos="Min" offset="0" />
+      <Anchor side="Left" relative="$parent" pos="Min" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Max" offset="0" />
+      <LayerColor val="9f30fe" />
+      <Alpha val="20" />
+    </Frame>
+    <Frame type="Image" name="BackgroundGlowTopBorder">
+      <Anchor side="Bottom" relative="$parent/BackgroundFrame" pos="Min" offset="0" />
+      <Anchor side="Left" relative="$parent" pos="Min" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Max" offset="0" />
+      <Height val="2" />
+      <LayerColor val="197fb4" />
+      <Alpha val="60" />
+    </Frame>
+    <Frame type="Image" name="BackgroundGlowBottom">
+      <Anchor side="Top" relative="$parent/BackgroundFrame" pos="Max" offset="0" />
+      <Anchor side="Bottom" relative="$parent" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent" pos="Min" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Max" offset="0" />
+      <LayerColor val="302560" />
+      <Alpha val="20" />
+    </Frame>
+    <Frame type="Image" name="BackgroundGlowBottomBorder">
+      <Anchor side="Top" relative="$parent/BackgroundFrame" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent" pos="Min" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Max" offset="0" />
+      <Height val="2" />
+      <LayerColor val="59219e" />
+      <Alpha val="100" />
+    </Frame>
+    <Frame type="Frame" name="TopButtonAnchor">
+      <Anchor side="Top" relative="$parent" pos="Min" offset="200" />
+      <Anchor side="Left" relative="$parent" pos="Min" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Max" offset="0" />
+    </Frame>
+    <Frame type="Frame" name="BottomButtonAnchor">
+      <Anchor side="Bottom" relative="$parent" pos="Max" offset="-230" />
+      <Anchor side="Left" relative="$parent" pos="Min" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Max" offset="0" />
+    </Frame>
+  </Frame>
+  <Frame type="GameMenuDialogMainPanel" name="GameMenuDialogMainPanelTemplate" template="GameMenuDialog/GameMenuDialogPanelTemplate">
+    <Frame type="Frame" name="TitleFrame">
+      <Anchor side="Top" relative="$parent" pos="Min" offset="80" />
+      <Anchor side="Left" relative="$parent" pos="Min" offset="75" />
+      <Anchor side="Right" relative="$parent" pos="Max" offset="-75" />
+      <Height val="188" />
+      <Frame type="Label" name="Label">
+        <Style val="GameOverDialogTitle" />
+        <Anchor side="Top" relative="$parent" pos="Min" offset="10" />
+        <Anchor side="Bottom" relative="$parent" pos="Max" offset="-10" />
+        <Anchor side="Left" relative="$parent" pos="Min" offset="5" />
+        <Anchor side="Right" relative="$parent" pos="Max" offset="-5" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="AchievementsButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button">
+        <Shortcut val="@UI/GameMenuAchievements_Hotkey" />
+        <Text val="@UI/GameMenuAchievements_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="MessageLogButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button">
+        <Shortcut val="@UI/GameMenuMessageLog_Hotkey" />
+        <Text val="@UI/GameMenuMessageLog_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="OptionsButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Shortcut val="@UI/GameMenuOptions_Hotkey" />
+        <Text val="@UI/GameMenuOptions_Control" />
+        <Anchor relative="$parent" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="HotkeysButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Shortcut val="@UI/GameMenuHotkeys_Hotkey" />
+        <Text val="@UI/GameMenuHotkeys_Control" />
+        <Anchor relative="$parent" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="LoadLastButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button">
+        <Shortcut val="@UI/GameMenuLoadLast_Hotkey" />
+        <Text val="@UI/GameMenuLoadLast_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="LoadLastButtonGapFrame">
+      <Anchor side="Left" relative="$parent" pos="Min" offset="75" />
+      <Anchor side="Right" relative="$parent" pos="Max" offset="-75" />
+      <Height val="60" />
+    </Frame>
+    <Frame type="Frame" name="MoreOptionsButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button">
+        <Shortcut val="@UI/GameMenuMoreOptions_Hotkey" />
+        <Text val="@UI/GameMenuMoreOptions_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="EndGameButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Shortcut val="@UI/GameMenuEndGame_Hotkey" />
+        <Text val="@UI/GameMenuEndGame_Control" />
+        <Anchor relative="$parent" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="LoadButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Shortcut val="@UI/GameMenuLoad_Hotkey" />
+        <Text val="@UI/GameMenuLoad_Control" />
+        <Anchor relative="$parent" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="SaveButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button">
+        <Shortcut val="@UI/GameMenuSave_Hotkey" />
+        <Text val="@UI/GameMenuSave_Control" />
+      </Frame>
+      <Frame type="Image" name="RightConnector">
+        <Visible val="false" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="PauseButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Anchor relative="$parent" />
+        <Shortcut val="@UI/GameMenuPause_Hotkey" />
+        <Text val="@UI/GameMenuPause_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="ResumeButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Anchor relative="$parent" />
+        <Shortcut val="@UI/GameMenuResume_Hotkey" />
+        <Text val="@UI/GameMenuResume_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="RestartMenuButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Anchor relative="$parent" />
+        <Shortcut val="@UI/GameMenuRestart_Hotkey" />
+        <Text val="@UI/GameMenuRestart_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="AbortButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Anchor relative="$parent" />
+        <Shortcut val="@UI/GameMenuAbortMission_Hotkey" />
+        <Text val="@UI/GameMenuAbortMission_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="QuitButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Anchor relative="$parent" />
+        <Shortcut val="@UI/GameMenuQuit_Hotkey" />
+        <Text val="@UI/GameMenuQuit_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="ExitButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Anchor relative="$parent" />
+        <Shortcut val="@UI/GameMenuExitProgram_Hotkey" />
+        <Text val="@UI/GameMenuExitProgram_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="ReturnButtonGapFrame">
+      <Anchor side="Left" relative="$parent" pos="Min" offset="75" />
+      <Anchor side="Right" relative="$parent" pos="Max" offset="-75" />
+      <Height val="60" />
+    </Frame>
+    <Frame type="Frame" name="ReturnButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Anchor relative="$parent" />
+        <Shortcut val="@UI/GameMenuReturn_Hotkey" />
+        <Text val="@UI/GameMenuReturn_Control" />
+        <SimulateSounds val="false" />
+        <ClickSound val="@UI_Game_Click" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="RatingsPanel">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Width val="205" />
+      <Height val="170" />
+      <Frame type="Frame" name="koKR">
+        <Anchor relative="$parent" />
+        <Frame type="Image" name="Image01">
+          <Anchor side="Top" relative="$parent" pos="Min" offset="20" />
+          <Anchor side="Right" relative="$parent" pos="Max" offset="0" />
+          <Width val="100" />
+          <Height val="120" />
+          <Texture val="@UI/Storm_Ratings_koKR_1" />
+        </Frame>
+        <Frame type="Image" name="Image02">
+          <Anchor side="Top" relative="$parent" pos="Min" offset="20" />
+          <Anchor side="Left" relative="$parent" pos="Min" offset="0" />
+          <Width val="100" />
+          <Height val="120" />
+          <Texture val="@UI/Storm_Ratings_koKR_2" />
+        </Frame>
+        <Frame type="Image" name="Image03">
+          <Anchor side="Top" relative="$parent" pos="Min" offset="20" />
+          <Anchor side="Left" relative="$parent" pos="Min" offset="0" />
+          <Width val="0" />
+          <Height val="0" />
+          <Visible val="false" />
+        </Frame>
+      </Frame>
+    </Frame>
+  </Frame>
+  <Frame type="GameMenuDialogRestartPanel" name="GameMenuDialogRestartPanelTemplate" template="GameMenuDialog/GameMenuDialogPanelTemplate">
+    <Frame type="Frame" name="DifficultyPulldown">
+      <Anchor side="Left" relative="$parent" pos="Min" offset="80" />
+      <Anchor side="Right" relative="$parent" pos="Max" offset="-80" />
+      <Height val="200" />
+      <Frame type="Label" name="DifficultyLabel">
+        <Anchor side="Top" relative="$parent" pos="Min" offset="30" />
+        <Anchor side="Left" relative="$parent" pos="Min" offset="10" />
+        <Anchor side="Right" relative="$parent" pos="Max" offset="-10" />
+        <Text val="@UI/RestartPanelDifficulty" />
+        <Style val="@@RestartPanelDifficultyLabel" />
+      </Frame>
+      <Frame type="DifficultyPulldown" name="DifficultyPulldown" template="StandardTemplates/StandardPulldownTemplate">
+        <Anchor side="Top" relative="$parent/DifficultyLabel" pos="Max" offset="10" />
+        <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+        <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="RestartButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Anchor relative="$parent" />
+        <Shortcut val="@UI/GameMenuRestart_Hotkey" />
+        <Text val="@UI/GameMenuRestart_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="CancelButtonGapFrame">
+      <Anchor side="Left" relative="$parent" pos="Min" offset="75" />
+      <Anchor side="Right" relative="$parent" pos="Max" offset="-75" />
+      <Height val="60" />
+    </Frame>
+    <Frame type="Frame" name="CancelButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Anchor relative="$parent" />
+        <Shortcut val="@UI/GameMenuCancel_Hotkey" />
+        <Text val="@UI/GameMenuCancel_Control" />
+      </Frame>
+    </Frame>
+  </Frame>
+  <Frame type="GameMenuDialogEndGamePanel" name="GameMenuDialogEndGamePanelTemplate" template="GameMenuDialog/GameMenuDialogPanelTemplate">
+    <Frame type="Frame" name="LoadLastButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Anchor relative="$parent" />
+        <Shortcut val="@UI/GameMenuLoadLast_Hotkey" />
+        <Text val="@UI/GameMenuLoadLast_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="AbortButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Anchor relative="$parent" />
+        <Shortcut val="@UI/GameMenuAbortMission_Hotkey" />
+        <Text val="@UI/GameMenuAbortMission_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="RestartButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Anchor relative="$parent" />
+        <Shortcut val="@UI/GameMenuRestart_Hotkey" />
+        <Text val="@UI/GameMenuRestart_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="QuitButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Anchor relative="$parent" />
+        <Shortcut val="@UI/GameMenuQuit_Hotkey" />
+        <Text val="@UI/GameMenuQuit_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="ExitButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Anchor relative="$parent" />
+        <Shortcut val="@UI/GameMenuExitProgram_Hotkey" />
+        <Text val="@UI/GameMenuExitProgram_Control" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="CancelButtonGapFrame">
+      <Anchor side="Left" relative="$parent" pos="Min" offset="75" />
+      <Anchor side="Right" relative="$parent" pos="Max" offset="-75" />
+      <Height val="60" />
+    </Frame>
+    <Frame type="Frame" name="CancelButton" template="GameMenuDialog/GameMenuButtonTemplate">
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Frame type="Button" name="Button" template="StandardTemplates/StandardButtonSmallTemplate">
+        <Anchor relative="$parent" />
+        <Shortcut val="@UI/GameMenuCancel_Hotkey" />
+        <Text val="@UI/GameMenuCancel_Control" />
+      </Frame>
+    </Frame>
+  </Frame>
+  <Frame type="GameMenuDialogOptionsPanel" name="GameMenuDialogOptionsPanelTemplate">
+    <Width val="1600" />
+    <Height val="1160" />
+    <RenderPriority val="520" />
+    <Frame type="Label" name="TitleLabel">
+      <Anchor side="Top" relative="$parent" pos="Min" offset="50" />
+      <Anchor side="Left" relative="$parent/GraphicsButton" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent/GraphicsButton" pos="Mid" offset="0" />
+      <Style val="@@HelpMenuDialogTitle" />
+      <Text val="@UI/Options" />
+      <Color val="ffffff" />
+    </Frame>
+    <Frame type="Button" name="TradeShowButton" template="StandardTemplates/StandardButtonSmallTemplate">
+      <Anchor side="Top" relative="$parent/TitleLabel" pos="Max" offset="40" />
+      <Anchor side="Left" relative="$parent" pos="Min" offset="3" />
+      <Width val="340" />
+      <Text val="@UI/Options_Control" />
+      <CollapseLayout val="true" />
+    </Frame>
+    <Frame type="Button" name="GraphicsButton" template="StandardTemplates/StandardButtonSmallTemplate">
+      <Anchor side="Top" relative="$parent/TitleLabel" pos="Max" offset="40" />
+      <Anchor side="Left" relative="$parent" pos="Min" offset="3" />
+      <Width val="340" />
+      <Text val="@UI/GameMenuGraphics_Control" />
+      <Shortcut val="@UI/Graphics_Hotkey" />
+    </Frame>
+    <Frame type="Button" name="SoundButton" template="StandardTemplates/StandardButtonSmallTemplate">
+      <Anchor side="Top" relative="$parent/GraphicsButton" pos="Max" offset="#LeftNavVerticalSpacing" />
+      <Anchor side="Left" relative="$parent/GraphicsButton" pos="Min" offset="0" />
+      <Width val="340" />
+      <Text val="@UI/GameMenuSound_Control" />
+      <Shortcut val="@UI/Sound_Hotkey" />
+    </Frame>
+    <Frame type="Button" name="VoiceButton" template="StandardTemplates/StandardButtonSmallTemplate">
+      <Anchor side="Top" relative="$parent/SoundButton" pos="Max" offset="#LeftNavVerticalSpacing" />
+      <Anchor side="Left" relative="$parent/SoundButton" pos="Min" offset="0" />
+      <Width val="340" />
+      <Text val="@UI/GameMenuVoice_Control" />
+      <Shortcut val="@UI/Voice_Hotkey" />
+      <CollapseLayout val="true" />
+    </Frame>
+    <Frame type="Button" name="InputButton" template="StandardTemplates/StandardButtonSmallTemplate">
+      <Anchor side="Top" relative="$parent/VoiceButton" pos="Max" offset="#LeftNavVerticalSpacing" />
+      <Anchor side="Left" relative="$parent/VoiceButton" pos="Min" offset="0" />
+      <Width val="340" />
+      <Text val="@UI/GameMenuInput_Control" />
+      <Shortcut val="@UI/GameMenuInput_Hotkey" />
+    </Frame>
+    <Frame type="Button" name="GameplayButton" template="StandardTemplates/StandardButtonSmallTemplate">
+      <Anchor side="Top" relative="$parent/InputButton" pos="Max" offset="#LeftNavVerticalSpacing" />
+      <Anchor side="Left" relative="$parent/InputButton" pos="Min" offset="0" />
+      <Width val="340" />
+      <Text val="@UI/GameMenuGameplay_Control" />
+      <Shortcut val="@UI/Gameplay_Hotkey" />
+      <CollapseLayout val="true" />
+    </Frame>
+    <Frame type="Button" name="SocialButton" template="StandardTemplates/StandardButtonSmallTemplate">
+      <Anchor side="Top" relative="$parent/GameplayButton" pos="Max" offset="#LeftNavVerticalSpacing" />
+      <Anchor side="Left" relative="$parent/GameplayButton" pos="Min" offset="0" />
+      <Width val="340" />
+      <Text val="@UI/GameMenuSocial_Control" />
+      <Shortcut val="@UI/Social_Hotkey" />
+      <CollapseLayout val="true" />
+    </Frame>
+    <Frame type="Button" name="VideoButton" template="StandardTemplates/StandardButtonSmallTemplate">
+      <Anchor side="Top" relative="$parent/SocialButton" pos="Max" offset="#LeftNavVerticalSpacing" />
+      <Anchor side="Left" relative="$parent/SocialButton" pos="Min" offset="0" />
+      <Width val="340" />
+      <Text val="@UI/GameMenuVideo_Control" />
+      <Shortcut val="@UI/Video_Hotkey" />
+      <CollapseLayout val="true" />
+    </Frame>
+    <Frame type="Button" name="ObserverButton" template="StandardTemplates/StandardButtonSmallTemplate">
+      <Anchor side="Top" relative="$parent/VideoButton" pos="Max" offset="#LeftNavVerticalSpacing" />
+      <Anchor side="Left" relative="$parent/VideoButton" pos="Min" offset="0" />
+      <Width val="340" />
+      <Text val="@UI/GameMenuObserver_Control" />
+      <Shortcut val="@UI/Observer_Hotkey" />
+      <CollapseLayout val="true" />
+    </Frame>
+    <Frame type="GraphicsOptionsPanel" name="GraphicsOptionsPanel" template="GraphicsOptionsPanel/GraphicsOptionsPanelTemplate">
+      <Anchor side="Top" relative="$parent" pos="Min" offset="50" />
+      <Anchor side="Bottom" relative="$parent" pos="Max" offset="-125" />
+      <Anchor side="Right" relative="$parent" pos="Max" offset="-85" />
+      <Anchor side="Left" relative="$parent/GraphicsButton" pos="Max" offset="20" />
+      <Visible val="false" />
+    </Frame>
+    <Frame type="SoundOptionsPanel" name="SoundOptionsPanel" template="SoundOptionsPanel/SoundOptionsPanelTemplate">
+      <Anchor side="Top" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Bottom" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Right" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Visible val="false" />
+    </Frame>
+    <Frame type="VoiceOptionsPanel" name="VoiceOptionsPanel" template="VoiceOptionsPanel/VoiceOptionsPanelTemplate">
+      <Anchor side="Top" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Bottom" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Right" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Visible val="false" />
+    </Frame>
+    <Frame type="InputOptionsPanel" name="InputOptionsPanel" template="InputOptionsPanel/InputOptionsPanelTemplate">
+      <Anchor side="Top" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Bottom" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Right" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Visible val="false" />
+    </Frame>
+    <Frame type="GameplayOptionsPanel" name="GameplayOptionsPanel" template="GameplayOptionsPanel/GameplayOptionsPanelTemplate">
+      <Anchor side="Top" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Bottom" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Right" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Visible val="false" />
+    </Frame>
+    <Frame type="VideoOptionsPanel" name="VideoOptionsPanel" template="VideoOptionsPanel/VideoOptionsPanelTemplate">
+      <Anchor side="Top" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Bottom" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Right" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Visible val="false" />
+    </Frame>
+    <Frame type="SocialOptionsPanel" name="SocialOptionsPanel" template="SocialOptionsPanel/SocialOptionsPanelTemplate">
+      <Anchor side="Top" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Bottom" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Right" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Visible val="false" />
+    </Frame>
+    <Frame type="ObserverOptionsPanel" name="ObserverOptionsPanel" template="ObserverOptionsPanel/ObserverOptionsPanelTemplate">
+      <Anchor side="Top" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Bottom" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Right" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Visible val="false" />
+    </Frame>
+    <Frame type="TradeShowOptionsPanel" name="TradeShowOptionsPanel" template="TradeShowOptionsPanel/TradeShowOptionsPanelTemplate">
+      <Anchor side="Top" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Bottom" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent/GraphicsOptionsPanel" pos="Min" offset="0" />
+      <Anchor side="Right" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Visible val="false" />
+    </Frame>
+    <Frame type="Button" name="CancelButton" template="StandardTemplates/StandardButtonTemplate">
+      <Anchor side="Top" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="3" />
+      <Shortcut val="@UI/GameMenuCancel_Hotkey" />
+      <Text val="@UI/GameMenuCancel_Control" />
+    </Frame>
+    <Frame type="Button" name="AcceptButton" template="StandardTemplates/StandardButtonTemplate">
+      <Anchor side="Top" relative="$parent/GraphicsOptionsPanel" pos="Max" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="-3" />
+      <Shortcut val="@UI/GameMenuAccept_Hotkey" />
+      <Text val="@UI/GameMenuAccept_Control" />
+    </Frame>
+  </Frame>
+  <Frame type="GameMenuDialogHotkeysPanel" name="GameMenuDialogHotkeysPanelTemplate">
+    <Anchor side="Top" relative="$parent" pos="Min" offset="30" />
+    <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+    <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+    <Height val="1100" />
+    <Width val="1600" />
+    <RenderPriority val="520" />
+    <Frame type="HotkeyNavPanel" name="NavPanel" template="HotkeyDialog/NavPanelTemplate">
+      <Frame type="Label" name="TitleLabel">
+        <Anchor side="Top" relative="$parent" pos="Min" offset="5" />
+        <Anchor side="Left" relative="$parent/ButtonListBox" pos="Mid" offset="0" />
+        <Anchor side="Right" relative="$parent/ButtonListBox" pos="Mid" offset="0" />
+        <Style val="@@HelpMenuDialogTitle" />
+        <Text val="@UI/Hotkeys" />
+        <Color val="ffffff" />
+      </Frame>
+      <Frame type="Frame" name="ProfileFrame">
+        <Anchor side="Top" relative="$parent" pos="Min" offset="100" />
+        <Anchor side="Left" relative="$parent" pos="Min" offset="0" />
+      </Frame>
+      <Frame type="ListBox" name="ButtonListBox">
+        <Anchor side="Top" relative="$parent/ProfileFrame" pos="Max" offset="-15" />
+        <Anchor side="Bottom" relative="$parent" pos="Max" offset="-85" />
+        <Anchor side="Left" relative="$parent" pos="Min" offset="3" />
+        <Width val="385" />
+      </Frame>
+      <Frame type="Frame" name="PanelFrame">
+        <Anchor relative="$parent/$parent/$parent/OptionsPanel/GraphicsOptionsPanel" />
+      </Frame>
+    </Frame>
+    <Frame type="Button" name="CancelButton" template="StandardTemplates/StandardButtonTemplate">
+      <Anchor side="Top" relative="$parent/NavPanel/PanelFrame" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="3" />
+      <RenderPriority val="530" />
+      <Shortcut val="@UI/GameMenuCancel_Hotkey" />
+      <Text val="@UI/GameMenuCancel_Control" />
+    </Frame>
+    <Frame type="Button" name="OkButton" template="StandardTemplates/StandardButtonTemplate">
+      <Anchor side="Top" relative="$parent/NavPanel/PanelFrame" pos="Max" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="-3" />
+      <RenderPriority val="530" />
+      <Shortcut val="@UI/GameMenuAccept_Hotkey" />
+      <Text val="@UI/GameMenuAccept_Control" />
+    </Frame>
+  </Frame>
+  <Frame type="GameMenuDialogSavePanel" name="GameMenuDialogSavePanelTemplate">
+    <Width val="1636" />
+    <Height val="1000" />
+    <RenderPriority val="520" />
+    <Frame type="Label" name="TitleLabel">
+      <Anchor side="Top" relative="$parent" pos="Min" offset="5" />
+      <Anchor side="Left" relative="$parent" pos="Min" offset="5" />
+      <Style val="DialogHeaderLabel" />
+      <Text val="@UI/FilePanelLoadGame" />
+    </Frame>
+    <Frame type="SaveFilePanel" name="SavePanel" template="StandardFilePanel/SavePanel">
+      <Anchor side="Top" relative="$parent" pos="Min" offset="95" />
+      <Anchor side="Bottom" relative="$parent" pos="Max" offset="-80" />
+      <Anchor side="Right" relative="$parent" pos="Max" offset="-85" />
+      <Anchor side="Left" relative="$parent/RecentButton" pos="Max" offset="10" />
+    </Frame>
+    <Frame type="Button" name="RecentButton" template="StandardTemplates/StandardButtonTemplate">
+      <Anchor side="Top" relative="$parent/TitleLabel" pos="Max" offset="5" />
+      <Anchor side="Left" relative="$parent" pos="Min" offset="3" />
+      <Text val="@UI/FilePanelRecent_Control" />
+    </Frame>
+    <Frame type="Button" name="MultiplayerButton" template="StandardTemplates/StandardButtonTemplate">
+      <Anchor side="Top" relative="$parent/RecentButton" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent/RecentButton" pos="Min" offset="0" />
+      <Text val="@UI/FilePanelMultiplayer_Control" />
+    </Frame>
+    <Frame type="Button" name="AutoSaveButton" template="StandardTemplates/StandardButtonTemplate">
+      <Anchor side="Top" relative="$parent/MultiplayerButton" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent/MultiplayerButton" pos="Min" offset="0" />
+      <Text val="@UI/FilePanelAutoSave_Control" />
+    </Frame>
+    <Frame type="Button" name="CancelButton" template="StandardTemplates/StandardButtonTemplate">
+      <Anchor side="Top" relative="$parent/SavePanel" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="3" />
+      <Shortcut val="@UI/GameMenuCancel_Hotkey" />
+      <Text val="@UI/GameMenuCancel_Control" />
+    </Frame>
+    <Frame type="Button" name="AcceptButton" template="StandardTemplates/StandardButtonTemplate">
+      <Anchor side="Top" relative="$parent/SavePanel" pos="Max" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="-3" />
+      <Shortcut val="@UI/GameMenuAccept_Hotkey" />
+      <Text val="@UI/GameMenuAccept_Control" />
+    </Frame>
+  </Frame>
+  <Frame type="GameMenuDialog" name="GameMenuDialogTemplate">
+    <Anchor side="Left" relative="$parent" pos="Min" offset="0" />
+    <Anchor side="Right" relative="$parent" pos="Max" offset="0" />
+    <Anchor side="Top" relative="$parent" pos="Min" offset="0" />
+    <Anchor side="Bottom" relative="$parent" pos="Max" offset="0" />
+    <Frame type="BlurFrame" name="FullscreenBlurFrame" template="StandardTemplates/FullscreenBlurFrame">
+      <Anchor relative="$parent" />
+    </Frame>
+    <Frame type="Image" name="FullscreenBlackoutImage">
+      <Anchor relative="$parent" />
+      <Color val="0, 0, 0" />
+      <Alpha val="180" />
+    </Frame>
+    <Frame type="GameMenuDialogMainPanel" name="MainPanel" template="GameMenuDialog/GameMenuDialogMainPanelTemplate">
+      <Anchor side="Top" relative="$parent" pos="Min" offset="0" />
+      <Anchor side="Bottom" relative="$parent" pos="Max" offset="0" />
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Visible val="false" />
+    </Frame>
+    <Frame type="GameMenuDialogRestartPanel" name="RestartPanel" template="GameMenuDialog/GameMenuDialogRestartPanelTemplate">
+      <Anchor side="Top" relative="$parent" pos="Min" offset="200" />
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Visible val="false" />
+    </Frame>
+    <Frame type="GameMenuDialogEndGamePanel" name="EndGamePanel" template="GameMenuDialog/GameMenuDialogEndGamePanelTemplate">
+      <Anchor side="Top" relative="$parent" pos="Min" offset="200" />
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Visible val="false" />
+    </Frame>
+    <Frame type="GameMenuDialogOptionsPanel" name="OptionsPanel" template="GameMenuDialog/GameMenuDialogOptionsPanelTemplate">
+      <Anchor side="Top" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Bottom" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Visible val="false" />
+    </Frame>
+    <Frame type="GameMenuDialogHotkeysPanel" name="HotkeysPanel" template="GameMenuDialog/GameMenuDialogHotkeysPanelTemplate">
+      <Anchor side="Top" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Bottom" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Visible val="false" />
+    </Frame>
+    <Frame type="GameMenuDialogSavePanel" name="SavePanel" template="GameMenuDialog/GameMenuDialogSavePanelTemplate">
+      <Anchor side="Top" relative="$parent" pos="Min" offset="200" />
+      <Anchor side="Left" relative="$parent" pos="Mid" offset="0" />
+      <Anchor side="Right" relative="$parent" pos="Mid" offset="0" />
+      <Visible val="false" />
+    </Frame>
+  </Frame>
+</Desc>

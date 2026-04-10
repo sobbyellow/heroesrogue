@@ -73,16 +73,42 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CActorSound id="AffixBuddyHealBeamLoopSound" parent="SoundContinuous">
     <On Terms="Effect.AffixBuddyHealCreatePersistent.Start; At Target" Send="Create" />
     <On Terms="Effect.AffixBuddyHealCreatePersistent.Stop" Send="Destroy" />
-    <Sound value="Medic_HealingBeam_Loop" />
+    <Sound value="Medic_HealingBeam_Loop_Buddy" />
   </CActorSound>
+  <CSound id="Medic_HealingBeam_Loop_Buddy" parent="_FX_Hero_Spell_Loop">
+      <LoopCount value="-1"/>
+      <Volume value="-25.000000,-25.000000"/>
+      <AssetArray File="Assets\Sounds\Heroes\Medic_Base\Medic_HealLoop01.wav" FacialGroup=""/>
+      <Category value="User32"/>
+      <CategoryLocal value="User33"/>
+  </CSound>
 
   <CActorMissile id="AffixBuddyDroneMissile" parent="StormMissileWithDeath" unitName="AffixBuddyDroneMissile">
-    <On Terms="ActorCreation" Send="Create Tank_Napalm_Missile" />
+    <On Terms="ActorCreation" Send="Create Tank_Napalm_Missile_Buddy" />
   </CActorMissile>
+  <CSound id="Tank_Napalm_Missile_Buddy" parent="_FX_Hero_Spell_Warning">
+      <AssetArray File="Assets\Sounds\Heroes\Tank_Base\Tank_Napalm_Missile01.wav" FacialGroup=""/>
+      <AssetArray File="Assets\Sounds\Heroes\Tank_Base\Tank_Napalm_Missile02.wav" FacialGroup=""/>
+      <AssetArray File="Assets\Sounds\Heroes\Tank_Base\Tank_Napalm_Missile03.wav" FacialGroup=""/>
+      <AssetArray File="Assets\Sounds\Heroes\Tank_Base\Tank_Napalm_Missile04.wav" FacialGroup=""/>
+      <AssetArray File="Assets\Sounds\Heroes\Tank_Base\Tank_Napalm_Missile05.wav" Volume="-7.000000,-7.000000" FacialGroup=""/>
+      <AssetArray File="Assets\Sounds\Heroes\Tank_Base\Tank_Napalm_Missile06.wav" FacialGroup=""/>
+      <DopplerLevel value="4.000000"/>
+      <FogFadeOut/>
+      <FogFadeOut Time="500" Volume="-96.000000"/>
+      <Pitch value="-2.000000,0.000000"/>
+      <ResourcePriority value="100"/>
+      <Volume value="-13.000000,-13.000000"/>
+      <VolumeRolloffFadeIn Volume="-96.000000"/>
+      <VolumeRolloffFadeIn Time="250"/>
+      <VolumeRolloffFadeOut/>
+      <VolumeRolloffFadeOut Time="500" Volume="-96.000000"/>
+      <VolumeRolloffPoints index="1" Distance="25.000000" Volume="-96.000000"/>
+  </CSound>
   <CActorAction id="AffixBuddyDroneMissileAttack" parent="GenericAttackPointStorm" effectImpact="AffixBuddyDroneImpactSearch" effectLaunch="AffixBuddyDroneLaunchMissile">
     <LaunchAttachQuery Methods="AMFilterWeapon00FullMatch" />
     <LaunchModel value="AffixBuddyDroneMissileLaunchModel" />
-    <ImpactMap index="None" Sound="Tank_Napalm_Impact" />
+    <ImpactMap index="None" />
     <ImpactModel value="" />
   </CActorAction>
   <CActorModel id="AffixBuddyDroneMissileLaunchModel" parent="StormModelAnimationStyleOneShot">
@@ -93,9 +119,13 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <On Terms="Effect.AffixBuddyDroneImpactSearch.Start" Send="Create" />
     <HostSiteOps Ops="SOpTargetPointStationary" />
   </CActorModel>
+  <CActorSound id="AffixBuddyDroneMissileImpactSound" parent="SoundOneShot">
+    <On Terms="Effect.AffixBuddyDroneImpactSearch.Start; At Source" Send="Create" />
+    <Sound value="Tank_Napalm_Impact_Buddy" />
+  </CActorSound>
   <CActorSound id="AffixBuddyDroneMissileLaunch" parent="SoundOneShot">
     <On Terms="Effect.AffixBuddyDroneLaunchMissile.Start; At Caster" Send="Create" />
-    <Sound value="Tank_Napalm_Launch" />
+    <Sound value="Tank_Attack_PreLaunch" />
   </CActorSound>
   <CModel id="AffixBuddyDroneMissileLaunch" parent="ImpactFX">
       <Model value="Assets\Effects\Storm_Effect_SgtHammer_Base_NapalmStrike_Launch\Storm_Effect_SgtHammer_Base_NapalmStrike_Launch.m3"/>
@@ -103,6 +133,14 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CModel id="AffixBuddyDroneMissile" parent="MissileFX">
       <Model value="Assets\Effects\Storm_Effect_Warfield_Base_IncendiaryRound_Missile\Storm_Effect_Warfield_Base_IncendiaryRound_Missile.m3"/>
   </CModel>
+  <CSound id="Tank_Napalm_Impact_Buddy" parent="_FX_Hero_Ult_Impact">
+      <AssetArray File="Assets\Sounds\Heroes\Tank_Base\Tank_Napalm_Impact01.wav"/>
+      <AssetArray File="Assets\Sounds\Heroes\Tank_Base\Tank_Napalm_Impact02.wav"/>
+      <AssetArray File="Assets\Sounds\Heroes\Tank_Base\Tank_Napalm_Impact03.wav"/>
+      <Pitch value="-1.000000,1.000000"/>
+      <Volume value="-10.000000,-10.000000"/>
+      <LocalAllyVolumeAdjustment value="-6.000000,-6.000000"/>
+  </CSound>
 
   
   <CActorSound id="TalentCleanseSound">

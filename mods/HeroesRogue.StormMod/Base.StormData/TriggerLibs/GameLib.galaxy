@@ -2015,6 +2015,12 @@ void libGame_gf_DeathRecapPopulateDeathRecapDataForPlayer (unit lp_playerHero, i
         else {
             lv_unitTypeAsString = (UnitGetType(libGame_gv_players[lv_effectingPlayer].lv_heroUnit));
             if ((lv_effectingUnitType != UnitGetType(libGame_gv_players[lv_effectingPlayer].lv_heroUnit)) && (((UnitTypeTestAttribute(lv_effectingUnitType, c_unitAttributeSummoned) == true) && (CatalogFieldValueGet(c_gameCatalogUnit, lv_effectingUnitType, "LeaderAlias", c_playerAny) != lv_unitTypeAsString)) || ((UnitTypeTestAttribute(lv_effectingUnitType, c_unitAttributeSummoned) == false) && (CatalogFieldValueGet(c_gameCatalogUnit, lv_effectingUnitType, "LeaderAlias", c_playerAny) == lv_unitTypeAsString)))) {
+                if (lv_effectHistoryEntryAbility == "") {
+                    effectMapping = libGame_GetAblilityEffectMapping(EffectHistoryGetEffect(lv_effectHistory, lv_itEffectHistoryEntry, c_effectHistoryEffectCurrent));
+                    if (effectMapping != "") {
+                        lv_effectHistoryEntryAbility = effectMapping;
+                    }
+                }
                 lv_effectHistoryEntryAbility = AbilityCommandGetAbility(TechTreeUnitProducedAbilCmd(lv_effectingUnitType, 0));
                 if ((lv_sourceButton == null)) {
                     lv_sourceButton = (CatalogFieldValueGet(c_gameCatalogAbil, lv_effectHistoryEntryAbility, "CmdButtonArray[" + IntToString(0) + "].DefaultButtonFace", c_playerAny));
@@ -6543,7 +6549,7 @@ bool auto_libGame_gf_HeroDeathAwardXP_TriggerFunc (bool testConds, bool runActio
     }
     auto44AF96F8_g = lv_xPlayerGroup;
     lv_itPlayer = -1;
-    if (libGame_teamOrderSharedXPDisabled) {
+    if (libGame_teamOrderSharedXPDisabled && libGame_gf_TeamNumberOfPlayer(lp_killingPlayer) == libGame_gv_teamOrderIndex_C) {
         lv_levelGap = libCore_gf_DataXPLevelGapBetweenHeroes(lp_killingPlayer, lp_deadHero);
         lv_xPGranted = libCore_gf_DataXPXPForHero(lp_killingPlayer, lp_deadHero);
         libGame_gf_GrantXPToPlayer(lv_xPGranted, lp_killingPlayer, libGame_ge_XPSources_Hero);
@@ -9257,7 +9263,7 @@ void libGame_gf_AwardXPForNPCKill (unit lp_killedUnit, int lp_killedUnitPlayer, 
 
     auto60ED318E_g = lv_xPAwardGroup;
     lv_itPlayer = -1;
-    if (libGame_teamOrderSharedXPDisabled) {
+    if (libGame_teamOrderSharedXPDisabled && libGame_gf_TeamNumberOfPlayer(lp_killingPlayer) == libGame_gv_teamOrderIndex_C) {
         auto6BF10103_val = lp_killedUnitClassification;
         if (auto6BF10103_val == c_unitAttributeStructure) {
             lv_xPSource = libGame_ge_XPSources_Structure;
@@ -15972,7 +15978,7 @@ bool libGame_gt_ExperienceGlobeGrantXP_Func (bool testConds, bool runActions) {
     lv_xPAwardGroup = PlayerGroupCopy(libGame_gf_AlliedPlayerGroupOfPlayer(lv_targetPlayer));
     auto4D2B2D44_g = lv_xPAwardGroup;
     lv_itPlayer = -1;
-    if (libGame_teamOrderSharedXPDisabled) {
+    if (libGame_teamOrderSharedXPDisabled && libGame_gf_TeamNumberOfPlayer(lv_targetPlayer) == libGame_gv_teamOrderIndex_C) {
         libGame_gf_GrantXPToPlayer(lv_xPAmount, lv_targetPlayer, libGame_ge_XPSources_Minion);
     } else {
         while (true) {

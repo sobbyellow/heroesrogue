@@ -109,7 +109,7 @@ int libPBU2_difficultyDialogEasy;
 int libPBU2_difficultyDialogNormal;
 int libPBU2_difficultyDialogHard;
 
-int libPBU2_difficulty;
+int libPBU2_difficulty = 1;
 
 // Function Declarations
 void libPBU2_gf_CurateHSUIInitialize ();

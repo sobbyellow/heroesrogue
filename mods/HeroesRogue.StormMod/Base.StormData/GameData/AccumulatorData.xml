@@ -53,7 +53,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   
   <CAccumulatorVitals id="MuradinCurrentHealthAccumulator" parent="BaseVitalAccumulator">
     <ApplicationRule value="Add" />
-    <Ratio value="0.05" />
+    <Ratio value="0.03" />
     <VitalType value="Life" />
     <UnitSource Value="Caster" />
     <ModificationType value="PerUnit" />

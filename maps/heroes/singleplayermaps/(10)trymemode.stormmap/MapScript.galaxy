@@ -32,8 +32,8 @@ void InitLibs () {
     libSond_InitLib();
     libGDHL_InitLib();
     libSprt_InitLib();
-    libTRYM_InitLib();
     libAffx_InitLib();
+    libTRYM_InitLib();
 }
 
 //--------------------------------------------------------------------------------------------------

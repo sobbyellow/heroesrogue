@@ -3112,7 +3112,9 @@ void libMapM_gf_MMRavenCurseStart (int lp_cursedPlayerID) {
     int lv_structureIndex;
     unit lv_structureUnit;
     fixed curseDuration = libMapM_gv_mMRavenCurseDuration_C;
-
+    unit unitVar;
+    unitgroup unitGroup;
+    int i;
     // Automatic Variable Declarations
     int auto1E839FCC_ae;
     const int auto1E839FCC_ai = 1;
@@ -3167,7 +3169,25 @@ void libMapM_gf_MMRavenCurseStart (int lp_cursedPlayerID) {
 
             }
         }
-
+    }
+    if (lv_cursedTeam == libGame_gv_teamChaosIndex_C) {
+        unitGroup = UnitGroup(null, libCore_gv_cOMPUTER_TeamChaos, RegionEntireMap(), libCore_gv_filtersStructure, 0);
+    } else {
+        unitGroup = UnitGroup(null, libCore_gv_cOMPUTER_TeamOrder, RegionEntireMap(), libCore_gv_filtersStructure, 0);
+    }
+    i = UnitGroupCount(unitGroup, c_unitCountAll);
+    for (;; i -= 1) {
+        if (i <= 0) { break; }
+        unitVar = UnitGroupUnitFromEnd(unitGroup, i);
+        if (unitVar == null) {
+            break;
+        }
+        if (UnitIsAlive(unitVar) == true && (UnitGetType(unitVar) == "TownCannonTowerL2" || UnitGetType(unitVar) == "TownCannonTowerL3" || UnitGetType(unitVar) == "TownCannonTowerL2Standalone" || UnitGetType(unitVar) == "TownCannonTowerL3Standalone")) {
+            UnitBehaviorAdd(unitVar, "RavenLordsCurseStructures", unitVar, 1);
+            UnitBehaviorSetDuration(unitVar, "RavenLordsCurseStructures", curseDuration);
+            UnitBehaviorAdd(unitVar, "RavenLordsCurseStructuresWarning", unitVar, 1);
+            UnitBehaviorSetDuration(unitVar, "RavenLordsCurseStructuresWarning", (curseDuration - 5.0));
+        }
     }
     auto4E0D066B_g = UnitGroup(null, lp_cursedPlayerID, RegionEntireMap(), libCore_gv_filtersMinionsTownMinions, 0);
     auto4E0D066B_u = UnitGroupCount(auto4E0D066B_g, c_unitCountAll);

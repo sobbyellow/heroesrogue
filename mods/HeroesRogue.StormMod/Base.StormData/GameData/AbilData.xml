@@ -48,4 +48,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CmdButtonArray index="Execute" DefaultButtonFace="NightElfBond" />
 </CAbilEffectInstant>
 
+<CAbilEffectInstant id="AffixFirstAid">
+  <CmdButtonArray index="Execute" DefaultButtonFace="AffixFirstAid" />
+</CAbilEffectInstant>
+
 </Catalog>

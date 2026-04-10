@@ -44,5 +44,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CButton id="NightElfBond" parent="StormButtonParent">
   <Icon value="Assets\Textures\affix_icon_night_elf_bond.dds" />
 </CButton>
+<CButton id="AffixFirstAid" parent="StormButtonParent">
+  <Icon value="Assets\Textures\affix_icon_first_aid.dds" />
+</CButton>
 
 </Catalog>

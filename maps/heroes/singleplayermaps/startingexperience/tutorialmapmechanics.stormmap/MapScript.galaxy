@@ -36,8 +36,8 @@ void InitLibs () {
     libSprt_InitLib();
     libMLHH_InitLib();
     libMSHE_InitLib();
-    libTRYM_InitLib();
     libAffx_InitLib();
+    libTRYM_InitLib();
 }
 
 //--------------------------------------------------------------------------------------------------

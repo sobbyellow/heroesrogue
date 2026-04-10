@@ -26,6 +26,7 @@ const int libAffx_catalogTypePerStackDeltaExclFirst      =   8; // Value * (adde
 // Bank
 
 const string libAffx_BankSection = "Affix Data";
+const string libAffx_BankSectionSettings = "Heroes Rogue Settings";
 
 // Trigger types
 
@@ -107,7 +108,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.9.2";
+const string libAffx_version = "0.10.0";
 
 struct libAffx_CatalogModification {
     int player;
@@ -179,6 +180,8 @@ struct libAffx_AffixData {
 
     int lastSeen;
 
+    bool excludeChoGall;
+
     int count; // Current number of stacks of the affix.
     int max; // Maximum amount allowed. 0 = Infinite
 };
@@ -209,15 +212,31 @@ int libAffx_dialogAffixSelectionLabel;
 int[libAffx_affixSelectionMax + 1] libAffx_dialogAffixSelectionButton;
 int libAffx_dialogAffixReroll;
 
-int libAffx_dialogAffixesButton;
+int libAffx_dialogTopRight;
+int libAffx_dialogControlOptions;
+int libAffx_dialogOptions;
+int libAffx_dialogOptionsRestart;
+int libAffx_dialogControlOptionsReturn;
+int libAffx_dialogControlOptionsRestart;
+int libAffx_dialogControlOptionsRestartYes;
+int libAffx_dialogControlOptionsRestartNo;
 int libAffx_dialogControlAffixesButton;
 int libAffx_dialogOwnedAffixes;
 int libAffx_dialogCurrentRun;
+int libAffx_dialogVersion;
+
+int libAffx_dialogRestartRun;
 
 int[libAffx_affixMax + 1] libAffx_ownedAffixes; // Affixes shown in Owned Affixes dialog.
 
+bool libAffx_appendTooltipInSelection = true;
+
+int libAffx_cursesNextGame;
+int libAffx_cursesQueued;
+
 bool libAffx_gamePaused; // Whether the game is paused.
 bool libAffx_showingOwnedAffixes; // Whether the Owned Affixes window is open.
+bool libAffx_showingOptions; // Whether the Options window is open.
 
 int libAffx_playerHeroIndex; // The player's Hero index.
 int libAffx_playerHeroIndexLoaded; // The player's Hero index that was loaded from the Bank.
@@ -234,6 +253,10 @@ int libAffx_executingAffixCount;
 int libAffx_boonsLevel10 = 1;
 
 int libAffx_difficulty = 1;
+int libAffx_loadedDifficulty;
+
+int libAffx_gallPlayer;
+int libAffx_choPlayer;
 
 fixed libAffx_processQueueTimeElapsed;
 
@@ -260,11 +283,16 @@ trigger libAffx_AffixHotkeyPressedTrigger;
 trigger libAffx_ObjectiveWonTrigger;
 trigger libAffx_AffixRerollTrigger;
 trigger libAffx_ProcessQueueTimeElapsedTrigger;
+trigger libAffx_DifficultyUnitCreatedTrigger;
+trigger libAffx_DifficultyUnitChangeOwner;
+trigger libAffx_OptionsClickedTrigger;
+trigger libAffx_OptionsRestartClickedTrigger;
 
 // Debug options
-bool libAffx_cheatCommands = true; // Enables cheat/debug commands
-bool libAffx_debugPrint = false; // Enables debug logging
+bool libAffx_loadTryMeMode = false; // Try mode 2.0
+bool libAffx_cheatCommands = false; // Enables cheat/debug commands
 bool libAffx_skipIntro = false; // Skips the Hero selection.
+bool libAffx_debugPrint = false; // Enables debug logging
 bool libAffx_pauseDisabled = false; // Disables pause features
 bool libAffx_ignoreMap = false; // Ignores the saved map.
 bool libAffx_disableAffixes = false; // Disables queueing affixes.
@@ -287,7 +315,7 @@ text libAffx_GetAffixTitle(bool negative);
 void libAffx_CreateAffixDialogItem(int buttonIndex, int affix, int xOffset);
 void libAffx_CreateAffixDialog(bool negative);
 void libAffx_ShowAffixDialog(); // Show dialog for picking affixes.
-void libAffx_CreateAffixesButtonDialog();
+void libAffx_CreateUI();
 void libAffx_CreateCurrentRunDialog();
 void libAffx_CreateAffixesOwnedDialogItem(int affix, int offsetX, int offsetY);
 void libAffx_CreateAffixesOwnedDialog();
@@ -302,8 +330,9 @@ void libAffx_CatalogSetForAllPlayers(int type, string entry, string path, string
 void libAffx_CatalogSetFixedForAllPlayers(int type, string entry, string path, fixed value); // Sets catalog for all players with fixed value.
 void libAffx_CatalogModifyForAllPlayers(int type, string entry, string path, string value, int operation); // Modifies catalog for all players.
 void libAffx_SendAffixAddedEvent (int affix, int amount);
-int libAffx_EventAffix(string affix); // Returns the triggering affix.
-int libAffx_EventAffixCount(string affix); // Returns the stack count added for the triggering affix.
+int libAffx_EventAffix(); // Returns the triggering affix.
+int libAffx_EventAffixCountAdded(); // Returns the stack count added for the triggering affix.
+int libAffx_EventAffixCount(); // Returns the current count
 bool libAffx_FilterMatches(unit unitVar, unitfilter unitFilter, int player, string unitType); // Checks whether unit matches filters.
 void libAffx_AddBehaviorFilter(unit unitVar, string behavior, unitfilter unitFilter, int player, string unitType, int stacks); // Adds behavior if unit matches filters.
 void libAffx_AddAndRemoveBehaviorFilter(unit unitVar, string behavior, unitfilter unitFilter, int player, string unitType, int stacks); // Adds behavior if unit matches filters, and removes behavior if it doesn't match.
