@@ -1538,13 +1538,7 @@ bool libAffx_HasFastAA(int heroIndex) {
     }
     return false;
 }
-bool libAffx_PathoftheAssassinAffixAdded (bool testConds, bool runActions) {
-    int level;
-    if (!runActions) {
-        return true;
-    }
-    pathOfTheAssassinIndex = libAffx_EventAffix();
-    level = UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit);
+void libAffx_PathoftheAssassinInit() {
     if (libAffx_playerHeroIndex == libCore_gf_GetIndexFromHero("Tracer")) {
         pathoftheAssassinValue = 1;
         pathoftheAssassinValue2 = 1;
@@ -1555,6 +1549,22 @@ bool libAffx_PathoftheAssassinAffixAdded (bool testConds, bool runActions) {
         pathoftheAssassinValue = 5;
         pathoftheAssassinValue2 = 2.5;
     }
+}
+bool libAffx_PathoftheAssassinExecuteImmediate (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_PathoftheAssassinInit();
+    return true;
+}
+bool libAffx_PathoftheAssassinAffixAdded (bool testConds, bool runActions) {
+    int level;
+    if (!runActions) {
+        return true;
+    }
+    pathOfTheAssassinIndex = libAffx_EventAffix();
+    level = UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit);
+    libAffx_PathoftheAssassinInit();
     libAffx_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheAssassin", "Modification.DamageDealtScaled[Basic]", libAffx_player, (pathoftheAssassinValue + pathoftheAssassinValue2 * (libAffx_affixes[pathOfTheAssassinIndex].count - 1)) * level);
     
     return true;

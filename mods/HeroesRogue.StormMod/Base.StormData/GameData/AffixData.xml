@@ -280,7 +280,7 @@
             <String String="BehaviorChange libAffx_NanoBoostBehaviorChange">
                 <Field Id="Trigger"/>
             </String>
-            <String String="1 0 AffixNanoBoost">
+            <String String="1 0 AffixNanoBoostNoMana">
                 <Field Id="Behavior"/>
             </String>
             <String String="1 2 Set Behavior,AffixNanoBoost,Modification.HealDealtAdditiveMultiplier[Life] 0.15">
@@ -1429,6 +1429,9 @@
             </String>
             <String String="LU libAffx_PathoftheAssassinLevelUp">
                 <Field Id="Trigger" Index="1"/>
+            </String>
+            <String String="EI libAffx_PathoftheAssassinExecuteImmediate">
+                <Field Id="Trigger" Index="2"/>
             </String>
         </Instances>
         <Instances Id="ShieldedCore">
@@ -3003,7 +3006,7 @@
             <Int Int="1">
                 <Field Id="Negative"/>
             </Int>
-            <Int Int="6">
+            <Int Int="3">
                 <Field Id="Max"/>
             </Int>
             <String String="LostVikings">
@@ -3012,7 +3015,7 @@
             <String String="1 0 AffixBlindfolded">
                 <Field Id="Behavior"/>
             </String>
-            <String String="1 2 Set Behavior,AffixBlindfolded,Modification.SightBonus -1">
+            <String String="1 2 Set Behavior,AffixBlindfolded,Modification.SightBonus -2">
                 <Field Id="CatalogModification"/>
             </String>
             <String String="Assets/Textures/storm_ui_icon_malganis_blindbat.dds">

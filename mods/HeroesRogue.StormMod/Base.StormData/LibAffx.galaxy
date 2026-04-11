@@ -1366,6 +1366,17 @@ void libAffx_ApplyBehaviors(int affix, int amount) {
         }
     }
 }
+void libAffx_ApplyImmediateTriggers() {
+    int i;
+    int i2;
+    for (i = 1; i <= libAffx_registeredAffixes; i += 1) {
+        for (i2 = 1; i2 <= libAffx_maxTrigger; i2 += 1) {
+            if (libAffx_affixes[i].triggers[i2].type == libAffx_triggerExecuteImmediate) {
+                TriggerExecute(TriggerCreate(libAffx_affixes[i].triggers[i2].name), true, false);
+            }
+        }
+    }
+}
 void libAffx_ApplyTriggers(int affix, int amount) {
     int i;
     int triggerType;
@@ -1733,6 +1744,7 @@ bool libAffx_AffixLogicUnitCreatedTrigger_Func (bool testConds, bool runActions)
             libAffx_choPlayer = 1;
             libAffx_gallPlayer = 2;
         }
+        libAffx_ApplyImmediateTriggers();
     }
 
     return true;
@@ -2002,6 +2014,7 @@ void libAffx_ProcessQueue() {
     if (libAffx_objectivesWonCounter > 0 && libAffx_queueAffixNegative[1] && !libAffx_debugCommandsAddAll) {
         libAffx_queueActive = true;
         libAffx_objectivesWonCounter -= 1;
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/CurseSwap"));
         libAffx_ChooseAffixes(libAffx_rarityCommon, false, libAffx_queueAffixLevel[1], libAffx_queueAffixPreventUpgrade[1]);
         libAffx_MoveQueue();
     } else if (libAffx_skipCurseCounter > 0 && libAffx_queueAffixNegative[1] && !libAffx_debugCommandsAddAll) {
@@ -3317,8 +3330,10 @@ void libAffx_InitAffixes () {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerExecute;
                     } else if (affixTrigger1 == "npctakedown" || affixTrigger1 == "nt") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerNPCTakedown;
-                    }else if (affixTrigger1 == "executeonce" || affixTrigger1 == "eo") {
+                    } else if (affixTrigger1 == "executeonce" || affixTrigger1 == "eo") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerExecuteOnce;
+                    } else if (affixTrigger1 == "executeimmediate" || affixTrigger1 == "ei") {
+                        libAffx_affixes[i].triggers[i2].type = libAffx_triggerExecuteImmediate;
                     } else if (affixTrigger1 == "herotakedown" || affixTrigger1 == "ht") { 
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerHeroTakedown;
                     } else if (affixTrigger1 == "unitcreated" || affixTrigger1 == "uc") {

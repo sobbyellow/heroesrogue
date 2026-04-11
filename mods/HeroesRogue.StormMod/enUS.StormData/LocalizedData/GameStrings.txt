@@ -59,6 +59,7 @@ Label/Name/RerollCurse=Curse rerolls available:
 Label/Name/RerollStarter=Cannot reroll starters
 Message/CurseToBoon=<c val="FFDE36">The next Curse you obtain will become a Boon!</c>
 Message/CurseSkipped=<c val="FFDE36">Curse skipped due to a previous Curse.</c>
+Message/CurseSwap=<c val="FFDE36">Curse swapped to a Boon due to winning the last Objective.</c>
 Message/CurseNextGame1=<c val="FC4747">Obtained a Curse for missing a Level 7 Curse last game.</c>
 Message/CurseNextGame2=<c val="FC4747">Obtained 2 Curses for missing the level 4 and level 7 Curses last game.</c>
 Message/GoldenBorder=Golden Heroes have unique starter boons.
@@ -118,7 +119,7 @@ Affix/Tooltip/NanoBoost=Increases Spell Power by <c val="#TooltipNumbers">15%</c
 Affix/Tooltip/Append/NanoBoost=<n/><n/>Spell Power bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixNanoBoost,Modification.DamageDealtFraction[Ability]*100" precision="1"/>%</c><n/>Cooldown reduction bonus: <c val="#TooltipNumbers"><d ref="$GalaxyVar:nanoBoostCDR$*100"precision="1"/>%</c><n/>Mana regeneration bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixNanoBoost,Modification.VitalRegenArray[Energy]" precision="1"/></c>
 Affix/Name/NanoBoostNoMana=Nano Boost
 Affix/Tooltip/NanoBoostNoMana=Increases Spell Power by <c val="#TooltipNumbers">15%</c> and recharge Basic Abilities <c val="#TooltipNumbers"><d ref="$GalaxyVar:nanoBoostCDR$*100"precision="1"/>%</c> faster.
-Affix/Tooltip/Append/NanoBoostNoMana=<n/><n/>Spell Power bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixNanoBoostNoMana,Modification.DamageDealtFraction[Ability]*100" precision="1"/>%</c><n/>Cooldown reduction bonus: <c val="#TooltipNumbers"><d ref="$GalaxyVar:nanoBoostCDR$*100"precision="1"/>%</c><n/>Mana regeneration bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixNanoBoostNoMana,Modification.VitalRegenArray[Energy]*100" precision="1"/>%</c>
+Affix/Tooltip/Append/NanoBoostNoMana=<n/><n/>Spell Power bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixNanoBoostNoMana,Modification.DamageDealtFraction[Ability]*100" precision="1"/>%</c><n/>Cooldown reduction bonus: <c val="#TooltipNumbers"><d ref="$GalaxyVar:nanoBoostCDR$*100"precision="1"/>%</c>
 Affix/Name/BlessingoftheDragons=Blessing of the Dragons
 Affix/Tooltip/BlessingoftheDragons=Your AI teammates gain <c val="#TooltipNumbers">500</c> maximum Health and <c val="#TooltipNumbers">20%</c> Movement Speed, and Basic Abilities recharge <c val="#TooltipNumbers"><d ref="$GalaxyVar:blessingoftheDragonsCDR$*100"precision="1"/>%</c> faster.
 Affix/Tooltip/Append/BlessingoftheDragons=<n/><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixBlessingoftheDragons,Modification.VitalMaxArray[Life]" precision="1"/></c><n/>Movement Speed bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixBlessingoftheDragons,Modification.UnifiedMoveSpeedFactor*100" precision="1"/>%</c><n/>Cooldown reduction bonus: <c val="#TooltipNumbers"><d ref="$GalaxyVar:blessingoftheDragonsCDR$*100"precision="1"/>%</c>
@@ -151,13 +152,13 @@ Affix/Tooltip/RegenerativeCore=Your Core regenerates <c val="#TooltipNumbers">2%
 Affix/Tooltip/Append/RegenerativeCore=
 Affix/Name/AllyDamage=Powerful
 Affix/Tooltip/AllyDamage=Increases Spell Power and Attack Damage of ALL allies by <c val="#TooltipNumbers">5%</c>.
-Affix/Tooltip/Append/AllyDamage=<n/><n/>Spell Power and Attack Damage bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixAllyDamageBuff,Modification.DamageDealtFraction[Ability]*100" precision="1"/>%</c>
+Affix/Tooltip/Append/AllyDamage=<n/><n/>Spell Power and Attack Damage bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixAllyDamageBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
 Affix/Name/AllyHealth=Endurance
 Affix/Tooltip/AllyHealth=Increases maximum Health of ALL allies by <c val="#TooltipNumbers">7%</c>.
-Affix/Tooltip/Append/AllyHealth=<n/><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixAllyHealthBuff,Modification.VitalMaxFractionArray[Life]*100" precision="1"/>%</c>
+Affix/Tooltip/Append/AllyHealth=<n/><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixAllyHealthBuff,Modification.VitalMaxFractionArray[Life]*100" precision="0"/>%</c>
 Affix/Name/AllySpeed=Fast Feet
 Affix/Tooltip/AllySpeed=Increases Movement Speed of ALL allies by <c val="#TooltipNumbers">6%</c>.
-Affix/Tooltip/Append/AllySpeed=<n/><n/>Movement Speed bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixAllySpeedBuff,Modification.UnifiedMoveSpeedFactor*100" precision="1"/>%</c>
+Affix/Tooltip/Append/AllySpeed=<n/><n/>Movement Speed bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixAllySpeedBuff,Modification.UnifiedMoveSpeedFactor*100" precision="0"/>%</c>
 Affix/Name/MountSpeed=Quick Mount
 Affix/Tooltip/MountSpeed=Increases the Movement Speed bonus of Summon Mount by <c val="#TooltipNumbers">40%</c> for ALL allies.
 Affix/Tooltip/Append/MountSpeed=
@@ -165,7 +166,7 @@ Affix/Name/Experienced=Experienced
 Affix/Tooltip/Experienced=Increases your team's experience gain by <c val="#TooltipNumbers">20%</c>.
 Affix/Tooltip/Append/Experienced=
 Affix/Name/KillContract=Kill Contract
-Affix/Tooltip/KillContract=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Get <c val="#TooltipNumbers"><d ref="Behavior,AffixKillContractQuestToken,Max"/></c> Hero Takedowns. Progress is lost between rounds. Progress is lost between rounds.<n/><n/><c val="#TooltipQuest">Reward:</c> Gain <c val="#TooltipNumbers">1</c> common and <c val="#TooltipNumbers">1</c> uncommon Boon.
+Affix/Tooltip/KillContract=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Get <c val="#TooltipNumbers"><d ref="Behavior,AffixKillContractQuestToken,Max"/></c> Hero Takedowns. Progress is lost between rounds.<n/><n/><c val="#TooltipQuest">Reward:</c> Gain <c val="#TooltipNumbers">1</c> common and <c val="#TooltipNumbers">1</c> uncommon Boon.
 Affix/Tooltip/Append/KillContract=
 Button/Name/AffixKillContractQuestToken=Kill Contract
 Button/Tooltip/AffixKillContractQuestToken=<c val="#TooltipQuest">Takedowns: <c val="#TooltipNumbers" validator="AffixKillContractQuestNotComplete"><d ref="$BehaviorStackCount:AffixKillContractQuestToken$"/> / <d ref="Behavior,AffixKillContractQuestToken,Max"/></c>
@@ -210,7 +211,7 @@ Affix/Name/PathoftheWarrior=Path of the Warrior
 Affix/Tooltip/PathoftheWarrior=Increases maximum Health by <c val="#TooltipNumbers">40</c> per level.
 Affix/Tooltip/Append/PathoftheWarrior=<n/><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixPathoftheWarrior,Modification.VitalMaxArray[Life]" precision="0"/></c>
 Affix/Name/PathoftheAssassin=Path of the Assassin
-Affix/Tooltip/PathoftheAssassin=Increases Basic Attack damage by <c val="#TooltipNumbers"><d ref="$GalaxyVar:pathoftheAssassinValue$"precision="0"/></c> per level.<n/><n/>Additional stacks increase Basic Attack damage by <c val="#TooltipNumbers"><d ref="$GalaxyVar:pathoftheAssassinValue2$"precision="0"/></c>.
+Affix/Tooltip/PathoftheAssassin=Increases Basic Attack damage by <c val="#TooltipNumbers"><d ref="$GalaxyVar:pathoftheAssassinValue$"precision="0"/></c> per level.<n/><n/>Additional stacks increase Basic Attack damage by <c val="#TooltipNumbers"><d ref="$GalaxyVar:pathoftheAssassinValue2$"precision="1"/></c>.
 Affix/Tooltip/Append/PathoftheAssassin=<n/><n/>Basic Attack damage bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixPathoftheAssassin,Modification.DamageDealtScaled[Basic]" precision="2"/></c>
 Affix/Name/ButtonMasher=Button Masher
 Affix/Tooltip/ButtonMasher=Gain the benefits of Viking Bribery, Spin To Win!, Norse Force, and Jump!.<n/><n/>Reduces Spin To Win!, Norse Force, Jump!, and Go Go Go! cooldowns by <c val="#TooltipNumbers">50%</c>.
@@ -359,16 +360,16 @@ Affix/Name/GreatRitual=Great Ritual
 Affix/Tooltip/GreatRitual=Increases Voodoo Ritual stacks gained by <c val="#TooltipNumbers">100%</c>.
 Affix/Tooltip/Append/GreatRitual=
 Affix/Name/Superiority=Superiority
-Affix/Tooltip/Superiority=Reduces damage taken from non-Heroic enemies by <c val="#TooltipNumbers">10%</c>.
+Affix/Tooltip/Superiority=Gain <c val="#TooltipNumbers">10</c> Armor against non-Heroic enemies, reducing the damage taken from non-Heroic enemies by <c val="#TooltipNumbers">10%</c>.
 Affix/Tooltip/Append/Superiority=<n/><n/>Total damage reduction: <c val="#TooltipNumbers"><d ref="Behavior,AffixSuperiority,ArmorModification.ArmorSet[Minion].ArmorMitigationTable[Basic]" precision="0"/>%</c>
 Affix/Name/MercLord=Mercenary Lord
 Affix/Tooltip/MercLord=Friendly non-Boss Mercenaries near you deal <c val="#TooltipNumbers">50%</c> more damage.
 Affix/Tooltip/Append/MercLord=
 Affix/Name/Besieger=Demolitionist
-Affix/Tooltip/Besieger=Increases damage dealt by <c val="#TooltipNumbers">15%</c> to Structures.
+Affix/Tooltip/Besieger=Increases damage dealt to Structures by <c val="#TooltipNumbers">15%</c>.
 Affix/Tooltip/Append/Besieger=<n/><n/>Damage bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixBesieger,Modification.DamageDealtAttributeMultiplier[Structure]*100" precision="1"/>%</c>
 Affix/Name/MinionKiller=Minion Killer
-Affix/Tooltip/MinionKiller=Increases damage dealt by <c val="#TooltipNumbers">15%</c> to Minions and Mercenaries.
+Affix/Tooltip/MinionKiller=Increases damage dealt to Minions and Mercenaries by <c val="#TooltipNumbers">15%</c>.
 Affix/Tooltip/Append/MinionKiller=<n/><n/>Damage bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixMinionKiller,Modification.DamageDealtAttributeMultiplier[Minion]*100" precision="1"/>%</c>
 Affix/Name/FirstAid=First Aid
 Affix/Tooltip/FirstAid=Regenerate <c val="#TooltipNumbers">1%</c> of your maximum Health per second.<n/><n/>Additional stacks increase healing by <c val="#TooltipNumbers">0.5%</c> of maximum Health per second.
@@ -542,7 +543,7 @@ Affix/Name/LostVikingsLost=Truly Lost
 Affix/Tooltip/LostVikingsLost=Reduces your vision range to <c val="#TooltipNumbers">4</c>.
 Affix/Tooltip/Append/LostVikingsLost=
 Affix/Name/Blindfolded=Blindfolded
-Affix/Tooltip/Blindfolded=Reduces your vision range by <c val="#TooltipNumbers">1</c>.
+Affix/Tooltip/Blindfolded=Reduces your vision range by <c val="#TooltipNumbers">2</c>.
 Affix/Tooltip/Append/Blindfolded=<n/><n/>Vision range: <c val="#TooltipNumbers"><d ref="Behavior,AffixBlindfolded,Modification.SightBonus" precision="2"/></c>
 Affix/Name/Injury=Injury
 Affix/Tooltip/Injury=You no longer naturally regenerate Health.

@@ -46,6 +46,7 @@ const int libAffx_triggerPeriodic                =   13;    // Executes every ga
 const int libAffx_triggerExecuteOnce             =   14;    // Executes immediately but only once.
 const int libAffx_triggerWin                     =   15;    // Executes when enemy core dies.
 const int libAffx_triggerRespawn                 =   16;    // Executes when a Hero respawns.
+const int libAffx_triggerExecuteImmediate        =   17;    // Executes immediately once at the start of game, regardless of stack count.
 
 
 const string libAffx_eventID = "EventAffix";
@@ -108,7 +109,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.10.0";
+const string libAffx_version = "0.10.1";
 
 struct libAffx_CatalogModification {
     int player;

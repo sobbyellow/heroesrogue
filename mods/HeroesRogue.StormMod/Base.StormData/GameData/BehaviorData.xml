@@ -235,7 +235,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CBehaviorBuff id="AffixMount" parent="CarryBehaviorParent">
     <DisableValidatorArray value="IsMounted" />
     <Modification>
-      <UnifiedMoveSpeedFactor value="0.4" />
+      <UnifiedMoveSpeedFactor value="0.7" />
     </Modification>
   </CBehaviorBuff>
   <CBehaviorAbility id="AffixMedallion">
