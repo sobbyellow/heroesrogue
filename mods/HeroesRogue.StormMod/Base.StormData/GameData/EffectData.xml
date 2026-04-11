@@ -561,7 +561,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CEffectDamage id="StormBoltHammererDamage" parent="StormSpellPercentDamage">
     <ValidatorArray value="TargetIsHero" />
     <Chance value="0" />
-    <VitalFractionMax index="Life" value="0.06" />
+    <VitalFractionMax index="Life" value="0.07" />
   </CEffectDamage>
   <CEffectSet id="StormBoltImpactSet">
     <EffectArray value="StormBoltHammererDamage" />
@@ -750,7 +750,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CEffectModifyUnit id="AffixExpensiveAttacksEffect">
     <ImpactUnit Value="Caster" />
     <VitalArray index="Energy">
-      <ChangeFraction value="-0.01" />
+      <Change value="-4" />
     </VitalArray>
   </CEffectModifyUnit>
   

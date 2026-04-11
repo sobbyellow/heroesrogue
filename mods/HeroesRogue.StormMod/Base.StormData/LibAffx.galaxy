@@ -71,12 +71,14 @@ bool libAffx_HeroSelectionTrigger_Func (bool testConds, bool runActions) {
                             }
                         }
                     }
+                    libAffx_playersHeroIndex[player] = libGame_gv_players[player].lv_heroIndex;
                 }
                 libCore_gf_DataLoadHeroDataIntoIndex(libCore_gf_GetHeroFromIndex(libGame_gv_players[player].lv_heroIndex), player);
                 if ((PlayerType(player) != c_playerTypeComputer)) {
                     libGame_gf_HeroSelectionRandomlyPickSkin(player);
                     libGame_gf_HeroSelectionRandomlyPickMount(player);
                 }
+                libAffx_DebugPrint("Player " + IntToString(player) + " set to Hero: " + libCore_gf_GetHeroFromIndex(libGame_gv_players[player].lv_heroIndex));
             }
         }
     }
@@ -90,15 +92,12 @@ void libAffx_HeroSelectionTrigger_Init () {
 
 //--------------------------------------------------------------------------------------------------
 bool libAffx_TalentGainedTrigger_Func (bool testConds, bool runActions) {
-    int player;
-    string talent;
+    int player = libGame_gf_HeroGainTalentPlayer();
+    string talent = libGame_gf_HeroGainTalentGainedTalent();
 
     if (!runActions) {
         return true;
     }
-
-    player = libGame_gf_HeroGainTalentPlayer();
-    talent = libGame_gf_HeroGainTalentGainedTalent();
     
     return true;
 }
@@ -107,6 +106,52 @@ void libAffx_TalentGainedTrigger_Init () {
     libGame_gf_HeroGainTalent(libAffx_TalentGainedTrigger);
 }
 //--------------------------------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: D.Va - Call Mech Completed
+//--------------------------------------------------------------------------------------------------
+bool libAffx_DVaCallMechCompletedTrigger_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int dvaPlayer;
+    unit dvaPilot;
+    int totalBehaviors;
+    string behavior;
+    int behaviorStacks;
+    string debug_allBehaviorsAdded;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    dvaPilot = EventUnit();
+    dvaPlayer = UnitGetOwner(dvaPilot);
+    totalBehaviors = UnitBehaviorCountAll(dvaPilot);
+    for (;; totalBehaviors -= 1) {
+        if (totalBehaviors <= 0) { break; }
+        behavior = UnitBehaviorGet(dvaPilot, totalBehaviors);
+
+        if (behavior == "DVaPilotSelfDestructTracker" || behavior == "DVaPilotInsideMech" || behavior == "DVaPilotMechAbilityDisablerCarry" || behavior == "DVaPilotTorpedoDashAllowed") {
+            continue;
+        }
+
+        behaviorStacks = UnitBehaviorCount(dvaPilot, behavior);
+        UnitBehaviorAdd(libHDVA_gv_dVaCallMechMechBeingSummoned[dvaPlayer], behavior, dvaPilot, behaviorStacks);
+        debug_allBehaviorsAdded += behavior + " ";
+    }
+
+    libAffx_DebugPrint(debug_allBehaviorsAdded);
+    
+    return true;
+}
+//--------------------------------------------------------------------------------------------------
+void libAffx_DVaCallMechCompletedTrigger_Init () {
+    libAffx_DVaCallMechCompletedTrigger = TriggerCreate("libAffx_DVaCallMechCompletedTrigger_Func");
+    TriggerAddEventUnitAbility(libAffx_DVaCallMechCompletedTrigger, null, AbilityCommand("DVaPilotCallMech", 0), c_abilEffectStageFinish, false);
+}
 
 void libAffx_Wait(fixed duration, int inTimeType) {
     fixed elapsed = 0.0;
@@ -1303,7 +1348,11 @@ void libAffx_ApplyCatalogModifications(int affix, int amount) {
             } else if (catalogType == libAffx_catalogTypePerStackDelta) {
                 catalogValueString = FixedToString(catalogValue * amount, c_fixedPrecisionAny);
             } else if (catalogType == libAffx_catalogTypePerStackDeltaExclFirst) {
-                catalogValueString = FixedToString(catalogValue * (amount - 1), c_fixedPrecisionAny);
+                if (libAffx_affixes[affix].count <= 0 || amount > 1) {
+                    catalogValueString = FixedToString(catalogValue * (amount - 1), c_fixedPrecisionAny);
+                } else {
+                    catalogValueString = FixedToString(catalogValue * amount, c_fixedPrecisionAny);
+                }
             } else if (catalogType == libAffx_catalogTypeAdditiveMult) {
                 catalogValueString = FixedToString(1 + (catalogValue * totalAmount), c_fixedPrecisionAny);
             } else if (catalogType == libAffx_catalogTypeAdditiveMultDelta) {
@@ -1545,7 +1594,7 @@ void libAffx_BankSave() {
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSectionSettings, "Difficulty", libAffx_difficulty);
     BankValueSetFromString(BankLastCreated(), libAffx_BankSection, "Map", libAffx_nextMap);
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "CurrentRun", libAffx_currentRun);
-    BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "Hero", libAffx_playerHeroIndex);
+    BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "Hero", libAffx_playersHeroIndex[libAffx_player]);
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "ObjectiveCounter", libAffx_objectivesWonCounter);
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "SkipCurseCounter", libAffx_skipCurseCounter);
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "Rerolls", libAffx_rerolls);
@@ -1645,7 +1694,7 @@ void libAffx_BankLoad() {
             }
         }
     }
-    while (!libAffx_playerFirstSpawnIn) {
+    while (!libAffx_playersFirstSpawnIn[libAffx_player]) {
         libAffx_Wait(0.0625, c_timeGame);
     }
     libAffx_Wait(libAffx_gameStartDelay, c_timeGame);
@@ -1721,17 +1770,16 @@ void libAffx_AffixLogicPeriodicTrigger_Init () {
 // Affix logic on unit creation
 //
 bool libAffx_AffixLogicUnitCreatedTrigger_Func (bool testConds, bool runActions) {
-    unit unitvar;
+    unit createdUnit = EventUnitCreatedUnit();
+    int player = UnitGetOwner(createdUnit);
     if (!runActions) {
         return true;
     }
-    
-    unitvar = EventUnitCreatedUnit();
 
-    if (UnitGetOwner(unitvar) == libAffx_player && !libAffx_playerFirstSpawnIn) {
-        libAffx_playerFirstSpawnIn = true;
+    if (player == libAffx_player && !libAffx_playersFirstSpawnIn[libAffx_player]) {
+        libAffx_playersFirstSpawnIn[libAffx_player] = true;
         DialogSetVisible(libAffx_dialogTopRight, PlayerGroupAll(), true);
-        libGame_gv_players[libAffx_player].lv_heroIndex = libAffx_playerHeroIndex;
+        libGame_gv_players[libAffx_player].lv_heroIndex = libAffx_playersHeroIndex[libAffx_player];
         if (libAffx_currentRun <= 1) {
             libAffx_difficulty = libPBU2_difficulty;
         }
@@ -1745,6 +1793,10 @@ bool libAffx_AffixLogicUnitCreatedTrigger_Func (bool testConds, bool runActions)
             libAffx_gallPlayer = 2;
         }
         libAffx_ApplyImmediateTriggers();
+    }
+    if (player >= 2 && player <= 10) {
+        libAffx_playersFirstSpawnIn[player] = true;
+        libGame_gv_players[player].lv_heroIndex = libAffx_playersHeroIndex[player];
     }
 
     return true;
@@ -1850,7 +1902,7 @@ int libAffx_RollAffix(int rarity, bool negative, int level, bool preventUpgrade)
                 continue;
             }
             // Check for correct Hero
-            if (!libAffx_affixes[i].allowedHero[libAffx_playerHeroIndex]) {
+            if (!libAffx_affixes[i].allowedHero[libAffx_playersHeroIndex[libAffx_player]]) {
                 continue;
             }
             // Check maximum count
@@ -2250,7 +2302,7 @@ bool libAffx_TestCommandTrigger_Func (bool testConds, bool runActions) {
         }
         libAffx_debugCommandsAddAll = true;
         for (i = 1; i <= libAffx_registeredAffixes; i += 1) {
-            if (libAffx_affixes[i].enabled && libAffx_affixes[i].allowedHero[libAffx_playerHeroIndex] && ((libAffx_affixes[i].max > 0 && libAffx_affixes[i].count <= libAffx_affixes[i].max) || (libAffx_affixes[i].max <= 0))) {
+            if (libAffx_affixes[i].enabled && libAffx_affixes[i].allowedHero[libAffx_playersHeroIndex[libAffx_player]] && ((libAffx_affixes[i].max > 0 && libAffx_affixes[i].count <= libAffx_affixes[i].max) || (libAffx_affixes[i].max <= 0))) {
                 if (libAffx_affixes[i].max <= 0) {
                     affixes += arg1;
                     libAffx_AddAffix(i, arg1);
@@ -2312,6 +2364,10 @@ bool libAffx_TestCommandTrigger_Func (bool testConds, bool runActions) {
         } else {
             libMapM_gf_MMRavenTributeCollectionThresholdReached(StringToInt(StringWord(EventChatMessage(false), 2)));
         }
+    } else if (StringWord(EventChatMessage(false), 1) == "printallheroes") {
+        for (i = 1; i <= 10; i += 1) {
+            libAffx_Print("Player " + IntToString(i) + ": " + libCore_gf_GetHeroFromIndex(libGame_gv_players[i].lv_heroIndex));
+        }
     }
     return true;
 }
@@ -2327,6 +2383,7 @@ void libAffx_TestCommandTrigger_Init () {
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "cooldown", false);
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "cd", false);
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "curse", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "printallheroes", false);
 }
 
 bool libAffx_QueueAffixCommandTrigger_Func (bool testConds, bool runActions) {
@@ -2493,6 +2550,9 @@ bool libAffx_LevelUpTrigger_Func (bool testConds, bool runActions) {
             libAffx_Wait(libAffx_gameStartDelay, c_timeGame);
             if (libAffx_player == libAffx_gallPlayer) {
                 libAffx_Wait(1, c_timeGame);
+            }
+            if (libGame_gv_players[libAffx_player].lv_heroIndex == libCore_gf_GetIndexFromHero("DVa")) {
+                libAffx_Wait(0.25, c_timeGame);
             }
             if (libAffx_difficulty == 3) {
                 libAffx_ApplyDifficulty();
@@ -2686,11 +2746,14 @@ void libAffx_CurateHeroesTrigger_Init () {
 }
 //--------------------------------------------------------------------------------------------------
 bool libAffx_HeroSelectedTrigger_Func(bool testConds, bool runActions) {
+    int i;
     // Actions
     if (!runActions) {
         return true;
     }
-    libAffx_playerHeroIndex = libGame_gv_players[libAffx_player].lv_heroIndex;
+    for (i = 1; i <= 10; i += 1) {
+        libAffx_playersHeroIndex[i] = libGame_gv_players[i].lv_heroIndex;
+    }
 
     return true;
 }
@@ -2717,13 +2780,13 @@ bool libAffx_MapInitTrigger_Func (bool testConds, bool runActions) {
         libCore_gf_DataLoadHeroDataIntoIndex(libCore_gf_GetHeroFromIndex(libGame_gv_players[libAffx_player].lv_heroIndex), libAffx_player);
         libGame_gf_HeroSelectionRandomlyPickSkin(libAffx_player);
         libGame_gf_HeroSelectionRandomlyPickMount(libAffx_player);
-        libAffx_playerHeroIndex = libCore_gf_GetIndexFromHero("WitchDoctor");
+        libAffx_playersHeroIndex[libAffx_player] = libCore_gf_GetIndexFromHero("WitchDoctor");
         libGame_gv_pickingHeroesCallback = libAffx_HeroSelectionTrigger;
     } else if (libAffx_playerHeroIndexLoaded == 0) {
         libGame_gv_pickingHeroesCallback = libAffx_CurateHeroesTrigger;
     } else {
         libGame_gv_players[libAffx_player].lv_heroIndex = libAffx_playerHeroIndexLoaded;
-        libAffx_playerHeroIndex = libAffx_playerHeroIndexLoaded;
+        libAffx_playersHeroIndex[libAffx_player] = libAffx_playerHeroIndexLoaded;
         libCore_gf_DataLoadHeroDataIntoIndex(libCore_gf_GetHeroFromIndex(libGame_gv_players[libAffx_player].lv_heroIndex), libAffx_player);
         libGame_gf_HeroSelectionRandomlyPickSkin(libAffx_player);
         libGame_gf_HeroSelectionRandomlyPickMount(libAffx_player);
@@ -2790,6 +2853,7 @@ void libAffx_InitTriggers () {
     libAffx_Difficulty_Init();
     libAffx_OptionsClickedTrigger_Init();
     libAffx_OptionsRestartClickedTrigger_Init();
+    libAffx_DVaCallMechCompletedTrigger_Init();
 
     TriggerEnable(libGDHL_gt_HeroSylvanasPossessionRewire, true);
     libAffx_pauseVLSK = TriggerCreate("libVLSK_PauseTrigger_Func");
@@ -3071,7 +3135,7 @@ void libAffx_InitVariables () {
     libAffx_cursesNextGame = 2;
     libAffx_queueActive = false;
     libAffx_showingOwnedAffixes = false;
-    libAffx_playerFirstSpawnIn = false;
+    libAffx_playersFirstSpawnIn[libAffx_player] = false;
     libAffx_dialogAffixSelection = c_invalidDialogId;
     libAffx_dialogTopRight = c_invalidDialogId;
     libAffx_dialogOwnedAffixes = c_invalidDialogId;

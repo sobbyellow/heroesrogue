@@ -109,7 +109,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.10.1";
+const string libAffx_version = "0.10.2";
 
 struct libAffx_CatalogModification {
     int player;
@@ -241,8 +241,9 @@ bool libAffx_showingOptions; // Whether the Options window is open.
 
 int libAffx_playerHeroIndex; // The player's Hero index.
 int libAffx_playerHeroIndexLoaded; // The player's Hero index that was loaded from the Bank.
-bool libAffx_playerFirstSpawnIn; // Whether the player's Hero unit has spawned into the game for the first time.
 int libAffx_currentRun; // Number of the current run.
+int[11] libAffx_playersHeroIndex;
+bool[11] libAffx_playersFirstSpawnIn; // Whether the player's Hero unit has spawned into the game for the first time.
 
 int libAffx_objectivesWon;
 int libAffx_objectivesWonCounter;
@@ -288,6 +289,7 @@ trigger libAffx_DifficultyUnitCreatedTrigger;
 trigger libAffx_DifficultyUnitChangeOwner;
 trigger libAffx_OptionsClickedTrigger;
 trigger libAffx_OptionsRestartClickedTrigger;
+trigger libAffx_DVaCallMechCompletedTrigger;
 
 // Debug options
 bool libAffx_loadTryMeMode = false; // Try mode 2.0

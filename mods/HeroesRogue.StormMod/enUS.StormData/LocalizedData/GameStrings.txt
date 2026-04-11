@@ -288,7 +288,7 @@ Affix/Name/UnstoppableAvatar=Unstoppable Avatar
 Affix/Tooltip/UnstoppableAvatar=Gain the benefits of Avatar, Unstoppable Force, and all Second Wind talents. Avatar is always active.<n/><n/>Basic Attacks deal bonus damage equal to <c val="#TooltipNumbers">3%</c> of your current Health.
 Affix/Tooltip/Append/UnstoppableAvatar=
 Affix/Name/HammerTime=Hammerer
-Affix/Tooltip/HammerTime=Gain the benefits of all Storm Bolt talents. Storm Bolt throws <c val="#TooltipNumbers">1</c> additional hammer.<n/><n/>Retain Storm Bolt's Quest progress after winning the game.
+Affix/Tooltip/HammerTime=Gain the benefits of all Storm Bolt talents. Storm Bolt deals bonus damage to enemy Heroes equal to <c val="#TooltipNumbers">7%</c> of their maximum Health.<n/><n/>Retain Storm Bolt's Quest progress after winning the game.
 Affix/Tooltip/Append/HammerTime=
 Affix/Name/ExtendedAssault=Extended Assault
 Affix/Tooltip/ExtendedAssault=Increases Sweeping Strike's Basic Attack damage bonus duration by <c val="#TooltipNumbers">3</c> seconds.
@@ -483,7 +483,7 @@ Affix/Tooltip/SlowStart=Your AI teammates are Time Stopped for <c val="#TooltipN
 Affix/Tooltip/Append/SlowStart=<n/><n/>Time Stop duration: <c val="#TooltipNumbers"><d ref="Behavior,AffixSlowStart,Duration" player="3" precision="2"/></c> seconds
 Behavior/Name/AffixSlowStart=Slow Start
 Affix/Name/PassiveAdvantage=Passive Advantage
-Affix/Tooltip/PassiveAdvantage=Increases passive Experience for the enemy Team by <c val="#TooltipNumbers">30%</c>.
+Affix/Tooltip/PassiveAdvantage=Increases passive Experience for the enemy Team by <c val="#TooltipNumbers">25%</c>.
 Affix/Tooltip/Append/PassiveAdvantage=
 Affix/Name/NoMinimapDLC=No Minimap DLC
 Affix/Tooltip/NoMinimapDLC=Hides your Minimap.
@@ -533,9 +533,9 @@ Button/Tooltip/NightElfBond=How could you let him die!?
 Affix/Name/ToyHammer=Toy Hammer
 Affix/Tooltip/ToyHammer=Storm Bolt has a <c val="#TooltipNumbers">50%</c> chance to not Stun enemies.
 Affix/Tooltip/Append/ToyHammer=
-Affix/Name/DelayedRitual=Delayed Ritual
-Affix/Tooltip/DelayedRitual=Voodoo Ritual deals damage over <c val="#TooltipNumbers">12</c> seconds.
-Affix/Tooltip/Append/DelayedRitual=
+Affix/Name/RushedRitual=Rushed Ritual
+Affix/Tooltip/RushedRitual=Reduces Voodoo Ritual's damage and duration by <c val="#TooltipNumbers">50%</c>.<n/><n/><c val="FFDE36">Skips the next Curse.</c>
+Affix/Tooltip/Append/RushedRitual=
 Affix/Name/SpiderToads=Spider Toads
 Affix/Tooltip/SpiderToads=Each Plague of Toads explodes into <c val="#TooltipNumbers">1</c> Corpse Spiders.
 Affix/Tooltip/Append/SpiderToads=
@@ -544,7 +544,7 @@ Affix/Tooltip/LostVikingsLost=Reduces your vision range to <c val="#TooltipNumbe
 Affix/Tooltip/Append/LostVikingsLost=
 Affix/Name/Blindfolded=Blindfolded
 Affix/Tooltip/Blindfolded=Reduces your vision range by <c val="#TooltipNumbers">2</c>.
-Affix/Tooltip/Append/Blindfolded=<n/><n/>Vision range: <c val="#TooltipNumbers"><d ref="Behavior,AffixBlindfolded,Modification.SightBonus" precision="2"/></c>
+Affix/Tooltip/Append/Blindfolded=<n/><n/>Vision range: <c val="#TooltipNumbers"><d ref="Behavior,AffixBlindfolded,Modification.SightBonus*-1" precision="2"/></c>
 Affix/Name/Injury=Injury
 Affix/Tooltip/Injury=You no longer naturally regenerate Health.
 Affix/Tooltip/Append/Injury=
@@ -555,7 +555,7 @@ Affix/Name/Dodge=Dodge
 Affix/Tooltip/Dodge=Enemy Heroes have a <c val="#TooltipNumbers">2%</c> chance to take no damage.
 Affix/Tooltip/Append/Dodge=<n/><n/>Dodge chance: <c val="#TooltipNumbers"><d ref="Behavior,AffixDodge,DamageResponse.Chance*100" player="6" precision="1"/>%</c>
 Affix/Name/ExpensiveAttacks=Expensive Attacks
-Affix/Tooltip/ExpensiveAttacks=Basic Attacks consume <c val="#TooltipNumbers">1%</c> of your maximum Mana.
+Affix/Tooltip/ExpensiveAttacks=Basic Attacks consume <c val="#TooltipNumbers">4</c> Mana.
 Affix/Tooltip/Append/ExpensiveAttacks=
 Affix/Name/LastMoments=Last Moments
 Affix/Tooltip/LastMoments=Last Rites is cast on you when your Health drops below <c val="#TooltipNumbers">35%</c>.<n/><n/>This effect has a <c val="#TooltipNumbers">300</c> second cooldown.<n/><n/>Additional stacks reduce the cooldown by <c val="#TooltipNumbers">60</c> seconds.

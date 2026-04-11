@@ -277,6 +277,7 @@ bool libAffx_BuddyAffixAdded (bool testConds, bool runActions) {
 const int manyRitualsStacks = 20;
 const int manyRitualsStacksInitial = 40;
 int manyRituals;
+bool manyRitualsInitialApplied = false;
 bool libAffx_ManyRituals (bool testConds, bool runActions) {
     int stacks = libAffx_EventAffixCountAdded();
     unit heroUnit = libGame_gv_players[libAffx_player].lv_heroUnit;
@@ -284,10 +285,17 @@ bool libAffx_ManyRituals (bool testConds, bool runActions) {
         return true;
     }
 
-    manyRituals = manyRitualsStacksInitial + (manyRitualsStacks * (stacks - 1));
-    
-    UnitSetTokenCount(heroUnit, "WitchDoctorVoodooRitual", UnitGetTokenCount(heroUnit, "WitchDoctorVoodooRitual") + manyRituals, heroUnit);
-    UnitSetTokenCount(heroUnit, "WitchDoctorThingOfTheDeepQuestToken", UnitGetTokenCount(heroUnit, "WitchDoctorThingOfTheDeepQuestToken") + manyRituals, heroUnit);
+
+    if (!manyRitualsInitialApplied) {
+        manyRitualsInitialApplied = true;
+        UnitSetTokenCount(heroUnit, "WitchDoctorVoodooRitual", UnitGetTokenCount(heroUnit, "WitchDoctorVoodooRitual") + manyRitualsStacksInitial + manyRitualsStacks * (stacks - 1), heroUnit);
+        UnitSetTokenCount(heroUnit, "WitchDoctorThingOfTheDeepQuestToken", UnitGetTokenCount(heroUnit, "WitchDoctorThingOfTheDeepQuestToken") + manyRitualsStacksInitial + manyRitualsStacks * (stacks - 1), heroUnit);
+        manyRituals += manyRitualsStacksInitial + manyRitualsStacks * (stacks - 1);
+    } else {
+        UnitSetTokenCount(heroUnit, "WitchDoctorVoodooRitual", UnitGetTokenCount(heroUnit, "WitchDoctorVoodooRitual") + manyRitualsStacks, heroUnit);
+        UnitSetTokenCount(heroUnit, "WitchDoctorThingOfTheDeepQuestToken", UnitGetTokenCount(heroUnit, "WitchDoctorThingOfTheDeepQuestToken") + manyRitualsStacks, heroUnit);
+        manyRituals += manyRitualsStacks;
+    }
     
     return true;
 }
@@ -1183,16 +1191,14 @@ bool libAffx_AffixCCDecreaseBehaviorChangeCategory (bool testConds, bool runActi
 // Enemy Level
 // ---------------------------------------------------------------
 bool libAffx_EnemyLevelAA (bool testConds, bool runActions) {
-    int stacks;
+    int stacks = libAffx_EventAffixCountAdded();
     int currentLevel;
     int i;
     if (!runActions) {
         return true;
     }
-    stacks = libAffx_EventAffixCountAdded();
-    currentLevel = UnitLevel(libGame_gv_players[libAffx_enemy].lv_heroUnit);
     for (i = 6; i <= 10; i += 1) {
-        UnitSetPropertyFixed(libGame_gv_players[i].lv_heroUnit, c_unitPropLevel, MinI(currentLevel + stacks, 30));
+        UnitXPAddXP(libGame_gv_players[i].lv_heroUnit, null, 2010);
     }
 
     return true;
@@ -1899,7 +1905,7 @@ bool libAffx_PassiveAdvantageExecute (bool testConds, bool runActions) {
         return true;
     }
 
-    libGame_teamChaosXPModTrickle = 0.3;
+    libGame_teamChaosXPModTrickle = 0.25;
 
     return true;
 }
