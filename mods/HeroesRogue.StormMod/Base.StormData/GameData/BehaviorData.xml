@@ -315,7 +315,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   
   <CBehaviorBuff id="AffixAASearing" parent="CarryBehaviorParent">
     <Modification>
-      <DamageDealtFraction index="Basic" value="0.25" />
+      <DamageDealtFraction index="Basic" value="0.20" />
     </Modification>
   </CBehaviorBuff>
 
@@ -439,8 +439,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorBuff id="AffixAmplifiedHealing" parent="CarryBehaviorParent">
   <Modification>
-    <HealTakenAdditiveMultiplier index="Life" value="0.3" />
-    <VitalRegenMultiplier index="Life" value="0.3" />
+    <HealTakenAdditiveMultiplier index="Life" value="0.25" />
+    <VitalRegenMultiplier index="Life" value="0.25" />
   </Modification>
 </CBehaviorBuff>
 <CBehaviorBuff id="AffixGatheringPower" parent="CarryBehaviorParent">
@@ -786,6 +786,14 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <VitalDamageLeechScoreArray Value="Healing" />
   </Modification>
 </CBehaviorBuff>
+<CBehaviorBuff id="AffixPhysicalLeech" parent="CarryBehaviorParent">
+  <Modification>
+    <VitalDamageLeechArray index="Life">
+      <KindArray index="Basic" value="0.1" />
+    </VitalDamageLeechArray>
+    <VitalDamageLeechScoreArray Value="Healing" />
+  </Modification>
+</CBehaviorBuff>
 
 <CBehaviorBuff id="AffixShieldCarry" parent="CarryBehaviorParent">
   <DisableValidatorArray value="CasterNotInCombat5AndAffixShieldNotFull" />
@@ -836,7 +844,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Duration value="0.5"/>
 </CBehaviorBuff>
 
-<CBehaviorBuff id="WizardMoveSpeedBuff" parent="StormShield">
+<CBehaviorBuff id="WizardMoveSpeedBuff">
   <Duration value="3" />
   <DamageResponse>
     <UnifiedMoveSpeedFactor value="0.25" />
@@ -897,6 +905,15 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <HealDealtAdditiveMultiplier index="Shields" value="0.075" />
     <DamageDealtFraction index="Ability" value="0.075" />
   </Modification>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="WizardAetherWalker">
+  <Alignment value="Positive" />
+  <BehaviorFlags index="Permanent" value="1" />
+  <RemoveValidatorArray value="NotInCombat3" />
+  <RemoveValidatorArray value="CasterNotDead" />
+  <RemoveValidatorArray value="WizardHasAetherWalker" />
+  <FinalEffect value="WizardAetherWalkerExpirationSet" />
 </CBehaviorBuff>
   
 </Catalog>

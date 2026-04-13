@@ -1278,13 +1278,15 @@ void libAffx_UnitCreateEffectUnit (int player, string effect) {
 }
 
 // Modify catalog with specified scaling scaling
-void libAffx_LevelUpScaling2(int catalog, string entry, string fieldPath, int player, fixed scaling) {
-    CatalogFieldValueSetFixed(catalog, entry, fieldPath, player, StringToFixed(CatalogFieldValueGet(catalog, entry, fieldPath, 0)) * Pow(scaling, UnitLevel(libGame_gv_players[player].lv_heroUnit)));
+void libAffx_LevelUpScaling2(string reference, int player, fixed scaling) {
+    int level = UnitLevel(libGame_gv_players[player].lv_heroUnit);
+    if (level <= 0) { level = 1; }
+    CatalogReferenceModify(reference, player, FixedToString(StringToFixed(CatalogReferenceGet(reference, 0)) * Pow(scaling, level), 4), c_upgradeOperationSet);
 }
 
 // Modify catalog with default 4% scaling
-void libAffx_LevelUpScaling(int catalog, string entry, string fieldPath, int player) {
-    libAffx_LevelUpScaling2(catalog, entry, fieldPath, player, 1.04);
+void libAffx_LevelUpScaling(string reference, int player) {
+    libAffx_LevelUpScaling2(reference, player, 1.04);
 }
 
 void libAffx_CatalogFieldValueAddFixed(int catalog, string entry, string fieldPath, int player, fixed value) {
@@ -1314,15 +1316,19 @@ void libAffx_CatalogReferenceModify (string reference, int player, string value)
     }
 }
 
-string libAffx_StringFraction(int value) {
-    string fraction = IntToString(value % 1000);
-    if (fraction == "0") { 
-    } else if (StringLength(fraction) == 1) {
-        fraction = "00" + fraction;
-    } else if (StringLength(fraction) == 2) {
+string libAffx_StringFraction(int value, int precision) {
+    int scale = PowI(10, precision);
+    int number = value / scale;
+    int fractionInt = value % scale;
+    string fraction = IntToString(fractionInt);
+    while (StringLength(fraction) < precision) {
         fraction = "0" + fraction;
     }
-    return (IntToString(value / 1000) + "." + fraction);
+
+    if (fractionInt == 0) {
+        return IntToString(number);
+    }
+    return IntToString(number) + "." + fraction;
 }
 
 // --------------------------------------------------------------------------------
@@ -1528,6 +1534,11 @@ void libAffx_ApplyTriggers(int affix, int amount) {
                 TriggerExecute(libAffx_affixes[affix].createdTriggers[i], true, false);
             } else if (libAffx_affixes[affix].createdTriggers[i] != null && triggerType == libAffx_triggerExecuteOnce && libAffx_affixes[affix].execute) {
                 TriggerExecute(libAffx_affixes[affix].createdTriggers[i], true, false);
+            } else if (libAffx_affixes[affix].createdTriggers[i] != null && triggerType == libAffx_triggerExecuteOncePerGame && !libAffx_affixes[affix].hasExecuted) {
+                libAffx_affixes[affix].hasExecuted = true;
+                TriggerExecute(libAffx_affixes[affix].createdTriggers[i], true, false);
+            } else if (libAffx_affixes[affix].createdTriggers[i] != null && triggerType == libAffx_triggerLevelUp && !libAffx_GateIsOpen()) {
+                TriggerExecute(libAffx_affixes[affix].createdTriggers[i], false, false);
             }
         }
     }
@@ -2565,26 +2576,22 @@ bool libAffx_LevelUpTrigger_Func (bool testConds, bool runActions) {
         } else if (level == 10) {
             libAffx_QueueAffix(libAffx_rarityCommon, false, level, libAffx_boonsLevel10, false);
         }
+        libAffx_startingBoonsQueued = true;
     }
     if (player == libAffx_enemy) {
         if (level == 1) {
             libAffx_Wait(libAffx_gameStartDelay, c_timeGame);
-            if (libAffx_player == libAffx_gallPlayer) {
-                libAffx_Wait(1, c_timeGame);
-            }
-            if (libGame_gv_players[libAffx_player].lv_heroIndex == libCore_gf_GetIndexFromHero("DVa")) {
-                libAffx_Wait(0.25, c_timeGame);
+            while (!libAffx_startingBoonsQueued) {
+                libAffx_Wait(0.0625, c_timeGame);
             }
             if (libAffx_difficulty == 3) {
                 libAffx_ApplyDifficulty();
                 libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1, false);
-                libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1, false);
             } else if (libAffx_difficulty == 2) {
                 libAffx_ApplyDifficulty();
-                libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1, false);
             } else {
-                libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1, false);
             }
+            libAffx_QueueAffix(libAffx_rarityCommon, true, level, libAffx_cursesLevel1, false);
             if (libAffx_cursesQueued > 0) {
                 if (libAffx_cursesQueued >= 2) {
                     UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/CurseNextGame2"));
@@ -3421,6 +3428,8 @@ void libAffx_InitAffixes () {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerNPCTakedown;
                     } else if (affixTrigger1 == "executeonce" || affixTrigger1 == "eo") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerExecuteOnce;
+                    } else if (affixTrigger1 == "executeoncepergame" || affixTrigger1 == "eopg" || affixTrigger1 == "oncepergame" || affixTrigger1 == "opg") {
+                        libAffx_affixes[i].triggers[i2].type = libAffx_triggerExecuteOncePerGame;
                     } else if (affixTrigger1 == "executeimmediate" || affixTrigger1 == "ei") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerExecuteImmediate;
                     } else if (affixTrigger1 == "herotakedown" || affixTrigger1 == "ht") { 

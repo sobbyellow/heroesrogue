@@ -663,7 +663,7 @@ bool libAffx_Experienced (bool testConds, bool runActions) {
     }
     affix = libAffx_EventAffix();
 
-    libGame_teamOrderXPMod += 0.2 * libAffx_affixes[affix].count;
+    libGame_teamOrderXPMod += 0.15 * libAffx_affixes[affix].count;
 
     return true;
 }
@@ -1279,7 +1279,7 @@ bool libAffx_CriticalMassHT (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 int trappedIndex;
 int trappedMineCount;
-bool libAffx_TrappedExecuteOnce (bool testConds, bool runActions) {
+bool libAffx_TrappedExecuteOncePerGame (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
@@ -1345,11 +1345,13 @@ bool libAffx_TrappedLevelUp (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 // Resurgence of the Storm
 // ---------------------------------------------------------------
+fixed resurgenceoftheStormCooldown = 300;
 bool libAffx_ResurgenceoftheStormAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
     resurgenceoftheStormIndex = libAffx_EventAffix();
+    resurgenceoftheStormCooldown = 300 - (60 * (libAffx_EventAffixCount() - 1));
     return true;
 }
 bool libAffx_ResurgenceoftheStormUD (bool testConds, bool runActions) {
@@ -1378,7 +1380,7 @@ bool libAffx_ResurgenceoftheStormUD (bool testConds, bool runActions) {
     }
 
     libGame_gv_players[libAffx_player].lv_suppressReviveVOSound = true;
-    libAffx_affixes[resurgenceoftheStormIndex].cooldown = 180;
+    libAffx_affixes[resurgenceoftheStormIndex].cooldown = resurgenceoftheStormCooldown;
     libGame_gf_HeroDeathUpdateRespawnTimer(libAffx_player, 5);
     return true;
 }
@@ -1526,7 +1528,7 @@ bool libAffx_PathoftheWarriorLevelUp (bool testConds, bool runActions) {
 // Path of the Assassin
 // ---------------------------------------------------------------
 fixed pathoftheAssassinValue = 5;
-fixed pathoftheAssassinValue2 = 2.5;
+fixed pathoftheAssassinValue2 = 2;
 int pathOfTheAssassinIndex;
 bool libAffx_HasFastAA(int heroIndex) {
     if (heroIndex == libCore_gf_GetIndexFromHero("DVa")) {
@@ -1553,7 +1555,7 @@ void libAffx_PathoftheAssassinInit() {
         pathoftheAssassinValue2 = 1;
     } else {
         pathoftheAssassinValue = 5;
-        pathoftheAssassinValue2 = 2.5;
+        pathoftheAssassinValue2 = 2;
     }
 }
 bool libAffx_PathoftheAssassinExecuteImmediate (bool testConds, bool runActions) {
@@ -1749,7 +1751,7 @@ bool libAffx_StructureAmmoExecute (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 int[6] grenadierPlayers;
 int grenadierTotal;
-bool libAffx_GrenadierExecuteOnce (bool testConds, bool runActions) {
+bool libAffx_GrenadierExecuteOncePerGame (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
@@ -1840,6 +1842,7 @@ bool libAffx_GreatVikingHoardUnitDied (bool testConds, bool runActions) {
         UnitCreate(1, "RegenGlobe", 0, libAffx_teamOrder, PointWithOffsetPolar(UnitGetPosition(deadUnit), 1.5, 90 * i), 0, null);
         UnitBehaviorRemove(UnitLastCreated(), "RegenGlobeTimedLifeInitial", 1);
         UnitBehaviorAdd(UnitLastCreated(), "RegenGlobeTimedLife", UnitLastCreated(), 1);
+        UnitBehaviorSetDuration(UnitLastCreated(), "RegenGlobeTimedLife", 6);
     }
               
     return true;
@@ -2024,6 +2027,28 @@ bool libAffx_NoMinimapDLCExecute (bool testConds, bool runActions) {
     return true;
 }
 // ---------------------------------------------------------------
+// Spell Leech
+// ---------------------------------------------------------------
+bool libAffx_SpellLeechAffixAdded (bool testConds, bool runActions) {
+    string amount = libAffx_StringFraction((10 + 5 * (libAffx_EventAffixCount() - 1)), 2);
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CatalogReferenceModify("Behavior,AffixSpellLeech,Modification.VitalDamageLeechArray[Life].KindArray[Ability]", libAffx_player, amount);
+    return true;
+}
+// ---------------------------------------------------------------
+// Physical Leech
+// ---------------------------------------------------------------
+bool libAffx_PhysicalLeechAffixAdded (bool testConds, bool runActions) {
+    string amount = libAffx_StringFraction((10 + 5 * (libAffx_EventAffixCount() - 1)), 2);
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CatalogReferenceModify("Behavior,AffixPhysicalLeech,Modification.VitalDamageLeechArray[Life].KindArray[Basic]", libAffx_player, amount);
+    return true;
+}
+// ---------------------------------------------------------------
 // Camera Zoom
 // ---------------------------------------------------------------
 bool libAffx_CameraZoomExecute (bool testConds, bool runActions) {
@@ -2064,24 +2089,18 @@ bool libAffx_UnstoppableAvatarRespawn (bool testConds, bool runActions) {
     UnitCreateEffectUnit(respawnedUnit, "MuradinAvatarApplyBehaviorsSet", respawnedUnit);
     
     libAffx_RemoveBehavior(libAffx_player, "Ultimate1Unlocked", 1, true);
-    //libAffx_RemoveBehavior(libAffx_player, "MuradinSecondWind", 1, true);
-    //libAffx_RemoveBehavior(libAffx_player, "MuradinSecondWindActiveImproved", 1, true);
     return true;
 }
 bool libAffx_UnstoppableAvatarExecute (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    //libAffx_LevelUpScaling(c_gameCatalogEffect, "MuradinSecondWindImprovedCreateHealerPermanent", "RechargeVitalRate", libAffx_player);
-    //libAffx_LevelUpScaling(c_gameCatalogEffect, "MuradinSecondWindImprovedCriticalCreateHealerPermanent", "RechargeVitalRate", libAffx_player);
     CatalogFieldValueSet(c_gameCatalogBehavior, "MuradinAvatarHealthBuff", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player, CatalogFieldValueGet(c_gameCatalogBehavior, "MuradinAvatar", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player));
     
     libAffx_AddBehavior(libAffx_player, "MuradinAvatarInitialDelay", 1, true);
     UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "MuradinAvatarApplyBehaviorsSet", libGame_gv_players[libAffx_player].lv_heroUnit);
 
     libAffx_RemoveBehavior(libAffx_player, "Ultimate1Unlocked", 1, true);
-    //libAffx_RemoveBehavior(libAffx_player, "MuradinSecondWind", 1, true);
-    //libAffx_RemoveBehavior(libAffx_player, "MuradinSecondWindActiveImproved", 1, true);
     return true;
 }
 bool libAffx_UnstoppableAvatarLevelUp (bool testConds, bool runActions) {
@@ -2095,8 +2114,6 @@ bool libAffx_UnstoppableAvatarLevelUp (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    //libAffx_LevelUpScaling(c_gameCatalogEffect, "MuradinSecondWindImprovedCreateHealerPermanent", "RechargeVitalRate", libAffx_player);
-    //libAffx_LevelUpScaling(c_gameCatalogEffect, "MuradinSecondWindImprovedCriticalCreateHealerPermanent", "RechargeVitalRate", libAffx_player);
     CatalogFieldValueSet(c_gameCatalogBehavior, "MuradinAvatarHealthBuff", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player, CatalogFieldValueGet(c_gameCatalogBehavior, "MuradinAvatar", "Modification.VitalMaxArray[" + IntToString(0) + "]", libAffx_player));
     return true;
 }
@@ -2114,7 +2131,7 @@ bool libAffx_SecondStartExecute (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_boonsLevel10 -= 1;
+    libAffx_QueueAffix(libAffx_rarityCommon, true, 1, 1, false);
     return true;
 }
 // ---------------------------------------------------------------
@@ -2285,7 +2302,7 @@ bool libAffx_AASearingAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixAASearing", "Modification.DamageDealtFraction[Basic]", 0.25 + 0.1 * (libAffx_affixes[libAffx_EventAffix()].count - 1));
+    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixAASearing", "Modification.DamageDealtFraction[Basic]", 0.20 + 0.1 * (libAffx_affixes[libAffx_EventAffix()].count - 1));
     return true;
 }
 // ---------------------------------------------------------------
@@ -2296,8 +2313,8 @@ bool libAffx_AmplifiedHealingAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixAmplifiedHealing", "Modification.HealTakenAdditiveMultiplier[Life]", 0.3 + 0.1 * (libAffx_affixes[affix].count - 1));
-    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixAmplifiedHealing", "Modification.VitalRegenMultiplier[Life]", 0.3 + 0.1 * (libAffx_affixes[affix].count - 1));
+    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixAmplifiedHealing", "Modification.HealTakenAdditiveMultiplier[Life]", 0.25 + 0.1 * (libAffx_affixes[affix].count - 1));
+    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixAmplifiedHealing", "Modification.VitalRegenMultiplier[Life]", 0.25 + 0.1 * (libAffx_affixes[affix].count - 1));
     return true;
 }
 // ---------------------------------------------------------------
@@ -2796,8 +2813,7 @@ bool libAffx_FirstAidAffixAdded (bool testConds, bool runActions) {
         return true;
     }
     
-    libAffx_DebugPrint("Value: " + libAffx_StringFraction(total));
-    libAffx_CatalogReferenceModify("Effect,AffixFirstAidCreateHealer,RechargeVitalFraction", libAffx_player, libAffx_StringFraction(total));
+    //libAffx_CatalogReferenceModify("Effect,AffixFirstAidCreateHealer,RechargeVitalFraction", libAffx_player, libAffx_StringFraction(total, 3));
 
     return true;
 }
@@ -2897,7 +2913,7 @@ bool libAffx_LastMomentsAffixAdded (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 // Execute Once
 // ---------------------------------------------------------------
-bool libAffx_RangedThrallExecuteOnce (bool testConds, bool runActions) {
+bool libAffx_RangedThrallExecuteOncePerGame (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
@@ -2907,11 +2923,11 @@ bool libAffx_RangedThrallExecuteOnce (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 // Quests Galore
 // ---------------------------------------------------------------
-bool libAffx_ThrallQuestsGaloreExecuteOnce (bool testConds, bool runActions) {
+bool libAffx_ThrallQuestsGaloreExecuteOncePerGame (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    TalentTreeSetSelectedHeroTalent(libAffx_player, 1, 1);
+    TalentTreeSetSelectedHeroTalent(libAffx_player, 4, 1);
     libGame_gf_TalentsUpdateChoicePanelForPlayer(libAffx_player);
     return true;
 }
@@ -2930,6 +2946,9 @@ bool libAffx_BadMannerismPeriodic (bool testConds, bool runActions) {
             return false;
         }
         if (UnitHasBehavior2(bmUnit, "Mounted")) {
+            return false;
+        }
+        if (libAffx_gamePaused || libGame_gv_gameOver) {
             return false;
         }
     }
@@ -3006,6 +3025,66 @@ bool libAffx_LiMingNeedMoreManaHeroTakedown (bool testConds, bool runActions) {
 
     UnitCreateEffectUnit(killerUnit, "WizardDominanceManaHealerAffix", killerUnit);
     
+    return true;
+}
+// ---------------------------------------------------------------
+// Teleporter
+// ---------------------------------------------------------------
+bool libAffx_LiMingTeleporterExecuteOncePerGame (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    
+    libAffx_CatalogReferenceModify("Abil,WizardTeleport,Cost[0].Cooldown.TimeUse", libAffx_player, "0.5");
+    libAffx_CatalogReferenceModify("Abil,WizardTeleport,Cost[0].Charge.TimeUse", libAffx_player, "5");
+    libAffx_CatalogReferenceModify("Abil,WizardTeleport,Cost[0].Charge.CountMax", libAffx_player, "3");
+    libAffx_CatalogReferenceModify("Abil,WizardTeleport,Cost[0].Charge.CountStart", libAffx_player, "3");
+    libAffx_CatalogReferenceModify("Abil,WizardTeleport,Cost[0].Charge.CountUse", libAffx_player, "1");
+    libAffx_CatalogReferenceModify("Effect,WizardArcaneLoopTeleport,Cost[0].ChargeTimeUse", libAffx_player, "-0.5");
+    libAffx_CatalogReferenceModify("Effect,WizardAetherWalkerInitialModifyPlayerTeleporter,Chance", libAffx_player, "1");
+    libAffx_CatalogReferenceModify("Effect,WizardAetherWalkerInitialModifyPlayer,Chance", libAffx_player, "0");
+    libAffx_CatalogReferenceModify("Effect,WizardAetherWalkerExpirationModifyPlayerTeleporter,Chance", libAffx_player, "1");
+    libAffx_CatalogReferenceModify("Effect,WizardAetherWalkerExpirationModifyPlayer,Chance", libAffx_player, "0");
+    return true;
+}
+bool libAffx_LiMingTeleporterLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (player != libAffx_player) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_LevelUpScaling2("Effect,WizardTeleportCalamityDamage2,Amount", libAffx_player, 1.03);
+    return true;
+}
+// ---------------------------------------------------------------
+// Missile Barrage
+// ---------------------------------------------------------------
+bool libAffx_LiMingMissileBarrageLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (player != libAffx_player) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_LevelUpScaling2("Effect,WizardMagicMissilesDamage2,Amount", libAffx_player, 1.035);
+    libAffx_LevelUpScaling2("Effect,WizardMagicMissilesDamage2Structure,Amount", libAffx_player, 1.035);
+    return true;
+}
+bool libAffx_LiMingMissileBarrageExecuteOncePerGame (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CatalogReferenceModify("Abil,WizardMagicMissiles,Cost[0].Cooldown.TimeUse", libAffx_player, "7");
+    libAffx_CatalogReferenceModify("Effect,WizardMagicMissilesCreatePersistents,PeriodCount", libAffx_player, "20");
     return true;
 }
 

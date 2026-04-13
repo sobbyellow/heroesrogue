@@ -2541,6 +2541,7 @@ void libCore_gf_ExecuteEffectAtRandomPointsWithinCircle (string lp_effect, unit 
     for ( ; ( (autoB5F7F78A_ai >= 0 && lv_i <= autoB5F7F78A_ae) || (autoB5F7F78A_ai < 0 && lv_i >= autoB5F7F78A_ae) ) ; lv_i += autoB5F7F78A_ai ) {
         lv_pointIndex = (ModI(lv_i, lv_numberOfValidPoints) + 1);
         UnitCreateEffectPoint(lp_casterUnit, lp_effect, lv_executionPoints[lv_pointIndex]);
+        
     }
 }
 

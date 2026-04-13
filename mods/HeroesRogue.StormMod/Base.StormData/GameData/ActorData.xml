@@ -304,19 +304,59 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Sound value="Wizard_TeleportCalamity_Impact" />
 </CActorSound>
 
-<CActorAction id="WizardMagicMissilesAttackLeftMirrorBall2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesMirrorBallImpactSet" effectLaunch="WizardMagicMissilesMirrorballLeftLM2">
+<CActorAction id="WizardAoEShieldImpactActor2" parent="StormAoEShieldImpactBase">
+  <On Terms="Effect.WizardTeleportCalamityDamage2.Start" Send="Create" />
+  <On Terms="Effect.WizardTeleportCalamityDamage2.Start" Send="ActionDamage" />
+  <On Terms="Effect.WizardTeleportCalamityDamage2.Stop" Send="Destroy" />
+</CActorAction>
+
+<CActorAction id="WizardMagicMissilesAttackCenter2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesImpactSet2" effectLaunch="WizardMagicMissilesCenterLM2">
+  <LaunchSiteOps Ops="SOpAttachHarness SOpMoveUpBy1 SOpAttachWeapon" />
+  <Missile value="WizardMagicMissilesMissile" />
+  <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy1" />
+  <ShieldFlashType value="None" />
+  <ImpactSound value="WizardMagicMissilesImpactSound" />
+  <LaunchAssets Sound="WizardMagicMissileProjectileSound" />
+</CActorAction>
+<CActorAction id="WizardMagicMissilesAttackLeft2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesImpactSet2" effectLaunch="WizardMagicMissilesLeftLM2">
+  <LaunchSiteOps Ops="SOpAttachCenter SOpMoveUpBy1 SOpMoveLeftBy3" />
+  <Missile value="WizardMagicMissilesMissileLeft" />
+  <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy1" />
+  <ShieldFlashType value="None" />
+  <LaunchAssets Sound="WizardMagicMissileProjectileSound" />
+  <ImpactSound value="WizardMagicMissilesImpactSound" />
+</CActorAction>
+<CActorAction id="WizardMagicMissilesAttackRight2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesImpactSet2" effectLaunch="WizardMagicMissilesRightLM2">
+  <LaunchSiteOps Ops="SOpAttachCenter SOpMoveUpBy1 SOpMoveRightBy3" />
+  <Missile value="WizardMagicMissilesMissileRight" />
+  <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy1" />
+  <ShieldFlashType value="None" />
+  <LaunchAssets Sound="WizardMagicMissileProjectileSound" />
+  <ImpactSound value="WizardMagicMissilesImpactSound" />
+</CActorAction>
+<CActorAction id="WizardMagicMissilesAttackLeftMirrorBall2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesImpactSet2" effectLaunch="WizardMagicMissilesMirrorballLeftLM2">
   <LaunchSiteOps Ops="SOpAttachCenter SOpMoveUpBy1 SOpMoveLeftBy3 SOpMoveLeftBy3" />
   <Missile value="WizardMagicMissilesMissileLeftTA" />
   <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy1" />
   <ShieldFlashType value="None" />
   <ImpactSound value="WizardMagicMissilesImpactSound" />
 </CActorAction>
-<CActorAction id="WizardMagicMissilesAttackRightMirrorBall2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesMirrorBallImpactSet" effectLaunch="WizardMagicMissilesMirrorballRightLM2">
+<CActorAction id="WizardMagicMissilesAttackRightMirrorBall2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesImpactSet2" effectLaunch="WizardMagicMissilesMirrorballRightLM2">
   <LaunchSiteOps Ops="SOpAttachCenter SOpMoveUpBy1 SOpMoveRightBy3 SOpMoveRightBy3" />
   <Missile value="WizardMagicMissilesMissileRightTA" />
   <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy1" />
   <ShieldFlashType value="None" />
   <ImpactSound value="WizardMagicMissilesImpactSound" />
 </CActorAction>
+<CActorSound id="WizardMagicMissilesImpactSound2" parent="SoundOneShot">
+  <On Terms="Effect.WizardMagicMissilesDamage2.Start" Send="Create" />
+  <Host Subject="_Unit" />
+  <Sound value="Wizard_MagicMissiles_Impact" />
+</CActorSound>
+<CActorSound id="WizardMagicMissilesImpactSound2Structure" parent="SoundOneShot">
+  <On Terms="Effect.WizardMagicMissilesDamage2Structure.Start" Send="Create" />
+  <Host Subject="_Unit" />
+  <Sound value="Wizard_MagicMissiles_Impact" />
+</CActorSound>
 
 </Catalog>

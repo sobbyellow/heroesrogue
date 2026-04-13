@@ -38,7 +38,7 @@ const int libAffx_triggerUnitCreated             =   5;     // Executes on unit 
 const int libAffx_triggerUnitDied                =   6;     // Executes on unit death.
 const int libAffx_triggerBehaviorChange          =   7;     // Executes on behavior added/removed.
 const int libAffx_triggerEffectUsed              =   8;     // Executes on CEffect use.
-const int libAffx_triggerLevelUp                 =   9;     // Executes on level up.
+const int libAffx_triggerLevelUp                 =   9;     // Executes at the start (ignoring test conds) and on level up.
 const int libAffx_triggerQuest                   =   10;    // Executes immediately if quest is not completed.
 const int libAffx_triggerUnitChangeOwner         =   11;    // Executes on unit ownership change.
 const int libAffx_triggerBehaviorChangeCategory  =   12;    // Executes on behavior added/removed based on category.
@@ -47,6 +47,7 @@ const int libAffx_triggerExecuteOnce             =   14;    // Executes immediat
 const int libAffx_triggerWin                     =   15;    // Executes when enemy core dies.
 const int libAffx_triggerRespawn                 =   16;    // Executes when a Hero respawns.
 const int libAffx_triggerExecuteImmediate        =   17;    // Executes immediately once at the start of game, regardless of stack count.
+const int libAffx_triggerExecuteOncePerGame      =   18;    // Executes once per game.
 
 
 const string libAffx_eventID = "EventAffix";
@@ -109,7 +110,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.11.0";
+const string libAffx_version = "0.11.1";
 
 struct libAffx_CatalogModification {
     int player;
@@ -155,6 +156,7 @@ struct libAffx_AffixData {
     bool isNegative;
     bool enabled;
     bool execute;
+    bool hasExecuted;
 
     bool[libAffx_affixMax + 1] excludedAffixes; // List of mutually exclusive affixes.
     bool[libAffx_affixMax + 1] requiredAffixes; // List of required affixes.
@@ -245,6 +247,8 @@ int libAffx_currentRun; // Number of the current run.
 int[11] libAffx_playersHeroIndex;
 bool[11] libAffx_playersFirstSpawnIn; // Whether the player's Hero unit has spawned into the game for the first time.
 
+bool libAffx_startingBoonsQueued;
+
 int libAffx_objectivesWon;
 int libAffx_objectivesWonCounter;
 int libAffx_skipCurseCounter;
@@ -253,6 +257,7 @@ int libAffx_executingAffix;
 int libAffx_executingAffixCount;
 
 int libAffx_boonsLevel10 = 1;
+int libAffx_cursesLevel1 = 1;
 
 int libAffx_difficulty = 1;
 int libAffx_loadedDifficulty;
@@ -292,8 +297,8 @@ trigger libAffx_OptionsRestartClickedTrigger;
 trigger libAffx_DVaCallMechCompletedTrigger;
 
 // Debug options
-bool libAffx_loadTryMeMode = false; // Try mode 2.0
-bool libAffx_cheatCommands = false; // Enables cheat/debug commands
+bool libAffx_loadTryMeMode = true; // Try mode 2.0
+bool libAffx_cheatCommands = true; // Enables cheat/debug commands
 bool libAffx_skipIntro = false; // Skips the Hero selection.
 bool libAffx_debugPrint = false; // Enables debug logging
 bool libAffx_pauseDisabled = false; // Disables pause features
@@ -375,7 +380,7 @@ void libAffx_AffixSetMapAll(int affix, bool allowed);
 void libAffx_AffixSetMapSpecific(int affix, int map);
 void libAffx_AffixSetWeight(int affix, int weight);
 void libAffx_AddBehavior(int player, string behavior, int stacks, bool applyToAllUnits);
-string libAffx_StringFraction(int value);
+string libAffx_StringFraction(int value, int precision);
 
 void libAffx_InitAffixTriggers();
 

@@ -501,16 +501,16 @@
             <String String="Assets/Textures/storm_ui_icon_talent_abilitytalent_damage.dds">
                 <Field Id="Icon"/>
             </String>
-            <String String="0 2 Set Behavior,AffixEnemyDamageBuff,Modification.HealDealtAdditiveMultiplier[Life] 0.1">
+            <String String="0 2 Set Behavior,AffixEnemyDamageBuff,Modification.HealDealtAdditiveMultiplier[Life] 0.15">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="0 2 Set Behavior,AffixEnemyDamageBuff,Modification.HealDealtAdditiveMultiplier[Shields] 0.1">
+            <String String="0 2 Set Behavior,AffixEnemyDamageBuff,Modification.HealDealtAdditiveMultiplier[Shields] 0.15">
                 <Field Id="CatalogModification" Index="1"/>
             </String>
-            <String String="0 2 Set Behavior,AffixEnemyDamageBuff,Modification.DamageDealtFraction[Ability] 0.1">
+            <String String="0 2 Set Behavior,AffixEnemyDamageBuff,Modification.DamageDealtFraction[Ability] 0.15">
                 <Field Id="CatalogModification" Index="2"/>
             </String>
-            <String String="0 2 Set Behavior,AffixEnemyDamageBuff,Modification.DamageDealtFraction[Basic] 0.1">
+            <String String="0 2 Set Behavior,AffixEnemyDamageBuff,Modification.DamageDealtFraction[Basic] 0.15">
                 <Field Id="CatalogModification" Index="3"/>
             </String>
             <String String="UnitCreated libAffx_EnemyDamageUnitCreated">
@@ -551,16 +551,16 @@
             <String String="Assets/Textures/storm_ui_icon_sonya_ferocioushealing.dds">
                 <Field Id="Icon"/>
             </String>
-            <String String="0 2 Set Behavior,AffixEnemyHealthBuff,Modification.VitalMaxFractionArray[Life] 0.15">
+            <String String="0 2 Set Behavior,AffixEnemyHealthBuff,Modification.VitalMaxFractionArray[Life] 0.2">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="0 2 Set Behavior,AffixEnemyHealthBuff,Modification.VitalMaxFractionArray[Shields] 0.15">
+            <String String="0 2 Set Behavior,AffixEnemyHealthBuff,Modification.VitalMaxFractionArray[Shields] 0.2">
                 <Field Id="CatalogModification" Index="1"/>
             </String>
-            <String String="0 2 Set Behavior,AffixEnemyHealthBuff,Modification.VitalRegenMultiplier[Life] 0.15">
+            <String String="0 2 Set Behavior,AffixEnemyHealthBuff,Modification.VitalRegenMultiplier[Life] 0.2">
                 <Field Id="CatalogModification" Index="2"/>
             </String>
-            <String String="0 2 Set Behavior,AffixEnemyHealthBuff,Modification.VitalRegenMultiplier[Shields] 0.15">
+            <String String="0 2 Set Behavior,AffixEnemyHealthBuff,Modification.VitalRegenMultiplier[Shields] 0.2">
                 <Field Id="CatalogModification" Index="3"/>
             </String>
             <String String="Execute libAffx_EnemyHealth">
@@ -1081,6 +1081,9 @@
             <Int Int="26">
                 <Field Id="LevelMax"/>
             </Int>
+            <Int Int="1">
+                <Field Id="SkipCurses"/>
+            </Int>
             <String String="Rare">
                 <Field Id="Rarity"/>
             </String>
@@ -1241,7 +1244,7 @@
             <String String="LU libAffx_TrappedLevelUp">
                 <Field Id="Trigger" Index="3"/>
             </String>
-            <String String="EO libAffx_TrappedExecuteOnce">
+            <String String="eopg libAffx_TrappedExecuteOncePerGame">
                 <Field Id="Trigger" Index="4"/>
             </String>
         </Instances>
@@ -1341,6 +1344,9 @@
             </String>
         </Instances>
         <Instances Id="ResurgenceoftheStorm">
+            <Int Int="3">
+                <Field Id="Max"/>
+            </Int>
             <String String="Epic">
                 <Field Id="Rarity"/>
             </String>
@@ -1589,7 +1595,7 @@
             <String String="Epic">
                 <Field Id="Rarity"/>
             </String>
-            <String String="EO libAffx_GrenadierExecuteOnce">
+            <String String="EOPG libAffx_GrenadierExecuteOncePerGame">
                 <Field Id="Trigger" Index="3"/>
             </String>
         </Instances>
@@ -2998,6 +3004,9 @@
             <Int Int="1">
                 <Field Id="Negative"/>
             </Int>
+            <Int Int="1">
+                <Field Id="SkipCurses"/>
+            </Int>
             <String String="LostVikings">
                 <Field Id="HeroSpecific"/>
             </String>
@@ -3318,8 +3327,8 @@
             <String String="Assets/Textures/storm_ui_icon_talent_abilitytalent_heal.dds">
                 <Field Id="Icon"/>
             </String>
-            <String String="1 2 Set Behavior,AffixSpellLeech,Modification.VitalDamageLeechArray[Life].KindArray[Ability] 0.1">
-                <Field Id="CatalogModification"/>
+            <String String="AA libAffx_SpellLeechAffixAdded">
+                <Field Id="Trigger"/>
             </String>
         </Instances>
         <Instances Id="Shield">
@@ -3524,7 +3533,7 @@
             <String String="1 3 Multiply Actor,ThrallChainLightningRangeSplat,Scale 1.5">
                 <Field Id="CatalogModification" Index="5"/>
             </String>
-            <String String="EO libAffx_RangedThrallExecuteOnce">
+            <String String="eopg libAffx_RangedThrallExecuteOncePerGame">
                 <Field Id="Trigger"/>
             </String>
             <String String="ThrallElementalAssault">
@@ -3574,7 +3583,7 @@
             <String String="ThrallEchooftheElements">
                 <Field Id="TalentsAdd" Index="4"/>
             </String>
-            <String String="EO libAffx_ThrallQuestsGaloreExecuteOnce">
+            <String String="EOPG libAffx_ThrallQuestsGaloreExecuteOncePerGame">
                 <Field Id="Trigger"/>
             </String>
             <String String="DoNothing">
@@ -3827,26 +3836,29 @@
             <String String="WizardTeleportDiamondSkin">
                 <Field Id="TalentsAdd" Index="3"/>
             </String>
-            <String String="1 1 Set Effect,WizardTeleportTeleport,PlacementRange 200">
+            <String String="1 3 Multiply Effect,WizardTeleportTeleport,PlacementRange 2">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="1 1 Set Effect,WizardTeleportTeleport,Range 500">
+            <String String="1 3 Multiply Effect,WizardTeleportTeleport,Range 2">
                 <Field Id="CatalogModification" Index="1"/>
             </String>
-            <String String="1 1 Set Abil,WizardTeleport,Range 500">
+            <String String="1 3 Multiply Abil,WizardTeleport,Range 2">
                 <Field Id="CatalogModification" Index="2"/>
             </String>
-            <String String="1 1 Set Actor,WizardTeleportRangeSplat,Scale 500">
+            <String String="1 3 Multiply Actor,WizardTeleportRangeSplat,Scale 2">
                 <Field Id="CatalogModification" Index="3"/>
             </String>
-            <String String="1 1 Set Effect,WizzardApplyMoveSpeed,Chance 1">
-                <Field Id="CatalogModification" Index="4"/>
+            <String String="LU libAffx_LiMingTeleporterLevelUp">
+                <Field Id="Trigger"/>
             </String>
             <String String="1 1 Set Effect,WizardTeleportCalamitySearch2,Chance 1">
+                <Field Id="CatalogModification" Index="4"/>
+            </String>
+            <String String="1 1 Set Effect,WizardTeleportCalamitySearch,Chance 1">
                 <Field Id="CatalogModification" Index="5"/>
             </String>
-            <String String="1 1 Set Effect,WizardTeleportCalamitySearch,Chance 0">
-                <Field Id="CatalogModification" Index="6"/>
+            <String String="EOPG libAffx_LiMingTeleporterExecuteOncePerGame">
+                <Field Id="Trigger" Index="1"/>
             </String>
         </Instances>
         <Instances Id="LiMingMissileBarrage">
@@ -3874,29 +3886,14 @@
             <String String="WizardMagicMissilesMirrorball">
                 <Field Id="TalentsAdd" Index="4"/>
             </String>
-            <String String="1 1 Set Effect,WizardMagicMissilesCreatePersistents,PeriodCount 20">
-                <Field Id="CatalogModification"/>
-            </String>
             <String String="WizardFirefliesMirrorball">
                 <Field Id="TalentsAdd" Index="5"/>
             </String>
-            <String String="1 1 Set Abil,WizardMagicMissiles,Cost.Cooldown.TimeUse 6">
-                <Field Id="CatalogModification" Index="1"/>
+            <String String="EOPG libAffx_LiMingMissileBarrageExecuteOncePerGame">
+                <Field Id="Trigger"/>
             </String>
-            <String String="1 1 Set Effect,WizardMagicMissilesCreatePersistents,PeriodicPeriodArray[0] 0.0625">
-                <Field Id="CatalogModification" Index="2"/>
-            </String>
-            <String String="1 1 Set Effect,WizardMagicMissilesCreatePersistents,PeriodicPeriodArray[1] 0.0625">
-                <Field Id="CatalogModification" Index="3"/>
-            </String>
-            <String String="1 1 Set Effect,WizardMagicMissilesCreatePersistents,PeriodicPeriodArray[2] 0.0625">
-                <Field Id="CatalogModification" Index="4"/>
-            </String>
-            <String String="1 1 Set Effect,WizardMagicMissilesCreatePersistents,PeriodicPeriodArray[3] 0.0625">
-                <Field Id="CatalogModification" Index="5"/>
-            </String>
-            <String String="1 1 Set Effect,WizardMagicMissilesCreatePersistents,PeriodicPeriodArray[4] 0.0625">
-                <Field Id="CatalogModification" Index="6"/>
+            <String String="LU libAffx_LiMingMissileBarrageLevelUp">
+                <Field Id="Trigger" Index="1"/>
             </String>
         </Instances>
         <Instances Id="LiMingOrbing">
@@ -3955,7 +3952,7 @@
             <String String="HT libAffx_LiMingCriticalPowerHeroTakedown">
                 <Field Id="Trigger"/>
             </String>
-            <String String="LiMingCriticalPowerTokenCounter 1">
+            <String String="LiMingCriticalPowerTokenCounter 0.5">
                 <Field Id="QuestRetain"/>
             </String>
             <String String="1 0 LiMingCriticalPowerTokenCounter">
@@ -4121,6 +4118,23 @@
             </String>
             <String String="1 1 Set Effect,WizardArcaneLoopTeleport,Chance 1">
                 <Field Id="CatalogModification" Index="2"/>
+            </String>
+        </Instances>
+        <Instances Id="PhysicalLeech">
+            <Int>
+                <Field Id="Max"/>
+            </Int>
+            <String String="1 0 AffixPhysicalLeech">
+                <Field Id="Behavior"/>
+            </String>
+            <String String="Epic">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_talent_autoattack_heal.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="AA libAffx_PhysicalLeechAffixAdded">
+                <Field Id="Trigger"/>
             </String>
         </Instances>
     </CUser>
