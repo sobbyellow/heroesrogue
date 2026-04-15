@@ -21,7 +21,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CBehaviorBuff id="AffixStructureHealthBuff" parent="CarryBehaviorParent">
     <Modification>
       <VitalMaxFractionArray index="Life" value="0.15" />
-      <VitalRegenMultiplier index="Life" value="0.15" />
     </Modification>
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixOutdatedCatapultsDebuff" parent="CarryBehaviorParent">
@@ -42,8 +41,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Modification>
       <VitalMaxFractionArray index="Life" value="0.15" />
       <VitalMaxFractionArray index="Shields" value="0.15" />
-      <VitalRegenMultiplier index="Life" value="0.15" />
-      <VitalRegenMultiplier index="Shields" value="0.15" />
     </Modification>
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixEnemySpeedBuff" parent="CarryBehaviorParent">
@@ -70,8 +67,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Modification>
       <VitalMaxFractionArray index="Life" value="0.07" />
       <VitalMaxFractionArray index="Shields" value="0.07" />
-      <VitalRegenMultiplier index="Life" value="0.07" />
-      <VitalRegenMultiplier index="Shields" value="0.07" />
     </Modification>
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixAllySpeedBuff" parent="CarryBehaviorParent">
@@ -416,12 +411,12 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   
 <CBehaviorBuff id="AffixDifficultyBuff" parent="CarryBehaviorParent">
   <Modification>
-    <DamageDealtFraction index="Ability" value="0.05" />
-    <DamageDealtFraction index="Basic" value="0.05" />
-    <VitalMaxFractionArray index="Life" value="0.05" />
-    <VitalMaxFractionArray index="Energy" value="0.05" />
-    <VitalRegenMultiplier index="Life" value="0.05" />
-    <VitalRegenMultiplier index="Energy" value="0.05" />
+    <DamageDealtFraction index="Ability" value="0.04" />
+    <DamageDealtFraction index="Basic" value="0.04" />
+    <VitalMaxFractionArray index="Life" value="0.04" />
+    <VitalMaxFractionArray index="Energy" value="0.04" />
+    <VitalRegenMultiplier index="Life" value="0.04" />
+    <VitalRegenMultiplier index="Energy" value="0.04" />
   </Modification>
 </CBehaviorBuff>
   
@@ -575,6 +570,9 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CBehaviorTokenCounter id="SentinelShotDamageTokenCounter" parent="StormQuestToken">
   <Face value="SentinelShotDamageToken" />
   <Max value="2000" />
+  <ConditionalEvents Compare="GE" CompareValue="20">
+    <Event EventId="QuestMilestone" Effect="LunarFlareQuestPierceUpgrade" />
+  </ConditionalEvents>
 </CBehaviorTokenCounter>
 <CBehaviorTokenCounter id="TheMarkTokenCounter" parent="StormQuestToken">
   <Face value="TheMarkTokenCounter" />
@@ -586,6 +584,9 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CBehaviorTokenCounter id="MuradinDwarfTossTokenCounter" parent="StormQuestToken">
   <Face value="MuradinDwarfTossTokenCounter" />
   <Max value="2000" />
+  <ConditionalEvents Compare="GE" CompareValue="25">
+    <Event EventId="QuestMilestone" Effect="MuradinDwarfTossTokenCounterUpgrade" />
+  </ConditionalEvents>
 </CBehaviorTokenCounter>
 
 <CBehaviorBuff id="MuradinPermanentSecondWind" parent="CarryBehaviorParent" />
@@ -682,16 +683,22 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CBehaviorBuff id="AffixInjury" parent="CarryBehaviorParent">
   <Modification>
     <VitalRegenArray index="Life" value="0" />
+    <HealTakenAdditiveMultiplier index="Life" value="-0.10" />
+    <VitalRegenMultiplier index="Life" value="-0.10" />
   </Modification>
 </CBehaviorBuff>
 <CBehaviorBuff id="AffixInjury2" parent="CarryBehaviorParent">
   <Modification>
     <VitalRegenArray index="Life" value="0" />
+    <HealTakenAdditiveMultiplier index="Life" value="-0.10" />
+    <VitalRegenMultiplier index="Life" value="-0.10" />
   </Modification>
 </CBehaviorBuff>
 <CBehaviorBuff id="AffixInjury3" parent="CarryBehaviorParent">
   <Modification>
     <VitalRegenArray index="Life" value="0" />
+    <HealTakenAdditiveMultiplier index="Life" value="-0.10" />
+    <VitalRegenMultiplier index="Life" value="-0.10" />
   </Modification>
 </CBehaviorBuff>
 
@@ -812,7 +819,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorBuff id="AffixRegenRing" parent="CarryBehaviorParent">
   <Modification>
-    <VitalRegenArray index="Life" value="5" />
+    <VitalRegenArray index="Life" value="8" />
   </Modification>
 </CBehaviorBuff>
 <CBehaviorBuff id="AffixRingofMagic" parent="CarryBehaviorParent" />
@@ -872,7 +879,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 </CBehaviorBuff>
 <CBehaviorTokenCounter id="LiMingCriticalPowerTokenCounter" parent="StormQuestToken">
   <Face value="LiMingCriticalPowerTokenCounter" />
-  <Max value="10000" />
+  <Max value="15000" />
 </CBehaviorTokenCounter>
 
 <CBehaviorBuff id="LiMingWaveofDoomSpellArmor" parent="StormArmor">
@@ -915,5 +922,46 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <RemoveValidatorArray value="WizardHasAetherWalker" />
   <FinalEffect value="WizardAetherWalkerExpirationSet" />
 </CBehaviorBuff>
+
+
+<CBehaviorBuff id="Mythic1Debuff" parent="CarryBehaviorParent">
+  <ArmorModification StackCount="1" >
+    <AllArmorBonus value="-10" />
+  </ArmorModification>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="Mythic2Buff" parent="CarryBehaviorParent">
+  <Modification>
+    <VitalMaxFractionArray index="Life" value="1.5" />
+    <HealDealtAdditiveMultiplier index="Life" value="0.5" />
+    <HealDealtAdditiveMultiplier index="Shields" value="0.5" />
+    <DamageDealtFraction index="Ability" value="0.5" />
+    <DamageDealtFraction index="Basic" value="0.5" />
+  </Modification>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="Mythic3Debuff" parent="CarryBehaviorParent">
+  <Modification>
+    <HealTakenAdditiveMultiplier index="Life" value="-1" />
+    <VitalRegenMultiplier index="Life" value="-1" />
+  </Modification>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="Mythic6Buff" parent="CarryBehaviorParent">
+  <Modification>
+    <VitalMaxFractionArray index="Life" value="2" />
+    <HealDealtAdditiveMultiplier index="Life" value="1" />
+    <HealDealtAdditiveMultiplier index="Shields" value="1" />
+    <DamageDealtFraction index="Ability" value="1" />
+    <DamageDealtFraction index="Basic" value="1" />
+  </Modification>
+</CBehaviorBuff>
+
+<CBehaviorTokenCounter id="WitchDoctorRitualofBoonsQuestToken" parent="StormQuestToken">
+  <Max value="250" />
+  <AtMaxEvents index="0" EventId="QuestComplete" Effect="WitchDoctorRitualofBoonsQuestComplete" />
+  <Face value="WitchDoctorRitualofBoonsQuestToken" />
+  <InfoIcon value="Assets\Textures\storm_ui_icon_nazeebo_voodooritual.dds" />
+</CBehaviorTokenCounter>
   
 </Catalog>

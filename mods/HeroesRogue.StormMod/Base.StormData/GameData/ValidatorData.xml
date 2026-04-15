@@ -166,6 +166,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Behavior value="AffixShield" />
 </CValidatorUnitCompareBehaviorCount>
 
+
 <CValidatorUnitCompareVital id="SourceLifeLT35Percent">
   <WhichUnit Value="Source" />
   <Compare value="LT" />
@@ -173,11 +174,21 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Value value="0.35" />
 </CValidatorUnitCompareVital>
 
-
 <CValidatorUnitCompareBehaviorCount id="CasterHasThrallRangedCarry">
   <WhichUnit Value="Caster" />
   <Compare value="GT" />
   <Behavior value="ThrallRangedCarry" />
 </CValidatorUnitCompareBehaviorCount>
+
+<CValidatorCombine id="HasPierceQuestCompleteOrHasPierceQuestCompleteAffix">
+  <CombineArray value="HasPierceQuestComplete" />
+  <CombineArray value="HasPierceQuestCompleteAffix" />
+</CValidatorCombine>
+<CValidatorUnitCompareTokenCount id="HasPierceQuestCompleteAffix">
+  <Compare value="GE" />
+  <Value value="20" />
+  <TokenId value="SentinelShotDamageTokenCounter" />
+  <WhichUnit Value="Caster" />
+</CValidatorUnitCompareTokenCount>
 
 </Catalog>

@@ -23,6 +23,7 @@ Label/Name/RarityEpic=<c val="a335ee">Epic
 Label/Name/RarityLegendary=<c val="ff8000">Legendary
 Label/Name/RarityStarter=<c val="e6cc80">Starter
 Label/Name/RarityNegative=<c val="c52020">Negative
+Label/Name/RarityMythicCurse=
 Label/Name/RaritySuffixStackable= - Stackable</c>
 Label/Name/RaritySuffixInfinite= - Infinite</c>
 Label/Name/RaritySuffixNone=</c>
@@ -51,17 +52,20 @@ Text/ExcludeChoGall=<n/><n/><c val="FFDE32">Does not apply to Cho'Gall.</c>
 Button/Name/PickAffix=Pick
 Label/Name/PickAffix=Choose a Boon!
 Label/Name/PickAffixNegative=Choose a Curse!
+Label/Name/PickAffixMythicCurse=Mythic Curse
 Button/Name/ShowAffixes=Boons & Curses
 Label/Name/ShowAffixes=Boons & Curses
 Button/Name/Reroll=Reroll
 Label/Name/Reroll=Boon rerolls available: 
 Label/Name/RerollCurse=Curse rerolls available: 
 Label/Name/RerollStarter=Cannot reroll starters
+Label/Name/RerollMythicCurse=Cannot reroll
 Message/CurseToBoon=<c val="FFDE36">The next Curse you obtain will become a Boon!</c>
 Message/CurseSkipped=<c val="FFDE36">Curse skipped due to a previous Curse.</c>
 Message/CurseSwap=<c val="FFDE36">Curse swapped to a Boon due to winning the last Objective.</c>
 Message/CurseNextGame1=<c val="FC4747">Obtained a Curse for missing a Level 7 Curse last game.</c>
 Message/CurseNextGame2=<c val="FC4747">Obtained 2 Curses for missing the level 4 and level 7 Curses last game.</c>
+Message/CurseCursed=<c val="FC4747">Obtained a Curse from dying 3 times.</c>
 Message/GoldenBorder=Golden Heroes have unique starter boons.
 Label/Name/Options=Options
 Button/Name/OptionsRestart=Restart the Run
@@ -69,14 +73,24 @@ Button/Name/OptionsReturn=Return to Game
 Label/Name/OptionsRestart=Are you sure you wish to restart the run?
 Button/Name/OptionsRestartYes=Yes
 Button/Name/OptionsRestartNo=No
+Label/Name/OptionsSpeedup=Increase game speed while gates are opening
 
 Label/Name/Difficulty=Difficulty
 Button/Name/Easy=Normal
 Button/Name/Normal=Heroic
 Button/Name/Hard=Mythic
 Button/Tooltip/Easy=No changes.
-Button/Tooltip/Normal=• Increases maximum Health and Mana, Mana regeneration, and damage dealt of enemy Heroes by <c val="#TooltipNumbers">4%</c> every game.
-Button/Tooltip/Hard=• Increases maximum Health and Mana, Mana regeneration, and damage dealt of ALL enemies by <c val="#TooltipNumbers">4%</c> every game.<n/>• Increases enemies's Experience gain by <c val="#TooltipNumbers">1%</c> every game.<n/>• Obtain an additional Curse at level <c val="#TooltipNumbers">1</c>.
+Button/Tooltip/Normal=• Increases maximum Health and Mana, Health and Mana regeneration, and damage dealt of enemy Heroes by <c val="#TooltipNumbers">4%</c> every game. Stacks multiplicatively.
+Button/Tooltip/Hard=• Increases maximum Health and Mana, Health and Mana regeneration, and damage dealt of ALL enemies by <c val="#TooltipNumbers">4%</c> every game. Stacks multiplicatively.<n/>• Increases enemies's Experience gain by <c val="#TooltipNumbers">1%</c> every game.<n/>• Obtain a powerful Mythic Curse every <c val="#TooltipNumbers">4</c> games.
+Affix/Name/DifficultyEasy=Normal
+Affix/Tooltip/DifficultyEasy=No changes.
+Affix/Tooltip/Append/DifficultyEasy=
+Affix/Name/DifficultyNormal=Heroic
+Affix/Tooltip/DifficultyNormal=Increases maximum Health and Mana, Health and Mana regeneration, and damage dealt of enemy Heroes by <c val="#TooltipNumbers">4%</c> every game. Stacks multiplicatively.
+Affix/Tooltip/Append/DifficultyNormal=<n/><n/>Stats bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDifficultyBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
+Affix/Name/DifficultyHard=Mythic
+Affix/Tooltip/DifficultyHard=Increases maximum Health and Mana, Health and Mana regeneration, and damage dealt of ALL enemies by <c val="#TooltipNumbers">4%</c> every game. Stacks multiplicatively.<n/><n/>Increases enemies's Experience gain by <c val="#TooltipNumbers">1%</c> every game.<n/><n/>Obtain a powerful Mythic Curse every <c val="#TooltipNumbers">4</c> games.
+Affix/Tooltip/Append/DifficultyHard=<n/><n/>Stats bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDifficultyBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c><n/>XP boost: <c val="#TooltipNumbers"><d ref="($GalaxyVar:libAffx_difficultyXPMod$)*100" precision="2"/>%</c>
 
 Button/Name/WitchDoctorWidowmakers2=Widowmakers II
 Button/SimpleDisplayText/WitchDoctorWidowmakers2=Increases Slow and duration
@@ -258,7 +272,7 @@ Affix/Name/Evasive=Evasive
 Affix/Tooltip/Evasive=Evasion is permanently active.<n/><n/>You take double Spell Damage.
 Affix/Tooltip/Append/Evasive=
 Affix/Name/ElunesRanger=Elune's Ranger
-Affix/Tooltip/ElunesRanger=Gain the benefits of all Sentinel talents and Sentinel gains a <c val="#TooltipNumbers">3rd</c> charge. Reduces the Mana Cost of Sentinel by <c val="#TooltipNumbers">100%</c>.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Hitting enemy Heroes with Sentinel increases its damage by <c val="#TooltipNumbers">5%</c>.<n/><n/>Retain <c val="#TooltipNumbers">25%</c> of Quest progress after winning the game.
+Affix/Tooltip/ElunesRanger=Gain the benefits of all Sentinel talents and Sentinel gains a <c val="#TooltipNumbers">3rd</c> charge. Reduces the Mana Cost of Sentinel by <c val="#TooltipNumbers">100%</c>.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Hitting enemy Heroes with Sentinel increases its damage by <c val="#TooltipNumbers">5%</c>.<n/><n/><c val="#TooltipQuest">Reward:</c> After hitting <c val="#TooltipNumbers">20</c> Heroes, Sentinel pierces the first Hero hit.<n/><n/>Retain <c val="#TooltipNumbers">25%</c> of Quest progress after winning the game.
 Affix/Tooltip/Append/ElunesRanger=
 Button/Name/SentinelShotDamageToken=Elune's Ranger
 Button/Tooltip/SentinelShotDamageToken=<c val="#TooltipQuest">Bonus damage: <c val="#TooltipNumbers"><d ref="$BehaviorTokenCount:SentinelShotDamageTokenCounter$*(100*Accumulator,SentinelShotDamageAccumulator,Scale)" precision="2"/>%</c>
@@ -286,7 +300,7 @@ Affix/Name/ElunesReach=Elune's Reach
 Affix/Tooltip/ElunesReach=Increases Light of Elune's range by <c val="#TooltipNumbers">50%</c>.
 Affix/Tooltip/Append/ElunesReach=
 Affix/Name/Jumper=Jumper
-Affix/Tooltip/Jumper=Gain the benefits of all Dwarf Toss talents and gain Unstoppable during the jump.<n/><n/>Increases Dwarf Toss's range and radius by <c val="#TooltipNumbers">100%</c>.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Hitting enemy Heroes with Dwarf Toss increases its damage by <c val="#TooltipNumbers">10%</c>.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
+Affix/Tooltip/Jumper=Gain the benefits of all Dwarf Toss talents and gain Unstoppable during the jump.<n/><n/>Increases Dwarf Toss's range and radius by <c val="#TooltipNumbers">100%</c>.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Hitting enemy Heroes with Dwarf Toss increases its damage by <c val="#TooltipNumbers">10%</c>.<n/><n/><c val="#TooltipQuest">Reward:</c> After hitting <c val="#TooltipNumbers">25</c> Heroes, reduce Dwarf Toss's cooldown by <c val="#TooltipNumbers">4</c> seconds.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
 Affix/Tooltip/Append/Jumper=
 Button/Name/MuradinDwarfTossTokenCounter=Jumper
 Button/Tooltip/MuradinDwarfTossTokenCounter=<c val="#TooltipQuest">Bonus damage: <c val="#TooltipNumbers"><d ref="$BehaviorTokenCount:MuradinDwarfTossTokenCounter$*100*(Accumulator,MuradinDwarfTossAccumulator,Scale)" precision="0"/>%</c>
@@ -405,13 +419,13 @@ Affix/Name/PhysicalArmor=Physical Armor
 Affix/Tooltip/PhysicalArmor=Gain permanent <c val="#TooltipNumbers">10</c> Physical Armor.<n/><n/>Additional stacks increase Physical Armor by <c val="#TooltipNumbers">5</c>.
 Affix/Tooltip/Append/PhysicalArmor=<n/><n/>Physical Armor: <c val="#TooltipNumbers"><d ref="Behavior,AffixPhysicalArmor,ArmorModification.ArmorSet[Hero].ArmorMitigationTable[Basic]" precision="0"/></c>
 Affix/Name/RegenerationRing=Ring of Regeneration
-Affix/Tooltip/RegenerationRing=You and allied Heroes regenerate <c val="#TooltipNumbers">5</c> Health per second.
+Affix/Tooltip/RegenerationRing=You and allied Heroes regenerate <c val="#TooltipNumbers">8</c> Health per second.
 Affix/Tooltip/Append/RegenerationRing=<n/><n/>Health regeneration bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixRegenRing,Modification.VitalRegenArray[Life]" precision="0"/></c>
 Affix/Name/MagicRing=Ring of Magic
 Affix/Tooltip/MagicRing=You and allied Heroes recharge Ability cooldowns <c val="#TooltipNumbers">5%</c> faster.
 Affix/Tooltip/Append/MagicRing=<n/><n/>Cooldown reduction bonus: <c val="#TooltipNumbers"><d ref="$GalaxyVar:ringOfMagicModifier$*100" precision="0"/>%</c>
 Affix/Name/RangedThrall=Lightning Rod
-Affix/Tooltip/RangedThrall=Thrall's Basic Attack becomes ranged. Gain the benefits of Nexus Blades and Elemental Assault.<n/><n/>Increases Feral Spirit and Chain Lightning's range by <c val="#TooltipNumbers">50%</c>.
+Affix/Tooltip/RangedThrall=Thrall's Basic Attack becomes ranged. Gain the benefits of Nexus Blades, Elemental Assault, and Elemental Momentum.<n/><n/>Increases Feral Spirit and Chain Lightning's range by <c val="#TooltipNumbers">50%</c>.
 Affix/Tooltip/Append/RangedThrall=
 Affix/Name/ThrallQuestsGalore=Quests Galore
 Affix/Tooltip/ThrallQuestsGalore=Gain the benefits of Echo of the Elements, Crash Lightning, Maelstrom Weapon, Frostwolf Pack, and Thunderstorm.<n/><n/>Completing Crash Lightning and Echo of the Elements will allow Chain Lightning to bounce on the same target.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress on these Quests after winning the game.
@@ -447,13 +461,13 @@ Affix/Name/LiMingTeleporter=Teleporter
 Affix/Tooltip/LiMingTeleporter=Gain the benefits of all Teleport talents. Calamity deals <c val="#TooltipNumbers">50%</c> damage to non-Heroes.<n/><n/>Increases Teleport's range by <c val="#TooltipNumbers">100%</c> and maximum charges by <c val="#TooltipNumbers">2</c>.
 Affix/Tooltip/Append/LiMingTeleporter=
 Affix/Name/LiMingMissileBarrage=Missile Barrage
-Affix/Tooltip/LiMingMissileBarrage=Gain the benefits of all Magic Missiles talents.<n/><n/>After the initial missiles, Magic Missiles fires a barage of <c val="#TooltipNumbers">15</c> magic missiles over <c val="#TooltipNumbers">1</c> second dealing <c val="#TooltipNumbers">50%</c> damage, but its cooldown is increased to <c val="#TooltipNumbers">7</c> seconds.<n/><n/>The additional magic missiles deal <c val="#TooltipNumbers">10%</c> damage to Structures.<n/><n/>Additional missiles do not benefit from Seeker.
+Affix/Tooltip/LiMingMissileBarrage=Gain the benefits of all Magic Missiles talents.<n/><n/>After the initial missiles, Magic Missiles fires a barage of <c val="#TooltipNumbers">15</c> magic missiles over <c val="#TooltipNumbers">1</c> second dealing <c val="#TooltipNumbers">50%</c> damage, but its cooldown is increased to <c val="#TooltipNumbers">6</c> seconds.<n/><n/>The additional magic missiles deal <c val="#TooltipNumbers">20%</c> damage to Structures.<n/><n/>Additional missiles do not benefit from Seeker.
 Affix/Tooltip/Append/LiMingMissileBarrage=
 Affix/Name/LiMingOrbing=Orbing
 Affix/Tooltip/LiMingOrbing=Gain the benefits of all Arcane Orb talents.<n/><n/>Arcane Orb fires <c val="#TooltipNumbers">2</c> additional orbs in an arc.
 Affix/Tooltip/Append/LiMingOrbing=
 Affix/Name/LiMingCriticalPower=Critical Power
-Affix/Tooltip/LiMingCriticalPower=Takedowns increase Spell Power by <c val="#TooltipNumbers">1%</c>.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
+Affix/Tooltip/LiMingCriticalPower=Gain the benefits of Tal Rasha's Elements.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Takedowns increase Spell Power by <c val="#TooltipNumbers">1.5%</c>.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
 Affix/Tooltip/Append/LiMingCriticalPower=
 Button/Name/LiMingCriticalPowerTokenCounter=Critical Power
 Button/Tooltip/LiMingCriticalPowerTokenCounter=<c val="#TooltipQuest">Bonus Spell Power: <c val="#TooltipNumbers"><d ref="$BehaviorTokenCount:LiMingCriticalPowerTokenCounter$*100*(Accumulator,LiMingCriticalPowerAccumulator,Scale)" precision="0"/>%</c>
@@ -475,8 +489,32 @@ Affix/Tooltip/Append/LiMingFarshot=<n/><n/>Range bonus: <c val="#TooltipNumbers"
 Affix/Name/LiMingArcaneLoop=Arcane Loop
 Affix/Tooltip/LiMingArcaneLoop=Using a Basic Ability reduces the cooldown of your other Basic Abilities by <c val="#TooltipNumbers">0.5</c> seconds.
 Affix/Tooltip/Append/LiMingArcaneLoop=
+Affix/Name/NazeeboRitualofBoons=Ritual of Boons
+Affix/Tooltip/NazeeboRitualofBoons=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Gain <c val="#TooltipNumbers">250</c> stacks of Voodoo Ritual. Progress is lost between rounds.<n/><n/><c val="#TooltipQuest">Reward:</c> Gain <c val="#TooltipNumbers">1</c> uncommon and <c val="#TooltipNumbers">1</c> rare Boon.
+Affix/Tooltip/Append/NazeeboRitualofBoons=
+Button/Name/WitchDoctorRitualofBoonsQuestToken=Ritual of Boons
+Button/Tooltip/WitchDoctorRitualofBoonsQuestToken=<c val="#TooltipQuest">Voodoo Ritual Stacks: <c val="#TooltipNumbers"><d ref="$BehaviorStackCount:WitchDoctorRitualofBoonsQuestToken$"/> / <d ref="Behavior,WitchDoctorRitualofBoonsQuestToken,Max"/></c>
 
 
+
+Affix/Name/Mythic1=Sabotage
+Affix/Tooltip/Mythic1=ALL allied Structures start at <c val="#TooltipNumbers">50%</c> Health and have their Armor reduced by <c val="#TooltipNumbers">10</c>.
+Affix/Tooltip/Append/Mythic1=
+Affix/Name/Mythic2=Citadel
+Affix/Tooltip/Mythic2=Increases enemy Structures maximum Health by <c val="#TooltipNumbers">150%</c> and their damage by <c val="#TooltipNumbers">50%</c>.
+Affix/Tooltip/Append/Mythic2=
+Affix/Name/Mythic3=Bleeding
+Affix/Tooltip/Mythic3=Reduces regeneration effects and all healing received by <c val="#TooltipNumbers">100%</c>.
+Affix/Tooltip/Append/Mythic3=
+Affix/Name/Mythic4=Level Disadvantage
+Affix/Tooltip/Mythic4=Enemy Heroes start at Level <c val="#TooltipNumbers">7</c>.
+Affix/Tooltip/Append/Mythic4=
+Affix/Name/Mythic5=Cursed
+Affix/Tooltip/Mythic5=Winning an objective no longer swaps a curse to a boon.<n/><n/>Obtain a Curse every <c val="#TooltipNumbers">3</c> deaths. Counter is reset between rounds.
+Affix/Tooltip/Append/Mythic5=
+Affix/Name/Mythic6=Eternal
+Affix/Tooltip/Mythic6=Increases enemy Heroes's maximum Health by <c val="#TooltipNumbers">200%</c> and damage by <c val="#TooltipNumbers">100%</c>.
+Affix/Tooltip/Append/Mythic6=<n/><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="Behavior,Mythic6Buff,Modification.VitalMaxFractionArray[Life]*100" precision="0"/>%</c><n/>Damage bonus: <c val="#TooltipNumbers"><d ref="Behavior,Mythic6Buff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
 
 Affix/Name/Conversion=Possession
 Affix/Tooltip/Conversion=Enemy leader Minions convert a nearby allied Minion to their side every <c val="#TooltipNumbers">30</c> seconds.<n/><n/>Additional stacks reduce the cooldown by <c val="#TooltipNumbers">10</c> seconds.
@@ -621,7 +659,7 @@ Affix/Name/Blindfolded=Blindfolded
 Affix/Tooltip/Blindfolded=Reduces your vision range by <c val="#TooltipNumbers">2</c>.
 Affix/Tooltip/Append/Blindfolded=<n/><n/>Vision range reduction: <c val="#TooltipNumbers"><d ref="-Behavior,AffixBlindfolded,Modification.SightBonus" precision="2"/></c>
 Affix/Name/Injury=Injury
-Affix/Tooltip/Injury=You no longer naturally regenerate Health.
+Affix/Tooltip/Injury=You no longer naturally regenerate Health.<n/><n/>Reduces regeneration effects and all healing received by <c val="#TooltipNumbers">10%</c>
 Affix/Tooltip/Append/Injury=
 Affix/Name/Wrath=Relentless
 Affix/Tooltip/Wrath=Reduces the duration of ALL Stuns, Slows, Roots, and Silences against enemy Heroes by <c val="#TooltipNumbers">15%</c>.

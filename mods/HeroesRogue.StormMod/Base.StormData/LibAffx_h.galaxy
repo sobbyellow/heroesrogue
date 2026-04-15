@@ -59,13 +59,13 @@ const string libAffx_eventParam2 = "AmountAdded";
 const fixed libAffx_commonToUncommon    =   0.25;
 const fixed libAffx_commonToRare        =   0.05;
 const fixed libAffx_commonToEpic        =   0.025;
-const fixed libAffx_commonToLegendary   =   0.01;
+const fixed libAffx_commonToLegendary   =   0.005;
 const fixed libAffx_uncommonToRare      =   0.125;
 const fixed libAffx_uncommonToEpic      =   0.075;
-const fixed libAffx_uncommonToLegendary =   0.015;
+const fixed libAffx_uncommonToLegendary =   0.01;
 const fixed libAffx_rareToEpic          =   0.15;
-const fixed libAffx_rareToLegendary     =   0.02;
-const fixed libAffx_epicToLegendary     =   0.04;
+const fixed libAffx_rareToLegendary     =   0.015;
+const fixed libAffx_epicToLegendary     =   0.02;
 
 const fixed libAffx_negativeUpgrade     =   0.30; // Additional chance for higher rarity negative affixes
 const fixed libAffx_negativeUpgradeHigh =   0.35; // Additional chance for epic and legendary negative affixes
@@ -78,6 +78,7 @@ const int libAffx_rarityRare        =   3;
 const int libAffx_rarityEpic        =   4;
 const int libAffx_rarityLegendary   =   5;
 const int libAffx_rarityStarter     =   6;
+const int libAffx_rarityMythicCurse =   7;
 
 // Map IDs
 
@@ -94,7 +95,6 @@ const int libAffx_teamChaos = libCore_gv_cOMPUTER_TeamChaos;
 const int libAffx_teamOrderIndex = libGame_gv_teamOrderIndex_C;
 const int libAffx_teamChaosIndex = libGame_gv_teamChaosIndex_C;
 
-const int libAffx_maxAffixesFromObjectives = 1; // Maximum affixes that can be gained from winning objectives.
 const int libAffx_rerollsPerGame = 1; // How many rerolls are added at the start of every game.
 const int libAffx_rerollsStart = 3; // How many rerolls the player starts with.
 
@@ -110,7 +110,7 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.11.2";
+const string libAffx_version = "0.12.0";
 
 struct libAffx_CatalogModification {
     int player;
@@ -153,10 +153,14 @@ struct libAffx_AffixData {
     int minLevel; // Minimum level requirement. 0 = No requirement
     int maxLevel; // Maximum level requirement. 0 = No requirement
 
-    bool isNegative;
+    bool curse;
+    bool mythicCurse;
+
     bool enabled;
-    bool execute;
+    bool shouldExecute;
     bool hasExecuted;
+
+    bool cannotRoll;
 
     bool[libAffx_affixMax + 1] excludedAffixes; // List of mutually exclusive affixes.
     bool[libAffx_affixMax + 1] requiredAffixes; // List of required affixes.
@@ -196,6 +200,8 @@ int libAffx_registeredAffixes; // Number of affixes loaded into the game.
 int libAffx_currentMap; // Current map
 string libAffx_nextMap; // The next map used for saving into bank.
 
+int libAffx_maxAffixesFromObjectives = 1; // Maximum affixes that can be gained from winning objectives.
+
 int[libAffx_queueMax + 1] libAffx_queueAffixRarity;
 bool[libAffx_queueMax + 1] libAffx_queueAffixNegative;
 int[libAffx_queueMax + 1] libAffx_queueAffixLevel;
@@ -210,6 +216,8 @@ bool libAffx_queueActive; // Whether the affix queue is currently active.
 int libAffx_rerolls; // Number of rerolls available.
 int libAffx_rerollsCurse; // Rerolls for curses.
 
+fixed libAffx_difficultyXPMod;
+
 int libAffx_dialogAffixSelection;
 int libAffx_dialogAffixSelectionLabel;
 int[libAffx_affixSelectionMax + 1] libAffx_dialogAffixSelectionButton;
@@ -219,6 +227,7 @@ int libAffx_dialogTopRight;
 int libAffx_dialogControlOptions;
 int libAffx_dialogOptions;
 int libAffx_dialogOptionsRestart;
+int libAffx_dialogControlOptionsSpeedup;
 int libAffx_dialogControlOptionsReturn;
 int libAffx_dialogControlOptionsRestart;
 int libAffx_dialogControlOptionsRestartYes;
@@ -241,7 +250,6 @@ bool libAffx_gamePaused; // Whether the game is paused.
 bool libAffx_showingOwnedAffixes; // Whether the Owned Affixes window is open.
 bool libAffx_showingOptions; // Whether the Options window is open.
 
-int libAffx_playerHeroIndex; // The player's Hero index.
 int libAffx_playerHeroIndexLoaded; // The player's Hero index that was loaded from the Bank.
 int libAffx_currentRun; // Number of the current run.
 int[11] libAffx_playersHeroIndex;
@@ -261,6 +269,8 @@ int libAffx_cursesLevel1 = 1;
 
 int libAffx_difficulty = 1;
 int libAffx_loadedDifficulty;
+
+bool libAffx_speedUpStart;
 
 int libAffx_gallPlayer;
 int libAffx_choPlayer;
@@ -295,10 +305,14 @@ trigger libAffx_DifficultyUnitChangeOwner;
 trigger libAffx_OptionsClickedTrigger;
 trigger libAffx_OptionsRestartClickedTrigger;
 trigger libAffx_DVaCallMechCompletedTrigger;
+trigger libAffx_DVaRespawnTrigger;
+trigger libAffx_OptionsSpeedUpClickedTrigger;
+trigger libAffx_SpeedUpTrigger;
+trigger libAffx_PBU2DifficultyChangedTrigger;
 
 // Debug options
-bool libAffx_loadTryMeMode = false; // Try mode 2.0
-bool libAffx_cheatCommands = false; // Enables cheat/debug commands
+bool libAffx_loadTryMeMode = true; // Try mode 2.0
+bool libAffx_cheatCommands = true; // Enables cheat/debug commands
 bool libAffx_skipIntro = false; // Skips the Hero selection.
 bool libAffx_debugPrint = false; // Enables debug logging
 bool libAffx_pauseDisabled = false; // Disables pause features
@@ -322,7 +336,7 @@ string libAffx_CountToString(int count, int maxCount);
 text libAffx_GetAffixTitle(bool negative);
 void libAffx_CreateAffixDialogItem(int buttonIndex, int affix, int xOffset);
 void libAffx_CreateAffixDialog(bool negative);
-void libAffx_ShowAffixDialog(); // Show dialog for picking affixes.
+void libAffx_ShowAffixDialog(int showCount); // Show dialog for picking affixes.
 void libAffx_CreateUI();
 void libAffx_CreateCurrentRunDialog();
 void libAffx_CreateAffixesOwnedDialogItem(int affix, int offsetX, int offsetY);
@@ -336,7 +350,7 @@ int libAffx_GetMapID(string mapString);
 string libAffx_GetMapString(int map);
 void libAffx_CatalogSetForAllPlayers(int type, string entry, string path, string value); // Sets catalog for all players.
 void libAffx_CatalogSetFixedForAllPlayers(int type, string entry, string path, fixed value); // Sets catalog for all players with fixed value.
-void libAffx_CatalogModifyForAllPlayers(int type, string entry, string path, string value, int operation); // Modifies catalog for all players.
+void libAffx_CatalogModifyForAllPlayers(string reference, string value); // Modifies catalog for all players.
 void libAffx_SendAffixAddedEvent (int affix, int amount);
 int libAffx_EventAffix(); // Returns the triggering affix.
 int libAffx_EventAffixCountAdded(); // Returns the stack count added for the triggering affix.
@@ -353,6 +367,9 @@ void libAffx_ApplyTriggers(int affix, int amount);
 void libAffx_ApplyAffix(int affix, int amount);
 void libAffx_AddAffix(int affix, int count);
 void libAffx_SetAffix(int affix, int count);
+void libAffx_SettingsSave();
+void libAffx_SettingsLoad();
+void libAffx_SettingsSavePBUDifficulty();
 void libAffx_BankSave();
 void libAffx_BankLoad();
 void libAffx_BankReset();

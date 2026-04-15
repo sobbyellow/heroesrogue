@@ -385,14 +385,11 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CEffectEnumArea>
   <CEffectSet id="ZaryaParticleGrenadeExplosionSetAffix">
     <EffectArray value="ZaryaParticleGrenadeDamageAffix" />
-    <EffectArray value="ZaryaParticleGrenadeDemolitionsExpertAddToken" />
-    <EffectArray value="ZaryaParticleGrenadePinpointAccuracySlowApply" />
     <EffectArray value="ApplyAbilityImpactReveal" />
-    <EffectArray value="ZaryaParticleGrenadeDeepBurnTalentApplyMarker" />
     <EffectArray value="StormSuicide" />
   </CEffectSet>
   <CEffectDamage id="ZaryaParticleGrenadeDamageAffix" parent="StormSpell">
-    <Amount value="80" />
+    <Amount value="240" />
     <AttributeFactor index="Structure" value="-0.5" />
   </CEffectDamage>
 
@@ -786,7 +783,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <WhichUnit Value="Caster" />
     <Behavior value="AffixShield" />
   </CEffectApplyBehavior>
-
   
   <CEffectSet id="AffixLastMomentsSet">
     <EffectArray value="AffixLastMomentsPersistent" />
@@ -1238,7 +1234,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <MultiplicativeModifierArray index="AetherWalker" Validator="WizardSourceHasTeleportMagicMissilesBonusDamageBuffAndAetherWalkerTalent" Modifier="0.1" />
 </CEffectDamage>
 <CEffectDamage id="WizardMagicMissilesDamage2Structure" parent="StormSpell">
-  <Amount value="14.7" />
+  <Amount value="29.4" />
   <MultiplicativeModifierArray index="0" Accumulator="WizardTalrashasElementsSourceMissileAccumulator" />
   <MultiplicativeModifierArray index="AetherWalker" Validator="WizardSourceHasTeleportMagicMissilesBonusDamageBuffAndAetherWalkerTalent" Modifier="0.1" />
 </CEffectDamage>
@@ -1298,6 +1294,34 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CEffectSet id="WizardAetherWalkerExpirationSet">
   <EffectArray value="WizardAetherWalkerExpirationModifyPlayer" />
   <EffectArray value="WizardAetherWalkerExpirationModifyPlayerTeleporter" />
+</CEffectSet>
+
+<CEffectModifyPlayer id="ThrallWindfuryMaelstromWeaponTalent1stQuestCompletionModifyPlayer">
+  <EffectArray Operation="Add" Reference="Behavior,WindfurySpeedBuff,Modification.UnifiedMoveSpeedFactor" Value=".1"/>
+</CEffectModifyPlayer>
+
+<CEffectSet id="ThrallEarthquakeDamageSet">
+  <EffectArray value="ApplyAbilityImpactReveal"/>
+</CEffectSet>
+<CEffectApplyBehavior id="TyrandeSentinelApplyPierceBuff">
+  <WhichUnit Value="Source" />
+  <Behavior value="TyrandeSentinelPierceBuff" />
+  <ValidatorArray index="0" value="HasPierceQuestCompleteOrHasPierceQuestCompleteAffix" />
+</CEffectApplyBehavior>
+
+<CEffectModifyPlayer id="MuradinDwarfTossTokenCounterUpgrade">
+  <EffectArray Reference="Abil,MuradinDwarfToss,Cost[0].Charge.TimeUse" Value="-4" />
+</CEffectModifyPlayer>
+
+<CEffectSet id="WitchDoctorRitualofBoonsQuestComplete" />
+
+<CEffectModifyTokenCount id="WitchDoctorRitualofBoonsAddToken" parent="BaseEffectModifyTokenCount">
+  <Chance value="0" />
+  <TokenId value="WitchDoctorRitualofBoonsQuestToken" />
+</CEffectModifyTokenCount>
+
+<CEffectSet id="WitchDoctorVoodooRitualProcSet">
+  <EffectArray value="WitchDoctorRitualofBoonsAddToken" />
 </CEffectSet>
 
   

@@ -77,6 +77,7 @@ bool libAffx_HeroSelectionTrigger_Func (bool testConds, bool runActions) {
                 if ((PlayerType(player) != c_playerTypeComputer)) {
                     libGame_gf_HeroSelectionRandomlyPickSkin(player);
                     libGame_gf_HeroSelectionRandomlyPickMount(player);
+                    PlayerSetSpray(player, "RandomSpray");
                 }
                 libAffx_DebugPrint("Player " + IntToString(player) + " set to Hero: " + libCore_gf_GetHeroFromIndex(libGame_gv_players[player].lv_heroIndex));
             }
@@ -106,12 +107,51 @@ void libAffx_TalentGainedTrigger_Init () {
     libGame_gf_HeroGainTalent(libAffx_TalentGainedTrigger);
 }
 //--------------------------------------------------------------------------------------------------
+// D.va fixes
+//--------------------------------------------------------------------------------------------------
+bool libAffx_DVaRespawnTrigger_Func (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroRespawnPlayer();
+    unit respawnUnit = libGame_gf_HeroRespawnUnit();
+    unit mechUnit;
+    unit heroUnit;
+    int totalBehaviors;
+    string behavior;
+    int behaviorStacks;
+    unitgroup heroUnitGroup = libGame_gv_players[player].lv_heroUnitGroup;
+    int groupCount = UnitGroupCount(heroUnitGroup, c_unitCountAll);
+    if (testConds) {
+        if (libAffx_playersHeroIndex[player] != libCore_gf_GetIndexFromHero("DVa")) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
 
-//--------------------------------------------------------------------------------------------------
-// Trigger: D.Va - Call Mech Completed
-//--------------------------------------------------------------------------------------------------
+    for (;; groupCount -= 1) {
+        if (groupCount <= 0) { break; }
+        heroUnit = UnitGroupUnitFromEnd(heroUnitGroup, groupCount);
+        if (UnitGetType(heroUnit) == "HeroDVaMech") {
+            mechUnit = heroUnit;
+        }
+    }
+
+    totalBehaviors = UnitBehaviorCountAll(respawnUnit);
+    for (;; totalBehaviors -= 1) {
+        if (totalBehaviors <= 0) { break; }
+        behavior = UnitBehaviorGet(respawnUnit, totalBehaviors);
+
+        if (behavior == "DVaPilotSelfDestructTracker" || behavior == "DVaPilotInsideMech" || behavior == "DVaPilotMechAbilityDisablerCarry" || behavior == "DVaPilotTorpedoDashAllowed") {
+            continue;
+        }
+
+        behaviorStacks = UnitBehaviorCount(respawnUnit, behavior);
+        UnitBehaviorAdd(mechUnit, behavior, respawnUnit, behaviorStacks);
+    }
+    return true;
+}
+
 bool libAffx_DVaCallMechCompletedTrigger_Func (bool testConds, bool runActions) {
-    // Variable Declarations
     int dvaPlayer;
     unit dvaPilot;
     int totalBehaviors;
@@ -119,10 +159,6 @@ bool libAffx_DVaCallMechCompletedTrigger_Func (bool testConds, bool runActions) 
     int behaviorStacks;
     string debug_allBehaviorsAdded;
 
-    // Automatic Variable Declarations
-    // Variable Initialization
-
-    // Actions
     if (!runActions) {
         return true;
     }
@@ -148,9 +184,11 @@ bool libAffx_DVaCallMechCompletedTrigger_Func (bool testConds, bool runActions) 
     return true;
 }
 //--------------------------------------------------------------------------------------------------
-void libAffx_DVaCallMechCompletedTrigger_Init () {
+void libAffx_DVaTriggers_Init () {
     libAffx_DVaCallMechCompletedTrigger = TriggerCreate("libAffx_DVaCallMechCompletedTrigger_Func");
+    libAffx_DVaRespawnTrigger = TriggerCreate("libAffx_DVaRespawnTrigger_Func");
     TriggerAddEventUnitAbility(libAffx_DVaCallMechCompletedTrigger, null, AbilityCommand("DVaPilotCallMech", 0), c_abilEffectStageFinish, false);
+    TriggerAddEventGeneric(libAffx_DVaRespawnTrigger, libGame_gv_eventID_HeroRespawn_C);
 }
 
 void libAffx_Wait(fixed duration, int inTimeType) {
@@ -317,7 +355,9 @@ void libAffx_Pause(bool pause) {
 }
 
 string libAffx_GetAffixLabel(int affix) {
-    if (libAffx_affixes[affix].isNegative) {
+    if (libAffx_affixes[affix].rarity == libAffx_rarityMythicCurse || libAffx_affixes[affix].mythicCurse) {
+        return "Label/Name/RarityMythicCurse";
+    } else if (libAffx_affixes[affix].curse) {
         return "Label/Name/RarityNegative";
     } else if (libAffx_affixes[affix].rarity == libAffx_rarityCommon) {
         return "Label/Name/RarityCommon";
@@ -335,7 +375,9 @@ string libAffx_GetAffixLabel(int affix) {
     return "Label/Name/AffixNone";
 }
 string libAffx_GetAffixLabelSuffix(int affix) {
-    if (libAffx_affixes[affix].max > 1) {
+    if (libAffx_affixes[affix].mythicCurse) {
+        return "Label/Name/RaritySuffixNone";
+    } else if (libAffx_affixes[affix].max > 1) {
         return "Label/Name/RaritySuffixStackable";
     } else if (libAffx_affixes[affix].max <= 0) {
         return "Label/Name/RaritySuffixInfinite";
@@ -344,7 +386,9 @@ string libAffx_GetAffixLabelSuffix(int affix) {
 }
 
 color libAffx_GetAffixColor(int affix) {
-    if (libAffx_affixes[affix].isNegative) {
+    if (libAffx_affixes[affix].rarity == libAffx_rarityMythicCurse || libAffx_affixes[affix].mythicCurse) {
+        return Color(66, 29, 53);
+    } else if (libAffx_affixes[affix].curse) {
         return Color(77, 12, 12);
     } else if (libAffx_affixes[affix].rarity == libAffx_rarityCommon) {
         return Color(100, 100, 100);
@@ -363,7 +407,9 @@ color libAffx_GetAffixColor(int affix) {
 }
 
 string libAffx_GetAffixSuffix(int affix) {
-    if (libAffx_affixes[affix].isNegative) {
+    if (libAffx_affixes[affix].rarity == libAffx_rarityMythicCurse || libAffx_affixes[affix].mythicCurse) {
+        return "_mythic";
+    } else if (libAffx_affixes[affix].curse) {
         return "_negative";
     } else if (libAffx_affixes[affix].rarity == libAffx_rarityCommon) {
         return "_common";
@@ -431,6 +477,8 @@ int libAffx_GetRarity(string rarityString) {
         return libAffx_rarityLegendary;
     } else if (rarity == "starter") {
         return libAffx_rarityStarter;
+    } else if (rarity == "mythiccurse" || rarity == "mythic curse") {
+        return libAffx_rarityMythicCurse;
     }
     return 0;
 }
@@ -447,6 +495,8 @@ string libAffx_GetRarityString(int rarity) {
         return "Legendary";
     } else if (rarity == libAffx_rarityStarter) {
         return "Starter";
+    } else if (rarity == libAffx_rarityMythicCurse) {
+        return "Mythic Curse";
     }
     return "";
 }
@@ -503,7 +553,11 @@ void libAffx_CreateAffixDialog(bool negative) {
     DialogSetImageVisible(libAffx_dialogAffixSelection, false);
     libNtve_gf_CreateDialogItemImage(libAffx_dialogAffixSelection, 3000, 3000, c_anchorCenter, 0, 0, null, "Assets/Textures/affix_blackout2.dds", c_triggerImageTypeNormal, false, ColorWithAlpha(0, 0, 0, 0), c_triggerBlendModeNormal);
 
-    libNtve_gf_CreateDialogItemLabel(libAffx_dialogAffixSelection, 1000, 60, c_anchorTop, 0, 110, libAffx_GetAffixTitle(negative), ColorWithAlpha(0, 0, 0, 0), true, 1.0);
+    if (libAffx_affixes[libAffx_rolledAffixes[1]].rarity == libAffx_rarityMythicCurse || libAffx_affixes[libAffx_rolledAffixes[2]].rarity == libAffx_rarityMythicCurse || libAffx_affixes[libAffx_rolledAffixes[3]].rarity == libAffx_rarityMythicCurse) {
+        libNtve_gf_CreateDialogItemLabel(libAffx_dialogAffixSelection, 1000, 60, c_anchorTop, 0, 110, StringExternal("Label/Name/PickAffixMythicCurse"), ColorWithAlpha(0, 0, 0, 0), true, 1.0);
+    } else {
+        libNtve_gf_CreateDialogItemLabel(libAffx_dialogAffixSelection, 1000, 60, c_anchorTop, 0, 110, libAffx_GetAffixTitle(negative), ColorWithAlpha(0, 0, 0, 0), true, 1.0);
+    }
     libAffx_dialogAffixSelectionLabel = DialogControlLastCreated();
     libNtve_gf_SetDialogItemStyle(libAffx_dialogAffixSelectionLabel, "Storm_Map_Large_Bold_Centered", PlayerGroupAll());
 
@@ -513,7 +567,10 @@ void libAffx_CreateAffixDialog(bool negative) {
     DialogControlSetPosition(libAffx_dialogAffixReroll, PlayerGroupAll(), c_anchorTop, 0, 990);
     DialogControlSetSize(libAffx_dialogAffixReroll, PlayerGroupAll(), 300, 100);
     DialogControlSetEnabled(libAffx_dialogAffixReroll, PlayerGroupAll(), true);
-    if (libAffx_affixes[libAffx_rolledAffixes[1]].rarity == libAffx_rarityStarter || libAffx_affixes[libAffx_rolledAffixes[2]].rarity == libAffx_rarityStarter || libAffx_affixes[libAffx_rolledAffixes[3]].rarity == libAffx_rarityStarter) {
+    if (libAffx_affixes[libAffx_rolledAffixes[1]].rarity == libAffx_rarityMythicCurse || libAffx_affixes[libAffx_rolledAffixes[2]].rarity == libAffx_rarityMythicCurse || libAffx_affixes[libAffx_rolledAffixes[3]].rarity == libAffx_rarityMythicCurse) {
+        DialogControlSetEnabled(libAffx_dialogAffixReroll, PlayerGroupAll(), false);
+        libNtve_gf_CreateDialogItemLabel(libAffx_dialogAffixSelection, 325, 100, c_anchorTop, 0, 1040, StringExternal("Label/Name/RerollMythicCurse"), ColorWithAlpha(0,0,0,0), false, 1.0);
+    } else if (libAffx_affixes[libAffx_rolledAffixes[1]].rarity == libAffx_rarityStarter || libAffx_affixes[libAffx_rolledAffixes[2]].rarity == libAffx_rarityStarter || libAffx_affixes[libAffx_rolledAffixes[3]].rarity == libAffx_rarityStarter) {
         DialogControlSetEnabled(libAffx_dialogAffixReroll, PlayerGroupAll(), false);
         libNtve_gf_CreateDialogItemLabel(libAffx_dialogAffixSelection, 325, 100, c_anchorTop, 0, 1040, StringExternal("Label/Name/RerollStarter"), ColorWithAlpha(0,0,0,0), false, 1.0);
     } else if (negative) {
@@ -525,17 +582,17 @@ void libAffx_CreateAffixDialog(bool negative) {
     
 }
 
-void libAffx_ShowAffixDialog() {
+void libAffx_ShowAffixDialog(int showCount) {
     int i;
     int affixSpacing = 370;
-    int windowWidth = affixSpacing * (libAffx_affixSelectionMax - 1);
-    if (libAffx_affixes[libAffx_rolledAffixes[1]].isNegative || libAffx_affixes[libAffx_rolledAffixes[2]].isNegative || libAffx_affixes[libAffx_rolledAffixes[3]].isNegative) {
+    int windowWidth = affixSpacing * (showCount - 1);
+    if (libAffx_affixes[libAffx_rolledAffixes[1]].curse || libAffx_affixes[libAffx_rolledAffixes[2]].curse || libAffx_affixes[libAffx_rolledAffixes[3]].curse) {
         libAffx_CreateAffixDialog(true);
     } else {
         libAffx_CreateAffixDialog(false);
     }
 
-    for (i = 1; i <= libAffx_affixSelectionMax; i += 1) {
+    for (i = 1; i <= showCount; i += 1) {
         libAffx_CreateAffixDialogItem(i, libAffx_rolledAffixes[i], -windowWidth / 2 + affixSpacing * (i - 1));
     }
 
@@ -675,11 +732,11 @@ void libAffx_UpdateOwnedAffixes() {
 
     libAffx_CreateAffixesOwnedDialog();
 
-    for (i = 1; i <= libAffx_rarityStarter; i += 1) {
+    for (i = 1; i <= libAffx_rarityMythicCurse; i += 1) {
         for (i2 = 1; i2 <= libAffx_registeredAffixes; i2 += 1) {
             if (libAffx_affixes[i2].rarity == i && libAffx_affixes[i2].count > 0) {
                 affixTotal += 1;
-                if (!libAffx_affixes[i2].isNegative) {
+                if (!libAffx_affixes[i2].curse) {
                     positiveTotal += 1;
                     positiveAffixes[positiveTotal] = i2;
                 } else {
@@ -711,16 +768,25 @@ void libAffx_CreateOptionUI() {
     libNtve_gf_CreateDialogItemLabel(libAffx_dialogOptions, 1000, 50, c_anchorTop, 0, 10, StringExternal("Label/Name/Options"), ColorWithAlpha(0, 0, 0, 0), true, 1.0);
     libNtve_gf_SetDialogItemStyle(DialogControlLastCreated(), "Storm_Map_Large_Bold_Centered", PlayerGroupAll());
 
+    libNtve_gf_CreateDialogItemLabel(libAffx_dialogOptions, 600, 50, c_anchorCenter, 25, -120, StringExternal("Label/Name/OptionsSpeedup"), ColorWithAlpha(0, 0, 0, 0), false, 1.0);
+    libNtve_gf_SetDialogItemStyle(DialogControlLastCreated(), "Affix_DialogLeft", PlayerGroupAll());
+    DialogControlCreateFromTemplate(libAffx_dialogOptions, c_triggerControlTypeCheckBox, "StandardTemplates/StandardCheckBoxTemplate");
+    libAffx_dialogControlOptionsSpeedup = DialogControlLastCreated();
+    DialogControlSetSize(libAffx_dialogControlOptionsSpeedup, PlayerGroupAll(), 48, 48);
+    DialogControlSetPosition(libAffx_dialogControlOptionsSpeedup, PlayerGroupAll(), c_anchorCenter, 285, -120);
+
+    libNtve_gf_SetDialogItemChecked(libAffx_dialogControlOptionsSpeedup, libAffx_speedUpStart, PlayerGroupAll());
+
     DialogControlCreateFromTemplate(libAffx_dialogOptions, c_triggerControlTypeButton, "StandardTemplates/StandardButtonTemplate");
     libAffx_dialogControlOptionsRestart = DialogControlLastCreated();
     DialogControlSetSize(libAffx_dialogControlOptionsRestart, PlayerGroupAll(), 360, 94);
-    DialogControlSetPosition(libAffx_dialogControlOptionsRestart, PlayerGroupAll(), c_anchorCenter, 0, -60);
+    DialogControlSetPosition(libAffx_dialogControlOptionsRestart, PlayerGroupAll(), c_anchorCenter, 0, 0);
     libNtve_gf_SetDialogItemText(libAffx_dialogControlOptionsRestart, StringExternal("Button/Name/OptionsRestart"), PlayerGroupAll());
 
     DialogControlCreateFromTemplate(libAffx_dialogOptions, c_triggerControlTypeButton, "StandardTemplates/StandardButtonTemplate");
     libAffx_dialogControlOptionsReturn = DialogControlLastCreated();
     DialogControlSetSize(libAffx_dialogControlOptionsReturn, PlayerGroupAll(), 360, 94);
-    DialogControlSetPosition(libAffx_dialogControlOptionsReturn, PlayerGroupAll(), c_anchorCenter, 0, 60);
+    DialogControlSetPosition(libAffx_dialogControlOptionsReturn, PlayerGroupAll(), c_anchorCenter, 0, 120);
     libNtve_gf_SetDialogItemText(libAffx_dialogControlOptionsReturn, StringExternal("Button/Name/OptionsReturn"), PlayerGroupAll());
 }
 void libAffx_CreateOptionRestartUI() {
@@ -749,6 +815,69 @@ void libAffx_CreateOptionRestartUI() {
     DialogControlSetPosition(libAffx_dialogControlOptionsRestartNo, PlayerGroupAll(), c_anchorCenter, 140, 70);
     libNtve_gf_SetDialogItemText(libAffx_dialogControlOptionsRestartNo, StringExternal("Button/Name/OptionsRestartNo"), PlayerGroupAll());
 }
+
+bool libAffx_PBU2DifficultyChangedTrigger_Func (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_SettingsSavePBUDifficulty();
+    return true;
+}
+void libAffx_PBU2DifficultyChangedTrigger_Init() {
+    libAffx_PBU2DifficultyChangedTrigger = TriggerCreate("libAffx_PBU2DifficultyChangedTrigger_Func");
+    TriggerAddEventGeneric(libAffx_PBU2DifficultyChangedTrigger, "libPBU2_DifficultyChanged");
+}
+
+bool libAffx_SpeedUpTrigger_Func (bool testConds, bool runActions) {
+    if (testConds) {
+        if (libAffx_GateIsOpen()) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    if (libAffx_speedUpStart) {
+        GameSetSpeedLocked(false);
+        GameSetSpeedValue(4);
+        while (!libAffx_GateIsOpen() && libAffx_speedUpStart) {
+            Wait(0.0625, c_timeGame);
+        }
+        GameSetSpeedValue(2);
+    }
+    return true;
+}
+
+void libAffx_SpeedUpTrigger_Init() {
+    libAffx_SpeedUpTrigger = TriggerCreate("libAffx_SpeedUpTrigger_Func");
+}
+
+
+bool libAffx_OptionsSpeedUpClickedTrigger_Func (bool testConds, bool runActions) {
+    if (testConds) {
+        if (EventDialogControl() != libAffx_dialogControlOptionsSpeedup) {
+            return false;
+        }
+        if (!libAffx_showingOptions) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_speedUpStart = libNtve_gf_DialogItemIsChecked(libAffx_dialogControlOptionsSpeedup, libAffx_player);
+    libAffx_SettingsSave();
+    if (TriggerActiveCount(libAffx_SpeedUpTrigger) <= 0) {
+        TriggerExecute(libAffx_SpeedUpTrigger, true, false);
+    }
+    return true;
+}
+
+void libAffx_OptionsSpeedUpClickedTrigger_Init() {
+    libAffx_OptionsSpeedUpClickedTrigger = TriggerCreate("libAffx_OptionsSpeedUpClickedTrigger_Func");
+    TriggerAddEventDialogControl(libAffx_OptionsSpeedUpClickedTrigger, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeChecked);
+}
+
 bool libAffx_OptionsRestartClickedTrigger_Func (bool testConds, bool runActions) {
     if (testConds) {
         if (EventDialogControl() != libAffx_dialogControlOptionsReturn && EventDialogControl() != libAffx_dialogControlOptionsRestart && EventDialogControl() != libAffx_dialogControlOptionsRestartYes && EventDialogControl() != libAffx_dialogControlOptionsRestartNo) {
@@ -1023,10 +1152,10 @@ void libAffx_CatalogSetFixedForAllPlayers(int type, string entry, string path, f
         CatalogFieldValueSetFixed(type, entry, path, i, value);
     }
 }
-void libAffx_CatalogModifyForAllPlayers(int type, string entry, string path, string value, int operation) {
+void libAffx_CatalogModifyForAllPlayers(string reference, string value) {
     int i;
     for (i = 1; i <= libCore_gv_bALMaxEnginePlayerCount; i += 1) {
-        CatalogFieldValueModify(type, entry, path, i, value, operation);
+        CatalogReferenceModify(reference, i, value, c_upgradeOperationSet);
     }
 }
 
@@ -1120,21 +1249,23 @@ void libAffx_RemoveBehaviorAllUnitsFilter (string behavior, unitfilter filter, i
 
 void libAffx_PlayerSetPropertyFixed (int player, int inProp, fixed value, bool applyToAllUnits) {
     int i;
-    unitgroup unitGroup;
-    int unitGroupCount;
-    unitGroup = libGame_gv_players[player].lv_heroUnitGroup;
-    unitGroupCount = UnitGroupCount(unitGroup, c_unitCountAll);
+    unitgroup unitGroup = libGame_gv_players[player].lv_heroUnitGroup;
+    int unitGroupCount = UnitGroupCount(unitGroup, c_unitCountAll);
+    unit heroUnit;
     if (applyToAllUnits) {
-        for (i = unitGroupCount; i > 0; i -= 1) {
-            if (UnitGetType(UnitGroupUnitFromEnd(unitGroup, i)) != "HeroLostVikingsController") {
-                UnitSetPropertyFixed(UnitGroupUnitFromEnd(unitGroup, i), inProp, value);
+        for (;; unitGroupCount -= 1) {
+            if (unitGroupCount <= 0) { break; }
+            heroUnit = UnitGroupUnitFromEnd(unitGroup, i);
+            if (UnitGetType(heroUnit) != "HeroLostVikingsController") {
+                UnitSetPropertyFixed(heroUnit, inProp, value);
             }
         }
     } else {
-        if (UnitGetType(UnitGroupUnitFromEnd(unitGroup, unitGroupCount)) == "HeroLostVikingsController") {
+        heroUnit = UnitGroupUnitFromEnd(unitGroup, unitGroupCount);
+        if (UnitGetType(heroUnit) == "HeroLostVikingsController") {
             UnitSetPropertyFixed(UnitGroupUnitFromEnd(unitGroup, unitGroupCount - 1), inProp, value);
         } else {
-            UnitSetPropertyFixed(UnitGroupUnitFromEnd(unitGroup, unitGroupCount), inProp, value);
+            UnitSetPropertyFixed(heroUnit, inProp, value);
         }
     }
 }
@@ -1158,36 +1289,44 @@ void libAffx_PlayerAddPropertyFixed (int player, int inProp, fixed value, bool a
         }
     }
 }
-void libAffx_AddBehavior (int player, string behavior, int stacks, bool applyToAllUnits) {
+void libAffx_AddBehaviorWithExclusion (int player, string behavior, int stacks, bool applyToAllUnits, string excludeUnit) {
     int i;
     unitgroup unitGroup;
     int unitGroupCount;
+    unit heroUnit;
     unitGroup = libGame_gv_players[player].lv_heroUnitGroup;
     unitGroupCount = UnitGroupCount(unitGroup, c_unitCountAll);
     if (applyToAllUnits) {
         for (i = unitGroupCount; i > 0; i -= 1) {
-            if (UnitGetType(UnitGroupUnitFromEnd(unitGroup, i)) != "HeroLostVikingsController") {
+            heroUnit = UnitGroupUnitFromEnd(unitGroup, i);
+            if (UnitGetType(heroUnit) != "HeroLostVikingsController" && UnitGetType(heroUnit) != excludeUnit) {
                 if (player == libAffx_choPlayer || player == libAffx_gallPlayer) {
                     UnitBehaviorAdd(libGame_gv_players[libAffx_gallPlayer].lv_heroUnit, behavior, libGame_gv_players[libAffx_gallPlayer].lv_heroUnit, stacks);
                     UnitBehaviorAdd(libGame_gv_players[libAffx_choPlayer].lv_heroUnit, behavior, libGame_gv_players[libAffx_choPlayer].lv_heroUnit, stacks);
                     break;
                 } else {
-                    UnitBehaviorAdd(UnitGroupUnitFromEnd(unitGroup, i), behavior, UnitGroupUnitFromEnd(unitGroup, i), stacks);
+                    UnitBehaviorAdd(heroUnit, behavior, heroUnit, stacks);
                 }
             }
         }
     } else {
-        if (UnitGetType(UnitGroupUnitFromEnd(unitGroup, unitGroupCount)) == "HeroLostVikingsController") {
+        heroUnit = UnitGroupUnitFromEnd(unitGroup, unitGroupCount);
+        if (UnitGetType(heroUnit) == excludeUnit) {
+
+        } else if (UnitGetType(heroUnit) == "HeroLostVikingsController") {
             UnitBehaviorAdd(UnitGroupUnitFromEnd(unitGroup, unitGroupCount - 1), behavior, UnitGroupUnitFromEnd(unitGroup, unitGroupCount - 1), stacks);
         } else {
             if (player == libAffx_choPlayer || player == libAffx_gallPlayer) {
                 UnitBehaviorAdd(libGame_gv_players[libAffx_gallPlayer].lv_heroUnit, behavior, libGame_gv_players[libAffx_gallPlayer].lv_heroUnit, stacks);
                 UnitBehaviorAdd(libGame_gv_players[libAffx_choPlayer].lv_heroUnit, behavior, libGame_gv_players[libAffx_choPlayer].lv_heroUnit, stacks);
             } else {
-                UnitBehaviorAdd(UnitGroupUnitFromEnd(unitGroup, unitGroupCount), behavior, UnitGroupUnitFromEnd(unitGroup, unitGroupCount), stacks);
+                UnitBehaviorAdd(heroUnit, behavior, heroUnit, stacks);
             }
         }
     }
+}
+void libAffx_AddBehavior (int player, string behavior, int stacks, bool applyToAllUnits) {
+    libAffx_AddBehaviorWithExclusion(player, behavior, stacks, applyToAllUnits, null);
 }
 void libAffx_RemoveBehavior (int player, string behavior, int stacks, bool applyToAllUnits) {
     int i;
@@ -1280,13 +1419,14 @@ void libAffx_UnitCreateEffectUnit (int player, string effect) {
 // Modify catalog with specified scaling scaling
 void libAffx_LevelUpScaling2(string reference, int player, fixed scaling) {
     int level = UnitLevel(libGame_gv_players[player].lv_heroUnit);
+    if (player == 0) { return; }
     if (level <= 0) { level = 1; }
-    CatalogReferenceModify(reference, player, FixedToString(StringToFixed(CatalogReferenceGet(reference, 0)) * Pow(scaling, level), 4), c_upgradeOperationSet);
+    CatalogReferenceModify(reference, player, FixedToString(StringToFixed(CatalogReferenceGet(reference, 0)) * Pow(1 + scaling, level), 4), c_upgradeOperationSet);
 }
 
 // Modify catalog with default 4% scaling
 void libAffx_LevelUpScaling(string reference, int player) {
-    libAffx_LevelUpScaling2(reference, player, 1.04);
+    libAffx_LevelUpScaling2(reference, player, 0.04);
 }
 
 void libAffx_CatalogFieldValueAddFixed(int catalog, string entry, string fieldPath, int player, fixed value) {
@@ -1532,7 +1672,7 @@ void libAffx_ApplyTriggers(int affix, int amount) {
                 libAffx_SendAffixAddedEvent(affix, amount);
             } else if (libAffx_affixes[affix].createdTriggers[i] != null && triggerType == libAffx_triggerExecute) {
                 TriggerExecute(libAffx_affixes[affix].createdTriggers[i], true, false);
-            } else if (libAffx_affixes[affix].createdTriggers[i] != null && triggerType == libAffx_triggerExecuteOnce && libAffx_affixes[affix].execute) {
+            } else if (libAffx_affixes[affix].createdTriggers[i] != null && triggerType == libAffx_triggerExecuteOnce && libAffx_affixes[affix].shouldExecute) {
                 TriggerExecute(libAffx_affixes[affix].createdTriggers[i], true, false);
             } else if (libAffx_affixes[affix].createdTriggers[i] != null && triggerType == libAffx_triggerExecuteOncePerGame && !libAffx_affixes[affix].hasExecuted) {
                 libAffx_affixes[affix].hasExecuted = true;
@@ -1567,14 +1707,14 @@ void libAffx_ApplyAffix(int affix, int amount) {
         UnitBehaviorAdd(libGame_gv_players[libAffx_player].lv_heroUnit, "TassadarAAFix", libGame_gv_players[libAffx_player].lv_heroUnit, 1);
     }
 
-    libAffx_affixes[affix].execute = false;
+    libAffx_affixes[affix].shouldExecute = false;
 }
 void libAffx_AddAffix(int affix, int count) {
     if (affix == 0) {
         return;
     }
     libAffx_affixes[affix].count += count;
-    libAffx_affixes[affix].execute = true;
+    libAffx_affixes[affix].shouldExecute = true;
     libAffx_skipCurseCounter += libAffx_affixes[affix].skipCurses;
     libAffx_ApplyAffix(affix, count);
 }
@@ -1583,7 +1723,7 @@ void libAffx_SetAffix(int affix, int count) {
         return;
     }
     libAffx_affixes[affix].count = count;
-    libAffx_affixes[affix].execute = true;
+    libAffx_affixes[affix].shouldExecute = true;
     libAffx_skipCurseCounter += libAffx_affixes[affix].skipCurses;
     libAffx_ApplyAffix(affix, count);
 }
@@ -1615,6 +1755,30 @@ void libAffx_BankSaveValueFixed(string key, fixed value) {
     BankValueSetFromFixed(BankLastCreated(), libAffx_BankSection, key, value);
     BankSave(BankLastCreated());
 }
+void libAffx_SettingsSavePBUDifficulty() {
+    BankLoad("PlayerSettings", libAffx_player);
+    BankValueSetFromInt(BankLastCreated(), libAffx_BankSectionSettings, "Difficulty", libPBU2_difficulty);
+    BankSave(BankLastCreated());
+}
+void libAffx_SettingsSave() {
+    BankLoad("PlayerSettings", libAffx_player);
+    BankValueSetFromInt(BankLastCreated(), libAffx_BankSectionSettings, "Difficulty", libAffx_difficulty);
+    BankValueSetFromInt(BankLastCreated(), libAffx_BankSectionSettings, "SpeedUp", BoolToInt(libAffx_speedUpStart));
+    BankSave(BankLastCreated());
+}
+void libAffx_SettingsLoad() {
+    BankLoad("PlayerSettings", libAffx_player);
+
+    if (BankKeyExists(BankLastCreated(), libAffx_BankSectionSettings, "Difficulty")) {
+        libAffx_loadedDifficulty = BankValueGetAsInt(BankLastCreated(), libAffx_BankSectionSettings, "Difficulty");
+    }
+    if (BankKeyExists(BankLastCreated(), libAffx_BankSectionSettings, "SpeedUp")) {
+        if (BankValueGetAsInt(BankLastCreated(), libAffx_BankSectionSettings, "SpeedUp") == 1) {
+            libAffx_speedUpStart = true;
+        }
+    }
+    libPBU2_SetDifficulty(libAffx_loadedDifficulty);
+}
 void libAffx_BankSave() {
     string affixName;
     int i;
@@ -1623,7 +1787,6 @@ void libAffx_BankSave() {
     unit heroUnit;
     int groupCount;
     BankLoad("PlayerSettings", libAffx_player);
-    BankValueSetFromInt(BankLastCreated(), libAffx_BankSectionSettings, "Difficulty", libAffx_difficulty);
     BankValueSetFromString(BankLastCreated(), libAffx_BankSection, "Map", libAffx_nextMap);
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "CurrentRun", libAffx_currentRun);
     BankValueSetFromInt(BankLastCreated(), libAffx_BankSection, "Hero", libAffx_playersHeroIndex[libAffx_player]);
@@ -1668,9 +1831,6 @@ void libAffx_BankLoad() {
     int i2;
     BankLoad("PlayerSettings", libAffx_player);
 
-    if (BankKeyExists(BankLastCreated(), libAffx_BankSectionSettings, "Difficulty")) {
-        libAffx_loadedDifficulty = BankValueGetAsInt(BankLastCreated(), libAffx_BankSectionSettings, "Difficulty");
-    }
     if (BankKeyExists(BankLastCreated(), libAffx_BankSection, "Map")) {
         libAffx_currentMap = libAffx_GetMapID(BankValueGetAsString(BankLastCreated(), libAffx_BankSection, "Map"));
     } else {
@@ -1814,6 +1974,7 @@ bool libAffx_AffixLogicUnitCreatedTrigger_Func (bool testConds, bool runActions)
         libGame_gv_players[libAffx_player].lv_heroIndex = libAffx_playersHeroIndex[libAffx_player];
         if (libAffx_currentRun <= 1) {
             libAffx_difficulty = libPBU2_difficulty;
+            libAffx_SettingsSave();
         }
         libAffx_CreateCurrentRunDialog();
 
@@ -1902,7 +2063,7 @@ int libAffx_RollAffix(int rarity, bool negative, int level, bool preventUpgrade)
         // Search for eligible affixes
         for (i = 1; i <= libAffx_registeredAffixes; i += 1) {
             eligible = true;
-            if (libAffx_affixes[i].name == "" || !libAffx_affixes[i].enabled) {
+            if (libAffx_affixes[i].name == "" || !libAffx_affixes[i].enabled || libAffx_affixes[i].cannotRoll) {
                 continue;
             }
             if (slotAffixCount > libAffx_rollMax) {
@@ -1910,7 +2071,7 @@ int libAffx_RollAffix(int rarity, bool negative, int level, bool preventUpgrade)
             }
 
             // Check for negative affix
-            if (negative && !libAffx_affixes[i].isNegative || !negative && libAffx_affixes[i].isNegative) {
+            if (negative && !libAffx_affixes[i].curse || !negative && libAffx_affixes[i].curse) {
                 continue;
             }
             // Check for affix exclusions and requirements
@@ -2040,38 +2201,55 @@ void libAffx_ChooseAffixes(int rarity, bool negative, int level, bool preventUpg
     int i;
 
     libAffx_processQueueTimeElapsed = 0;
-
-    for (slot = 1; slot <= libAffx_affixSelectionMax; slot += 1) {
-        libAffx_rolledAffixes[slot] = 0;
-        if (preventUpgrade) {
-            totalRarity += rarity;
-            libAffx_rolledAffixes[slot] = libAffx_RollAffix(rarity, negative, level, preventUpgrade);
-        } else {
-            if (negative) { // Curses don't use rarities
-                rolledRarity = libAffx_rarityCommon;
+    if (rarity == libAffx_rarityMythicCurse) {
+        if (libAffx_currentRun == 4) {
+            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic1");
+        } else if (libAffx_currentRun == 8) {
+            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic2");
+        } else if (libAffx_currentRun == 12) {
+            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic3");
+        } else if (libAffx_currentRun == 16) {
+            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic4");
+        } else if (libAffx_currentRun == 20) {
+            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic5");
+        } else if (libAffx_currentRun >= 24) {
+            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic6");
+        }
+        SoundPlayOnUnit(SoundLink("UI_Game_LevelUp_Talent", -1), PlayerGroupSingle(1), libGame_gv_players[libAffx_player].lv_heroUnit, 8.0, 100.0, 0.0);
+        libAffx_ShowAffixDialog(1);
+        libAffx_Pause(true);
+    } else {
+        for (slot = 1; slot <= libAffx_affixSelectionMax; slot += 1) {
+            libAffx_rolledAffixes[slot] = 0;
+            if (preventUpgrade) {
+                totalRarity += rarity;
+                libAffx_rolledAffixes[slot] = libAffx_RollAffix(rarity, negative, level, preventUpgrade);
             } else {
-                rolledRarity = libAffx_RollRarity(rarity, negative);
+                if (negative) { // Curses don't use rarities
+                    rolledRarity = libAffx_rarityCommon;
+                } else {
+                    rolledRarity = libAffx_RollRarity(rarity, negative);
+                }
+                totalRarity += rolledRarity;
+                libAffx_rolledAffixes[slot] = libAffx_RollAffix(rolledRarity, negative, level, preventUpgrade);
             }
-            totalRarity += rolledRarity;
-            libAffx_rolledAffixes[slot] = libAffx_RollAffix(rolledRarity, negative, level, preventUpgrade);
+        }
+    
+        libAffx_currentAffixRarity = CeilingI(totalRarity / libAffx_affixSelectionMax);
+        libAffx_currentAffixNegative = negative;
+        libAffx_currentAffixLevel = level;
+        libAffx_currentAffixPreventUpgrade = preventUpgrade;
+    
+        if (libAffx_rolledAffixes[1] == 0 && libAffx_rolledAffixes[2] == 0 && libAffx_rolledAffixes[3] == 0) {
+            libAffx_queueActive = false;
+            libAffx_MoveQueue();
+            libAffx_ProcessQueue();
+        } else {
+            SoundPlayOnUnit(SoundLink("UI_Game_LevelUp_Talent", -1), PlayerGroupSingle(1), libGame_gv_players[libAffx_player].lv_heroUnit, 8.0, 100.0, 0.0);
+            libAffx_ShowAffixDialog(libAffx_affixSelectionMax);
+            libAffx_Pause(true);
         }
     }
-
-    libAffx_currentAffixRarity = CeilingI(totalRarity / libAffx_affixSelectionMax);
-    libAffx_currentAffixNegative = negative;
-    libAffx_currentAffixLevel = level;
-    libAffx_currentAffixPreventUpgrade = preventUpgrade;
-
-    if (libAffx_rolledAffixes[1] == 0 && libAffx_rolledAffixes[2] == 0 && libAffx_rolledAffixes[3] == 0) {
-        libAffx_queueActive = false;
-        libAffx_MoveQueue();
-        libAffx_ProcessQueue();
-    } else {
-        SoundPlayOnUnit(SoundLink("UI_Game_LevelUp_Talent", -1), PlayerGroupSingle(1), libGame_gv_players[libAffx_player].lv_heroUnit, 8.0, 100.0, 0.0);
-        libAffx_ShowAffixDialog();
-        libAffx_Pause(true);
-    }
-
 }
 
 void libAffx_MoveQueue() {
@@ -2095,13 +2273,13 @@ void libAffx_ProcessQueue() {
         libAffx_affixes[i].lastSeen = 0;
     }
 
-    if (libAffx_objectivesWonCounter > 0 && libAffx_queueAffixNegative[1] && !libAffx_debugCommandsAddAll) {
+    if (libAffx_objectivesWonCounter > 0 && libAffx_queueAffixNegative[1] && !libAffx_debugCommandsAddAll && libAffx_queueAffixRarity[1] != libAffx_rarityMythicCurse) {
         libAffx_queueActive = true;
         libAffx_objectivesWonCounter -= 1;
         UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/CurseSwap"));
         libAffx_ChooseAffixes(libAffx_rarityCommon, false, libAffx_queueAffixLevel[1], libAffx_queueAffixPreventUpgrade[1]);
         libAffx_MoveQueue();
-    } else if (libAffx_skipCurseCounter > 0 && libAffx_queueAffixNegative[1] && !libAffx_debugCommandsAddAll) {
+    } else if (libAffx_skipCurseCounter > 0 && libAffx_queueAffixNegative[1] && !libAffx_debugCommandsAddAll && libAffx_queueAffixRarity[1] != libAffx_rarityMythicCurse) {
         libAffx_queueActive = false;
         libAffx_skipCurseCounter -= 1;
         UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/CurseSkipped"));
@@ -2114,7 +2292,7 @@ void libAffx_ProcessQueue() {
     }
 }
 
-void libAffx_QueueAffix(int rarity, bool negative, int level, int amount, bool preventUpgrade) {
+void libAffx_QueueAffix2(int rarity, bool negative, int level, int amount, bool preventUpgrade, bool mythicCurse) {
     int i;
     if (amount > 0) {
         for (i = 1; i <= amount; i += 1) {
@@ -2130,6 +2308,10 @@ void libAffx_QueueAffix(int rarity, bool negative, int level, int amount, bool p
     }
 
     libAffx_ProcessQueue();
+}
+
+void libAffx_QueueAffix(int rarity, bool negative, int level, int amount, bool preventUpgrade) {
+    libAffx_QueueAffix2(rarity, negative, level, amount, preventUpgrade, false);
 }
 void libAffx_AffixSelected(int selectionIndex) {
     int i;
@@ -2317,7 +2499,7 @@ bool libAffx_TestCommandTrigger_Func (bool testConds, bool runActions) {
             affixesNegative = 0;
             for (i2 = 1; i2 <= libAffx_registeredAffixes; i2 += 1) {
                 if (libAffx_affixes[i2].rarity == i && libAffx_affixes[i2].enabled) {
-                    if (!libAffx_affixes[i2].isNegative) {
+                    if (!libAffx_affixes[i2].curse) {
                         affixes += 1;
                     } else {
                         affixesNegative += 1;
@@ -2519,27 +2701,36 @@ void libAffx_Difficulty_Init() {
 
 void libAffx_ApplyDifficulty () {
     fixed modifier;
+    fixed scaledModifier;
     int i;
 
     if (libAffx_difficulty == 3) {
         modifier = 0.04;
-        libGame_teamChaosXPMod += 0.01 * (libAffx_currentRun - 1);
+        libAffx_difficultyXPMod = 0.01 * libAffx_currentRun;
+        libGame_teamChaosXPMod += libAffx_difficultyXPMod;
+        libAffx_SetAffix(libAffx_GetAffixId("DifficultyHard"), libAffx_currentRun);
     } else if (libAffx_difficulty == 2) {
-        modifier = 0.03;
+        modifier = 0.04;
+        libAffx_SetAffix(libAffx_GetAffixId("DifficultyNormal"), libAffx_currentRun);
     } else {
         modifier = 0;
+        libAffx_SetAffix(libAffx_GetAffixId("DifficultyEasy"), 1);
     }
-    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixDifficultyBuff", "Modification.DamageDealtFraction[Ability]", Pow((1 + modifier), (libAffx_currentRun - 1)) - 1);
-    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixDifficultyBuff", "Modification.DamageDealtFraction[Basic]", Pow((1 + modifier), (libAffx_currentRun - 1)) - 1);
-    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixDifficultyBuff", "Modification.VitalMaxFractionArray[Life]", Pow((1 + modifier), (libAffx_currentRun - 1)) - 1);
-    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixDifficultyBuff", "Modification.VitalRegenMultiplier[Life]", Pow((1 + modifier), (libAffx_currentRun - 1)) - 1);
+    scaledModifier = Pow((1 + modifier), libAffx_currentRun) - 1;
+    if (scaledModifier < 0) {
+        scaledModifier = 0;
+    }
+    libAffx_CatalogModifyForAllPlayers("Behavior,AffixDifficultyBuff,Modification.DamageDealtFraction[Ability]", FixedToString(scaledModifier, c_fixedPrecisionAny));
+    libAffx_CatalogModifyForAllPlayers("Behavior,AffixDifficultyBuff,Modification.DamageDealtFraction[Basic]", FixedToString(scaledModifier, c_fixedPrecisionAny));
+    libAffx_CatalogModifyForAllPlayers("Behavior,AffixDifficultyBuff,Modification.VitalMaxFractionArray[Life]", FixedToString(scaledModifier, c_fixedPrecisionAny));
+    libAffx_CatalogModifyForAllPlayers("Behavior,AffixDifficultyBuff,Modification.VitalRegenMultiplier[Life]", FixedToString(scaledModifier, c_fixedPrecisionAny));
     for (i = 6; i <= 10; i += 1) {
         if (!UnitHasBehavior2(libGame_gv_players[i].lv_heroUnit, "NotManaUserDummy")) {
-            CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixDifficultyBuff", "Modification.VitalMaxFractionArray[Energy]", i, Pow((1 + modifier), (libAffx_currentRun - 1)) - 1);
-            CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixDifficultyBuff", "Modification.VitalRegenMultiplier[Energy]", i, Pow((1 + modifier), (libAffx_currentRun - 1)) - 1);
+            libAffx_CatalogReferenceModify("Behavior,AffixDifficultyBuff,Modification.VitalMaxFractionArray[Energy]", i, FixedToString(scaledModifier, c_fixedPrecisionAny));
+            libAffx_CatalogReferenceModify("Behavior,AffixDifficultyBuff,Modification.VitalRegenMultiplier[Energy]", i, FixedToString(scaledModifier, c_fixedPrecisionAny));
         } else {
-            CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixDifficultyBuff", "Modification.VitalMaxFractionArray[Energy]", i, 0);
-            CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixDifficultyBuff", "Modification.VitalRegenMultiplier[Energy]", i, 0);
+            libAffx_CatalogReferenceModify("Behavior,AffixDifficultyBuff,Modification.VitalMaxFractionArray[Energy]", i, "0");
+            libAffx_CatalogReferenceModify("Behavior,AffixDifficultyBuff,Modification.VitalRegenMultiplier[Energy]", i, "0");
         }
         libAffx_AddBehavior(i, "AffixDifficultyBuff", 1, true);
     }
@@ -2550,21 +2741,22 @@ void libAffx_ApplyDifficulty () {
 }
 
 bool libAffx_LevelUpTrigger_Func (bool testConds, bool runActions) {
-    int player;
-    int level;
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
     if (!runActions) {
         return true;
     }
-    player = libGame_gf_HeroLevelUpPlayer();
-    level = libGame_gf_HeroLevelUpLevel();
     if (player == libAffx_player) {
         if (level == 1) {
             libAffx_Wait(libAffx_gameStartDelay, c_timeGame);
+            if (libAffx_currentRun != 0 && libAffx_currentRun % 4 == 0 && libAffx_difficulty == 3) {
+                libAffx_QueueAffix2(libAffx_rarityMythicCurse, true, level, 1, true, true);
+            }
             if (libAffx_currentRun <= 1) {
                 libAffx_QueueAffix(libAffx_rarityStarter, false, level, 1, false);
             } else {
-                if (libAffx_currentMap == libAffx_mapCursedHollow) {
-                    libAffx_QueueAffix(libAffx_rarityEpic, false, level, 1, false);
+                if (libAffx_currentRun % 4 == 0) {
+                    libAffx_QueueAffix(libAffx_rarityLegendary, false, level, 1, false);
                 } else {
                     libAffx_QueueAffix(libAffx_rarityRare, false, level, 1, false);
                 }
@@ -2586,7 +2778,7 @@ bool libAffx_LevelUpTrigger_Func (bool testConds, bool runActions) {
             }
             if (libAffx_difficulty == 3) {
                 libAffx_ApplyDifficulty();
-                libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1, false);
+                //libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1, false);
             } else if (libAffx_difficulty == 2) {
                 libAffx_ApplyDifficulty();
             } else {
@@ -2601,26 +2793,31 @@ bool libAffx_LevelUpTrigger_Func (bool testConds, bool runActions) {
                 libAffx_QueueAffix(libAffx_rarityCommon, true, level, libAffx_cursesQueued, false);
                 libAffx_cursesQueued = 0;
             }
-        } else if (level == 4) {
-            libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1, false);
-            libAffx_cursesNextGame -= 1;
-        } else if (level == 7) {
-            libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1, false);
-            libAffx_cursesNextGame -= 1;
-        } else if (level == 10) {
-            libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1, false);
-        } else if (level == 13) {
-            libAffx_QueueAffix(libAffx_rarityUncommon, true, level, 1, false);
-        } else if (level == 16) {
-            libAffx_QueueAffix(libAffx_rarityUncommon, true, level, 1, false);
-        } else if (level == 20) {
-            libAffx_QueueAffix(libAffx_rarityRare, true, level, 1, false);
-        } else if (level == 24) {
-            libAffx_QueueAffix(libAffx_rarityRare, true, level, 1, false);
-        } else if (level == 27) {
-            libAffx_QueueAffix(libAffx_rarityRare, true, level, 1, false);
-        } else if (level == 30) {
-            libAffx_QueueAffix(libAffx_rarityEpic, true, level, 1, false);
+        } else {
+            while (!libAffx_startingBoonsQueued) {
+                libAffx_Wait(0.0625, c_timeGame);
+            }
+            if (level == 4) {
+                libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1, false);
+                libAffx_cursesNextGame -= 1;
+            } else if (level == 7) {
+                libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1, false);
+                libAffx_cursesNextGame -= 1;
+            } else if (level == 10) {
+                libAffx_QueueAffix(libAffx_rarityCommon, true, level, 1, false);
+            } else if (level == 13) {
+                libAffx_QueueAffix(libAffx_rarityUncommon, true, level, 1, false);
+            } else if (level == 16) {
+                libAffx_QueueAffix(libAffx_rarityUncommon, true, level, 1, false);
+            } else if (level == 20) {
+                libAffx_QueueAffix(libAffx_rarityRare, true, level, 1, false);
+            } else if (level == 24) {
+                libAffx_QueueAffix(libAffx_rarityRare, true, level, 1, false);
+            } else if (level == 27) {
+                libAffx_QueueAffix(libAffx_rarityRare, true, level, 1, false);
+            } else if (level == 30) {
+                libAffx_QueueAffix(libAffx_rarityEpic, true, level, 1, false);
+            }
         }
     }
     return true;
@@ -2636,6 +2833,7 @@ bool libAffx_MapInitLoadBankTrigger_Func (bool testConds, bool runActions) {
         return true;
     }
     libAffx_BankLoad();
+    TriggerExecute(libAffx_SpeedUpTrigger, true, false);
 
     return true;
 }
@@ -2801,6 +2999,7 @@ bool libAffx_MapInitTrigger_Func (bool testConds, bool runActions) {
     SetTalentsEnabled(false);
 
     TriggerExecute(libAffx_MapInitLoadBankTrigger, false, false);
+    libAffx_SettingsLoad();
 
     libAffx_currentRun += 1;
     libPBU2_timerExpired = libAffx_HeroSelectedTrigger;
@@ -2810,6 +3009,7 @@ bool libAffx_MapInitTrigger_Func (bool testConds, bool runActions) {
         libCore_gf_DataLoadHeroDataIntoIndex(libCore_gf_GetHeroFromIndex(libGame_gv_players[libAffx_player].lv_heroIndex), libAffx_player);
         libGame_gf_HeroSelectionRandomlyPickSkin(libAffx_player);
         libGame_gf_HeroSelectionRandomlyPickMount(libAffx_player);
+        PlayerSetSpray(libAffx_player, "RandomSpray");
         libAffx_playersHeroIndex[libAffx_player] = libCore_gf_GetIndexFromHero("WitchDoctor");
         libGame_gv_pickingHeroesCallback = libAffx_HeroSelectionTrigger;
     } else if (libAffx_playerHeroIndexLoaded == 0) {
@@ -2820,6 +3020,7 @@ bool libAffx_MapInitTrigger_Func (bool testConds, bool runActions) {
         libCore_gf_DataLoadHeroDataIntoIndex(libCore_gf_GetHeroFromIndex(libGame_gv_players[libAffx_player].lv_heroIndex), libAffx_player);
         libGame_gf_HeroSelectionRandomlyPickSkin(libAffx_player);
         libGame_gf_HeroSelectionRandomlyPickMount(libAffx_player);
+        PlayerSetSpray(libAffx_player, "RandomSpray");
         libGame_gv_pickingHeroesCallback = libAffx_HeroSelectionTrigger;
     }
     UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringToText("Version " + libAffx_version));
@@ -2883,7 +3084,10 @@ void libAffx_InitTriggers () {
     libAffx_Difficulty_Init();
     libAffx_OptionsClickedTrigger_Init();
     libAffx_OptionsRestartClickedTrigger_Init();
-    libAffx_DVaCallMechCompletedTrigger_Init();
+    libAffx_DVaTriggers_Init();
+    libAffx_OptionsSpeedUpClickedTrigger_Init();
+    libAffx_SpeedUpTrigger_Init();
+    libAffx_PBU2DifficultyChangedTrigger_Init();
 
     TriggerEnable(libGDHL_gt_HeroSylvanasPossessionRewire, true);
     libAffx_pauseVLSK = TriggerCreate("libVLSK_PauseTrigger_Func");
@@ -2899,7 +3103,7 @@ void libAffx_AffixInitBlank() {
     libAffx_affixes[0].weight = 0;
     libAffx_affixes[0].minLevel = 0;
     libAffx_affixes[0].maxLevel = 0;
-    libAffx_affixes[0].isNegative = false;
+    libAffx_affixes[0].curse = false;
     libAffx_affixes[0].enabled = true;
     libAffx_affixes[0].count = 0;
     libAffx_affixes[0].max = 0;
@@ -3253,10 +3457,14 @@ void libAffx_InitAffixes () {
         } else {
             libAffx_affixes[i].enabled = false;
         }
-        if (UserDataGetInt("Affix", affixInstance, "Negative", 1) == 0) {
-            libAffx_affixes[i].isNegative = false;
+        if (UserDataGetInt("Affix", affixInstance, "Curse", 1) == 2) {
+            libAffx_affixes[i].mythicCurse = true;
+            libAffx_affixes[i].curse = true;
+            libAffx_affixes[i].cannotRoll = true;
+        } else if (UserDataGetInt("Affix", affixInstance, "Curse", 1) == 1) {
+            libAffx_affixes[i].curse = true;
         } else {
-            libAffx_affixes[i].isNegative = true;
+            libAffx_affixes[i].curse = false;
         }
         if (UserDataGetString("Affix", affixInstance, "CooldownLink", 1) != "") {
             libAffx_affixes[i].cooldownLink = UserDataGetString("Affix", affixInstance, "CooldownLink", 1);
@@ -3270,6 +3478,11 @@ void libAffx_InitAffixes () {
             libAffx_affixes[i].excludeChoGall = true;
         } else {
             libAffx_affixes[i].excludeChoGall = false;
+        }
+        if (UserDataGetInt("Affix", affixInstance, "NoRoll", 1) == 1) {
+            libAffx_affixes[i].cannotRoll = true;
+        } else {
+            libAffx_affixes[i].cannotRoll = false;
         }
         for (i2 = 1; i2 <= libAffx_maxQuestRetain; i2 += 1) {
             affixString = UserDataGetString("Affix", affixInstance, "QuestRetain", i2);

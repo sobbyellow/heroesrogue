@@ -56,4 +56,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Icon value="Assets\Textures\storm_ui_icon_wizard_criticalmass.dds" />
 </CButton>
 
+<CButton id="WitchDoctorRitualofBoonsQuestToken" parent="StormButtonParent">
+  <Icon value="Assets\Textures\storm_ui_icon_nazeebo_voodooritual.dds" />
+</CButton>
+
 </Catalog>

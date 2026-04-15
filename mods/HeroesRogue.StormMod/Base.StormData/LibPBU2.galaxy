@@ -214,6 +214,7 @@ bool libPBU2_DifficultyDialog_Func (bool testConds, bool runActions) {
     if (dialog == libPBU2_difficultyDialogEasy) { libPBU2_SetDifficulty(1); }
     if (dialog == libPBU2_difficultyDialogNormal) { libPBU2_SetDifficulty(2); }
     if (dialog == libPBU2_difficultyDialogHard) { libPBU2_SetDifficulty(3); }
+    TriggerSendEvent("libPBU2_DifficultyChanged");
 
     return true;
 }
@@ -1467,6 +1468,7 @@ void libPBU2_gf_CurateHSUISetHeroSkinAndMountForPlayer (int lp_player, bool lp_r
     if ((lp_randomSkin == true)) {
         libGame_gf_HeroSelectionRandomlyPickSkin(lp_player);
         libGame_gf_HeroSelectionRandomlyPickMount(lp_player);
+        PlayerSetSpray(lp_player, "RandomSpray");
     }
 
 }
@@ -1659,6 +1661,7 @@ bool libPBU2_gt_CurateHSUICountdownTimerExpires_Func (bool testConds, bool runAc
                 if ((PlayerType(player) != c_playerTypeComputer)) {
                     libGame_gf_HeroSelectionRandomlyPickSkin(player);
                     libGame_gf_HeroSelectionRandomlyPickMount(player);
+                    PlayerSetSpray(player, "RandomSpray");
                 }
 
             }
