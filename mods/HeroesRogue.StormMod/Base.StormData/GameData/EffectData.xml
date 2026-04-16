@@ -1324,6 +1324,59 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <EffectArray value="WitchDoctorRitualofBoonsAddToken" />
 </CEffectSet>
 
+<CEffectEnumArea id="ThrallChainLightningCrashLightningTalentBounce1Search">
+  <ImpactLocation Value="TargetPoint"/>
+  <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
+  <ExcludeArray Value="Target"/>
+  <TargetSorts RequestCount="1" RequestPercentage="1">
+      <SortArray value="TSHeroic"/>
+      <SortArray value="TSNoLowBouncePriority"/>
+  </TargetSorts>
+  <AreaArray Effect="ThrallChainLightningBounce1ImpactSet">
+      <Radius value="6"/>
+  </AreaArray>
+  <MaxCount value="1"/>
+</CEffectEnumArea>
+<CEffectEnumArea id="ThrallChainLightningCrashLightningTalentBounce2Search">
+  <ImpactLocation Value="TargetPoint"/>
+  <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
+  <ExcludeArray Value="Target"/>
+  <TargetSorts RequestCount="1" RequestPercentage="1">
+      <SortArray value="TSHeroic"/>
+      <SortArray value="TSNoLowBouncePriority"/>
+  </TargetSorts>
+  <AreaArray Effect="ThrallChainLightningBounce2ImpactSet">
+      <Radius value="6"/>
+  </AreaArray>
+  <MaxCount value="1"/>
+</CEffectEnumArea>
+<CEffectEnumArea id="ThrallChainLightningCrashLightningTalentBounce3Search">
+  <ImpactLocation Value="TargetPoint"/>
+  <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
+  <ExcludeArray Value="Target"/>
+  <TargetSorts RequestCount="1" RequestPercentage="1">
+      <SortArray value="TSHeroic"/>
+      <SortArray value="TSNoLowBouncePriority"/>
+  </TargetSorts>
+  <AreaArray Effect="ThrallChainLightningBounce3ImpactSet">
+      <Radius value="6"/>
+  </AreaArray>
+  <MaxCount value="1"/>
+</CEffectEnumArea>
+<CEffectEnumArea id="ThrallChainLightningCrashLightningTalentBounce4Search">
+  <ImpactLocation Value="TargetPoint"/>
+  <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable"/>
+  <ExcludeArray Value="Target"/>
+  <TargetSorts RequestCount="1" RequestPercentage="1">
+      <SortArray value="TSHeroic"/>
+      <SortArray value="TSNoLowBouncePriority"/>
+  </TargetSorts>
+  <AreaArray Effect="ThrallChainLightningBounce4ImpactSet">
+      <Radius value="6"/>
+  </AreaArray>
+  <MaxCount value="1"/>
+</CEffectEnumArea>
+
   
 
 

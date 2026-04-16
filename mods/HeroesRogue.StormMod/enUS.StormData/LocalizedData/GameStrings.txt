@@ -401,7 +401,7 @@ Affix/Name/Promote=Promote
 Affix/Tooltip/Promote=Allied Minions take <c val="#TooltipNumbers">25%</c> reduced damage from non-Heroic enemies and deal <c val="#TooltipNumbers">50%</c> increased damage to non-Heroic enemies.<n/><n/>Additional stacks increase the damage by <c val="#TooltipNumbers">20%</c>.
 Affix/Tooltip/Append/Promote=<n/><n/>Damage bonus: <c val="#TooltipNumbers"><d ref="(Behavior,AffixPromoteDamage,DamageResponse.ModifyFraction-1)*100" player="11" precision="0"/>%</c>
 Affix/Name/RegenerativeWalls=Automatic Repairs
-Affix/Tooltip/RegenerativeWalls=Allied Structures regenerate <c val="#TooltipNumbers">50</c> Health per second.<n/><n/>Does not affect your allied Core.
+Affix/Tooltip/RegenerativeWalls=Allied Structures regenerate <c val="#TooltipNumbers">35</c> Health per second.<n/><n/>Does not affect your allied Core.
 Affix/Tooltip/Append/RegenerativeWalls=<n/><n/>Health regeneration bonus: <c val="#TooltipNumbers"><d ref="Behavior,RegenerativeWalls,Modification.VitalRegenArray[Life]" player="11" precision="0"/></c>
 Affix/Name/SpellLeech=Spell Leech
 Affix/Tooltip/SpellLeech=Abilities heal for <c val="#TooltipNumbers">10%</c> of the damage dealt.<n/><n/>Additional stacks increase healing by <c val="#TooltipNumbers">5%</c>.
@@ -419,8 +419,8 @@ Affix/Name/PhysicalArmor=Physical Armor
 Affix/Tooltip/PhysicalArmor=Gain permanent <c val="#TooltipNumbers">10</c> Physical Armor.<n/><n/>Additional stacks increase Physical Armor by <c val="#TooltipNumbers">5</c>.
 Affix/Tooltip/Append/PhysicalArmor=<n/><n/>Physical Armor: <c val="#TooltipNumbers"><d ref="Behavior,AffixPhysicalArmor,ArmorModification.ArmorSet[Hero].ArmorMitigationTable[Basic]" precision="0"/></c>
 Affix/Name/RegenerationRing=Ring of Regeneration
-Affix/Tooltip/RegenerationRing=You and allied Heroes regenerate <c val="#TooltipNumbers">8</c> Health per second.
-Affix/Tooltip/Append/RegenerationRing=<n/><n/>Health regeneration bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixRegenRing,Modification.VitalRegenArray[Life]" precision="0"/></c>
+Affix/Tooltip/RegenerationRing=You and allied Heroes regenerate <c val="#TooltipNumbers">8</c> Health per second and have <c val="#TooltipNumbers">50</c> increased maximum Health.
+Affix/Tooltip/Append/RegenerationRing=<n/><n/>Health regeneration bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixRegenRing,Modification.VitalRegenArray[Life]" precision="0"/></c><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixRegenRing,Modification.VitalMaxArray[Life]" precision="0"/></c>
 Affix/Name/MagicRing=Ring of Magic
 Affix/Tooltip/MagicRing=You and allied Heroes recharge Ability cooldowns <c val="#TooltipNumbers">5%</c> faster.
 Affix/Tooltip/Append/MagicRing=<n/><n/>Cooldown reduction bonus: <c val="#TooltipNumbers"><d ref="$GalaxyVar:ringOfMagicModifier$*100" precision="0"/>%</c>
@@ -428,7 +428,7 @@ Affix/Name/RangedThrall=Lightning Rod
 Affix/Tooltip/RangedThrall=Thrall's Basic Attack becomes ranged. Gain the benefits of Nexus Blades, Elemental Assault, and Elemental Momentum.<n/><n/>Increases Feral Spirit and Chain Lightning's range by <c val="#TooltipNumbers">50%</c>.
 Affix/Tooltip/Append/RangedThrall=
 Affix/Name/ThrallQuestsGalore=Quests Galore
-Affix/Tooltip/ThrallQuestsGalore=Gain the benefits of Echo of the Elements, Crash Lightning, Maelstrom Weapon, Frostwolf Pack, and Thunderstorm.<n/><n/>Completing Crash Lightning and Echo of the Elements will allow Chain Lightning to bounce on the same target.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress on these Quests after winning the game.
+Affix/Tooltip/ThrallQuestsGalore=Gain the benefits of Echo of the Elements, Crash Lightning, Maelstrom Weapon, Frostwolf Pack, and Thunderstorm.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress on these Quests after winning the game.
 Affix/Tooltip/Append/ThrallQuestsGalore=
 Affix/Name/FrostwolfFury=Frostwolf's Fury
 Affix/Tooltip/FrostwolfFury=Gain the benefits of Frostwolf Pack, Ancestral Wrath, Frostwolf's Grace, and Spirit Shield.<n/><n/>Basic Attacks grant <c val="#TooltipNumbers">1</c> stack of Frostwolf Resilience.
@@ -440,13 +440,13 @@ Affix/Name/PinnedDown=Pinned Down
 Affix/Tooltip/PinnedDown=Increases Feral Spirit's Root duration by <c val="#TooltipNumbers">0.25</c> seconds.
 Affix/Tooltip/Append/PinnedDown=
 Affix/Name/ThrallQuickLightning=Quick Lightning
-Affix/Tooltip/ThrallQuickLightning=Reduces Chain Lightning's cooldown by <c val="#TooltipNumbers">3</c> seconds.
+Affix/Tooltip/ThrallQuickLightning=Reduces Chain Lightning's cooldown by <c val="#TooltipNumbers">2</c> seconds.
 Affix/Tooltip/Append/ThrallQuickLightning=
 Affix/Name/ThrallBreezingWind=Breeze
-Affix/Tooltip/ThrallBreezingWind=Reduces Windfury's cooldown by <c val="#TooltipNumbers">4</c> seconds and its Mana Cost by <c val="#TooltipNumbers">20</c>.
+Affix/Tooltip/ThrallBreezingWind=Reduces Windfury's cooldown by <c val="#TooltipNumbers">3</c> seconds and its Mana Cost by <c val="#TooltipNumbers">20</c>.
 Affix/Tooltip/Append/ThrallBreezingWind=
 Affix/Name/ThrallElectricShock=Electric Shock
-Affix/Tooltip/ThrallElectricShock=Chain Lightning Stuns enemies hit for <c val="#TooltipNumbers">0.5</c> seconds.
+Affix/Tooltip/ThrallElectricShock=Chain Lightning Stuns enemies hit for <c val="#TooltipNumbers">0.25</c> seconds.
 Affix/Tooltip/Append/ThrallElectricShock=
 Affix/Name/ThrallEarthShatter=Earth Shatterer
 Affix/Tooltip/ThrallEarthShatter=Earthquake gains unlimited range.<n/><n/>Reduces Earthquake's cooldown by <c val="#TooltipNumbers">50</c> seconds.

@@ -273,7 +273,7 @@ bool libAffx_BuddyAffixAdded (bool testConds, bool runActions) {
     libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogEffect, "AffixBuddyHealCreatePersistent", "PeriodicPeriodArray[0]", 3 - (0.25 * (libAffx_affixes[affix].count - 1)));
     return true;
 }
-bool libaffx_BuddyExecuteOnce (bool testConds, bool runActions) {
+bool libaffx_BuddyExecuteOncePerGame (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }

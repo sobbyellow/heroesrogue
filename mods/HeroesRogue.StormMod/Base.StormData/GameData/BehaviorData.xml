@@ -781,7 +781,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorBuff id="RegenerativeWalls" parent="CarryBehaviorParent">
   <Modification>
-    <VitalRegenArray index="Life" value="50" />
+    <VitalRegenArray index="Life" value="35" />
   </Modification>
 </CBehaviorBuff>
 
@@ -819,6 +819,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorBuff id="AffixRegenRing" parent="CarryBehaviorParent">
   <Modification>
+    <VitalMaxArray index="Life" value="50" />
     <VitalRegenArray index="Life" value="8" />
   </Modification>
 </CBehaviorBuff>
@@ -848,7 +849,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 </CBehaviorBuff>
 
 <CBehaviorBuff id="ThrallChainLightningStun" parent="StormStun">
-    <Duration value="0.5"/>
+    <Duration value="0.25"/>
 </CBehaviorBuff>
 
 <CBehaviorBuff id="WizardMoveSpeedBuff">

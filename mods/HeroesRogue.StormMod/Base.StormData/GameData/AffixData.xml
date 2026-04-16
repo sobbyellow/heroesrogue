@@ -197,9 +197,6 @@
             <String String="11 2 Set Behavior,AffixStructureHealthBuff,Modification.VitalMaxFractionArray[Life] 0.15">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="11 2 Set Behavior,AffixStructureHealthBuff,Modification.VitalRegenMultiplier[Life] 0.15">
-                <Field Id="CatalogModification" Index="1"/>
-            </String>
             <String String="Execute libAffx_StructureHealth">
                 <Field Id="Trigger"/>
             </String>
@@ -383,7 +380,7 @@
             <String String="AA libAffx_BuddyAffixAdded">
                 <Field Id="Trigger" Index="2"/>
             </String>
-            <String String="EO libaffx_BuddyExecuteOnce">
+            <String String="EOPG libaffx_BuddyExecuteOncePerGame">
                 <Field Id="Trigger" Index="3"/>
             </String>
         </Instances>
@@ -735,12 +732,6 @@
             <String String="0 2 Set Behavior,AffixEnemyHealthBuff,Modification.VitalMaxFractionArray[Shields] 0.2">
                 <Field Id="CatalogModification" Index="1"/>
             </String>
-            <String String="0 2 Set Behavior,AffixEnemyHealthBuff,Modification.VitalRegenMultiplier[Life] 0.2">
-                <Field Id="CatalogModification" Index="2"/>
-            </String>
-            <String String="0 2 Set Behavior,AffixEnemyHealthBuff,Modification.VitalRegenMultiplier[Shields] 0.2">
-                <Field Id="CatalogModification" Index="3"/>
-            </String>
             <String String="Execute libAffx_EnemyHealth">
                 <Field Id="Trigger"/>
             </String>
@@ -889,12 +880,6 @@
             </String>
             <String String="0 2 Set Behavior,AffixAllyHealthBuff,Modification.VitalMaxFractionArray[Shields] 0.07">
                 <Field Id="CatalogModification" Index="1"/>
-            </String>
-            <String String="0 2 Set Behavior,AffixAllyHealthBuff,Modification.VitalRegenMultiplier[Life] 0.07">
-                <Field Id="CatalogModification" Index="2"/>
-            </String>
-            <String String="0 2 Set Behavior,AffixAllyHealthBuff,Modification.VitalRegenMultiplier[Shields] 0.07">
-                <Field Id="CatalogModification" Index="3"/>
             </String>
             <String String="Execute libAffx_AllyHealth">
                 <Field Id="Trigger"/>
@@ -3482,7 +3467,7 @@
             <String String="UC libAffx_RegenerativeWallsUnitCreated">
                 <Field Id="Trigger" Index="1"/>
             </String>
-            <String String="11 2 Set Behavior,RegenerativeWalls,Modification.VitalRegenArray[Life] 50">
+            <String String="11 2 Set Behavior,RegenerativeWalls,Modification.VitalRegenArray[Life] 35">
                 <Field Id="CatalogModification"/>
             </String>
         </Instances>
@@ -3620,6 +3605,21 @@
             </String>
             <String String="5 2 Set Behavior,AffixRegenRing,Modification.VitalRegenArray[Life] 8">
                 <Field Id="CatalogModification" Index="4"/>
+            </String>
+            <String String="1 2 Set Behavior,AffixRegenRing,Modification.VitalMaxArray[Life] 50">
+                <Field Id="CatalogModification" Index="5"/>
+            </String>
+            <String String="2 2 Set Behavior,AffixRegenRing,Modification.VitalMaxArray[Life] 50">
+                <Field Id="CatalogModification" Index="6"/>
+            </String>
+            <String String="3 2 Set Behavior,AffixRegenRing,Modification.VitalMaxArray[Life] 50">
+                <Field Id="CatalogModification" Index="7"/>
+            </String>
+            <String String="4 2 Set Behavior,AffixRegenRing,Modification.VitalMaxArray[Life] 50">
+                <Field Id="CatalogModification" Index="8"/>
+            </String>
+            <String String="5 2 Set Behavior,AffixRegenRing,Modification.VitalMaxArray[Life] 50">
+                <Field Id="CatalogModification" Index="9"/>
             </String>
         </Instances>
         <Instances Id="MagicRing">
@@ -3863,7 +3863,7 @@
             <String String="Rare">
                 <Field Id="Rarity"/>
             </String>
-            <String String="1 3 Add Abil,ThrallChainLightning,Cost[0].Charge.TimeUse -3">
+            <String String="1 3 Add Abil,ThrallChainLightning,Cost[0].Charge.TimeUse -2">
                 <Field Id="CatalogModification"/>
             </String>
             <String String="Assets/Textures/storm_ui_icon_thrall_chainlightning.dds">
@@ -3877,7 +3877,7 @@
             <String String="Rare">
                 <Field Id="Rarity"/>
             </String>
-            <String String="1 3 Add Abil,ThrallWindfury,Cost[0].Cooldown.TimeUse -4">
+            <String String="1 3 Add Abil,ThrallWindfury,Cost[0].Cooldown.TimeUse -3">
                 <Field Id="CatalogModification"/>
             </String>
             <String String="1 3 Add Abil,ThrallWindfury,Cost[0].Vital[Energy] -20">
