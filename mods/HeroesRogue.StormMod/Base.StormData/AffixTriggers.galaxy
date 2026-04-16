@@ -3234,6 +3234,9 @@ bool libAffx_Mythic5UnitDied (bool testConds, bool runActions) {
         if (!(UnitTestState(deadUnit, c_unitStateHallucination) == false)) {
             return false;
         }
+        if (!UnitTypeTestAttribute(UnitGetType(deadUnit), c_unitAttributeHeroic)) {
+            return false;
+        }
     }
     if (!runActions) {
         return true;
