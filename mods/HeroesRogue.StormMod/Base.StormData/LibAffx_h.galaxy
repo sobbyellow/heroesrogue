@@ -332,9 +332,9 @@ trigger libAffx_SpeedUpDeathUnitDiedTrigger;
 trigger libAffx_PBU2DifficultyChangedTrigger;
 
 // Debug options
-bool libAffx_loadTryMeMode = true; // Try mode 2.0
-bool libAffx_cheatCommands = true; // Enables cheat/debug commands
-bool libAffx_skipIntro = true; // Skips the Hero selection.
+bool libAffx_loadTryMeMode = false; // Try mode 2.0
+bool libAffx_cheatCommands = false; // Enables cheat/debug commands
+bool libAffx_skipIntro = false; // Skips the Hero selection.
 string libAffx_skipHero = "WitchDoctor"; // Player hero when hero selection is skipped.
 bool libAffx_forceHeroes = false; // Force enemy heroes to specific heroes.
 bool libAffx_debugPrint = false; // Enables debug logging
