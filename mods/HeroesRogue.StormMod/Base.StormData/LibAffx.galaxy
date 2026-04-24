@@ -2958,15 +2958,16 @@ void libAffx_ApplyDifficulty () {
         modifier = 0.04;
         libAffx_difficultyXPMod = 0.01 * libAffx_currentRun;
         libGame_teamChaosXPMod += libAffx_difficultyXPMod;
+        scaledModifier = (modifier + 0.01 * libAffx_currentRun) * libAffx_currentRun;
         libAffx_SetAffix(libAffx_GetAffixId("DifficultyHard"), libAffx_currentRun);
     } else if (libAffx_difficulty == 2) {
         modifier = 0.04;
+        scaledModifier = Pow((1 + modifier), libAffx_currentRun) - 1;
         libAffx_SetAffix(libAffx_GetAffixId("DifficultyNormal"), libAffx_currentRun);
     } else {
         modifier = 0;
         libAffx_SetAffix(libAffx_GetAffixId("DifficultyEasy"), 1);
     }
-    scaledModifier = Pow((1 + modifier), libAffx_currentRun) - 1;
     if (scaledModifier < 0) {
         scaledModifier = 0;
     }

@@ -85,7 +85,7 @@ Button/Name/Normal=Heroic
 Button/Name/Hard=Mythic
 Button/Tooltip/Easy=No changes.
 Button/Tooltip/Normal=• Increases maximum Health and Mana, Health and Mana regeneration, and damage dealt of enemy Heroes by <c val="#TooltipNumbers">4%</c> every game. Stacks multiplicatively.
-Button/Tooltip/Hard=• Increases maximum Health and Mana, Health and Mana regeneration, and damage dealt of ALL enemies by <c val="#TooltipNumbers">4%</c> every game. Stacks multiplicatively.<n/>• Increases enemies's Experience gain by <c val="#TooltipNumbers">1%</c> every game.<n/>• Obtain a powerful <c val="A84987">mythic Curse</c> at the start and every <c val="#TooltipNumbers">4</c> games afterwards.
+Button/Tooltip/Hard=• Increases maximum Health and Mana, Health and Mana regeneration, and damage dealt of ALL enemies by <c val="#TooltipNumbers">4%</c> plus an additional <c val="#TooltipNumbers">1%</c> per rounds, multiplied by the number of rounds.<n/>• Increases enemies's Experience gain by <c val="#TooltipNumbers">1%</c> every game.<n/>• Obtain a powerful <c val="A84987">mythic Curse</c> at the start and every <c val="#TooltipNumbers">4</c> games afterwards.
 Affix/Name/DifficultyEasy=Normal
 Affix/Tooltip/DifficultyEasy=No changes.
 Affix/Tooltip/Append/DifficultyEasy=
@@ -93,7 +93,7 @@ Affix/Name/DifficultyNormal=Heroic
 Affix/Tooltip/DifficultyNormal=Increases maximum Health and Mana, Health and Mana regeneration, and damage dealt of enemy Heroes by <c val="#TooltipNumbers">4%</c> every game. Stacks multiplicatively.
 Affix/Tooltip/Append/DifficultyNormal=<n/><n/>Stats bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDifficultyBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
 Affix/Name/DifficultyHard=Mythic
-Affix/Tooltip/DifficultyHard=Increases maximum Health and Mana, Health and Mana regeneration, and damage dealt of ALL enemies by <c val="#TooltipNumbers">4%</c> every game. Stacks multiplicatively.<n/><n/>Increases enemies's Experience gain by <c val="#TooltipNumbers">1%</c> every game.<n/><n/>Obtain a powerful <c val="A84987">mythic Curse</c> at the start and every <c val="#TooltipNumbers">4</c> games afterwards.
+Affix/Tooltip/DifficultyHard=Increases maximum Health and Mana, Health and Mana regeneration, and damage dealt of ALL enemies by <c val="#TooltipNumbers">4%</c> plus an additional <c val="#TooltipNumbers">1%</c> per round, multiplied by the number of rounds.<n/><n/>Increases enemies's Experience gain by <c val="#TooltipNumbers">1%</c> every game.<n/><n/>Obtain a powerful <c val="A84987">mythic Curse</c> at the start and every <c val="#TooltipNumbers">4</c> games afterwards.
 Affix/Tooltip/Append/DifficultyHard=<n/><n/>Stats bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDifficultyBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c><n/>XP boost: <c val="#TooltipNumbers"><d ref="($GalaxyVar:libAffx_difficultyXPMod$)*100" precision="0"/>%</c>
 
 Button/Name/WitchDoctorWidowmakers2=Widowmakers II
