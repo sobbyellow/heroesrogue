@@ -679,7 +679,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Period value="0.25" />
   <Modification>
     <UnifiedMoveSpeedFactor value="0.3" />
-    <VitalMaxArray index="Life" value="1000" />
     <VitalRegenArray index="Energy" value="497" />
   </Modification>
 </CBehaviorBuff>
@@ -1082,6 +1081,9 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Kind index="Ability" value="0" />
   </DamageResponse>
   <BehaviorCategories index="BuffAutoattackDPS" value="1" />
+</CBehaviorBuff>
+
+<CBehaviorBuff id="AffixSgtHammerMachineGunner" parent="CarryBehaviorParent">
 </CBehaviorBuff>
   
 </Catalog>

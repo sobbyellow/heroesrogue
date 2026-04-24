@@ -237,11 +237,19 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <PeriodicPeriodArray value="0" />
   </CEffectCreatePersistent>
 
+  <CEffectModifyTokenCount id="AffixKillContractIncrementTokenNoQuest" parent="BaseEffectModifyTokenCount">
+    <TokenId value="AffixKillContractQuestToken" />
+  </CEffectModifyTokenCount>
   <CEffectModifyTokenCount id="AffixKillContractIncrementToken" parent="BaseEffectModifyTokenCount">
     <TokenId value="AffixKillContractQuestToken" />
     <EffectCategory index="Quest" value="1" />
   </CEffectModifyTokenCount>
   <CEffectSet id="AffixKillContractQuestComplete" />
+
+
+  <CEffectModifyTokenCount id="AffixStructureQuestIncrementTokenNoQuest" parent="BaseEffectModifyTokenCount">
+    <TokenId value="AffixStructureQuestToken" />
+  </CEffectModifyTokenCount>
   <CEffectModifyTokenCount id="AffixStructureQuestIncrementToken" parent="BaseEffectModifyTokenCount">
     <TokenId value="AffixStructureQuestToken" />
     <EffectCategory index="Quest" value="1" />
@@ -1386,5 +1394,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
 </CEffectSet>
 
+<CEffectSet id="EmptySetDummy" />
 
 </Catalog>

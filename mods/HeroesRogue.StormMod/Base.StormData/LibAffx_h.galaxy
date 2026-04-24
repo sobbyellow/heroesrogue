@@ -41,20 +41,21 @@ const int libAffx_triggerHeroTakedown                =   6;     // Runs on any H
 const int libAffx_triggerUnitCreated                 =   7;     // Runs when any unit is created
 const int libAffx_triggerUnitDied                    =   8;     // Runs when any unit dies
 const int libAffx_triggerUnitBehaviorChange          =   9;     // Runs when a unit receives specified behavior
-const int libAffx_triggerUnitBehaviorChangeCategory  =   10;    // Runs when a unit receives behavior with the specified category
-const int libAffx_triggerUnitChangeOwner             =   11;    // Runs when a unit changes ownership
+const int libAffx_triggerUnitBehaviorCreate          =   10;     // 
+const int libAffx_triggerUnitBehaviorChangeCategory  =   11;    // Runs when a unit receives behavior with the specified category
+const int libAffx_triggerUnitChangeOwner             =   12;    // Runs when a unit changes ownership
 
-const int libAffx_triggerPlayerEffectUsed            =   12;    // Runs when any player triggers the specified effect
-const int libAffx_triggerHeroLevelUp                 =   13;    // Runs immediately once and on Hero level up
-const int libAffx_triggerHeroRespawn                 =   14;    // Runs when Hero respawns
-const int libAffx_triggerHeroKilled                  =   15;    // Runs when a Hero is killed
-const int libAffx_triggerScaling                     =   16;    // Same as libAffx_triggerHeroLevelUp but also runs regardless of stack count
+const int libAffx_triggerPlayerEffectUsed            =   13;    // Runs when any player triggers the specified effect
+const int libAffx_triggerHeroLevelUp                 =   14;    // Runs immediately once and on Hero level up
+const int libAffx_triggerHeroRespawn                 =   15;    // Runs when Hero respawns
+const int libAffx_triggerHeroKilled                  =   16;    // Runs when a Hero is killed
+const int libAffx_triggerScaling                     =   17;    // Same as libAffx_triggerHeroLevelUp but also runs regardless of stack count
 
-const int libAffx_triggerQuest                       =   17;    // Runs immediately if affix quest is NOT complete
-const int libAffx_triggerPeriodic                    =   18;    // Runs periodically. Default: 0.0625s
-const int libAffx_triggerWin                         =   19;    // Executes when enemy core dies.
+const int libAffx_triggerQuest                       =   18;    // Runs immediately if affix quest is NOT complete
+const int libAffx_triggerPeriodic                    =   19;    // Runs periodically. Default: 0.0625s
+const int libAffx_triggerWin                         =   20;    // Executes when enemy core dies.
 
-const int libAffx_triggerExecute                     =   20;     // Obsolete, converts into libAffx_triggerAffixAdded
+const int libAffx_triggerExecute                     =   21;     // Obsolete, converts into libAffx_triggerAffixAdded
 
 
 const string libAffx_eventID = "EventAffix";
@@ -110,14 +111,15 @@ const int libAffx_rerollsStart = 3; // How many rerolls the player starts with.
 unitfilter libAffx_filtersTeamOrder = UnitFilter(0, 0, (1 << c_targetFilterNeutral) | (1 << c_targetFilterEnemy) | (1 << c_targetFilterCreep) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))); // Filter for all units in team Order.
 unitfilter libAffx_filtersTeamOrderNoStructures = UnitFilter(0, 0, (1 << c_targetFilterStructure) | (1 << c_targetFilterNeutral) | (1 << c_targetFilterEnemy) | (1 << c_targetFilterCreep) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))); // Filter for all units in team Order excluding Structures.
 
-const int libAffx_affixMax = 200; // Maximum affixes
+const int libAffx_affixMax = 300; // Maximum affixes
 const int libAffx_queueMax = 100; // Maximum affixes in queue.
 const int libAffx_rollMax = 100; // Maximum affixes that can roll for a slot.
+const int libAffx_behaviorMax = 1000;
 const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pick from.
 
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.13.2";
+const string libAffx_version = "0.14.0";
 
 struct libAffx_CatalogModification {
     int player;
@@ -210,11 +212,13 @@ struct libAffx_AffixData {
 libAffx_AffixData[libAffx_affixMax + 1] libAffx_affixes; // All affixes
 int[libAffx_affixSelectionMax + 1] libAffx_rolledAffixes;
 int libAffx_registeredAffixes; // Number of affixes loaded into the game.
+string[11][libAffx_behaviorMax] libAffx_affixBehaviors;
 
 int libAffx_currentMap; // Current map
 string libAffx_nextMap; // The next map used for saving into bank.
 
 int libAffx_maxAffixesFromObjectives = 1; // Maximum affixes that can be gained from winning objectives.
+int[11] libAffx_behaviorIndex;
 
 int[libAffx_queueMax + 1] libAffx_queueAffixRarity;
 bool[libAffx_queueMax + 1] libAffx_queueAffixCurse;
@@ -291,6 +295,7 @@ bool libAffx_speedUpDeath;
 int libAffx_gallPlayer;
 int libAffx_choPlayer;
 
+bool libAffx_debugCommandsAddAll;
 fixed libAffx_processQueueTimeElapsed;
 
 int libAffx_lastSelected;
@@ -324,6 +329,7 @@ trigger libAffx_OptionsClickedTrigger;
 trigger libAffx_OptionsRestartClickedTrigger;
 trigger libAffx_DVaCallMechCompletedTrigger;
 trigger libAffx_DVaRespawnTrigger;
+trigger libAffx_DVaEjectTrigger;
 trigger libAffx_OptionsSpeedUpClickedTrigger;
 trigger libAffx_OptionsSpeedUpDeathClickedTrigger;
 trigger libAffx_SpeedUpTrigger;
@@ -332,19 +338,16 @@ trigger libAffx_SpeedUpDeathUnitDiedTrigger;
 trigger libAffx_PBU2DifficultyChangedTrigger;
 
 // Debug options
-bool libAffx_loadTryMeMode = false; // Try mode 2.0
-bool libAffx_cheatCommands = false; // Enables cheat/debug commands
-bool libAffx_skipIntro = false; // Skips the Hero selection.
-string libAffx_skipHero = "WitchDoctor"; // Player hero when hero selection is skipped.
-bool libAffx_forceHeroes = false; // Force enemy heroes to specific heroes.
-bool libAffx_debugPrint = false; // Enables debug logging
-bool libAffx_pauseDisabled = false; // Disables pause features
-bool libAffx_ignoreMap = false; // Ignores the saved map.
-bool libAffx_disableAffixes = false; // Disables queueing affixes.
+bool libAffx_debug_enableTryMeMode2 = false; // Try mode 2.0
+bool libAffx_debug_enableCheatCommands = false; // Enables cheat/debug commands
+bool libAffx_debug_enableDebugLogging = false; // Enables debug logging
+bool libAffx_debug_forcedHeroes = false; // Enemy heroes are forced to predetermined heroes
+bool libAffx_debug_disablePausing = false; // Disables pause features
+bool libAffx_debug_ignoreMap = false; // Ignores the saved map.
+bool libAffx_debug_disableAffixQueue = false; // Disables queueing affixes.
+bool libAffx_debug_disableHeroSelection = false; // Skips the Hero selection.
+string libAffx_debug_playerHero = "LostVikings"; // Player hero when hero selection is disabled.
 
-bool libAffx_debugCommandsAddAll = false;
-
-void testcommandafx (int lp_heroIndex, int lp_player);
 void libAffx_DebugPrint(string print);
 string libAffx_GetRarityString(int rarity); // Gets rarity name.
 int libAffx_GetAffixId(string affixName); // Get affix index by name.
@@ -379,6 +382,10 @@ void libAffx_SendAffixAddedEvent (int affix, int amount);
 int libAffx_EventAffix(); // Returns the triggering affix.
 int libAffx_EventAffixCountAdded(); // Returns the stack count added for the triggering affix.
 int libAffx_EventAffixCount(); // Returns the current count
+void libAffx_AddAffixBehavior(int player, string behavior);
+void libAffx_CatalogReferenceModify2 (string reference, int player, string value, int operation);
+void libAffx_CatalogReferenceModify (string reference, int player, string value);
+void libAffx_UnitBehaviorAdd(unit targetUnit, string behavior, unit casterUnit, int stacks);
 bool libAffx_FilterMatches(unit unitVar, unitfilter unitFilter, int player, string unitType); // Checks whether unit matches filters.
 void libAffx_AddBehaviorFilter(unit unitVar, string behavior, unitfilter unitFilter, int player, string unitType, int stacks); // Adds behavior if unit matches filters.
 void libAffx_AddAndRemoveBehaviorFilter(unit unitVar, string behavior, unitfilter unitFilter, int player, string unitType, int stacks); // Adds behavior if unit matches filters, and removes behavior if it doesn't match.
@@ -397,6 +404,7 @@ void libAffx_SettingsSavePBUDifficulty();
 void libAffx_BankSave();
 void libAffx_BankLoad();
 void libAffx_BankReset();
+unit libAffx_GetDVaMech(int player);
 bool libAffx_IntToBoolean(int value);
 int libAffx_RollRarity(int baseRarity, bool curse); // Roll rarity to upgrade.
 int libAffx_RollAffix(int rarity, bool curse, int level, bool preventUpgrade); // Returns an affix that matches the criteria and all requirements.

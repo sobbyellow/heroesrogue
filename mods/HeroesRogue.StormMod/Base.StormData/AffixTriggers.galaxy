@@ -114,6 +114,7 @@ bool libAffx_BlessingoftheDragonsBehaviorChange (bool testConds, bool runActions
 // ---------------------------------------------------------------
 // BUDDY
 // ---------------------------------------------------------------
+int buddyAllIndex;
 int buddyCount = 1;
 int[11] currentBuddies;
 int[11] currentBuddies2;
@@ -285,7 +286,7 @@ bool libAffx_BuddyCheck (bool testConds, bool runActions) {
         if (player != libAffx_player) {
             return false;
         }
-        if ((totalBuddies) >= buddyCount) {
+        if (totalBuddies >= buddyCount) {
             return false;
         }
         if (!UnitIsAlive(user)) {
@@ -296,6 +297,10 @@ bool libAffx_BuddyCheck (bool testConds, bool runActions) {
         return true;
     }
     for (i = 1; i <= (buddyCount - totalBuddies); i += 1) {
+        totalBuddies = currentBuddies[player] + currentBuddies2[player] + currentBuddies3[player];
+        if (totalBuddies >= buddyCount) {
+            break;
+        }
         if (UnitGetType(user) == "HeroErik") {
             if (currentBuddies3[player] < currentBuddies[player] && currentBuddies3[player] < currentBuddies2[player]) {
                 UnitCreateEffectUnit(user, "AffixBuddyDroneApplyOwner", user);
@@ -304,12 +309,12 @@ bool libAffx_BuddyCheck (bool testConds, bool runActions) {
             if (currentBuddies2[player] < currentBuddies[player] && currentBuddies2[player] <= currentBuddies3[player]) {
                 UnitCreateEffectUnit(user, "AffixBuddyDroneApplyOwner", user);
             }
-        } else if (UnitGetType(user) == "RexxarMisha") {
-            if (currentBuddies2[player] < currentBuddies[player]) {
-                UnitCreateEffectUnit(user, "AffixBuddyDroneApplyOwner", user);
-            }
         } else if (UnitGetType(user) == "HeroOlaf") {
             if (currentBuddies[player] <= currentBuddies2[player] && currentBuddies[player] <= currentBuddies3[player]) {
+                UnitCreateEffectUnit(user, "AffixBuddyDroneApplyOwner", user);
+            }
+        } else if (UnitGetType(user) == "RexxarMisha") {
+            if (currentBuddies2[player] < currentBuddies[player]) {
                 UnitCreateEffectUnit(user, "AffixBuddyDroneApplyOwner", user);
             }
         } else if (UnitGetType(user) == "HeroRexxar") {
@@ -334,9 +339,13 @@ bool libAffx_BuddyScaling (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-
-    libAffx_LevelUpScaling("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", player);
-    libAffx_LevelUpScaling("Effect,AffixBuddyDroneMissileDamage,Amount", player);
+    if (libAffx_affixes[buddyAllIndex].count > 0) {
+        libAffx_LevelUpScaling3("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", player, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate")) * 0.75);
+        libAffx_LevelUpScaling3("Effect,AffixBuddyDroneMissileDamage,Amount", player, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyDroneMissileDamage,Amount")) * 0.75);
+    } else {
+        libAffx_LevelUpScaling("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", player);
+        libAffx_LevelUpScaling("Effect,AffixBuddyDroneMissileDamage,Amount", player);
+    }
 
     return true;
 }
@@ -872,6 +881,7 @@ bool libAffx_RaenaKnight (bool testConds, bool runActions) {
 // Kill Contract
 // ---------------------------------------------------------------
 int killContract;
+bool killContractSuppressRewards;
 bool libAffx_KillContractAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
@@ -890,6 +900,12 @@ bool libAffx_KillContract (bool testConds, bool runActions) {
 bool libAffx_KillContractQuestComplete (bool testConds, bool runActions) {
     if (testConds) {
         if (killContract == 0) {
+            return false;
+        }
+        if (killContractSuppressRewards) {
+            return false;
+        }
+        if (libAffx_affixes[killContract].quest.questDone) {
             return false;
         }
     }
@@ -922,7 +938,23 @@ bool libAffx_KillContractHeroTakedown (bool testConds, bool runActions) {
     }
 
     libAffx_UnitCreateEffectUnit(player, "AffixKillContractIncrementToken");
+    libAffx_affixes[killContract].quest.questProgress += 1;
     
+    return true;
+}
+bool libAffx_KillContractUnitBehaviorCreate (bool testConds, bool runActions) {
+    unit heroUnit = EventUnit();
+    if (testConds) {
+        if (!UnitHasBehavior2(heroUnit, "AffixKillContractQuestToken")) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    killContractSuppressRewards = true;
+    UnitSetTokenCount(heroUnit, "AffixKillContractQuestToken", libAffx_affixes[killContract].quest.questProgress, heroUnit);
+    killContractSuppressRewards = false;
     return true;
 }
 
@@ -931,6 +963,7 @@ bool libAffx_KillContractHeroTakedown (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 int structureQuestIndex;
 bool structureQuestSuppressRewards;
+bool[4] structureQuestFinished;
 bool libAffx_StructureQuestAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
@@ -946,6 +979,7 @@ bool libAffx_StructureQuest (bool testConds, bool runActions) {
     }
     quest = libAffx_affixes[libAffx_executingAffix].quest.questProgress;
     libAffx_AddBehavior(libAffx_player, "AffixStructureQuestToken", 1, false);
+    
     if (quest > 0) {
         structureQuestSuppressRewards = true;
         libAffx_ModifyTokenCount(libAffx_player, quest, "AffixStructureQuestToken");
@@ -1001,12 +1035,15 @@ bool libAffx_StructureQuestComplete (bool testConds, bool runActions) {
         if (structureQuestIndex == 0) {
             return false;
         }
+        if (libAffx_affixes[structureQuestIndex].quest.questDone) {
+            return false;
+        }
     }
     if (!runActions) {
         return true;
     }
-    libAffx_affixes[structureQuestIndex].quest.questDone = true;
     libAffx_QueueAffix(libAffx_rarityRare, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, true);
+    libAffx_affixes[structureQuestIndex].quest.questDone = true;
     
     return true;
 }
@@ -1015,11 +1052,15 @@ bool libAffx_StructureQuest6 (bool testConds, bool runActions) {
         if (structureQuestSuppressRewards) {
             return false;
         }
+        if (structureQuestFinished[1]) {
+            return false;
+        }
     }
     if (!runActions) {
         return true;
     }
     libAffx_QueueAffix(libAffx_rarityCommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, true);
+    structureQuestFinished[1] = true;
     
     return true;
 }
@@ -1028,12 +1069,31 @@ bool libAffx_StructureQuest12 (bool testConds, bool runActions) {
         if (structureQuestSuppressRewards) {
             return false;
         }
+        if (structureQuestFinished[2]) {
+            return false;
+        }
     }
     if (!runActions) {
         return true;
     }
     libAffx_QueueAffix(libAffx_rarityUncommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, true);
+    structureQuestFinished[2] = true;
     
+    return true;
+}
+bool libAffx_StructureQuestUnitBehaviorCreate (bool testConds, bool runActions) {
+    unit heroUnit = EventUnit();
+    if (testConds) {
+        if (!UnitHasBehavior2(heroUnit, "AffixStructureQuestToken")) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    structureQuestSuppressRewards = true;
+    UnitSetTokenCount(heroUnit, "AffixStructureQuestToken", libAffx_affixes[structureQuestIndex].quest.questProgress, heroUnit);
+    structureQuestSuppressRewards = false;
     return true;
 }
 // ---------------------------------------------------------------
@@ -1708,10 +1768,21 @@ bool libAffx_PathoftheAssassinLevelUp (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 // Buddy All
 // ---------------------------------------------------------------
+bool libAffx_BuddyAllOncePerGame (bool testConds, bool runActions) {
+    int i;
+    if (!runActions) {
+        return true;
+    }
+    for (i = 2; i <= 5; i += 1) {
+        libAffx_AddBehaviorWithExclusion(i, "AffixBuddyDroneSpawnBehavior", 1, true, "HeroDVaMech");
+    }
+    return true;
+}
 bool libaffx_BuddyAllAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
+    buddyAllIndex = libAffx_EventAffix();
     buddyCount += libAffx_EventAffixCountAdded();
     return true;
 }
@@ -1729,8 +1800,8 @@ bool libAffx_BuddyAllLevelUp (bool testConds, bool runActions) {
         return true;
     }
 
-    libAffx_LevelUpScaling3("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", player, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate")) * 0.5);
-    libAffx_LevelUpScaling3("Effect,AffixBuddyDroneMissileDamage,Amount", player, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyDroneMissileDamage,Amount")) * 0.5);
+    libAffx_LevelUpScaling3("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", player, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate")) * 0.75);
+    libAffx_LevelUpScaling3("Effect,AffixBuddyDroneMissileDamage,Amount", player, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyDroneMissileDamage,Amount")) * 0.75);
     return true;
 }
 // ---------------------------------------------------------------
@@ -2105,7 +2176,7 @@ bool libAffx_PeriodicRegenGlobesPeriodic (bool testConds, bool runActions) {
             if (UnitHasBehaviorWithCategoryFlag(unitVar, c_behaviorCategoryTimeStop) == true) {
                 return true;
             }
-            if (UnitIsAlive(unitVar) && UnitGetType(unitVar) != "HeroLostVikingsController") {
+            if (UnitIsAlive(unitVar) && UnitGetType(unitVar) != "HeroLostVikingsController" && UnitGetType(unitVar) != "HeroDVaMech") {
                 UnitCreate(1, "RegenGlobe", 0, libAffx_teamOrder, PointWithOffset(UnitGetPosition(unitVar), 2 * (RandomInt(0, 1) * 2) - 1, 2 * (RandomInt(0, 1) * 2) - 1), 0, null);
                 libAffx_affixes[perRegenGlobeIndex].cooldown = globeHufferCooldown;
             }
@@ -2357,6 +2428,16 @@ bool libAffx_LavaWaveLevelUp (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 // Divine Intervention
 // ---------------------------------------------------------------
+bool libAffx_DivineInterventionOncePerGame (bool testConds, bool runActions) {
+    int i;
+    if (!runActions) {
+        return true;
+    }
+    for (i = 6; i <= 10; i += 1) {
+        libAffx_AddAffixBehavior(6, "AffixAutoPalmCooldown");
+    }
+    return true;
+}
 bool libAffx_DivineInterventionAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
@@ -2759,7 +2840,9 @@ bool libAffx_WheresIllidanPeriodic (bool testConds, bool runActions) {
         libNtve_gf_SendActorMessageToUnit(maiev, "Signal Respawn");
         UnitIssueOrder(maiev, OrderTargetingPoint(AbilityCommand("move", 0), UnitGetPosition(libGame_gv_players[libAffx_player].lv_heroUnit)), c_orderQueueReplace);
         libAffx_Wait(0.825, c_timeGame);
-        UnitCreateEffectPoint(maiev, "MaievContainmentDiscLaunchMissile", UnitGetPosition(libGame_gv_players[libAffx_player].lv_heroUnit));
+        if (UnitIsAlive(maiev)) {
+            UnitCreateEffectPoint(maiev, "MaievContainmentDiscLaunchMissile", UnitGetPosition(libGame_gv_players[libAffx_player].lv_heroUnit));
+        }
         libAffx_Wait(0.75, c_timeGame);
         UnitRemove(maiev);
         UnitKill(maiev);
@@ -2774,24 +2857,89 @@ bool libAffx_WheresIllidanPeriodic (bool testConds, bool runActions) {
 // Night Elf Bond
 // ---------------------------------------------------------------
 unit nightElfBondMalfurion;
-void libAffx_NightElfBondUpdateStats() {
-    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "NightElfBondMalfurion", "Modification.VitalMaxArray[Life]", UnitGetPropertyFixed(libGame_gv_players[libAffx_player].lv_heroUnit, c_unitPropLifeMax, true) * 0.5);
-}
+unit nightElfBondTyrande;
 void libAffx_NightElfBondSpawnMalfurion () {
+    fixed sharedHealth;
     if (nightElfBondMalfurion == null || !UnitIsAlive(nightElfBondMalfurion)) {
         libNtve_gf_CreateUnitsAtPoint2(1, "HeroMalfurion", c_unitCreateIgnorePlacement, libAffx_teamOrder, PointWithOffsetPolar(UnitGetPosition(libGame_gv_players[libAffx_player].lv_heroUnit), 5, RandomFixed(0, 360)), null);
         nightElfBondMalfurion = UnitLastCreated();
+        nightElfBondTyrande = libAffx_GetHeroUnit(libAffx_player);
         libNtve_gf_SendActorMessageToUnit(nightElfBondMalfurion, "Signal Respawn");
-        libAffx_NightElfBondUpdateStats();
         UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "ApplyNightElfBondMalfurion", nightElfBondMalfurion);
+        sharedHealth = (UnitGetPropertyFixed(nightElfBondTyrande, c_unitPropLife, true) + UnitGetPropertyFixed(nightElfBondMalfurion, c_unitPropLife, true) / 2);
+        UnitSetPropertyFixed(nightElfBondTyrande, c_unitPropLife, sharedHealth);
+        UnitSetPropertyFixed(nightElfBondMalfurion, c_unitPropLife, sharedHealth);
     }
+}
+bool libAffx_NightElfBondDamageTaken (bool testConds, bool runActions) {
+    unit eventUnit = EventUnit();
+    int player = UnitGetOwner(eventUnit);
+    fixed incomingDamage = EventUnitDamageAmount();
+    if (testConds) {
+        if (eventUnit != nightElfBondMalfurion && eventUnit != nightElfBondTyrande) {
+            return false;
+        }
+        if (nightElfBondMalfurion == null || nightElfBondTyrande == null) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    if (eventUnit == nightElfBondTyrande) {
+        //UnitSetPropertyFixed(nightElfBondTyrande, c_unitPropLife, UnitGetPropertyFixed(nightElfBondTyrande, c_unitPropLife, true) + incomingDamage / 2);
+        UnitSetPropertyFixed(nightElfBondMalfurion, c_unitPropLife, UnitGetPropertyFixed(nightElfBondTyrande, c_unitPropLife, true));
+    } else {
+        //UnitSetPropertyFixed(nightElfBondMalfurion, c_unitPropLife, UnitGetPropertyFixed(nightElfBondMalfurion, c_unitPropLife, true) + incomingDamage / 2);
+        UnitSetPropertyFixed(nightElfBondTyrande, c_unitPropLife, UnitGetPropertyFixed(nightElfBondMalfurion, c_unitPropLife, true));
+    }
+    return true;
+}
+bool libAffx_NightElfBondHealed (bool testConds, bool runActions) {
+    unit eventUnit = EventUnit();
+    int player = UnitGetOwner(eventUnit);
+    fixed healingReceived = EventUnitHealAmount();
+    if (testConds) {
+        if (eventUnit != nightElfBondMalfurion && eventUnit != nightElfBondTyrande) {
+            return false;
+        }
+        if (nightElfBondMalfurion == null || nightElfBondTyrande == null) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    if (eventUnit == nightElfBondTyrande) {
+        //UnitSetPropertyFixed(nightElfBondTyrande, c_unitPropLife, UnitGetPropertyFixed(nightElfBondTyrande, c_unitPropLife, true) - healingReceived / 2);
+        UnitSetPropertyFixed(nightElfBondMalfurion, c_unitPropLife, UnitGetPropertyFixed(nightElfBondTyrande, c_unitPropLife, true));
+    } else {
+        //UnitSetPropertyFixed(nightElfBondMalfurion, c_unitPropLife, UnitGetPropertyFixed(nightElfBondMalfurion, c_unitPropLife, true) - healingReceived / 2);
+        UnitSetPropertyFixed(nightElfBondTyrande, c_unitPropLife, UnitGetPropertyFixed(nightElfBondMalfurion, c_unitPropLife, true));
+    }
+    return true;
+}
+bool libAffx_NightElfBondOncePerGame (bool testConds, bool runActions) {
+    trigger damageEvent;
+    trigger healEvent;
+    if (!runActions) {
+        return true;
+    }
+    libGame_AddAbilityEffectMapping("NightElfBond", "NightElfBondDamage");
+
+    damageEvent = TriggerCreate("libAffx_NightElfBondDamageTaken");
+    healEvent = TriggerCreate("libAffx_NightElfBondHealed");
+
+    TriggerAddDamageEvent(damageEvent, null, "HeroTyrande", c_unitDamageTypeAny, c_unitDamageEither, null);
+    TriggerAddDamageEvent(damageEvent, null, "HeroMalfurion", c_unitDamageTypeAny, c_unitDamageEither, null);
+    TriggerAddEventUnitHealed(healEvent, null, c_unitVitalLife, null);
+    return true;
 }
 bool libAffx_NightElfBondAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
     libAffx_NightElfBondSpawnMalfurion();
-    libGame_AddAbilityEffectMapping("NightElfBond", "NightElfBondDamage");
     return true;
 }
 bool libAffx_NightElfBondRespawn (bool testConds, bool runActions) {
@@ -2837,7 +2985,14 @@ bool libAffx_NightElfBondPeriodic (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_NightElfBondUpdateStats();
+    if ((DistanceBetweenPoints(UnitGetPosition(nightElfBondMalfurion), UnitGetPosition(nightElfBondTyrande)) >= 24)) {
+        UnitSetPosition(nightElfBondMalfurion, PointWithOffsetPolar(UnitGetPosition(nightElfBondTyrande), 1.5, RandomFixed(0, 360)), false);
+        UnitIssueOrder(nightElfBondMalfurion, Order(AbilityCommand("stop", 0)), c_orderQueueReplace);
+    }
+
+    if (UnitGetPropertyFixed(nightElfBondMalfurion, c_unitPropLifeMax, true) != UnitGetPropertyFixed(nightElfBondTyrande, c_unitPropLifeMax, true)) {
+        UnitSetPropertyFixed(nightElfBondMalfurion, c_unitPropLifeMax, UnitGetPropertyFixed(nightElfBondTyrande, c_unitPropLifeMax, true));
+    }
 
     return true;
 }
@@ -2965,7 +3120,7 @@ bool libAffx_PromoteAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPromoteDamage", "DamageResponse.ModifyFraction", libAffx_teamOrder, StringToFixed(libAffx_GetCatalogDefault("Behavior,AffixPromoteDamage,DamageResponse.ModifyFraction")) + (0.20 * (libAffx_EventAffixCount() - 1)));
+    libAffx_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPromoteDamage", "DamageResponse.ModifyFraction", libAffx_teamOrder, StringToFixed(libAffx_GetCatalogDefault("Behavior,AffixPromoteDamage,DamageResponse.ModifyFraction")) + (0.25 * (libAffx_EventAffixCount() - 1)));
     libAffx_AddBehaviorAllUnitsFilter("AffixPromoteDamage", libCore_gv_filtersMinionsTownMinions, libAffx_teamOrder, "", 1);
     libAffx_AddBehaviorAllUnitsFilter("AffixPromoteDamageReduction", libCore_gv_filtersMinionsTownMinions, libAffx_teamOrder, "", 1);
     return true;
@@ -3040,10 +3195,33 @@ bool libAffx_RingOfMagicAffixAdded (bool testConds, bool runActions) {
     ringOfMagicModifier = 0.05 * libAffx_EventAffixCount();
     return true;
 }
+
+// ---------------------------------------------------------------
+// Emergency Measure
+// ---------------------------------------------------------------
+
+bool libAffx_EmergencyMeasureOncePerGame (bool testConds, bool runActions) {
+    int i;
+    if (!runActions) {
+        return true;
+    }
+    for (i = 2; i <= 5; i += 1) {
+        libAffx_AddAffixBehavior(libAffx_player, "AffixEmergencyMeasureCooldown");
+    }
+    return true;
+}
+
 // ---------------------------------------------------------------
 // Last Moments
 // ---------------------------------------------------------------
 int libAffx_lastMomentsIndex;
+bool libAffx_LastMomentsOncePerGame (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_AddAffixBehavior(libAffx_player, "AffixLastMomentsCooldown");
+    return true;
+}
 bool libAffx_LastMomentsAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
@@ -3053,6 +3231,8 @@ bool libAffx_LastMomentsAffixAdded (bool testConds, bool runActions) {
     return true;
 }
 bool libAffx_LastMomentsPeriodic (bool testConds, bool runActions) {
+    fixed behaviorDuration;
+    unit heroUnit = libAffx_GetHeroUnit(libAffx_player);
     if (testConds) {
         if (libAffx_lastMomentsIndex == 0) {
             return false;
@@ -3061,7 +3241,12 @@ bool libAffx_LastMomentsPeriodic (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_affixes[libAffx_lastMomentsIndex].cooldown = UnitBehaviorDuration(libAffx_GetHeroUnit(libAffx_player), "AffixLastMomentsCooldown");
+    behaviorDuration = UnitBehaviorDuration(heroUnit, "AffixLastMomentsCooldown");
+    if (behaviorDuration < libAffx_affixes[libAffx_lastMomentsIndex].cooldown - 1) {
+        UnitBehaviorSetDuration(heroUnit, "AffixLastMomentsCooldown", libAffx_affixes[libAffx_lastMomentsIndex].cooldown);
+    } else {
+        libAffx_affixes[libAffx_lastMomentsIndex].cooldown = behaviorDuration;
+    }
     return true;
 }
 // ---------------------------------------------------------------
@@ -3647,6 +3832,24 @@ bool libAffx_AncientBlessingsScaling (bool testConds, bool runActions) {
     }
     libAffx_LevelUpScaling("Effect,DeckardAncientBlessingsAoEDamage,Amount", player);
     libAffx_LevelUpScaling("Effect,DeckardAncientBlessingsHealCreateHealer,RechargeVitalRate", player);
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Ancient Blessings
+// ---------------------------------------------------------------
+bool libAffx_SgtHammerMachineGunnerOncePerGame (bool testConds, bool runActions) {
+    unit heroUnit = libAffx_GetHeroUnit(libAffx_player);
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CatalogReferenceModify("Weapon,HeroSgtHammer,Period", libAffx_player, "0.125");
+    libAffx_CatalogReferenceModify2("Effect,SgtHammerTankAttackDamage,Amount", libAffx_player, "0.25", c_upgradeOperationMultiply);
+    libAffx_CatalogReferenceModify("Weapon,SgtHammerSiegeModeWeapon,Period", libAffx_player, "0.125");
+    libAffx_CatalogReferenceModify2("Effect,SiegeWeaponBaseDamage,Amount", libAffx_player, "0.25", c_upgradeOperationMultiply);
+    libAffx_CatalogReferenceModify("Effect,SiegeWeaponImpactSet,EffectArray[6]", libAffx_player, "EmptySetDummy");
+
+    UnitCreateEffectUnit(heroUnit, "SiegeModeRemoveSet", heroUnit);
 
     return true;
 }

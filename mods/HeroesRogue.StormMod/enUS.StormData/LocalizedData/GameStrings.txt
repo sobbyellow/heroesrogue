@@ -94,7 +94,7 @@ Affix/Tooltip/DifficultyNormal=Increases maximum Health and Mana, Health and Man
 Affix/Tooltip/Append/DifficultyNormal=<n/><n/>Stats bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDifficultyBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
 Affix/Name/DifficultyHard=Mythic
 Affix/Tooltip/DifficultyHard=Increases maximum Health and Mana, Health and Mana regeneration, and damage dealt of ALL enemies by <c val="#TooltipNumbers">4%</c> every game. Stacks multiplicatively.<n/><n/>Increases enemies's Experience gain by <c val="#TooltipNumbers">1%</c> every game.<n/><n/>Obtain a powerful <c val="A84987">mythic Curse</c> at the start and every <c val="#TooltipNumbers">4</c> games afterwards.
-Affix/Tooltip/Append/DifficultyHard=<n/><n/>Stats bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDifficultyBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c><n/>XP boost: <c val="#TooltipNumbers"><d ref="($GalaxyVar:libAffx_difficultyXPMod$)*100" precision="2"/>%</c>
+Affix/Tooltip/Append/DifficultyHard=<n/><n/>Stats bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDifficultyBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c><n/>XP boost: <c val="#TooltipNumbers"><d ref="($GalaxyVar:libAffx_difficultyXPMod$)*100" precision="0"/>%</c>
 
 Button/Name/WitchDoctorWidowmakers2=Widowmakers II
 Button/SimpleDisplayText/WitchDoctorWidowmakers2=Increases Slow and duration
@@ -154,7 +154,7 @@ Affix/Name/Buddy=BUDDY
 Affix/Tooltip/Buddy=A friendly Drone follows you around, healing you for <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreateHealer,RechargeVitalRate" player="1" precision="0"/></c> Health every <c val="#TooltipNumbers">3</c> seconds.<n/><n/>BUDDY shoots a missile every <c val="#TooltipNumbers">4</c> seconds at the nearest enemy, dealing <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyDroneMissileDamage,Amount" player="1" precision="0"/></c> damage in the area.<n/><n/>Additional stacks reduce BUDDY's missile cooldown by <c val="#TooltipNumbers">1</c> second and healing beam cooldown by <c val="#TooltipNumbers">0.25</c> seconds.
 Affix/Tooltip/Append/Buddy=<n/><n/>Healing cooldown: <c val="#TooltipNumbers"><d ref="Effect,AffixBuddyHealCreatePersistent,PeriodicPeriodArray[0]" precision="2"/></c> seconds<n/>Missile cooldown: <c val="#TooltipNumbers"><d ref="Behavior,AffixBuddyDroneController,Period" precision="2"/></c> seconds
 Affix/Name/BuddyAll=Army of BUDDYs
-Affix/Tooltip/BuddyAll=Gain an additional BUDDY and your AI teammates gain their own BUDDYs with <c val="#TooltipNumbers">50%</c> damage and healing.<n/><n/>Additional stacks grant another BUDDY to you.
+Affix/Tooltip/BuddyAll=Gain <c val="#TooltipNumbers">1</c> additional BUDDY and your AI teammates gain <c val="#TooltipNumbers">1</c> BUDDY each.<n/><n/>All BUDDYs have <c val="#TooltipNumbers">75%</c> damage and healing.<n/><n/>Additional stacks grant <c val="#TooltipNumbers">1</c> more BUDDY to you.
 Affix/Tooltip/Append/BuddyAll=
 Affix/Name/ManyRituals=Many Rituals
 Affix/Tooltip/ManyRituals=Gain <c val="#TooltipNumbers">40</c> Voodoo Ritual stacks now and at the start of every game.<n/><n/>Additional stacks increase Voodoo Ritual stacks by an additional <c val="#TooltipNumbers">20</c>.
@@ -402,7 +402,7 @@ Button/Name/AffixFirstAid=First Aid
 Button/SimpleDisplayText/AffixFirstAid=Regenerate health.
 Button/Tooltip/AffixFirstAid=Regenerate health.
 Affix/Name/Promote=Promote
-Affix/Tooltip/Promote=Allied Minions take <c val="#TooltipNumbers">25%</c> reduced damage from non-Heroic enemies and deal <c val="#TooltipNumbers">50%</c> increased damage to non-Heroic enemies.<n/><n/>Additional stacks increase the damage by <c val="#TooltipNumbers">20%</c>.
+Affix/Tooltip/Promote=Allied Minions take <c val="#TooltipNumbers">25%</c> reduced damage from non-Heroic enemies and deal <c val="#TooltipNumbers">50%</c> increased damage to non-Heroic enemies.<n/><n/>Additional stacks increase the damage by <c val="#TooltipNumbers">25%</c>.
 Affix/Tooltip/Append/Promote=<n/><n/>Damage bonus: <c val="#TooltipNumbers"><d ref="(Behavior,AffixPromoteDamage,DamageResponse.ModifyFraction-1)*100" player="11" precision="0"/>%</c>
 Affix/Name/RegenerativeWalls=Automatic Repairs
 Affix/Tooltip/RegenerativeWalls=Allied Structures regenerate <c val="#TooltipNumbers">35</c> Health per second.<n/><n/>Does not affect your allied Core.
@@ -507,6 +507,9 @@ Affix/Tooltip/Append/GiantKiller=<n/><n/>Maximum Health damage: <c val="#Tooltip
 Affix/Name/AncientBlessings=Ancient Blessings
 Affix/Tooltip/AncientBlessings=Basic Attacks deal an additional <c val="#TooltipNumbers"><d ref="Effect,DeckardAncientBlessingsAoEDamage,Amount"/></c> damage in an area and heal for <c val="#TooltipNumbers"><d ref="Effect,DeckardAncientBlessingsHealCreateHealer,RechargeVitalRate"/></c> for each Hero hit.<n/><n/>This effect can only occur once per second.
 Affix/Tooltip/Append/AncientBlessings=
+Affix/Name/SgtHammerMachineGunner=Machine Gunner
+Affix/Tooltip/SgtHammerMachineGunner=Sgt. Hammer's Basic Attacks deal <c val="#TooltipNumbers">25%</c> damage and Siege Mode no longer splashes, but her Basic Attack cooldown is reduced to <c val="#TooltipNumbers">0.125</c> seconds.
+Affix/Tooltip/Append/SgtHammerMachineGunner=
 
 
 
@@ -651,7 +654,7 @@ Affix/Name/WheresIllidan=Where's Illidan?
 Affix/Tooltip/WheresIllidan=Every <c val="#TooltipNumbers">50</c> to <c val="#TooltipNumbers">250</c> seconds, Maiev appears for a brief moment and casts Containment Disc on you.
 Affix/Tooltip/Append/WheresIllidan=
 Affix/Name/NightElfBond=Night Elf Bond
-Affix/Tooltip/NightElfBond=Malfurion follows you around. If he dies, you die.<n/><n/>Malfurion gains bonus Health equal to <c val="#TooltipNumbers">50%</c> of your maximum Health and has <c val="#TooltipNumbers">30%</c> increased Movement Speed and infinite Mana.<n/><n/>Malfurion does not gain talents and does not scale with levels.<n/><n/><c val="FFDE36">Skips the next Curse.</c>
+Affix/Tooltip/NightElfBond=Malfurion follows you around. Malfurion's maximum Health is equal to Tyrande's maximum Health and Health is shared between the two. If he dies, you die.<n/><n/>Malfurion has <c val="#TooltipNumbers">30%</c> increased Movement Speed and infinite Mana.<n/><n/>Malfurion does not gain talents and does not scale with levels.<n/><n/><c val="FFDE36">Skips the next 3 Curses.</c>
 Affix/Tooltip/Append/NightElfBond=
 Button/Name/NightElfBond=Night Elf Bond
 Button/SimpleDisplayText/NightElfBond=How could you let him die!?
