@@ -3230,9 +3230,69 @@ bool libAffx_LastMomentsAffixAdded (bool testConds, bool runActions) {
     libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixLastMomentsCooldown", "Duration", 300 - (60 * (libAffx_EventAffixCount() - 1)));
     return true;
 }
+
+// ---------------------------------------------------------------
+// Last Moments - DVa Fix
+// ---------------------------------------------------------------
+void SyncDVaLastMomentsCooldowns() {
+    unitgroup heroGroup = libGame_gv_players[libAffx_player].lv_heroUnitGroup;
+    int unitGroupCount = UnitGroupCount(heroGroup, c_unitCountAll);
+    fixed maxCooldown = libAffx_affixes[libAffx_lastMomentsIndex].cooldown;
+    fixed currentUnitCooldown;
+    unit dvaUnit;
+    int i;
+    int j;
+    string unitTypes;
+
+    //debug_Log("There are " + IntToString(unitGroupCount) + " units in group");
+    for (i = 1; i <= unitGroupCount; i += 1) {
+    	dvaUnit = UnitGroupUnitFromEnd(heroGroup, i);
+    	currentUnitCooldown = UnitBehaviorDuration(dvaUnit, "AffixLastMomentsCooldown");
+    	if (currentUnitCooldown > maxCooldown) {
+    		maxCooldown = currentUnitCooldown;
+    	}
+    	unitTypes += " " + UnitGetType(dvaUnit);
+	}
+	//debug_Log("Current units are:" + unitTypes);
+
+    for (i = 1; i <= unitGroupCount; i += 1) {
+		dvaUnit = UnitGroupUnitFromEnd(heroGroup, i);
+        //debug_Log(
+        //   "before: DVa is " + UnitGetType(dvaUnit)
+        //   + " has AffixLastMoments = " + IntToString(BoolToInt(UnitHasBehavior(dvaUnit, "AffixLastMoments")))
+        //   + " and AffixCooldown = " + IntToString(BoolToInt(UnitHasBehavior(dvaUnit, "AffixLastMomentsCooldown")))
+        //   + " and its cooldown is " + IntToString(FixedToInt(UnitBehaviorDuration(dvaUnit, "AffixLastMomentsCooldown")))
+        //);
+        if (!UnitHasBehavior(dvaUnit, "AffixLastMomentsCooldown") && !UnitHasBehavior(dvaUnit, "AffixLastMoments")) {
+            UnitBehaviorAdd(dvaUnit, "AffixLastMomentsCooldown", dvaUnit, 1);
+            UnitBehaviorSetDuration(dvaUnit, "AffixLastMomentsCooldown", maxCooldown);
+        }
+        currentUnitCooldown = UnitBehaviorDuration(dvaUnit, "AffixLastMomentsCooldown");
+        if (maxCooldown > 0) {
+            UnitBehaviorRemove(dvaUnit, "AffixLastMoments", 1);
+            UnitBehaviorAdd(dvaUnit, "AffixLastMomentsCooldown", dvaUnit, 1);
+            UnitBehaviorSetDuration(dvaUnit, "AffixLastMomentsCooldown", maxCooldown);
+        } else {
+            UnitBehaviorRemove(dvaUnit, "AffixLastMomentsCooldown", 1);
+            UnitBehaviorAdd(dvaUnit, "AffixLastMoments", dvaUnit, 1);
+        }
+        if (currentUnitCooldown < maxCooldown) {
+        	UnitBehaviorSetDuration(dvaUnit, "AffixLastMomentsCooldown", maxCooldown);
+        }
+	    //debug_Log(
+        //	"after: DVa is " + UnitGetType(dvaUnit)
+        //	+ " has AffixLastMoments = " + IntToString(BoolToInt(UnitHasBehavior(dvaUnit, "AffixLastMoments")))
+        //    + " and AffixCooldown = " + IntToString(BoolToInt(UnitHasBehavior(dvaUnit, "AffixLastMomentsCooldown")))
+        //    + " and its cooldown is " + IntToString(FixedToInt(UnitBehaviorDuration(dvaUnit, "AffixLastMomentsCooldown")))
+        //);
+	}
+}
+
 bool libAffx_LastMomentsPeriodic (bool testConds, bool runActions) {
     fixed behaviorDuration;
     unit heroUnit = libAffx_GetHeroUnit(libAffx_player);
+	string heroUnitType = UnitGetType(heroUnit);
+
     if (testConds) {
         if (libAffx_lastMomentsIndex == 0) {
             return false;
@@ -3247,6 +3307,12 @@ bool libAffx_LastMomentsPeriodic (bool testConds, bool runActions) {
     } else {
         libAffx_affixes[libAffx_lastMomentsIndex].cooldown = behaviorDuration;
     }
+
+    if (heroUnitType == "HeroDVaMech" || heroUnitType == "HeroDVaPilot") {
+        SyncDVaLastMomentsCooldowns();
+    }
+
+    // debug_Log(IntToString(libAffx_lastMomentsIndex) + " " + IntToString(FixedToInt(libAffx_affixes[libAffx_lastMomentsIndex].cooldown)));
     return true;
 }
 // ---------------------------------------------------------------
