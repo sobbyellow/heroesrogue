@@ -253,6 +253,8 @@ int libAffx_dialogControlOptionsRestartYes;
 int libAffx_dialogControlOptionsRestartNo;
 int libAffx_dialogControlAffixesButton;
 int libAffx_dialogOwnedAffixes;
+int libAffx_dialogOwnedAffixesPreviousPage;
+int libAffx_dialogOwnedAffixesNextPage;
 int libAffx_dialogCurrentRun;
 int libAffx_dialogVersion;
 
@@ -266,8 +268,12 @@ int libAffx_cursesNextGame;
 int libAffx_cursesQueued;
 
 bool libAffx_gamePaused; // Whether the game is paused.
-bool libAffx_showingOwnedAffixes; // Whether the Owned Affixes window is open.
 bool libAffx_showingOptions; // Whether the Options window is open.
+bool libAffx_showingOwnedAffixes; // Whether the Owned Affixes window is open.
+
+int libAffx_ownedAffixesCurrentPage = 1;
+int libAffx_ownedAffixesMaxPages;
+int libAffx_ownedAffixesPerPage = 90;
 
 int libAffx_playerHeroIndexLoaded; // The player's Hero index that was loaded from the Bank.
 int libAffx_currentRun; // Number of the current run.
@@ -279,26 +285,22 @@ bool libAffx_startingBoonsQueued;
 int libAffx_objectivesWon;
 int libAffx_objectivesWonCounter;
 int libAffx_skipCurseCounter;
-
 int libAffx_executingAffix;
 int libAffx_executingAffixCount;
+int libAffx_loadedDifficulty;
+bool libAffx_speedUpStart;
+bool libAffx_speedUpDeath;
+int libAffx_gallPlayer;
+int libAffx_choPlayer;
+bool libAffx_debugCommandsAddAll;
+fixed libAffx_processQueueTimeElapsed;
+int libAffx_lastSelected;
 
 int libAffx_boonsLevel10 = 1;
 int libAffx_cursesLevel1 = 1;
-
 int libAffx_difficulty = 1;
-int libAffx_loadedDifficulty;
 
-bool libAffx_speedUpStart;
-bool libAffx_speedUpDeath;
 
-int libAffx_gallPlayer;
-int libAffx_choPlayer;
-
-bool libAffx_debugCommandsAddAll;
-fixed libAffx_processQueueTimeElapsed;
-
-int libAffx_lastSelected;
 
 // Triggers
 trigger libAffx_HeroSelectionTrigger;
@@ -336,17 +338,18 @@ trigger libAffx_SpeedUpTrigger;
 trigger libAffx_SpeedUpDeathTrigger;
 trigger libAffx_SpeedUpDeathUnitDiedTrigger;
 trigger libAffx_PBU2DifficultyChangedTrigger;
+trigger libAffx_OwnedAffixesPagesClickedTrigger;
 
 // Debug options
 bool libAffx_debug_enableTryMeMode2 = false; // Try mode 2.0
 bool libAffx_debug_enableCheatCommands = false; // Enables cheat/debug commands
+bool libAffx_debug_disableHeroSelection = false; // Skips the Hero selection.
+string libAffx_debug_playerHero = "Abathur"; // Player hero when hero selection is disabled.
 bool libAffx_debug_enableDebugLogging = false; // Enables debug logging
 bool libAffx_debug_forcedHeroes = false; // Enemy heroes are forced to predetermined heroes
-bool libAffx_debug_disablePausing = false; // Disables pause features
 bool libAffx_debug_ignoreMap = false; // Ignores the saved map.
+bool libAffx_debug_disablePausing = false; // Disables pause features
 bool libAffx_debug_disableAffixQueue = false; // Disables queueing affixes.
-bool libAffx_debug_disableHeroSelection = false; // Skips the Hero selection.
-string libAffx_debug_playerHero = "LostVikings"; // Player hero when hero selection is disabled.
 
 void libAffx_DebugPrint(string print);
 string libAffx_GetRarityString(int rarity); // Gets rarity name.
@@ -405,6 +408,7 @@ void libAffx_BankSave();
 void libAffx_BankLoad();
 void libAffx_BankReset();
 unit libAffx_GetDVaMech(int player);
+void libAffx_UpdateOwnedAffixes();
 bool libAffx_IntToBoolean(int value);
 int libAffx_RollRarity(int baseRarity, bool curse); // Roll rarity to upgrade.
 int libAffx_RollAffix(int rarity, bool curse, int level, bool preventUpgrade); // Returns an affix that matches the criteria and all requirements.

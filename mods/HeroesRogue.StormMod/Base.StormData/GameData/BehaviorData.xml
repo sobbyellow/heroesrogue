@@ -65,8 +65,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixAllyHealthBuff" parent="CarryBehaviorParent">
     <Modification>
-      <VitalMaxFractionArray index="Life" value="0.07" />
-      <VitalMaxFractionArray index="Shields" value="0.07" />
+      <VitalMaxFractionArray index="Life" value="0.075" />
+      <VitalMaxFractionArray index="Shields" value="0.075" />
     </Modification>
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixAllySpeedBuff" parent="CarryBehaviorParent">
@@ -586,7 +586,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorTokenCounter id="SentinelShotDamageTokenCounter" parent="StormQuestToken">
   <Face value="SentinelShotDamageToken" />
-  <Max value="2000" />
+  <Max value="10000" />
   <ConditionalEvents Compare="GE" CompareValue="20">
     <Event EventId="QuestMilestone" Effect="LunarFlareQuestPierceUpgrade" />
   </ConditionalEvents>
@@ -600,7 +600,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorTokenCounter id="MuradinDwarfTossTokenCounter" parent="StormQuestToken">
   <Face value="MuradinDwarfTossTokenCounter" />
-  <Max value="2000" />
+  <Max value="10000" />
   <ConditionalEvents Compare="GE" CompareValue="25">
     <Event EventId="QuestMilestone" Effect="MuradinDwarfTossTokenCounterUpgrade" />
   </ConditionalEvents>
@@ -729,24 +729,24 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CBehaviorBuff id="AffixSuperiority" parent="StormArmorPermanent">
   <ArmorModification>
     <ArmorSet index="Merc">
-      <ArmorMitigationTable index="Basic" value="10" />
-      <ArmorMitigationTable index="Ability" value="10" />
+      <ArmorMitigationTable index="Basic" value="15" />
+      <ArmorMitigationTable index="Ability" value="15" />
     </ArmorSet>
     <ArmorSet index="Monster">
-      <ArmorMitigationTable index="Basic" value="10" />
-      <ArmorMitigationTable index="Ability" value="10" />
+      <ArmorMitigationTable index="Basic" value="15" />
+      <ArmorMitigationTable index="Ability" value="15" />
     </ArmorSet>
     <ArmorSet index="Summon">
-      <ArmorMitigationTable index="Basic" value="10" />
-      <ArmorMitigationTable index="Ability" value="10" />
+      <ArmorMitigationTable index="Basic" value="15" />
+      <ArmorMitigationTable index="Ability" value="15" />
     </ArmorSet>
     <ArmorSet index="Structure">
-      <ArmorMitigationTable index="Basic" value="10" />
-      <ArmorMitigationTable index="Ability" value="10" />
+      <ArmorMitigationTable index="Basic" value="15" />
+      <ArmorMitigationTable index="Ability" value="15" />
     </ArmorSet>
     <ArmorSet index="Minion">
-      <ArmorMitigationTable index="Basic" value="10" />
-      <ArmorMitigationTable index="Ability" value="10" />
+      <ArmorMitigationTable index="Basic" value="15" />
+      <ArmorMitigationTable index="Ability" value="15" />
     </ArmorSet>
   </ArmorModification>
 </CBehaviorBuff>
@@ -991,7 +991,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorBuff id="Mythic5Debuff" parent="CarryBehaviorParent">
   <MaxStackCount value="1" />
-  <ArmorModification AllArmorBonus="-10" StackCount="1" >
+  <ArmorModification AllArmorBonus="-5" StackCount="1" >
     <ArmorSet index="Hero">
       <OverrideMinCap index="Splash" value="1"/>
       <OverrideMinCap index="Basic" value="1"/>
@@ -1044,8 +1044,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorBuff id="EnemyHealing" parent="CarryBehaviorParent">
   <Modification>
-    <HealTakenAdditiveMultiplier index="Life" value="0.4" />
-    <VitalRegenMultiplier index="Life" value="0.4" />
+    <HealTakenAdditiveMultiplier index="Life" value="0.3" />
+    <VitalRegenMultiplier index="Life" value="0.3" />
   </Modification>
 </CBehaviorBuff>
 
@@ -1081,6 +1081,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Kind index="Ability" value="0" />
   </DamageResponse>
   <BehaviorCategories index="BuffAutoattackDPS" value="1" />
+</CBehaviorBuff>
+
+<CBehaviorBuff id="TyrandeShootingStarCooldown">
+  <Duration value="2.5" />
 </CBehaviorBuff>
 
 <CBehaviorBuff id="AffixSgtHammerMachineGunner" parent="CarryBehaviorParent">

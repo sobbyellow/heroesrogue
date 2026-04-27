@@ -191,4 +191,11 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <WhichUnit Value="Caster" />
 </CValidatorUnitCompareTokenCount>
 
+
+<CValidatorUnitCompareBehaviorCount id="CasterDoesNotHaveTyrandeShootingStarCooldown">
+  <WhichUnit Value="Caster" />
+  <Value value="0" />
+  <Behavior value="TyrandeShootingStarCooldown" />
+</CValidatorUnitCompareBehaviorCount>
+
 </Catalog>

@@ -888,10 +888,10 @@
             <String String="Assets/Textures/affix_icon_ally_health.dds">
                 <Field Id="Icon"/>
             </String>
-            <String String="0 2 Set Behavior,AffixAllyHealthBuff,Modification.VitalMaxFractionArray[Life] 0.07">
+            <String String="0 2 Set Behavior,AffixAllyHealthBuff,Modification.VitalMaxFractionArray[Life] 0.075">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="0 2 Set Behavior,AffixAllyHealthBuff,Modification.VitalMaxFractionArray[Shields] 0.07">
+            <String String="0 2 Set Behavior,AffixAllyHealthBuff,Modification.VitalMaxFractionArray[Shields] 0.075">
                 <Field Id="CatalogModification" Index="1"/>
             </String>
             <String String="Execute libAffx_AllyHealth">
@@ -1346,36 +1346,6 @@
             </String>
             <String String="AA libaffx_BuddyAllAffixAdded">
                 <Field Id="Trigger" Index="2"/>
-            </String>
-            <String String="2 6 Multiply Effect,AffixBuddyHealCreateHealer,RechargeVitalRate 0.75">
-                <Field Id="CatalogModification"/>
-            </String>
-            <String String="2 6 Multiply Effect,AffixBuddyDroneMissileDamage,Amount 0.75">
-                <Field Id="CatalogModification" Index="1"/>
-            </String>
-            <String String="3 6 Multiply Effect,AffixBuddyHealCreateHealer,RechargeVitalRate 0.75">
-                <Field Id="CatalogModification" Index="2"/>
-            </String>
-            <String String="4 6 Multiply Effect,AffixBuddyHealCreateHealer,RechargeVitalRate 0.75">
-                <Field Id="CatalogModification" Index="4"/>
-            </String>
-            <String String="5 6 Multiply Effect,AffixBuddyHealCreateHealer,RechargeVitalRate 0.75">
-                <Field Id="CatalogModification" Index="6"/>
-            </String>
-            <String String="3 6 Multiply Effect,AffixBuddyDroneMissileDamage,Amount 0.75">
-                <Field Id="CatalogModification" Index="3"/>
-            </String>
-            <String String="4 6 Multiply Effect,AffixBuddyDroneMissileDamage,Amount 0.75">
-                <Field Id="CatalogModification" Index="5"/>
-            </String>
-            <String String="5 6 Multiply Effect,AffixBuddyDroneMissileDamage,Amount 0.75">
-                <Field Id="CatalogModification" Index="7"/>
-            </String>
-            <String String="1 6 Multiply Effect,AffixBuddyHealCreateHealer,RechargeVitalRate 0.75">
-                <Field Id="CatalogModification" Index="8"/>
-            </String>
-            <String String="1 6 Multiply Effect,AffixBuddyDroneMissileDamage,Amount 0.75">
-                <Field Id="CatalogModification" Index="9"/>
             </String>
             <User Type="Affix" Instance="Buddy">
                 <Field Id="AffixesRequired"/>
@@ -2329,7 +2299,7 @@
             <String String="Starter">
                 <Field Id="Rarity"/>
             </String>
-            <String String="1 1 Set Effect,TyrandeShootingStarProcSearchAffix,Chance 0.33">
+            <String String="1 1 Set Effect,TyrandeShootingStarProcSearchAffix,Chance 1">
                 <Field Id="CatalogModification"/>
             </String>
             <String String="ElunesGift">
@@ -2802,9 +2772,6 @@
             <Int Int="1">
                 <Field Id="Curse"/>
             </Int>
-            <Int Int="1">
-                <Field Id="SkipCurses"/>
-            </Int>
             <String String="E libAffx_Pre2020Execute">
                 <Field Id="Trigger"/>
             </String>
@@ -3153,6 +3120,9 @@
             <Int Int="1">
                 <Field Id="Curse"/>
             </Int>
+            <Int Int="1">
+                <Field Id="SkipCurses"/>
+            </Int>
             <String String="Assets/Textures/affix_icon_toy_hammer.dds">
                 <Field Id="Icon"/>
             </String>
@@ -3279,34 +3249,34 @@
             <String String="1 0 AffixSuperiority">
                 <Field Id="Behavior"/>
             </String>
-            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Merc].ArmorMitigationTable[Basic] 10">
+            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Merc].ArmorMitigationTable[Basic] 15">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Merc].ArmorMitigationTable[Ability] 10">
+            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Merc].ArmorMitigationTable[Ability] 15">
                 <Field Id="CatalogModification" Index="1"/>
             </String>
-            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Monster].ArmorMitigationTable[Basic] 10">
+            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Monster].ArmorMitigationTable[Basic] 15">
                 <Field Id="CatalogModification" Index="2"/>
             </String>
-            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Monster].ArmorMitigationTable[Ability] 10">
+            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Monster].ArmorMitigationTable[Ability] 15">
                 <Field Id="CatalogModification" Index="3"/>
             </String>
-            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Summon].ArmorMitigationTable[Basic] 10">
+            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Summon].ArmorMitigationTable[Basic] 15">
                 <Field Id="CatalogModification" Index="4"/>
             </String>
-            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Summon].ArmorMitigationTable[Ability] 10">
+            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Summon].ArmorMitigationTable[Ability] 15">
                 <Field Id="CatalogModification" Index="5"/>
             </String>
-            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Structure].ArmorMitigationTable[Basic] 10">
+            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Structure].ArmorMitigationTable[Basic] 15">
                 <Field Id="CatalogModification" Index="6"/>
             </String>
-            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Structure].ArmorMitigationTable[Ability] 10">
+            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Structure].ArmorMitigationTable[Ability] 15">
                 <Field Id="CatalogModification" Index="7"/>
             </String>
-            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Minion].ArmorMitigationTable[Basic] 10">
+            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Minion].ArmorMitigationTable[Basic] 15">
                 <Field Id="CatalogModification" Index="8"/>
             </String>
-            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Minion].ArmorMitigationTable[Ability] 10">
+            <String String="1 2 Set Behavior,AffixSuperiority,ArmorModification.ArmorSet[Minion].ArmorMitigationTable[Ability] 15">
                 <Field Id="CatalogModification" Index="9"/>
             </String>
         </Instances>
@@ -3634,35 +3604,8 @@
             <String String="5 0 AffixRegenRing">
                 <Field Id="Behavior" Index="4"/>
             </String>
-            <String String="1 2 Set Behavior,AffixRegenRing,Modification.VitalRegenArray[Life] 8">
-                <Field Id="CatalogModification"/>
-            </String>
-            <String String="2 2 Set Behavior,AffixRegenRing,Modification.VitalRegenArray[Life] 8">
-                <Field Id="CatalogModification" Index="1"/>
-            </String>
-            <String String="3 2 Set Behavior,AffixRegenRing,Modification.VitalRegenArray[Life] 8">
-                <Field Id="CatalogModification" Index="2"/>
-            </String>
-            <String String="4 2 Set Behavior,AffixRegenRing,Modification.VitalRegenArray[Life] 8">
-                <Field Id="CatalogModification" Index="3"/>
-            </String>
-            <String String="5 2 Set Behavior,AffixRegenRing,Modification.VitalRegenArray[Life] 8">
-                <Field Id="CatalogModification" Index="4"/>
-            </String>
-            <String String="1 2 Set Behavior,AffixRegenRing,Modification.VitalMaxArray[Life] 50">
-                <Field Id="CatalogModification" Index="5"/>
-            </String>
-            <String String="2 2 Set Behavior,AffixRegenRing,Modification.VitalMaxArray[Life] 50">
-                <Field Id="CatalogModification" Index="6"/>
-            </String>
-            <String String="3 2 Set Behavior,AffixRegenRing,Modification.VitalMaxArray[Life] 50">
-                <Field Id="CatalogModification" Index="7"/>
-            </String>
-            <String String="4 2 Set Behavior,AffixRegenRing,Modification.VitalMaxArray[Life] 50">
-                <Field Id="CatalogModification" Index="8"/>
-            </String>
-            <String String="5 2 Set Behavior,AffixRegenRing,Modification.VitalMaxArray[Life] 50">
-                <Field Id="CatalogModification" Index="9"/>
+            <String String="AA libAffx_RegenerationRingAffixAdded">
+                <Field Id="Trigger"/>
             </String>
         </Instances>
         <Instances Id="MagicRing">
@@ -4421,10 +4364,10 @@
             <String String="10 0 EnemyHealing">
                 <Field Id="Behavior" Index="4"/>
             </String>
-            <String String="0 2 Set Behavior,EnemyHealing,Modification.HealTakenAdditiveMultiplier[Life] 0.4">
+            <String String="0 2 Set Behavior,EnemyHealing,Modification.HealTakenAdditiveMultiplier[Life] 0.3">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="0 2 Set Behavior,EnemyHealing,Modification.VitalRegenMultiplier[Life] 0.4">
+            <String String="0 2 Set Behavior,EnemyHealing,Modification.VitalRegenMultiplier[Life] 0.3">
                 <Field Id="CatalogModification" Index="1"/>
             </String>
         </Instances>
@@ -4535,6 +4478,17 @@
             </String>
             <String String="Scaling libAffx_AncientBlessingsScaling">
                 <Field Id="Trigger" Index="1"/>
+            </String>
+        </Instances>
+        <Instances Id="MacGuffin">
+            <Int Int="3">
+                <Field Id="Max"/>
+            </Int>
+            <String String="Assets/Textures/affix_icon_macguffin.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="AA libAffx_MacGuffinAffixAdded">
+                <Field Id="Trigger"/>
             </String>
         </Instances>
         <Instances Id="SgtHammerMachineGunner">

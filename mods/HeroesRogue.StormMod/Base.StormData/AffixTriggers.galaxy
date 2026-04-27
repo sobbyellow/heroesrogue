@@ -1776,6 +1776,10 @@ bool libAffx_BuddyAllOncePerGame (bool testConds, bool runActions) {
     for (i = 2; i <= 5; i += 1) {
         libAffx_AddBehaviorWithExclusion(i, "AffixBuddyDroneSpawnBehavior", 1, true, "HeroDVaMech");
     }
+    for (i = 1; i <= 5; i += 1) {
+        libAffx_LevelUpScaling3("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", i, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate")) * 0.75);
+        libAffx_LevelUpScaling3("Effect,AffixBuddyDroneMissileDamage,Amount", i, 0.04, StringToFixed(libAffx_GetCatalogDefault("Effect,AffixBuddyDroneMissileDamage,Amount")) * 0.75);
+    }
     return true;
 }
 bool libaffx_BuddyAllAffixAdded (bool testConds, bool runActions) {
@@ -1789,7 +1793,7 @@ bool libaffx_BuddyAllAffixAdded (bool testConds, bool runActions) {
 bool libAffx_BuddyAllLevelUp (bool testConds, bool runActions) {
     int player = libGame_gf_HeroLevelUpPlayer();
     if (testConds) {
-        if (player < 2 || player > 5) {
+        if (player < 1 || player > 5) {
             return false;
         }
         if (player == libAffx_choPlayer || player == libAffx_gallPlayer) {
@@ -3174,7 +3178,7 @@ bool libAffx_ShieldExecuteAffixAdded (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 // Ring of Magic
 // ---------------------------------------------------------------
-fixed ringOfMagicModifier = 0.05;
+fixed ringOfMagicModifier = 0.15;
 bool libAffx_RingOfMagicBehaviorChange (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
@@ -3189,10 +3193,26 @@ bool libAffx_RingOfMagicBehaviorChange (bool testConds, bool runActions) {
     return true;
 }
 bool libAffx_RingOfMagicAffixAdded (bool testConds, bool runActions) {
+    int count = libAffx_EventAffixCount();
     if (!runActions) {
         return true;
     }
-    ringOfMagicModifier = 0.05 * libAffx_EventAffixCount();
+    ringOfMagicModifier = 0.15 + (0.075 * (count - 1));
+    return true;
+}
+// ---------------------------------------------------------------
+// Ring of Regeneration
+// ---------------------------------------------------------------
+bool libAffx_RegenerationRingAffixAdded (bool testConds, bool runActions) {
+    int i;
+    int count = libAffx_EventAffixCount();
+    if (!runActions) {
+        return true;
+    }
+    for (i = 1; i <= 5; i += 1) {
+        libAffx_CatalogReferenceModify("Behavior,AffixRegenRing,Modification.VitalMaxArray[Life]", i, FixedToString(250 + 50 * (count - 1), 0));
+        libAffx_CatalogReferenceModify("Behavior,AffixRegenRing,Modification.VitalRegenArray[Life]", i, FixedToString(12 + 8 * (count - 1), 0));
+    }
     return true;
 }
 
@@ -3586,7 +3606,7 @@ bool libAffx_Mythic5LevelUp (bool testConds, bool runActions) {
         return true;
     }
     libAffx_affixes[libAffx_mythic5Index].customBool = true;
-    libAffx_affixes[libAffx_mythic5Index].cooldown = 120;
+    libAffx_affixes[libAffx_mythic5Index].cooldown = 60;
     TriggerAddEventTimePeriodic(TriggerCreate("libAffx_Mythic5Periodic"), 0.0625, c_timeGame);
     TriggerAddEventUnitCreated(TriggerCreate("libAffx_Mythic5UnitCreated"), null, null, null);
     TriggerAddEventUnitChangeOwner(TriggerCreate("libAffx_Mythic5UnitChangeOwner"), null);
@@ -3637,8 +3657,8 @@ bool libAffx_Mythic5Periodic (bool testConds, bool runActions) {
     if (libAffx_affixes[libAffx_mythic5Index].cooldown <= 0) {
         level = UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit);
         if (level < 30) {
-            libAffx_CatalogModifyForAllPlayers("Behavior,Mythic5Debuff,ArmorModification.AllArmorBonus", FixedToString(StringToFixed(CatalogReferenceGet("Behavior,Mythic5Debuff,ArmorModification.AllArmorBonus", libAffx_player)) - 10, 0));
-            libAffx_affixes[libAffx_mythic5Index].cooldown = 120;
+            libAffx_CatalogModifyForAllPlayers("Behavior,Mythic5Debuff,ArmorModification.AllArmorBonus", FixedToString(StringToFixed(CatalogReferenceGet("Behavior,Mythic5Debuff,ArmorModification.AllArmorBonus", libAffx_player)) - 5, 0));
+            libAffx_affixes[libAffx_mythic5Index].cooldown = 60;
         } else {
             libAffx_CatalogModifyForAllPlayers("Behavior,Mythic5Debuff,ArmorModification.AllArmorBonus", FixedToString(StringToFixed(CatalogReferenceGet("Behavior,Mythic5Debuff,ArmorModification.AllArmorBonus", libAffx_player)) - 100, 0));
             libAffx_affixes[libAffx_mythic5Index].cooldown = 60;
@@ -3832,6 +3852,26 @@ bool libAffx_AncientBlessingsScaling (bool testConds, bool runActions) {
     }
     libAffx_LevelUpScaling("Effect,DeckardAncientBlessingsAoEDamage,Amount", player);
     libAffx_LevelUpScaling("Effect,DeckardAncientBlessingsHealCreateHealer,RechargeVitalRate", player);
+
+    return true;
+}
+// ---------------------------------------------------------------
+// MacGuffin
+// ---------------------------------------------------------------
+fixed macGuffinModifier = 0.25;
+bool libAffx_MacGuffinAffixAdded (bool testConds, bool runActions) {
+    int i;
+    int count = libAffx_EventAffixCount();
+    string original = CatalogReferenceGet("Effect,CaptureMacGuffin,PeriodCount", 0);
+    string originalVehicle = CatalogReferenceGet("Effect,UseVehiclePersistent,PeriodCount", 0);
+    if (!runActions) {
+        return true;
+    }
+    macGuffinModifier = 0.25 * count;
+    for (i = 1; i <= 5; i += 1) {
+        CatalogReferenceModify("Effect,CaptureMacGuffin,PeriodCount", i, FixedToString(StringToFixed(original) * (1 - macGuffinModifier), 0), c_upgradeOperationSet);
+        CatalogReferenceModify("Effect,UseVehiclePersistent,PeriodCount", i, FixedToString(StringToFixed(originalVehicle) * (1 - macGuffinModifier), 0), c_upgradeOperationSet);
+    }
 
     return true;
 }

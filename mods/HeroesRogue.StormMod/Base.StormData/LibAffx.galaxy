@@ -715,23 +715,25 @@ void libAffx_CreateAffixesOwnedDialog() {
     libNtve_gf_SetDialogItemStyle(DialogControlLastCreated(), "Storm_Map_Large_Bold_Centered", PlayerGroupAll());
 }
 
-void libAffx_CreateAffixesOwnedGrid(int affixTotal) {
+void libAffx_CreateAffixesOwnedGrid(int totalAffixes) {
     int i;
     int row;
     int column;
     int affixesThisRow;
     int affixesPerRow = 15;
-    int totalRows = CeilingI(IntToFixed(affixTotal) / IntToFixed(affixesPerRow));
     int affixWidth = 134;
     int affixHeight = 150;
     int offsetX;
     int offsetY;
-    for (i = 1; i <= affixTotal; i += 1) {
-        row     = (i - 1) / affixesPerRow;
-        column  = (i - 1) % affixesPerRow;
+    int start = (libAffx_ownedAffixesCurrentPage - 1) * libAffx_ownedAffixesPerPage + 1;
+    int end = MinI(totalAffixes, start + libAffx_ownedAffixesPerPage - 1);
+    int totalRows = CeilingI(IntToFixed(end - start + 1) / IntToFixed(affixesPerRow));
+    for (i = start; i <= end; i += 1) {
+        row     = (i - start) / affixesPerRow;
+        column  = (i - start) % affixesPerRow;
 
         if (row == totalRows - 1) {
-            affixesThisRow = affixTotal - row * affixesPerRow;
+            affixesThisRow = (end - start + 1) - row * affixesPerRow;
         } else {
             affixesThisRow = affixesPerRow;
         }
@@ -740,6 +742,53 @@ void libAffx_CreateAffixesOwnedGrid(int affixTotal) {
 
         libAffx_CreateAffixesOwnedDialogItem(libAffx_ownedAffixes[i], offsetX, offsetY);
     }
+    if (libAffx_ownedAffixesMaxPages > 1) {
+        DialogControlCreateFromTemplate(libAffx_dialogOwnedAffixes, c_triggerControlTypeButton, "StandardTemplates/StandardButtonTemplate");
+        libAffx_dialogOwnedAffixesPreviousPage = DialogControlLastCreated();
+        DialogControlSetSize(libAffx_dialogOwnedAffixesPreviousPage, PlayerGroupAll(), 282, 94);
+        DialogControlSetPosition(libAffx_dialogOwnedAffixesPreviousPage, PlayerGroupAll(), c_anchorBottomLeft, 0, 0);
+        libNtve_gf_SetDialogItemText(libAffx_dialogOwnedAffixesPreviousPage, StringExternal("Button/Name/PreviousPage"), PlayerGroupAll());
+        if (libAffx_ownedAffixesCurrentPage <= 1) {
+            DialogControlSetEnabled(libAffx_dialogOwnedAffixesPreviousPage, PlayerGroupAll(), false);
+        } else {
+            DialogControlSetEnabled(libAffx_dialogOwnedAffixesPreviousPage, PlayerGroupAll(), true);
+        }
+
+        DialogControlCreateFromTemplate(libAffx_dialogOwnedAffixes, c_triggerControlTypeButton, "StandardTemplates/StandardButtonTemplate");
+        libAffx_dialogOwnedAffixesNextPage = DialogControlLastCreated();
+        DialogControlSetSize(libAffx_dialogOwnedAffixesNextPage, PlayerGroupAll(), 282, 94);
+        DialogControlSetPosition(libAffx_dialogOwnedAffixesNextPage, PlayerGroupAll(), c_anchorBottomRight, 0, 0);
+        libNtve_gf_SetDialogItemText(libAffx_dialogOwnedAffixesNextPage, StringExternal("Button/Name/NextPage"), PlayerGroupAll());
+        if (libAffx_ownedAffixesCurrentPage >= libAffx_ownedAffixesMaxPages) {
+            DialogControlSetEnabled(libAffx_dialogOwnedAffixesNextPage, PlayerGroupAll(), false);
+        } else {
+            DialogControlSetEnabled(libAffx_dialogOwnedAffixesNextPage, PlayerGroupAll(), true);
+        }
+    }
+}
+
+bool libAffx_OwnedAffixesPagesClickedTrigger_Func (bool testConds, bool runActions) {
+    int eventDialog = EventDialogControl();
+    if (testConds) {
+        if (EventDialogControl() != libAffx_dialogOwnedAffixesPreviousPage && EventDialogControl() != libAffx_dialogOwnedAffixesNextPage) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    if (eventDialog == libAffx_dialogOwnedAffixesPreviousPage) {
+        libAffx_ownedAffixesCurrentPage = MaxI(1, libAffx_ownedAffixesCurrentPage - 1);
+    } else if (eventDialog == libAffx_dialogOwnedAffixesNextPage) {
+        libAffx_ownedAffixesCurrentPage = MinI(libAffx_ownedAffixesMaxPages, libAffx_ownedAffixesCurrentPage + 1);
+    }
+    libAffx_UpdateOwnedAffixes();
+    return true;
+}
+
+void libAffx_OwnedAffixesPagesClickedTrigger_Init() {
+    libAffx_OwnedAffixesPagesClickedTrigger = TriggerCreate("libAffx_OwnedAffixesPagesClickedTrigger_Func");
+    TriggerAddEventDialogControl(libAffx_OwnedAffixesPagesClickedTrigger, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
 }
 
 void libAffx_UpdateOwnedAffixes() {
@@ -767,6 +816,7 @@ void libAffx_UpdateOwnedAffixes() {
                     totalCurses += 1;
                     curses[totalCurses] = i2;
                 }
+                
             }
         }
     }
@@ -777,6 +827,7 @@ void libAffx_UpdateOwnedAffixes() {
             libAffx_ownedAffixes[i] = curses[i - totalBoons];
         }
     }
+    libAffx_ownedAffixesMaxPages = CeilingI(IntToFixed(totalAffixes) / IntToFixed(libAffx_ownedAffixesPerPage));
     libAffx_CreateAffixesOwnedGrid(totalAffixes);  
     DialogSetVisible(libAffx_dialogOwnedAffixes, PlayerGroupAll(), true);
 }
@@ -1141,8 +1192,8 @@ void libAffx_ResetCooldowns (unit playerUnit) {
                 libNtve_gf_PlayerRemoveCooldown(player, cooldownLink);
                 chargeLink = CatalogFieldValueGet(c_gameCatalogAbil, abilLink, "Cost[" + IntToString(0) + "].Charge.Link", player);
                 chargeCount = CatalogFieldValueGetAsInt(c_gameCatalogAbil, abilLink, "Cost[" + IntToString(0) + "].Charge.CountMax", player);
-                UnitAddChargeUsed(unitVar, chargeLink, (-chargeCount));
-                PlayerAddChargeUsed(player, chargeLink, (-chargeCount));
+                UnitAddChargeUsed(unitVar, chargeLink, (-1));
+                PlayerAddChargeUsed(player, chargeLink, (-1));
             }
         }
     }
@@ -2571,9 +2622,9 @@ void libAffx_AffixSelected(int selectionIndex) {
     if (!libAffx_showingOwnedAffixes) {
         libAffx_Pause(false);
     }
-    libAffx_UpdateOwnedAffixes();
     libAffx_queueActive = false;
     libAffx_ProcessQueue();
+    libAffx_UpdateOwnedAffixes();
 }
 bool libAffx_AffixHotkeyPressedTrigger_Func (bool testConds, bool runActions) {
     int hotkeyPressed;
@@ -3342,6 +3393,7 @@ void libAffx_InitTriggers () {
     libAffx_SpeedUpTrigger_Init();
     libAffx_SpeedUpDeathUnitDied_Init();
     libAffx_PBU2DifficultyChangedTrigger_Init();
+    libAffx_OwnedAffixesPagesClickedTrigger_Init();
 
     TriggerEnable(libGDHL_gt_HeroSylvanasPossessionRewire, true);
     libAffx_pauseVLSK = TriggerCreate("libVLSK_PauseTrigger_Func");
@@ -3444,7 +3496,6 @@ void libAffx_AffixSetHeroAllRanged(int affix, bool allowed) {
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("MeiOW")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Mephisto")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Tychus")] = allowed;
-    libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Zarya")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Probius")] = allowed;
 }
 void libAffx_AffixSetHeroAllMelee(int affix, bool allowed) {
@@ -3492,6 +3543,7 @@ void libAffx_AffixSetHeroAllMelee(int affix, bool allowed) {
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Dehaka")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Muradin")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Uther")] = allowed;
+    libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Zarya")] = allowed;
 }
 void libAffx_AffixSetHeroUsesMana(int affix, bool allowed) {
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Chromie")] = allowed;

@@ -495,15 +495,31 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <EffectArray value="TheMarkModifyTokenCount" />
   </CEffectSet>
   <CEffectEnumArea id="TyrandeShootingStarProcSearchAffix">
+    <ValidatorArray value="CasterDoesNotHaveTyrandeShootingStarCooldown" />
     <Chance value="0" />
     <SearchFilters value="Visible;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable,Benign" />
     <TargetSorts RequestCount="1" RequestPercentage="1">
+      <SortArray value="TSHeroic" />
       <SortArray value="TSRandom" />
     </TargetSorts>
-    <AreaArray MaxCount="1" Effect="LunarFlareInitialPersistent">
+    <AreaArray MaxCount="1" Effect="TyrandeShootingStarProcSet">
       <Radius value="$TyrandeLunarFlareRange" />
     </AreaArray>
   </CEffectEnumArea>
+  <CEffectSet id="TyrandeShootingStarProcSet">
+    <EffectArray value="TyrandeShootingStarApplyCooldown" />
+    <EffectArray value="TyrandeShootingStarLunarFlareInitialPersistent" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="TyrandeShootingStarLunarFlareInitialPersistent">
+    <PeriodicPeriodArray value="0" />
+    <PeriodicValidator value="CasterDoesNotHaveTyrandeShootingStarCooldown" />
+    <PeriodicEffectArray value="LunarFlareInitialPersistent" />
+    <PeriodCount value="1" />
+  </CEffectCreatePersistent>
+  <CEffectApplyBehavior id="TyrandeShootingStarApplyCooldown">
+    <WhichUnit Value="Caster" />
+    <Behavior value="TyrandeShootingStarCooldown" />
+  </CEffectApplyBehavior>
   <CEffectModifyPlayer id="LunarFlareQuestRangeUpgrade">
     <EffectArray Reference="Effect,TyrandeShootingStarProcSearchAffix,AreaArray[0].Radius" Value="$TyrandeLunarBlazeRangeIncrease" />
   </CEffectModifyPlayer>
