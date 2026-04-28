@@ -339,12 +339,14 @@ trigger libAffx_SpeedUpDeathTrigger;
 trigger libAffx_SpeedUpDeathUnitDiedTrigger;
 trigger libAffx_PBU2DifficultyChangedTrigger;
 trigger libAffx_OwnedAffixesPagesClickedTrigger;
+trigger libAffx_AbathurSymbioteTrigger;
+trigger libAffx_AbathurUltimateEvolutionTrigger;
 
 // Debug options
 bool libAffx_debug_enableTryMeMode2 = false; // Try mode 2.0
 bool libAffx_debug_enableCheatCommands = false; // Enables cheat/debug commands
 bool libAffx_debug_disableHeroSelection = false; // Skips the Hero selection.
-string libAffx_debug_playerHero = "Abathur"; // Player hero when hero selection is disabled.
+string libAffx_debug_playerHero = "DVa"; // Player hero when hero selection is disabled.
 bool libAffx_debug_enableDebugLogging = false; // Enables debug logging
 bool libAffx_debug_forcedHeroes = false; // Enemy heroes are forced to predetermined heroes
 bool libAffx_debug_ignoreMap = false; // Ignores the saved map.

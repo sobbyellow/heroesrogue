@@ -2432,35 +2432,48 @@ bool libAffx_LavaWaveLevelUp (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 // Divine Intervention
 // ---------------------------------------------------------------
-bool libAffx_DivineInterventionOncePerGame (bool testConds, bool runActions) {
-    int i;
-    if (!runActions) {
-        return true;
-    }
-    for (i = 6; i <= 10; i += 1) {
-        libAffx_AddAffixBehavior(6, "AffixAutoPalmCooldown");
-    }
-    return true;
-}
+int divineInterventionIndex;
+fixed divineInterventionCooldown;
 bool libAffx_DivineInterventionAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixAutoPalmCooldown", "Duration", 300 - (60 * (libAffx_affixes[libAffx_EventAffix()].count - 1)));
+    divineInterventionIndex = libAffx_EventAffix();
+    divineInterventionCooldown = 300 - (60 * (libAffx_EventAffixCount() - 1));
     return true;
 }
-bool libAffx_DivineInterventionExecute (bool testConds, bool runActions) {
-    int i;
+bool libAffx_DivineInterventionEffectUsed (bool testConds, bool runActions) {
+    unit target = EventPlayerEffectUsedUnit(c_effectUnitSource);
+    if (testConds) {
+        if (divineInterventionIndex == 0) {
+            return false;
+        }
+        if (libAffx_affixes[divineInterventionIndex].cooldown > 0) {
+            return false;
+        }
+    }
     if (!runActions) {
         return true;
     }
-    for (i = 6; i <= 10; i += 1) {
-        libAffx_CatalogFieldValueSetFixed(c_gameCatalogEffect, "MonkDivinePalmCreateHealer", "RechargeVitalRate", i, StringToFixed(CatalogFieldValueGet(c_gameCatalogEffect, "MonkDivinePalmCreateHealer", "RechargeVitalRate", 0)) * Pow(1.04, UnitLevel(libGame_gv_players[i].lv_heroUnit)));
-    }
-
+    UnitCreateEffectUnit(target, "MonkDivinePalmInitialSet", target);
+    libAffx_affixes[divineInterventionIndex].cooldown = divineInterventionCooldown;
     return true;
 }
-bool libAffx_DivineInterventionLevelUp (bool testConds, bool runActions) {
+bool libAffx_DivineInterventionPeriodic (bool testConds, bool runActions) {
+    if (testConds) {
+        if (divineInterventionIndex == 0) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    if (libAffx_affixes[divineInterventionIndex].cooldown > 0) {
+        libAffx_affixes[divineInterventionIndex].cooldown -= 0.0625;
+    }
+    return true;
+}
+bool libAffx_DivineInterventionScaling (bool testConds, bool runActions) {
     int player = libGame_gf_HeroLevelUpPlayer();
     int level = libGame_gf_HeroLevelUpLevel();
     if (testConds) {
@@ -2474,7 +2487,7 @@ bool libAffx_DivineInterventionLevelUp (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogFieldValueSetFixed(c_gameCatalogEffect, "MonkDivinePalmCreateHealer", "RechargeVitalRate", player, StringToFixed(CatalogFieldValueGet(c_gameCatalogEffect, "MonkDivinePalmCreateHealer", "RechargeVitalRate", 0)) * Pow(1.04, level));
+    libAffx_LevelUpScaling("Effect,MonkDivinePalmCreateHealer,RechargeVitalRate", player);
 
     return true;
 }
@@ -3235,6 +3248,7 @@ bool libAffx_EmergencyMeasureOncePerGame (bool testConds, bool runActions) {
 // Last Moments
 // ---------------------------------------------------------------
 int libAffx_lastMomentsIndex;
+fixed libAffx_lastMomentsCooldown;
 bool libAffx_LastMomentsOncePerGame (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
@@ -3247,12 +3261,12 @@ bool libAffx_LastMomentsAffixAdded (bool testConds, bool runActions) {
         return true;
     }
     libAffx_lastMomentsIndex = libAffx_EventAffix();
-    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixLastMomentsCooldown", "Duration", 300 - (60 * (libAffx_EventAffixCount() - 1)));
+    libAffx_lastMomentsCooldown = 300 - (60 * (libAffx_EventAffixCount() - 1));
     return true;
 }
 
 // ---------------------------------------------------------------
-// Last Moments - DVa Fix
+// Last Moments - DVa Fix (no longer necessary)
 // ---------------------------------------------------------------
 void SyncDVaLastMomentsCooldowns() {
     unitgroup heroGroup = libGame_gv_players[libAffx_player].lv_heroUnitGroup;
@@ -3264,7 +3278,6 @@ void SyncDVaLastMomentsCooldowns() {
     int j;
     string unitTypes;
 
-    //debug_Log("There are " + IntToString(unitGroupCount) + " units in group");
     for (i = 1; i <= unitGroupCount; i += 1) {
     	dvaUnit = UnitGroupUnitFromEnd(heroGroup, i);
     	currentUnitCooldown = UnitBehaviorDuration(dvaUnit, "AffixLastMomentsCooldown");
@@ -3273,16 +3286,9 @@ void SyncDVaLastMomentsCooldowns() {
     	}
     	unitTypes += " " + UnitGetType(dvaUnit);
 	}
-	//debug_Log("Current units are:" + unitTypes);
 
     for (i = 1; i <= unitGroupCount; i += 1) {
 		dvaUnit = UnitGroupUnitFromEnd(heroGroup, i);
-        //debug_Log(
-        //   "before: DVa is " + UnitGetType(dvaUnit)
-        //   + " has AffixLastMoments = " + IntToString(BoolToInt(UnitHasBehavior(dvaUnit, "AffixLastMoments")))
-        //   + " and AffixCooldown = " + IntToString(BoolToInt(UnitHasBehavior(dvaUnit, "AffixLastMomentsCooldown")))
-        //   + " and its cooldown is " + IntToString(FixedToInt(UnitBehaviorDuration(dvaUnit, "AffixLastMomentsCooldown")))
-        //);
         if (!UnitHasBehavior(dvaUnit, "AffixLastMomentsCooldown") && !UnitHasBehavior(dvaUnit, "AffixLastMoments")) {
             UnitBehaviorAdd(dvaUnit, "AffixLastMomentsCooldown", dvaUnit, 1);
             UnitBehaviorSetDuration(dvaUnit, "AffixLastMomentsCooldown", maxCooldown);
@@ -3299,13 +3305,25 @@ void SyncDVaLastMomentsCooldowns() {
         if (currentUnitCooldown < maxCooldown) {
         	UnitBehaviorSetDuration(dvaUnit, "AffixLastMomentsCooldown", maxCooldown);
         }
-	    //debug_Log(
-        //	"after: DVa is " + UnitGetType(dvaUnit)
-        //	+ " has AffixLastMoments = " + IntToString(BoolToInt(UnitHasBehavior(dvaUnit, "AffixLastMoments")))
-        //    + " and AffixCooldown = " + IntToString(BoolToInt(UnitHasBehavior(dvaUnit, "AffixLastMomentsCooldown")))
-        //    + " and its cooldown is " + IntToString(FixedToInt(UnitBehaviorDuration(dvaUnit, "AffixLastMomentsCooldown")))
-        //);
 	}
+}
+
+bool libAffx_LastMomentsEffectUsed (bool testConds, bool runActions) {
+    unit targetUnit = EventPlayerEffectUsedUnit(c_effectUnitSource);
+    if (testConds) {
+        if (libAffx_lastMomentsIndex == 0) {
+            return false;
+        }
+        if (libAffx_affixes[libAffx_lastMomentsIndex].cooldown > 0) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    UnitCreateEffectUnit(libGame_gv_teams[libAffx_teamChaosIndex].lv_core, "MalthaelLastRitesInitialSet", targetUnit);
+    libAffx_affixes[libAffx_lastMomentsIndex].cooldown = libAffx_lastMomentsCooldown;
+    return true;
 }
 
 bool libAffx_LastMomentsPeriodic (bool testConds, bool runActions) {
@@ -3321,18 +3339,10 @@ bool libAffx_LastMomentsPeriodic (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    behaviorDuration = UnitBehaviorDuration(heroUnit, "AffixLastMomentsCooldown");
-    if (behaviorDuration < libAffx_affixes[libAffx_lastMomentsIndex].cooldown - 1) {
-        UnitBehaviorSetDuration(heroUnit, "AffixLastMomentsCooldown", libAffx_affixes[libAffx_lastMomentsIndex].cooldown);
-    } else {
-        libAffx_affixes[libAffx_lastMomentsIndex].cooldown = behaviorDuration;
+    if (libAffx_affixes[libAffx_lastMomentsIndex].cooldown > 0) {
+        libAffx_affixes[libAffx_lastMomentsIndex].cooldown -= 0.0625;
     }
 
-    if (heroUnitType == "HeroDVaMech" || heroUnitType == "HeroDVaPilot") {
-        SyncDVaLastMomentsCooldowns();
-    }
-
-    // debug_Log(IntToString(libAffx_lastMomentsIndex) + " " + IntToString(FixedToInt(libAffx_affixes[libAffx_lastMomentsIndex].cooldown)));
     return true;
 }
 // ---------------------------------------------------------------

@@ -151,7 +151,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     </AreaArray>
     <ImpactLocation Value="TargetPoint" />
   </CEffectEnumArea>
-  <CEffectDamage id="AffixBuddyDroneMissileDamage" parent="StormWeapon">
+  <CEffectDamage id="AffixBuddyDroneMissileDamage" parent="StormSummonedUnitWeapon">
     <Amount value="142" />
     <Kind value="Ability" />
   </CEffectDamage>
@@ -191,6 +191,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CEffectCreateHealer id="AffixBuddyHealCreateHealer" parent="StormHealingSpell">
     <RechargeVitalRate value="154" />
     <SourceButtonFace value="AffixBuddyHeal" />
+    <LaunchUnit Value="Creator"/>
   </CEffectCreateHealer>
   <CEffectSet id="AffixBuddyHealInitialSet">
     <EffectArray value="AffixBuddyHealAddUnitToTracker" />
@@ -669,20 +670,11 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
   <CEffectSet id="AffixAutoPalmSet">
     <EffectArray value="AffixAutoPalmPersistent" />
-    <EffectArray value="AffixAutoPalmApplyCooldown" />
   </CEffectSet>
   <CEffectCreatePersistent id="AffixAutoPalmPersistent">
     <WhichLocation Value="SourceUnit" />
-    <InitialEffect value="MonkDivinePalmInitialSet" />
+    <!--<InitialEffect value="MonkDivinePalmInitialSet" />-->
   </CEffectCreatePersistent>
-  <CEffectApplyBehavior id="AffixAutoPalmApplyCooldown">
-    <WhichUnit Value="Source" />
-    <Behavior value="AffixAutoPalmCooldown" />
-  </CEffectApplyBehavior>
-  <CEffectRemoveBehavior id="AffixAutoPalmCooldownRemove">
-    <WhichUnit Value="Caster" />
-    <BehaviorLink value="AffixAutoPalmCooldown" />
-  </CEffectRemoveBehavior>
   
   <CEffectApplyBehavior id="ApplyNightElfBondMalfurion">
     <Behavior value="NightElfBondMalfurion" />
@@ -806,21 +798,12 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CEffectApplyBehavior>
   
   <CEffectSet id="AffixLastMomentsSet">
+    <ValidatorArray value="CasterIsHero" />
     <EffectArray value="AffixLastMomentsPersistent" />
-    <EffectArray value="AffixLastMomentsApplyCooldown" />
   </CEffectSet>
   <CEffectCreatePersistent id="AffixLastMomentsPersistent">
     <WhichLocation Value="SourceUnit" />
-    <InitialEffect value="MalthaelLastRitesInitialSet" />
   </CEffectCreatePersistent>
-  <CEffectApplyBehavior id="AffixLastMomentsApplyCooldown">
-    <WhichUnit Value="Source" />
-    <Behavior value="AffixLastMomentsCooldown" />
-  </CEffectApplyBehavior>
-  <CEffectRemoveBehavior id="AffixLastMomentsRemoveCooldown">
-    <WhichUnit Value="Caster" />
-    <BehaviorLink value="AffixLastMomentsCooldown" />
-  </CEffectRemoveBehavior>
 
 
   <CEffectModifyUnit id="ThrallModifyWeaponCooldown">

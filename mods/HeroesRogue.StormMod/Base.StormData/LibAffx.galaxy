@@ -3,6 +3,7 @@ include "TriggerLibs/HeroesLib"
 include "TriggerLibs/GameLib"
 include "TriggerLibs/MapMechanicsLib"
 include "TriggerLibs/StartingExperienceLib"
+include "TriggerLibs/GameDataHelperLib"
 include "TriggerLibs/UILib"
 include "LibPBU2"
 include "LibAffx_h"
@@ -114,9 +115,6 @@ void libAffx_TalentGainedTrigger_Init () {
     libAffx_TalentGainedTrigger = TriggerCreate("libAffx_TalentGainedTrigger_Func");
     libGame_gf_HeroGainTalent(libAffx_TalentGainedTrigger);
 }
-//--------------------------------------------------------------------------------------------------
-// D.va fixes
-//--------------------------------------------------------------------------------------------------
 void libAffx_SyncBehaviors(unit sourceUnit, unit targetUnit) {
     int i;
     int player = UnitGetOwner(sourceUnit); 
@@ -143,6 +141,9 @@ void libAffx_SyncBehaviors(unit sourceUnit, unit targetUnit) {
     }
 }
 
+//--------------------------------------------------------------------------------------------------
+// D.Va
+//--------------------------------------------------------------------------------------------------
 bool libAffx_DVaRespawnTrigger_Func (bool testConds, bool runActions) {
     int player = libGame_gf_HeroRespawnPlayer();
     unit respawnUnit = libGame_gf_HeroRespawnUnit();
@@ -180,7 +181,6 @@ bool libAffx_DVaEjectTrigger_Func (bool testConds, bool runActions) {
     libAffx_SyncBehaviors(dvaMech, dvaPilot);
     return true;
 }
-//--------------------------------------------------------------------------------------------------
 void libAffx_DVaTriggers_Init () {
     libAffx_DVaCallMechCompletedTrigger = TriggerCreate("libAffx_DVaCallMechCompletedTrigger_Func");
     libAffx_DVaRespawnTrigger = TriggerCreate("libAffx_DVaRespawnTrigger_Func");
@@ -189,6 +189,35 @@ void libAffx_DVaTriggers_Init () {
     TriggerAddEventGeneric(libAffx_DVaRespawnTrigger, libGame_gv_eventID_HeroRespawn_C);
     TriggerAddEventPlayerEffectUsed(libAffx_DVaEjectTrigger, c_playerAny, "DVaMechPilotUnloadSet");
 }
+//--------------------------------------------------------------------------------------------------
+// Abathur
+//--------------------------------------------------------------------------------------------------
+
+bool libAffx_AbathurSymbioteTrigger_Func (bool testConds, bool runActions) {
+    int player = libGDHL_gf_AbathurSymbioteAbathurPlayer();
+    unit symbiote = libGDHL_gf_AbathurSymbioteUnit();
+    if (!runActions) {
+        return true;
+    }
+    libAffx_SyncBehaviors(libGame_gv_players[player].lv_heroUnit, symbiote);
+    return true;
+}
+bool libAffx_AbathurUltimateEvolutionTrigger_Func (bool testConds, bool runActions) {
+    int player = libGDHL_gf_AbathurUltimateEvolutionHeroCopiedAbathurOwner();
+    if (!runActions) {
+        return true;
+    }
+    libAffx_SyncBehaviors(libGame_gv_players[player].lv_heroUnit, libGame_gv_players[player].lv_activeVehicle);
+    return true;
+}
+
+void libAffx_AbathurTriggers_Init() {
+    libAffx_AbathurSymbioteTrigger = TriggerCreate("libAffx_AbathurSymbioteTrigger_Func");
+    libAffx_AbathurUltimateEvolutionTrigger = TriggerCreate("libAffx_AbathurUltimateEvolutionTrigger_Func");
+    libGDHL_gf_AbathurSymbiote(libAffx_AbathurSymbioteTrigger);
+    libGDHL_gf_AbathurUltimateEvolutionHeroCopied(libAffx_AbathurUltimateEvolutionTrigger);
+}
+
 
 void libAffx_Wait(fixed duration, int inTimeType) {
     fixed elapsed = 0.0;
@@ -3394,6 +3423,7 @@ void libAffx_InitTriggers () {
     libAffx_SpeedUpDeathUnitDied_Init();
     libAffx_PBU2DifficultyChangedTrigger_Init();
     libAffx_OwnedAffixesPagesClickedTrigger_Init();
+    libAffx_AbathurTriggers_Init();
 
     TriggerEnable(libGDHL_gt_HeroSylvanasPossessionRewire, true);
     libAffx_pauseVLSK = TriggerCreate("libVLSK_PauseTrigger_Func");

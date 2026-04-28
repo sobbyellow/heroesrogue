@@ -653,13 +653,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ValidatorArray value="SourceLifeLT25Percent"/>
   </DamageResponse>
 </CBehaviorBuff>
-<CBehaviorBuff id="AffixAutoPalmCooldown" parent="CarryBehaviorParent">
-  <Duration value="300" />
-  <ExpireEffect value="AffixAutoPalmCooldownRemove" />
-  <Modification>
-    <BehaviorLinkDisableArray value="AffixAutoPalm" />
-  </Modification>
-</CBehaviorBuff>
 <CBehaviorBuff id="AffixPermanentCloak" parent="StormPersistentCloak" />
 <CBehaviorBuff id="AffixPermanentCloakDisableController" parent="StormPersistentCloakController" />
 
@@ -803,17 +796,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </DamageResponse>
 </CBehaviorBuff>
 
-<CBehaviorBuff id="AffixAncientBlessings" parent="CarryBehaviorParent">
-  <DamageResponse Chance="1" Handled="AffixAncientBlessingsAoEProcDummy" Location="Attacker">
-    <Cost>
-      <Cooldown Location="Unit" TimeUse="1" />
-    </Cost>
-    <Kind index="Splash" value="0" />
-    <Kind index="Ability" value="0" />
-  </DamageResponse>
-  <BehaviorCategories index="BuffAutoattackDPS" value="1" />
-</CBehaviorBuff>
-
 <CBehaviorBuff id="RegenerativeWalls" parent="CarryBehaviorParent">
   <Modification>
     <VitalRegenArray index="Life" value="35" />
@@ -866,13 +848,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Handled value="AffixLastMomentsSet" />
     <ValidatorArray value="SourceLifeLT35Percent"/>
   </DamageResponse>
-</CBehaviorBuff>
-<CBehaviorBuff id="AffixLastMomentsCooldown" parent="CarryBehaviorParent">
-  <Duration value="300" />
-  <ExpireEffect value="AffixLastMomentsRemoveCooldown" />
-  <Modification>
-    <BehaviorLinkDisableArray value="AffixLastMoments" />
-  </Modification>
 </CBehaviorBuff>
 
 <CBehaviorBuff id="ThrallRangedCarry">

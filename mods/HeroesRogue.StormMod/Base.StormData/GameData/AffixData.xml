@@ -2671,17 +2671,17 @@
             <String String="10 0 AffixAutoPalm">
                 <Field Id="Behavior" Index="4"/>
             </String>
-            <String String="OPG libAffx_DivineInterventionOncePerGame">
+            <String String="AA libAffx_DivineInterventionAffixAdded">
                 <Field Id="Trigger"/>
             </String>
-            <String String="Execute libAffx_DivineInterventionExecute">
+            <String String="Scaling libAffx_DivineInterventionScaling">
+                <Field Id="Trigger" Index="1"/>
+            </String>
+            <String String="EU libAffx_DivineInterventionEffectUsed AffixAutoPalmSet">
                 <Field Id="Trigger" Index="2"/>
             </String>
-            <String String="LU libAffx_DivineInterventionLevelUp">
+            <String String="P libAffx_DivineInterventionPeriodic">
                 <Field Id="Trigger" Index="3"/>
-            </String>
-            <String String="AA libAffx_DivineInterventionAffixAdded">
-                <Field Id="Trigger" Index="4"/>
             </String>
         </Instances>
         <Instances Id="MassCloak">
@@ -3664,6 +3664,9 @@
             </String>
             <String String="P libAffx_LastMomentsPeriodic">
                 <Field Id="Trigger" Index="2"/>
+            </String>
+            <String String="EU libAffx_LastMomentsEffectUsed AffixLastMomentsPersistent">
+                <Field Id="Trigger" Index="3"/>
             </String>
         </Instances>
         <Instances Id="RangedThrall">
