@@ -4521,5 +4521,22 @@
                 <Field Id="Behavior"/>
             </String>
         </Instances>
+        <Instances Id="CrashStress">
+            <Int Int="1">
+                <Field Id="Curse"/>
+            </Int>
+            <String String="DVa">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Assets/Textures/affix_icon_crash_stress.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Rare">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="1 0 AffixCrashStressHappens">
+                <Field Id="Behavior"/>
+            </String>
+        </Instances>
     </CUser>
 </Catalog>

@@ -135,6 +135,9 @@ void libAffx_SyncBehaviors(unit sourceUnit, unit targetUnit) {
         if (UnitHasBehavior2(targetUnit, behavior) && UnitBehaviorCount(targetUnit, behavior) == UnitBehaviorCount(sourceUnit, behavior)) {
             continue;
         }
+		if (behavior == "AffixCrashStress") {
+            continue;
+        }
         libAffx_DebugPrint("Adding behavior " + behavior + " with " + IntToString(behaviorStacks) + " stacks and duration " + FixedToString(behaviorDuration, 2) + " to unit " + UnitGetType(targetUnit) + " for player " + IntToString(player));
         UnitBehaviorAdd(targetUnit, behavior, targetUnit, behaviorStacks);
         UnitBehaviorSetDuration(targetUnit, behavior, behaviorDuration);
