@@ -713,5 +713,7 @@ Affix/Tooltip/Append/VeryBadBargain=<n/><n/>Current reduction: <c val="#TooltipN
 Affix/Name/PurificationProtocol=Purification Protocol
 Affix/Tooltip/PurificationProtocol=Purifier Beam is cast on you and will chase you forever.<n/><n/><c val="FFDE36">Skips the next Curse.</c>
 Affix/Tooltip/Append/PurificationProtocol=
+Affix/Name/CrashStress=Crash Stress
+Affix/Tooltip/CrashStress=The moment DVa Mech dies, DVa has <c val="#TooltipNumbers">-15</c> armor reduction, <c val="#TooltipNumbers">40%</c> slow, greatly reduced vision and hearing heartbeat over all the game sounds for <c val="#TooltipNumbers">5</c> seconds.
 
 
