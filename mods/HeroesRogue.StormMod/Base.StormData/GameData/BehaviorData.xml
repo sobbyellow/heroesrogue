@@ -57,10 +57,14 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
   <CBehaviorBuff id="AffixAllyDamageBuff" parent="CarryBehaviorParent">
     <Modification>
+      <DamageDealtFraction index="Basic" value="0.05" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="AffixAllyDamageSpellBuff" parent="CarryBehaviorParent">
+    <Modification>
       <HealDealtAdditiveMultiplier index="Life" value="0.05" />
       <HealDealtAdditiveMultiplier index="Shields" value="0.05" />
       <DamageDealtFraction index="Ability" value="0.05" />
-      <DamageDealtFraction index="Basic" value="0.05" />
     </Modification>
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixAllyHealthBuff" parent="CarryBehaviorParent">
@@ -359,10 +363,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
   <CBehaviorBuff id="AffixEnemyAllStats" parent="CarryBehaviorParent">
     <Modification>
-      <AdditiveAttackSpeedFactor value="0.15" />
-      <DamageDealtFraction index="Basic" value="0.15" />
-      <DamageDealtFraction index="Ability" value="0.15" />
-      <VitalMaxFractionArray index="Life" value="0.15" />
+      <AdditiveAttackSpeedFactor value="0.10" />
+      <DamageDealtFraction index="Basic" value="0.10" />
+      <DamageDealtFraction index="Ability" value="0.10" />
+      <VitalMaxFractionArray index="Life" value="0.10" />
     </Modification>
   </CBehaviorBuff>
 

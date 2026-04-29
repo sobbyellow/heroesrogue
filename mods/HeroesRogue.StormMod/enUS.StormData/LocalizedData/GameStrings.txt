@@ -177,8 +177,11 @@ Affix/Name/RegenerativeCore=Regenerative Core
 Affix/Tooltip/RegenerativeCore=Your Core regenerates <c val="#TooltipNumbers">2%</c> of maximum Health per second while its Shield is active.
 Affix/Tooltip/Append/RegenerativeCore=
 Affix/Name/AllyDamage=Powerful
-Affix/Tooltip/AllyDamage=Increases Spell Power and Attack Damage of ALL allies by <c val="#TooltipNumbers">5%</c> <c val="747A84">(+5% per stack)</c>.
+Affix/Tooltip/AllyDamage=Increases Attack Damage of ALL allies by <c val="#TooltipNumbers">5%</c> <c val="747A84">(+5% per stack)</c>.
 Affix/Tooltip/Append/AllyDamage=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixAllyDamageBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
+Affix/Name/AllyDamageSpell=Spellcasting
+Affix/Tooltip/AllyDamageSpell=Increases Spell Power of ALL allies by <c val="#TooltipNumbers">5%</c> <c val="747A84">(+5% per stack)</c>.
+Affix/Tooltip/Append/AllyDamageSpell=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixAllyDamageSpellBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
 Affix/Name/AllyHealth=Endurance
 Affix/Tooltip/AllyHealth=Increases maximum Health of ALL allies by <c val="#TooltipNumbers">7.5%</c> <c val="747A84">(+7.5% per stack)</c>.
 Affix/Tooltip/Append/AllyHealth=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixAllyHealthBuff,Modification.VitalMaxFractionArray[Life]*100" precision="0"/>%</c>
@@ -240,7 +243,7 @@ Affix/Name/PathoftheWarrior=Path of the Warrior
 Affix/Tooltip/PathoftheWarrior=Increases maximum Health by <c val="#TooltipNumbers">40</c> <c val="747A84">(+40 per stack)</c> per level.
 Affix/Tooltip/Append/PathoftheWarrior=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixPathoftheWarrior,Modification.VitalMaxArray[Life]" precision="0"/></c>
 Affix/Name/PathoftheAssassin=Path of the Assassin
-Affix/Tooltip/PathoftheAssassin=Increases Basic Attack damage by <c val="#TooltipNumbers"><d ref="$GalaxyVar:pathoftheAssassinValue$"precision="0"/></c> <c val="747A84">(+<d ref="$GalaxyVar:pathoftheAssassinValue2$"precision="1"/> per stack)</c> per level.
+Affix/Tooltip/PathoftheAssassin=Increases Attack Damage by <c val="#TooltipNumbers"><d ref="$GalaxyVar:pathoftheAssassinValue$"precision="0"/></c> <c val="747A84">(+<d ref="$GalaxyVar:pathoftheAssassinValue2$"precision="1"/> per stack)</c> per level.
 Affix/Tooltip/Append/PathoftheAssassin=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixPathoftheAssassin,Modification.DamageDealtScaled[Basic]" precision="2"/></c>
 Affix/Name/ButtonMasher=Button Masher
 Affix/Tooltip/ButtonMasher=Gain the benefits of Viking Bribery, Spin To Win!, Norse Force, and Jump!.<n/><n/>Reduces Spin To Win!, Norse Force, Jump!, and Go Go Go! cooldowns by <c val="#TooltipNumbers">50%</c>.
@@ -258,7 +261,7 @@ Affix/Name/AmplifiedHealing=Amplified Healing
 Affix/Tooltip/AmplifiedHealing=Increases regeneration effects and all healing received by <c val="#TooltipNumbers">25%</c> <c val="747A84">(+10% per stack)</c>.
 Affix/Tooltip/Append/AmplifiedHealing=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixAmplifiedHealing,Modification.HealTakenAdditiveMultiplier[Life]*100" precision="0"/>%</c>
 Affix/Name/GatheringPower=Gathering Power
-Affix/Tooltip/GatheringPower=Increases Spell Power by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+10% per stack)</c>.
+Affix/Tooltip/GatheringPower=Increases Spell Power by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c>.
 Affix/Tooltip/Append/GatheringPower=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixGatheringPower,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
 Affix/Name/ConvenientPortals=Convenient Portals
 Affix/Tooltip/ConvenientPortals=Creates a permanent Portal between the top lane and the bottom lane, only usable by your Team.
@@ -398,7 +401,7 @@ Affix/Name/Besieger=Demolitionist
 Affix/Tooltip/Besieger=Increases damage dealt to Structures by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c>.
 Affix/Tooltip/Append/Besieger=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixBesieger,Modification.DamageDealtAttributeMultiplier[Structure]*100" precision="0"/>%</c>
 Affix/Name/MinionKiller=Minion Killer
-Affix/Tooltip/MinionKiller=Increases damage dealt to Minions and Mercenaries by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c>.
+Affix/Tooltip/MinionKiller=Increases your and your AI teammates's damage dealt to Minions and Mercenaries by <c val="#TooltipNumbers">20%</c> <c val="747A84">(+20% per stack)</c>.
 Affix/Tooltip/Append/MinionKiller=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixMinionKiller,Modification.DamageDealtAttributeMultiplier[Minion]*100" precision="0"/>%</c>
 Affix/Name/FirstAid=First Aid
 Affix/Tooltip/FirstAid=Regenerate <c val="#TooltipNumbers">1%</c> <c val="747A84">(+0.5% per stack)</c> of your maximum Health per second.
@@ -609,7 +612,7 @@ Affix/Name/ShieldedCore=Overcharged Shields
 Affix/Tooltip/ShieldedCore=Increases the maximum Shields of the enemy's Core by <c val="#TooltipNumbers">50%</c> <c val="747A84">(+50% per stack)</c> and the recharge rate by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c>.
 Affix/Tooltip/Append/ShieldedCore=<n/><n/>Maximum Shields bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixShieldedCore,Modification.VitalMaxFractionArray[Shields]*100" player="12" precision="1"/>%</c><n/>Shield recharge rate bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixShieldedCore,Modification.VitalRegenMultiplier[Shields]*100" player="12" precision="1"/>%</c>
 Affix/Name/EnemyAllStats=All-Rounder
-Affix/Tooltip/EnemyAllStats=Increases the Attack Speed, maximum Health, and damage dealt of enemy Heroes by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c>.<n/><n/><c val="FFDE36">Each stack skips the next Curse.</c>
+Affix/Tooltip/EnemyAllStats=Increases the Attack Speed, maximum Health, and damage dealt of enemy Heroes by <c val="#TooltipNumbers">10%</c> <c val="747A84">(+10% per stack)</c>.<n/><n/><c val="FFDE36">Each stack skips the next Curse.</c>
 Affix/Tooltip/Append/EnemyAllStats=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixEnemyAllStats,Modification.AdditiveAttackSpeedFactor*100" precision="0"/>%</c>
 Affix/Name/Cloned=Doppelganger
 Affix/Tooltip/Cloned=Spawns a clone of an enemy Hero every <c val="#TooltipNumbers">200</c> seconds. Cooldown recharges <c val="#TooltipNumbers">100%</c> faster if there are no active Clones.<n/><n/>Clones do not respawn after dying and do not scale from levels.

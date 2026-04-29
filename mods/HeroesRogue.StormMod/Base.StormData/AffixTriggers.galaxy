@@ -734,6 +734,30 @@ bool libAffx_AllyDamageUCO (bool testConds, bool runActions) {
     return true;
 }
 // ---------------------------------------------------------------
+// Ally Damage Spell
+// ---------------------------------------------------------------
+bool libAffx_AllyDamageSpellUnitCreated (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixAllyDamageSpellBuff", 1, libAffx_filterAllAllies);
+    return true;
+}
+bool libAffx_AllyDamageSpell (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_UnitBehaviorAddCriteriaAll("AffixAllyDamageSpellBuff", 1, libAffx_filterAllAllies);
+    return true;
+}
+bool libAffx_AllyDamageSpellUnitChangeOwner (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "AffixAllyDamageSpellBuff", 1, libAffx_filterAllAllies);
+    return true;
+}
+// ---------------------------------------------------------------
 // Ally Health
 // ---------------------------------------------------------------
 bool libAffx_AllyHealthUnitCreated (bool testConds, bool runActions) {
@@ -2577,9 +2601,9 @@ bool libAffx_GatheringPowerAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixGatheringPower", "Modification.HealDealtAdditiveMultiplier[Life]", 0.15 + 0.1 * (libAffx_affixes[affix].count - 1));
-    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixGatheringPower", "Modification.HealDealtAdditiveMultiplier[Shields]", 0.15 + 0.1 * (libAffx_affixes[affix].count - 1));
-    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixGatheringPower", "Modification.DamageDealtFraction[Ability]", 0.15 + 0.1 * (libAffx_affixes[affix].count - 1));
+    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixGatheringPower", "Modification.HealDealtAdditiveMultiplier[Life]", 0.15 + 0.15 * (libAffx_affixes[affix].count - 1));
+    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixGatheringPower", "Modification.HealDealtAdditiveMultiplier[Shields]", 0.15 + 0.15 * (libAffx_affixes[affix].count - 1));
+    libAffx_CatalogSetFixedForAllPlayers(c_gameCatalogBehavior, "AffixGatheringPower", "Modification.DamageDealtFraction[Ability]", 0.15 + 0.15 * (libAffx_affixes[affix].count - 1));
     return true;
 }
 // ---------------------------------------------------------------

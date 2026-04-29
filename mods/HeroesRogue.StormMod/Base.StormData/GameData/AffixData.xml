@@ -866,17 +866,8 @@
             <String String="Assets/Textures/affix_icon_ally_damage.dds">
                 <Field Id="Icon"/>
             </String>
-            <String String="0 2 Set Behavior,AffixAllyDamageBuff,Modification.HealDealtAdditiveMultiplier[Life] 0.05">
-                <Field Id="CatalogModification"/>
-            </String>
-            <String String="0 2 Set Behavior,AffixAllyDamageBuff,Modification.HealDealtAdditiveMultiplier[Shields] 0.05">
-                <Field Id="CatalogModification" Index="1"/>
-            </String>
-            <String String="0 2 Set Behavior,AffixAllyDamageBuff,Modification.DamageDealtFraction[Ability] 0.05">
-                <Field Id="CatalogModification" Index="2"/>
-            </String>
             <String String="0 2 Set Behavior,AffixAllyDamageBuff,Modification.DamageDealtFraction[Basic] 0.05">
-                <Field Id="CatalogModification" Index="3"/>
+                <Field Id="CatalogModification"/>
             </String>
             <String String="Execute libAffx_AllyDamage">
                 <Field Id="Trigger"/>
@@ -885,6 +876,32 @@
                 <Field Id="Trigger" Index="1"/>
             </String>
             <String String="UCO libAffx_AllyDamageUCO">
+                <Field Id="Trigger" Index="2"/>
+            </String>
+        </Instances>
+        <Instances Id="AllyDamageSpell">
+            <Int>
+                <Field Id="Max"/>
+            </Int>
+            <String String="Assets/Textures/affix_icon_ally_damage_spell.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="0 2 Set Behavior,AffixAllyDamageSpellBuff,Modification.HealDealtAdditiveMultiplier[Life] 0.05">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="0 2 Set Behavior,AffixAllyDamageSpellBuff,Modification.HealDealtAdditiveMultiplier[Shields] 0.05">
+                <Field Id="CatalogModification" Index="1"/>
+            </String>
+            <String String="0 2 Set Behavior,AffixAllyDamageSpellBuff,Modification.DamageDealtFraction[Ability] 0.05">
+                <Field Id="CatalogModification" Index="2"/>
+            </String>
+            <String String="Execute libAffx_AllyDamageSpell">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="UnitCreated libAffx_AllyDamageSpellUnitCreated">
+                <Field Id="Trigger" Index="1"/>
+            </String>
+            <String String="UCO libAffx_AllyDamageSpellUnitChangeOwner">
                 <Field Id="Trigger" Index="2"/>
             </String>
         </Instances>
@@ -3331,11 +3348,47 @@
             <String String="1 0 AffixMinionKiller">
                 <Field Id="Behavior"/>
             </String>
+            <String String="2 0 AffixMinionKiller">
+                <Field Id="Behavior"/>
+            </String>
+            <String String="3 0 AffixMinionKiller">
+                <Field Id="Behavior"/>
+            </String>
+            <String String="4 0 AffixMinionKiller">
+                <Field Id="Behavior"/>
+            </String>
+            <String String="5 0 AffixMinionKiller">
+                <Field Id="Behavior"/>
+            </String>
             <String String="1 2 Set Behavior,AffixMinionKiller,Modification.DamageDealtAttributeMultiplier[Minion] 0.15">
                 <Field Id="CatalogModification"/>
             </String>
             <String String="1 2 Set Behavior,AffixMinionKiller,Modification.DamageDealtAttributeMultiplier[Merc] 0.15">
                 <Field Id="CatalogModification" Index="1"/>
+            </String>
+            <String String="2 2 Set Behavior,AffixMinionKiller,Modification.DamageDealtAttributeMultiplier[Minion] 0.15">
+                <Field Id="CatalogModification" Index="2"/>
+            </String>
+            <String String="2 2 Set Behavior,AffixMinionKiller,Modification.DamageDealtAttributeMultiplier[Merc] 0.15">
+                <Field Id="CatalogModification" Index="3"/>
+            </String>
+            <String String="3 2 Set Behavior,AffixMinionKiller,Modification.DamageDealtAttributeMultiplier[Minion] 0.15">
+                <Field Id="CatalogModification" Index="4"/>
+            </String>
+            <String String="3 2 Set Behavior,AffixMinionKiller,Modification.DamageDealtAttributeMultiplier[Merc] 0.15">
+                <Field Id="CatalogModification" Index="5"/>
+            </String>
+            <String String="4 2 Set Behavior,AffixMinionKiller,Modification.DamageDealtAttributeMultiplier[Minion] 0.15">
+                <Field Id="CatalogModification" Index="6"/>
+            </String>
+            <String String="4 2 Set Behavior,AffixMinionKiller,Modification.DamageDealtAttributeMultiplier[Merc] 0.15">
+                <Field Id="CatalogModification" Index="7"/>
+            </String>
+            <String String="5 2 Set Behavior,AffixMinionKiller,Modification.DamageDealtAttributeMultiplier[Minion] 0.15">
+                <Field Id="CatalogModification" Index="8"/>
+            </String>
+            <String String="5 2 Set Behavior,AffixMinionKiller,Modification.DamageDealtAttributeMultiplier[Merc] 0.15">
+                <Field Id="CatalogModification" Index="9"/>
             </String>
         </Instances>
         <Instances Id="Wrath">
