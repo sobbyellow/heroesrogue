@@ -107,6 +107,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     </Modification>
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixNexusRangeBuff" parent="CarryBehaviorParent">
+    <DisableValidatorArray value="DoesNotHaveWorgenFormOrNotGreymane" />
+    <DisableValidatorArray value="DVaSourceisPilotOrNotDVa" />
     <Modification>
       <WeaponRange value="1.1" />
       <WeaponScanBonus value="1.1" />
@@ -1034,6 +1036,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 </CBehaviorBuff>
 
 <CBehaviorBuff id="AffixGiantKiller" parent="CarryBehaviorParent">
+  <DisableValidatorArray value="HasWorgenFormOrNotGreymane" />
+  <DisableValidatorArray value="DVaSourceisMechOrNotDVa" />
   <DamageResponse>
     <Chance value="1" />
     <Handled value="AffixGiantKillerDamage" />

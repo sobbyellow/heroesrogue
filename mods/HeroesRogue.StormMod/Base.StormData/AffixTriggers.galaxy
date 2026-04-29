@@ -3249,13 +3249,6 @@ bool libAffx_EmergencyMeasureOncePerGame (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 int libAffx_lastMomentsIndex;
 fixed libAffx_lastMomentsCooldown;
-bool libAffx_LastMomentsOncePerGame (bool testConds, bool runActions) {
-    if (!runActions) {
-        return true;
-    }
-    libAffx_AddAffixBehavior(libAffx_player, "AffixLastMomentsCooldown");
-    return true;
-}
 bool libAffx_LastMomentsAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;

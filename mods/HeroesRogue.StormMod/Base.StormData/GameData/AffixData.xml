@@ -72,6 +72,7 @@
         <Fields Id="ExcludeChoGall" Type="Int"/>
         <Fields Id="NoRoll" Type="Int"/>
         <Fields Id="RequiredDifficulty" Type="Int"/>
+        <Fields Id="HeroTooltip" Type="String" Count="90"/>
         <Instances Id="[Default]">
             <Int Int="1">
                 <Field Id="Enabled"/>
@@ -351,6 +352,12 @@
             </String>
             <String String="Gall">
                 <Field Id="HeroesExcluded"/>
+            </String>
+            <String String="Greymane">
+                <Field Id="HeroTooltip"/>
+            </String>
+            <String String="DVa">
+                <Field Id="HeroTooltip" Index="1"/>
             </String>
         </Instances>
         <Instances Id="Buddy">
@@ -3656,17 +3663,14 @@
             <String String="1 8">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="OPG libAffx_LastMomentsOncePerGame">
+            <String String="AA libAffx_LastMomentsAffixAdded">
                 <Field Id="Trigger"/>
             </String>
-            <String String="AA libAffx_LastMomentsAffixAdded">
+            <String String="P libAffx_LastMomentsPeriodic">
                 <Field Id="Trigger" Index="1"/>
             </String>
-            <String String="P libAffx_LastMomentsPeriodic">
-                <Field Id="Trigger" Index="2"/>
-            </String>
             <String String="EU libAffx_LastMomentsEffectUsed AffixLastMomentsPersistent">
-                <Field Id="Trigger" Index="3"/>
+                <Field Id="Trigger" Index="2"/>
             </String>
         </Instances>
         <Instances Id="RangedThrall">
@@ -4464,6 +4468,12 @@
             </String>
             <String String="Rare">
                 <Field Id="Rarity"/>
+            </String>
+            <String String="Greymane">
+                <Field Id="HeroTooltip"/>
+            </String>
+            <String String="DVa">
+                <Field Id="HeroTooltip" Index="1"/>
             </String>
         </Instances>
         <Instances Id="AncientBlessings">

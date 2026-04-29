@@ -149,6 +149,8 @@ Affix/Tooltip/BlessingoftheDragons=Your AI teammates gain <c val="#TooltipNumber
 Affix/Tooltip/Append/BlessingoftheDragons=<n/><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixBlessingoftheDragons,Modification.VitalMaxArray[Life]" precision="1"/></c><n/>Movement Speed bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixBlessingoftheDragons,Modification.UnifiedMoveSpeedFactor*100" precision="1"/>%</c><n/>Cooldown reduction bonus: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_blessingoftheDragonsCDR$*100"precision="1"/>%</c>
 Affix/Name/NexusRange=Nexus Range
 Affix/Tooltip/NexusRange=Increases Attack Range by <c val="#TooltipNumbers">1.1</c> <c val="747A84">(+0.5 per stack)</c>.
+Affix/Tooltip/NexusRange/Greymane=Increases <c val="f9e79f">Human</c> Attack Range by <c val="#TooltipNumbers">1.1</c> <c val="747A84">(+0.5 per stack)</c>.
+Affix/Tooltip/NexusRange/DVa=Increases Attack Range by <c val="#TooltipNumbers">1.1</c> <c val="747A84">(+0.5 per stack)</c> while in Pilot Mode.
 Affix/Tooltip/Append/NexusRange=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixNexusRangeBuff,Modification.WeaponRange" precision="1"/></c>
 Affix/Name/AASearing=Searing Attacks
 Affix/Tooltip/AASearing=Increases Attack Damage by <c val="#TooltipNumbers">20%</c> <c val="747A84">(+10% per stack)</c>.
@@ -506,6 +508,8 @@ Affix/Tooltip/SharedPower=Your AI teammates benefit from the difficulty's <c val
 Affix/Tooltip/Append/SharedPower=
 Affix/Name/GiantKiller=Giant Killer
 Affix/Tooltip/GiantKiller=Basic Attacks against enemy Heroes deal bonus damage equal to <c val="#TooltipNumbers">2%</c> <c val="747A84">(+1% per stack)</c> of the Hero's maximum Health.
+Affix/Tooltip/GiantKiller/Greymane=<c val="CC66FF">Worgen</c> Basic Attacks against enemy Heroes deal bonus damage equal to <c val="#TooltipNumbers">2%</c> <c val="747A84">(+1% per stack)</c> of the Hero's maximum Health.
+Affix/Tooltip/GiantKiller/DVa=D.Va's Mech Basic Attacks against enemy Heroes deal bonus damage equal to <c val="#TooltipNumbers">2%</c> <c val="747A84">(+1% per stack)</c> of the Hero's maximum Health.
 Affix/Tooltip/Append/GiantKiller=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Effect,AffixGiantKillerDamage,VitalFractionMax[Life]*100" precision="2"/>%</c>
 Affix/Name/AncientBlessings=Ancient Blessings
 Affix/Tooltip/AncientBlessings=Basic Attacks deal an additional <c val="#TooltipNumbers"><d ref="Effect,DeckardAncientBlessingsAoEDamage,Amount"/></c> damage in an area and heal for <c val="#TooltipNumbers"><d ref="Effect,DeckardAncientBlessingsHealCreateHealer,RechargeVitalRate"/></c> for each Hero hit.<n/><n/>This effect can only occur once per second.

@@ -136,7 +136,7 @@ void libAffx_SyncBehaviors(unit sourceUnit, unit targetUnit) {
             continue;
         }
         libAffx_DebugPrint("Adding behavior " + behavior + " with " + IntToString(behaviorStacks) + " stacks and duration " + FixedToString(behaviorDuration, 2) + " to unit " + UnitGetType(targetUnit) + " for player " + IntToString(player));
-        UnitBehaviorAdd(targetUnit, behavior, sourceUnit, behaviorStacks);
+        UnitBehaviorAdd(targetUnit, behavior, targetUnit, behaviorStacks);
         UnitBehaviorSetDuration(targetUnit, behavior, behaviorDuration);
     }
 }
@@ -551,6 +551,7 @@ void libAffx_CreateAffixDialogItem(int buttonIndex, int affix, int xOffset) {
     int yOffset = 140;
     int windowXSize = 400;
     int windowYSize = 850;
+    text tooltip;
     text appendTooltip;
     
     libNtve_gf_CreateDialogItemImage(libAffx_dialogAffixSelection, windowXSize, windowYSize + 5, c_anchorTop, xOffset, yOffset - 5, null, "Assets/Textures/affix_bg.dds", c_triggerImageTypeNormal, false, Color(100, 100, 100), c_triggerBlendModeNormal);
@@ -575,11 +576,17 @@ void libAffx_CreateAffixDialogItem(int buttonIndex, int affix, int xOffset) {
     } else if (libAffx_affixes[affix].excludeChoGall && libAffx_choPlayer != 0) {
         appendTooltip += StringExternal("Text/ExcludeChoGall");
     }
+
     if (libAffx_appendTooltipInSelection && libAffx_affixes[affix].count > 0 && libAffx_affixes[affix].max != 1) {
         appendTooltip += StringExternal("Affix/Tooltip/Append/" + libAffx_affixes[affix].name);
     }
     
-    libNtve_gf_CreateDialogItemLabel(libAffx_dialogAffixSelection, 310, 400, c_anchorTop, xOffset, yOffset + 420, StringExternal("Affix/Tooltip/" + libAffx_affixes[affix].name) + appendTooltip, ColorWithAlpha(0, 0, 0, 0), false, 1.0);
+    if (libAffx_affixes[affix].heroTooltip[libAffx_playersHeroIndex[libAffx_player]]) {
+        tooltip = StringExternal("Affix/Tooltip/" + libAffx_affixes[affix].name + "/" + libCore_gf_GetHeroFromIndex(libAffx_playersHeroIndex[libAffx_player])) + appendTooltip;
+    } else {
+        tooltip = StringExternal("Affix/Tooltip/" + libAffx_affixes[affix].name) + appendTooltip;
+    }
+    libNtve_gf_CreateDialogItemLabel(libAffx_dialogAffixSelection, 310, 400, c_anchorTop, xOffset, yOffset + 420, tooltip, ColorWithAlpha(0, 0, 0, 0), false, 1.0);
     libNtve_gf_SetDialogItemStyle(DialogControlLastCreated(), "TalentDescription", PlayerGroupAll());
 
     libNtve_gf_CreateDialogItemLabel(libAffx_dialogAffixSelection, 310, 100, c_anchorTop, xOffset, yOffset + 745, StringExternal(libAffx_GetAffixLabel(affix)) + StringExternal(libAffx_GetAffixLabelSuffix(affix)), ColorWithAlpha(0, 0, 0, 0), false, 1.0);
@@ -697,6 +704,7 @@ void libAffx_CreateAffixesOwnedDialogItem(int affix, int offsetX, int offsetY) {
     int affixWidth = 95;
     int affixHeight = 95;
     text appendTooltip;
+    text tooltip;
     if (libAffx_affixes[affix].quest.isQuest) {
         questIcon = "Affix/Quest";
     }
@@ -705,10 +713,18 @@ void libAffx_CreateAffixesOwnedDialogItem(int affix, int offsetX, int offsetY) {
     } else if (libAffx_affixes[affix].excludeChoGall && libAffx_choPlayer != 0) {
         appendTooltip += StringExternal("Text/ExcludeChoGall");
     }
+
     if (libAffx_affixes[affix].count > 0 && libAffx_affixes[affix].max != 1) {
         appendTooltip += StringExternal("Affix/Tooltip/Append/" + libAffx_affixes[affix].name);
     }
-    libNtve_gf_CreateDialogItemImage(libAffx_dialogOwnedAffixes, affixWidth, affixHeight, c_anchorCenter, offsetX, offsetY, StringExternal("<c val=\"#TooltipNumbers\">") + StringExternal("Affix/Name/" + libAffx_affixes[affix].name) + StringExternal("</c><n/><n/>") + StringExternal("Affix/Tooltip/" + libAffx_affixes[affix].name) + appendTooltip, libAffx_affixes[affix].icon, c_triggerImageTypeNormal, false, Color(100, 100, 100), c_triggerBlendModeNormal);
+
+    if (libAffx_affixes[affix].heroTooltip[libAffx_playersHeroIndex[libAffx_player]]) {
+        tooltip = StringExternal("Affix/Tooltip/" + libAffx_affixes[affix].name + "/" + libCore_gf_GetHeroFromIndex(libAffx_playersHeroIndex[libAffx_player])) + appendTooltip;
+    } else {
+        tooltip = StringExternal("Affix/Tooltip/" + libAffx_affixes[affix].name) + appendTooltip;
+    }
+
+    libNtve_gf_CreateDialogItemImage(libAffx_dialogOwnedAffixes, affixWidth, affixHeight, c_anchorCenter, offsetX, offsetY, StringExternal("<c val=\"#TooltipNumbers\">") + StringExternal("Affix/Name/" + libAffx_affixes[affix].name) + StringExternal("</c><n/><n/>") + tooltip, libAffx_affixes[affix].icon, c_triggerImageTypeNormal, false, Color(100, 100, 100), c_triggerBlendModeNormal);
     libNtve_gf_CreateDialogItemImage(libAffx_dialogOwnedAffixes, affixWidth + 28, affixHeight + 28, c_anchorCenter, offsetX, offsetY, null, "Assets/Textures/icon_overlay" + libAffx_GetAffixSuffix(affix) + ".dds", c_triggerImageTypeNormal, false, Color(100, 100, 100), c_triggerBlendModeNormal);
 
     libNtve_gf_CreateDialogItemLabel(libAffx_dialogOwnedAffixes, affixWidth + 44, affixHeight - 50, c_anchorCenter, offsetX, offsetY + 75, StringExternal(questIcon) + StringExternal("Affix/Name/" + libAffx_affixes[affix].name) + StringToText(libAffx_CountToString(libAffx_affixes[affix].count, libAffx_affixes[affix].max)), libAffx_GetAffixColor(affix), false, 1.0);
@@ -1489,7 +1505,7 @@ void libAffx_PlayerAddPropertyFixed (int player, int inProp, fixed value, bool a
     }
 }
 void libAffx_AddAffixBehavior(int player, string behavior) {
-    if (player >= 1 && player <= 10 && libAffx_behaviorIndex[player] <= libAffx_behaviorMax && behavior != "" && behavior != null && libCore_gf_GetHeroFromIndex(player) == "DVa") {
+    if (player >= 1 && player <= 10 && libAffx_behaviorIndex[player] <= libAffx_behaviorMax && behavior != "" && behavior != null) {
         libAffx_behaviorIndex[player] += 1;
         libAffx_affixBehaviors[player][libAffx_behaviorIndex[player]] = behavior;
         libAffx_DebugPrint("Adding " + behavior + " to affix behaviors for player " + IntToString(player) + " at index " + IntToString(libAffx_behaviorIndex[player]));
@@ -3481,7 +3497,7 @@ void libAffx_AffixSetHero(int affix, string hero, bool allowed) {
     libAffx_affixes[affix].allowedHero[index] = allowed;
 }
 
-// Exceptions: Greymane (both melee and ranged) and Gall
+// Both melee & ranged or exceptions: Greymane, D.Va and Gall
 
 void libAffx_AffixSetHeroAllRanged(int affix, bool allowed) {
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Chromie")] = allowed;
@@ -3530,7 +3546,6 @@ void libAffx_AffixSetHeroAllRanged(int affix, bool allowed) {
 }
 void libAffx_AffixSetHeroAllMelee(int affix, bool allowed) {
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Firebat")] = allowed;
-    libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("DVa")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Deathwing")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("NexusHunter")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Arthas")] = allowed;
@@ -3828,6 +3843,12 @@ void libAffx_InitAffixes () {
             libAffx_affixes[i].cannotRoll = true;
         } else {
             libAffx_affixes[i].cannotRoll = false;
+        }
+        for (i2 = 1; i2 <= libAffx_maxHeroes; i2 += 1) {
+            affixString = UserDataGetString("Affix", affixInstance, "HeroTooltip", i2);
+            if (affixString != "" && affixString != null) {
+                libAffx_affixes[i].heroTooltip[libCore_gf_GetIndexFromHero(affixString)] = true;
+            }
         }
         for (i2 = 1; i2 <= libAffx_maxQuestRetain; i2 += 1) {
             affixString = UserDataGetString("Affix", affixInstance, "QuestRetain", i2);

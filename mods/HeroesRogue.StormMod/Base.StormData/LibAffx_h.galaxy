@@ -176,6 +176,7 @@ struct libAffx_AffixData {
     bool[libAffx_affixMax + 1] excludedAffixes; // List of mutually exclusive affixes.
     bool[libAffx_affixMax + 1] requiredAffixes; // List of required affixes.
     bool[libAffx_maxHeroes + 1] allowedHero; // List of Hero requirements.
+    bool[libAffx_maxHeroes + 1] heroTooltip; 
     bool[libAffx_maxMaps + 1] allowedMap; // List of Map requirements
     int requiredDifficulty;
 
@@ -292,7 +293,6 @@ bool libAffx_speedUpStart;
 bool libAffx_speedUpDeath;
 int libAffx_gallPlayer;
 int libAffx_choPlayer;
-bool libAffx_debugCommandsAddAll;
 fixed libAffx_processQueueTimeElapsed;
 int libAffx_lastSelected;
 
@@ -352,6 +352,7 @@ bool libAffx_debug_forcedHeroes = false; // Enemy heroes are forced to predeterm
 bool libAffx_debug_ignoreMap = false; // Ignores the saved map.
 bool libAffx_debug_disablePausing = false; // Disables pause features
 bool libAffx_debug_disableAffixQueue = false; // Disables queueing affixes.
+bool libAffx_debugCommandsAddAll;
 
 void libAffx_DebugPrint(string print);
 string libAffx_GetRarityString(int rarity); // Gets rarity name.

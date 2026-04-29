@@ -198,4 +198,44 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Behavior value="TyrandeShootingStarCooldown" />
 </CValidatorUnitCompareBehaviorCount>
 
+
+<CValidatorUnitType id="NotGreymane">
+  <WhichUnit Value="Source" />
+  <Value value="HeroGreymane" />
+  <Find value="0" />
+</CValidatorUnitType>
+
+<CValidatorCombine id="HasWorgenFormOrNotGreymane">
+  <CombineArray value="GreymaneSourceHasWorgenForm" />
+  <CombineArray value="NotGreymane" />
+</CValidatorCombine>
+<CValidatorCombine id="DoesNotHaveWorgenFormOrNotGreymane">
+  <CombineArray value="GreymaneNotInWorgenForm" />
+  <CombineArray value="NotGreymane" />
+</CValidatorCombine>
+
+<CValidatorCombine id="NotDVa">
+  <Type value="And" />
+  <CombineArray value="NotHeroDVaMech" />
+  <CombineArray value="NotHeroDVaPilot" />
+</CValidatorCombine>
+<CValidatorUnitType id="NotHeroDVaMech">
+  <WhichUnit Value="Source" />
+  <Value value="HeroDVaMech" />
+  <Find value="0" />
+</CValidatorUnitType>
+<CValidatorUnitType id="NotHeroDVaPilot">
+  <WhichUnit Value="Source" />
+  <Value value="HeroDVaPilot" />
+  <Find value="0" />
+</CValidatorUnitType>
+<CValidatorCombine id="DVaSourceisPilotOrNotDVa">
+  <CombineArray value="DVaSourceisPilot" />
+  <CombineArray value="NotDVa" />
+</CValidatorCombine>
+<CValidatorCombine id="DVaSourceisMechOrNotDVa">
+  <CombineArray value="DVaSourceisMech" />
+  <CombineArray value="NotDVa" />
+</CValidatorCombine>
+
 </Catalog>
