@@ -11,6 +11,7 @@ const int libAffx_maxTrigger = 10;
 const int libAffx_maxQuestRetain = 10;
 const int libAffx_player = 1; // The player's index.
 const int libAffx_enemy = 6;
+const int libAffx_maxFilters = 100;
 
 // Catalog Modification types
 
@@ -120,6 +121,27 @@ const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pic
 const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
 
 const string libAffx_version = "0.14.0";
+
+struct libAffx_Filter {
+    unitfilter unitFilter;
+    int requiredPlayer;
+    string requiredUnitType;
+    string[libAffx_maxFilters + 1] excludedUnitTypes;
+};
+
+libAffx_Filter libAffx_filterAllAllies;
+libAffx_Filter libAffx_filterAlliedHeroes;
+libAffx_Filter libAffx_filterAlliedStructures;
+libAffx_Filter libAffx_filterAlliedStructuresExcludingCore;
+libAffx_Filter libAffx_filterAlliedCore;
+libAffx_Filter libAffx_filterAlliedMinions;
+
+libAffx_Filter libAffx_filterAllEnemies;
+libAffx_Filter libAffx_filterEnemyHeroes;
+libAffx_Filter libAffx_filterEnemyStructures;
+libAffx_Filter libAffx_filterEnemyStructuresExcludingCore;
+libAffx_Filter libAffx_filterEnemyCore;
+libAffx_Filter libAffx_filterEnemyMinions;
 
 struct libAffx_CatalogModification {
     int player;
@@ -346,7 +368,7 @@ trigger libAffx_AbathurUltimateEvolutionTrigger;
 bool libAffx_debug_enableTryMeMode2 = false; // Try mode 2.0
 bool libAffx_debug_enableCheatCommands = false; // Enables cheat/debug commands
 bool libAffx_debug_disableHeroSelection = false; // Skips the Hero selection.
-string libAffx_debug_playerHero = "DVa"; // Player hero when hero selection is disabled.
+string libAffx_debug_playerHero = "Cho"; // Player hero when hero selection is disabled.
 bool libAffx_debug_enableDebugLogging = false; // Enables debug logging
 bool libAffx_debug_forcedHeroes = false; // Enemy heroes are forced to predetermined heroes
 bool libAffx_debug_ignoreMap = false; // Ignores the saved map.
@@ -392,11 +414,10 @@ void libAffx_AddAffixBehavior(int player, string behavior);
 void libAffx_CatalogReferenceModify2 (string reference, int player, string value, int operation);
 void libAffx_CatalogReferenceModify (string reference, int player, string value);
 void libAffx_UnitBehaviorAdd(unit targetUnit, string behavior, unit casterUnit, int stacks);
+bool libAffx_UnitMatchesCriteria(unit unitVar, structref<libAffx_Filter> filter); // Check whether a unit matches the given criteria.
+void libAffx_UnitBehaviorAddCriteria(unit unitVar, string behavior, int stacks, structref<libAffx_Filter> filter); // Add a behavior to a unit if it matches criteria.
+void libAffx_UnitBehaviorAddOrRemoveCriteria(unit unitVar, string behavior, int stacks, structref<libAffx_Filter> filter); // Add a behavior to a unit if it matches criteria, and removes it if it doesn't.
 bool libAffx_FilterMatches(unit unitVar, unitfilter unitFilter, int player, string unitType); // Checks whether unit matches filters.
-void libAffx_AddBehaviorFilter(unit unitVar, string behavior, unitfilter unitFilter, int player, string unitType, int stacks); // Adds behavior if unit matches filters.
-void libAffx_AddAndRemoveBehaviorFilter(unit unitVar, string behavior, unitfilter unitFilter, int player, string unitType, int stacks); // Adds behavior if unit matches filters, and removes behavior if it doesn't match.
-void libAffx_AddBehaviorAllUnitsFilter (string behavior, unitfilter filter, int player, string unitType, int stacks); // Adds behavior to all units that match the filters.
-void libAffx_RemoveBehaviorAllUnitsFilter (string behavior, unitfilter filter, int player, string unitType, int stacks); // Removes behavior from all units that match the filters.
 void libAffx_ApplyTalents(int affix);
 void libAffx_ApplyCatalogModifications(int affix, int amount);
 void libAffx_ApplyBehaviors(int affix, int amount);

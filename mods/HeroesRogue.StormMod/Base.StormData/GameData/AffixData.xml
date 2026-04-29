@@ -611,7 +611,7 @@
             <String String="12 3 Add Behavior,AffixConversionBuff,Period -10">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="Execute libAffx_Conversion">
+            <String String="OPG libAffx_ConversionOncePerGame">
                 <Field Id="Trigger"/>
             </String>
             <String String="UnitCreated libAffx_ConversionUnitCreated">
@@ -673,7 +673,7 @@
             <String String="Assets/Textures/affix_icon_catapults.dds">
                 <Field Id="Icon"/>
             </String>
-            <String String="Execute libAffx_OutdatedCatapults">
+            <String String="OPG libAffx_OutdatedCatapultsOncePerGame">
                 <Field Id="Trigger"/>
             </String>
             <String String="UnitCreated libAffx_OutdatedCatapultsUnitCreated">
@@ -775,22 +775,22 @@
             <String String="Assets/Textures/storm_ui_icon_talent_gidbin.dds">
                 <Field Id="Icon"/>
             </String>
-            <String String="Execute libAffx_EnemySpeed">
-                <Field Id="Trigger"/>
-            </String>
-            <String String="BehaviorChange libAffx_EnemySpeedBehaviorChange AffixEnemySpeedBuff">
-                <Field Id="Trigger" Index="1"/>
-            </String>
             <String String="0 2 Set Behavior,AffixEnemySpeedBuff,Modification.UnifiedMoveSpeedFactor 0.1">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="UnitCreated libAffx_EnemySpeedUnitCreated">
+            <String String="AA libAffx_EnemySpeedAffixAdded">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="Execute libAffx_EnemySpeed">
+                <Field Id="Trigger" Index="1"/>
+            </String>
+            <String String="BehaviorChange libAffx_EnemySpeedBehaviorChange AffixEnemySpeedBuff">
                 <Field Id="Trigger" Index="2"/>
             </String>
-            <String String="UCO libAffx_EnemySpeedUCO">
+            <String String="UnitCreated libAffx_EnemySpeedUnitCreated">
                 <Field Id="Trigger" Index="3"/>
             </String>
-            <String String="AA libAffx_EnemySpeedAffixAdded">
+            <String String="UCO libAffx_EnemySpeedUCO">
                 <Field Id="Trigger" Index="4"/>
             </String>
         </Instances>
@@ -4518,7 +4518,7 @@
                 <Field Id="Rarity"/>
             </String>
             <String String="UD libAffx_CrashStressUnitDied">
-                <Field Id="Trigger" Index="1"/>
+                <Field Id="Trigger"/>
             </String>
         </Instances>
         <Instances Id="SgtHammerMachineGunner">
