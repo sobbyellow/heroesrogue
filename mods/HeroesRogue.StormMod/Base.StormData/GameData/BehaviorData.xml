@@ -54,7 +54,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     </Modification>
   </CBehaviorBuff>
 
-  
+
   <CBehaviorBuff id="AffixAllyDamageBuff" parent="CarryBehaviorParent">
     <Modification>
       <HealDealtAdditiveMultiplier index="Life" value="0.05" />
@@ -78,7 +78,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CBehaviorBuff id="WitchDoctorZombieWallTimedLifeZombieHandler">
     <Duration value="0.0625" />
     <FinalEffect value="WitchDoctorZombieWallTimedLifeFinishZombieHandler" />
-  </CBehaviorBuff>  
+  </CBehaviorBuff>
   <CBehaviorBuff id="AffixBloodlust" parent="CarryBehaviorParent">
     <Modification>
       <UnifiedMoveSpeedFactor value="0.175" />
@@ -191,7 +191,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <BehaviorFlags index="Permanent" value="1" />
     <BehaviorFlags index="EnabledWhileDead" value="1" />
   </CBehaviorUnitTracker>
-  
+
   <CBehaviorBuff id="AffixRegenerativeCore" parent="CarryBehaviorParent">
     <DisableValidatorArray value="CasterShieldGT0Percent" />
     <Period value="0.25" />
@@ -324,7 +324,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     </Modification>
     <DamageResponse Chance="1" Handled="ChromieTimeTrapApplyCooldownSwitch" Fatal="1" />
   </CBehaviorBuff>
-  
+
   <CBehaviorBuff id="AffixAASearing" parent="CarryBehaviorParent">
     <Modification>
       <DamageDealtFraction index="Basic" value="0.20" />
@@ -347,7 +347,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
       <DamageDealtScaled index="Basic" value="4" />
     </Modification>
   </CBehaviorBuff>
-  
+
   <CBehaviorBuff id="AffixShieldedCore" parent="CarryBehaviorParent">
     <Modification>
       <VitalMaxFractionArray index="Shields" value="0.5" />
@@ -425,7 +425,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixButtonMasher" parent="CarryBehaviorParent" />
 
-  
+
 <CBehaviorBuff id="AffixDifficultyBuff" parent="CarryBehaviorParent">
   <Modification>
     <DamageDealtFraction index="Ability" value="0.04" />
@@ -436,7 +436,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <VitalRegenMultiplier index="Energy" value="0.04" />
   </Modification>
 </CBehaviorBuff>
-  
+
 <CBehaviorBuff id="AffixSlowStart" parent="StormTimeStopParent">
   <BehaviorCategories index="Restorable" value="1" />
   <Duration value="60" />
@@ -1085,5 +1085,19 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorBuff id="AffixSgtHammerMachineGunner" parent="CarryBehaviorParent">
 </CBehaviorBuff>
-  
+
+  <CBehaviorBuff id="AffixCrashStressHappens" parent="CarryBehaviorParent">
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="AffixCrashStress" parent="CarryBehaviorParent">
+    <Duration value="5.0"/>
+    <Modification>
+      <UnifiedMoveSpeedFactor value="-0.4" />
+      <SightMaximum value="4" />
+    </Modification>
+    <ArmorModification StackCount="1">
+      <AllArmorBonus value="-15"/>
+    </ArmorModification>
+  </CBehaviorBuff>
+
 </Catalog>

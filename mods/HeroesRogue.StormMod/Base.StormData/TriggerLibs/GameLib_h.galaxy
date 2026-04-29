@@ -1905,6 +1905,7 @@ trigger libGame_gt_VehicleDragonKnightBullRush;
 trigger libGame_gt_InitializeWatchTowers;
 trigger libGame_gt_WatchTowersOwnershipChanges;
 trigger libGame_gt_HealthPackGeneratorHealthPackCreated;
+trigger libGame_gt_DVaMechDies;
 
 bool libGame_paused = false;
 int libGame_winningTeam;
