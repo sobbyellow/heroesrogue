@@ -413,6 +413,7 @@ void libAffx_BankReset();
 unit libAffx_GetDVaMech(int player);
 void libAffx_UpdateOwnedAffixes();
 bool libAffx_IntToBoolean(int value);
+void libAffx_MuteAllChannelsExcept(playergroup pg, bool mute, int except);
 int libAffx_RollRarity(int baseRarity, bool curse); // Roll rarity to upgrade.
 int libAffx_RollAffix(int rarity, bool curse, int level, bool preventUpgrade); // Returns an affix that matches the criteria and all requirements.
 void libAffx_ChooseAffixes(int rarity, bool curse, int level, bool preventUpgrade); // Chooses affixes and provide the player with the affix options.

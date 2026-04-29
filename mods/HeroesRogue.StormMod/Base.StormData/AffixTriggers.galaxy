@@ -3944,6 +3944,43 @@ bool libAffx_MacGuffinAffixAdded (bool testConds, bool runActions) {
 
     return true;
 }
+//--------------------------------------------------------------------------------------------------
+// Trigger: DVa Mech Dies
+//--------------------------------------------------------------------------------------------------
+bool libAffx_CrashStressUnitDied (bool testConds, bool runActions) {
+    unit deadUnit = EventUnit();
+    int deadPlayer = EventPlayer();
+    unit dvaUnit = libGame_gv_players[deadPlayer].lv_heroUnit;
+    soundlink soundLink = SoundLink("DVaCrashStressSound", -1);
+    sound hSound;
+
+    if (testConds) {
+        if (deadPlayer != libAffx_player) {
+            return false;
+        }
+		if (UnitGetType(libGame_gv_players[deadPlayer].lv_heroUnit) != "HeroDVaPilot") {
+            return false;
+		}
+        if (deadUnit == libGame_gv_players[deadPlayer].lv_heroUnit) {
+			return false;
+        }
+        if (UnitTestState(deadUnit, c_unitStateHallucination)) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+
+    UnitBehaviorAdd(dvaUnit, "AffixCrashStress", dvaUnit, 1);
+    libAffx_MuteAllChannelsExcept(PlayerGroupAll(), true, c_soundCategoryTV);
+    SoundPlay(soundLink, PlayerGroupAll(), 200, 0.0);
+    hSound = SoundLastPlayed();
+    SoundWait(hSound, 5.0, 0);
+    libAffx_MuteAllChannelsExcept(PlayerGroupAll(), false, c_soundCategoryTV);
+
+	return true;
+}
 // ---------------------------------------------------------------
 // Machine Gunner
 // ---------------------------------------------------------------

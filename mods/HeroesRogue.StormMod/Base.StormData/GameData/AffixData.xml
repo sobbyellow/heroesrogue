@@ -4504,6 +4504,23 @@
                 <Field Id="Trigger"/>
             </String>
         </Instances>
+        <Instances Id="CrashStress">
+            <Int Int="1">
+                <Field Id="Curse"/>
+            </Int>
+            <String String="DVa">
+                <Field Id="HeroSpecific"/>
+            </String>
+            <String String="Assets/Textures/affix_icon_crash_stress.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Rare">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="UD libAffx_CrashStressUnitDied">
+                <Field Id="Trigger" Index="1"/>
+            </String>
+        </Instances>
         <Instances Id="SgtHammerMachineGunner">
             <String String="Assets/Textures/storm_ui_icon_sgthammer_tankmode.dds">
                 <Field Id="Icon"/>
@@ -4518,23 +4535,6 @@
                 <Field Id="Trigger"/>
             </String>
             <String String="1 0 AffixSgtHammerMachineGunner">
-                <Field Id="Behavior"/>
-            </String>
-        </Instances>
-        <Instances Id="CrashStress">
-            <Int Int="1">
-                <Field Id="Curse"/>
-            </Int>
-            <String String="DVa">
-                <Field Id="HeroSpecific"/>
-            </String>
-            <String String="Assets/Textures/affix_icon_crash_stress.dds">
-                <Field Id="Icon"/>
-            </String>
-            <String String="Rare">
-                <Field Id="Rarity"/>
-            </String>
-            <String String="1 0 AffixCrashStressHappens">
                 <Field Id="Behavior"/>
             </String>
         </Instances>

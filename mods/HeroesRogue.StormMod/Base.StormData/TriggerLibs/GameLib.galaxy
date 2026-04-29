@@ -22593,99 +22593,6 @@ void libGame_gt_HealthPackGeneratorHealthPackCreated_Init () {
     TriggerAddEventPlayerEffectUsed(libGame_gt_HealthPackGeneratorHealthPackCreated, c_playerAny, "GenerateHealthPackAddBehaviortoGlobe");
 }
 
-void MuteAllChannelsExcept(playergroup pg, bool mute, int except) {
-    int i;
-
-    for (i = 0; i < except; i += 1) {
-        SoundChannelMute(pg, i, mute);
-    }
-    for (i = except + 1; i < 30; i += 1) {
-        SoundChannelMute(pg, i, mute);
-    }
-
-    //if (mute) {
-    //    debug_Log("All the channels got muted");
-    //} else {
-    //    debug_Log("All the channels got UNmuted");
-    //}
-}
-
-//--------------------------------------------------------------------------------------------------
-// Trigger: DVa Mech Dies
-//--------------------------------------------------------------------------------------------------
-bool libGame_gt_DVaMechDies_Func (bool testConds, bool runActions) {
-    // Variable Declarations
-    unit lv_deadUnit;
-    int lv_deadPlayer;
-    int lv_killingPlayer;
-    int lv_deadPlayerTeamID;
-    unit dvaUnit;
-    soundlink soundLink = SoundLink("DVaCrashStressSound", -1);
-    sound hSound;
-
-
-    // Automatic Variable Declarations
-    // Variable Initialization
-    lv_deadUnit = EventUnit();
-    lv_deadPlayer = EventPlayer();
-    lv_deadPlayerTeamID = libGame_gf_TeamNumberOfPlayer(lv_deadPlayer);
-
-    // Conditions
-    if (testConds) {
-        if (!((libGame_gv_gameOver == false))) {
-            return false;
-        }
-
-        if (!((lv_deadPlayer >= 1))) {
-            return false;
-        }
-
-        if (!((lv_deadPlayer <= libCore_gv_bALMaxPlayers))) {
-            return false;
-        }
-
-		if (!(UnitGetType(libGame_gv_players[lv_deadPlayer].lv_heroUnit) == "HeroDVaPilot")) {
-            return false;
-		}
-        if (lv_deadUnit == libGame_gv_players[lv_deadPlayer].lv_heroUnit) {
-			//It means DVa pilot died
-			//UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringToText("Unfortunately it was DVa pilot"));
-			return false;
-        }
-
-        if (!((UnitTestState(lv_deadUnit, c_unitStateHallucination) == false))) {
-            return false;
-        }
-    }
-
-    // Actions
-    if (!runActions) {
-        return true;
-    }
-
-	//UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringToText("DVa Mech died, trigger worked"));
-    dvaUnit = libGame_gv_players[lv_deadPlayer].lv_heroUnit;
-
-    UnitBehaviorAdd(dvaUnit, "AffixCrashStress", lv_deadUnit, 1);
-    if (soundLink != null) {
-        //debug_Log("Sound link NOT null");
-    } else {
-        //debug_Log("Sound link is null");
-    }
-
-    MuteAllChannelsExcept(PlayerGroupAll(), true, c_soundCategoryTV);
-    SoundPlay(soundLink, PlayerGroupAll(), 200, 0.0);
-    hSound = SoundLastPlayed();
-    SoundWait(hSound, 5.0, 0);
-    MuteAllChannelsExcept(PlayerGroupAll(), false, c_soundCategoryTV);
-
-	return true;
-}
-
-void libGame_gt_DVaMechDies_Init () {
-    libGame_gt_DVaMechDies = TriggerCreate("libGame_gt_DVaMechDies_Func");
-    TriggerAddEventUnitDied(libGame_gt_DVaMechDies, null);
-}
 
 void libGame_InitTriggers () {
     libGame_gt_IncludeGame_Init();
@@ -22864,7 +22771,6 @@ void libGame_InitTriggers () {
     libGame_gt_InitializeWatchTowers_Init();
     libGame_gt_WatchTowersOwnershipChanges_Init();
     libGame_gt_HealthPackGeneratorHealthPackCreated_Init();
-    libGame_gt_DVaMechDies_Init();
 }
 
 //--------------------------------------------------------------------------------------------------

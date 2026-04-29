@@ -517,6 +517,9 @@ Affix/Tooltip/Append/AncientBlessings=
 Affix/Name/MacGuffin=MacGuffin
 Affix/Tooltip/MacGuffin=Reduces objective channel time for your team by <c val="#TooltipNumbers">25%</c> <c val="747A84">(+25% per stack)</c>.
 Affix/Tooltip/Append/MacGuffin=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="$GalaxyVar:macGuffinModifier$*100" precision="1"/>%</c>
+Affix/Name/CrashStress=Crash Stress
+Affix/Tooltip/CrashStress=When D.Va's Mech is destroyed, you are Slowed by <c val="#TooltipNumbers">40%</c>, have your Armor reduced by <c val="#TooltipNumbers">15</c>, have greatly reduced vision, and hear heartbeat sounds for <c val="#TooltipNumbers">5</c> seconds.
+Affix/Tooltip/Append/CrashStress=
 Affix/Name/SgtHammerMachineGunner=Machine Gunner
 Affix/Tooltip/SgtHammerMachineGunner=Sgt. Hammer's Basic Attacks deal <c val="#TooltipNumbers">25%</c> damage and Siege Mode no longer splashes, but her Basic Attack cooldown is reduced to <c val="#TooltipNumbers">0.125</c> seconds.
 Affix/Tooltip/Append/SgtHammerMachineGunner=
@@ -723,7 +726,5 @@ Affix/Tooltip/Append/VeryBadBargain=<n/><n/>Current reduction: <c val="#TooltipN
 Affix/Name/PurificationProtocol=Purification Protocol
 Affix/Tooltip/PurificationProtocol=Purifier Beam is cast on you and will chase you forever.<n/><n/>Damage scales with the enemy's Core.<n/><n/><c val="FFDE36">Skips the next Curse.</c>
 Affix/Tooltip/Append/PurificationProtocol=
-Affix/Name/CrashStress=Crash Stress
-Affix/Tooltip/CrashStress=The moment DVa Mech dies, DVa has <c val="#TooltipNumbers">-15</c> armor reduction, <c val="#TooltipNumbers">40%</c> slow, greatly reduced vision and hearing heartbeat over all the game sounds for <c val="#TooltipNumbers">5</c> seconds.
 
 

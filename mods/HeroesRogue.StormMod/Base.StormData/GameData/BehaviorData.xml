@@ -1069,18 +1069,15 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CBehaviorBuff id="AffixSgtHammerMachineGunner" parent="CarryBehaviorParent">
 </CBehaviorBuff>
 
-  <CBehaviorBuff id="AffixCrashStressHappens" parent="CarryBehaviorParent">
-  </CBehaviorBuff>
-
-  <CBehaviorBuff id="AffixCrashStress" parent="CarryBehaviorParent">
-    <Duration value="5.0"/>
-    <Modification>
-      <UnifiedMoveSpeedFactor value="-0.4" />
-      <SightMaximum value="4" />
-    </Modification>
-    <ArmorModification StackCount="1">
-      <AllArmorBonus value="-15"/>
-    </ArmorModification>
-  </CBehaviorBuff>
+<CBehaviorBuff id="AffixCrashStress" parent="CarryBehaviorParent">
+  <Duration value="5.0"/>
+  <Modification>
+    <UnifiedMoveSpeedFactor value="-0.4" />
+    <SightMaximum value="4" />
+  </Modification>
+  <ArmorModification StackCount="1">
+    <AllArmorBonus value="-15"/>
+  </ArmorModification>
+</CBehaviorBuff>
 
 </Catalog>
