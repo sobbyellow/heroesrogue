@@ -1,19 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DocInfo>
     <Icon>
-        <Value>Storm_UI_Gamemode_MapSelect_TombOfTheSpiderQueen.png</Value>
+        <Value>Storm_UI_Gamemode_MapSelect_HauntedMines_CN.png</Value>
     </Icon>
     <MatchMakerTag>
         <Value>Hero</Value>
     </MatchMakerTag>
     <Dependencies>
-        <Value>bnet:Tomb of the Spider Queen (Mod)/0.0/1364,file:Mods\heroesmapmods/battlegroundmapmods/tombofthespiderqueen.stormmod</Value>
+        <Value>bnet:Haunted Mines (Mod)/0.0/1578,file:Mods\heroesmapmods/battlegroundmapmods/hauntedmines.stormmod</Value>
     </Dependencies>
     <ModifiableDependencies>
         <Value>Mods/HeroesData.StormMod</Value>
-        <Value>Mods\heroesmapmods/battlegroundmapmods/tombofthespiderqueen.stormmod</Value>
+        <Value>Mods\heroesmapmods/battlegroundmapmods/hauntedmines.stormmod</Value>
     </ModifiableDependencies>
+    <Screenshot>
+        <File>
+            <Value>HB_W09_HauntedMines.dds</Value>
+            <Value>HB_W09_HauntedMines-zhCN.dds</Value>
+        </File>
+        <CaptionId>
+            <Value>1</Value>
+            <Value>2</Value>
+        </CaptionId>
+        <Flags>
+            <Value> </Value>
+            <Value> </Value>
+        </Flags>
+    </Screenshot>
     <Preload>
-        <Value>GameLink:Model;RavenLordTributeWarning</Value>
+        <Value>GameLink:Model;UnderworldBoss</Value>
+        <Value>GameLink:Model;UnderworldSummonedBossBetter</Value>
+        <Value>GameLink:Model;JungleGraveGolemUnderground</Value>
+        <Value>GameLink:Model;JungleGraveGolemUndergroundDeath</Value>
+        <Value>GameLink:Model;MercSiegeGiant</Value>
+        <Value>GameLink:Model;MercSiegeGiantDeath</Value>
+        <Value>GameLink:Model;MercLanerSiegeGiantNormal</Value>
+        <Value>GameLink:Model;MercLanerMeleeBlackKnight</Value>
+        <Value>GameLink:Model;MercLanerMeleeBlackKnightDeath</Value>
+        <Value>GameLink:Model;MercDefenderRangedOgreDeath</Value>
+        <Value>GameLink:Model;MercDefenderRangedOgreBlackKnight</Value>
+        <Value>GameLink:Model;MercDefenderRangedOgreBlackKnightDeath</Value>
+        <Value>GameLink:Model;MercLanerRangedOgreBlackKnight</Value>
+        <Value>GameLink:Model;MercLanerRangedOgreBlackKnightDeath</Value>
+        <Value>GameLink:Model;MinionCatapultRangedRavenCourt</Value>
+        <Value>GameLink:Model;MinionCatapultRangedRavenCourtDeath</Value>
+        <Value>GameLink:Unit;MercLanerMeleeOgre</Value>
+        <Value>GameLink:Unit;MercLanerRangedOgre</Value>
+        <Value>GameLink:Unit;MercDefenderRangedOgre</Value>
+        <Value>GameLink:Unit;MercDefenderMeleeOgre</Value>
+        <Value>GameLink:Unit;MercDefenderSiegeGiant</Value>
+        <Value>GameLink:Unit;MercLanerSiegeGiant</Value>
+        <Value>GameLink:Unit;JungleCampIconUnit</Value>
+        <Value>GameLink:Unit;RangedMinion</Value>
+        <Value>GameLink:Unit;CatapultMinion</Value>
+        <Value>GameLink:Unit;FootmanMinion</Value>
+        <Value>GameLink:Unit;WizardMinion</Value>
     </Preload>
 </DocInfo>

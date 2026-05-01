@@ -205,7 +205,7 @@ Affix/Tooltip/Append/StructureQuest=
 Button/Name/AffixStructureQuestToken=Destruction
 Button/Tooltip/AffixStructureQuestToken=<c val="#TooltipQuest">Forts/Keeps destroyed: <c val="#TooltipNumbers" validator="AffixStructureQuestNotComplete"><d ref="$BehaviorStackCount:AffixStructureQuestToken$"/> / <d ref="Behavior,AffixStructureQuestToken,Max"/></c>
 Affix/Name/AASpeed=Nexus Frenzy
-Affix/Tooltip/AASpeed=Increases Attack Speed by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+8% per stack)</c>.
+Affix/Tooltip/AASpeed=Increases Attack Speed by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+7% per stack)</c>.
 Affix/Tooltip/Append/AASpeed=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixAASpeed,Modification.AdditiveAttackSpeedFactor*100" precision="0"/>%</c>
 Affix/Name/GladiatorsMedallion=Gladiator's Medallion
 Affix/Tooltip/GladiatorsMedallion=<c val="#TooltipNumbers">Cooldown: 60 seconds</c> <c val="747A84">(-20s per stack)</c><n/><n/>Activate to become Unstoppable for <c val="#TooltipNumbers">2</c> seconds.
@@ -395,8 +395,8 @@ Affix/Name/Superiority=Superiority
 Affix/Tooltip/Superiority=Gain <c val="#TooltipNumbers">15</c> <c val="747A84">(+15 per stack)</c> Armor against non-Heroic enemies.
 Affix/Tooltip/Append/Superiority=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixSuperiority,ArmorModification.ArmorSet[Minion].ArmorMitigationTable[Basic]" precision="0"/></c>
 Affix/Name/MercLord=Mercenary Lord
-Affix/Tooltip/MercLord=Friendly non-Boss Mercenaries near you deal <c val="#TooltipNumbers">50%</c> more damage.
-Affix/Tooltip/Append/MercLord=
+Affix/Tooltip/MercLord=Friendly non-Boss Mercenaries near you deal <c val="#TooltipNumbers">50%</c> <c val="747A84">(+50% per stack)</c> more damage.
+Affix/Tooltip/Append/MercLord=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixMercenaryLordDamageBuff,Modification.DamageDealtFraction[Basic]*100" precision="0"/>%</c>
 Affix/Name/Besieger=Demolitionist
 Affix/Tooltip/Besieger=Increases damage dealt to Structures by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c>.
 Affix/Tooltip/Append/Besieger=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixBesieger,Modification.DamageDealtAttributeMultiplier[Structure]*100" precision="0"/>%</c>
@@ -404,14 +404,14 @@ Affix/Name/MinionKiller=Minion Killer
 Affix/Tooltip/MinionKiller=Increases your and your AI teammates's damage dealt to Minions and Mercenaries by <c val="#TooltipNumbers">20%</c> <c val="747A84">(+20% per stack)</c>.
 Affix/Tooltip/Append/MinionKiller=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixMinionKiller,Modification.DamageDealtAttributeMultiplier[Minion]*100" precision="0"/>%</c>
 Affix/Name/FirstAid=First Aid
-Affix/Tooltip/FirstAid=Regenerate <c val="#TooltipNumbers">1%</c> <c val="747A84">(+1% per stack)</c> of your maximum Health per second.
-Affix/Tooltip/Append/FirstAid=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Effect,AffixFirstAidCreateHealer,RechargeVitalFraction*100" precision="2"/>%</c>
+Affix/Tooltip/FirstAid=Increases maximum Health by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c> and regenerate <c val="#TooltipNumbers">1%</c> <c val="747A84">(+1% per stack)</c> of your maximum Health per second.
+Affix/Tooltip/Append/FirstAid=<n/><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixFirstAid,Modification.VitalMaxFractionArray[Life]*100" precision="0"/>%</c><n/>Regeneration bonus: <c val="#TooltipNumbers"><d ref="Effect,AffixFirstAidCreateHealer,RechargeVitalFraction*100" precision="0"/>%</c>
 Button/Name/AffixFirstAid=First Aid
 Button/SimpleDisplayText/AffixFirstAid=Regenerate health.
 Button/Tooltip/AffixFirstAid=Regenerate health.
 Affix/Name/Promote=Promote
-Affix/Tooltip/Promote=Allied Minions take <c val="#TooltipNumbers">25%</c> reduced damage from non-Heroic enemies and deal <c val="#TooltipNumbers">50%</c> <c val="747A84">(+25% per stack)</c> increased damage to non-Heroic enemies.
-Affix/Tooltip/Append/Promote=<n/><n/>Damage bonus: <c val="#TooltipNumbers"><d ref="(Behavior,AffixPromoteDamage,DamageResponse.ModifyFraction-1)*100" player="11" precision="0"/>%</c>
+Affix/Tooltip/Promote=Allied Minions take <c val="#TooltipNumbers">25%</c> reduced damage from non-Heroic enemies and deal <c val="#TooltipNumbers">50%</c> <c val="747A84">(+25% per stack)</c> increased damage to non-Heroic enemies.<n/><n/>Increases maximum Health of allied Minions by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c>.
+Affix/Tooltip/Append/Promote=<n/><n/>Damage bonus: <c val="#TooltipNumbers"><d ref="(Behavior,AffixPromoteDamage,DamageResponse.ModifyFraction-1)*100" player="11" precision="0"/>%</c><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="(Behavior,AffixPromoteDamage,Modification.VitalMaxFractionArray[Life])*100" player="11" precision="0"/>%</c>
 Affix/Name/RegenerativeWalls=Automatic Repairs
 Affix/Tooltip/RegenerativeWalls=Allied Structures regenerate <c val="#TooltipNumbers">35</c> <c val="747A84">(+35 per stack)</c> Health per second.<n/><n/>Does not affect your allied Core.
 Affix/Tooltip/Append/RegenerativeWalls=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,RegenerativeWalls,Modification.VitalRegenArray[Life]" player="11" precision="0"/></c>
@@ -557,7 +557,7 @@ Affix/Name/Mythic3=Bleeding
 Affix/Tooltip/Mythic3=Reduces regeneration effects and all healing received by <c val="#TooltipNumbers">100%</c>.
 Affix/Tooltip/Append/Mythic3=
 Affix/Name/Mythic4=Level Disadvantage
-Affix/Tooltip/Mythic4=Enemy Heroes start at Level <c val="#TooltipNumbers">7</c>.
+Affix/Tooltip/Mythic4=Enemy Heroes start at Level <c val="#TooltipNumbers">4</c> and gain <c val="#TooltipNumbers">20%</c> increased Experience.
 Affix/Tooltip/Append/Mythic4=
 Affix/Name/Mythic5=Cursed
 Affix/Tooltip/Mythic5=Winning an objective no longer swaps a curse to a boon.<n/><n/>Obtain a <c val="c52020">Curse</c> every <c val="#TooltipNumbers">3</c> deaths. Counter is reset between rounds.<n/><n/>After reaching level <c val="#TooltipNumbers">20</c>, you and ALL allies lose <c val="#TooltipNumbers">5</c> Armor now and every minute.<n/>After reaching level <c val="#TooltipNumbers">30</c>, lose <c val="#TooltipNumbers">100</c> Armor every minute.
@@ -639,7 +639,7 @@ Affix/Name/StructureAmmo=Ammunition
 Affix/Tooltip/StructureAmmo=Allied Towers, Forts, and Keeps have limited Ammunition, with each attack consuming one ammo. Once a structure runs out of ammo, it will be unable to attack.<n/><n/>Structures replenish <c val="#TooltipNumbers">2</c> ammo every <c val="#TooltipNumbers">30</c> seconds.<n/><n/><c val="FFDE36">Skips the next Curse.</c>
 Affix/Tooltip/Append/StructureAmmo=
 Affix/Name/Grenadier=Grenadier
-Affix/Tooltip/Grenadier=Grants the ability to throw a Frag Grenade, Particle Grenade, or a Biotic Grenade to <c val="#TooltipNumbers">1</c> <c val="747A84">(+1 per stack)</c> random enemy Hero.<n/><n/>This effect has a <c val="#TooltipNumbers">8</c> second cooldown.
+Affix/Tooltip/Grenadier=Grants the ability to throw a Frag Grenade, Particle Grenade, or a Biotic Grenade to <c val="#TooltipNumbers">1</c> <c val="747A84">(+1 per stack)</c> random enemy Hero.<n/><n/>This effect has a <c val="#TooltipNumbers">10</c> second cooldown.
 Affix/Tooltip/Append/Grenadier=<n/><n/>Total Heroes: <c val="#TooltipNumbers"><d ref="$GalaxyVar:grenadierTotal$" precision="0"/></c>
 Affix/Name/SlowStart=Slow Start
 Affix/Tooltip/SlowStart=Your AI teammates are Time Stopped for <c val="#TooltipNumbers">60</c> <c val="747A84">(+60s per stack)</c> seconds.
@@ -715,7 +715,7 @@ Affix/Name/Wrath=Relentless
 Affix/Tooltip/Wrath=Reduces the duration of ALL Stuns, Slows, Roots, and Silences against enemy Heroes by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c>.
 Affix/Tooltip/Append/Wrath=<n/><n/>Total modifier: <c val="#TooltipNumbers"><d ref="$GalaxyVar:affixCCDecreaseModifier$*100" precision="1"/>%</c>
 Affix/Name/Dodge=Dodge
-Affix/Tooltip/Dodge=Enemy Heroes have a <c val="#TooltipNumbers">2%</c> <c val="747A84">(+2% per stack)</c> chance to take no damage.
+Affix/Tooltip/Dodge=Enemy Heroes have a <c val="#TooltipNumbers">4%</c> <c val="747A84">(+4% per stack)</c> chance to take no damage.
 Affix/Tooltip/Append/Dodge=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDodge,DamageResponse.Chance*100" player="6" precision="1"/>%</c>
 Affix/Name/ExpensiveAttacks=Expensive Attacks
 Affix/Tooltip/ExpensiveAttacks=Basic Attacks consume <c val="#TooltipNumbers">4</c> Mana.
@@ -747,5 +747,10 @@ Affix/Tooltip/Append/VeryBadBargain=<n/><n/>Current reduction: <c val="#TooltipN
 Affix/Name/PurificationProtocol=Purification Protocol
 Affix/Tooltip/PurificationProtocol=Purifier Beam is cast on you and will chase you forever.<n/><n/>Damage scales with the enemy's Core.<n/><n/><c val="FFDE36">Skips the next Curse.</c>
 Affix/Tooltip/Append/PurificationProtocol=
-
+Affix/Name/SkullStockpile=Skull Stockpile
+Affix/Tooltip/SkullStockpile=The enemy Team starts with <c val="#TooltipNumbers">20</c> Skulls.<n/><n/>Reduces enemy Grave Golem's Root cooldown by <c val="#TooltipNumbers">75%</c>.
+Affix/Tooltip/Append/SkullStockpile=
+Affix/Name/Doomed=Doomed
+Affix/Tooltip/Doomed=Reduces your Core's Health by <c val="#TooltipNumbers">10</c>. The enemy Core regenerates <c val="#TooltipNumbers">1</c> Health every minute.<n/><n/>Only applies on Towers of Doom.
+Affix/Tooltip/Append/Doomed=
 

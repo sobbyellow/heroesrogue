@@ -47,29 +47,11 @@
         <AttributeHidden Namespace="999" Id="3109"/>
         <AttributeHidden Namespace="999" Id="3110"/>
         <AttributeHidden Namespace="999" Id="3111"/>
-        <Attribute Namespace="999" Id="3000">
-            <Default>
-                <Slot Id="Global"/>
-                <Value Id="1180791666"/>
-            </Default>
-        </Attribute>
-        <Attribute Namespace="999" Id="3010">
-            <Default>
-                <Slot Id="Global"/>
-                <Value Id="7955827"/>
-            </Default>
-        </Attribute>
         <Attribute Namespace="999" Id="1001">
             <Default>
                 <Slot Id="Global"/>
                 <Value Id="7955827"/>
                 <Locked/>
-            </Default>
-        </Attribute>
-        <Attribute Namespace="999" Id="3006">
-            <Default>
-                <Slot Id="Global"/>
-                <Value Id="53"/>
             </Default>
         </Attribute>
         <Attribute Namespace="999" Id="2001">
@@ -119,6 +101,12 @@
             <Default>
                 <Slot Id="9"/>
                 <Value Id="21554" Index="4"/>
+            </Default>
+        </Attribute>
+        <Attribute Namespace="999" Id="3006">
+            <Default>
+                <Slot Id="Global"/>
+                <Value Id="53"/>
             </Default>
         </Attribute>
         <AchievementTag Value="CSTM"/>

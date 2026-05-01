@@ -73,6 +73,7 @@
         <Fields Id="NoRoll" Type="Int"/>
         <Fields Id="RequiredDifficulty" Type="Int"/>
         <Fields Id="HeroTooltip" Type="String" Count="90"/>
+        <Fields Id="AffixesRequiredMax" Type="Int"/>
         <Instances Id="[Default]">
             <Int Int="1">
                 <Field Id="Enabled"/>
@@ -2765,14 +2766,11 @@
             <String String="Assets/Textures/affix_icon_talent_disadvantage.dds">
                 <Field Id="Icon"/>
             </String>
-            <String String="LU libAffx_TalentDisadvantageLevelUp">
-                <Field Id="Trigger" Index="1"/>
-            </String>
             <String String="AA libAffx_TalentDisadvantageAffixAdded">
                 <Field Id="Trigger"/>
             </String>
-            <String String="E libAffx_TalentDisadvantageExecute">
-                <Field Id="Trigger" Index="2"/>
+            <String String="LU libAffx_TalentDisadvantageLevelUp">
+                <Field Id="Trigger" Index="1"/>
             </String>
         </Instances>
         <Instances Id="Greed">
@@ -3305,17 +3303,26 @@
             </String>
         </Instances>
         <Instances Id="MercLord">
+            <Int>
+                <Field Id="Max"/>
+            </Int>
             <String String="Rare">
                 <Field Id="Rarity"/>
             </String>
             <String String="Assets/Textures/storm_ui_icon_talent_mercenarylord.dds">
                 <Field Id="Icon"/>
             </String>
-            <String String="LostVikings">
-                <Field Id="HeroesExcluded"/>
-            </String>
             <String String="1 0 AffixMercenaryLord">
                 <Field Id="Behavior"/>
+            </String>
+            <String String="0 2 Set Behavior,AffixMercenaryLordDamageBuff,Modification.DamageDealtFraction[Splash] 0.5">
+                <Field Id="CatalogModification"/>
+            </String>
+            <String String="0 2 Set Behavior,AffixMercenaryLordDamageBuff,Modification.DamageDealtFraction[Basic] 0.5">
+                <Field Id="CatalogModification" Index="1"/>
+            </String>
+            <String String="0 2 Set Behavior,AffixMercenaryLordDamageBuff,Modification.DamageDealtFraction[Ability] 0.5">
+                <Field Id="CatalogModification" Index="2"/>
             </String>
         </Instances>
         <Instances Id="Besieger">
@@ -3467,7 +3474,7 @@
             <Int Int="1">
                 <Field Id="Curse"/>
             </Int>
-            <Int Int="50">
+            <Int Int="25">
                 <Field Id="Max"/>
             </Int>
             <String String="Rare">
@@ -3491,19 +3498,19 @@
             <String String="10 0 AffixDodge">
                 <Field Id="Behavior" Index="4"/>
             </String>
-            <String String="6 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.02">
+            <String String="6 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.04">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="7 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.02">
+            <String String="7 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.04">
                 <Field Id="CatalogModification" Index="1"/>
             </String>
-            <String String="8 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.02">
+            <String String="8 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.04">
                 <Field Id="CatalogModification" Index="2"/>
             </String>
-            <String String="9 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.02">
+            <String String="9 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.04">
                 <Field Id="CatalogModification" Index="3"/>
             </String>
-            <String String="10 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.02">
+            <String String="10 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.04">
                 <Field Id="CatalogModification" Index="4"/>
             </String>
         </Instances>
@@ -4572,6 +4579,61 @@
             </String>
             <String String="UD libAffx_CrashStressUnitDied">
                 <Field Id="Trigger"/>
+            </String>
+        </Instances>
+        <Instances Id="SkullStockpile">
+            <Int Int="1">
+                <Field Id="Curse"/>
+            </Int>
+            <Int Int="1">
+                <Field Id="LevelMin"/>
+            </Int>
+            <Int Int="4">
+                <Field Id="LevelMax"/>
+            </Int>
+            <Int Int="100000">
+                <Field Id="Weight"/>
+            </Int>
+            <String String="Rare">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Assets/Textures/affix_icon_skullstockpile.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="AA libAffx_SkullStockpileAffixAdded">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="HauntedMines">
+                <Field Id="MapSpecific"/>
+            </String>
+            <String String="12 2 Multiply Abil,UnderworldBossRoots,Cost.Cooldown.TimeUse 0.25">
+                <Field Id="CatalogModification"/>
+            </String>
+        </Instances>
+        <Instances Id="Doomed">
+            <Int Int="1">
+                <Field Id="Curse"/>
+            </Int>
+            <Int Int="100000">
+                <Field Id="Weight"/>
+            </Int>
+            <Int Int="1">
+                <Field Id="LevelMin"/>
+            </Int>
+            <Int Int="1">
+                <Field Id="LevelMax"/>
+            </Int>
+            <String String="Assets/Textures/affix_icon_doomed.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Rare">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="AA libAffx_DoomedAffixAdded">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="TowersOfDoom">
+                <Field Id="MapSpecific"/>
             </String>
         </Instances>
         <Instances Id="SgtHammerMachineGunner">

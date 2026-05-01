@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CWater id="Agria">
+        <State index="0">
+            <Name value="[Default]"/>
+            <Height value="4.700000"/>
+            <Color value="0.100000,0.350000,0.500000,0.300000"/>
+            <ColorFallOff value="0.100000"/>
+            <Specularity value="100.000000"/>
+            <SpecularScaler value="2.450000"/>
+            <UvRate value="0.000000,-1.000000,0.000000,0.000000"/>
+            <ReflectionDistortion value="0.012000"/>
+            <RefractionDistortion value="0.025000"/>
+            <MinReflection value="0.300000"/>
+            <ReflectivityPower value="8.000000"/>
+        </State>
+    </CWater>
+    <CWater id="KingsCrestDocks">
+        <State index="0">
+            <Name value="[Default]"/>
+            <Height value="3.950000"/>
+            <Color value="0.000000,0.156863,0.258824,0.399000"/>
+            <ColorFallOff value="0.199000"/>
+            <CausticsFallOff value="4.580000"/>
+            <Specularity value="800.500000"/>
+            <SpecularScaler value="3.220000"/>
+            <UvRate value="0.065638,-0.055567,0.000000,0.000000"/>
+            <UvRotate value="4.679053"/>
+            <MeshRoughness value="0.963000"/>
+            <TextureRoughness value="0.458000"/>
+            <ReflectionDistortion value="0.028000"/>
+            <RefractionDistortion value="0.000400"/>
+            <MinReflection value="0.027000"/>
+            <ReflectivityPower value="0.430000"/>
+        </State>
+    </CWater>
+    <CWater id="KingsCrestRavenCourt">
+        <State index="0">
+            <Name value="[Default]"/>
+            <Height value="7.600000"/>
+            <Color value="0.000000,0.031373,0.062745,0.431000"/>
+            <ColorFallOff value="0.019000"/>
+            <CausticsFallOff value="1.340000"/>
+            <Specularity value="159.000000"/>
+            <SpecularScaler value="0.050000"/>
+            <UvRate value="0.000718,-0.000696,0.000000,0.000000"/>
+            <UvRotate value="5.588370"/>
+            <MeshRoughness value="0.225000"/>
+            <TextureRoughness value="0.232000"/>
+            <ReflectionDistortion value="0.183000"/>
+            <RefractionDistortion value="0.019600"/>
+            <MinReflection value="0.000000"/>
+            <ReflectivityPower value="3.180000"/>
+        </State>
+        <ReflectionCubeMap value="Assets\Textures\Reflection_BelShir.dds"/>
+    </CWater>
+</Catalog>

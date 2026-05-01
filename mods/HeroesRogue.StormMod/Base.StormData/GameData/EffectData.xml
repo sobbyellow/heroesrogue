@@ -1404,11 +1404,13 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CEffectApplyBehavior id="SgtHammerShredderRoundsApplyBehavior">
   <Chance value="0" />
   <Behavior value="SgtHammerShredderRoundsArmorDebuff" />
+  <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
 </CEffectApplyBehavior>
 <CEffectApplyBehavior id="SgtHammerDebilitatingRoundsApplyBehavior">
   <Chance value="0" />
   <Behavior value="SgtHammerDebilitatingRoundsSlow" />
   <ValidatorArray value="NotStructureTarget" />
+  <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
 </CEffectApplyBehavior>
 
 <CEffectApplyBehavior id="SgtHammerTrojanMinesApplyBehavior">
@@ -1479,5 +1481,24 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <EffectArray value="SgtHammerShredderRoundsApplyBehavior" />
     <EffectArray value="SgtHammerDebilitatingRoundsApplyBehavior" />
   </CEffectSet>
+
+  <CEffectCreateHealer id="DoomedRegenCreateHealer" parent="StormHealingSpell">
+    <FloaterCreation value="Suppress" />
+    <ImpactUnit Value="Caster" />
+    <RechargeVitalRate value="1" />
+    <SourceButtonFace value="Doomed" />
+  </CEffectCreateHealer>
+  
+  <CEffectEnumArea id="AffixMercenaryLordPeriodicSearch">
+    <SearchFilters value="Merc;Neutral,Enemy,ImmuneToFriendlyAbilities,Missile,Stasis,Hidden,Summoned" />
+    <AreaArray Effect="AffixMercenaryLordApplyDamageBuffBehavior">
+      <Radius value="9" />
+    </AreaArray>
+    <SearchFlags index="ExtendByUnitRadius" value="1" />
+  </CEffectEnumArea>
+  <CEffectApplyBehavior id="AffixMercenaryLordApplyDamageBuffBehavior">
+    <ValidatorArray index="0" value="TargetIsNotABossUnitOrMonsterMinorCombine" />
+    <Behavior value="AffixMercenaryLordDamageBuff" />
+  </CEffectApplyBehavior>
 
 </Catalog>

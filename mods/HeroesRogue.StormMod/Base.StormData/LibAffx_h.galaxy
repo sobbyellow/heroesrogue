@@ -3,7 +3,7 @@
 //--------------------------------------------------------------------------------------------------
 
 const int libAffx_maxHeroes = 90;
-const int libAffx_maxMaps = 5;
+const int libAffx_maxMaps = 7;
 const int libAffx_maxTalentsAdd = 10;
 const int libAffx_maxCatalogModification = 10;
 const int libAffx_maxBehavior = 10;
@@ -96,8 +96,14 @@ const int libAffx_mapCursedHollow   =   2;
 const int libAffx_mapShrines        =   3;
 const int libAffx_mapCrypts         =   4;
 const int libAffx_mapDragonShire    =   5;
+const int libAffx_mapHauntedMines   =   6;
+const int libAffx_mapTowersOfDoom   =   7;
 
-const int libAffx_startingMap = libAffx_mapCursedHollow; // The starting map.
+const int libAffx_map1 = libAffx_mapCursedHollow;
+const int libAffx_map2 = libAffx_mapShrines;
+const int libAffx_map3 = libAffx_mapHauntedMines;
+const int libAffx_map4 = libAffx_mapTowersOfDoom;
+const int libAffx_startingMap = libAffx_map1; // The starting map.
 
 const int libAffx_teamOrder = libCore_gv_cOMPUTER_TeamOrder;
 const int libAffx_teamChaos = libCore_gv_cOMPUTER_TeamChaos;
@@ -127,6 +133,7 @@ struct libAffx_Filter {
     int requiredPlayer;
     string requiredUnitType;
     string[libAffx_maxFilters + 1] excludedUnitTypes;
+    int excludedUnitTypeIndex;
 };
 
 libAffx_Filter libAffx_filterAllAllies;
@@ -142,6 +149,7 @@ libAffx_Filter libAffx_filterEnemyStructures;
 libAffx_Filter libAffx_filterEnemyStructuresExcludingCore;
 libAffx_Filter libAffx_filterEnemyCore;
 libAffx_Filter libAffx_filterEnemyMinions;
+libAffx_Filter libAffx_filterDifficulty;
 
 struct libAffx_CatalogModification {
     int player;
@@ -197,6 +205,7 @@ struct libAffx_AffixData {
 
     bool[libAffx_affixMax + 1] excludedAffixes; // List of mutually exclusive affixes.
     bool[libAffx_affixMax + 1] requiredAffixes; // List of required affixes.
+    bool requiresMaxStacks; // If required affixes also require maximum stacks.
     bool[libAffx_maxHeroes + 1] allowedHero; // List of Hero requirements.
     bool[libAffx_maxHeroes + 1] heroTooltip; 
     bool[libAffx_maxMaps + 1] allowedMap; // List of Map requirements
@@ -343,6 +352,8 @@ trigger libAffx_CurateHeroesTrigger;
 trigger libAffx_pauseVLSK;
 trigger libAffx_pauseMSHE;
 trigger libAffx_pauseMSOC;
+trigger libAffx_pauseMHTM;
+trigger libAffx_pauseMTOD;
 trigger libAffx_AffixHotkeyPressedTrigger;
 trigger libAffx_ObjectiveWonTrigger;
 trigger libAffx_AffixRerollTrigger;
@@ -376,6 +387,8 @@ bool libAffx_debug_disablePausing = false; // Disables pause features
 bool libAffx_debug_disableAffixQueue = false; // Disables queueing affixes.
 bool libAffx_debugCommandsAddAll;
 
+void libAffx_CopyFilter(structref<libAffx_Filter> original, structref<libAffx_Filter> copy);
+void libAffx_AddExcludedUnitTypeFilter(structref<libAffx_Filter> filter, string unitType);
 void libAffx_DebugPrint(string print);
 string libAffx_GetRarityString(int rarity); // Gets rarity name.
 int libAffx_GetAffixId(string affixName); // Get affix index by name.

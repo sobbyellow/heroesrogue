@@ -74,15 +74,15 @@ bool libAffx_HeroSelectionTrigger_Func (bool testConds, bool runActions) {
                     }
                     if (libAffx_debug_forcedHeroes) {
                         if (player == 6) {
-                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Varian");
+                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Tyrande");
                         } else if (player == 7) {
-                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Leoric");
+                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Monk");
                         } else if (player == 8) {
-                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Tyrael");
+                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Rehgar");
                         } else if (player == 9) {
-                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Cho");
+                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Deckard");
                         } else if (player == 10) {
-                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Gall");
+                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Uther");
                         }
                     }
                     libAffx_playersHeroIndex[player] = libGame_gv_players[player].lv_heroIndex;
@@ -317,6 +317,10 @@ void libAffx_Pause(bool pause) {
             TriggerExecute(libAffx_pauseMSHE, false, false);
         } else if (libCore_gv_mAPMapStringID == "Crypts" && libAffx_pauseMSOC != null) {
             TriggerExecute(libAffx_pauseMSOC, false, false);
+        } else if (libCore_gv_mAPMapStringID == "HauntedMines" && libAffx_pauseMHTM != null) {
+            TriggerExecute(libAffx_pauseMHTM, false, false);
+        } else if (libCore_gv_mAPMapStringID == "TowersOfDoom" && libAffx_pauseMTOD != null) {
+            TriggerExecute(libAffx_pauseMTOD, false, false);
         } else if (libCore_gv_mAPMapStringID == "DragonShire") {
             if (TimerGetRemaining(libMapM_gv_mMGardensDragonDragonTowerStartTimer) > 0.0) {
                 TimerPause(libMapM_gv_mMGardensDragonDragonTowerStartTimer, true);
@@ -373,6 +377,10 @@ void libAffx_Pause(bool pause) {
             TriggerExecute(libAffx_pauseMSHE, false, false);
         } else if (libCore_gv_mAPMapStringID == "Crypts" && libAffx_pauseMSOC != null) {
             TriggerExecute(libAffx_pauseMSOC, false, false);
+        } else if (libCore_gv_mAPMapStringID == "HauntedMines" && libAffx_pauseMHTM != null) {
+            TriggerExecute(libAffx_pauseMHTM, false, false);
+        } else if (libCore_gv_mAPMapStringID == "TowersOfDoom" && libAffx_pauseMTOD != null) {
+            TriggerExecute(libAffx_pauseMTOD, false, false);
         } else if (libCore_gv_mAPMapStringID == "DragonShire") {
             if (TimerGetRemaining(libMapM_gv_mMGardensDragonDragonTowerStartTimer) > 0.0) {
                 TimerPause(libMapM_gv_mMGardensDragonDragonTowerStartTimer, false);
@@ -505,6 +513,10 @@ int libAffx_GetMapID(string mapString) {
         return libAffx_mapCrypts;
     } else if (map == "dragonshire") {
         return libAffx_mapDragonShire;
+    } else if (map == "hauntedmines") {
+        return libAffx_mapHauntedMines;
+    } else if (map == "towersofdoom") {
+        return libAffx_mapTowersOfDoom;
     }
     return 0;
 }
@@ -519,6 +531,10 @@ string libAffx_GetMapString(int map) {
         return "Crypts";
     } else if (map == libAffx_mapDragonShire) {
         return "DragonShire";
+    } else if (map == libAffx_mapHauntedMines) {
+        return "HauntedMines";
+    } else if (map == libAffx_mapTowersOfDoom) {
+        return "TowersOfDoom";
     }
     return "";
 }
@@ -1411,8 +1427,17 @@ void libAffx_CopyFilter(structref<libAffx_Filter> original, structref<libAffx_Fi
     copy.requiredUnitType = original.requiredUnitType;
     copy.requiredPlayer = original.requiredPlayer;
     for (i = 1; i <= libAffx_maxFilters; i += 1) {
-        copy.excludedUnitTypes[i] = original.excludedUnitTypes[i];
+        libAffx_AddExcludedUnitTypeFilter(copy, original.excludedUnitTypes[i]);
     }
+}
+void libAffx_AddExcludedUnitTypeFilter(structref<libAffx_Filter> filter, string unitType) {
+    if (filter.excludedUnitTypeIndex >= libAffx_maxFilters) {
+        libAffx_DebugPrint("Warning: A filter reached maximum limit!");
+        return;
+    }
+    if (unitType == "") { return; }
+    filter.excludedUnitTypeIndex += 1;
+    filter.excludedUnitTypes[filter.excludedUnitTypeIndex] = unitType;
 }
 bool libAffx_UnitMatchesCriteria(unit unitVar, structref<libAffx_Filter> filter) {
     int i;
@@ -2264,18 +2289,18 @@ bool libAffx_GameOverCallbackTrigger_Func (bool testConds, bool runActions) {
     map = libAffx_GetMapID(libCore_gv_mAPMapStringID);
 
     if (winningTeam == 1) {
-        if (map == libAffx_mapCursedHollow) {
+        if (map == libAffx_map1) {
             GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorialmapmechanics.stormmap");
-            libAffx_nextMap = "Shrines";
-        } else if (map == libAffx_mapShrines) {
+            libAffx_nextMap = libAffx_GetMapString(libAffx_map2);
+        } else if (map == libAffx_map2) {
             GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorial01.stormmap");
-            libAffx_nextMap = "Crypts";
-        } else if (map == libAffx_mapCrypts) {
+            libAffx_nextMap = libAffx_GetMapString(libAffx_map3);
+        } else if (map == libAffx_map3) {
             GameSetNextMap("heroes/singleplayermaps/(10)trymemode.stormmap");
-            libAffx_nextMap = "DragonShire";
-        } else if (map == libAffx_mapDragonShire) {
+            libAffx_nextMap = libAffx_GetMapString(libAffx_map4);
+        } else if (map == libAffx_map4) {
             GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorialveteran.stormmap");
-            libAffx_nextMap = "CursedHollow";
+            libAffx_nextMap = libAffx_GetMapString(libAffx_map1);
         }
         libAffx_BankSave();
     } else {
@@ -2317,6 +2342,10 @@ bool libAffx_AffixLogicUnitCreatedTrigger_Func (bool testConds, bool runActions)
     }
 
     if (player == libAffx_player && !libAffx_playersFirstSpawnIn[libAffx_player]) {
+
+        if (libCore_gv_mAPMapStringID == libAffx_GetMapString(libAffx_mapTowersOfDoom)) {
+            libAffx_AddExcludedUnitTypeFilter(libAffx_filterDifficulty, "KingsCore");
+        }
         libAffx_playersFirstSpawnIn[libAffx_player] = true;
         DialogSetVisible(libAffx_dialogTopRight, PlayerGroupAll(), true);
         libGame_gv_players[libAffx_player].lv_heroIndex = libAffx_playersHeroIndex[libAffx_player];
@@ -2428,7 +2457,7 @@ int libAffx_RollAffix(int rarity, bool curse, int level, bool preventUpgrade) {
 
             // Check for affix exclusions and requirements
             for (i2 = 1; i2 <= libAffx_registeredAffixes; i2 += 1) {
-                if ((libAffx_affixes[i].excludedAffixes[i2] && libAffx_affixes[i2].count > 0) || (libAffx_affixes[i].requiredAffixes[i2] && libAffx_affixes[i2].count < 1 && libAffx_affixes[i2].max != 0) || (libAffx_affixes[i].requiredAffixes[i2] && libAffx_affixes[i2].count <= 0 && libAffx_affixes[i2].max == 0)) {
+                if ((libAffx_affixes[i].excludedAffixes[i2] && libAffx_affixes[i2].count > 0) || (libAffx_affixes[i].requiredAffixes[i2] && libAffx_affixes[i2].count < 1 && libAffx_affixes[i2].max != 0 && !libAffx_affixes[i2].requiresMaxStacks) || (libAffx_affixes[i].requiredAffixes[i2] && libAffx_affixes[i2].count < libAffx_affixes[i2].max && libAffx_affixes[i2].max != 0 && libAffx_affixes[i2].requiresMaxStacks) || (libAffx_affixes[i].requiredAffixes[i2] && libAffx_affixes[i2].count <= 0 && libAffx_affixes[i2].max == 0)) {
                     eligible = false;
                     break;
                 }
@@ -2558,14 +2587,12 @@ void libAffx_ChooseAffixes(int rarity, bool curse, int level, bool preventUpgrad
         if (run == 0) {
             libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic1");
         } else if (run == 4) {
-            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic2");
+            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic4");
         } else if (run == 8) {
             libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic3");
         } else if (run == 12) {
-            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic4");
-        } else if (run == 16) {
             libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic5");
-        } else if (run >= 20) {
+        } else {
             libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic6");
         }
         SoundPlayOnUnit(SoundLink("UI_Game_LevelUp_Talent", -1), PlayerGroupSingle(1), libGame_gv_players[libAffx_player].lv_heroUnit, 8.0, 100.0, 0.0);
@@ -2890,18 +2917,18 @@ bool libAffx_TestCommandTrigger_Func (bool testConds, bool runActions) {
         libAffx_Print("Added a total of " + IntToString(affixes) + " affixes!");
     } else if (StringWord(EventChatMessage(false), 1) == "nextmap") {
         libAffx_Print("Loading next map...");
-        if (libAffx_GetMapID(libCore_gv_mAPMapStringID) == libAffx_mapCursedHollow) {
+        if (libAffx_GetMapID(libCore_gv_mAPMapStringID) == libAffx_map1) {
             GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorialmapmechanics.stormmap");
-            libAffx_nextMap = "Shrines";
-        } else if (libAffx_GetMapID(libCore_gv_mAPMapStringID) == libAffx_mapShrines) {
+            libAffx_nextMap = libAffx_GetMapString(libAffx_map2);
+        } else if (libAffx_GetMapID(libCore_gv_mAPMapStringID) == libAffx_map2) {
             GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorial01.stormmap");
-            libAffx_nextMap = "Crypts";
-        } else if (libAffx_GetMapID(libCore_gv_mAPMapStringID) == libAffx_mapCrypts) {
+            libAffx_nextMap = libAffx_GetMapString(libAffx_map3);
+        } else if (libAffx_GetMapID(libCore_gv_mAPMapStringID) == libAffx_map3) {
             GameSetNextMap("heroes/singleplayermaps/(10)trymemode.stormmap");
-            libAffx_nextMap = "DragonShire";
-        } else if (libAffx_GetMapID(libCore_gv_mAPMapStringID) == libAffx_mapDragonShire) {
+            libAffx_nextMap = libAffx_GetMapString(libAffx_map4);
+        } else if (libAffx_GetMapID(libCore_gv_mAPMapStringID) == libAffx_map4) {
             GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorialveteran.stormmap");
-            libAffx_nextMap = "CursedHollow";
+            libAffx_nextMap = libAffx_GetMapString(libAffx_map1);
         }
         libAffx_BankSave();
         Wait(1, c_timeGame);
@@ -3036,7 +3063,7 @@ bool libAffx_DifficultyUnitCreated_Func (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixDifficultyBuff", 1, libAffx_filterAllEnemies);
+    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "AffixDifficultyBuff", 1, libAffx_filterDifficulty);
     return true;
 }
 bool libAffx_DifficultyUnitChangeOwner_Func (bool testConds, bool runActions) {
@@ -3048,7 +3075,7 @@ bool libAffx_DifficultyUnitChangeOwner_Func (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "AffixDifficultyBuff", 1, libAffx_filterAllEnemies);
+    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "AffixDifficultyBuff", 1, libAffx_filterDifficulty);
     return true;
 }
 void libAffx_Difficulty_Init() {
@@ -3095,7 +3122,7 @@ void libAffx_ApplyDifficulty () {
         libAffx_AddBehavior(i, "AffixDifficultyBuff", 1, true);
     }
     if (libAffx_difficulty == 3) {
-        libAffx_UnitBehaviorAddCriteriaAll("AffixDifficultyBuff", 1, libAffx_filterAllEnemies);
+        libAffx_UnitBehaviorAddCriteriaAll("AffixDifficultyBuff", 1, libAffx_filterDifficulty);
     }
     
 }
@@ -3398,16 +3425,16 @@ bool libAffx_MapInitTrigger_Func (bool testConds, bool runActions) {
 
     Wait(0.0625, c_timeGame);
     if (libAffx_currentMap != libAffx_GetMapID(libCore_gv_mAPMapStringID) && !libAffx_debug_ignoreMap) {
-        if (libAffx_currentMap == libAffx_mapCursedHollow) {
+        if (libAffx_currentMap == libAffx_map1) {
             GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorialveteran.stormmap");
             KickFromGame(PlayerGroupAll());
-        } else if (libAffx_currentMap == libAffx_mapShrines) {
+        } else if (libAffx_currentMap == libAffx_map2) {
             GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorialmapmechanics.stormmap");
             KickFromGame(PlayerGroupAll());
-        } else if (libAffx_currentMap == libAffx_mapCrypts) {
+        } else if (libAffx_currentMap == libAffx_map3) {
             GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorial01.stormmap");
             KickFromGame(PlayerGroupAll());
-        } else if (libAffx_currentMap == libAffx_mapDragonShire) {
+        } else if (libAffx_currentMap == libAffx_map4) {
             GameSetNextMap("heroes/singleplayermaps/(10)trymemode.stormmap");
             KickFromGame(PlayerGroupAll());
         }
@@ -3457,6 +3484,8 @@ void libAffx_InitTriggers () {
     libAffx_pauseVLSK = TriggerCreate("libVLSK_PauseTrigger_Func");
     libAffx_pauseMSHE = TriggerCreate("libMSHE_PauseTrigger_Func");
     libAffx_pauseMSOC = TriggerCreate("libMSOC_PauseTrigger_Func");
+    libAffx_pauseMHTM = TriggerCreate("libMHTM_PauseTrigger_Func");
+    libAffx_pauseMTOD = TriggerCreate("libMTOD_PauseTrigger_Func");
 }
 
 void libAffx_AffixInitBlank() {
@@ -3699,6 +3728,7 @@ void libAffx_AffixSetHeroStartersOnly(int affix, bool allowed) {
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Tyrande")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Thrall")] = allowed;
     libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("Wizard")] = allowed;
+    libAffx_affixes[affix].allowedHero[libCore_gf_GetIndexFromHero("SgtHammer")] = allowed;
 }
 void libAffx_AffixSetMap(int affix, int map, bool allowed) {
     libAffx_affixes[affix].allowedMap[map] = allowed;
@@ -3728,14 +3758,16 @@ void libAffx_InitVariables () {
     }
 
     libAffx_filterAllAllies.unitFilter = UnitFilter(0, 0, (1 << c_targetFilterNeutral) | (1 << c_targetFilterEnemy) | (1 << c_targetFilterCreep) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)));
-    
+    libAffx_AddExcludedUnitTypeFilter(libAffx_filterAllAllies, "AnubarakCocoonNormal");
+    libAffx_AddExcludedUnitTypeFilter(libAffx_filterAllAllies, "AnubarakCocoonFat");
+
     libAffx_filterAlliedHeroes.unitFilter = UnitFilter((1 << c_targetFilterHeroic), 0, (1 << c_targetFilterNeutral) | (1 << c_targetFilterEnemy) | (1 << c_targetFilterMissile) | (1 << c_targetFilterItem), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)));;
 
     libAffx_filterAlliedStructures.unitFilter = libCore_gv_filtersStructure;
     libAffx_filterAlliedStructures.requiredPlayer = libAffx_teamOrder;
 
     libAffx_CopyFilter(libAffx_filterAlliedStructures, libAffx_filterAlliedStructuresExcludingCore);
-    libAffx_filterAlliedStructuresExcludingCore.excludedUnitTypes[1] = "KingsCore";
+    libAffx_AddExcludedUnitTypeFilter(libAffx_filterAlliedStructuresExcludingCore, "KingsCore");
 
     libAffx_CopyFilter(libAffx_filterAlliedStructures, libAffx_filterAlliedCore);
     libAffx_filterAlliedCore.requiredUnitType = "KingsCore";
@@ -3744,6 +3776,10 @@ void libAffx_InitVariables () {
     libAffx_filterAlliedMinions.requiredPlayer = libAffx_teamOrder;
 
     libAffx_filterAllEnemies.unitFilter = libCore_gv_filtersEnemy;
+    libAffx_AddExcludedUnitTypeFilter(libAffx_filterAllEnemies, "AnubarakCocoonNormal");
+    libAffx_AddExcludedUnitTypeFilter(libAffx_filterAllEnemies, "AnubarakCocoonFat");
+
+    libAffx_CopyFilter(libAffx_filterAllEnemies, libAffx_filterDifficulty);
 
     libAffx_filterEnemyHeroes.unitFilter = libCore_gv_filtersHeroicEnemy;
 
@@ -3751,7 +3787,7 @@ void libAffx_InitVariables () {
     libAffx_filterEnemyStructures.requiredPlayer = libAffx_teamChaos;
 
     libAffx_CopyFilter(libAffx_filterEnemyStructures, libAffx_filterEnemyStructuresExcludingCore);
-    libAffx_filterEnemyStructuresExcludingCore.excludedUnitTypes[1] = "KingsCore";
+    libAffx_AddExcludedUnitTypeFilter(libAffx_filterEnemyStructuresExcludingCore, "KingsCore");
 
     libAffx_CopyFilter(libAffx_filterEnemyStructures, libAffx_filterEnemyCore);
     libAffx_filterEnemyCore.requiredUnitType = "KingsCore";
@@ -3888,6 +3924,11 @@ void libAffx_InitAffixes () {
             libAffx_affixes[i].cannotRoll = true;
         } else {
             libAffx_affixes[i].cannotRoll = false;
+        }
+        if (UserDataGetInt("Affix", affixInstance, "AffixesRequiredMax", 1) == 1) {
+            libAffx_affixes[i].requiresMaxStacks = true;
+        } else {
+            libAffx_affixes[i].requiresMaxStacks = false;
         }
         for (i2 = 1; i2 <= libAffx_maxHeroes; i2 += 1) {
             affixString = UserDataGetString("Affix", affixInstance, "HeroTooltip", i2);

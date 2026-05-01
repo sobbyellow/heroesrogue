@@ -20,4 +20,5 @@
     <DataComponent Type="text" Locale="plPL">GameText</DataComponent>
     <DataComponent Type="text" Locale="esMX">GameText</DataComponent>
     <DataComponent Type="text" Locale="itIT">GameText</DataComponent>
+    <DataComponent Type="uiui">UI/Layout/DescIndex.StormLayout</DataComponent>
 </Components>

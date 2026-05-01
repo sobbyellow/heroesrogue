@@ -30,6 +30,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     </Modification>
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixEnemyDamageBuff" parent="CarryBehaviorParent">
+  <DisableValidatorArray value="LeoricDoesNotHaveUndying" />
     <Modification>
       <HealDealtAdditiveMultiplier index="Life" value="0.1" />
       <HealDealtAdditiveMultiplier index="Shields" value="0.1" />
@@ -38,6 +39,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     </Modification>
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixEnemyHealthBuff" parent="CarryBehaviorParent">
+  <DisableValidatorArray value="LeoricDoesNotHaveUndying" />
     <Modification>
       <VitalMaxFractionArray index="Life" value="0.15" />
       <VitalMaxFractionArray index="Shields" value="0.15" />
@@ -362,6 +364,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CBehaviorBuff>
 
   <CBehaviorBuff id="AffixEnemyAllStats" parent="CarryBehaviorParent">
+  <DisableValidatorArray value="LeoricDoesNotHaveUndying" />
     <Modification>
       <AdditiveAttackSpeedFactor value="0.10" />
       <DamageDealtFraction index="Basic" value="0.10" />
@@ -375,7 +378,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <DisableValidatorArray value="CasterNotDead" />
     <DisableValidatorArray value="CasterDoesNotHaveAffixGrenadierReady" />
     <PeriodicEffect value="AffixGrenadierApplyReady" />
-    <Period value="8" />
+    <Period value="10" />
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixGrenadierReady" parent="CarryBehaviorParent">
     <Period value="0.0625" />
@@ -433,6 +436,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 
 <CBehaviorBuff id="AffixDifficultyBuff" parent="CarryBehaviorParent">
+<DisableValidatorArray value="LeoricDoesNotHaveUndying" />
   <Modification>
     <DamageDealtFraction index="Ability" value="0.04" />
     <DamageDealtFraction index="Basic" value="0.04" />
@@ -752,8 +756,19 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorBuff id="AffixMercenaryLord" parent="CarryBehaviorParent">
   <Period value="0.5" />
-  <PeriodicEffect value="MercenaryLordPeriodicSearch" />
+  <PeriodicEffect value="AffixMercenaryLordPeriodicSearch" />
   <DisableValidatorArray value="TargetNotUsingVehicle" />
+</CBehaviorBuff>
+<CBehaviorBuff id="AffixMercenaryLordDamageBuff">
+  <BehaviorFlags index="Permanent" value="1" />
+  <BehaviorFlags index="EnabledWhileDead" value="1" />
+  <InfoIcon value="Assets\Textures\storm_ui_temp_icon_teleport.dds" />
+  <Modification>
+    <DamageDealtFraction index="Splash" value="0.5" />
+    <DamageDealtFraction index="Basic" value="0.5" />
+    <DamageDealtFraction index="Ability" value="0.5" />
+  </Modification>
+  <Duration value="2" />
 </CBehaviorBuff>
 
 <CBehaviorBuff id="AffixBesieger" parent="CarryBehaviorParent">
@@ -771,6 +786,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CBehaviorBuff id="AffixFirstAid" parent="CarryBehaviorParent">
   <Period value="1" />
   <PeriodicEffect value="AffixFirstAidCreateHealer" />
+  <Modification>
+    <VitalMaxFractionArray index="Life" value="0.15" />
+    <VitalMaxFractionArray index="Shields" value="0.15" />
+  </Modification>
 </CBehaviorBuff>
 
 <CBehaviorBuff id="AffixPromoteDamage" parent="CarryBehaviorParent">
@@ -781,6 +800,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ModifyFraction value="1.5" />
     <ValidatorArray value="TargetNotSummonedOrSummonedForNPC" />
   </DamageResponse>
+  <Modification>
+    <VitalMaxFractionArray index="Life" value="0.15" />
+    <VitalMaxFractionArray index="Shields" value="0.15" />
+  </Modification>
 </CBehaviorBuff>
 <CBehaviorBuff id="AffixPromoteDamageReduction" parent="CarryBehaviorParent">
   <DamageResponse Chance="1" TargetFilters="-;Heroic" ModifyFraction="0.75">
@@ -789,7 +812,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 </CBehaviorBuff>
 
 <CBehaviorBuff id="AffixDodge" parent="CarryBehaviorParent">
-  <DamageResponse Chance="0.02" TargetFilters="-;-" ModifyFraction="0" />
+  <DamageResponse Chance="0.04" TargetFilters="-;-" ModifyFraction="0" />
 </CBehaviorBuff>
 
 <CBehaviorBuff id="AffixExpensiveAttacks" parent="CarryBehaviorParent">
@@ -1007,6 +1030,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 </CBehaviorBuff>
 
 <CBehaviorBuff id="Mythic6Buff" parent="CarryBehaviorParent">
+<DisableValidatorArray value="LeoricDoesNotHaveUndying" />
   <Modification>
     <VitalMaxFractionArray index="Life" value="1.5" />
     <HealDealtAdditiveMultiplier index="Life" value="1" />
@@ -1024,6 +1048,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 </CBehaviorTokenCounter>
 
 <CBehaviorBuff id="EnemyHealing" parent="CarryBehaviorParent">
+<DisableValidatorArray value="LeoricDoesNotHaveUndying" />
   <Modification>
     <HealTakenAdditiveMultiplier index="Life" value="0.3" />
     <VitalRegenMultiplier index="Life" value="0.3" />
@@ -1149,5 +1174,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CBehaviorBuff id="SgtHammerRubberBulletsStun" parent="StormStun">
     <Duration value="0.25" />
   </CBehaviorBuff>
+
+<CBehaviorBuff id="DoomedRegen" parent="CarryBehaviorParent">
+  <Period value="60" />
+  <PeriodicEffect value="DoomedRegenCreateHealer" />
+</CBehaviorBuff>
 
 </Catalog>

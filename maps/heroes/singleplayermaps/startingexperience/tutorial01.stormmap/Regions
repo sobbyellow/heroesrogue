@@ -1,1055 +1,559 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Regions>
-    <region id="2">
-        <name value="Lane 1 - Order - Town 1"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="48.6765,128.5104,75.3232,148.5664"/>
-        </shape>
-        <shape type="rect">
-            <quad value="73.4995,122.538,78.9995,131.038"/>
-        </shape>
-        <shape type="rect">
-            <quad value="78.9921,121.176,80.7216,124.055"/>
-        </shape>
-        <shape type="rect">
-            <quad value="78.221,121.6325,79.4255,122.5485"/>
-        </shape>
-    </region>
-    <region id="12">
-        <name value="Lane 2 - Order - Town 1"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="51.4997,103.9018,80.7668,124.175"/>
-        </shape>
-    </region>
-    <region id="13">
-        <name value="Lane 2 - Order - Town 2"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="84.8691,85.168,112.1303,110.9086"/>
-        </shape>
-    </region>
-    <region id="17">
-        <name value="Lane 1 - Chaos - Town 1"/>
-        <color value="255,255,128,0"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="173.2473,126.5734,199.7524,150.5031"/>
-        </shape>
-        <shape type="rect">
-            <quad value="170.9995,124.038,173.9995,130.038"/>
-        </shape>
-        <shape type="rect">
-            <quad value="166.6684,120.8215,171.122,126.7087"/>
-        </shape>
-    </region>
     <region id="21">
-        <name value="Lane 1 - Chaos - Town 2"/>
-        <color value="255,255,128,0"/>
+        <name value="Plane - Above Ground (Camera)"/>
         <invisible/>
         <shape type="rect">
-            <quad value="137.4721,124.9484,165.5275,150.1284"/>
-        </shape>
-    </region>
-    <region id="4">
-        <name value="Lane 1 - Order - Town 2"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="86.095,125.075,109.2392,150.0727"/>
+            <quad value="20,135,236,240.5"/>
         </shape>
     </region>
     <region id="22">
-        <name value="Lane 2 - Chaos Town 2"/>
-        <color value="255,255,128,0"/>
-        <invisible/>
+        <name value="Base Visibility Blue Team"/>
         <shape type="rect">
-            <quad value="136.3557,87.2976,162.644,111.7792"/>
+            <quad value="19,183,62.9545,217.0002"/>
+        </shape>
+        <shape type="diamond">
+            <center value="58.6687,200.0004"/>
+            <width value="28.0446"/>
+            <height value="17.2082"/>
+        </shape>
+        <shape type="rect">
+            <quad value="54.5898,163,79.0898,203"/>
+        </shape>
+        <shape type="diamond">
+            <center value="41.9565,172.9626"/>
+            <width value="18.2702"/>
+            <height value="46.6604"/>
+        </shape>
+        <shape type="diamond">
+            <center value="48.8647,177.8676"/>
+            <width value="18.7316"/>
+            <height value="58.6853"/>
+        </shape>
+        <shape type="rect">
+            <quad value="52,150,62,169"/>
         </shape>
     </region>
-    <region id="30">
-        <name value="Lane 2 - Chaos - Town 1"/>
-        <color value="255,255,128,0"/>
+    <region id="5">
+        <name value="Plane - Under Ground (Playable)"/>
         <invisible/>
         <shape type="rect">
-            <quad value="165.5488,103.377,194.0837,126.602"/>
+            <quad value="20,8.5,236,112"/>
         </shape>
     </region>
-    <region id="7">
-        <name value="Lane 3 - Order - Town 1"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="44.7497,81.4663,68.6826,103.591"/>
+    <region id="4">
+        <name value="Underworld Minion 02"/>
+        <shape type="circle">
+            <center value="148.5002,84.0002"/>
+            <radius value="8"/>
+        </shape>
+    </region>
+    <region id="8">
+        <name value="Underworld Minion 01"/>
+        <shape type="circle">
+            <center value="161.0002,95.5002"/>
+            <radius value="8"/>
         </shape>
     </region>
     <region id="11">
-        <name value="Lane 3 - Order - Town 2"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="87.1687,50.8466,110.438,72.675"/>
+        <name value="Underworld Minion 03"/>
+        <shape type="circle">
+            <center value="122.0002,95.0002"/>
+            <radius value="8"/>
         </shape>
     </region>
-    <region id="15">
-        <name value="Lane 3 - Chaos - Town 1"/>
-        <color value="255,255,128,0"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="179.1118,79.864,203.6484,104.2546"/>
-        </shape>
-    </region>
-    <region id="25">
-        <name value="Lane 3 - Chaos - Town 2"/>
-        <color value="255,255,128,0"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="138.1906,52.195,159.2521,72.6027"/>
-        </shape>
-    </region>
-    <region id="24">
-        <name value="Merc Camp - Neutral - Golem"/>
-        <color value="255,192,192,192"/>
-        <shape type="rect">
-            <quad value="116,145.991,132.045,161"/>
+    <region id="13">
+        <name value="Underworld Minion 08"/>
+        <shape type="circle">
+            <center value="111.5002,78.0002"/>
+            <radius value="8"/>
         </shape>
     </region>
     <region id="16">
-        <name value="Merc Camp - Neutral - Medium 2"/>
-        <color value="255,192,192,192"/>
+        <name value="Underworld Minion 05"/>
         <shape type="circle">
-            <center value="124.0002,37.0002"/>
+            <center value="139.5002,44.0002"/>
+            <radius value="8"/>
+        </shape>
+    </region>
+    <region id="18">
+        <name value="Underworld Minion 04"/>
+        <shape type="circle">
+            <center value="167.0002,34.0002"/>
+            <radius value="8"/>
+        </shape>
+    </region>
+    <region id="20">
+        <name value="Underworld Minion 06"/>
+        <shape type="circle">
+            <center value="125.0002,33.0002"/>
+            <radius value="8"/>
+        </shape>
+    </region>
+    <region id="32">
+        <name value="Underworld Boss"/>
+        <shape type="circle">
+            <center value="144,64"/>
+            <radius value="13"/>
+        </shape>
+    </region>
+    <region id="2">
+        <name value="Blue - Lane 2 - Town 1"/>
+        <invisible/>
+        <shape type="diamond">
+            <center value="64.9345,163.0576"/>
+            <width value="28.2734"/>
+            <height value="21.3872"/>
+        </shape>
+    </region>
+    <region id="3">
+        <name value="Blue - Lane 1 - Town 1"/>
+        <shape type="diamond">
+            <center value="64.906,204.5922"/>
+            <width value="21.2053"/>
+            <height value="24.3051"/>
+        </shape>
+        <shape type="rect">
+            <quad value="78,177.5,82,190"/>
+        </shape>
+    </region>
+    <region id="6">
+        <name value="Blue - Lane 1 - Town 2"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="86.75,207.5,112.25,231.75"/>
+        </shape>
+    </region>
+    <region id="7">
+        <name value="Blue - Lane 2 - Town 2"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="83.75,136,109.25,161.3752"/>
+        </shape>
+    </region>
+    <region id="12">
+        <name value="Orange - Lane 2 - Town 2"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="142.25,135.5,167.75,160.3752"/>
+        </shape>
+    </region>
+    <region id="15">
+        <name value="Orange - Lane 1 - Town 2"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="144.25,205.5,169.75,231.3752"/>
+        </shape>
+    </region>
+    <region id="17">
+        <name value="Orange - Lane 1 - Town 1"/>
+        <color value="255,255,128,0"/>
+        <shape type="diamond">
+            <center value="190.4672,204.4672"/>
+            <width value="22.5346"/>
+            <height value="19.2651"/>
+        </shape>
+        <shape type="rect">
+            <quad value="174.5,183.5,178,190"/>
+        </shape>
+    </region>
+    <region id="30">
+        <name value="Orange - Lane 2 - Town 1"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="diamond">
+            <center value="191.9296,164.066"/>
+            <width value="21.0322"/>
+            <height value="27.063"/>
+        </shape>
+    </region>
+    <region id="38">
+        <name value="Projectile Blocker"/>
+        <shape type="rect">
+            <quad value="4,114.5,252,126.5"/>
+        </shape>
+    </region>
+    <region id="46">
+        <name value="Plane - Full Map (Camera)"/>
+        <color value="255,255,128,64"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="20,8.5,236,240.5"/>
+        </shape>
+    </region>
+    <region id="47">
+        <name value="Plane - Unexplored Region"/>
+        <color value="255,0,0,0"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="4.062,110.045,253.562,125.5"/>
+        </shape>
+        <shape type="rect">
+            <quad value="4.062,0.795,65.562,113.295"/>
+        </shape>
+        <shape type="rect">
+            <quad value="1.062,0.545,255.062,12.545"/>
+        </shape>
+        <shape type="rect">
+            <quad value="191.062,0.8964,253.562,121.045"/>
+        </shape>
+        <shape type="diamond">
+            <center value="64.062,22.545"/>
+            <width value="23.332"/>
+            <height value="30.4023"/>
+        </shape>
+        <shape type="circle">
+            <center value="78.062,17.545"/>
+            <radius value="12.6342"/>
+        </shape>
+        <shape type="circle">
+            <center value="95.5622,17.0451"/>
+            <radius value="12.0231"/>
+        </shape>
+        <shape type="circle">
+            <center value="107.0622,14.5451"/>
+            <radius value="9.0554"/>
+        </shape>
+        <shape type="diamond">
+            <center value="187.0622,18.5451"/>
+            <width value="35"/>
+            <height value="16.9687"/>
+        </shape>
+        <shape type="diamond">
+            <center value="189.2482,106.358"/>
+            <width value="19.7998"/>
+            <height value="33.0546"/>
+        </shape>
+        <shape type="diamond">
+            <center value="63.2431,107.9738"/>
+            <width value="23.1567"/>
+            <height value="16.6137"/>
+        </shape>
+        <shape type="rect">
+            <quad value="63.312,103.4201,107.812,118.6701"/>
+        </shape>
+        <shape type="diamond">
+            <center value="60.562,65.545"/>
+            <width value="26.8671"/>
+            <height value="26.8671"/>
+        </shape>
+        <shape type="circle">
+            <center value="117.062,11.5451"/>
+            <radius value="5.8361"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.5622,77.5451"/>
+            <radius value="10.854"/>
+        </shape>
+        <shape type="circle">
+            <center value="100.5622,109.5451"/>
+            <radius value="9.618"/>
+        </shape>
+        <shape type="circle">
+            <center value="95.0622,108.0451"/>
+            <radius value="7.8535"/>
+        </shape>
+        <shape type="circle">
+            <center value="110.5622,114.0451"/>
+            <radius value="7.8535"/>
+        </shape>
+        <shape type="circle">
+            <center value="119.0622,116.5451"/>
+            <radius value="7.8535"/>
+        </shape>
+        <shape type="circle">
+            <center value="144.562,115.045"/>
+            <radius value="7.8535"/>
+        </shape>
+        <shape type="circle">
+            <center value="133.0622,117.0451"/>
+            <radius value="7.8535"/>
+        </shape>
+        <shape type="circle">
+            <center value="156.0622,115.5451"/>
+            <radius value="7.8535"/>
+        </shape>
+        <shape type="circle">
+            <center value="162.562,115.5451"/>
+            <radius value="7.8535"/>
+        </shape>
+        <shape type="circle">
+            <center value="177.5622,109.5451"/>
+            <radius value="7.8535"/>
+        </shape>
+        <shape type="circle">
+            <center value="199.5622,96.0451"/>
+            <radius value="13.9265"/>
+        </shape>
+        <shape type="circle">
+            <center value="201.5622,62.0451"/>
+            <radius value="14.4763"/>
+        </shape>
+        <shape type="circle">
+            <center value="203.0622,34.5451"/>
+            <radius value="14.4763"/>
+        </shape>
+        <shape type="circle">
+            <center value="203.0622,49.5451"/>
+            <radius value="14.4763"/>
+        </shape>
+        <shape type="circle">
+            <center value="172.0622,10.0451"/>
+            <radius value="8.8847"/>
+        </shape>
+        <shape type="circle">
+            <center value="159.0622,10.0451"/>
+            <radius value="7.7365"/>
+        </shape>
+        <shape type="circle">
+            <center value="58.5622,51.0451"/>
+            <radius value="7.7365"/>
+        </shape>
+        <shape type="circle">
+            <center value="59.5622,39.0451"/>
+            <radius value="7.7365"/>
+        </shape>
+        <shape type="circle">
+            <center value="66.0622,58.5451"/>
+            <radius value="7.7365"/>
+        </shape>
+        <shape type="circle">
+            <center value="59.5622,88.5451"/>
+            <radius value="7.7365"/>
+        </shape>
+        <shape type="circle">
+            <center value="60.0622,102.0451"/>
+            <radius value="7.7365"/>
+        </shape>
+        <shape type="circle">
+            <center value="76.5622,108.5451"/>
+            <radius value="7.7365"/>
+        </shape>
+        <shape type="circle">
+            <center value="69.0622,26.0451"/>
+            <radius value="7.7365"/>
+        </shape>
+        <shape type="circle">
+            <center value="79.5622,66.0451"/>
+            <radius value="3.9096"/>
+        </shape>
+        <shape type="circle">
+            <center value="69.0625,76.0451"/>
+            <radius value="3.9096"/>
+        </shape>
+        <shape type="circle">
+            <center value="84.0625,67.0454"/>
+            <radius value="2.7343"/>
+        </shape>
+        <shape type="circle">
+            <center value="103.5622,25.5454"/>
+            <radius value="3.9536"/>
+        </shape>
+        <shape type="circle">
+            <center value="107.5622,23.5456"/>
+            <radius value="3.9536"/>
+        </shape>
+        <shape type="circle">
+            <center value="107.5625,28.046"/>
+            <radius value="2.5468"/>
+        </shape>
+        <shape type="circle">
+            <center value="170.562,114.0451"/>
+            <radius value="7.8535"/>
+        </shape>
+        <shape type="circle">
+            <center value="70.562,109.5451"/>
+            <radius value="7.8535"/>
+        </shape>
+        <shape type="circle">
+            <center value="106.0622,112.0451"/>
+            <radius value="7.9997"/>
+        </shape>
+        <shape type="circle">
+            <center value="106.0622,105.5451"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="154.6376,8.3967"/>
+            <radius value="7.7365"/>
+        </shape>
+        <shape type="circle">
+            <center value="74.5622,67.5451"/>
+            <radius value="3.9096"/>
+        </shape>
+        <shape type="circle">
+            <center value="74.0622,63.5451"/>
+            <radius value="3.9096"/>
+        </shape>
+    </region>
+    <region id="48">
+        <name value="Plane - Above Ground (Playable)"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="20,128,236,252"/>
+        </shape>
+    </region>
+    <region id="49">
+        <name value="Underworld Below"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="140.5002,62.5002"/>
+            <radius value="48.2844"/>
+        </shape>
+    </region>
+    <region id="50">
+        <name value="Underworld Above"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="14.1103,131.0983,243.8901,234.902"/>
+        </shape>
+    </region>
+    <region id="9">
+        <name value="Merc Camp - Blue - Medium 1"/>
+        <shape type="circle">
+            <center value="96.402,190.4455"/>
             <radius value="12"/>
         </shape>
         <shape type="rect">
             <negative/>
-            <quad value="119,44,129,49"/>
+            <quad value="106.0122,194.0207,108.0122,196.0207"/>
         </shape>
-        <shape type="diamond">
-            <negative/>
-            <center value="129.25,46.5"/>
-            <width value="3.8886"/>
-            <height value="3.1816"/>
-        </shape>
-        <shape type="diamond">
-            <negative/>
-            <center value="118.75,46.5"/>
-            <width value="3.1816"/>
-            <height value="3.8886"/>
-        </shape>
-    </region>
-    <region id="9">
-        <name value="Merc Camp - Blue - Hard 1"/>
-        <color value="255,0,0,255"/>
         <shape type="rect">
-            <quad value="77.0002,83,86,96.0002"/>
+            <negative/>
+            <quad value="85.0122,175.5197,108.0122,185.5197"/>
         </shape>
     </region>
     <region id="1">
-        <name value="Merc Camp - Orange - Hard 1"/>
-        <color value="255,255,128,0"/>
+        <name value="Base Visibility Orange Team"/>
+        <color value="255,255,128,64"/>
         <shape type="rect">
-            <quad value="162,83,171.0002,96.0002"/>
-        </shape>
-    </region>
-    <region id="6">
-        <name value="Soul Cage - Blue"/>
-        <color value="255,0,0,255"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="18,36.2502,124,167.7502"/>
-        </shape>
-    </region>
-    <region id="10">
-        <name value="Soul Cage - Orange"/>
-        <color value="255,255,128,0"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="124,37.5,234,167.5"/>
-        </shape>
-    </region>
-    <region id="14">
-        <name value="Soul Cage - Orange - Top 1"/>
-        <color value="255,255,128,0"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="124,123,164,152"/>
-        </shape>
-    </region>
-    <region id="18">
-        <name value="Soul Cage - Orange - Top 2"/>
-        <color value="255,255,128,0"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="164,123,191.5,152"/>
+            <quad value="193.0456,183,237.0002,217.0002"/>
         </shape>
         <shape type="diamond">
-            <center value="194.25,138"/>
-            <width value="23.6855"/>
-            <height value="15.9082"/>
+            <center value="197.3315,200.0004"/>
+            <width value="17.2082"/>
+            <height value="28.0446"/>
         </shape>
         <shape type="rect">
-            <quad value="191.5,146,197.5,152"/>
-        </shape>
-        <shape type="rect">
-            <quad value="191.5,123.5,192,125"/>
+            <quad value="176.9101,165,201.4101,205"/>
         </shape>
         <shape type="diamond">
-            <center value="200.25,132.5"/>
-            <width value="23.6855"/>
-            <height value="0.3535"/>
-        </shape>
-        <shape type="rect">
-            <quad value="196.5,129,207,139"/>
+            <center value="214.0437,172.9626"/>
+            <width value="46.6604"/>
+            <height value="18.2702"/>
         </shape>
         <shape type="diamond">
-            <center value="196.5,128.25"/>
-            <width value="3.1816"/>
-            <height value="0.3535"/>
+            <center value="207.1354,177.8676"/>
+            <width value="58.6853"/>
+            <height value="18.7316"/>
         </shape>
         <shape type="rect">
-            <quad value="195.5,128.5,200,129"/>
-        </shape>
-        <shape type="diamond">
-            <center value="196.75,128"/>
-            <width value="1.7675"/>
-            <height value="0.3535"/>
-        </shape>
-        <shape type="rect">
-            <quad value="197,128,198.5,128.5"/>
-        </shape>
-    </region>
-    <region id="19">
-        <name value="Soul Cage - Orange - Middle 1"/>
-        <color value="255,255,128,0"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="124,89,160,112"/>
-        </shape>
-        <shape type="diamond">
-            <center value="161.5,102"/>
-            <width value="7.7773"/>
-            <height value="12.0195"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="163,98,168.5,106.5"/>
-        </shape>
-        <shape type="diamond">
-            <negative/>
-            <center value="162.75,105.5"/>
-            <width value="1.7675"/>
-            <height value="5.3027"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="162,104,163,105"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="160.5,107,161.5,108"/>
-        </shape>
-    </region>
-    <region id="23">
-        <name value="Soul Cage - Orange - Bottom 1"/>
-        <color value="255,255,128,0"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="124,50.5,162,78.5"/>
-        </shape>
-        <shape type="rect">
-            <quad value="162,64,165,72"/>
-        </shape>
-        <shape type="rect">
-            <quad value="165,66,166,71"/>
-        </shape>
-        <shape type="diamond">
-            <center value="162.5,72.75"/>
-            <width value="2.4746"/>
-            <height value="4.5957"/>
-        </shape>
-    </region>
-    <region id="26">
-        <name value="Soul Cage - Orange - Bottom 2"/>
-        <color value="255,255,128,0"/>
-        <invisible/>
-        <shape type="diamond">
-            <center value="184.3454,84.8498"/>
-            <width value="43.836"/>
-            <height value="20.504"/>
-        </shape>
-        <shape type="rect">
-            <quad value="166.0954,64.0998,174.5954,72.0998"/>
-        </shape>
-        <shape type="rect">
-            <quad value="196.0954,93.0998,208.5954,104.0998"/>
-        </shape>
-        <shape type="diamond">
-            <center value="204.3454,89.0998"/>
-            <width value="15.9082"/>
-            <height value="1.7675"/>
-        </shape>
-        <shape type="rect">
-            <quad value="165.0954,72.0998,166.0954,73.0998"/>
-        </shape>
-        <shape type="rect">
-            <quad value="165.0954,71.0998,166.0954,72.0998"/>
-        </shape>
-        <shape type="rect">
-            <quad value="165.0954,64.0998,166.0954,66.0998"/>
-        </shape>
-        <shape type="diamond">
-            <center value="164.0954,74.0998"/>
-            <width value="1.414"/>
-            <height value="4.2421"/>
-        </shape>
-    </region>
-    <region id="27">
-        <name value="Soul Cage - Orange - Core"/>
-        <color value="255,255,128,0"/>
-        <invisible/>
-        <shape type="circle">
-            <center value="202.75,116.5"/>
-            <radius value="12.5522"/>
-        </shape>
-        <shape type="rect">
-            <quad value="190,108,194,123"/>
-        </shape>
-        <shape type="rect">
-            <quad value="196,104,210,107.5"/>
-        </shape>
-        <shape type="diamond">
-            <center value="194.5,106.5"/>
-            <width value="1.414"/>
-            <height value="5.6562"/>
-        </shape>
-    </region>
-    <region id="28">
-        <name value="Soul Cage - Blue - Core"/>
-        <color value="255,0,0,255"/>
-        <invisible/>
-        <shape type="circle">
-            <center value="45.2504,116.5"/>
-            <radius value="12.5522"/>
-        </shape>
-        <shape type="rect">
-            <quad value="54.0004,108,58.0004,123"/>
-        </shape>
-        <shape type="rect">
-            <quad value="38.0004,104,52.0004,107.5"/>
-        </shape>
-        <shape type="diamond">
-            <center value="53.5004,106.5"/>
-            <width value="5.6562"/>
-            <height value="1.414"/>
+            <quad value="194.0002,150,204.0002,169"/>
         </shape>
     </region>
     <region id="29">
-        <name value="Soul Cage - Blue - Bottom 1"/>
-        <color value="255,0,0,255"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="86.0002,50.5,124.0002,78.5"/>
-        </shape>
-        <shape type="rect">
-            <quad value="83.0002,64,86.0002,72"/>
-        </shape>
-        <shape type="rect">
-            <quad value="82.0002,66,83.0002,71"/>
-        </shape>
-        <shape type="diamond">
-            <center value="85.5002,72.75"/>
-            <width value="4.5957"/>
-            <height value="2.4746"/>
-        </shape>
-    </region>
-    <region id="31">
-        <name value="Soul Cage - Blue - Bottom 2"/>
-        <color value="255,0,0,255"/>
-        <invisible/>
-        <shape type="diamond">
-            <center value="63.6545,84.8498"/>
-            <width value="20.504"/>
-            <height value="43.836"/>
-        </shape>
-        <shape type="rect">
-            <quad value="73.4045,64.0998,81.9045,72.0998"/>
-        </shape>
-        <shape type="rect">
-            <quad value="39.4045,93.0998,51.9045,104.0998"/>
-        </shape>
-        <shape type="diamond">
-            <center value="43.6545,89.0998"/>
-            <width value="1.7675"/>
-            <height value="15.9082"/>
-        </shape>
-        <shape type="rect">
-            <quad value="81.9045,72.0998,82.9045,73.0998"/>
-        </shape>
-        <shape type="rect">
-            <quad value="81.9045,71.0998,82.9045,72.0998"/>
-        </shape>
-        <shape type="rect">
-            <quad value="81.9045,64.0998,82.9045,66.0998"/>
-        </shape>
-        <shape type="diamond">
-            <center value="83.9045,74.0998"/>
-            <width value="4.2421"/>
-            <height value="1.414"/>
-        </shape>
-    </region>
-    <region id="32">
-        <name value="Soul Cage - Blue - Middle 1"/>
-        <color value="255,0,0,255"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="88.0002,89,124.0002,112"/>
-        </shape>
-        <shape type="diamond">
-            <center value="86.5002,102"/>
-            <width value="12.0195"/>
-            <height value="7.7773"/>
+        <name value="Merc Camp - Orange - Medium 1"/>
+        <color value="255,255,128,64"/>
+        <shape type="circle">
+            <center value="159.5981,177.555"/>
+            <radius value="12"/>
         </shape>
         <shape type="rect">
             <negative/>
-            <quad value="79.5002,98,85.0002,106.5"/>
-        </shape>
-        <shape type="diamond">
-            <negative/>
-            <center value="85.2502,105.5"/>
-            <width value="5.3027"/>
-            <height value="1.7675"/>
+            <quad value="148,172,150,174"/>
         </shape>
         <shape type="rect">
             <negative/>
-            <quad value="85.0002,104,86.0002,105"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="86.5002,107,87.5002,108"/>
-        </shape>
-    </region>
-    <region id="33">
-        <name value="Soul Cage - Blue - Middle 2"/>
-        <color value="255,0,0,255"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="53.7951,99.691,87.2951,117.691"/>
-        </shape>
-        <shape type="diamond">
-            <negative/>
-            <center value="59.5451,98.441"/>
-            <width value="7.0703"/>
-            <height value="6.3632"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="84.7951,99.691,87.2951,104.191"/>
-        </shape>
-        <shape type="diamond">
-            <negative/>
-            <center value="87.0451,105.191"/>
-            <width value="1.7675"/>
-            <height value="1.7675"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="85.7951,104.191,86.7951,105.191"/>
-        </shape>
-        <shape type="rect">
-            <quad value="86.7951,107.191,87.2951,109.191"/>
-        </shape>
-        <shape type="rect">
-            <quad value="85.7951,107.191,86.7951,108.191"/>
-        </shape>
-        <shape type="rect">
-            <quad value="53.7951,117.691,77.7951,121.191"/>
-        </shape>
-        <shape type="diamond">
-            <negative/>
-            <center value="54.2951,103.691"/>
-            <width value="7.0703"/>
-            <height value="8.4843"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="53.7951,116.191,58.2951,121.191"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="53.7951,113.191,58.2951,116.191"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="53.7951,111.191,57.7951,113.191"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="53.7951,110.191,57.2951,111.191"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="53.2951,105.191,57.7951,110.191"/>
-        </shape>
-        <shape type="rect">
-            <quad value="85.7951,107.191,87.2951,108.191"/>
-        </shape>
-        <shape type="rect">
-            <quad value="87,109,88,112"/>
-        </shape>
-        <shape type="diamond">
-            <center value="87.25,108.75"/>
-            <width value="1.414"/>
-            <height value="0.707"/>
-        </shape>
-        <shape type="rect">
-            <quad value="87,112,88,117.5"/>
-        </shape>
-    </region>
-    <region id="20">
-        <name value="Soul Cage - Orange - Middle 2"/>
-        <color value="255,255,128,0"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="160.7053,99.691,194.2053,117.691"/>
-        </shape>
-        <shape type="diamond">
-            <negative/>
-            <center value="188.4553,98.441"/>
-            <width value="6.3632"/>
-            <height value="7.0703"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="160.7053,99.691,163.2053,104.191"/>
-        </shape>
-        <shape type="diamond">
-            <negative/>
-            <center value="160.9553,105.191"/>
-            <width value="1.7675"/>
-            <height value="1.7675"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="161.2053,104.191,162.2053,105.191"/>
-        </shape>
-        <shape type="rect">
-            <quad value="160.7053,107.191,161.2053,109.191"/>
-        </shape>
-        <shape type="rect">
-            <quad value="161.2053,107.191,162.2053,108.191"/>
-        </shape>
-        <shape type="rect">
-            <quad value="170.2053,117.691,194.2053,121.191"/>
-        </shape>
-        <shape type="diamond">
-            <negative/>
-            <center value="193.7053,103.691"/>
-            <width value="8.4843"/>
-            <height value="7.0703"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="189.7053,116.191,194.2053,121.191"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="189.7053,113.191,194.2053,116.191"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="190.2053,111.191,194.2053,113.191"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="190.7053,110.191,194.2053,111.191"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="190.2053,105.191,194.7053,110.191"/>
-        </shape>
-        <shape type="rect">
-            <quad value="160.7053,107.191,162.2053,108.191"/>
-        </shape>
-        <shape type="rect">
-            <quad value="160.0004,109,161.0004,112"/>
-        </shape>
-        <shape type="diamond">
-            <center value="160.7504,108.75"/>
-            <width value="0.707"/>
-            <height value="1.414"/>
-        </shape>
-        <shape type="rect">
-            <quad value="160.0004,112,161.0004,117.5"/>
-        </shape>
-    </region>
-    <region id="34">
-        <name value="Soul Cage - Blue - Top 1"/>
-        <color value="255,0,0,255"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="84.0002,123,124.0002,152"/>
+            <quad value="148,182,171,190"/>
         </shape>
     </region>
     <region id="35">
-        <name value="Soul Cage - Blue - Top 2"/>
-        <color value="255,0,0,255"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="56.5004,123,84.0004,152"/>
-        </shape>
-        <shape type="diamond">
-            <center value="53.7504,138"/>
-            <width value="15.9082"/>
-            <height value="23.6855"/>
-        </shape>
-        <shape type="rect">
-            <quad value="50.5004,146,56.5004,152"/>
-        </shape>
-        <shape type="rect">
-            <quad value="56.0004,123.5,56.5004,125"/>
-        </shape>
-        <shape type="diamond">
-            <center value="47.7504,132.5"/>
-            <width value="0.3535"/>
-            <height value="23.6855"/>
-        </shape>
-        <shape type="rect">
-            <quad value="41.0004,129,51.5004,139"/>
-        </shape>
-        <shape type="diamond">
-            <center value="51.5004,128.25"/>
-            <width value="0.3535"/>
-            <height value="3.1816"/>
-        </shape>
-        <shape type="rect">
-            <quad value="48.0004,128.5,52.5004,129"/>
-        </shape>
-        <shape type="diamond">
-            <center value="51.2504,128"/>
-            <width value="0.3535"/>
-            <height value="1.7675"/>
-        </shape>
-        <shape type="rect">
-            <quad value="49.5004,128,51.0004,128.5"/>
-        </shape>
-    </region>
-    <region id="36">
-        <name value="Ghoul_Chaos"/>
-        <color value="255,192,192,192"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="132,73.9975,144.0195,87"/>
-        </shape>
-    </region>
-    <region id="37">
-        <name value="Ghoul_Order"/>
-        <color value="255,192,192,192"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="104.0002,74,116,87.0002"/>
-        </shape>
-    </region>
-    <region id="5">
-        <name value="Base Visibility Blue Team"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="40,112,48,120"/>
-        </shape>
-        <shape type="diamond">
-            <center value="58.5002,104.4995"/>
-            <width value="21.2131"/>
-            <height value="25.4545"/>
-        </shape>
-        <shape type="diamond">
-            <center value="40.3681,114.8815"/>
-            <width value="22.9812"/>
-            <height value="53.014"/>
-        </shape>
-        <shape type="rect">
-            <quad value="51,88,60,94"/>
-        </shape>
-        <shape type="rect">
-            <quad value="58,103,75,132"/>
-        </shape>
-        <shape type="diamond">
-            <center value="57.5,130"/>
-            <width value="26.1601"/>
-            <height value="20.504"/>
-        </shape>
-        <shape type="rect">
-            <quad value="29,121,55.5,141.5"/>
-        </shape>
-        <shape type="rect">
-            <quad value="71,106,76,125"/>
-        </shape>
-        <shape type="diamond">
-            <center value="74.25,124.75"/>
-            <width value="2.8281"/>
-            <height value="2.121"/>
-        </shape>
-        <shape type="diamond">
-            <center value="74.75,105.75"/>
-            <width value="2.121"/>
-            <height value="1.414"/>
-        </shape>
-        <shape type="diamond">
-            <center value="45.5,93.25"/>
-            <width value="1.7675"/>
-            <height value="15.2011"/>
-        </shape>
-        <shape type="diamond">
-            <center value="58,90"/>
-            <width value="12.7265"/>
-            <height value="7.0703"/>
-        </shape>
-        <shape type="diamond">
-            <center value="20,118.25"/>
-            <width value="1.0605"/>
-            <height value="19.4433"/>
-        </shape>
-        <shape type="rect">
-            <quad value="36,140.5,60,151.5"/>
-        </shape>
-        <shape type="diamond">
-            <center value="66.5,139.25"/>
-            <width value="1.7675"/>
-            <height value="20.1503"/>
-        </shape>
-        <shape type="rect">
-            <quad value="74.5,101,76,107"/>
-        </shape>
-        <shape type="rect">
-            <quad value="34.5,139,36,146.5"/>
-        </shape>
-        <shape type="rect">
-            <quad value="39,97.5,40.5,100"/>
-        </shape>
-        <shape type="diamond">
-            <center value="74.5,130.5"/>
-            <width value="1.414"/>
-            <height value="4.2421"/>
-        </shape>
-        <shape type="diamond">
-            <center value="74.5,128.5"/>
-            <width value="2.121"/>
-            <height value="2.121"/>
-        </shape>
-        <shape type="rect">
-            <quad value="60,136.5,69.5,148"/>
-        </shape>
-        <shape type="rect">
-            <quad value="60,147,66,151.5"/>
+        <name value="Merc Camp - Neutral 1"/>
+        <color value="255,128,128,128"/>
+        <shape type="circle">
+            <center value="127.7443,202.3696"/>
+            <radius value="13"/>
         </shape>
         <shape type="rect">
             <negative/>
-            <quad value="67.5,142.5,70,148"/>
+            <quad value="116.7441,189.3693,138.7441,193.3693"/>
         </shape>
         <shape type="rect">
             <negative/>
-            <quad value="68,142,69.5,142.5"/>
-        </shape>
-        <shape type="rect">
-            <quad value="76,107,77,119"/>
-        </shape>
-        <shape type="rect">
-            <quad value="77,111,78,119"/>
-        </shape>
-        <shape type="diamond">
-            <center value="43.75,91.25"/>
-            <width value="5.6562"/>
-            <height value="28.9882"/>
-        </shape>
-        <shape type="rect">
-            <quad value="50,151.5,64,153.5"/>
-        </shape>
-        <shape type="diamond">
-            <center value="42,84"/>
-            <width value="7.0703"/>
-            <height value="18.3828"/>
-        </shape>
-        <shape type="rect">
-            <quad value="33,88,38,96.5"/>
-        </shape>
-        <shape type="diamond">
-            <center value="30.75,98.5"/>
-            <width value="3.1816"/>
-            <height value="9.545"/>
-        </shape>
-        <shape type="diamond">
-            <center value="29.5,105.75"/>
-            <width value="6.0097"/>
-            <height value="11.666"/>
-        </shape>
-        <shape type="diamond">
-            <center value="25.75,104.25"/>
-            <width value="1.414"/>
-            <height value="6.3632"/>
-        </shape>
-        <shape type="rect">
-            <quad value="21.5,106,24.5,114.5"/>
-        </shape>
-        <shape type="diamond">
-            <center value="25,110.5"/>
-            <width value="2.8281"/>
-            <height value="4.2421"/>
-        </shape>
-        <shape type="rect">
-            <quad value="78,111,79,118"/>
-        </shape>
-        <shape type="rect">
-            <quad value="77,108,78,111"/>
-        </shape>
-        <shape type="rect">
-            <quad value="73.5,125,75.5,128"/>
-        </shape>
-        <shape type="rect">
-            <quad value="73.5,124.5,75.5,128.5"/>
-        </shape>
-        <shape type="rect">
-            <quad value="69,114.5,75.5,130"/>
-        </shape>
-        <shape type="diamond">
-            <center value="76,121.75"/>
-            <width value="4.5957"/>
-            <height value="4.5957"/>
-        </shape>
-        <shape type="diamond">
-            <center value="78.25,119.25"/>
-            <width value="2.8281"/>
-            <height value="2.121"/>
-        </shape>
-        <shape type="diamond">
-            <center value="77.3383,123.8383"/>
-            <width value="0.2497"/>
-            <height value="4.9492"/>
-        </shape>
-        <shape type="diamond">
-            <center value="21.6257,111.596"/>
-            <width value="6.0617"/>
-            <height value="5.7285"/>
-        </shape>
-    </region>
-    <region id="3">
-        <name value="Base Visibility Orange Team"/>
-        <color value="255,255,128,0"/>
-        <invisible/>
-        <shape type="rect">
-            <quad value="200.081,112.0812,208.081,120.0812"/>
-        </shape>
-        <shape type="diamond">
-            <center value="189.5808,104.5808"/>
-            <width value="25.4545"/>
-            <height value="21.2131"/>
-        </shape>
-        <shape type="diamond">
-            <center value="207.713,114.963"/>
-            <width value="53.014"/>
-            <height value="22.9812"/>
-        </shape>
-        <shape type="rect">
-            <quad value="188.081,88.0812,197.081,94.0812"/>
-        </shape>
-        <shape type="rect">
-            <quad value="173.081,103.0812,190.081,132.0812"/>
-        </shape>
-        <shape type="diamond">
-            <center value="190.581,130.0812"/>
-            <width value="20.504"/>
-            <height value="26.1601"/>
-        </shape>
-        <shape type="rect">
-            <quad value="192.581,121.0812,219.081,141.5812"/>
-        </shape>
-        <shape type="rect">
-            <quad value="172.081,106.0812,177.081,125.0812"/>
-        </shape>
-        <shape type="diamond">
-            <center value="173.831,124.8312"/>
-            <width value="2.121"/>
-            <height value="2.8281"/>
-        </shape>
-        <shape type="diamond">
-            <center value="173.331,105.8312"/>
-            <width value="1.414"/>
-            <height value="2.121"/>
-        </shape>
-        <shape type="diamond">
-            <center value="202.581,93.3312"/>
-            <width value="15.2011"/>
-            <height value="1.7675"/>
-        </shape>
-        <shape type="diamond">
-            <center value="190.081,90.0812"/>
-            <width value="7.0703"/>
-            <height value="12.7265"/>
-        </shape>
-        <shape type="diamond">
-            <center value="228.081,118.3312"/>
-            <width value="19.4433"/>
-            <height value="1.0605"/>
-        </shape>
-        <shape type="rect">
-            <quad value="188.081,140.5812,212.081,151.5812"/>
-        </shape>
-        <shape type="diamond">
-            <center value="181.581,139.3312"/>
-            <width value="20.1503"/>
-            <height value="1.7675"/>
-        </shape>
-        <shape type="rect">
-            <quad value="172.081,101.0812,173.581,107.0812"/>
-        </shape>
-        <shape type="rect">
-            <quad value="212.081,139.0812,213.581,146.5812"/>
-        </shape>
-        <shape type="rect">
-            <quad value="207.581,97.5812,209.081,100.0812"/>
-        </shape>
-        <shape type="rect">
-            <quad value="180.0808,139.0812,184.0808,147.0812"/>
-        </shape>
-        <shape type="rect">
-            <quad value="184.0808,139.0812,188.0808,151.5812"/>
-        </shape>
-        <shape type="rect">
-            <quad value="183.0808,147.0812,184.0808,151.0812"/>
-        </shape>
-        <shape type="rect">
-            <quad value="180.0808,145.0812,181.0808,147.0812"/>
-        </shape>
-        <shape type="rect">
-            <quad value="183,147,184,151.5"/>
+            <quad value="116.7441,211.3693,138.7441,215.3693"/>
         </shape>
         <shape type="rect">
             <negative/>
-            <quad value="180,145,181,147"/>
+            <quad value="114.2441,192.8693,118.7441,211.3693"/>
         </shape>
         <shape type="rect">
-            <quad value="182,151.5,198,153.5"/>
-        </shape>
-        <shape type="rect">
-            <quad value="181.5,147,183,151.5"/>
-        </shape>
-        <shape type="rect">
-            <quad value="169,107.5,173,119.5"/>
-        </shape>
-        <shape type="diamond">
-            <center value="202.75,90"/>
-            <width value="22.2714"/>
-            <height value="5.3027"/>
-        </shape>
-        <shape type="diamond">
-            <center value="194,82.5"/>
-            <width value="0.707"/>
-            <height value="3.5351"/>
-        </shape>
-        <shape type="diamond">
-            <center value="207.5,85.5"/>
-            <width value="21.918"/>
-            <height value="7.7773"/>
-        </shape>
-        <shape type="diamond">
-            <center value="215.5,100.75"/>
-            <width value="10.959"/>
-            <height value="8.1308"/>
-        </shape>
-        <shape type="diamond">
-            <center value="220.75,106.75"/>
-            <width value="4.9492"/>
-            <height value="7.0703"/>
-        </shape>
-        <shape type="diamond">
-            <center value="223,109"/>
-            <width value="1.414"/>
-            <height value="7.0703"/>
-        </shape>
-        <shape type="rect">
-            <quad value="221.5,108.5,225,115"/>
-        </shape>
-        <shape type="rect">
-            <quad value="179.5,139,180,143.5"/>
-        </shape>
-        <shape type="rect">
-            <quad value="180.5,145,181,147"/>
-        </shape>
-        <shape type="rect">
-            <quad value="172.5,125,173.5,128"/>
-        </shape>
-        <shape type="rect">
-            <quad value="170,119.5,172.5,120"/>
-        </shape>
-        <shape type="diamond">
-            <center value="171.75,122.25"/>
-            <width value="4.2421"/>
-            <height value="3.5351"/>
-        </shape>
-        <shape type="diamond">
-            <center value="170,120.25"/>
-            <width value="1.0605"/>
-            <height value="1.7675"/>
-        </shape>
-        <shape type="diamond">
-            <center value="170.25,124.25"/>
-            <width value="4.9492"/>
-            <height value="1.414"/>
-        </shape>
-        <shape type="diamond">
-            <center value="169,121.25"/>
-            <width value="1.0605"/>
-            <height value="1.0605"/>
-        </shape>
-        <shape type="diamond">
-            <center value="169.5,119.5"/>
-            <width value="0.707"/>
-            <height value="0.707"/>
-        </shape>
-        <shape type="diamond">
-            <center value="169,120"/>
-            <width value="0.707"/>
-            <height value="0.707"/>
-        </shape>
-        <shape type="diamond">
-            <center value="226.0063,111.39"/>
-            <width value="6.2744"/>
-            <height value="5.835"/>
+            <negative/>
+            <quad value="136.7441,193.3693,140.7441,211.3693"/>
         </shape>
     </region>
-    <region id="8">
+    <region id="10">
+        <name value="Underworld Minion 07"/>
+        <shape type="circle">
+            <center value="176.3151,50.9213"/>
+            <radius value="8"/>
+        </shape>
+    </region>
+    <region id="14">
         <name value="Chaos Repulsor and Heal Region"/>
         <color value="255,255,128,0"/>
+        <shape type="diamond">
+            <center value="222.7236,197.7175"/>
+            <width value="12.0207"/>
+            <height value="16.962"/>
+        </shape>
         <shape type="circle">
-            <center value="220.1518,134.4167"/>
-            <radius value="12.0417"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="207.1186,126.3598,210.6394,134.4165"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="212.379,121.9165,219.6516,124.6306"/>
-        </shape>
-        <shape type="rect">
-            <negative/>
-            <quad value="206.5,134,209.5,141"/>
+            <center value="219.16,194.0664"/>
+            <radius value="3.0498"/>
         </shape>
     </region>
-    <region id="38">
+    <region id="19">
         <name value="Order Repulsor and Heal Region"/>
+        <shape type="diamond">
+            <center value="32.9931,197.995"/>
+            <width value="16.971"/>
+            <height value="12.018"/>
+        </shape>
         <shape type="circle">
-            <center value="27.8698,134.3964"/>
-            <radius value="12.0417"/>
+            <center value="36.95,194.17"/>
+            <radius value="3.0498"/>
+        </shape>
+    </region>
+    <region id="23">
+        <name value="Merc Camp - Neutral 2"/>
+        <color value="255,128,128,128"/>
+        <shape type="circle">
+            <center value="127.9233,166.941"/>
+            <radius value="13"/>
         </shape>
         <shape type="rect">
             <negative/>
-            <quad value="37.3823,126.3395,40.903,134.3962"/>
+            <quad value="116.923,153.9406,138.923,157.9406"/>
         </shape>
         <shape type="rect">
             <negative/>
-            <quad value="28.37,121.8962,35.6428,124.6103"/>
+            <quad value="116.923,175.9406,138.923,179.9406"/>
         </shape>
         <shape type="rect">
             <negative/>
-            <quad value="38,134,40.5,142"/>
+            <quad value="114.423,157.4406,118.923,175.9406"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="136.923,157.9406,140.923,175.9406"/>
+        </shape>
+    </region>
+    <region id="25">
+        <name value="Hole Peak Detection Area"/>
+        <shape type="circle">
+            <center value="127.5,183.5"/>
+            <radius value="14"/>
         </shape>
     </region>
 </Regions>

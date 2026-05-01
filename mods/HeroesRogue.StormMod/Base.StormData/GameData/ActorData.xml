@@ -365,4 +365,27 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Model value="SgtHammerSiegeAttackSplashImpact" />
   </CActorModel>
 
+  <CActorSimple id="MercLordSizeScaling2">
+    <On Terms="ActorCreation" Send="TimerSet 0.600000 PhysicsRestart" />
+    <On Terms="ActorCreation" Target="_Unit" Send="PhysicsTerminate" />
+    <On Terms="ActorCreation" Target="_Unit" Send="SetScale 1.200000 0.500000 MercLordScale" />
+    <On Terms="ActorCreation" Target="_Unit" Send="SetScale 1.200000 0.500000 MercLordScale" />
+    <On Terms="TimerExpired; TimerName PhysicsRestart" Target="_Unit" Send="PhysicsInitialize" />
+    <On Terms="TimerExpired; TimerName DelayDestroy" Target="_Unit" Send="PhysicsInitialize" />
+    <On Terms="TimerExpired; TimerName DelayDestroy" Send="Destroy" />
+    <On Terms="Behavior.AffixMercenaryLordDamageBuff.On" Send="Create" />
+    <On Terms="Behavior.AffixMercenaryLordDamageBuff.Off" Send="TimerSet 0.600000 DelayDestroy" />
+    <On Terms="Behavior.AffixMercenaryLordDamageBuff.Off" Target="_Unit" Send="PhysicsTerminate" />
+    <On Terms="Behavior.AffixMercenaryLordDamageBuff.Off" Send="TimerKill PhysicsRestart" />
+    <On Terms="Behavior.AffixMercenaryLordDamageBuff.Off" Target="_Unit" Send="ClearScale 0.500000 MercLordScale" />
+  </CActorSimple>
+  <CActorModel id="MercenaryLordBuff2" parent="StormModelAnimationStyleContinuousUnit">
+    <Inherits index="BaseModelScale" value="1" />
+    <Inherits index="Scale" value="1" />
+    <On Terms="Behavior.AffixMercenaryLordDamageBuff.On" Send="Create" />
+    <On Terms="Behavior.AffixMercenaryLordDamageBuff.Off" Send="AnimBracketStop BSD" />
+    <HostSiteOps Ops="SOpShadow" />
+    <AutoScaleFactor value="1.500000" />
+  </CActorModel>
+
 </Catalog>
