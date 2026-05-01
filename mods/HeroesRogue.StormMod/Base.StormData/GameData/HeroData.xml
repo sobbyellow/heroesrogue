@@ -437,4 +437,12 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <HeroSpecificUIArray Location="Status" DescName="Nazeebo/NazeeboFrame" />
     <Rarity value="Epic" />
   </CHero>
+  <CHero id="SgtHammer">
+    <TalentTreeArray Talent="SgtHammerShredderRounds" Tier="1" Column="4" />
+    <TalentTreeArray Talent="SgtHammerDebilitatingRounds" Tier="1" Column="5" />
+    <TalentTreeArray Talent="SgtHammerTrojanMines" Tier="2" Column="4" />
+    <TalentTreeArray Talent="SgtHammerLightTank" Tier="3" Column="4" />
+    <TalentTreeArray Talent="SgtHammerRubberBullets" Tier="5" Column="4" />
+    <TalentTreeArray Talent="SgtHammerExplosiveShells" Tier="7" Column="5" />
+  </CHero>
 </Catalog>

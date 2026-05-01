@@ -238,4 +238,19 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CombineArray value="NotDVa" />
 </CValidatorCombine>
 
+<CValidatorUnitCompareBehaviorCount id="Has8StackSgtHammerTrojanMines">
+  <Value value="7" />
+  <Behavior value="SgtHammerTrojanMinesStack" />
+</CValidatorUnitCompareBehaviorCount>
+<CValidatorPlayerTalent id="SgtHammerHasTrojanMines">
+  <WhichPlayer Value="Caster" />
+  <Find value="1" />
+  <Value value="SgtHammerTrojanMines" />
+</CValidatorPlayerTalent>
+
+<CValidatorUnitCompareBehaviorCount id="Has8StackSgtHammerRubberBullets">
+  <Value value="7" />
+  <Behavior value="SgtHammerRubberBulletsStack" />
+</CValidatorUnitCompareBehaviorCount>
+
 </Catalog>

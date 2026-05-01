@@ -73,13 +73,18 @@ bool libAffx_HeroSelectionTrigger_Func (bool testConds, bool runActions) {
                         }
                     }
                     if (libAffx_debug_forcedHeroes) {
-                        libGame_gv_players[6].lv_heroIndex = libCore_gf_GetIndexFromHero("Uther");
-                        libGame_gv_players[7].lv_heroIndex = libCore_gf_GetIndexFromHero("Leoric");
-                        libGame_gv_players[8].lv_heroIndex = libCore_gf_GetIndexFromHero("Tyrael");
-                        libGame_gv_players[9].lv_heroIndex = libCore_gf_GetIndexFromHero("Cho");
-                        libGame_gv_players[10].lv_heroIndex = libCore_gf_GetIndexFromHero("Gall");
+                        if (player == 6) {
+                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Varian");
+                        } else if (player == 7) {
+                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Leoric");
+                        } else if (player == 8) {
+                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Tyrael");
+                        } else if (player == 9) {
+                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Cho");
+                        } else if (player == 10) {
+                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Gall");
+                        }
                     }
-
                     libAffx_playersHeroIndex[player] = libGame_gv_players[player].lv_heroIndex;
                 }
                 libCore_gf_DataLoadHeroDataIntoIndex(libCore_gf_GetHeroFromIndex(libGame_gv_players[player].lv_heroIndex), player);

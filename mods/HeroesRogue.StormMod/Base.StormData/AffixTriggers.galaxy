@@ -2281,7 +2281,7 @@ bool libAffx_NoMinimapDLCExecute (bool testConds, bool runActions) {
 // Spell Leech
 // ---------------------------------------------------------------
 bool libAffx_SpellLeechAffixAdded (bool testConds, bool runActions) {
-    string amount = libAffx_StringFraction((10 + 5 * (libAffx_EventAffixCount() - 1)), 2);
+    string amount = libAffx_StringFraction((10 + 10 * (libAffx_EventAffixCount() - 1)), 2);
     if (!runActions) {
         return true;
     }
@@ -2292,7 +2292,7 @@ bool libAffx_SpellLeechAffixAdded (bool testConds, bool runActions) {
 // Physical Leech
 // ---------------------------------------------------------------
 bool libAffx_PhysicalLeechAffixAdded (bool testConds, bool runActions) {
-    string amount = libAffx_StringFraction((10 + 5 * (libAffx_EventAffixCount() - 1)), 2);
+    string amount = libAffx_StringFraction((10 + 10 * (libAffx_EventAffixCount() - 1)), 2);
     if (!runActions) {
         return true;
     }
@@ -2569,6 +2569,11 @@ bool libAffx_NexusRangeAffixAdded (bool testConds, bool runActions) {
     }
     libAffx_CatalogModifyForAllPlayers("Behavior,AffixNexusRangeBuff,Modification.WeaponRange", FixedToString(1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
     libAffx_CatalogModifyForAllPlayers("Behavior,AffixNexusRangeBuff,Modification.WeaponScanBonus", FixedToString(1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
+    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeRangeTank,Range", libAffx_player, FixedToString(11.050000 + 1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
+    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeRange,Range", libAffx_player, FixedToString(11.050000 + 1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
+    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeGraduatingRange1,Range", libAffx_player, FixedToString(12.050000 + 1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
+    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeGraduatingRange2,Range", libAffx_player, FixedToString(13.050000 + 1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
+    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeGraduatingRange3,Range", libAffx_player, FixedToString(14.050000 + 1.1 + 0.5 * (libAffx_EventAffixCount() - 1), 2));
     return true;
 }
 // ---------------------------------------------------------------
@@ -2610,89 +2615,73 @@ bool libAffx_GatheringPowerAffixAdded (bool testConds, bool runActions) {
 // Talent Disadvantage
 // ---------------------------------------------------------------
 int talentDisadvantageIndex;
-bool[21] talentDisadvantageApplied;
+bool[11][8] talentDisadvantageApplied;
+void libAffx_TalentDisadvantagePickAllTalents(int player, int tier) {
+    int i;
+    string hero = libCore_gf_GetHeroFromIndex(libAffx_playersHeroIndex[player]);
+    unit heroUnit = libGame_gv_players[player].lv_heroUnit;
+    int affixCount = libAffx_affixes[talentDisadvantageIndex].count;
+    if (talentDisadvantageApplied[player][tier]) { return; }
+    libAffx_DebugPrint("Trying to apply " + IntToString(tier) + " tier to hero " + hero);
+    if (hero == "Varian") {
+        if (tier == 1 && affixCount < 1) { return; }
+        else if (tier == 2) { return; }
+        else if (tier == 3 && affixCount < 2) { return; }
+        else if (tier == 4 && affixCount < 3) { return; }
+        else if (tier == 5 && affixCount < 4) { return; }
+        else if (tier == 6 && affixCount < 5) { return; }
+        else if (tier == 7 && affixCount < 6) { return; }
+    } else {
+        if (tier == 1 && affixCount < 1) { return; }
+        else if (tier == 2 && affixCount < 2) { return; }
+        else if (tier == 3 && affixCount < 3) { return; }
+        else if (tier == 4) { return; }
+        else if (tier == 5 && affixCount < 4) { return; }
+        else if (tier == 6 && affixCount < 5) { return; }
+        else if (tier == 7 && affixCount < 6) { return; }
+    }
+
+    for (i = 1; i <= 5; i += 1) {
+        if (hero == "WitchDoctor" && i > 3 && ((tier == 1) || (tier == 2) || (tier == 3) || (tier == 6))) { continue; }
+        if (hero == "SgtHammer" && i > 3 && ((tier == 1) || (tier == 2) || (tier == 3) || (tier == 5))) { continue; }
+        if (hero == "Varian" && tier > 2 && (!UnitHasBehavior2(heroUnit, "Ultimate1Unlocked") || !UnitHasBehavior2(heroUnit, "Ultimate2Unlocked") || !UnitHasBehavior2(heroUnit, "Ultimate3Unlocked"))) {
+            while ((!UnitHasBehavior2(heroUnit, "Ultimate1Unlocked") && !UnitHasBehavior2(heroUnit, "Ultimate2Unlocked") && !UnitHasBehavior2(heroUnit, "Ultimate3Unlocked"))) {
+                libAffx_Wait(0.0625, c_timeGame);
+            }
+        }
+        libGame_gf_TalentsChooseTalentForPlayer(tier, i, player);
+        libAffx_DebugPrint(IntToString(tier) + " tier talent " + IntToString(i) + " applied to player " + IntToString(player));
+    }
+    talentDisadvantageApplied[player][tier] = true;
+}
 void libAffx_ApplyTalentDisadvantage(int player, int level) {
     string hero = libCore_gf_GetHeroFromIndex(libAffx_playersHeroIndex[player]);
     unit heroUnit = libGame_gv_players[player].lv_heroUnit;
-    int levelAdjustment = 0;
-    if (level <= 0 || level > 20) {
-        return;
-    }
-    if (talentDisadvantageApplied[level]) {
-        return;
-    }
+    int levelAdjustment = level;
+    if (level <= 0 || level > 20) { return; }
+    if (hero == "Chromie") { levelAdjustment -= 2; }
 
-    if (hero == "Chromie") {
-        levelAdjustment = -2;
+    if (level >= 1) {
+        libAffx_TalentDisadvantagePickAllTalents(player, 1);
     }
-    if (level == 1 && libAffx_affixes[talentDisadvantageIndex].count >= 1) {
-        if (hero == "WitchDoctor") {
-            libGame_gf_TalentsChooseTalentForPlayer(1, 1, player);
-            libGame_gf_TalentsChooseTalentForPlayer(1, 2, player);
-            libGame_gf_TalentsChooseTalentForPlayer(1, 3, player);
-        } else {
-            libGame_gf_TalentsChooseTalentForPlayer(1, 1, player);
-            libGame_gf_TalentsChooseTalentForPlayer(1, 2, player);
-            libGame_gf_TalentsChooseTalentForPlayer(1, 3, player);
-            libGame_gf_TalentsChooseTalentForPlayer(1, 4, player);
-            libGame_gf_TalentsChooseTalentForPlayer(1, 5, player);
-        }
-    } else if (level == (4 + levelAdjustment) && libAffx_affixes[talentDisadvantageIndex].count >= 2 && hero != "Varian" && UnitGetType(heroUnit) != "HeroVarian") {
-        if (hero == "WitchDoctor") {
-            libGame_gf_TalentsChooseTalentForPlayer(2, 1, player);
-            libGame_gf_TalentsChooseTalentForPlayer(2, 2, player);
-            libGame_gf_TalentsChooseTalentForPlayer(2, 3, player);
-        } else {
-            libGame_gf_TalentsChooseTalentForPlayer(2, 1, player);
-            libGame_gf_TalentsChooseTalentForPlayer(2, 2, player);
-            libGame_gf_TalentsChooseTalentForPlayer(2, 3, player);
-            libGame_gf_TalentsChooseTalentForPlayer(2, 4, player);
-            libGame_gf_TalentsChooseTalentForPlayer(2, 5, player);
-        }
-    } else if ((level == (7 + levelAdjustment) && libAffx_affixes[talentDisadvantageIndex].count >= 3) || (level == (7 + levelAdjustment) && libAffx_affixes[talentDisadvantageIndex].count >= 2 && hero == "Varian")) {
-        if (hero == "WitchDoctor") {
-            libGame_gf_TalentsChooseTalentForPlayer(3, 1, player);
-            libGame_gf_TalentsChooseTalentForPlayer(3, 2, player);
-            libGame_gf_TalentsChooseTalentForPlayer(3, 3, player);
-        } else {
-            libGame_gf_TalentsChooseTalentForPlayer(3, 1, player);
-            libGame_gf_TalentsChooseTalentForPlayer(3, 2, player);
-            libGame_gf_TalentsChooseTalentForPlayer(3, 3, player);
-            libGame_gf_TalentsChooseTalentForPlayer(3, 4, player);
-            libGame_gf_TalentsChooseTalentForPlayer(3, 5, player);
-        }
-    } else if (level == (10 + levelAdjustment) && libAffx_affixes[talentDisadvantageIndex].count >= 3 && hero == "Varian") {
-        libGame_gf_TalentsChooseTalentForPlayer(4, 1, player);
-        libGame_gf_TalentsChooseTalentForPlayer(4, 2, player);
-        libGame_gf_TalentsChooseTalentForPlayer(4, 3, player);
-        libGame_gf_TalentsChooseTalentForPlayer(4, 4, player);
-        libGame_gf_TalentsChooseTalentForPlayer(4, 5, player);
-    } else if (level == (13 + levelAdjustment) && libAffx_affixes[talentDisadvantageIndex].count >= 4) {
-        libGame_gf_TalentsChooseTalentForPlayer(5, 1, player);
-        libGame_gf_TalentsChooseTalentForPlayer(5, 2, player);
-        libGame_gf_TalentsChooseTalentForPlayer(5, 3, player);
-        libGame_gf_TalentsChooseTalentForPlayer(5, 4, player);
-        libGame_gf_TalentsChooseTalentForPlayer(5, 5, player);
-    } else if (level == (16 + levelAdjustment) && libAffx_affixes[talentDisadvantageIndex].count >= 5) {
-        if (hero == "WitchDoctor") {
-            libGame_gf_TalentsChooseTalentForPlayer(6, 1, player);
-            libGame_gf_TalentsChooseTalentForPlayer(6, 2, player);
-            libGame_gf_TalentsChooseTalentForPlayer(6, 3, player);
-        } else {
-            libGame_gf_TalentsChooseTalentForPlayer(6, 1, player);
-            libGame_gf_TalentsChooseTalentForPlayer(6, 2, player);
-            libGame_gf_TalentsChooseTalentForPlayer(6, 3, player);
-            libGame_gf_TalentsChooseTalentForPlayer(6, 4, player);
-            libGame_gf_TalentsChooseTalentForPlayer(6, 5, player);
-        }
-    } else if (level == (20 + levelAdjustment) && libAffx_affixes[talentDisadvantageIndex].count >= 6) {
-        libGame_gf_TalentsChooseTalentForPlayer(7, 1, player);
-        libGame_gf_TalentsChooseTalentForPlayer(7, 2, player);
-        libGame_gf_TalentsChooseTalentForPlayer(7, 3, player);
-        libGame_gf_TalentsChooseTalentForPlayer(7, 4, player);
-        libGame_gf_TalentsChooseTalentForPlayer(7, 5, player);
+    if (levelAdjustment >= 4) {
+        libAffx_TalentDisadvantagePickAllTalents(player, 2);
     }
-    talentDisadvantageApplied[level] = true;
+    if (levelAdjustment >= 7) {
+        libAffx_TalentDisadvantagePickAllTalents(player, 3);
+    }
+    if (levelAdjustment >= 10) {
+        libAffx_TalentDisadvantagePickAllTalents(player, 4);
+    }
+    if (levelAdjustment >= 13) {
+        libAffx_TalentDisadvantagePickAllTalents(player, 5);
+    }
+    if (levelAdjustment >= 16) {
+        libAffx_TalentDisadvantagePickAllTalents(player, 6);
+    }
+    if (levelAdjustment >= 20) {
+        libAffx_TalentDisadvantagePickAllTalents(player, 7);
+    }
 }
 bool libAffx_TalentDisadvantageAffixAdded (bool testConds, bool runActions) {
     int i;
@@ -3178,7 +3167,7 @@ bool libAffx_BlindfoldedAffixAdded (bool testConds, bool runActions) {
 bool libAffx_FirstAidAffixAdded (bool testConds, bool runActions) {
     int stacks = libAffx_EventAffixCount();
     int base = 10;
-    int modifier = 5;
+    int modifier = 10;
     int total = base + (modifier * (stacks - 1));
     if (!runActions) {
         return true;
@@ -3282,7 +3271,7 @@ bool libAffx_RegenerationRingAffixAdded (bool testConds, bool runActions) {
         return true;
     }
     for (i = 1; i <= 5; i += 1) {
-        libAffx_CatalogReferenceModify("Behavior,AffixRegenRing,Modification.VitalMaxArray[Life]", i, FixedToString(250 + 50 * (count - 1), 0));
+        libAffx_CatalogReferenceModify("Behavior,AffixRegenRing,Modification.VitalMaxArray[Life]", i, FixedToString(250 + 100 * (count - 1), 0));
         libAffx_CatalogReferenceModify("Behavior,AffixRegenRing,Modification.VitalRegenArray[Life]", i, FixedToString(12 + 8 * (count - 1), 0));
     }
     return true;
@@ -4050,9 +4039,6 @@ bool libAffx_SgtHammerMachineGunnerOncePerGame (bool testConds, bool runActions)
     }
     libAffx_CatalogReferenceModify("Weapon,HeroSgtHammer,Period", libAffx_player, "0.125");
     libAffx_CatalogReferenceModify2("Effect,SgtHammerTankAttackDamage,Amount", libAffx_player, "0.25", c_upgradeOperationMultiply);
-    libAffx_CatalogReferenceModify("Weapon,SgtHammerSiegeModeWeapon,Period", libAffx_player, "0.125");
-    libAffx_CatalogReferenceModify2("Effect,SiegeWeaponBaseDamage,Amount", libAffx_player, "0.25", c_upgradeOperationMultiply);
-    libAffx_CatalogReferenceModify("Effect,SiegeWeaponImpactSet,EffectArray[6]", libAffx_player, "EmptySetDummy");
 
     UnitCreateEffectUnit(heroUnit, "SiegeModeRemoveSet", heroUnit);
 

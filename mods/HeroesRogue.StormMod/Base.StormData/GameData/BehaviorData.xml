@@ -842,7 +842,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorBuff id="AffixRegenRing" parent="CarryBehaviorParent">
   <Modification>
-    <VitalMaxArray index="Life" value="50" />
+    <VitalMaxArray index="Life" value="100" />
     <VitalRegenArray index="Life" value="8" />
   </Modification>
 </CBehaviorBuff>
@@ -1070,9 +1070,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Duration value="2.5" />
 </CBehaviorBuff>
 
-<CBehaviorBuff id="AffixSgtHammerMachineGunner" parent="CarryBehaviorParent">
-</CBehaviorBuff>
-
 <CBehaviorBuff id="AffixCrashStress" parent="CarryBehaviorParent">
   <Duration value="5.0"/>
   <Modification>
@@ -1083,5 +1080,74 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <AllArmorBonus value="-15"/>
   </ArmorModification>
 </CBehaviorBuff>
+
+<CBehaviorBuff id="AffixSgtHammerMachineGunner" parent="CarryBehaviorParent">
+  <DisableValidatorArray value="CasterNoSiegeMode" />
+  <Modification>
+    <WeaponRange value="1.5" />
+    <WeaponScanBonus value="1.5" />
+  </Modification>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="SgtHammerShredderRoundsArmorDebuff" parent="StormArmor">
+  <BehaviorCategories index="DebuffVulnerable" value="1" />
+  <MaxStackCount value="50" />
+  <Duration value="4" />
+  <BuffFlags index="RefreshStack" value="1" />
+  <ArmorModification StackCount="50">
+    <ArmorSet index="Hero">
+      <ArmorMitigationTable index="Basic" value="-1" />
+    </ArmorSet>
+    <ArmorSet index="Merc">
+      <ArmorMitigationTable index="Basic" value="-1" />
+    </ArmorSet>
+    <ArmorSet index="Monster">
+      <ArmorMitigationTable index="Basic" value="-1" />
+    </ArmorSet>
+    <ArmorSet index="Summon">
+      <ArmorMitigationTable index="Basic" value="-1" />
+    </ArmorSet>
+    <ArmorSet index="Structure">
+      <ArmorMitigationTable index="Basic" value="-1" />
+    </ArmorSet>
+    <ArmorSet index="Minion">
+      <ArmorMitigationTable index="Basic" value="-1" />
+    </ArmorSet>
+  </ArmorModification>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="SgtHammerDebilitatingRoundsSlow" parent="StormSlowParent">
+  <MaxStackCount value="50" />
+  <BuffFlags index="RefreshStack" value="1" />
+  <Duration value="4" />
+  <Modification>
+    <UnifiedMoveSpeedFactor value="-0.01" />
+  </Modification>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="SgtHammerTrojanMinesStack">
+  <BuffFlags index="RefreshStack" value="1" />
+  <MaxStackCount value="7" />
+  <Duration value="3" />
+</CBehaviorBuff>
+
+<CBehaviorBuff id="SgtHammerLightTank" parent="CarryBehaviorParent">
+  <DisableValidatorArray value="CasterNoSiegeMode" />
+  <Modification>
+    <UnifiedMoveSpeedFactor value="0.2" />
+    <MoveSpeedMinimum value="5.808" />
+    <WeaponRange value="1.5" />
+    <WeaponScanBonus value="1.5" />
+  </Modification>
+</CBehaviorBuff>
+
+<CBehaviorBuff id="SgtHammerRubberBulletsStack">
+  <BuffFlags index="RefreshStack" value="1" />
+  <MaxStackCount value="7" />
+  <Duration value="3" />
+</CBehaviorBuff>
+  <CBehaviorBuff id="SgtHammerRubberBulletsStun" parent="StormStun">
+    <Duration value="0.25" />
+  </CBehaviorBuff>
 
 </Catalog>

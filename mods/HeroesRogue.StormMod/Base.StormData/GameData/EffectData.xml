@@ -1381,7 +1381,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <MaxCount value="1"/>
 </CEffectEnumArea>
 
-
 <CEffectDamage id="AffixGiantKillerDamage" parent="StormSpellPercentDamage">
   <Visibility value="Hidden" />
   <VitalFractionMax index="Life" value="0.02" />
@@ -1394,5 +1393,91 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 </CEffectSet>
 
 <CEffectSet id="EmptySetDummy" />
+
+<CEffectSet id="SgtHammerTankAttackImpactSet">
+  <EffectArray value="SgtHammerShredderRoundsApplyBehavior" />
+  <EffectArray value="SgtHammerDebilitatingRoundsApplyBehavior" />
+  <EffectArray value="SgtHammerTrojanMinesSwitch" />
+  <EffectArray value="SgtHammerRubberBulletsSwitch" />
+  <EffectArray value="SgtHammerExplosiveShellsSplashSearch" />
+</CEffectSet>
+<CEffectApplyBehavior id="SgtHammerShredderRoundsApplyBehavior">
+  <Chance value="0" />
+  <Behavior value="SgtHammerShredderRoundsArmorDebuff" />
+</CEffectApplyBehavior>
+<CEffectApplyBehavior id="SgtHammerDebilitatingRoundsApplyBehavior">
+  <Chance value="0" />
+  <Behavior value="SgtHammerDebilitatingRoundsSlow" />
+  <ValidatorArray value="NotStructureTarget" />
+</CEffectApplyBehavior>
+
+<CEffectApplyBehavior id="SgtHammerTrojanMinesApplyBehavior">
+  <Behavior value="SgtHammerTrojanMinesStack" />
+</CEffectApplyBehavior>
+<CEffectSet id="SgtHammerTrojanMinesProcSet">
+  <EffectArray value="SgtHammerSpiderMinesCreateUnit" />
+  <EffectArray value="SgtHammerTrojanMinesRemoveStackBehavior" />
+</CEffectSet>
+<CEffectRemoveBehavior id="SgtHammerTrojanMinesRemoveStackBehavior">
+  <BehaviorLink value="SgtHammerTrojanMinesStack" />
+  <Count value="8" />
+</CEffectRemoveBehavior>
+<CEffectSwitch id="SgtHammerTrojanMinesSwitch">
+  <Chance value="0" />
+  <CaseArray Validator="Has8StackSgtHammerTrojanMines" Effect="SgtHammerTrojanMinesProcSet" />
+  <CaseDefault value="SgtHammerTrojanMinesApplyBehavior" />
+  <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
+</CEffectSwitch>
+
+<CEffectDamage id="SgtHammerSpiderMinesDamage" parent="StormSpell">
+  <Visibility value="Hidden" />
+  <Amount value="96" />
+  <LeechFraction index="Life" value="0.75" />
+  <LeechValidator index="Life" value="SgtHammerHasTrojanMines" />
+</CEffectDamage>
+
+<CEffectApplyBehavior id="SgtHammerRubberBulletsApplyBehavior">
+  <Behavior value="SgtHammerRubberBulletsStack" />
+</CEffectApplyBehavior>
+<CEffectApplyBehavior id="SgtHammerRubberBulletsApplyStun">
+  <Behavior value="SgtHammerRubberBulletsStun" />
+</CEffectApplyBehavior>
+<CEffectSet id="SgtHammerRubberBulletsProcSet">
+  <EffectArray value="SgtHammerRubberBulletsApplyStun" />
+  <EffectArray value="SgtHammerRubberBulletsRemoveStackBehavior" />
+</CEffectSet>
+<CEffectRemoveBehavior id="SgtHammerRubberBulletsRemoveStackBehavior">
+  <BehaviorLink value="SgtHammerRubberBulletsStack" />
+  <Count value="8" />
+</CEffectRemoveBehavior>
+<CEffectSwitch id="SgtHammerRubberBulletsSwitch">
+  <Chance value="0" />
+  <CaseArray Validator="Has8StackSgtHammerRubberBullets" Effect="SgtHammerRubberBulletsProcSet" />
+  <CaseDefault value="SgtHammerRubberBulletsApplyBehavior" />
+  <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
+</CEffectSwitch>
+
+
+<CEffectEnumArea id="SgtHammerExplosiveShellsSplashSearch">
+  <ValidatorArray value="TargetNotEvading" />
+  <ExcludeArray Effect="SgtHammerTankAttackImpactSet" Value="Target" />
+  <SearchFilters value="-;Self,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+  <AreaArray Effect="SgtHammerExplosiveShellsSplashSet">
+    <Radius value="1.75" />
+  </AreaArray>
+  <RevealerParams Duration="0.75" ShapeExpansion="1">
+    <RevealFlags index="Unfog" value="1" />
+  </RevealerParams>
+</CEffectEnumArea>
+  <CEffectSet id="SgtHammerExplosiveShellsSplashSet">
+    <Chance value="0" />
+    <EffectArray value="UniversalWeaponImpact" />
+    <EffectArray value="SgtHammerTankWeaponPreImpactSet" />
+    <EffectArray value="SgtHammerTankAttackDamage" />
+    <EffectArray value="SgtHammerTankWeaponPostImpactSet" />
+    <EffectArray value="UniversalWeaponPostImpactSet" />
+    <EffectArray value="SgtHammerShredderRoundsApplyBehavior" />
+    <EffectArray value="SgtHammerDebilitatingRoundsApplyBehavior" />
+  </CEffectSet>
 
 </Catalog>

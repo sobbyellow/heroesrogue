@@ -60,4 +60,23 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Icon value="Assets\Textures\storm_ui_icon_nazeebo_voodooritual.dds" />
 </CButton>
 
+<CButton id="SgtHammerShredderRounds" parent="StormButtonParent">
+  <Icon value="Assets\Textures\storm_ui_icon_sgthammer_tankmode.dds" />
+</CButton>
+<CButton id="SgtHammerDebilitatingRounds" parent="StormButtonParent">
+  <Icon value="Assets\Textures\affix_icon_sgthammer_tankmode_b.dds" />
+</CButton>
+<CButton id="SgtHammerTrojanMines" parent="StormButtonParent">
+  <Icon value="Assets\Textures\storm_ui_icon_sgthammer_spidermines.dds" />
+</CButton>
+<CButton id="SgtHammerLightTank" parent="StormButtonParent">
+  <Icon value="Assets\Textures\storm_ui_icon_sgthammer_tankmode.dds" />
+</CButton>
+<CButton id="SgtHammerRubberBullets" parent="StormButtonParent">
+  <Icon value="Assets\Textures\storm_ui_icon_sgthammer_tankmode.dds" />
+</CButton>
+<CButton id="SgtHammerExplosiveShells" parent="StormButtonParent">
+  <Icon value="Assets\Textures\storm_ui_icon_sgthammer_tankmode.dds" />
+</CButton>
+
 </Catalog>

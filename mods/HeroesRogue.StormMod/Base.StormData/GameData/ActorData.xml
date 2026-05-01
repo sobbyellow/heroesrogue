@@ -359,4 +359,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Sound value="Wizard_MagicMissiles_Impact" />
 </CActorSound>
 
+  <CActorModel id="SgtHammerSiegeAttackSplashImpactFX2" parent="StormModelAnimationStyleOneShotUnit">
+    <On Terms="Effect.SgtHammerExplosiveShellsSplashSet; At Target" Send="Create" />
+    <HostSiteOps Ops="SOpAttachCenter" HoldPosition="1" HoldRotation="1" />
+    <Model value="SgtHammerSiegeAttackSplashImpact" />
+  </CActorModel>
+
 </Catalog>

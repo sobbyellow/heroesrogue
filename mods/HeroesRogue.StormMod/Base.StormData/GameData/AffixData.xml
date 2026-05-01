@@ -4590,6 +4590,24 @@
             <String String="1 0 AffixSgtHammerMachineGunner">
                 <Field Id="Behavior"/>
             </String>
+            <String String="SgtHammerShredderRounds">
+                <Field Id="TalentsShow"/>
+            </String>
+            <String String="SgtHammerDebilitatingRounds">
+                <Field Id="TalentsShow" Index="1"/>
+            </String>
+            <String String="SgtHammerTrojanMines">
+                <Field Id="TalentsShow" Index="2"/>
+            </String>
+            <String String="SgtHammerLightTank">
+                <Field Id="TalentsShow" Index="3"/>
+            </String>
+            <String String="SgtHammerRubberBullets">
+                <Field Id="TalentsShow" Index="4"/>
+            </String>
+            <String String="SgtHammerExplosiveShells">
+                <Field Id="TalentsShow" Index="5"/>
+            </String>
         </Instances>
     </CUser>
 </Catalog>

@@ -404,7 +404,7 @@ Affix/Name/MinionKiller=Minion Killer
 Affix/Tooltip/MinionKiller=Increases your and your AI teammates's damage dealt to Minions and Mercenaries by <c val="#TooltipNumbers">20%</c> <c val="747A84">(+20% per stack)</c>.
 Affix/Tooltip/Append/MinionKiller=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixMinionKiller,Modification.DamageDealtAttributeMultiplier[Minion]*100" precision="0"/>%</c>
 Affix/Name/FirstAid=First Aid
-Affix/Tooltip/FirstAid=Regenerate <c val="#TooltipNumbers">1%</c> <c val="747A84">(+0.5% per stack)</c> of your maximum Health per second.
+Affix/Tooltip/FirstAid=Regenerate <c val="#TooltipNumbers">1%</c> <c val="747A84">(+1% per stack)</c> of your maximum Health per second.
 Affix/Tooltip/Append/FirstAid=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Effect,AffixFirstAidCreateHealer,RechargeVitalFraction*100" precision="2"/>%</c>
 Button/Name/AffixFirstAid=First Aid
 Button/SimpleDisplayText/AffixFirstAid=Regenerate health.
@@ -416,10 +416,10 @@ Affix/Name/RegenerativeWalls=Automatic Repairs
 Affix/Tooltip/RegenerativeWalls=Allied Structures regenerate <c val="#TooltipNumbers">35</c> <c val="747A84">(+35 per stack)</c> Health per second.<n/><n/>Does not affect your allied Core.
 Affix/Tooltip/Append/RegenerativeWalls=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,RegenerativeWalls,Modification.VitalRegenArray[Life]" player="11" precision="0"/></c>
 Affix/Name/SpellLeech=Spell Leech
-Affix/Tooltip/SpellLeech=Abilities heal for <c val="#TooltipNumbers">10%</c> <c val="747A84">(+5% per stack)</c> of the damage dealt.
+Affix/Tooltip/SpellLeech=Abilities heal for <c val="#TooltipNumbers">10%</c> <c val="747A84">(+10% per stack)</c> of the damage dealt.
 Affix/Tooltip/Append/SpellLeech=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixSpellLeech,Modification.VitalDamageLeechArray[Life].KindArray[Ability]*100" precision="0"/>%</c>
 Affix/Name/PhysicalLeech=Physical Leech
-Affix/Tooltip/PhysicalLeech=Basic Attacks heal for <c val="#TooltipNumbers">10%</c> <c val="747A84">(+5% per stack)</c> of the damage dealt.
+Affix/Tooltip/PhysicalLeech=Basic Attacks heal for <c val="#TooltipNumbers">10%</c> <c val="747A84">(+10% per stack)</c> of the damage dealt.
 Affix/Tooltip/Append/PhysicalLeech=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixPhysicalLeech,Modification.VitalDamageLeechArray[Life].KindArray[Basic]*100" precision="0"/>%</c>
 Affix/Name/Shield=Storm Shield
 Affix/Tooltip/Shield=Gain a Shield equal to <c val="#TooltipNumbers">25%</c> <c val="747A84">(+10% per stack)</c> of your maximum Health. Shields regenerate quickly as long as you haven't taken damage recently.
@@ -431,13 +431,13 @@ Affix/Name/PhysicalArmor=Physical Armor
 Affix/Tooltip/PhysicalArmor=Gain permanent <c val="#TooltipNumbers">15</c> <c val="747A84">(+10 per stack)</c> Physical Armor.
 Affix/Tooltip/Append/PhysicalArmor=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixPhysicalArmor,ArmorModification.ArmorSet[Hero].ArmorMitigationTable[Basic]" precision="0"/></c>
 Affix/Name/RegenerationRing=Ring of Regeneration
-Affix/Tooltip/RegenerationRing=You and allied Heroes regenerate <c val="#TooltipNumbers">12</c> <c val="747A84">(+8 per stack)</c> Health per second and have <c val="#TooltipNumbers">250</c> <c val="747A84">(+50 per stack)</c> increased maximum Health.
+Affix/Tooltip/RegenerationRing=You and allied Heroes regenerate <c val="#TooltipNumbers">12</c> <c val="747A84">(+8 per stack)</c> Health per second and have <c val="#TooltipNumbers">250</c> <c val="747A84">(+100 per stack)</c> increased maximum Health.
 Affix/Tooltip/Append/RegenerationRing=<n/><n/>Health regeneration bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixRegenRing,Modification.VitalRegenArray[Life]" precision="0"/></c><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixRegenRing,Modification.VitalMaxArray[Life]" precision="0"/></c>
 Affix/Name/MagicRing=Ring of Magic
 Affix/Tooltip/MagicRing=You and allied Heroes recharge Ability cooldowns <c val="#TooltipNumbers">15%</c> <c val="747A84">(+7.5% per stack)</c> faster.
 Affix/Tooltip/Append/MagicRing=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="$GalaxyVar:ringOfMagicModifier$*100" precision="0"/>%</c>
 Affix/Name/RangedThrall=Lightning Rod
-Affix/Tooltip/RangedThrall=Thrall's Basic Attack becomes ranged. Gain the benefits of Nexus Blades, Elemental Assault, and Elemental Momentum.<n/><n/>Increases Feral Spirit and Chain Lightning's range by <c val="#TooltipNumbers">50%</c>.
+Affix/Tooltip/RangedThrall=Thrall's Basic Attack becomes ranged and ranged-only boons become available.<n/><n/>Gain the benefits of Nexus Blades, Elemental Assault, and Elemental Momentum.<n/><n/>Increases Feral Spirit and Chain Lightning's range by <c val="#TooltipNumbers">50%</c>.
 Affix/Tooltip/Append/RangedThrall=
 Affix/Name/ThrallQuestsGalore=Quests Galore
 Affix/Tooltip/ThrallQuestsGalore=Gain the benefits of Echo of the Elements, Crash Lightning, Maelstrom Weapon, Frostwolf Pack, and Thunderstorm.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress on these Quests after winning the game.
@@ -524,8 +524,26 @@ Affix/Name/CrashStress=Crash Stress
 Affix/Tooltip/CrashStress=When D.Va's Mech is destroyed, you are Slowed by <c val="#TooltipNumbers">40%</c>, have your Armor reduced by <c val="#TooltipNumbers">15</c>, have greatly reduced vision, and hear heartbeat sounds for <c val="#TooltipNumbers">5</c> seconds.
 Affix/Tooltip/Append/CrashStress=
 Affix/Name/SgtHammerMachineGunner=Machine Gunner
-Affix/Tooltip/SgtHammerMachineGunner=Sgt. Hammer's Basic Attacks deal <c val="#TooltipNumbers">25%</c> damage and Siege Mode no longer splashes, but her Basic Attack cooldown is reduced to <c val="#TooltipNumbers">0.125</c> seconds.
+Affix/Tooltip/SgtHammerMachineGunner=Basic Attacks while in Tank Mode have their cooldown reduced to <c val="#TooltipNumbers">0.125</c> seconds, deal <c val="#TooltipNumbers">25%</c> damage, and have <c val="#TooltipNumbers">1.5</c> increased Attack Range.<n/><n/>Talents affecting Tank Mode become available to choose.
 Affix/Tooltip/Append/SgtHammerMachineGunner=
+Button/Name/SgtHammerShredderRounds=Shredder Rounds
+Button/SimpleDisplayText/SgtHammerShredderRounds=Basic Attacks reduce Physical Armor in Tank Mode
+Button/Tooltip/SgtHammerShredderRounds=While in Tank Mode, Basic Attacks reduce Physical Armor by <c val="#TooltipNumbers">1</c> for <c val="#TooltipNumbers">4</c> seconds, stacking up to <c val="#TooltipNumbers">50</c>.
+Button/Name/SgtHammerDebilitatingRounds=Debilitating Rounds
+Button/SimpleDisplayText/SgtHammerDebilitatingRounds=Basic Attacks Slow in Tank Mode
+Button/Tooltip/SgtHammerDebilitatingRounds=While in Tank Mode, Basic Attacks Slow by <c val="#TooltipNumbers">1%</c> for <c val="#TooltipNumbers">4</c> seconds, up to <c val="#TooltipNumbers">50%</c>.
+Button/Name/SgtHammerTrojanMines=Trojan Mines
+Button/SimpleDisplayText/SgtHammerTrojanMines=Basic Attacks summon Spider Mines in Tank Mode
+Button/Tooltip/SgtHammerTrojanMines=While in Tank Mode, every <c val="#TooltipNumbers">8th</c> Basic Attack against the same enemy summons a Spider Mine.<n/><n/><c val="#AbilityPassive">Passive: </c>Spider Mines heal you for <c val="#TooltipNumbers">75%</c> of the damage dealt.
+Button/Name/SgtHammerLightTank=Light Tank
+Button/SimpleDisplayText/SgtHammerLightTank=Increases Attack Range and Movement Speed in Tank Mode
+Button/Tooltip/SgtHammerLightTank=While in Tank Mode, gain <c val="#TooltipNumbers">1.5</c> Attack Range and <c val="#TooltipNumbers">20%</c> Movement Speed.<n/><n/>Your Movement Speed cannot be reduced below <c val="#TooltipNumbers">120%</c> in Tank Mode.
+Button/Name/SgtHammerRubberBullets=Rubber Bullets
+Button/SimpleDisplayText/SgtHammerRubberBullets=Basic Attacks Stun enemies in Tank Mode
+Button/Tooltip/SgtHammerRubberBullets=While in Tank Mode, every <c val="#TooltipNumbers">8th</c> Basic Attack against the same enemy Stuns them for <c val="#TooltipNumbers">0.25</c> seconds.
+Button/Name/SgtHammerExplosiveShells=Explosive Shells
+Button/SimpleDisplayText/SgtHammerExplosiveShells=Basic Attacks splash in Tank Mode 
+Button/Tooltip/SgtHammerExplosiveShells=While in Tank Mode, Basic Attacks splash for <c val="#TooltipNumbers">100%</c> damage in an area around the target.
 
 
 
