@@ -3704,7 +3704,7 @@ bool libAffx_Mythic4OncePerGame (bool testConds, bool runActions) {
             }
         }
     }
-    libGame_teamChaosXPMod += 0.20;
+    libGame_teamChaosXPMod += 0.25;
 
     return true;
 }
@@ -4084,21 +4084,6 @@ bool libAffx_CrashStressUnitDied (bool testConds, bool runActions) {
 	return true;
 }
 // ---------------------------------------------------------------
-// Machine Gunner
-// ---------------------------------------------------------------
-bool libAffx_SgtHammerMachineGunnerOncePerGame (bool testConds, bool runActions) {
-    unit heroUnit = libAffx_GetHeroUnit(libAffx_player);
-    if (!runActions) {
-        return true;
-    }
-    libAffx_CatalogReferenceModify("Weapon,HeroSgtHammer,Period", libAffx_player, "0.125");
-    libAffx_CatalogReferenceModify2("Effect,SgtHammerTankAttackDamage,Amount", libAffx_player, "0.25", c_upgradeOperationMultiply);
-
-    UnitCreateEffectUnit(heroUnit, "SiegeModeRemoveSet", heroUnit);
-
-    return true;
-}
-// ---------------------------------------------------------------
 // Skull Stockpile
 // ---------------------------------------------------------------
 bool libAffx_SkullStockpileAffixAdded (bool testConds, bool runActions) {
@@ -4121,6 +4106,54 @@ bool libAffx_DoomedAffixAdded (bool testConds, bool runActions) {
         libAffx_UnitAddPropertyFixed(libGame_gv_teams[libAffx_teamOrderIndex].lv_core, c_unitPropLife, -10);
         libAffx_UnitBehaviorAdd(libGame_gv_teams[libAffx_teamChaosIndex].lv_core, "DoomedRegen", libGame_gv_teams[libAffx_teamChaosIndex].lv_core, 1);
     }
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Machine Gunner
+// ---------------------------------------------------------------
+bool libAffx_SgtHammerMachineGunnerOncePerGame (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CatalogReferenceModify("Weapon,HeroSgtHammer,Period", libAffx_player, "0.125");
+    libAffx_CatalogReferenceModify2("Effect,SgtHammerTankAttackDamage,Amount", libAffx_player, "0.25", c_upgradeOperationMultiply);
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Machine Gunner
+// ---------------------------------------------------------------
+bool libAffx_SgtHammerArtilleryOncePerGame (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_AffixSetHero(libAffx_GetAffixId("NexusRange"), "SgtHammer", false);
+
+    libAffx_CatalogReferenceModify("Effect,SiegeWeaponSplashSearch,AreaArray[0].Radius", libAffx_player, "3");
+    libAffx_CatalogReferenceModify("Behavior,SgtHammerSiegeDamageSplashDamage,DamageResponse.ModifyFraction", libAffx_player, "0.75");
+    libAffx_CatalogReferenceModify("Weapon,SgtHammerSiegeModeWeapon,Range", libAffx_player, "500");
+    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeRangeTank,Range", libAffx_player, FixedToString(500, 2));
+    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeRange,Range", libAffx_player, FixedToString(500, 2));
+    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeGraduatingRange1,Range", libAffx_player, FixedToString(500, 2));
+    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeGraduatingRange2,Range", libAffx_player, FixedToString(500, 2));
+    libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeGraduatingRange3,Range", libAffx_player, FixedToString(500, 2));
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Big Guns
+// ---------------------------------------------------------------
+bool libAffx_SgtHammerBFGOncePerGame (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CatalogReferenceModify("Abil,SgtHammerBluntForceGun,Cost[0].Cooldown.TimeUse", libAffx_player, "0.5");
+    libAffx_CatalogReferenceModify("Abil,SgtHammerBluntForceGun,Cost[0].Vital[Energy]", libAffx_player, "0");
+    libAffx_CatalogReferenceModify("Abil,SgtHammerBluntForceGun,Cost[0].Charge.TimeUse", libAffx_player, "10");
+    libAffx_CatalogReferenceModify("Abil,SgtHammerBluntForceGun,Cost[0].Charge.CountMax", libAffx_player, "3");
+    libAffx_CatalogReferenceModify("Abil,SgtHammerBluntForceGun,Cost[0].Charge.CountStart", libAffx_player, "3");
+    libAffx_CatalogReferenceModify("Abil,SgtHammerBluntForceGun,Cost[0].Charge.CountUse", libAffx_player, "1");
 
     return true;
 }

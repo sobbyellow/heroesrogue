@@ -13,7 +13,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <MaxAccumulation value="390000" />
     <ApplicationRule value="Add" />
     <TokenId value="WitchDoctorVoodooRitual" />
-    <Scale value="0.4" />
+    <Scale value="0.5" />
   </CAccumulatorToken>
   <CAccumulatorToken id="LostVikingsGreatVikingHoardAccumulator" parent="BaseTokenAccumulator">
     <ApplicationRule value="Add" />

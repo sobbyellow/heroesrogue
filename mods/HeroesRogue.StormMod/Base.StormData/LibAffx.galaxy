@@ -74,15 +74,15 @@ bool libAffx_HeroSelectionTrigger_Func (bool testConds, bool runActions) {
                     }
                     if (libAffx_debug_forcedHeroes) {
                         if (player == 6) {
-                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Tyrande");
-                        } else if (player == 7) {
                             libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Monk");
+                        } else if (player == 7) {
+                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("MalGanis");
                         } else if (player == 8) {
-                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Rehgar");
-                        } else if (player == 9) {
-                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Deckard");
-                        } else if (player == 10) {
                             libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Uther");
+                        } else if (player == 9) {
+                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Abathur");
+                        } else if (player == 10) {
+                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Samuro");
                         }
                     }
                     libAffx_playersHeroIndex[player] = libGame_gv_players[player].lv_heroIndex;
@@ -2869,6 +2869,7 @@ bool libAffx_TestCommandTrigger_Func (bool testConds, bool runActions) {
     int affixes;
     int affixesNegative;
     int arg1;
+    bool arg2;
     if (testConds) {
         if (!libAffx_debug_enableCheatCommands) {
             return false;
@@ -2900,9 +2901,13 @@ bool libAffx_TestCommandTrigger_Func (bool testConds, bool runActions) {
         if (StringWord(EventChatMessage(false), 2) != null) {
             arg1 = StringToInt(StringWord(EventChatMessage(false), 2));
         }
+        // Ignore requirements
+        if (StringWord(EventChatMessage(false), 3) == "ignore") {
+            arg2 = true;
+        }
         libAffx_debugCommandsAddAll = true;
         for (i = 1; i <= libAffx_registeredAffixes; i += 1) {
-            if (libAffx_affixes[i].enabled && libAffx_affixes[i].allowedHero[libAffx_playersHeroIndex[libAffx_player]] && ((libAffx_affixes[i].max > 0 && libAffx_affixes[i].count <= libAffx_affixes[i].max) || (libAffx_affixes[i].max <= 0))) {
+            if (((libAffx_affixes[i].enabled && libAffx_affixes[i].allowedHero[libAffx_playersHeroIndex[libAffx_player]]) || arg2) && ((libAffx_affixes[i].max > 0 && libAffx_affixes[i].count <= libAffx_affixes[i].max) || (libAffx_affixes[i].max <= 0))) {
                 if (libAffx_affixes[i].max <= 0) {
                     affixes += arg1;
                     libAffx_AddAffix(i, arg1);

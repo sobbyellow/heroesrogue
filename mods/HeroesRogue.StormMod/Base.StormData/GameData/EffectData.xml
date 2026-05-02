@@ -74,7 +74,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CEffectDamage>
   <CEffectDamage id="WitchDoctorHeroWeaponDamageSplash" parent="StormWeapon">
     <FlatModifierArray index="AffixPowerRitual" Validator="CasterHasAffixPowerRitual" Accumulator="AffixPowerRitualSplashAccumulator" />
-    <Amount value="35.2" />
+    <Amount value="44" />
   </CEffectDamage>
   <CEffectCreatePersistent id="AffixZombieHandlerCreationPersistent">
     <InitialEffect value="WitchDoctorZombieWallPersistentInitialSet" />
@@ -1238,7 +1238,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <MultiplicativeModifierArray index="AetherWalker" Validator="WizardSourceHasTeleportMagicMissilesBonusDamageBuffAndAetherWalkerTalent" Modifier="0.1" />
 </CEffectDamage>
 <CEffectDamage id="WizardMagicMissilesDamage2Structure" parent="StormSpell">
-  <Amount value="29.4" />
+  <Amount value="36.75" />
   <MultiplicativeModifierArray index="0" Accumulator="WizardTalrashasElementsSourceMissileAccumulator" />
   <MultiplicativeModifierArray index="AetherWalker" Validator="WizardSourceHasTeleportMagicMissilesBonusDamageBuffAndAetherWalkerTalent" Modifier="0.1" />
 </CEffectDamage>
@@ -1465,7 +1465,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <ExcludeArray Effect="SgtHammerTankAttackImpactSet" Value="Target" />
   <SearchFilters value="-;Self,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
   <AreaArray Effect="SgtHammerExplosiveShellsSplashSet">
-    <Radius value="1.75" />
+    <Radius value="1.5" />
   </AreaArray>
   <RevealerParams Duration="0.75" ShapeExpansion="1">
     <RevealFlags index="Unfog" value="1" />

@@ -812,7 +812,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 </CBehaviorBuff>
 
 <CBehaviorBuff id="AffixDodge" parent="CarryBehaviorParent">
-  <DamageResponse Chance="0.04" TargetFilters="-;-" ModifyFraction="0" />
+  <DamageResponse Chance="0.03" TargetFilters="-;-" ModifyFraction="0" />
 </CBehaviorBuff>
 
 <CBehaviorBuff id="AffixExpensiveAttacks" parent="CarryBehaviorParent">
@@ -948,9 +948,9 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorBuff id="LiMingSelfishPowerBuff" parent="CarryBehaviorParent">
   <Modification>
-    <HealDealtAdditiveMultiplier index="Life" value="0.075" />
-    <HealDealtAdditiveMultiplier index="Shields" value="0.075" />
-    <DamageDealtFraction index="Ability" value="0.075" />
+    <HealDealtAdditiveMultiplier index="Life" value="0.10" />
+    <HealDealtAdditiveMultiplier index="Shields" value="0.10" />
+    <DamageDealtFraction index="Ability" value="0.10" />
   </Modification>
 </CBehaviorBuff>
 
@@ -1179,5 +1179,9 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Period value="60" />
   <PeriodicEffect value="DoomedRegenCreateHealer" />
 </CBehaviorBuff>
+
+<CBehaviorAbility id="AffixBFG">
+  <Buttons Face="SgtHammerBluntForceGun" Type="AbilCmd" AbilCmd="SgtHammerBluntForceGun,Execute" />
+</CBehaviorAbility>
 
 </Catalog>

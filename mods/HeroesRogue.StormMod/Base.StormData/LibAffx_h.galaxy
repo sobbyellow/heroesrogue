@@ -124,7 +124,7 @@ const int libAffx_rollMax = 100; // Maximum affixes that can roll for a slot.
 const int libAffx_behaviorMax = 1000;
 const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pick from.
 
-const fixed libAffx_gameStartDelay = 2; // Delay before loading affixes from the bank.
+const fixed libAffx_gameStartDelay = 2.25; // Delay before loading affixes from the bank.
 
 const string libAffx_version = "0.14.0";
 
@@ -412,7 +412,7 @@ void libAffx_CreateAffixesOwnedDialog();
 void libAffx_CreateAffixesOwnedGrid(int affixTotal);
 void libAffx_ShowOwnedAffixes(); // Show dialog for currently owned affixes.
 void libAffx_DummyTalentChoicesFromTalentName(int lp_player, string talent); // Adds talent data to the player's index 0 talent choices.
-void libAffx_AddTalent(int lp_player, string talent); // Adds talent to player using.
+void libAffx_AddTalent(int lp_player, string talent); // Adds talent to player.
 void libAffx_ShowTalent(string talent, bool show); // Hides/shows talent from talent selection.
 int libAffx_GetMapID(string mapString);
 string libAffx_GetMapString(int map);
