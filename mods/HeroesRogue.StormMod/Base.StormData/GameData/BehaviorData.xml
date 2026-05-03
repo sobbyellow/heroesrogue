@@ -778,8 +778,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 </CBehaviorBuff>
 <CBehaviorBuff id="AffixMinionKiller" parent="CarryBehaviorParent">
   <Modification>
-    <DamageDealtAttributeMultiplier index="Minion" value="0.15" />
-    <DamageDealtAttributeMultiplier index="Merc" value="0.15" />
+    <DamageDealtAttributeMultiplier index="Minion" value="0.2" />
+    <DamageDealtAttributeMultiplier index="Merc" value="0.2" />
   </Modification>
 </CBehaviorBuff>
 

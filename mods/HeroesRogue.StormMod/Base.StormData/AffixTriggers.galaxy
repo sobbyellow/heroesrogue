@@ -2235,6 +2235,12 @@ bool libAffx_ConvenientPortalsExecute (bool testConds, bool runActions) {
     } else if (libAffx_currentMap == libAffx_mapDragonShire) {
         UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libAffx_teamOrder, Point(124.15, 146.24), 0, null);
         UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libAffx_teamOrder, Point(123.96, 53.97), 0, null);
+    } else if (libAffx_currentMap == libAffx_mapHauntedMines) {
+        UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libAffx_teamOrder, Point(127.96, 227.73), 0, null);
+        UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libAffx_teamOrder, Point(128.08, 140.25), 0, null);
+    } else if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
+        UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libAffx_teamOrder, Point(123.91, 150.03), 0, null);
+        UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libAffx_teamOrder, Point(123.84, 19.45), 0, null);
     }
 
     return true;

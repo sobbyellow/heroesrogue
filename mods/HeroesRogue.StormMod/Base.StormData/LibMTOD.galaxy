@@ -2291,6 +2291,7 @@ bool libMTOD_gt_MMToDScoringAltarCaptured_Func (bool testConds, bool runActions)
             StatEventCreate("Altar Captured");
             StatEventAddDataInt(StatEventLastCreated(), "Firing Team", lv_capturingTeam);
             if ((lv_capturingTeam == libGame_gv_teamOrderIndex_C)) {
+                TriggerSendEvent("AffixObjectiveWon");
                 StatEventAddDataInt(StatEventLastCreated(), "Towns Owned", UnitGroupCount(libMTOD_gv_mMToDOrderBases, c_unitCountAlive));
                 libMTOD_gf_MMToDAltarDamageDoneCache(lv_capturingPlayer, UnitGroupCount(libMTOD_gv_mMToDOrderBases, c_unitCountAlive));
             }
