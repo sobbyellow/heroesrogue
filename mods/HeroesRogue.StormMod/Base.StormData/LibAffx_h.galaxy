@@ -15,14 +15,13 @@ const int libAffx_maxFilters = 100;
 
 // Catalog Modification types
 
-const int libAffx_catalogTypeFlat                        =   1; // Base value
-const int libAffx_catalogTypePerStack                    =   2; // Value * total stacks
-const int libAffx_catalogTypePerStackDelta               =   3; // Value * added stacks
-const int libAffx_catalogTypeAdditiveMult                =   4; // 1 + (value * total stacks)
-const int libAffx_catalogTypeAdditiveMultDelta           =   5; // 1 + (value * added stacks)
-const int libAffx_catalogTypeAdditiveReductionMult       =   6; // 1 - (value * total stacks)
-const int libAffx_catalogTypeAdditiveReductionMultDelta  =   7; // 1 - (value * added stacks)
-const int libAffx_catalogTypePerStackDeltaExclFirst      =   8; // Value * (added stacks - 1)
+const int libAffx_catalogTypeFlat                        =   1;     // Base value
+const int libAffx_catalogTypePerStack                    =   2;     // Value * total stacks
+const int libAffx_catalogTypePerStackDelta               =   3;     // Value * added stacks
+const int libAffx_catalogTypePerStackDeltaExclFirst      =   4;     // Value * added stacks (excluding first stack)
+const int libAffx_catalogTypeBase                        =   5;     // Catalog base value (operation) value * total stacks
+const int libAffx_catalogTypeBaseDelta                   =   6;     // Catalog base value (operation) value * added stacks
+const int libAffx_catalogTypeBaseMult                    =   7;     // Catalog base value (operation) 1 + (value * total stacks)
 
 // Bank
 
@@ -50,13 +49,14 @@ const int libAffx_triggerPlayerEffectUsed            =   13;    // Runs when any
 const int libAffx_triggerHeroLevelUp                 =   14;    // Runs immediately once and on Hero level up
 const int libAffx_triggerHeroRespawn                 =   15;    // Runs when Hero respawns
 const int libAffx_triggerHeroKilled                  =   16;    // Runs when a Hero is killed
-const int libAffx_triggerScaling                     =   17;    // Same as libAffx_triggerHeroLevelUp but also runs regardless of stack count
+const int libAffx_triggerHeroGainTalent              =   17;    // Runs when a Hero gains a Talent
+const int libAffx_triggerScaling                     =   18;    // Same as libAffx_triggerHeroLevelUp but also runs regardless of stack count
 
-const int libAffx_triggerQuest                       =   18;    // Runs immediately if affix quest is NOT complete
-const int libAffx_triggerPeriodic                    =   19;    // Runs periodically. Default: 0.0625s
-const int libAffx_triggerWin                         =   20;    // Executes when enemy core dies.
+const int libAffx_triggerQuest                       =   19;    // Runs immediately if affix quest is NOT complete
+const int libAffx_triggerPeriodic                    =   20;    // Runs periodically. Default: 0.0625s
+const int libAffx_triggerWin                         =   21;    // Executes when enemy core dies.
 
-const int libAffx_triggerExecute                     =   21;     // Obsolete, converts into libAffx_triggerAffixAdded
+const int libAffx_triggerExecute                     =   22;     // Obsolete, converts into libAffx_triggerAffixAdded
 
 
 const string libAffx_eventID = "EventAffix";
@@ -374,6 +374,8 @@ trigger libAffx_PBU2DifficultyChangedTrigger;
 trigger libAffx_OwnedAffixesPagesClickedTrigger;
 trigger libAffx_AbathurSymbioteTrigger;
 trigger libAffx_AbathurUltimateEvolutionTrigger;
+trigger libAffx_ChenStormEarthFireTrigger;
+trigger libAffx_LostVikingsRaidboatTrigger;
 
 // Debug options
 bool libAffx_debug_enableTryMeMode2 = false; // Try mode 2.0

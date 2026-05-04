@@ -713,12 +713,15 @@ unit GetDVaUnit(unit lv_purifierBeamTarget) {
     return UnitGroupUnitFromEnd(heroUnitGroup, groupCount);
 }
 
-unit UpdatePurifierBeamTarget(unit lv_purifierBeamTarget) {
-    if (UnitGetType(lv_purifierBeamTarget) == "HeroDVaMech") {
-        return GetDVaUnit(lv_purifierBeamTarget);
+unit[libCore_gv_bALMaxPlayers + 3] purifierInitialTarget;
+unit UpdatePurifierBeamTarget(int beamOwner) {
+    if (UnitGetType(purifierInitialTarget[beamOwner]) == "HeroDVaMech" && UnitHasBehavior2(purifierInitialTarget[beamOwner], "PurificationProtocol")) {
+        return GetDVaUnit(purifierInitialTarget[beamOwner]);
+    } else if (UnitHasBehavior2(purifierInitialTarget[beamOwner], "LongboatRaidHideVikings") && UnitHasBehavior2(purifierInitialTarget[beamOwner], "PurificationProtocol")) {
+        return libGDHL_gv_lostVikingsPlayer[UnitGetOwner(purifierInitialTarget[beamOwner])].lv_boat;
     }
 
-    return lv_purifierBeamTarget;
+    return purifierInitialTarget[beamOwner];
 }
 
 bool auto_libGDHL_gf_HeroArtanisSpearofAdunPurifierBeamAI_TriggerFunc (bool testConds, bool runActions) {
@@ -729,6 +732,7 @@ bool auto_libGDHL_gf_HeroArtanisSpearofAdunPurifierBeamAI_TriggerFunc (bool test
     unit lv_artanis;
     unit lv_purifierBeamTarget = libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner];
     int lv_purifierBeamState;
+    purifierInitialTarget[lp_owner] = libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner];
 
     // Automatic Variable Declarations
     // Variable Initialization
@@ -738,7 +742,7 @@ bool auto_libGDHL_gf_HeroArtanisSpearofAdunPurifierBeamAI_TriggerFunc (bool test
     lv_purifierBeamState = libGDHL_ge_SpearofAdunPurifierBeamState_Priming;
     lv_artanis = libGame_gv_players[lp_owner].lv_heroUnit;
     while ((UnitIsAlive(lp_purifierBeam) == true)) {
-        lv_purifierBeamTarget = UpdatePurifierBeamTarget(lv_purifierBeamTarget);
+        lv_purifierBeamTarget = UpdatePurifierBeamTarget(lp_owner);
         // if debug is needed, here is printed target of beam
         //UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringToText(UnitGetType(lv_purifierBeamTarget)));
         if ((lv_purifierBeamState == libGDHL_ge_SpearofAdunPurifierBeamState_Priming)) {

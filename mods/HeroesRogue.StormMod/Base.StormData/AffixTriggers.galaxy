@@ -163,6 +163,9 @@ bool libAffx_BuddyAI (bool testConds, bool runActions) {
         if (UnitGetType(ownerUnit) == "HeroLostVikingsController") {
             return false;
         }
+        if (UnitGetType(ownerUnit) == "LongboatRaidBoat") {
+            return false;
+        }
         if (currentBuddies[ownerPlayer] >= buddyCount) {
             return false;
         }
@@ -185,6 +188,8 @@ bool libAffx_BuddyAI (bool testConds, bool runActions) {
             activeUnit = UnitTransport(ownerUnit);
         } else if (UnitGetType(ownerUnit) == "HeroDVaPilot" && libNtve_gf_UnitIsInsideTransport(ownerUnit)) {
             activeUnit = UnitTransport(ownerUnit);
+        } else if (UnitHasBehavior2(ownerUnit, "LongboatRaidHideVikings")) {
+            activeUnit = libGDHL_gv_lostVikingsPlayer[ownerPlayer].lv_boat;
         } else {
             activeUnit = ownerUnit;
         }
@@ -196,7 +201,11 @@ bool libAffx_BuddyAI (bool testConds, bool runActions) {
         }
         // Heal owner
         if (UnitGroupCount(UnitGetTrackedUnitGroup(buddyUnit, "AffixBuddyHealUnitTracker"), c_unitCountAll) <= 0) {
-            if (ownerPlayer == libAffx_gallPlayer) {
+            if (UnitHasBehavior2(activeUnit, "StormEarthFireCasterBehavior")) {
+                UnitIssueOrder(buddyUnit, OrderTargetingUnit(AbilityCommand("AffixBuddyHeal", 0), UnitGroupUnit(libGDHL_gv_heroChenStormEarthFireUnits[ownerPlayer].lv_stormEarthFireUnits, 1)), c_orderQueueReplace);
+                UnitIssueOrder(buddyUnit, OrderTargetingUnit(AbilityCommand("AffixBuddyHeal", 0), UnitGroupUnit(libGDHL_gv_heroChenStormEarthFireUnits[ownerPlayer].lv_stormEarthFireUnits, 2)), c_orderQueueReplace);
+                UnitIssueOrder(buddyUnit, OrderTargetingUnit(AbilityCommand("AffixBuddyHeal", 0), UnitGroupUnit(libGDHL_gv_heroChenStormEarthFireUnits[ownerPlayer].lv_stormEarthFireUnits, 3)), c_orderQueueReplace);
+            } else if (ownerPlayer == libAffx_gallPlayer) {
                 UnitIssueOrder(buddyUnit, OrderTargetingUnit(AbilityCommand("AffixBuddyHeal", 0), libGame_gv_players[libAffx_choPlayer].lv_heroUnit), c_orderQueueReplace);
             } else {
                 UnitIssueOrder(buddyUnit, OrderTargetingUnit(AbilityCommand("AffixBuddyHeal", 0), activeUnit), c_orderQueueReplace);
@@ -1287,6 +1296,23 @@ bool libAffx_FortificationsAffixAdded (bool testConds, bool runActions) {
             libAffx_FortificationsCreateTower(10, "TownCannonTowerL2", Point(154, 42), 305);
             libAffx_FortificationsCreateTower(11, "TownCannonTowerL2", Point(182, 179), 135);
         }
+    } else if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
+        libAffx_FortificationsCreateTower(1, "TownCannonTowerL2", Point(153, 108), 135);
+        libAffx_FortificationsCreateTower(2, "TownCannonTowerL2", Point(142, 78), 135);
+        libAffx_FortificationsCreateTower(3, "TownCannonTowerL2", Point(144, 58), 135);
+        libAffx_FortificationsCreateTower(4, "TownCannonTowerL3", Point(177, 124), 135);
+        libAffx_FortificationsCreateTower(5, "TownCannonTowerL3", Point(168, 93), 180);
+        libAffx_FortificationsCreateTower(6, "TownCannonTowerL3", Point(175, 64), 225);
+        if (libAffx_affixes[fortificationsIndex].count >= 2) {
+            libAffx_FortificationsCreateTower(7, "TownCannonTowerL2", Point(135, 24), 135);
+            libAffx_FortificationsCreateTower(8, "TownCannonTowerL2", Point(134, 121), 225);
+            libAffx_FortificationsCreateTower(9, "TownCannonTowerL2", Point(135, 156), 225);
+        }
+        if (libAffx_affixes[fortificationsIndex].count >= 3) {
+            libAffx_FortificationsCreateTower(10, "TownCannonTowerL2", Point(130, 75), 225);
+            libAffx_FortificationsCreateTower(11, "TownCannonTowerL2", Point(161, 65), 305);
+            libAffx_FortificationsCreateTower(12, "TownCannonTowerL2", Point(164, 117), 225);
+        }
     }
 
     return true;
@@ -2134,8 +2160,8 @@ bool libAffx_GreatVikingHoardHeroKilled (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    for (i = 1; i <= 4; i += 1) {
-        UnitCreate(1, "RegenGlobe", 0, libAffx_teamOrder, PointWithOffsetPolar(UnitGetPosition(deadUnit), 1.5, 90 * i), 0, null);
+    for (i = 1; i <= 3; i += 1) {
+        UnitCreate(1, "RegenGlobe", 0, libAffx_teamOrder, PointWithOffsetPolar(UnitGetPosition(deadUnit), 1.5, 120 * i), 0, null);
         UnitBehaviorRemove(UnitLastCreated(), "RegenGlobeTimedLifeInitial", 1);
         UnitBehaviorAdd(UnitLastCreated(), "RegenGlobeTimedLife", UnitLastCreated(), 1);
         UnitBehaviorSetDuration(UnitLastCreated(), "RegenGlobeTimedLife", 6);
@@ -2290,7 +2316,7 @@ bool libAffx_PeriodicRegenGlobesPeriodic (bool testConds, bool runActions) {
         for (;; unitCount -= 1) {
             if (unitCount <= 0) { break; }
             unitVar = UnitGroupUnitFromEnd(libGame_gv_players[random].lv_heroUnitGroup, unitCount);
-            if (UnitHasBehaviorWithCategoryFlag(unitVar, c_behaviorCategoryTimeStop) == true) {
+            if (UnitHasBehaviorWithCategoryFlag(unitVar, c_behaviorCategoryTimeStop) == true || UnitHasBehavior2(unitVar, "LongboatRaidHideVikings")) {
                 return true;
             }
             if (UnitIsAlive(unitVar) && UnitGetType(unitVar) != "HeroLostVikingsController" && UnitGetType(unitVar) != "HeroDVaMech") {
@@ -2575,6 +2601,9 @@ bool libAffx_DivineInterventionEffectUsed (bool testConds, bool runActions) {
 bool libAffx_DivineInterventionPeriodic (bool testConds, bool runActions) {
     if (testConds) {
         if (divineInterventionIndex == 0) {
+            return false;
+        }
+        if (libAffx_gamePaused || libGame_gv_gameOver) {
             return false;
         }
     }
@@ -3094,6 +3123,9 @@ bool libAffx_NightElfBondPeriodic (bool testConds, bool runActions) {
         if (!UnitIsAlive(nightElfBondMalfurion)) {
             return false;
         }
+        if (libAffx_gamePaused || libGame_gv_gameOver) {
+            return false;
+        }
     }
     if (!runActions) {
         return true;
@@ -3428,6 +3460,9 @@ bool libAffx_LastMomentsPeriodic (bool testConds, bool runActions) {
         if (libAffx_lastMomentsIndex == 0) {
             return false;
         }
+        if (libAffx_gamePaused || libGame_gv_gameOver) {
+            return false;
+        }
     }
     if (!runActions) {
         return true;
@@ -3649,9 +3684,9 @@ bool libAffx_LiMingMissileBarrageExecuteOncePerGame (bool testConds, bool runAct
     return true;
 }
 // ---------------------------------------------------------------
-// Mythic 1
+// Sabotage
 // ---------------------------------------------------------------
-bool libAffx_Mythic1OncePerGame (bool testConds, bool runActions) {
+bool libAffx_MythicCurseSabotageOncePerGame (bool testConds, bool runActions) {
     unitgroup structures = UnitGroup(null, libAffx_teamOrder, RegionEntireMap(), libCore_gv_filtersStructure, 0);
     int structureCount = UnitGroupCount(structures, c_unitCountAll);
     unit structure;
@@ -3668,32 +3703,32 @@ bool libAffx_Mythic1OncePerGame (bool testConds, bool runActions) {
 
         if (libAffx_currentMap != libAffx_mapTowersOfDoom && UnitGetType(structure) == "KingsCore") {
             UnitSetPropertyFixed(structure, c_unitPropLife, UnitGetPropertyFixed(structure, c_unitPropLife, true) * 0.5);
-            UnitBehaviorAdd(structure, "Mythic1Debuff", structure, 1);
+            UnitBehaviorAdd(structure, "MythicCurseSabotageDebuff", structure, 1);
         }
     }
 
     return true;
 }
 // ---------------------------------------------------------------
-// Mythic 2
+// Citadel
 // ---------------------------------------------------------------
-libAffx_Filter libAffx_filterMythic2;
-bool libAffx_Mythic2ExecuteOncePerGame (bool testConds, bool runActions) {
+libAffx_Filter libAffx_filterCitadel;
+bool libAffx_MythicCurseCitadelExecuteOncePerGame (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_CopyFilter(libAffx_filterEnemyStructures, libAffx_filterMythic2);
+    libAffx_CopyFilter(libAffx_filterEnemyStructures, libAffx_filterCitadel);
     if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
-        libAffx_AddExcludedUnitTypeFilter(libAffx_filterMythic2, "KingsCore");
+        libAffx_AddExcludedUnitTypeFilter(libAffx_filterCitadel, "KingsCore");
     }
-    libAffx_UnitBehaviorAddCriteriaAll("Mythic2Buff", 1, libAffx_filterMythic2);
+    libAffx_UnitBehaviorAddCriteriaAll("MythicCurseCitadelBuff", 1, libAffx_filterCitadel);
 
     return true;
 }
 // ---------------------------------------------------------------
-// Mythic 4
+// Level Disadvantage
 // ---------------------------------------------------------------
-bool libAffx_Mythic4OncePerGame (bool testConds, bool runActions) {
+bool libAffx_MythicCurseLevelDisadvantageOncePerGame (bool testConds, bool runActions) {
     int i;
     int i2;
     int heroLevel;
@@ -3715,24 +3750,24 @@ bool libAffx_Mythic4OncePerGame (bool testConds, bool runActions) {
     return true;
 }
 // ---------------------------------------------------------------
-// Mythic 5
+// Cursed
 // ---------------------------------------------------------------
-int libAffx_mythic5Index;
-bool libAffx_Mythic5AffixAdded (bool testConds, bool runActions) {
+int libAffx_cursedIndex;
+bool libAffx_MythicCurseCursedAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_mythic5Index = libAffx_EventAffix();
+    libAffx_cursedIndex = libAffx_EventAffix();
     return true;
 }
-bool libAffx_Mythic5OncePerGame (bool testConds, bool runActions) {
+bool libAffx_MythicCurseCursedOncePerGame (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
     libAffx_maxAffixesFromObjectives -= 1;
     return true;
 }
-bool libAffx_Mythic5HeroKilled (bool testConds, bool runActions) {
+bool libAffx_MythicCurseCursedHeroKilled (bool testConds, bool runActions) {
     unit deadUnit = libGame_gf_HeroKilledUnit();
     int deadPlayer = libGame_gf_HeroKilledPlayer();
     int killingPlayer = libGame_gf_HeroKilledKillingPlayer();
@@ -3754,15 +3789,15 @@ bool libAffx_Mythic5HeroKilled (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libAffx_affixes[libAffx_mythic5Index].customValue += 1;
-    if (libAffx_affixes[libAffx_mythic5Index].customValue >= 3) {
-        libAffx_affixes[libAffx_mythic5Index].customValue = 0;
+    libAffx_affixes[libAffx_cursedIndex].customValue += 1;
+    if (libAffx_affixes[libAffx_cursedIndex].customValue >= 3) {
+        libAffx_affixes[libAffx_cursedIndex].customValue = 0;
         UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/CurseCursed"));
         libAffx_QueueCurse(1);
     }
     return true;
 }
-bool libAffx_Mythic5LevelUp (bool testConds, bool runActions) {
+bool libAffx_MythicCurseCursedLevelUp (bool testConds, bool runActions) {
     int player = libGame_gf_HeroLevelUpPlayer();
     int level = libGame_gf_HeroLevelUpLevel();
     if (testConds) {
@@ -3772,7 +3807,7 @@ bool libAffx_Mythic5LevelUp (bool testConds, bool runActions) {
         if (level < 20) {
             return false;
         }
-        if (libAffx_affixes[libAffx_mythic5Index].customBool) {
+        if (libAffx_affixes[libAffx_cursedIndex].customBool) {
             return false;
         }
     }
@@ -3782,43 +3817,43 @@ bool libAffx_Mythic5LevelUp (bool testConds, bool runActions) {
     if (level <= 0) {
         return true;
     }
-    libAffx_affixes[libAffx_mythic5Index].customBool = true;
-    libAffx_affixes[libAffx_mythic5Index].cooldown = 60;
-    TriggerAddEventTimePeriodic(TriggerCreate("libAffx_Mythic5Periodic"), 0.0625, c_timeGame);
-    TriggerAddEventUnitCreated(TriggerCreate("libAffx_Mythic5UnitCreated"), null, null, null);
-    TriggerAddEventUnitChangeOwner(TriggerCreate("libAffx_Mythic5UnitChangeOwner"), null);
-    libAffx_UnitBehaviorAddCriteriaAll("Mythic5Debuff", 1, libAffx_filterAllAllies);
+    libAffx_affixes[libAffx_cursedIndex].customBool = true;
+    libAffx_affixes[libAffx_cursedIndex].cooldown = 60;
+    TriggerAddEventTimePeriodic(TriggerCreate("libAffx_MythicCurseCursedPeriodic"), 0.0625, c_timeGame);
+    TriggerAddEventUnitCreated(TriggerCreate("libAffx_MythicCurseCursedUnitCreated"), null, null, null);
+    TriggerAddEventUnitChangeOwner(TriggerCreate("libAffx_MythicCurseCursedUnitChangeOwner"), null);
+    libAffx_UnitBehaviorAddCriteriaAll("MythicCurseCursedDebuff", 1, libAffx_filterAllAllies);
     
     return true;
 }
-bool libAffx_Mythic5UnitCreated (bool testConds, bool runActions) {
+bool libAffx_MythicCurseCursedUnitCreated (bool testConds, bool runActions) {
     if (testConds) {
-        if (!libAffx_affixes[libAffx_mythic5Index].customBool) {
+        if (!libAffx_affixes[libAffx_cursedIndex].customBool) {
             return false;
         }
     }
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "Mythic5Debuff", 1, libAffx_filterAllAllies);
+    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "MythicCurseCursedDebuff", 1, libAffx_filterAllAllies);
     return true;
 }
-bool libAffx_Mythic5UnitChangeOwner (bool testConds, bool runActions) {
+bool libAffx_MythicCurseCursedUnitChangeOwner (bool testConds, bool runActions) {
     if (testConds) {
-        if (!libAffx_affixes[libAffx_mythic5Index].customBool) {
+        if (!libAffx_affixes[libAffx_cursedIndex].customBool) {
             return false;
         }
     }
     if (!runActions) {
         return true;
     }
-    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "Mythic5Debuff", 1, libAffx_filterAllAllies);
+    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "MythicCurseCursedDebuff", 1, libAffx_filterAllAllies);
     return true;
 }
-bool libAffx_Mythic5Periodic (bool testConds, bool runActions) {
+bool libAffx_MythicCurseCursedPeriodic (bool testConds, bool runActions) {
     int level;
     if (testConds) {
-        if (!libAffx_affixes[libAffx_mythic5Index].customBool) {
+        if (!libAffx_affixes[libAffx_cursedIndex].customBool) {
             return false;
         }
         if (libAffx_gamePaused) {
@@ -3831,17 +3866,17 @@ bool libAffx_Mythic5Periodic (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    if (libAffx_affixes[libAffx_mythic5Index].cooldown <= 0) {
+    if (libAffx_affixes[libAffx_cursedIndex].cooldown <= 0) {
         level = UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit);
         if (level < 30) {
-            libAffx_CatalogModifyForAllPlayers("Behavior,Mythic5Debuff,ArmorModification.AllArmorBonus", FixedToString(StringToFixed(CatalogReferenceGet("Behavior,Mythic5Debuff,ArmorModification.AllArmorBonus", libAffx_player)) - 5, 0));
-            libAffx_affixes[libAffx_mythic5Index].cooldown = 60;
+            libAffx_CatalogModifyForAllPlayers("Behavior,MythicCurseCursedDebuff,ArmorModification.AllArmorBonus", FixedToString(StringToFixed(CatalogReferenceGet("Behavior,MythicCurseCursedDebuff,ArmorModification.AllArmorBonus", libAffx_player)) - 5, 0));
+            libAffx_affixes[libAffx_cursedIndex].cooldown = 60;
         } else {
-            libAffx_CatalogModifyForAllPlayers("Behavior,Mythic5Debuff,ArmorModification.AllArmorBonus", FixedToString(StringToFixed(CatalogReferenceGet("Behavior,Mythic5Debuff,ArmorModification.AllArmorBonus", libAffx_player)) - 100, 0));
-            libAffx_affixes[libAffx_mythic5Index].cooldown = 60;
+            libAffx_CatalogModifyForAllPlayers("Behavior,MythicCurseCursedDebuff,ArmorModification.AllArmorBonus", FixedToString(StringToFixed(CatalogReferenceGet("Behavior,MythicCurseCursedDebuff,ArmorModification.AllArmorBonus", libAffx_player)) - 100, 0));
+            libAffx_affixes[libAffx_cursedIndex].cooldown = 60;
         }
     } else {
-        libAffx_affixes[libAffx_mythic5Index].cooldown -= 0.0625;
+        libAffx_affixes[libAffx_cursedIndex].cooldown -= 0.0625;
     }
     return true;
 }
@@ -3954,6 +3989,7 @@ void libAffx_CastPurifierBeam() {
     
             libAffx_purificationProtocolUnit = heroUnit;
             UnitCreateEffectUnit(libGame_gv_teams[libAffx_teamChaosIndex].lv_core, "ArtanisSpearofAdunPurifierBeamInitialSet", libAffx_purificationProtocolUnit);
+            UnitBehaviorAdd(heroUnit, "PurificationProtocol", heroUnit, 1);
             libAffx_purificationProtocolActive = true;
             break;
         }
@@ -4137,6 +4173,7 @@ bool libAffx_SgtHammerArtilleryOncePerGame (bool testConds, bool runActions) {
     libAffx_AffixSetHero(libAffx_GetAffixId("NexusRange"), "SgtHammer", false);
 
     libAffx_CatalogReferenceModify("Effect,SiegeWeaponSplashSearch,AreaArray[0].Radius", libAffx_player, "3");
+    libAffx_CatalogReferenceModify("Effect,SiegeWeaponSplashSearch2,AreaArray[0].Radius", libAffx_player, "3");
     libAffx_CatalogReferenceModify("Behavior,SgtHammerSiegeDamageSplashDamage,DamageResponse.ModifyFraction", libAffx_player, "0.75");
     libAffx_CatalogReferenceModify("Weapon,SgtHammerSiegeModeWeapon,Range", libAffx_player, "500");
     libAffx_CatalogReferenceModify("Actor,SgtHammerBaseSiegeModeRangeTank,Range", libAffx_player, FixedToString(500, 2));
@@ -4160,6 +4197,35 @@ bool libAffx_SgtHammerBFGOncePerGame (bool testConds, bool runActions) {
     libAffx_CatalogReferenceModify("Abil,SgtHammerBluntForceGun,Cost[0].Charge.CountMax", libAffx_player, "3");
     libAffx_CatalogReferenceModify("Abil,SgtHammerBluntForceGun,Cost[0].Charge.CountStart", libAffx_player, "3");
     libAffx_CatalogReferenceModify("Abil,SgtHammerBluntForceGun,Cost[0].Charge.CountUse", libAffx_player, "1");
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Blaster
+// ---------------------------------------------------------------
+bool libAffx_SgtHammerBlasterAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    if (PlayerHasTalent(libAffx_player, "SgtHammerBarricade")) {
+        libAffx_CatalogReferenceModify("Abil,SgtHammerConcussiveBlast,Cost[0].Cooldown.TimeUse", libAffx_player, "0.5");
+        libAffx_CatalogReferenceModify("Abil,SgtHammerConcussiveBlast,Cost[0].Charge.TimeUse", libAffx_player, "8");
+    }
+
+    return true;
+}
+bool libAffx_SgtHammerBlasterGainTalent (bool testConds, bool runActions) {
+    string talent = libGame_gf_HeroGainTalentGainedTalent();
+    if (testConds) {
+        if (talent != "SgtHammerBarricade") {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CatalogReferenceModify("Abil,SgtHammerConcussiveBlast,Cost[0].Cooldown.TimeUse", libAffx_player, "0.5");
+    libAffx_CatalogReferenceModify("Abil,SgtHammerConcussiveBlast,Cost[0].Charge.TimeUse", libAffx_player, "8");
 
     return true;
 }

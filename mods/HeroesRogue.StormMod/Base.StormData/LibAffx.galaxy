@@ -140,7 +140,7 @@ void libAffx_SyncBehaviors(unit sourceUnit, unit targetUnit) {
         if (UnitHasBehavior2(targetUnit, behavior) && UnitBehaviorCount(targetUnit, behavior) == UnitBehaviorCount(sourceUnit, behavior)) {
             continue;
         }
-        libAffx_DebugPrint("Adding behavior " + behavior + " with " + IntToString(behaviorStacks) + " stacks and duration " + FixedToString(behaviorDuration, 2) + " to unit " + UnitGetType(targetUnit) + " for player " + IntToString(player));
+        //libAffx_DebugPrint("Adding behavior " + behavior + " with " + IntToString(behaviorStacks) + " stacks and duration " + FixedToString(behaviorDuration, 2) + " to unit " + UnitGetType(targetUnit) + " for player " + IntToString(player));
         UnitBehaviorAdd(targetUnit, behavior, targetUnit, behaviorStacks);
         UnitBehaviorSetDuration(targetUnit, behavior, behaviorDuration);
     }
@@ -233,6 +233,69 @@ void libAffx_AbathurTriggers_Init() {
     libGDHL_gf_AbathurSymbiote(libAffx_AbathurSymbioteTrigger);
     libGDHL_gf_AbathurUltimateEvolutionHeroCopied(libAffx_AbathurUltimateEvolutionTrigger);
 }
+//--------------------------------------------------------------------------------------------------
+// Chen
+//--------------------------------------------------------------------------------------------------
+bool libAffx_ChenStormEarthFireTrigger_Func (bool testConds, bool runActions) {
+    unit caster = EventPlayerEffectUsedUnit(c_effectUnitCaster);
+    int player = UnitGetOwner(caster);
+    unitgroup pandas = libGDHL_gv_heroChenStormEarthFireUnits[player].lv_stormEarthFireUnits;
+    int pandaCount;
+    unit pandaUnit;
+    if (!runActions) {
+        return true;
+    }
+    libAffx_Wait(0.0625, c_timeGame);
+    pandaCount = UnitGroupCount(pandas, c_unitCountAll);
+    for (;; pandaCount -= 1) {
+        if (pandaCount <= 0) { break; }
+        pandaUnit = UnitGroupUnitFromEnd(pandas, pandaCount);
+        libAffx_DebugPrint("Syncing behaviors from " + UnitGetType(caster) + " to " + UnitGetType(pandaUnit));
+        libAffx_SyncBehaviors(caster, pandaUnit);
+    }
+    return true;
+}
+
+void libAffx_ChenTriggers_Init() {
+    libAffx_ChenStormEarthFireTrigger = TriggerCreate("libAffx_ChenStormEarthFireTrigger_Func");
+    TriggerAddEventPlayerEffectUsed(libAffx_ChenStormEarthFireTrigger, c_playerAny, "ChenStormEarthFireCreateFinishSet");
+}
+//--------------------------------------------------------------------------------------------------
+// Lost Vikings
+//--------------------------------------------------------------------------------------------------
+bool libAffx_LostVikingsRaidboatTrigger_Func (bool testConds, bool runActions) {
+    unit createdUnit = EventUnitCreatedUnit();
+    int player = UnitGetOwner(createdUnit);
+    unitgroup heroGroup = libGame_gv_players[player].lv_heroUnitGroup;
+    int heroGroupCount = UnitGroupCount(heroGroup, c_unitCountAll);
+    unit heroUnit;
+    if (testConds) {
+        if (UnitGetType(createdUnit) != "LongboatRaidBoat") {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_Wait(0.0625, c_timeGame);
+    libAffx_SyncBehaviors(libGame_gv_players[player].lv_heroUnit, createdUnit);
+    return true;
+    for (;; heroGroupCount -= 1) {
+        if (heroGroupCount <= 0) { break; }
+        heroUnit = UnitGroupUnitFromEnd(heroGroup, heroGroupCount);
+        if (UnitGetType(heroUnit) != "HeroLostVikingsController") {
+            libAffx_DebugPrint("Syncing " + UnitGetType(heroUnit) + " behaviors with " + UnitGetType(createdUnit));
+            libAffx_SyncBehaviors(heroUnit, createdUnit);
+            break;
+        }
+    }
+    return true;
+}
+
+void libAffx_LostVikingsTriggers_Init() {
+    libAffx_LostVikingsRaidboatTrigger = TriggerCreate("libAffx_LostVikingsRaidboatTrigger_Func");
+    TriggerAddEventUnitCreated(libAffx_LostVikingsRaidboatTrigger, null, null, null);
+}
 
 
 void libAffx_Wait(fixed duration, int inTimeType) {
@@ -301,6 +364,24 @@ void libAffx_Pause(bool pause) {
             if (TimerGetRemaining(libGame_gv_players[i].lv_respawnTimer) > 0.0) { // Respawn timer
                 TimerPause(libGame_gv_players[i].lv_respawnTimer, true);
             }
+            if (libAffx_playersHeroIndex[i] == libCore_gf_GetIndexFromHero("LostVikings")) {
+                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_erikDeathTimer) > 0.0) {
+                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_erikDeathTimer, true);
+                }
+                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_olafDeathTimer) > 0.0) {
+                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_olafDeathTimer, true);
+                }
+                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_baleogDeathTimer) > 0.0) {
+                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_baleogDeathTimer, true);
+                }
+                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_checkpointReachedCarinRespawnTimer) > 0.0) {
+                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_checkpointReachedCarinRespawnTimer, true);
+                }
+            } else if (libAffx_playersHeroIndex[i] == libCore_gf_GetIndexFromHero("Rexxar")) {
+                if (TimerGetRemaining(libGDHL_gv_mishaDeathTimer[i]) > 0.0) {
+                    TimerPause(libGDHL_gv_mishaDeathTimer[i], true);
+                }
+            }
             if (TimerGetRemaining(libGame_gv_players[i].lv_respawnSoundCueTimer) > 0.0) {
                 TimerPause(libGame_gv_players[i].lv_respawnSoundCueTimer, true);
             }
@@ -366,6 +447,24 @@ void libAffx_Pause(bool pause) {
             }
             if (TimerGetRemaining(libMapM_gv_jungleCreepCamps[i].lv_stateCreepRespawnTimer) > 0.0) {
                 TimerPause(libMapM_gv_jungleCreepCamps[i].lv_stateCreepRespawnTimer, false);
+            }
+            if (libAffx_playersHeroIndex[i] == libCore_gf_GetIndexFromHero("LostVikings")) {
+                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_erikDeathTimer) > 0.0) {
+                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_erikDeathTimer, false);
+                }
+                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_olafDeathTimer) > 0.0) {
+                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_olafDeathTimer, false);
+                }
+                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_baleogDeathTimer) > 0.0) {
+                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_baleogDeathTimer, false);
+                }
+                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_checkpointReachedCarinRespawnTimer) > 0.0) {
+                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_checkpointReachedCarinRespawnTimer, false);
+                }
+            } else if (libAffx_playersHeroIndex[i] == libCore_gf_GetIndexFromHero("Rexxar")) {
+                if (TimerGetRemaining(libGDHL_gv_mishaDeathTimer[i]) > 0.0) {
+                    TimerPause(libGDHL_gv_mishaDeathTimer[i], false);
+                }
             }
         }
 
@@ -1546,7 +1645,7 @@ void libAffx_AddAffixBehavior(int player, string behavior) {
     if (player >= 1 && player <= 10 && libAffx_behaviorIndex[player] <= libAffx_behaviorMax && behavior != "" && behavior != null) {
         libAffx_behaviorIndex[player] += 1;
         libAffx_affixBehaviors[player][libAffx_behaviorIndex[player]] = behavior;
-        libAffx_DebugPrint("Adding " + behavior + " to affix behaviors for player " + IntToString(player) + " at index " + IntToString(libAffx_behaviorIndex[player]));
+        //libAffx_DebugPrint("Adding " + behavior + " to affix behaviors for player " + IntToString(player) + " at index " + IntToString(libAffx_behaviorIndex[player]));
     }
 }
 void libAffx_UnitBehaviorAdd(unit targetUnit, string behavior, unit casterUnit, int stacks) {
@@ -1822,10 +1921,25 @@ void libAffx_ApplyTalents(int affix) {
         }
     }
 }
+void libAffx_ApplyCatalogModificationBaseMult(string reference, int player, string valueString, fixed value, int stacks, int operation, fixed mult) {
+    if (operation == c_upgradeOperationSubtract) {
+        CatalogReferenceModify(reference, player, FixedToString(StringToFixed(valueString) - (mult + (value * stacks)), c_fixedPrecisionAny), c_upgradeOperationSet);
+    } else if (operation == c_upgradeOperationMultiply) {
+        CatalogReferenceModify(reference, player, FixedToString(StringToFixed(valueString) * (mult + (value * stacks)), c_fixedPrecisionAny), c_upgradeOperationSet);
+    } else if (operation == c_upgradeOperationDivide) {
+        CatalogReferenceModify(reference, player, FixedToString(StringToFixed(valueString) / (mult + (value * stacks)), c_fixedPrecisionAny), c_upgradeOperationSet);
+    } else {
+        CatalogReferenceModify(reference, player, FixedToString(StringToFixed(valueString) + (mult + (value * stacks)), c_fixedPrecisionAny), c_upgradeOperationSet);
+    }
+}
+void libAffx_ApplyCatalogModificationBase(string reference, int player, string valueString, fixed value, int stacks, int operation) {
+    libAffx_ApplyCatalogModificationBaseMult(reference, player, valueString, value, stacks, operation, 0);
+}
 void libAffx_ApplyCatalogModifications(int affix, int amount) {
     int i;
     int i2;
     int totalAmount = libAffx_affixes[affix].count;
+    int catalogAmount;
     string catalogReference;
     int catalogType;
     int catalogPlayer;
@@ -1846,19 +1960,10 @@ void libAffx_ApplyCatalogModifications(int affix, int amount) {
             } else if (catalogType == libAffx_catalogTypePerStackDelta) {
                 catalogValueString = FixedToString(catalogValue * amount, c_fixedPrecisionAny);
             } else if (catalogType == libAffx_catalogTypePerStackDeltaExclFirst) {
-                if (libAffx_affixes[affix].count <= 1 || amount > 1) {
-                    catalogValueString = FixedToString(catalogValue * (amount - 1), c_fixedPrecisionAny);
-                } else {
-                    catalogValueString = FixedToString(catalogValue * amount, c_fixedPrecisionAny);
-                }
-            } else if (catalogType == libAffx_catalogTypeAdditiveMult) {
-                catalogValueString = FixedToString(1 + (catalogValue * totalAmount), c_fixedPrecisionAny);
-            } else if (catalogType == libAffx_catalogTypeAdditiveMultDelta) {
-                catalogValueString = FixedToString(1 + (catalogValue * amount), c_fixedPrecisionAny);
-            } else if (catalogType == libAffx_catalogTypeAdditiveReductionMult) {
-                catalogValueString = FixedToString(1 - (catalogValue * totalAmount), c_fixedPrecisionAny);
-            } else if (catalogType == libAffx_catalogTypeAdditiveReductionMultDelta) {
-                catalogValueString = FixedToString(1 - (catalogValue * amount), c_fixedPrecisionAny);
+                catalogAmount = MaxI(0, totalAmount - 1) - MaxI(0, totalAmount - amount - 1);
+                catalogValueString = FixedToString(catalogValue * catalogAmount, c_fixedPrecisionAny);
+            } else if (catalogType == libAffx_catalogTypeBase || catalogType == libAffx_catalogTypeBaseDelta || catalogType == libAffx_catalogTypeBaseMult) {
+                catalogValueString = CatalogReferenceGet(catalogReference, 0);
             } else {
                 catalogValueString = FixedToString(catalogValue, c_fixedPrecisionAny);
             }
@@ -1867,13 +1972,29 @@ void libAffx_ApplyCatalogModifications(int affix, int amount) {
                     if ((i2 == libAffx_choPlayer || i2 == libAffx_gallPlayer) && libAffx_affixes[affix].excludeChoGall) {
                         continue;
                     } else {
-                        CatalogReferenceModify(catalogReference, i2, catalogValueString, catalogOperation);
+                        if (catalogType == libAffx_catalogTypeBase) {
+                            libAffx_ApplyCatalogModificationBase(catalogReference, i2, catalogValueString, catalogValue, totalAmount, catalogOperation);
+                        } else if (catalogType == libAffx_catalogTypeBaseDelta) {
+                            libAffx_ApplyCatalogModificationBase(catalogReference, i2, catalogValueString, catalogValue, amount, catalogOperation);
+                        } else if (catalogType == libAffx_catalogTypeBaseMult) {
+                            libAffx_ApplyCatalogModificationBaseMult(catalogReference, i2, catalogValueString, catalogValue, totalAmount, catalogOperation, 1);
+                        } else {
+                            CatalogReferenceModify(catalogReference, i2, catalogValueString, catalogOperation);
+                        }
                     }
                 }
             } else if ((catalogPlayer == libAffx_choPlayer || catalogPlayer == libAffx_gallPlayer) && libAffx_affixes[affix].excludeChoGall) {
                 continue;
             } else if (catalogPlayer >= 1 && catalogPlayer <= 12) {
-                CatalogReferenceModify(catalogReference, catalogPlayer, catalogValueString, catalogOperation);
+                if (catalogType == libAffx_catalogTypeBase) {
+                    libAffx_ApplyCatalogModificationBase(catalogReference, catalogPlayer, catalogValueString, catalogValue, totalAmount, catalogOperation);
+                } else if (catalogType == libAffx_catalogTypeBaseDelta) {
+                    libAffx_ApplyCatalogModificationBase(catalogReference, catalogPlayer, catalogValueString, catalogValue, amount, catalogOperation);
+                } else if (catalogType == libAffx_catalogTypeBaseMult) {
+                    libAffx_ApplyCatalogModificationBaseMult(catalogReference, catalogPlayer, catalogValueString, catalogValue, totalAmount, catalogOperation, 1);
+                } else {
+                    CatalogReferenceModify(catalogReference, catalogPlayer, catalogValueString, catalogOperation);
+                }
             }
         }
     }
@@ -2014,6 +2135,8 @@ void libAffx_ApplyTriggers(int affix, int amount) {
                     TriggerAddEventUnitDied(libAffx_affixes[affix].createdTriggers[i], null);
                 } else if (triggerType == libAffx_triggerHeroKilled) {
                     libGame_gf_HeroKilled(libAffx_affixes[affix].createdTriggers[i]);
+                } else if (triggerType == libAffx_triggerHeroGainTalent) {
+                    libGame_gf_HeroGainTalent(libAffx_affixes[affix].createdTriggers[i]);
                 } else if (triggerType == libAffx_triggerQuest) {
                     if (libAffx_affixes[affix].quest.isQuest && !libAffx_affixes[affix].quest.questDone) {
                         TriggerExecute(libAffx_affixes[affix].createdTriggers[i], true, false);
@@ -2585,15 +2708,15 @@ void libAffx_ChooseAffixes(int rarity, bool curse, int level, bool preventUpgrad
     libAffx_processQueueTimeElapsed = 0;
     if (rarity == libAffx_rarityMythic) {
         if (run == 0) {
-            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic1");
+            libAffx_rolledAffixes[1] = libAffx_GetAffixId("MythicCurseSabotage");
         } else if (run == 4) {
-            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic4");
+            libAffx_rolledAffixes[1] = libAffx_GetAffixId("MythicCurseLevelDisadvantage");
         } else if (run == 8) {
-            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic3");
+            libAffx_rolledAffixes[1] = libAffx_GetAffixId("MythicCurseBleeding");
         } else if (run == 12) {
-            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic5");
+            libAffx_rolledAffixes[1] = libAffx_GetAffixId("MythicCurseCursed");
         } else {
-            libAffx_rolledAffixes[1] = libAffx_GetAffixId("Mythic6");
+            libAffx_rolledAffixes[1] = libAffx_GetAffixId("MythicCurseEternal");
         }
         SoundPlayOnUnit(SoundLink("UI_Game_LevelUp_Talent", -1), PlayerGroupSingle(1), libGame_gv_players[libAffx_player].lv_heroUnit, 8.0, 100.0, 0.0);
         libAffx_ShowAffixDialog(1);
@@ -3484,6 +3607,8 @@ void libAffx_InitTriggers () {
     libAffx_PBU2DifficultyChangedTrigger_Init();
     libAffx_OwnedAffixesPagesClickedTrigger_Init();
     libAffx_AbathurTriggers_Init();
+    libAffx_ChenTriggers_Init();
+    libAffx_LostVikingsTriggers_Init();
 
     TriggerEnable(libGDHL_gt_HeroSylvanasPossessionRewire, true);
     libAffx_pauseVLSK = TriggerCreate("libVLSK_PauseTrigger_Func");
@@ -3828,6 +3953,8 @@ void libAffx_InitVariables () {
     libAffx_dialogControlOptionsSpeedup = c_invalidDialogControlId;
     libTRYM_loadTryMeMode = libAffx_debug_enableTryMeMode2;
 
+    libCore_gv_dEBUGPingLimitEnabled = false;
+
     libAffx_CreateUI();
     DialogSetVisible(libAffx_dialogTopRight, PlayerGroupAll(), false);
     DialogSetVisible(libAffx_dialogOwnedAffixes, PlayerGroupAll(), false);
@@ -4139,6 +4266,8 @@ void libAffx_InitAffixes () {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerHeroRespawn;
                     } else if (affixTrigger1 == "herokilled" || affixTrigger1 == "herokill" || affixTrigger1 == "hk") {
                         libAffx_affixes[i].triggers[i2].type = libAffx_triggerHeroKilled;
+                    } else if (affixTrigger1 == "herotalentgain" || affixTrigger1 == "herogaintalent" || affixTrigger1 == "herotalent" || affixTrigger1 == "hgt" || affixTrigger1 == "htg") {
+                        libAffx_affixes[i].triggers[i2].type = libAffx_triggerHeroGainTalent;
                     } else {
                         libAffx_affixes[i].triggers[i2].type = 0;
                     }

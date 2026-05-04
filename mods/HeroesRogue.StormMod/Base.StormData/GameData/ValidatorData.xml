@@ -214,6 +214,31 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CombineArray value="NotGreymane" />
 </CValidatorCombine>
 
+<CValidatorUnitType id="NotMisha">
+  <WhichUnit Value="Source" />
+  <Value value="RexxarMisha" />
+  <Find value="0" />
+</CValidatorUnitType>
+<CValidatorUnitType id="NotRexxar">
+  <WhichUnit Value="Source" />
+  <Value value="HeroRexxar" />
+  <Find value="0" />
+</CValidatorUnitType>
+<CValidatorUnitType id="NotOlaf">
+  <WhichUnit Value="Source" />
+  <Value value="HeroOlaf" />
+  <Find value="0" />
+</CValidatorUnitType>
+<CValidatorUnitType id="NotErik">
+  <WhichUnit Value="Source" />
+  <Value value="HeroErik" />
+  <Find value="0" />
+</CValidatorUnitType>
+<CValidatorUnitType id="NotBaleog">
+  <WhichUnit Value="Source" />
+  <Value value="HeroBaleog" />
+  <Find value="0" />
+</CValidatorUnitType>
 <CValidatorCombine id="NotDVa">
   <Type value="And" />
   <CombineArray value="NotHeroDVaMech" />
@@ -251,6 +276,21 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CValidatorUnitCompareBehaviorCount id="Has8StackSgtHammerRubberBullets">
   <Value value="7" />
   <Behavior value="SgtHammerRubberBulletsStack" />
+</CValidatorUnitCompareBehaviorCount>
+
+<CValidatorUnitType id="CreatorIsNotMedivhRaven">
+  <WhichUnit Value="Creator" />
+  <Value value="HeroMedivhRaven" />
+  <Find value="0" />
+</CValidatorUnitType>
+
+<CValidatorUnitCompareBehaviorCount id="TargetDoesNotHaveGlobeCollector">
+  <Compare value="LE" />
+  <Behavior value="GlobeCollector" />
+</CValidatorUnitCompareBehaviorCount>
+<CValidatorUnitCompareBehaviorCount id="TargetHasGlobeCollector">
+  <Compare value="GT" />
+  <Behavior value="GlobeCollector" />
 </CValidatorUnitCompareBehaviorCount>
 
 </Catalog>

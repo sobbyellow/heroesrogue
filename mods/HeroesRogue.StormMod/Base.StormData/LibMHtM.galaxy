@@ -1505,10 +1505,10 @@ bool libMHtM_ApplySkullStockpile_Func (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    libMHtM_startingSkullsChaos += 20;
+    libMHtM_startingSkullsChaos += 15;
 
-    if (libMHtM_gv_mMUnderworldSkullCollected[2] < 20) {
-        libMHtM_gv_mMUnderworldSkullCollected[2] += 20;
+    if (libMHtM_gv_mMUnderworldSkullCollected[2] < 15) {
+        libMHtM_gv_mMUnderworldSkullCollected[2] += 15;
     }
     
     return true;

@@ -186,6 +186,18 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
       </Modifications>
     </AbilityModificationArray>
   </CTalent>
+
+  <CTalent id="SgtHammerSiegeModeAdvancedArtillery">
+    <AbilityModificationArray>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Catalog value="Effect" />
+        <Entry value="SiegeWeaponSplashSearch2" />
+        <Field value="AreaArray[0].Radius" />
+        <Value value="0.500000" />
+      </Modifications>
+    </AbilityModificationArray>
+  </CTalent>
   
 
 </Catalog>

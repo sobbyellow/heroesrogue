@@ -1431,13 +1431,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <ValidatorArray value="CasterNotBlindedAndTargetNotEvading" />
 </CEffectSwitch>
 
-<CEffectDamage id="SgtHammerSpiderMinesDamage" parent="StormSpell">
-  <Visibility value="Hidden" />
-  <Amount value="96" />
-  <LeechFraction index="Life" value="0.75" />
-  <LeechValidator index="Life" value="SgtHammerHasTrojanMines" />
-</CEffectDamage>
-
 <CEffectApplyBehavior id="SgtHammerRubberBulletsApplyBehavior">
   <Behavior value="SgtHammerRubberBulletsStack" />
 </CEffectApplyBehavior>
@@ -1471,6 +1464,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <RevealFlags index="Unfog" value="1" />
   </RevealerParams>
 </CEffectEnumArea>
+
   <CEffectSet id="SgtHammerExplosiveShellsSplashSet">
     <Chance value="0" />
     <EffectArray value="UniversalWeaponImpact" />
@@ -1500,5 +1494,129 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ValidatorArray index="0" value="TargetIsNotABossUnitOrMonsterMinorCombine" />
     <Behavior value="AffixMercenaryLordDamageBuff" />
   </CEffectApplyBehavior>
+
+  <CEffectCreatePersistent id="SgtHammerSpiderMinesInitialPersistent">
+    <InitialEffect value="SgtHammerAmbushHoldFireRemoveSet" />
+    <InitialOffset Y="1" />
+    <ExpireEffect value="SgtHammerSpiderMinesCreateUnitExtraMine" />
+    <ExpireOffset Y="1" />
+    <PeriodCount value="4" />
+    <PeriodicEffectArray value="SgtHammerSpiderMinesRotateTurretModifyUnit" />
+    <PeriodicEffectArray value="SgtHammerSpiderMinesCreateUnit" />
+    <PeriodicEffectArray value="SgtHammerSpiderMinesCreateUnitSwitch" />
+    <PeriodicEffectArray value="SgtHammerSpiderMinesCreateUnit" />
+    <PeriodicEffectArray value="SgtHammerSpiderMinesCreateUnit" />
+    <PeriodicEffectArray value="SgtHammerSpiderMinesCreateUnit" />
+    <PeriodicOffsetArray X="2.4" Y="0.6" />
+    <PeriodicOffsetArray X="1.2" Y="0.1" />
+    <PeriodicOffsetArray Y="-0.4" />
+    <PeriodicOffsetArray X="-1.2" Y="0.1" />
+    <PeriodicOffsetArray X="-2.4" Y="0.6" />
+    <PeriodicPeriodArray value="0" />
+    <PeriodicPeriodArray value="0.1" />
+    <PeriodicPeriodArray value="0.1" />
+    <PeriodicPeriodArray value="0.1" />
+    <PeriodicPeriodArray value="0.1" />
+    <PeriodicPeriodArray value="0.1" />
+  </CEffectCreatePersistent>
+
+  <CEffectDamage id="SgtHammerSpiderMinesDamage" parent="StormSpell">
+    <Visibility value="Hidden" />
+    <Amount value="96" />
+    <LeechFraction index="Life" value="0.75" />
+    <LeechValidator index="Life" value="SgtHammerHasTrojanMines" />
+    <MultiplicativeModifierArray index="SgtHammerExplosiveMine" Modifier="0" />
+  </CEffectDamage>
+
+  <CEffectDamage id="WitchDoctorGargantuanStompDamage" parent="StormSpell">
+    <Amount value="240" />
+    <Visibility value="Hidden" />
+    <MultiplicativeModifierArray index="Tantrum" Modifier="0" />
+  </CEffectDamage>
+
+  <CEffectDamage id="ConcussiveBlastDamage" parent="StormSpell">
+    <Amount value="141" />
+    <MultiplicativeModifierArray index="Entrenched" Validator="SgtHammerHasSgtHammerEntrenchedANDCasterHasSiegeMode" Modifier="0.75" Crit="1" />
+    <MultiplicativeModifierArray index="SgtHammerBlaster" Modifier="0" />
+  </CEffectDamage>
+
+  <CEffectSet id="SiegeWeaponImpactSet">
+    <EffectArray value="SiegeWeaponSplashSearch2" />
+  </CEffectSet>
+
+  <CEffectEnumArea id="SiegeWeaponSplashSearch2">
+    <Chance value="0" />
+    <ValidatorArray value="TargetNotEvading" />
+    <ExcludeArray Effect="SiegeWeaponImpactSet" Value="Target" />
+    <SearchFilters value="Ally;Self,Player,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Effect="SiegeWeaponSplashDamageSet">
+      <Radius value="2" />
+    </AreaArray>
+    <RevealerParams Duration="0.75" ShapeExpansion="1">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+  </CEffectEnumArea>
+
+  <CEffectSet id="RegenGlobeSearchSet">
+    <EffectArray value="RegenGlobeSearch2" />
+    <EffectArray value="RegenGlobeSearch" />
+  </CEffectSet>
+  <CEffectSet id="RegenGlobeNeutralSearchSet">
+    <EffectArray value="RegenGlobeNeutralSearch2" />
+    <EffectArray value="RegenGlobeNeutralSearch" />
+  </CEffectSet>
+
+  <CEffectEnumArea id="RegenGlobeSearch">
+    <SearchFilters value="Heroic;Player,Neutral,Enemy,Stasis,Dead" />
+    <TargetSorts RequestCount="1" RequestPercentage="1">
+      <SortArray value="TSDistance" />
+    </TargetSorts>
+    <AreaArray MaxCount="1" Effect="RegenGlobeSearchFound">
+      <Radius value="1.25" />
+    </AreaArray>
+  </CEffectEnumArea>
+  <CEffectSet id="RegenGlobeSearchFound">
+    <EffectArray value="RegenGlobePickupSet" />
+    <ValidatorArray value="TargetDoesNotHaveGlobeCollector" />
+  </CEffectSet>
+  <CEffectEnumArea id="RegenGlobeSearch2">
+    <SearchFilters value="Heroic;Player,Neutral,Enemy,Stasis,Dead" />
+    <TargetSorts RequestCount="1" RequestPercentage="1">
+      <SortArray value="TSDistance" />
+    </TargetSorts>
+    <AreaArray MaxCount="1" Effect="RegenGlobeSearch2Found">
+      <Radius value="1.25" />
+    </AreaArray>
+  </CEffectEnumArea>
+  <CEffectSet id="RegenGlobeSearch2Found">
+    <EffectArray value="RegenGlobePickupSet" />
+    <ValidatorArray value="TargetHasGlobeCollector" />
+  </CEffectSet>
+  <CEffectEnumArea id="RegenGlobeNeutralSearch">
+    <SearchFilters value="Heroic;Structure,Item,Stasis,Dead" />
+    <TargetSorts RequestCount="1" RequestPercentage="1">
+      <SortArray value="TSDistance" />
+    </TargetSorts>
+    <AreaArray MaxCount="1" Effect="RegenGlobeNeutralSearchFound">
+      <Radius value="1.25" />
+    </AreaArray>
+  </CEffectEnumArea>
+  <CEffectSet id="RegenGlobeNeutralSearchFound">
+    <EffectArray value="RegenGlobeNeutralDummySet" />
+    <ValidatorArray value="TargetDoesNotHaveGlobeCollector" />
+  </CEffectSet>
+  <CEffectEnumArea id="RegenGlobeNeutralSearch2">
+    <SearchFilters value="Heroic;Structure,Item,Stasis,Dead" />
+    <TargetSorts RequestCount="1" RequestPercentage="1">
+      <SortArray value="TSDistance" />
+    </TargetSorts>
+    <AreaArray MaxCount="1" Effect="RegenGlobeNeutralSearch2Found">
+      <Radius value="1.25" />
+    </AreaArray>
+  </CEffectEnumArea>
+  <CEffectSet id="RegenGlobeNeutralSearch2Found">
+    <EffectArray value="RegenGlobeNeutralDummySet" />
+    <ValidatorArray value="TargetHasGlobeCollector" />
+  </CEffectSet>
 
 </Catalog>
