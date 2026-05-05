@@ -3773,6 +3773,7 @@ bool libAffx_LiMingMissileBarrageExecuteOncePerGame (bool testConds, bool runAct
 // ---------------------------------------------------------------
 // Sabotage
 // ---------------------------------------------------------------
+libAffx_Filter libAffx_filterSabotage;
 bool libAffx_MythicCurseSabotageOncePerGame (bool testConds, bool runActions) {
     unitgroup structures = UnitGroup(null, libAffx_teamOrder, RegionEntireMap(), libCore_gv_filtersStructure, 0);
     int structureCount = UnitGroupCount(structures, c_unitCountAll);
@@ -3780,20 +3781,58 @@ bool libAffx_MythicCurseSabotageOncePerGame (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
+    libAffx_CopyFilter(libAffx_filterAlliedStructures, libAffx_filterSabotage);
+    libAffx_AddExcludedUnitTypeFilter(libAffx_filterSabotage, "TownMoonwellL3");
+    libAffx_AddExcludedUnitTypeFilter(libAffx_filterSabotage, "TownMoonwellL2");
+    if (libAffx_currentMap == libAffx_mapTowersOfDoom) {
+        libAffx_AddExcludedUnitTypeFilter(libAffx_filterSabotage, "KingsCore");
+    }
     for (;; structureCount -= 1) {
         if (structureCount <= 0) { break; }
         structure = UnitGroupUnitFromEnd(structures, structureCount);
 
-        if (UnitGetType(structure) == "TownMoonwellL3" || UnitGetType(structure) == "TownMoonwellL2") {
-            continue;
-        }
-
-        if (libAffx_currentMap != libAffx_mapTowersOfDoom && UnitGetType(structure) == "KingsCore") {
+        if (libAffx_UnitMatchesCriteria(structure, libAffx_filterSabotage)) {
             UnitSetPropertyFixed(structure, c_unitPropLife, UnitGetPropertyFixed(structure, c_unitPropLife, true) * 0.5);
             UnitBehaviorAdd(structure, "MythicCurseSabotageDebuff", structure, 1);
         }
     }
 
+    return true;
+}
+bool libAffx_MythicCurseSabotageUnitCreated (bool testConds, bool runActions) {
+    unit created = EventUnitCreatedUnit();
+    if (testConds) {
+        if (UnitGetOwner(created) != libAffx_teamOrder) {
+            return false;
+        }
+        if (!libAffx_UnitMatchesCriteria(created, libAffx_filterSabotage)) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    while (UnitHasBehavior2(created, "StructureOwnershipChangeRepairBehavior")) {
+        libAffx_Wait(0.0625, c_timeGame);
+    }
+    UnitSetPropertyFixed(created, c_unitPropLife, UnitGetPropertyFixed(created, c_unitPropLife, true) * 0.5);
+    UnitBehaviorAdd(created, "MythicCurseSabotageDebuff", created, 1);
+    return true;
+}
+bool libAffx_MythicCurseSabotageUnitChangeOwner (bool testConds, bool runActions) {
+    unit changed = EventUnit();
+    if (!runActions) {
+        return true;
+    }
+    while (UnitHasBehavior2(changed, "StructureOwnershipChangeRepairBehavior")) {
+        libAffx_Wait(0.0625, c_timeGame);
+    }
+    libAffx_UnitBehaviorAddOrRemoveCriteria(changed, "MythicCurseSabotageDebuff", 1, libAffx_filterSabotage);
+    if (libAffx_UnitMatchesCriteria(changed, libAffx_filterSabotage)) {
+        UnitSetPropertyFixed(changed, c_unitPropLife, UnitGetPropertyFixed(changed, c_unitPropLife, true) * 0.5);
+    } else {
+        UnitSetPropertyFixed(changed, c_unitPropLife, UnitGetPropertyFixed(changed, c_unitPropLife, true));
+    }
     return true;
 }
 // ---------------------------------------------------------------

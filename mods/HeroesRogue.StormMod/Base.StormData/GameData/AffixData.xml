@@ -465,6 +465,12 @@
             <String String="OPG libAffx_MythicCurseSabotageOncePerGame">
                 <Field Id="Trigger"/>
             </String>
+            <String String="UnitCreated libAffx_MythicCurseSabotageUnitCreated">
+                <Field Id="Trigger" Index="1"/>
+            </String>
+            <String String="UnitChangeOwner libAffx_MythicCurseSabotageUnitChangeOwner">
+                <Field Id="Trigger" Index="2"/>
+            </String>
         </Instances>
         <Instances Id="MythicCurseCitadel">
             <Int Int="2">
@@ -5018,7 +5024,7 @@
                 <Field Id="CatalogModification" Index="1"/>
             </String>
             <String String="0 5 Add Effect,RegenGlobeNeutralSearch2,AreaArray[0].Radius 3">
-                <Field Id="CatalogModification" Index="1"/>
+                <Field Id="CatalogModification" Index="2"/>
             </String>
         </Instances>
         <Instances Id="LostVikingsPowerofThree">

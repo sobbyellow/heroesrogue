@@ -127,7 +127,7 @@ int libAffx_affixSelectionMaxCurrent = 3;
 
 const fixed libAffx_gameStartDelay = 2.25; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.14.0";
+const string libAffx_version = "0.14.1";
 
 struct libAffx_Filter {
     unitfilter unitFilter;
@@ -396,7 +396,7 @@ bool libAffx_debug_disablePausing = false; // Disables pause features
 bool libAffx_debug_disableAffixQueue = false; // Disables queueing affixes.
 bool libAffx_debugCommandsAddAll;
 
-void libAffx_CopyFilter(structref<libAffx_Filter> original, structref<libAffx_Filter> copy);
+void libAffx_CopyFilter(structref<libAffx_Filter> original, structref<libAffx_Filter> copyTo);
 void libAffx_AddExcludedUnitTypeFilter(structref<libAffx_Filter> filter, string unitType);
 void libAffx_DebugPrint(string print);
 string libAffx_GetRarityString(int rarity); // Gets rarity name.
