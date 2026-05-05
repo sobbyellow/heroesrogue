@@ -1546,13 +1546,13 @@ int libAffx_EventAffixCount() {
     return libAffx_affixes[libAffx_EventAffix()].count;
 }
 
-void libAffx_CopyFilter(structref<libAffx_Filter> original, structref<libAffx_Filter> copy) {
+void libAffx_CopyFilter(structref<libAffx_Filter> original, structref<libAffx_Filter> copyTo) {
     int i;
-    copy.unitFilter = original.unitFilter;
-    copy.requiredUnitType = original.requiredUnitType;
-    copy.requiredPlayer = original.requiredPlayer;
+    copyTo.unitFilter = original.unitFilter;
+    copyTo.requiredUnitType = original.requiredUnitType;
+    copyTo.requiredPlayer = original.requiredPlayer;
     for (i = 1; i <= libAffx_maxFilters; i += 1) {
-        libAffx_AddExcludedUnitTypeFilter(copy, original.excludedUnitTypes[i]);
+        libAffx_AddExcludedUnitTypeFilter(copyTo, original.excludedUnitTypes[i]);
     }
 }
 void libAffx_AddExcludedUnitTypeFilter(structref<libAffx_Filter> filter, string unitType) {
