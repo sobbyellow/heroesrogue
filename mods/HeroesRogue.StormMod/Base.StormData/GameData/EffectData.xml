@@ -465,6 +465,12 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <MultiplicativeModifierArray index="SentinelShotDamage" Accumulator="SentinelShotDamageAccumulator" />
     <MultiplicativeModifierArray index="Ranger" Validator="HasTyrandeSentinelRanger" Accumulator="TyrandeSentinelShotRangerAccumulator" />
   </CEffectDamage>
+  <CEffectDamage id="SentinelShotDamagePvE" parent="StormSpell">
+    <Visibility value="Hidden" />
+    <Amount value="60" />
+    <MultiplicativeModifierArray index="SentinelShotDamage" Accumulator="SentinelShotDamageAccumulator" />
+    <MultiplicativeModifierArray index="Ranger" Validator="HasTyrandeSentinelRanger" Accumulator="TyrandeSentinelShotRangerAccumulator" />
+  </CEffectDamage>
   <CEffectModifyTokenCount id="SentinelShotDamageModifyTokenCount" parent="BaseEffectModifyTokenCount">
     <Chance value="0" />
     <ValidatorArray value="TargetIsHero" />
@@ -1618,5 +1624,84 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <EffectArray value="RegenGlobeNeutralDummySet" />
     <ValidatorArray value="TargetHasGlobeCollector" />
   </CEffectSet>
+
+  <CEffectEnumArea id="SentinelShotMissileSearchPvE">
+    <Chance value="0" />
+    <SearchFilters value="-;Heroic,Player,Ally,Neutral,ImmuneToSkillshots,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Effect="SentinelShotImpactSetPvE">
+      <RectangleWidth value="1.25" />
+      <RectangleHeight value="2.25" />
+    </AreaArray>
+    <RevealerParams Duration="4" ShapeExpansion="7">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+    <LaunchLocation Value="OriginPoint" />
+  </CEffectEnumArea>
+
+  <CEffectSet id="SentinelShotImpactSetPvE">
+    <EffectArray value="SentinelShotRevealerPersistent" />
+    <EffectArray value="SentinelShotDamagePvE" />
+    <EffectArray value="TyrandeSentinelHarshMoonlightTalentProcSetPvE" />
+    <EffectArray value="ApplyTyrandeSentinelPvEHit" />
+    <EffectArray value="CameraShakeLightTauntingTotemSet" />
+    <ValidatorArray value="noMarkers" />
+    <ValidatorArray value="SourceNotDead" />
+    <ValidatorArray value="TargetDoesNotHaveTyrandeSentinelPvEHit" />
+  </CEffectSet>
+
+  <CEffectApplyBehavior id="ApplyTyrandeSentinelPvEHit">
+    <Behavior value="TyrandeSentinelPvEHit" />
+  </CEffectApplyBehavior>
+
+  <CEffectApplyBehavior id="TyrandeSentinelHarshMoonlightTalentApplyDamageReductionPvE">
+    <ValidatorArray index="0" value="TyrandeHasHarshMoonlightTalent" />
+    <Behavior value="TyrandeSentinelHarshMoonlightTalentDamageReductionPvE" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="TyrandeSentinelHarshMoonlightTalentApplySlowPvE" parent="StormSlowApply">
+    <ValidatorArray index="0" value="TyrandeHasHarshMoonlightTalent" />
+    <Behavior value="TyrandeSentinelHarshMoonlightTalentSlowPvE" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="TyrandeSentinelHarshMoonlightTalentProcSetPvE">
+    <ValidatorArray value="TyrandeHasHarshMoonlightTalent" />
+    <EffectArray value="TyrandeSentinelHarshMoonlightTalentApplyDamageReductionPvE" />
+    <EffectArray value="TyrandeSentinelHarshMoonlightTalentApplySlowPvE" />
+  </CEffectSet>
+
+  <CEffectEnumArea id="LiMingStormArmorSearch">
+    <SearchFilters value="-;Player,Ally,Neutral,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray MaxCount="1" Effect="LiMingStormArmorImpactSet">
+      <Radius value="9" />
+    </AreaArray>
+    <TargetSorts RequestCount="1" RequestPercentage="1">
+      <SortArray value="TSHeroic" />
+      <SortArray value="TSRandom" />
+    </TargetSorts>
+    <SearchFlags index="CenterAtLaunch" value="1" />
+    <SearchFlags index="OffsetAreaByAngle" value="0" />
+    <ValidatorArray value="CasterNotStasis" />
+  </CEffectEnumArea>
+  <CEffectSet id="LiMingStormArmorImpactSet">
+    <EffectArray value="ApplyAbilityImpactReveal" />
+    <EffectArray value="LiMingStormArmorDamage" />
+    <EffectArray value="LiMingStormArmorPersistentRevealer" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="LiMingStormArmorPersistentRevealer">
+    <WhichLocation Value="TargetUnit" />
+    <ExpireDelay value="0.5" />
+    <RevealRadius value="0.75" />
+    <RevealFlags index="Unfog" value="1" />
+  </CEffectCreatePersistent>
+
+  <CEffectDamage id="LiMingStormArmorDamage" parent="StormSpell">
+    <Amount value="147" />
+  </CEffectDamage>
+
+  <CEffectCreateHealer id="ThrallFrostwolfResilienceCreateHealer" parent="StormSelfOnlyHealingSpell">
+      <ImpactUnit Value="Caster"/>
+      <RechargeVitalRate value="$ThrallFrostwolfResilienceHealAmount"/>
+      <SourceButtonFace value="ThrallFrostwolfResilience"/>
+      <MultiplicativeModifierArray index="MaelstromWeaponComplete" Validator="ThrallMaelstromWeaponPinnacleRewardReached" Modifier="$ThrallMaelstromWeaponFrostwolfResilienceHealingModifierPinnacle"/>
+      <MultiplicativeModifierArray index="ThrallHealthyFrostwolf" Modifier="0"/>
+  </CEffectCreateHealer>
 
 </Catalog>

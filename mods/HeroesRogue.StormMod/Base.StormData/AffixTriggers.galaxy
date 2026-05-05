@@ -408,6 +408,8 @@ bool libAffx_ManyRitualsAffixAdded (bool testConds, bool runActions) {
     }
 
     libAffx_AddTokenCount(heroUnit, "WitchDoctorVoodooRitual", amount);
+    libAffx_AddTokenCount(heroUnit, "WitchDoctorVoodooRitualTokenCounter", amount);
+    libAffx_AddTokenCount(heroUnit, "WitchDoctorVoodooRitualVileInfectionTokenCounter", amount);
     libAffx_AddTokenCount(heroUnit, "WitchDoctorThingOfTheDeepQuestToken", amount);
     libAffx_AddTokenCount(heroUnit, "WitchDoctorRitualofBoonsQuestToken", amount);
 
@@ -514,11 +516,49 @@ bool libAffx_DeathTimerAffixAdded (bool testConds, bool runActions) {
     deathTimerCurrentMod = deathTimerModifier * libAffx_EventAffixCount();
     return true;
 }
+bool libAffx_DeathTimerUnitDied (bool testConds, bool runActions) {
+    unit deadUnit = EventUnit();
+    int deadPlayer = UnitGetOwner(deadUnit);
+    fixed deathDuration;
+    if (testConds) {
+        if (libGame_gv_gameOver) {
+            return false;
+        }
+        if (!(deadPlayer >= 1)) {
+            return false;
+        }
+        if (!(deadPlayer <= 5)) {
+            return false;
+        }
+        if (UnitTestState(deadUnit, c_unitStateHallucination)) {
+            return false;
+        }
+        if (deathTimerIndex == 0) {
+            return false;
+        }
+        if (resurgenceoftheStormIndex != 0 && libAffx_affixes[resurgenceoftheStormIndex].cooldown <= 0) {
+            return false;
+        }
+        if (UnitGetType(deadUnit) != "RexxarMisha") {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    } 
+    deathDuration = TimerGetRemaining(libGDHL_gv_mishaDeathTimer[deadPlayer]);
+    libNtve_gf_StopTimer(libGDHL_gv_mishaDeathTimer[deadPlayer]);
+    TimerStart(libGDHL_gv_mishaDeathTimer[deadPlayer], deathDuration * (1 + deathTimerCurrentMod), false, c_timeGame);
+    UnitBehaviorSetDuration(libGame_gv_players[deadPlayer].lv_heroUnit, "RexxarSpiritBondCooldown", deathDuration * (1 + deathTimerCurrentMod));
+    UnitModifyCooldown(libGame_gv_players[deadPlayer].lv_heroUnit, "Abil/RexxarMishaFocus", deathDuration * (1 + deathTimerCurrentMod), c_cooldownOperationSet);
+    return true;
+}
 bool libAffx_DeathTimerHeroKilled (bool testConds, bool runActions) {
     unit deadUnit = libGame_gf_HeroKilledUnit();
     int deadPlayer = libGame_gf_HeroKilledPlayer();
     int killingPlayer = libGame_gf_HeroKilledKillingPlayer();
     fixed deathTime;
+    fixed deathDuration;
     // Conditions
     if (testConds) {
         if (libGame_gv_gameOver) {
@@ -527,13 +567,13 @@ bool libAffx_DeathTimerHeroKilled (bool testConds, bool runActions) {
         if (!(deadPlayer >= 1)) {
             return false;
         }
-        if (!(deadPlayer <= libCore_gv_bALMaxPlayers)) {
+        if (!(deadPlayer <= 5)) {
             return false;
         }
-        if (!(deadUnit == libGame_gv_players[deadPlayer].lv_heroUnit)) {
+        if (deadUnit != libGame_gv_players[deadPlayer].lv_heroUnit && UnitGetType(libGame_gv_players[deadPlayer].lv_heroUnit) != "HeroLostVikingsController") {
             return false;
         }
-        if (!(UnitTestState(deadUnit, c_unitStateHallucination) == false)) {
+        if (UnitTestState(deadUnit, c_unitStateHallucination)) {
             return false;
         }
         if (deathTimerIndex == 0) {
@@ -550,32 +590,36 @@ bool libAffx_DeathTimerHeroKilled (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    if (deadPlayer >= 1 && deadPlayer <= 5) {
-        if (UnitGetType(deadUnit) == "HeroMurky" && !((UnitIsAlive(libGame_gv_heroDeathMurkyRespawnEggs[deadPlayer]) == false) || (libGame_gv_heroDeathMurkyRespawnEggs[deadPlayer] == null))) {
-            deathTime = libCore_gv_bALMurkyWithEggDeathTime * (1 + deathTimerCurrentMod);
-        } else {
-            deathTime = libCore_gf_HeroDeathTime(deadPlayer, UnitLevel(libGame_gv_players[deadPlayer].lv_heroUnit)) * (1 + deathTimerCurrentMod);
+    if (UnitGetType(deadUnit) == "HeroMurky" && !((UnitIsAlive(libGame_gv_heroDeathMurkyRespawnEggs[deadPlayer]) == false) || (libGame_gv_heroDeathMurkyRespawnEggs[deadPlayer] == null))) {
+        deathTime = libCore_gv_bALMurkyWithEggDeathTime * (1 + deathTimerCurrentMod);
+    } else {
+        deathTime = libCore_gf_HeroDeathTime(deadPlayer, UnitLevel(libGame_gv_players[deadPlayer].lv_heroUnit)) * (1 + deathTimerCurrentMod);
+    }
+    if (UnitGetType(deadUnit) == "HeroLeoric") {
+        libGame_gf_HeroDeathStartRespawnTimer(deadPlayer, deathTime);
+        libNtve_gf_SendActorMessageToUnit(deadUnit, "SetShowStatusBar 1");
+        if ((TimerGetDuration(libGame_gv_players[deadPlayer].lv_respawnTimer) > 0.0)) {
+            UnitBehaviorSetDuration(deadUnit, "LeoricUndying", TimerGetRemaining(libGame_gv_players[deadPlayer].lv_respawnTimer));
+            UnitBehaviorSetDuration(deadUnit, "Dead", TimerGetRemaining(libGame_gv_players[deadPlayer].lv_respawnTimer));
+            libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer] = UnitBehaviorDurationTotal(deadUnit, "LeoricUndying");
         }
-        if (UnitGetType(deadUnit) == "HeroLeoric") {
-            libGame_gf_HeroDeathStartRespawnTimer(deadPlayer, deathTime);
-            libNtve_gf_SendActorMessageToUnit(deadUnit, "SetShowStatusBar 1");
-            if ((TimerGetDuration(libGame_gv_players[deadPlayer].lv_respawnTimer) > 0.0)) {
-                UnitBehaviorSetDuration(deadUnit, "LeoricUndying", TimerGetRemaining(libGame_gv_players[deadPlayer].lv_respawnTimer));
-                UnitBehaviorSetDuration(deadUnit, "Dead", TimerGetRemaining(libGame_gv_players[deadPlayer].lv_respawnTimer));
-                libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer] = UnitBehaviorDurationTotal(deadUnit, "LeoricUndying");
-            }
-            else {
-                UnitBehaviorSetDuration(deadUnit, "LeoricUndying", 0.0);
-                UnitBehaviorSetDuration(deadUnit, "Dead", 0.0);
-                libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer] = UnitBehaviorDurationTotal(deadUnit, "LeoricUndying");
-            }
-            CatalogFieldValueSetFixed(c_gameCatalogEffect, "LeoricUndyingLifeRegenModifyUnit", "VitalArray[" + IntToString(0) + "].ChangeFraction", deadPlayer, (0.5 / (libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer] - 2.0)));
-        } else {
-            libGame_gf_HeroDeathStartRespawnTimer(deadPlayer, deathTime);
-            libGame_gf_HeroDeathUpdateUIElementsForDeath(true, true, true, deadPlayer, killingPlayer);
-            libGame_gf_HeroDeathEnableDisableDeadSoundStateForPlayer(true, deadPlayer);
-            libGame_gf_HeroDeathPortHeroBackAndSetDeathState(deadPlayer, libGame_gv_players[deadPlayer].lv_spawnPoint);
+        else {
+            UnitBehaviorSetDuration(deadUnit, "LeoricUndying", 0.0);
+            UnitBehaviorSetDuration(deadUnit, "Dead", 0.0);
+            libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer] = UnitBehaviorDurationTotal(deadUnit, "LeoricUndying");
         }
+        CatalogFieldValueSetFixed(c_gameCatalogEffect, "LeoricUndyingLifeRegenModifyUnit", "VitalArray[" + IntToString(0) + "].ChangeFraction", deadPlayer, (0.5 / (libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer] - 2.0)));
+    } else if (UnitGetType(deadUnit) == "HeroOlaf") {
+        TimerStart(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_olafDeathTimer, TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_olafDeathTimer) * (1 + deathTimerCurrentMod), false, c_timeGame);
+    } else if (UnitGetType(deadUnit) == "HeroBaleog") {
+        TimerStart(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_baleogDeathTimer, TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_baleogDeathTimer) * (1 + deathTimerCurrentMod), false, c_timeGame);
+    } else if (UnitGetType(deadUnit) == "HeroErik") {
+        TimerStart(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_erikDeathTimer, TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_erikDeathTimer) * (1 + deathTimerCurrentMod), false, c_timeGame);
+    } else {
+        libGame_gf_HeroDeathStartRespawnTimer(deadPlayer, deathTime);
+        libGame_gf_HeroDeathUpdateUIElementsForDeath(true, true, true, deadPlayer, killingPlayer);
+        libGame_gf_HeroDeathEnableDisableDeadSoundStateForPlayer(true, deadPlayer);
+        libGame_gf_HeroDeathPortHeroBackAndSetDeathState(deadPlayer, libGame_gv_players[deadPlayer].lv_spawnPoint);
     }
     return true;
 }
@@ -677,7 +721,6 @@ bool libAffx_EnemySpeedAffixAdded (bool testConds, bool runActions) {
         return true;
     }
     libAffx_CopyFilter(libAffx_filterAllEnemies, libAffx_filterEnemySpeed);
-    libAffx_AddExcludedUnitTypeFilter(libAffx_filterEnemySpeed, "ArtanisSpearofAdunPurifierBeamInvisibleTrackingUnit");
 
     enemySpeed = libAffx_EventAffix();
     enemySpeedModifier = enemySpeedCDR * libAffx_EventAffixCount();
@@ -1649,6 +1692,33 @@ bool libAffx_ResurgenceoftheStormAffixAdded (bool testConds, bool runActions) {
     }
     resurgenceoftheStormIndex = libAffx_EventAffix();
     resurgenceoftheStormCooldown = 300 - (60 * (libAffx_EventAffixCount() - 1));
+    if (libAffx_playersHeroIndex[libAffx_player] == libCore_gf_GetIndexFromHero("LostVikings")) {
+        resurgenceoftheStormCooldown = 180 - (60 * (libAffx_EventAffixCount() - 1));
+    }
+    return true;
+}
+bool libAffx_ResurgenceoftheStormUnitDied (bool testConds, bool runActions) {
+    unit deadUnit = EventUnit();
+    int deadPlayer = UnitGetOwner(deadUnit);
+    if (testConds) {
+        if (resurgenceoftheStormIndex == 0) {
+            return false;
+        }
+        if (deadPlayer != libAffx_player || libAffx_affixes[resurgenceoftheStormIndex].cooldown > 0) {
+            return false;
+        }
+        if (UnitGetType(deadUnit) != "RexxarMisha") {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    } 
+    libAffx_affixes[resurgenceoftheStormIndex].cooldown = resurgenceoftheStormCooldown / 2;
+    libNtve_gf_StopTimer(libGDHL_gv_mishaDeathTimer[deadPlayer]);
+    TimerStart(libGDHL_gv_mishaDeathTimer[deadPlayer], 5, false, c_timeGame);
+    UnitBehaviorSetDuration(libGame_gv_players[deadPlayer].lv_heroUnit, "RexxarSpiritBondCooldown", 5);
+    UnitModifyCooldown(libGame_gv_players[deadPlayer].lv_heroUnit, "Abil/RexxarMishaFocus", 5, c_cooldownOperationSet);
     return true;
 }
 bool libAffx_ResurgenceoftheStormHeroKilled (bool testConds, bool runActions) {
@@ -1663,7 +1733,7 @@ bool libAffx_ResurgenceoftheStormHeroKilled (bool testConds, bool runActions) {
         if (deadPlayer != libAffx_player || libAffx_affixes[resurgenceoftheStormIndex].cooldown > 0) {
             return false;
         }
-        if (deadUnit != libGame_gv_players[libAffx_player].lv_heroUnit) {
+        if (deadUnit != libGame_gv_players[libAffx_player].lv_heroUnit && UnitGetType(libGame_gv_players[libAffx_player].lv_heroUnit) != "HeroLostVikingsController") {
             return false;
         }
         if (libGame_diabloUsedSouls[libAffx_player]) {
@@ -1685,6 +1755,15 @@ bool libAffx_ResurgenceoftheStormHeroKilled (bool testConds, bool runActions) {
         UnitBehaviorSetDuration(deadUnit, "Dead", TimerGetRemaining(libGame_gv_players[deadPlayer].lv_respawnTimer));
         libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer] = UnitBehaviorDurationTotal(deadUnit, "LeoricUndying");
         CatalogFieldValueSetFixed(c_gameCatalogEffect, "LeoricUndyingLifeRegenModifyUnit", "VitalArray[" + IntToString(0) + "].ChangeFraction", deadPlayer, (0.5 / (libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer])));
+    } else if (UnitGetType(deadUnit) == "HeroOlaf") {
+        libNtve_gf_StopTimer(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_olafDeathTimer);
+        TimerStart(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_olafDeathTimer, 5, false, c_timeGame);
+    } else if (UnitGetType(deadUnit) == "HeroBaleog") {
+        libNtve_gf_StopTimer(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_baleogDeathTimer);
+        TimerStart(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_baleogDeathTimer, 5, false, c_timeGame);
+    } else if (UnitGetType(deadUnit) == "HeroErik") {
+        libNtve_gf_StopTimer(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_erikDeathTimer);
+        TimerStart(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_erikDeathTimer, 5, false, c_timeGame);
     }
     return true;
 }
@@ -3221,11 +3300,19 @@ bool libAffx_InjuryLevelUp (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 // Truly Lost
 // ---------------------------------------------------------------
-bool libAffx_LostVikingsLostAffixAdded (bool testConds, bool runActions) {
+bool libAffx_LostVikingsLostPeriodic (bool testConds, bool runActions) {
+    int i;
     if (!runActions) {
         return true;
     }
-    libAffx_CatalogReferenceModify("Unit,AffixBuddyDrone,Sight", libAffx_player, libAffx_GetCatalogDefault("Behavior,LostVikingsLost,Modification.SightMaximum"));
+    libGame_gf_ShareUnshareVisionOfAlliesForPlayer(false, libAffx_player);
+    for (i = 2; i <= 5; i += 1) {
+        PlayerSetAlliance(i, c_allianceIdSeekHelp, libAffx_player, false);
+        PlayerSetAlliance(i, c_allianceIdGiveHelp, libAffx_player, false);
+    }
+    PlayerSetAlliance(11, c_allianceIdSeekHelp, libAffx_player, false);
+    PlayerSetAlliance(11, c_allianceIdGiveHelp, libAffx_player, false);
+    VisRevealerEnable(libGame_gv_baseRevealers[libAffx_player], false);
 
     return true;
 }
@@ -4227,6 +4314,259 @@ bool libAffx_SgtHammerBlasterGainTalent (bool testConds, bool runActions) {
     libAffx_CatalogReferenceModify("Abil,SgtHammerConcussiveBlast,Cost[0].Cooldown.TimeUse", libAffx_player, "0.5");
     libAffx_CatalogReferenceModify("Abil,SgtHammerConcussiveBlast,Cost[0].Charge.TimeUse", libAffx_player, "8");
 
+    return true;
+}
+// ---------------------------------------------------------------
+// Trilogy
+// ---------------------------------------------------------------
+bool libAffx_LostVikingsTrilogyAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libGDHL_gv_data_LostVikingsTheSequelDeathTimeReduction[libAffx_player] = 0.8;
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Loot Box
+// ---------------------------------------------------------------
+bool libAffx_LootBoxOneTime (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_QueueAffix3(libAffx_rarityCommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 2, false, false, 1, true);
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Experience Hoarder
+// ---------------------------------------------------------------
+bool libAffx_ExperienceHoarderAffixAdded (bool testConds, bool runActions) {
+    fixed xp;
+    int player;
+    playergroup playerGroup;
+    if (!runActions) {
+        return true;
+    }
+    xp = libAffx_BankLoadValueFixed("ExperienceHoarderXP");
+    if (xp > 0) {
+        if (libGame_teamOrderSharedXPDisabled) {
+            libGame_gf_GrantXPToPlayer(xp, libAffx_player, libGame_ge_XPSources_External);
+        } else {
+            playerGroup = PlayerGroupCopy(libGame_gf_AlliedPlayerGroupOfPlayer(libAffx_player));
+            while (true) {
+                player = PlayerGroupNextPlayer(playerGroup, player);
+                if (player<0) { break; }
+                libGame_gf_GrantXPToPlayer(xp, player, libGame_ge_XPSources_External);
+            }
+        }
+    }
+
+    return true;
+}
+bool libAffx_ExperienceHoarderWin (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_BankSaveValueFixed("ExperienceHoarderXP", UnitXPTotal(libGame_gv_players[libAffx_player].lv_heroUnit) * 0.20);
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Flyby Attack
+// ---------------------------------------------------------------
+bool libAffx_TyrandeFlybyAttackScaling (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    if (testConds) {
+        if (player != libAffx_player) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_LevelUpScaling("Effect,SentinelShotDamagePvE,Amount", player);
+
+    return true;
+}
+bool libAffx_TyrandeFlybyAttackAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    if (PlayerHasTalent(libAffx_player, "TyrandeRanger")) {
+        libAffx_CatalogReferenceModify2("Effect,SentinelShotMissileSearchPvE,AreaArray[0].RectangleWidth", libAffx_player, "1.25", c_upgradeOperationAdd);
+    }
+    return true;
+}
+bool libAffx_TyrandeFlybyAttackEffectUsed (bool testConds, bool runActions) {
+    unit caster =  EventPlayerEffectUsedUnit(c_effectUnitCaster);
+    point casterPoint = EventPlayerEffectUsedPoint(c_effectLocationTargetPoint);
+    if (!runActions) {
+        return true;
+    }
+    UnitCreateEffectPoint(caster, "SentinelShotMissileSearchPvE", casterPoint);
+
+    return true;
+}
+bool libAffx_TyrandeFlybyAttackTalentGained (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroGainTalentPlayer();
+    string talent = libGame_gf_HeroGainTalentGainedTalent();
+    if (testConds) {
+        if (player != libAffx_player) {
+            return false;
+        }
+        if (talent != "TyrandeRanger") {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CatalogReferenceModify2("Effect,SentinelShotMissileSearchPvE,AreaArray[0].RectangleWidth", libAffx_player, "1.25", c_upgradeOperationAdd);
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Dual Hammer
+// ---------------------------------------------------------------
+bool libAffx_MuradinDualHammerAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Charge.CountMax", libAffx_player, "2");
+    libAffx_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Charge.CountStart", libAffx_player, "2");
+    libAffx_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Charge.CountUse", libAffx_player, "1");
+    libAffx_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Charge.TimeUse", libAffx_player, "10");
+    libAffx_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Cooldown.TimeUse", libAffx_player, "0.5");
+    libAffx_CatalogReferenceModify("Effect,MuradinHeroWeaponItsHammerTimeStormBoltModifyCooldown,Cost[0].CooldownTimeUse", libAffx_player, "0");
+    libAffx_CatalogReferenceModify("Effect,MuradinHeroWeaponItsHammerTimeStormBoltModifyCooldown,Cost[0].ChargeTimeUse", libAffx_player, "-0.5");
+
+    if (PlayerHasTalent(libAffx_player, "MuradinMasteryStormhammerSledgehammer")) {
+        libAffx_CatalogReferenceModify2("Abil,MuradinStormBolt,Cost.Charge.TimeUse", libAffx_player, "1.5", c_upgradeOperationSubtract);
+    }
+
+    return true;
+}
+bool libAffx_MuradinDualHammerTalentGained (bool testConds, bool runActions) {
+    string talent = libGame_gf_HeroGainTalentGainedTalent();
+    int player = libGame_gf_HeroGainTalentPlayer();
+    if (testConds) {
+        if (player != libAffx_player) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CatalogReferenceModify2("Abil,MuradinStormBolt,Cost.Charge.TimeUse", libAffx_player, "1.5", c_upgradeOperationSubtract);
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Storm Armor
+// ---------------------------------------------------------------
+bool libAffx_LiMingStormArmorScaling (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    if (testConds) {
+        if (player != libAffx_player) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_LevelUpScaling("Effect,LiMingStormArmorDamage,Amount", player);
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Pacifism
+// ---------------------------------------------------------------
+int libAffx_pacifismIndex;
+bool libAffx_PacifismAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_pacifismIndex = libAffx_EventAffix();
+    if (libAffx_BankLoadValueInt("PacifismReady") == 1) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/Pacifism"));
+        libAffx_QueueAffix(libAffx_rarityRare, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, true);
+        libAffx_QueueAffix(libAffx_rarityEpic, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, true);
+        libAffx_BankSaveValueInt("PacifismReady", 0);
+    }
+    
+    return true;
+}
+bool libAffx_PacifismWin (bool testConds, bool runActions) {
+    fixed takedowns = libGame_gv_scoreValues[libAffx_player].lv_takedowns;
+    fixed kills = libGame_gv_scoreValues[libAffx_player].lv_kills;
+    fixed assists = libGame_gv_scoreValues[libAffx_player].lv_assists;
+    if (testConds) {
+        if (libAffx_pacifismIndex == 0) {
+            return false;
+        }
+        if (libAffx_affixes[libAffx_pacifismIndex].quest.questDone) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    if ((takedowns + kills + assists) <= 0) {
+        libAffx_affixes[libAffx_pacifismIndex].quest.questDone = true;
+        libAffx_BankSaveValueInt("PacifismReady", 1);
+    }
+    
+    return true;
+}
+// ---------------------------------------------------------------
+// Long Armed Giants
+// ---------------------------------------------------------------
+libAffx_Filter libAffx_filterLongArmedGiants;
+bool libAffx_LongArmedGiantsUnitCreated (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_UnitBehaviorAddCriteria(EventUnitCreatedUnit(), "LongArmedGiants", 1, libAffx_filterLongArmedGiants);
+    return true;
+}
+bool libAffx_LongArmedGiantsAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_CopyFilter(libAffx_filterAllEnemies, libAffx_filterLongArmedGiants);
+    libAffx_filterLongArmedGiants.requiredUnitType = "MercLanerSiegeGiant";
+    libAffx_UnitBehaviorAddCriteriaAll("LongArmedGiants", 1, libAffx_filterLongArmedGiants);
+    return true;
+}
+bool libAffx_LongArmedGiantsUnitChangeOwner (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_UnitBehaviorAddOrRemoveCriteria(EventUnit(), "LongArmedGiants", 1, libAffx_filterLongArmedGiants);
+    return true;
+}
+// ---------------------------------------------------------------
+// Prepared
+// ---------------------------------------------------------------
+bool libAffx_PreparedOncePerGame (bool testConds, bool runActions) {
+    int i;
+    unitgroup heroGroup;
+    int groupCount;
+    unit heroUnit;
+    if (!runActions) {
+        return true;
+    }
+    for (i = 6; i <= 10; i += 1) {
+        heroGroup = libGame_gv_players[i].lv_heroUnitGroup;
+        groupCount = UnitGroupCount(heroGroup, c_unitCountAll);
+        for (;; groupCount -= 1) {
+            if (groupCount <= 0) { break; }
+            heroUnit = UnitGroupUnitFromEnd(heroGroup, groupCount);
+            if (heroUnit == null) { continue; }
+            UnitBehaviorAdd(heroUnit, "PreparedShield", heroUnit, 1);
+        }
+    }
     return true;
 }
 

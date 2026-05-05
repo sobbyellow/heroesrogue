@@ -50,6 +50,9 @@ void libGDHL_InitVariables () {
     libGDHL_gv_gPU2020GateTimer = TimerCreate();
     libGDHL_gv_gPU2020EventPhase = 1;
     for (init_i = 0; init_i <= libCore_gv_bALMaxPlayers; init_i += 1) {
+        libGDHL_gv_data_LostVikingsTheSequelDeathTimeReduction[init_i] = 0.5;
+    }
+    for (init_i = 0; init_i <= libCore_gv_bALMaxPlayers; init_i += 1) {
         libGDHL_gv_abathurDeepTunnelPingTextLockoutTimer[init_i] = TimerCreate();
     }
     for (init_i = 0; init_i <= libCore_gv_bALMaxPlayers; init_i += 1) {
@@ -1910,7 +1913,7 @@ void libGDHL_gf_VikingDownStartRespawnTimer (unit lp_viking, timer lp_respawnTim
         UnitSetState(lv_heroUnit, c_unitStateStatusBar, false);
         if ((PlayerHasTalent(lv_lVPlayer, "LostVikingsMasteryTheSequel") == true)) {
             lv_respawnTime = libCore_gf_HeroDeathTime(lv_lVPlayer, lv_heroLevel);
-            lv_respawnTime -= (lv_respawnTime * libGDHL_gv_data_LostVikingsTheSequelDeathTimeReduction);
+            lv_respawnTime -= (lv_respawnTime * libGDHL_gv_data_LostVikingsTheSequelDeathTimeReduction[lv_lVPlayer]);
         }
         else {
             lv_respawnTime = libCore_gf_HeroDeathTime(lv_lVPlayer, lv_heroLevel);

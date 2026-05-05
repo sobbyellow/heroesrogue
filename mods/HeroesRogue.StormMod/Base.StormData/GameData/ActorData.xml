@@ -388,4 +388,30 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <AutoScaleFactor value="1.500000" />
   </CActorModel>
 
+  <CActorSite id="LiMingStormArmorImpactSiteActive" parent="SiteCenter">
+    <On Terms="Effect.LiMingStormArmorDamage.Start; At Target" Send="Create" />
+    <On Terms="ActorCreation" Send="RefSetFromRequest ::scope.Chain1Launch LiMingStormArmorLaunchSiteActive Implicit Find" />
+    <On Terms="ActorCreation" Send="Create LiMingStormArmorImpactSound" />
+    <On Terms="ActorCreation" Send="Create LiMingStormArmorStrike" />
+  </CActorSite>
+  <CActorSound id="LiMingStormArmorImpactSound" parent="HeroAttackImpactSoundOneShot">
+    <Sound value="Falstad_Thunderstorm_Impact" />
+  </CActorSound>
+  <CActorSite id="LiMingStormArmorLaunchSiteActive" parent="SiteWeapon">
+    <On Terms="Effect.LiMingStormArmorSearch.Start" Send="Create" />
+    <Host Subject="_Unit" Scope="Caster" Actor="Find" />
+  </CActorSite>
+  <CActorBeamSimple id="LiMingStormArmorStrike">
+    <Flags index="SuppressSaveLoad" value="1" />
+    <On Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death ContentPlayOnce" />
+    <On Terms="AnimBracketState.*.AfterClosing; AnimName BSD" Send="Destroy" />
+    <HostLaunch Subject="::Creator" />
+    <HostImpact Subject="::scope.Chain1Launch" />
+  </CActorBeamSimple>
+  <CModel id="LiMingStormArmorStrike" parent="PersistentSpellFX">
+    <Model value="Assets\Effects\Storm_FX_Falstad_Base_LightningRod_Strike\Storm_FX_Falstad_Base_LightningRod_Strike.m3" />
+    <ScaleMax X="2.000000" Y="2.000000" Z="2.000000" />
+    <ScaleMin X="2.000000" Y="2.000000" Z="2.000000" />
+  </CModel>
+
 </Catalog>

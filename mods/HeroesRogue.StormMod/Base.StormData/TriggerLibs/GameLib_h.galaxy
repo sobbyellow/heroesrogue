@@ -110,6 +110,7 @@ const int libGame_ge_XPSources_Creep = 3;
 const int libGame_ge_XPSources_Hero = 4;
 const int libGame_ge_XPSources_Structure = 5;
 const int libGame_ge_XPSources_RegenGlobe = 6;
+const int libGame_ge_XPSources_External = 100;
 const int libGame_ge_TownStates_Idle = 0;
 const int libGame_ge_TownStates_Fighting = 1;
 const int libGame_ge_TownStates_Leashing = 2;

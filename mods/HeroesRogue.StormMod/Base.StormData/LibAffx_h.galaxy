@@ -123,6 +123,7 @@ const int libAffx_queueMax = 100; // Maximum affixes in queue.
 const int libAffx_rollMax = 100; // Maximum affixes that can roll for a slot.
 const int libAffx_behaviorMax = 1000;
 const int libAffx_affixSelectionMax = 3; // Number of affixes the player can pick from.
+int libAffx_affixSelectionMaxCurrent = 3;
 
 const fixed libAffx_gameStartDelay = 2.25; // Delay before loading affixes from the bank.
 
@@ -207,6 +208,7 @@ struct libAffx_AffixData {
     bool[libAffx_affixMax + 1] requiredAffixes; // List of required affixes.
     bool requiresMaxStacks; // If required affixes also require maximum stacks.
     bool[libAffx_maxHeroes + 1] allowedHero; // List of Hero requirements.
+    bool heroExclusive;
     bool[libAffx_maxHeroes + 1] heroTooltip; 
     bool[libAffx_maxMaps + 1] allowedMap; // List of Map requirements
     int requiredDifficulty;
@@ -256,10 +258,14 @@ int[libAffx_queueMax + 1] libAffx_queueAffixRarity;
 bool[libAffx_queueMax + 1] libAffx_queueAffixCurse;
 int[libAffx_queueMax + 1] libAffx_queueAffixLevel;
 bool[libAffx_queueMax + 1] libAffx_queueAffixPreventUpgrade;
+int[libAffx_queueMax + 1] libAffx_queueAffixAmount;
+bool[libAffx_queueMax + 1] libAffx_queueAffixDisableReroll;
 int libAffx_currentAffixRarity;
 bool libAffx_currentAffixCurse;
 int libAffx_currentAffixLevel;
 bool libAffx_currentAffixPreventUpgrade;
+int libAffx_currentAffixAmount;
+bool libAffx_currentAffixDisableReroll;
 int libAffx_queueCount; // Number of affixes in the queue.
 bool libAffx_queueActive; // Whether the affix queue is currently active.
 
@@ -376,12 +382,13 @@ trigger libAffx_AbathurSymbioteTrigger;
 trigger libAffx_AbathurUltimateEvolutionTrigger;
 trigger libAffx_ChenStormEarthFireTrigger;
 trigger libAffx_LostVikingsRaidboatTrigger;
+trigger libAffx_RexxarTrigger;
 
 // Debug options
 bool libAffx_debug_enableTryMeMode2 = false; // Try mode 2.0
 bool libAffx_debug_enableCheatCommands = false; // Enables cheat/debug commands
 bool libAffx_debug_disableHeroSelection = false; // Skips the Hero selection.
-string libAffx_debug_playerHero = "SgtHammer"; // Player hero when hero selection is disabled.
+string libAffx_debug_playerHero = "Thrall"; // Player hero when hero selection is disabled.
 bool libAffx_debug_enableDebugLogging = false; // Enables debug logging
 bool libAffx_debug_forcedHeroes = false; // Enemy heroes are forced to predetermined heroes
 bool libAffx_debug_ignoreMap = false; // Ignores the saved map.
@@ -405,8 +412,8 @@ string libAffx_GetAffixSuffix(int affix);
 string libAffx_CountToString(int count, int maxCount);
 text libAffx_GetAffixTitle(bool curse);
 void libAffx_CreateAffixDialogItem(int buttonIndex, int affix, int xOffset);
-void libAffx_CreateAffixDialog(bool curse);
-void libAffx_ShowAffixDialog(int showCount); // Show dialog for picking affixes.
+void libAffx_CreateAffixDialog(bool curse, bool rerollDisabled);
+void libAffx_ShowAffixDialog(int showCount, bool rerollDisabled); // Show dialog for picking affixes.
 void libAffx_CreateUI();
 void libAffx_CreateCurrentRunDialog();
 void libAffx_CreateAffixesOwnedDialogItem(int affix, int offsetX, int offsetY);
@@ -452,7 +459,7 @@ bool libAffx_IntToBoolean(int value);
 void libAffx_MuteAllChannelsExcept(playergroup pg, bool mute, int except);
 int libAffx_RollRarity(int baseRarity, bool curse); // Roll rarity to upgrade.
 int libAffx_RollAffix(int rarity, bool curse, int level, bool preventUpgrade); // Returns an affix that matches the criteria and all requirements.
-void libAffx_ChooseAffixes(int rarity, bool curse, int level, bool preventUpgrade); // Chooses affixes and provide the player with the affix options.
+void libAffx_ChooseAffixes(int rarity, bool curse, int level, bool preventUpgrade, int affixCount, bool rerollDisabled); // Chooses affixes and provide the player with the affix options.
 void libAffx_ProcessQueue(); // Goes through the affix queue.
 void libAffx_MoveQueue();
 void libAffx_QueueAffix(int rarity, bool curse, int level, int amount, bool preventUpgrade); // Queue an affix with the specified criteria.

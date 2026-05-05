@@ -293,4 +293,13 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Behavior value="GlobeCollector" />
 </CValidatorUnitCompareBehaviorCount>
 
+<CValidatorUnitCompareBehaviorCount id="TargetDoesNotHaveTyrandeSentinelPvEHit">
+  <Compare value="LE" />
+  <Behavior value="TyrandeSentinelPvEHit" />
+</CValidatorUnitCompareBehaviorCount>
+<CValidatorUnitCompareBehaviorCount id="TargetDoesNotHaveLegallyBlind">
+  <Compare value="LE" />
+  <Behavior value="LegallyBlind" />
+</CValidatorUnitCompareBehaviorCount>
+
 </Catalog>
