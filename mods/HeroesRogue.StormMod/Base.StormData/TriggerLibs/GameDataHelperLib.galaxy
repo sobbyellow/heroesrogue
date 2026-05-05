@@ -50,6 +50,9 @@ void libGDHL_InitVariables () {
     libGDHL_gv_gPU2020GateTimer = TimerCreate();
     libGDHL_gv_gPU2020EventPhase = 1;
     for (init_i = 0; init_i <= libCore_gv_bALMaxPlayers; init_i += 1) {
+        libGDHL_gv_data_LostVikingsTheSequelDeathTimeReduction[init_i] = 0.5;
+    }
+    for (init_i = 0; init_i <= libCore_gv_bALMaxPlayers; init_i += 1) {
         libGDHL_gv_abathurDeepTunnelPingTextLockoutTimer[init_i] = TimerCreate();
     }
     for (init_i = 0; init_i <= libCore_gv_bALMaxPlayers; init_i += 1) {
@@ -705,13 +708,34 @@ void libGDHL_gf_HeroArtanisSpearofAdunPurifierBeamAI (unit lp_purifierBeam, int 
     TriggerExecute(auto_libGDHL_gf_HeroArtanisSpearofAdunPurifierBeamAI_Trigger, false, false);
 }
 
+unit GetDVaUnit(unit lv_purifierBeamTarget) {
+    int player = UnitGetOwner(lv_purifierBeamTarget);
+    unitgroup heroUnitGroup = libGame_gv_players[player].lv_heroUnitGroup;
+    int groupCount = UnitGroupCount(heroUnitGroup, c_unitCountAll);
+
+    return UnitGroupUnitFromEnd(heroUnitGroup, groupCount);
+}
+
+unit[libCore_gv_bALMaxPlayers + 3] purifierInitialTarget;
+unit UpdatePurifierBeamTarget(int beamOwner) {
+    if (UnitGetType(purifierInitialTarget[beamOwner]) == "HeroDVaMech" && UnitHasBehavior2(purifierInitialTarget[beamOwner], "PurificationProtocol")) {
+        return GetDVaUnit(purifierInitialTarget[beamOwner]);
+    } else if (UnitHasBehavior2(purifierInitialTarget[beamOwner], "LongboatRaidHideVikings") && UnitHasBehavior2(purifierInitialTarget[beamOwner], "PurificationProtocol")) {
+        return libGDHL_gv_lostVikingsPlayer[UnitGetOwner(purifierInitialTarget[beamOwner])].lv_boat;
+    }
+
+    return purifierInitialTarget[beamOwner];
+}
+
 bool auto_libGDHL_gf_HeroArtanisSpearofAdunPurifierBeamAI_TriggerFunc (bool testConds, bool runActions) {
     unit lp_purifierBeam = auto_libGDHL_gf_HeroArtanisSpearofAdunPurifierBeamAI_lp_purifierBeam;
     int lp_owner = auto_libGDHL_gf_HeroArtanisSpearofAdunPurifierBeamAI_lp_owner;
 
     // Variable Declarations
     unit lv_artanis;
+    unit lv_purifierBeamTarget = libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner];
     int lv_purifierBeamState;
+    purifierInitialTarget[lp_owner] = libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner];
 
     // Automatic Variable Declarations
     // Variable Initialization
@@ -721,8 +745,11 @@ bool auto_libGDHL_gf_HeroArtanisSpearofAdunPurifierBeamAI_TriggerFunc (bool test
     lv_purifierBeamState = libGDHL_ge_SpearofAdunPurifierBeamState_Priming;
     lv_artanis = libGame_gv_players[lp_owner].lv_heroUnit;
     while ((UnitIsAlive(lp_purifierBeam) == true)) {
+        lv_purifierBeamTarget = UpdatePurifierBeamTarget(lp_owner);
+        // if debug is needed, here is printed target of beam
+        //UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringToText(UnitGetType(lv_purifierBeamTarget)));
         if ((lv_purifierBeamState == libGDHL_ge_SpearofAdunPurifierBeamState_Priming)) {
-            if (((UnitIsAlive(libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner]) == false) || (UnitHasBehavior2(libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner], "Dead") == true) || (UnitHasBehaviorWithCategoryFlag(libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner], c_behaviorCategorySpecialDeathState) == true)) && (UnitHasBehavior2(lv_artanis, "ArtanisSpearofAdunTargetPurifiedSupressionBehavior") == true)) {
+            if (((UnitIsAlive(lv_purifierBeamTarget) == false) || (UnitHasBehavior2(lv_purifierBeamTarget, "Dead") == true) || (UnitHasBehaviorWithCategoryFlag(lv_purifierBeamTarget, c_behaviorCategorySpecialDeathState) == true)) && (UnitHasBehavior2(lv_artanis, "ArtanisSpearofAdunTargetPurifiedSupressionBehavior") == true)) {
                 UnitKill(lp_purifierBeam);
                 UnitModifyCooldown(lv_artanis, "Abil/ArtanisSpearofAdunPurifierBeam", 10.0, c_cooldownOperationSet);
                 break;
@@ -732,16 +759,16 @@ bool auto_libGDHL_gf_HeroArtanisSpearofAdunPurifierBeamAI_TriggerFunc (bool test
                 lv_purifierBeamState = libGDHL_ge_SpearofAdunPurifierBeamState_Active;
             }
             else {
-                UnitSetPosition(lp_purifierBeam, UnitGetPosition(libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner]), false);
-                libGDHL_gv_heroArtanisSpearofAdunPurifierBeamLastKnownPoint[lp_owner] = UnitGetPosition(libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner]);
+                UnitSetPosition(lp_purifierBeam, UnitGetPosition(lv_purifierBeamTarget), false);
+                libGDHL_gv_heroArtanisSpearofAdunPurifierBeamLastKnownPoint[lp_owner] = UnitGetPosition(lv_purifierBeamTarget);
             }
         }
         else {
             if ((lv_purifierBeamState == libGDHL_ge_SpearofAdunPurifierBeamState_Active)) {
-                if ((UnitIsAlive(libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner]) == true) && (UnitHasBehavior2(libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner], "Dead") == false) && (UnitHasBehaviorWithCategoryFlag(libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner], c_behaviorCategorySpecialDeathState) == false)) {
+                if ((UnitIsAlive(lv_purifierBeamTarget) == true) && (UnitHasBehavior2(lv_purifierBeamTarget, "Dead") == false) && (UnitHasBehaviorWithCategoryFlag(lv_purifierBeamTarget, c_behaviorCategorySpecialDeathState) == false)) {
                     if ((libGDHL_gv_heroArtanisSpearofAdunPurifierBeamPointOverride[lp_owner] == true)) {
                         if ((DistanceBetweenPoints(UnitGetPosition(lp_purifierBeam), libGDHL_gv_heroArtanisSpearofAdunPurifierBeamLastKnownPoint[lp_owner]) <= 6.0)) {
-                            UnitIssueOrder(lp_purifierBeam, OrderTargetingPoint(AbilityCommand("move", 0), UnitGetPosition(libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner])), c_orderQueueReplace);
+                            UnitIssueOrder(lp_purifierBeam, OrderTargetingPoint(AbilityCommand("move", 0), UnitGetPosition(lv_purifierBeamTarget)), c_orderQueueReplace);
                             libGDHL_gv_heroArtanisSpearofAdunPurifierBeamPointOverride[lp_owner] = false;
                         }
                         else {
@@ -749,8 +776,8 @@ bool auto_libGDHL_gf_HeroArtanisSpearofAdunPurifierBeamAI_TriggerFunc (bool test
                         }
                     }
                     else {
-                        UnitIssueOrder(lp_purifierBeam, OrderTargetingPoint(AbilityCommand("move", 0), UnitGetPosition(libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner])), c_orderQueueReplace);
-                        libGDHL_gv_heroArtanisSpearofAdunPurifierBeamLastKnownPoint[lp_owner] = UnitGetPosition(libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner]);
+                        UnitIssueOrder(lp_purifierBeam, OrderTargetingPoint(AbilityCommand("move", 0), UnitGetPosition(lv_purifierBeamTarget)), c_orderQueueReplace);
+                        libGDHL_gv_heroArtanisSpearofAdunPurifierBeamLastKnownPoint[lp_owner] = UnitGetPosition(lv_purifierBeamTarget);
                     }
                 }
                 else {
@@ -766,7 +793,7 @@ bool auto_libGDHL_gf_HeroArtanisSpearofAdunPurifierBeamAI_TriggerFunc (bool test
             }
             else {
                 if ((lv_purifierBeamState == libGDHL_ge_SpearofAdunPurifierBeamState_Idle)) {
-                    if ((UnitIsAlive(libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner]) == true) && (UnitHasBehavior2(libGDHL_gv_heroArtanisSpearofAdunPurifierBeamTarget[lp_owner], "Dead") == false)) {
+                    if ((UnitIsAlive(lv_purifierBeamTarget) == true) && (UnitHasBehavior2(lv_purifierBeamTarget, "Dead") == false)) {
                         lv_purifierBeamState = libGDHL_ge_SpearofAdunPurifierBeamState_Active;
                     }
                     else {
@@ -1886,7 +1913,7 @@ void libGDHL_gf_VikingDownStartRespawnTimer (unit lp_viking, timer lp_respawnTim
         UnitSetState(lv_heroUnit, c_unitStateStatusBar, false);
         if ((PlayerHasTalent(lv_lVPlayer, "LostVikingsMasteryTheSequel") == true)) {
             lv_respawnTime = libCore_gf_HeroDeathTime(lv_lVPlayer, lv_heroLevel);
-            lv_respawnTime -= (lv_respawnTime * libGDHL_gv_data_LostVikingsTheSequelDeathTimeReduction);
+            lv_respawnTime -= (lv_respawnTime * libGDHL_gv_data_LostVikingsTheSequelDeathTimeReduction[lv_lVPlayer]);
         }
         else {
             lv_respawnTime = libCore_gf_HeroDeathTime(lv_lVPlayer, lv_heroLevel);

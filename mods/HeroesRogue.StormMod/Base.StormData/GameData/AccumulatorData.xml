@@ -13,12 +13,24 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <MaxAccumulation value="390000" />
     <ApplicationRule value="Add" />
     <TokenId value="WitchDoctorVoodooRitual" />
-    <Scale value="0.4" />
+    <Scale value="0.5" />
   </CAccumulatorToken>
   <CAccumulatorToken id="LostVikingsGreatVikingHoardAccumulator" parent="BaseTokenAccumulator">
     <ApplicationRule value="Add" />
     <TokenId value="LostVikingsVikingHoardTokenCounter" />
     <Scale value="0.005" />
+    <UnitSource Value="Source" />
+  </CAccumulatorToken>
+  <CAccumulatorToken id="LostVikingsGreatVikingHoardAccumulatorSpeed" parent="BaseTokenAccumulator">
+    <ApplicationRule value="Add" />
+    <TokenId value="LostVikingsVikingHoardTokenCounter" />
+    <Scale value="0.0025" />
+    <UnitSource Value="Source" />
+  </CAccumulatorToken>
+  <CAccumulatorToken id="LostVikingsGreatVikingHoardAccumulatorSpeedGoGoGo" parent="BaseTokenAccumulator">
+    <ApplicationRule value="Add" />
+    <TokenId value="LostVikingsVikingHoardTokenCounter" />
+    <Scale value="0.0075" />
     <UnitSource Value="Source" />
   </CAccumulatorToken>
   
@@ -34,7 +46,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ApplicationRule value="Add" />
     <TokenId value="SentinelShotDamageTokenCounter" />
     <Scale value="0.05" />
-    <MaxAccumulation value="100" />
+    <MaxAccumulation value="500" />
   </CAccumulatorToken>
   <CAccumulatorToken id="TheMarkAccumulator" parent="BaseAccumulator">
     <SourceEffect value="TyrandeHeroWeaponDamage" />
@@ -48,7 +60,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ApplicationRule value="Add" />
     <TokenId value="MuradinDwarfTossTokenCounter" />
     <Scale value="0.1" />
-    <MaxAccumulation value="100" />
+    <MaxAccumulation value="1000" />
   </CAccumulatorToken>
   
   <CAccumulatorVitals id="MuradinCurrentHealthAccumulator" parent="BaseVitalAccumulator">

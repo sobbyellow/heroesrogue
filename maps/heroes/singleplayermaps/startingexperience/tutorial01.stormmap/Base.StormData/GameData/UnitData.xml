@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CUnit id="GroundHole">
+        <PlaneArray index="Ground" value="0"/>
+    </CUnit>
+    <CUnit id="GroundHoleCamera">
+        <FlagArray index="Unselectable" value="1"/>
+        <FlagArray index="Untargetable" value="1"/>
+        <FlagArray index="Unstoppable" value="1"/>
+        <Radius value="0"/>
+        <PlaneArray index="Air" value="1"/>
+        <Height value="6"/>
+    </CUnit>
+    <CUnit id="GroundHoleVision">
+        <Sight value="10"/>
+    </CUnit>
+    <CUnit id="HoleLadderDown">
+        <FlagArray index="Turnable" value="1"/>
+        <FlagArray index="Uncommandable" value="1"/>
+        <FlagArray index="Unselectable" value="1"/>
+        <FlagArray index="Uncloakable" value="1"/>
+        <FlagArray index="Undetectable" value="1"/>
+        <FlagArray index="Unstoppable" value="1"/>
+        <Radius value="0"/>
+        <PlaneArray index="Ground" value="0"/>
+    </CUnit>
+    <CUnit id="HoleLadderUp">
+        <FlagArray index="Turnable" value="1"/>
+        <FlagArray index="Uncommandable" value="1"/>
+        <FlagArray index="Unselectable" value="1"/>
+        <FlagArray index="Uncloakable" value="1"/>
+        <FlagArray index="Undetectable" value="1"/>
+        <FlagArray index="Unstoppable" value="1"/>
+        <Radius value="0"/>
+        <PlaneArray index="Ground" value="0"/>
+    </CUnit>
+    <CUnit id="XelNagaWatchTower">
+        <Sight value="16"/>
+    </CUnit>
+</Catalog>

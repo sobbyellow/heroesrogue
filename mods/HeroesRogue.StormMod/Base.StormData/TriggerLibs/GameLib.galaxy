@@ -10459,15 +10459,17 @@ void libGame_gf_GrantXPToPlayer (fixed lp_incomingXP, int lp_player, int lp_sour
 
     }
 
-    if (lp_player >= 1 && lp_player <= 5) {
-        lv_xP = lv_xP * (1 + libGame_teamOrderXPMod);
-        if (lp_source == libGame_ge_XPSources_Trickle) {
-            lv_xP = lv_xP * (1 + libGame_teamOrderXPModTrickle);
-        }
-    } else if (lp_player >= 6 && lp_player <= 10) {
-        lv_xP = lv_xP * (1 + libGame_teamChaosXPMod);
-        if (lp_source == libGame_ge_XPSources_Trickle) {
-            lv_xP = lv_xP * (1 + libGame_teamChaosXPModTrickle);
+    if (lp_source != libGame_ge_XPSources_External) {
+        if (lp_player >= 1 && lp_player <= 5) {
+            lv_xP = lv_xP * (1 + libGame_teamOrderXPMod);
+            if (lp_source == libGame_ge_XPSources_Trickle) {
+                lv_xP = lv_xP * (1 + libGame_teamOrderXPModTrickle);
+            }
+        } else if (lp_player >= 6 && lp_player <= 10) {
+            lv_xP = lv_xP * (1 + libGame_teamChaosXPMod);
+            if (lp_source == libGame_ge_XPSources_Trickle) {
+                lv_xP = lv_xP * (1 + libGame_teamChaosXPModTrickle);
+            }
         }
     }
 
@@ -11952,7 +11954,6 @@ void libGame_gf_TalentsChooseTalentForPlayer (int lp_tierIndex, int lp_buttonInd
         libGame_gf_SendEventHeroGainTalent((libGame_gv_talents_TalentChoices[lp_player][lp_tierIndex].lv_talentData[lp_buttonIndex].lv_talentCatalogLink), lp_player);
         libGame_gf_ApplyAbilityModificationsForPlayerAtTalent(lp_player, lp_tierIndex, lp_buttonIndex);
     }
-
     StatEventCreate("TalentChosen");
     StatEventAddDataInt(StatEventLastCreated(), "PlayerID", lp_player);
     StatEventAddDataString(StatEventLastCreated(), "PurchaseName", (libGame_gv_talents_TalentChoices[lp_player][lp_tierIndex].lv_talentData[lp_buttonIndex].lv_talentCatalogLink));
@@ -22592,6 +22593,7 @@ void libGame_gt_HealthPackGeneratorHealthPackCreated_Init () {
     TriggerEnable(libGame_gt_HealthPackGeneratorHealthPackCreated, false);
     TriggerAddEventPlayerEffectUsed(libGame_gt_HealthPackGeneratorHealthPackCreated, c_playerAny, "GenerateHealthPackAddBehaviortoGlobe");
 }
+
 
 void libGame_InitTriggers () {
     libGame_gt_IncludeGame_Init();

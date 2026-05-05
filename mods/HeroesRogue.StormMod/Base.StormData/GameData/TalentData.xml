@@ -91,8 +91,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
       </Modifications>
     </AbilityModificationArray>
   </CTalent>
-
-  
   <CTalent id="WizardFirefliesMirrorball">
     <Face value="WizardFireflies" />
     <AbilityModificationArray>
@@ -113,5 +111,93 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     </AbilityModificationArray>
     <Abil value="WizardMagicMissiles" />
   </CTalent>
+
+  <CTalent id="SgtHammerShredderRounds">
+    <Face value="SgtHammerShredderRounds" />
+    <AbilityModificationArray>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Catalog value="Effect" />
+        <Entry value="SgtHammerShredderRoundsApplyBehavior" />
+        <Field value="Chance" />
+        <Value value="1.000000" />
+      </Modifications>
+    </AbilityModificationArray>
+  </CTalent>
+  <CTalent id="SgtHammerDebilitatingRounds">
+    <Face value="SgtHammerDebilitatingRounds" />
+    <AbilityModificationArray>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Catalog value="Effect" />
+        <Entry value="SgtHammerDebilitatingRoundsApplyBehavior" />
+        <Field value="Chance" />
+        <Value value="1.000000" />
+      </Modifications>
+    </AbilityModificationArray>
+  </CTalent>
+  <CTalent id="SgtHammerTrojanMines">
+    <Face value="SgtHammerTrojanMines" />
+    <AbilityModificationArray>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Catalog value="Effect" />
+        <Entry value="SgtHammerTrojanMinesSwitch" />
+        <Field value="Chance" />
+        <Value value="1.000000" />
+      </Modifications>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Catalog value="Effect" />
+        <Entry value="SgtHammerSpiderMinesCreateUnit" />
+        <Field value="SpawnRange" />
+        <Value value="1" />
+      </Modifications>
+    </AbilityModificationArray>
+    <Abil value="SgtHammerSpiderMines" />
+  </CTalent>
+  <CTalent id="SgtHammerLightTank">
+    <Face value="SgtHammerLightTank" />
+    <RankArray>
+      <BehaviorArray value="SgtHammerLightTank" />
+    </RankArray>
+  </CTalent>
+  <CTalent id="SgtHammerRubberBullets">
+    <Face value="SgtHammerRubberBullets" />
+    <AbilityModificationArray>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Catalog value="Effect" />
+        <Entry value="SgtHammerRubberBulletsSwitch" />
+        <Field value="Chance" />
+        <Value value="1" />
+      </Modifications>
+    </AbilityModificationArray>
+  </CTalent>
+  <CTalent id="SgtHammerExplosiveShells">
+    <Face value="SgtHammerExplosiveShells" />
+    <AbilityModificationArray>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Catalog value="Effect" />
+        <Entry value="SgtHammerExplosiveShellsSplashSet" />
+        <Field value="Chance" />
+        <Value value="1" />
+      </Modifications>
+    </AbilityModificationArray>
+  </CTalent>
+
+  <CTalent id="SgtHammerSiegeModeAdvancedArtillery">
+    <AbilityModificationArray>
+      <Modifications>
+        <Type value="FlatModification" />
+        <Catalog value="Effect" />
+        <Entry value="SiegeWeaponSplashSearch2" />
+        <Field value="AreaArray[0].Radius" />
+        <Value value="0.500000" />
+      </Modifications>
+    </AbilityModificationArray>
+  </CTalent>
+  
 
 </Catalog>

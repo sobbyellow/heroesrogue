@@ -1,0 +1,233 @@
+include "TriggerLibs/HeroesLib"
+
+//--------------------------------------------------------------------------------------------------
+// Library: Towers of Doom
+//--------------------------------------------------------------------------------------------------
+// Preset Declarations
+const int libMTOD_ge_MMToDTownStateChange_SwapTeams = 0;
+const int libMTOD_ge_MMToDTownStateChange_Remove = 1;
+const int libMTOD_ge_MMToDTownStateChange_Add = 2;
+
+// Constants
+const string libMTOD_gv_mMToDMechanicName_C = "TowersOfDoom";
+const fixed libMTOD_gv_mMToDCoreShots_C = 1.0;
+const int libMTOD_gv_mMToDScoringAltarMaxCount_C = 4;
+const fixed libMTOD_gv_mMToDScoringAltarAnimTime_C = 4.0;
+const fixed libMTOD_gv_mMToDScoringEventDelay_C = 180.0;
+const fixed libMTOD_gv_mMToDAltarRespawnDelay_C = 110.0;
+const fixed libMTOD_gv_mMToDScoringAltarWarningTime_C = 30.0;
+const int libMTOD_gv_mMToDScoringAltarMaxConfigs_C = 6;
+const fixed libMTOD_gv_mMToDScoringAltarRevealArea_C = 4.5;
+const fixed libMTOD_gv_mMToDScoringAltarSecondSpawnSoundTime_C = 15.0;
+const fixed libMTOD_gv_mMToDPhaseTwoDelay_C = 720.0;
+const fixed libMTOD_gv_mMToDPhaseTwoWarningTime_C = 15.0;
+const int libMTOD_gv_mMToDTownsMaxCount_C = 6;
+const int libMTOD_gv_mMToDTownStructureMaxCount_C = 20;
+const int libMTOD_gv_mMToDTownFlipDelayTime_C = 2;
+const int libMTOD_gv_mMToDBossCannonShots_C = 4;
+const fixed libMTOD_gv_data_XP_GoblinSapperCapture_C = 0.0;
+const fixed libMTOD_gv_data_XP_GraveGolemCapture_C = 0.0;
+const fixed libMTOD_gv_mMToDDefenderHeadSpellScaling_C = 0.1;
+const fixed libMTOD_gv_mMToDLanerHeadSpellScaling_C = 0.1;
+const fixed libMTOD_gv_mMToDLanerSapperSuicideScaling_C = 0.11;
+const fixed libMTOD_gv_mMToDBaseProtectionScaling = 25.0;
+const int libMTOD_gv_mMToDCannonRangeThreshold = 15;
+const fixed libMTOD_gv_mMToDWaygateRevealArea_C = 5.0;
+const int libMTOD_gv_mMFieldofSlaughterWaygateMaxCount_C = 1;
+const fixed libMTOD_gv_mMToDSpiritHealerVOCooldown = 6.0;
+
+// Structures
+struct libMTOD_gs_MMToDScoringAltar {
+    unit lv_unit;
+    bool lv_active;
+};
+
+struct libMTOD_gs_MMFieldOfSlaughterTown2 {
+    string lv_buildingType;
+    point lv_buildingPosition;
+    fixed lv_buildingFacing;
+};
+
+struct libMTOD_gs_MMToDTown {
+    text lv_townName;
+    int lv_owningTeam;
+    int lv_originalOwningTeam;
+    unit lv_fortUnit;
+    libMTOD_gs_MMFieldOfSlaughterTown2 lv_fortInfo;
+    libMTOD_gs_MMFieldOfSlaughterTown2[libMTOD_gv_mMToDTownStructureMaxCount_C + 1] lv_structureArray;
+    unit lv_capturePointUnit;
+    int lv_capturePointIndex;
+};
+
+struct libMTOD_gs_MMToDWaygate {
+    point lv_position;
+    unit lv_waygateUnit;
+    unit lv_orderEntrance;
+    unit lv_chaosEntrance;
+};
+
+struct libMTOD_gs_MMToDTownPanels {
+    int lv_mainTownPanel;
+    int lv_blueTownPanel;
+    int lv_blueTownHealth;
+    int lv_blueTownHealthFrame;
+    int lv_redTownPanel;
+    int lv_redTownHealth;
+    int lv_redTownHealthFrame;
+};
+
+struct libMTOD_gs_MMToDPanelEntries {
+    int lv_mainPanel;
+    libMTOD_gs_MMToDTownPanels[libMTOD_gv_mMToDTownsMaxCount_C + 1] lv_townHealth;
+    int lv_mainHealthPanel;
+    int lv_mainAltarTimerPanel;
+    int lv_altarInfoLabel;
+    int lv_altarLabel;
+    int lv_altarTimerLabel;
+    int lv_mainPotentialShotsPanel;
+    int lv_mainPotentialShotsLabel;
+    int lv_leftPotentialShotsLabel;
+    int lv_rightPotentialShotsLabel;
+    int lv_enemyCaptureNotificationPanel;
+    int lv_enemyCaptureNotificationLabel;
+    int lv_enemyCaptureNotificationTargetLabel;
+    int lv_allyCaptureNotificationPanel;
+    int lv_allyCaptureNotificationLabel;
+    int lv_allyCaptureNotificationTargetLabel;
+    int lv_waygateNotificationPanel;
+    int lv_townUpgradeNotificationPanel;
+    int lv_ravenNotificationPanel;
+    int lv_ravenNotificationLabel;
+    int lv_necroNotificationPanel;
+    int lv_necroNotificationLabel;
+};
+
+// Variable Declarations
+unitgroup libMTOD_gv_mMToDOrderBases;
+unitgroup libMTOD_gv_mMToDChaosBases;
+bool libMTOD_gv_mMToDSixTownEventActive;
+bool libMTOD_gv_mMToDFirstEventSpawned;
+timer libMTOD_gv_mMToDScoringAltarTimer;
+libMTOD_gs_MMToDScoringAltar[libMTOD_gv_mMToDScoringAltarMaxCount_C + 1] libMTOD_gv_mMToDScoringAltars;
+revealer[libMTOD_gv_mMToDScoringAltarMaxCount_C + 1] libMTOD_gv_mMToDScoringAltarOrderRevealers;
+revealer[libMTOD_gv_mMToDScoringAltarMaxCount_C + 1] libMTOD_gv_mMToDScoringAltarChaosRevealers;
+playergroup[libMTOD_gv_mMToDScoringAltarMaxConfigs_C + 1] libMTOD_gv_mMToDScoringAltarConfigs;
+playergroup libMTOD_gv_mMToDScoringAltarRemainingConfigs;
+playergroup libMTOD_gv_mMToDScoringAltarRemainingConfigsThreeAltarEvent;
+int libMTOD_gv_mMToDScoringAltarsActive;
+int libMTOD_gv_mMToDEventNumber;
+int libMTOD_gv_mMToDEventCurrentPointGroup;
+timer libMTOD_gv_mMToDObjectivePreviewTimer;
+fixed libMTOD_gv_mMToDObjectivePreviewDelay_C;
+timer libMTOD_gv_mMToDPhaseTwoTimer;
+fixed libMTOD_gv_mMToDSixCapDelay_C;
+timer libMTOD_gv_mMToDSixCapTimer;
+libMTOD_gs_MMToDTown[libMTOD_gv_mMToDTownsMaxCount_C + 1] libMTOD_gv_mMToDTowns;
+timer libMTOD_gv_mMToDScalingTimer;
+unit libMTOD_gv_mMToDHorsemanCannon;
+region[libCore_gv_bALMaxTeams + 1] libMTOD_gv_mMToDBaseKillZones;
+unitgroup[libCore_gv_bALMaxTeams + 1] libMTOD_gv_mMToDProtectionTowers;
+libMTOD_gs_MMToDWaygate[libMTOD_gv_mMFieldofSlaughterWaygateMaxCount_C + 1] libMTOD_gv_mMToDWaygates;
+unit libMTOD_gv_mMToDSpiritHealer;
+bool libMTOD_gv_mMToDSpiritHealerClicked;
+int[libCore_gv_bALMaxPlayers + 1] libMTOD_gv_mMToDSpiritHealerTextTags;
+timer[libCore_gv_bALMaxPlayers + 1] libMTOD_gv_mMToDSpiritHealerVOTimers;
+int[libCore_gv_bALMaxPlayers + 1] libMTOD_gv_mMToDAltarDamageDoneTotal;
+bool libMTOD_gv_mMToDBanterVariable;
+timer libMTOD_gv_mMToDBanterTimer;
+libMTOD_gs_MMToDPanelEntries libMTOD_gv_mMToDPanels;
+bool libMTOD_gv_mMToDPhaseTwoCheatUsed;
+bool libMTOD_gv_mMToDMapEventDisabled;
+
+// Function Declarations
+void libMTOD_gf_MMToDInitMercs ();
+void libMTOD_gf_MMToDUpdateTownState (unit lp_base, int lp_computerPlayer, int lp_stateChange);
+void libMTOD_gf_MMToDUpdatePotentialShotsLabels ();
+void libMTOD_gf_MMTodAddScoringAltarData (unit lp_altarUnit, int lp_pointNumber);
+void libMTOD_gf_MMToDTurnOnOffScoringAltar (bool lp_onOff, int lp_altarIndex);
+void libMTOD_gf_MMToDDefineNextAltarsandCreatePreviews ();
+void libMTOD_gf_MMToDAltarFireCannons (int lp_teamScored);
+void libMTOD_gf_MMToDSixCapFireCannons ();
+void libMTOD_gf_MMTodAddTownData (unitgroup lp_buildingUnitGroup, int lp_townNumber, text lp_townName);
+void libMTOD_gf_MMToDRespawnTown (int lp_townNumber, unit lp_fortUnit, int lp_oldOwningTeam);
+void libMTOD_gf_MMToDBuildTownStructure (int lp_townNum, int lp_structureNum);
+void libMTOD_gf_MMToDRemoveDeathModelsInRegion (region lp_region);
+void libMTOD_gf_MMToDAnnouncementTownCaptured (unit lp_fortUnit, int lp_team);
+void libMTOD_gf_MMToDChangeMarkerOwnershipOnAltars (int lp_townNumber, int lp_newOwner);
+void libMTOD_gf_MMToDChangeTownMarkerOwnershipInRegion (region lp_region, int lp_newOwningTeam);
+unit libMTOD_gf_MMToDGetTownFort (int lp_townIndex);
+void libMTOD_gf_MMToDBossCampFireCannons (int lp_firingTeam);
+void libMTOD_gf_MMTodInitializeProtectionTowers (region lp_orderKillzone, region lp_chaosKillzone);
+void libMTOD_gf_MMTodAddWaygate (int lp_waygateIndex, unit lp_waygateUnit, unit lp_orderEntrance, unit lp_chaosEntrance);
+void libMTOD_gf_MMToDActivateWaygates ();
+void libMTOD_gf_MMToDCannonballImpactShakingCamera (point lp_targetLocation);
+void libMTOD_gf_MMToDAltarDamageDoneCache (int lp_player, int lp_townCount);
+void libMTOD_gf_MMToDTransmissionBellTowersActivating ();
+void libMTOD_gf_MMToDTransmissionBellTowersActivate ();
+void libMTOD_gf_MMToDTransmissionTeleporterActivated ();
+void libMTOD_gf_MMToDTransmissionBellTowersFiring (int lp_team);
+void libMTOD_gf_MMToDTransmissionBellSixTowersTaken ();
+void libMTOD_gf_MMToDTownHallDestroyedForTeam (int lp_team);
+void libMTOD_gf_MMToDUIInit (int lp_parentPanel);
+void libMTOD_gf_MMToDUIDisplayCaptureNotification (int lp_teamThatCapturedTown, int lp_townThatWasCaptured);
+void libMTOD_gf_MMToDUIDisplayTowerUpgradeUI ();
+void libMTOD_gf_MMToDUIDisplayRavenNecroNotifications (text lp_text, int lp_team, playergroup lp_players);
+void libMTOD_gf_MMToDShowHideTownOwnershipUI (bool lp_showHide, int lp_townNumber, int lp_owningTeam);
+
+// Trigger Declarations
+trigger libMTOD_gt_IncludeToD;
+trigger libMTOD_gt_MMToDInit;
+trigger libMTOD_gt_MMToDPingDataInit;
+trigger libMTOD_gt_MMToDInitializeScoringAltars;
+trigger libMTOD_gt_MMToDGateOpen;
+trigger libMTOD_gt_MMToDArchwayAnims;
+trigger libMTOD_gt_MMToDMinimapHealthMonitor;
+trigger libMTOD_gt_MMToDFastSpawnMinions;
+trigger libMTOD_gt_MMToDScoringAltarTimerTrigger;
+trigger libMTOD_gt_MMToDObjectivePreviewTimerExpires;
+trigger libMTOD_gt_MMToDScoringAltarCaptured;
+trigger libMTOD_gt_MMToDStartPhaseTwoTimer;
+trigger libMTOD_gt_MMToDL2FortMorphsIntoL3Keep;
+trigger libMTOD_gt_MMToDL2TowerMorphsIntoL3Tower;
+trigger libMTOD_gt_MMToDL2MoonwellMorphsIntoL3Moonwell;
+trigger libMTOD_gt_MMToDSixCapCannonActivation;
+trigger libMTOD_gt_MMToDOwnedTownDies;
+trigger libMTOD_gt_MMToDTownFinishedBuilding;
+trigger libMTOD_gt_MMToDMercScaling;
+trigger libMTOD_gt_MMToDMercDamageTracking;
+trigger libMTOD_gt_MMToDMercLanerHorsemanSummonsHead;
+trigger libMTOD_gt_MMToDBossHorsemanCreated;
+trigger libMTOD_gt_MMToDBossHorsemanDies;
+trigger libMTOD_gt_MMToDHeadlessHorsemanCampCaptured;
+trigger libMTOD_gt_MMToDProtectionTowerScan;
+trigger libMTOD_gt_MMToDEnteredWaygate;
+trigger libMTOD_gt_MMToDInitStoreSpiritHealer;
+trigger libMTOD_gt_MMToDShowSpiritHealer;
+trigger libMTOD_gt_MMToDHideSpiritHealer;
+trigger libMTOD_gt_MMToDSpiritHealerClicked;
+trigger libMTOD_gt_MMToDCannonMissileCreated;
+trigger libMTOD_gt_MMToDEndofGameCleanUp;
+trigger libMTOD_gt_MMToDBanterTimer;
+trigger libMTOD_gt_MMToDTownHealthTracker;
+trigger libMTOD_gt_MMToDUIModInitialize;
+trigger libMTOD_gt_MMToDDisableJungle;
+trigger libMTOD_gt_MMToDDebugFlipTown;
+trigger libMTOD_gt_MMToDDebugPhaseTwo;
+trigger libMTOD_gt_MMToDDebugWaygates;
+trigger libMTOD_gt_MMToDDebugAllCannons;
+trigger libMTOD_gt_MMToDDebugOrderCannons;
+trigger libMTOD_gt_MMToDDebugChaosCannons;
+trigger libMTOD_gt_MMToDDebugBossCannons;
+trigger libMTOD_gt_MMToDDebugWarningOn;
+trigger libMTOD_gt_MMToDDebugAltarsOn;
+trigger libMTOD_gt_MMToDDebugEventStart;
+
+void libMTOD_Wait(fixed duration, int inTimeType);
+bool libMTOD_PauseTrigger_Func(bool testConds, bool runActions);
+
+bool libMTOD_paused = false;
+bool libMTOD_gv_mMToDSixCapTimer_Paused = false;
+
+// Library Initialization
+void libMTOD_InitVariables ();
+

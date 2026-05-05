@@ -110,6 +110,7 @@ const int libGame_ge_XPSources_Creep = 3;
 const int libGame_ge_XPSources_Hero = 4;
 const int libGame_ge_XPSources_Structure = 5;
 const int libGame_ge_XPSources_RegenGlobe = 6;
+const int libGame_ge_XPSources_External = 100;
 const int libGame_ge_TownStates_Idle = 0;
 const int libGame_ge_TownStates_Fighting = 1;
 const int libGame_ge_TownStates_Leashing = 2;
@@ -1905,6 +1906,7 @@ trigger libGame_gt_VehicleDragonKnightBullRush;
 trigger libGame_gt_InitializeWatchTowers;
 trigger libGame_gt_WatchTowersOwnershipChanges;
 trigger libGame_gt_HealthPackGeneratorHealthPackCreated;
+trigger libGame_gt_DVaMechDies;
 
 bool libGame_paused = false;
 int libGame_winningTeam;

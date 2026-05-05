@@ -103,12 +103,6 @@
                 <Value Id="21554" Index="4"/>
             </Default>
         </Attribute>
-        <Attribute Namespace="999" Id="3006">
-            <Default>
-                <Slot Id="Global"/>
-                <Value Id="53"/>
-            </Default>
-        </Attribute>
         <AchievementTag Value="CSTM"/>
     </Variant>
 </Attributes>

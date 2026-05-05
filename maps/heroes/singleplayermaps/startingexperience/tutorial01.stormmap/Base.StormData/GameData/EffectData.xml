@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CEffectCreatePersistent id="CaptureMacGuffin">
+        <PeriodCount value="4"/>
+        <PeriodicValidator value="CaptureMacguffinPeriodValidatorCombat"/>
+    </CEffectCreatePersistent>
+    <CEffectRemoveBehavior id="CaptureMacGuffinDismountCaster">
+        <Chance value="0"/>
+    </CEffectRemoveBehavior>
+    <CEffectRemoveBehavior id="CaptureMacGuffinDismountRehgar">
+        <Chance value="0"/>
+    </CEffectRemoveBehavior>
+    <CEffectCreatePersistent id="SummonedUnitSpecialCaseInteractionCreatePersistent">
+        <PeriodCount value="4"/>
+    </CEffectCreatePersistent>
+</Catalog>

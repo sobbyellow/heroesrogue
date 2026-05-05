@@ -35,4 +35,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Icon value="Assets\Textures\storm_temp_war3_btnorcmeleeuptwo.dds"/>
   </CWeaponLegacy>
 
+  <CWeaponLegacy id="BlankWeapon" />
+
 </Catalog>

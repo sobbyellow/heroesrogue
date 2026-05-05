@@ -51,7 +51,7 @@ const fixed libGDHL_gv_hero_Leoric_Undying_Reanimation_DeathTimeReduction = 1.0;
 const int libGDHL_gv_aIHeroDelegateTokenValueVikingValue = 3;
 const int libGDHL_gv_aIHeroDelegateTokenValueAnyVikingAliveValue = 1;
 const fixed libGDHL_gv_data_LostVikingsDeathTimeReduction = 0.0;
-const fixed libGDHL_gv_data_LostVikingsTheSequelDeathTimeReduction = 0.5;
+fixed[11] libGDHL_gv_data_LostVikingsTheSequelDeathTimeReduction;
 const fixed libGDHL_gv_data_LostVikingsCheckpointReachedDeathTime = 3.0;
 const fixed libGDHL_gv_data_LostVikingsUIWarningCameraDistance_C = 20.0;
 const fixed libGDHL_gv_heroMuradinHaymakerGrandSlamMultiplier = 1.4;

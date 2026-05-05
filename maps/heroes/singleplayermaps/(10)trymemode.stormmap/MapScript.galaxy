@@ -2,7 +2,7 @@
 // 
 // Generated Map Script
 // 
-// Name:   Dragon Shire
+// Name:   Towers of Doom
 // 
 //==================================================================================================
 include "TriggerLibs/NativeLib"
@@ -15,6 +15,7 @@ include "TriggerLibs/StartingExperienceLib"
 include "TriggerLibs/SoundLib"
 include "TriggerLibs/GameDataHelperLib"
 include "TriggerLibs/SupportLib"
+include "LibMTOD"
 include "LibTryMeMode"
 include "LibAffx"
 
@@ -32,71 +33,23 @@ void InitLibs () {
     libSond_InitLib();
     libGDHL_InitLib();
     libSprt_InitLib();
+    libMTOD_InitLib();
     libAffx_InitLib();
     libTRYM_InitLib();
 }
-
-//--------------------------------------------------------------------------------------------------
-// Constants
-//--------------------------------------------------------------------------------------------------
-const int gv_glowingRockCountMax_C = 24;
-
-//--------------------------------------------------------------------------------------------------
-// Global Structures
-//--------------------------------------------------------------------------------------------------
-struct gs_GlowingRock {
-    actor[libCore_gv_bALMaxTeams + 1] lv_rockDoodads;
-    region lv_searchRegion;
-};
-
-//--------------------------------------------------------------------------------------------------
-// Global Variables
-//--------------------------------------------------------------------------------------------------
-gs_GlowingRock[gv_glowingRockCountMax_C + 1] gv_glowingRocks;
-int gv_glowingRockCount;
-
-void InitGlobals () {
-}
-
-//--------------------------------------------------------------------------------------------------
-// Global Function Declarations
-//--------------------------------------------------------------------------------------------------
-void gf_InitializeGlowingRock (doodad lp_orderDoodad, doodad lp_chaosDoodad, region lp_searchArea);
 
 //--------------------------------------------------------------------------------------------------
 // Trigger Variables
 //--------------------------------------------------------------------------------------------------
 trigger gt_InitializeMap;
 trigger gt_InitializeMapMechanic;
-trigger gt_InitializeTribute;
-trigger gt_InitializeGlobalVariables;
-trigger gt_InitializeJungleCreepData;
-trigger gt_InitializeLaneData;
-trigger gt_InitializeTownData;
-trigger gt_InitializeRegionData;
-trigger gt_PlayerEntersVehicle;
-trigger gt_PlayerLeavesVehicle;
-trigger gt_PeriodicallyMakeRocksGlow;
-
-//--------------------------------------------------------------------------------------------------
-// Global Functions
-//--------------------------------------------------------------------------------------------------
-void gf_InitializeGlowingRock (doodad lp_orderDoodad, doodad lp_chaosDoodad, region lp_searchArea) {
-    // Automatic Variable Declarations
-    // Implementation
-    if ((gv_glowingRockCount >= gv_glowingRockCountMax_C)) {
-        TextExpressionSetToken("Param/Expression/66FE7555", "A", IntToText(gv_glowingRockCountMax_C));
-        TriggerDebugOutput(1, TextExpressionAssemble("Param/Expression/66FE7555"), true);
-        return ;
-    }
-
-    gv_glowingRockCount += 1;
-    gv_glowingRocks[gv_glowingRockCount].lv_rockDoodads[libGame_gv_teamOrderIndex_C] = ActorFromDoodad(lp_orderDoodad);
-    gv_glowingRocks[gv_glowingRockCount].lv_rockDoodads[libGame_gv_teamChaosIndex_C] = ActorFromDoodad(lp_chaosDoodad);
-    gv_glowingRocks[gv_glowingRockCount].lv_searchRegion = lp_searchArea;
-    ActorSend(gv_glowingRocks[gv_glowingRockCount].lv_rockDoodads[libGame_gv_teamOrderIndex_C], "Signal HiddenFromChaos");
-    ActorSend(gv_glowingRocks[gv_glowingRockCount].lv_rockDoodads[libGame_gv_teamChaosIndex_C], "Signal HiddenFromOrder");
-}
+trigger gt_MapMechanicIntroCallback;
+trigger gt_HookupGlobalVariables;
+trigger gt_HookupLaneData;
+trigger gt_HookupJungleCreepData;
+trigger gt_HookupTownDataForField;
+trigger gt_HookupRegionData;
+trigger gt_RegisterDangerUnits;
 
 //--------------------------------------------------------------------------------------------------
 // Trigger: Initialize Map
@@ -112,27 +65,28 @@ bool gt_InitializeMap_Func (bool testConds, bool runActions) {
     TriggerExecute(libGame_gt_IncludeGame, true, false);
     TriggerExecute(libGDHL_gt_IncludeGameDataHelper, true, false);
     TriggerExecute(libMapM_gt_IncludeMapMechanics, true, false);
-    TriggerExecute(libStEx_gt_IncludeStartingExperience, true, false);
     TriggerExecute(libSond_gt_IncludeSound, true, false);
+    TriggerExecute(libStEx_gt_IncludeStartingExperience, true, false);
     TriggerExecute(libSprt_gt_IncludeSupport, true, false);
     TriggerExecute(libUIUI_gt_IncludeUI, true, false);
-    TriggerExecute(gt_InitializeGlobalVariables, true, true);
-    TriggerExecute(gt_InitializeLaneData, true, true);
-    TriggerExecute(gt_InitializeJungleCreepData, true, true);
-    TriggerExecute(gt_InitializeTownData, true, true);
-    TriggerExecute(gt_InitializeRegionData, true, true);
-    libMapM_gf_MapMechanicAdd(libMapM_gv_mMGardensDragonMechanicName_C, gt_InitializeMapMechanic);
+    TriggerExecute(libMTOD_gt_IncludeToD, true, false);
+    TriggerExecute(gt_HookupGlobalVariables, true, false);
+    TriggerExecute(gt_HookupLaneData, true, false);
+    TriggerExecute(gt_HookupJungleCreepData, true, false);
+    TriggerExecute(gt_HookupTownDataForField, true, false);
+    TriggerExecute(gt_HookupRegionData, true, false);
+    libAIAI_gv_heroAICustomRegisterDangerUnitsTrigger = gt_RegisterDangerUnits;
+    libMapM_gf_MapMechanicAdd(libMTOD_gv_mMToDMechanicName_C, gt_InitializeMapMechanic);
     libCore_gv_sYSGameMode = libCore_ge_GameModes_Sandbox;
     libCore_gv_sYSTowns = true;
     libCore_gv_sYSJungleCreepCamps = true;
     libCore_gv_sYSJungleWatchTowers = true;
     libCore_gv_sYSTowerAI = true;
     libCore_gv_sYSMinionAI = true;
-    TriggerExecute(libCore_gt_InitializeStormMod, true, true);
-    TriggerExecute(gt_InitializeTribute, true, true);
-    libCore_gf_DataAnnouncerVOSetDefaultAnnouncerForPlayerGroup(PlayerGroupAll(), "LadyofThorns");
-    libNtve_gf_ShowHideDoodadsInRegion(false, RegionEntireMap(), "Storm_Doodad_DS19_Embers");
-    libNtve_gf_ShowHideDoodadsInRegion(false, RegionEntireMap(), "Storm_Doodad_DS19_DragonFog");
+    TriggerExecute(libCore_gt_InitializeStormMod, true, false);
+    libCore_gf_DataAnnouncerVOSetDefaultAnnouncerForPlayerGroup(libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false), "RavenLord");
+    libCore_gf_DataAnnouncerVOSetDefaultAnnouncerForPlayerGroup(libCore_gv_playerGroupFromPlayer[libCore_gv_oBSERVER_ObserverUIPlayer], "RavenLord");
+    libCore_gf_DataAnnouncerVOSetDefaultAnnouncerForPlayerGroup(libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamChaosIndex_C, false), "Necromancer");
     return true;
 }
 
@@ -146,37 +100,31 @@ void gt_InitializeMap_Init () {
 // Trigger: Initialize Map Mechanic
 //--------------------------------------------------------------------------------------------------
 bool gt_InitializeMapMechanic_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_itScoringAltarCount;
+    int lv_itWaygateCount;
+
     // Automatic Variable Declarations
+    // Variable Initialization
+
     // Actions
     if (!runActions) {
         return true;
     }
 
-    libMapM_gf_MMGardensDragonInitTowers(UnitFromId(38), UnitFromId(397));
-    gf_InitializeGlowingRock(DoodadFromId(1524150757), DoodadFromId(293021596), RegionFromId(16));
-    gf_InitializeGlowingRock(DoodadFromId(1187686044), DoodadFromId(437613679), RegionFromId(18));
-    gf_InitializeGlowingRock(DoodadFromId(1467907379), DoodadFromId(2079385535), RegionFromId(19));
-    gf_InitializeGlowingRock(DoodadFromId(554069253), DoodadFromId(572313783), RegionFromId(20));
-    gf_InitializeGlowingRock(DoodadFromId(1530607468), DoodadFromId(253543304), RegionFromId(23));
-    gf_InitializeGlowingRock(DoodadFromId(1107827036), DoodadFromId(63608956), RegionFromId(26));
-    gf_InitializeGlowingRock(DoodadFromId(1194436926), DoodadFromId(1941804518), RegionFromId(27));
-    gf_InitializeGlowingRock(DoodadFromId(325242379), DoodadFromId(2125448265), RegionFromId(28));
-    gf_InitializeGlowingRock(DoodadFromId(580532599), DoodadFromId(1626511782), RegionFromId(29));
-    gf_InitializeGlowingRock(DoodadFromId(1059352473), DoodadFromId(439700415), RegionFromId(31));
-    gf_InitializeGlowingRock(DoodadFromId(924734334), DoodadFromId(2044046412), RegionFromId(32));
-    gf_InitializeGlowingRock(DoodadFromId(177646977), DoodadFromId(1706242716), RegionFromId(33));
-    gf_InitializeGlowingRock(DoodadFromId(315755638), DoodadFromId(2110501447), RegionFromId(34));
-    gf_InitializeGlowingRock(DoodadFromId(870592109), DoodadFromId(102283045), RegionFromId(35));
-    gf_InitializeGlowingRock(DoodadFromId(1842609077), DoodadFromId(1828292314), RegionFromId(36));
-    gf_InitializeGlowingRock(DoodadFromId(1363276434), DoodadFromId(1499930744), RegionFromId(37));
-    gf_InitializeGlowingRock(DoodadFromId(1428498514), DoodadFromId(691198668), RegionFromId(38));
-    gf_InitializeGlowingRock(DoodadFromId(1287485761), DoodadFromId(2020425807), RegionFromId(39));
-    gf_InitializeGlowingRock(DoodadFromId(546536717), DoodadFromId(169807408), RegionFromId(40));
-    gf_InitializeGlowingRock(DoodadFromId(1637951221), DoodadFromId(569354797), RegionFromId(41));
-    gf_InitializeGlowingRock(DoodadFromId(229372219), DoodadFromId(1761831411), RegionFromId(42));
-    gf_InitializeGlowingRock(DoodadFromId(569393868), DoodadFromId(1855794078), RegionFromId(43));
-    gf_InitializeGlowingRock(DoodadFromId(618627175), DoodadFromId(733577639), RegionFromId(44));
-    gf_InitializeGlowingRock(DoodadFromId(1328376423), DoodadFromId(691154724), RegionFromId(45));
+    lv_itWaygateCount += 1;
+    libMTOD_gf_MMTodAddWaygate(lv_itWaygateCount, UnitFromId(1844), UnitFromId(1224), UnitFromId(1223));
+    lv_itScoringAltarCount += 1;
+    libMTOD_gf_MMTodAddScoringAltarData(UnitFromId(134), lv_itScoringAltarCount);
+    lv_itScoringAltarCount += 1;
+    libMTOD_gf_MMTodAddScoringAltarData(UnitFromId(2201), lv_itScoringAltarCount);
+    lv_itScoringAltarCount += 1;
+    libMTOD_gf_MMTodAddScoringAltarData(UnitFromId(2464), lv_itScoringAltarCount);
+    lv_itScoringAltarCount += 1;
+    libMTOD_gf_MMTodAddScoringAltarData(UnitFromId(2467), lv_itScoringAltarCount);
+    libMTOD_gf_MMTodInitializeProtectionTowers(RegionFromId(12), RegionFromId(14));
+    libMTOD_gv_mMToDHorsemanCannon = UnitFromId(245);
+    libStEx_gf_SetMapMechanicTutorialCallback(gt_MapMechanicIntroCallback);
     return true;
 }
 
@@ -186,154 +134,181 @@ void gt_InitializeMapMechanic_Init () {
 }
 
 //--------------------------------------------------------------------------------------------------
-// Trigger: Initialize Tribute
+// Trigger: Map Mechanic Intro Callback
 //--------------------------------------------------------------------------------------------------
-bool gt_InitializeTribute_Func (bool testConds, bool runActions) {
-    // Variable Declarations
-    unit lv_tribUnit;
-
+bool gt_MapMechanicIntroCallback_Func (bool testConds, bool runActions) {
     // Automatic Variable Declarations
-    // Variable Initialization
-
     // Actions
     if (!runActions) {
         return true;
     }
 
-    lv_tribUnit = UnitFromId(1441536957);
-    UnitSetInfoTip(lv_tribUnit, StringExternal("Param/Value/92577B84"));
-    UnitSetState(lv_tribUnit, c_unitStateTooltipable, true);
-    UnitSetState(lv_tribUnit, c_unitStateHighlightable, true);
+    ActorSend(ActorFromDoodad(DoodadFromId(648)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(648)), "AliasAdd cine_red_core_platform");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(346)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(346)), "AliasAdd cine_necro_core");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(161)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(161)), "AliasAdd cine_red_archway_upLeft");
+    ActorSend(ActorFromDoodad(DoodadFromId(1194)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1194)), "AliasAdd cine_archway_base_upLeft");
+    ActorSend(ActorFromDoodad(DoodadFromId(2343)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(2343)), "AliasAdd cine_red_lamp_01");
+    ActorSend(ActorFromDoodad(DoodadFromId(569)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(569)), "AliasAdd cine_red_lamp_02");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(986)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(986)), "AliasAdd cine_red_archway_vertical_left");
+    ActorSend(ActorFromDoodad(DoodadFromId(1193)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1193)), "AliasAdd cine_red_archway_base_mid");
+    ActorSend(ActorFromDoodad(DoodadFromId(1760)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1760)), "AliasAdd cine_red_angel_01");
+    ActorSend(ActorFromDoodad(DoodadFromId(1711)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1711)), "AliasAdd cine_red_angel_02");
+    ActorSend(ActorFromDoodad(DoodadFromId(1712)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1712)), "AliasAdd cine_red_angel_03");
+    ActorSend(ActorFromDoodad(DoodadFromId(2303)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(2303)), "AliasAdd cine_red_angel_04");
+    ActorSend(ActorFromDoodad(DoodadFromId(808)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(808)), "AliasAdd cine_banner_01");
+    ActorSend(ActorFromDoodad(DoodadFromId(762)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(762)), "AliasAdd cine_banner_02");
+    ActorSend(ActorFromDoodad(DoodadFromId(607)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(607)), "AliasAdd cine_banner_03");
+    ActorSend(ActorFromDoodad(DoodadFromId(809)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(809)), "AliasAdd cine_banner_04");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(210)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(210)), "AliasAdd cine_raven_core");
+    ActorSend(ActorFromDoodad(DoodadFromId(1201)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1201)), "AliasAdd cine_DMZ_range_01");
+    ActorSend(ActorFromDoodad(DoodadFromId(2042)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(2042)), "AliasAdd cine_DMZ_range_02");
+    ActorSend(ActorFromDoodad(DoodadFromId(2046)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(2046)), "AliasAdd cine_DMZ_range_03");
+    ActorSend(ActorFromDoodad(DoodadFromId(967)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(967)), "AliasAdd cine_DMZ_range_04");
+    ActorSend(ActorFromDoodad(DoodadFromId(190)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(190)), "AliasAdd cine_DMZ_range_05");
+    ActorSend(ActorFromDoodad(DoodadFromId(1750)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1750)), "AliasAdd cine_DMZ_range_06");
+    ActorSend(ActorFromDoodad(DoodadFromId(1528)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1528)), "AliasAdd cine_raven_banner_large_01");
+    ActorSend(ActorFromDoodad(DoodadFromId(1569)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1569)), "AliasAdd cine_raven_banner_large_02");
+    ActorSend(ActorFromDoodad(DoodadFromId(649)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(649)), "AliasAdd cine_blue_core_platform");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(815)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(815)), "AliasAdd cine_blue_archway_DownRight");
+    ActorSend(ActorFromDoodad(DoodadFromId(490)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(490)), "AliasAdd cine_blue_archway_base_DownRight");
+    ActorSend(ActorFromDoodad(DoodadFromId(290)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(290)), "AliasAdd cine_raven_banner_small_01");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(811)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(811)), "AliasAdd cine_base_cannon_L");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(812)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(812)), "AliasAdd cine_base_cannon_R");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(513)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(513)), "AliasAdd cine_base_tower_L");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(514)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(514)), "AliasAdd cine_base_tower_R");
+    ActorSend(ActorFromDoodad(DoodadFromId(2210)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(2210)), "AliasAdd cine_base_tower_LTop");
+    ActorSend(ActorFromDoodad(DoodadFromId(1381)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1381)), "AliasAdd cine_raven_banner_small_02");
+    ActorSend(ActorFromDoodad(DoodadFromId(165)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(165)), "AliasAdd cine_barracks_01");
+    ActorSend(ActorFromDoodad(DoodadFromId(1038)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1038)), "AliasAdd cine_pumpkin_scene2_01");
+    ActorSend(ActorFromDoodad(DoodadFromId(1001)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1001)), "AliasAdd cine_pumpkin_scene2_02");
+    ActorSend(ActorFromDoodad(DoodadFromId(1354)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1354)), "AliasAdd cine_raven_lamppost_01");
+    ActorSend(ActorFromDoodad(DoodadFromId(1246)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1246)), "AliasAdd cine_raven_lamppost_02");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(100)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(100)), "AliasAdd cine_bot_tower_01");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(105)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(105)), "AliasAdd cine_bot_tower_02");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(2039)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(2039)), "AliasAdd cine_bot_moonwell");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(98)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(98)), "AliasAdd cine_gate_death_00");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(128)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(128)), "AliasAdd cine_fence_death_01");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(133)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(133)), "AliasAdd cine_fence_death_02");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(84)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(84)), "AliasAdd cine_raven_hall_death");
+    ActorSend(ActorFromDoodad(DoodadFromId(1477)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1477)), "AliasAdd cine_haunted_tree_01");
+    ActorSend(ActorFromDoodad(DoodadFromId(1006)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1006)), "AliasAdd cine_barn_01");
+    ActorSend(ActorFromDoodad(DoodadFromId(354)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(354)), "AliasAdd cine_blue_lamp_01");
+    ActorSend(ActorFromDoodad(DoodadFromId(246)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(246)), "AliasAdd cine_blue_lamp_02");
+    ActorSend(ActorFromDoodad(DoodadFromId(1387)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1387)), "AliasAdd cine_pumpkin_01");
+    ActorSend(ActorFromDoodad(DoodadFromId(643)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(643)), "AliasAdd cine_pumpkin_02");
+    ActorSend(ActorFromDoodad(DoodadFromId(1309)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1309)), "AliasAdd cine_pumpkin_03");
+    ActorSend(ActorFromDoodad(DoodadFromId(1544)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1544)), "AliasAdd cine_raven_banner_large_03");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(2464)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(2464)), "AliasAdd cine_collection_altar");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(82)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(82)), "AliasAdd cine_raven_hall_topR");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(148)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(148)), "AliasAdd cine_blue_moonwell_top");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(86)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(86)), "AliasAdd cine_blue_gate_01");
+    ActorSend(ActorFromDoodad(DoodadFromId(267)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(267)), "AliasAdd cine_necro_banner_small_01");
+    ActorSend(ActorFromDoodad(DoodadFromId(256)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(256)), "AliasAdd cine_necro_banner_small_02");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(1603)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(1603)), "AliasAdd cine_necro_cannon_tower_01");
     return true;
 }
 
 //--------------------------------------------------------------------------------------------------
-void gt_InitializeTribute_Init () {
-    gt_InitializeTribute = TriggerCreate("gt_InitializeTribute_Func");
+void gt_MapMechanicIntroCallback_Init () {
+    gt_MapMechanicIntroCallback = TriggerCreate("gt_MapMechanicIntroCallback_Func");
 }
 
 //--------------------------------------------------------------------------------------------------
-// Trigger: Initialize Global Variables
+// Trigger: Hookup Global Variables
 //--------------------------------------------------------------------------------------------------
-bool gt_InitializeGlobalVariables_Func (bool testConds, bool runActions) {
+bool gt_HookupGlobalVariables_Func (bool testConds, bool runActions) {
     // Automatic Variable Declarations
     // Actions
     if (!runActions) {
         return true;
     }
 
-    libCore_gv_mAPMapStringID = "DragonShire";
+    libCore_gv_mAPMapStringID = "TowersOfDoom";
     libCore_gv_mAPMapImage = "CustomMiniMap.tga";
+    libCore_gv_mAPUsesCirclingAI = true;
+    libCore_gv_mAPPathNodesBeforeLooping = 2;
     libGame_gv_teams[libGame_gv_teamOrderIndex_C].lv_core = UnitFromId(210);
     libGame_gv_teams[libGame_gv_teamChaosIndex_C].lv_core = UnitFromId(346);
     libCore_gv_mAPOrderBaseRegion = RegionFromId(5);
     libCore_gv_mAPChaosBaseRegion = RegionFromId(1);
-    libCore_gv_mAPMapSoundtrack[0] = "MX_Dragonshire_Intro";
-    libCore_gv_mAPMapSoundtrack[1] = "MX_Dragonshire_LVL_1";
-    libCore_gv_mAPMapSoundtrack[2] = "MX_Dragonshire_LVL_10";
-    libCore_gv_mAPMapSoundtrack[3] = "MX_Dragonshire_LVL_20";
+    libCore_gv_mAPMapSoundtrack[0] = "MX_Towers_Intro";
+    libCore_gv_mAPMapSoundtrack[1] = "MX_Towers_LVL_1";
+    libCore_gv_mAPMapSoundtrack[2] = "MX_Towers_LVL_10";
+    libCore_gv_mAPMapSoundtrack[3] = "MX_Towers_LVL_20";
     return true;
 }
 
 //--------------------------------------------------------------------------------------------------
-void gt_InitializeGlobalVariables_Init () {
-    gt_InitializeGlobalVariables = TriggerCreate("gt_InitializeGlobalVariables_Func");
+void gt_HookupGlobalVariables_Init () {
+    gt_HookupGlobalVariables = TriggerCreate("gt_HookupGlobalVariables_Func");
 }
 
 //--------------------------------------------------------------------------------------------------
-// Trigger: Initialize Jungle Creep Data
+// Trigger: Hookup Lane Data
 //--------------------------------------------------------------------------------------------------
-bool gt_InitializeJungleCreepData_Func (bool testConds, bool runActions) {
-    // Variable Declarations
-    int lv_junglecamp;
-
-    // Automatic Variable Declarations
-    // Variable Initialization
-
-    // Actions
-    if (!runActions) {
-        return true;
-    }
-
-    lv_junglecamp += 1;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_SiegeGiants;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(244);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(242);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(248);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderLeashRegion = RegionFromId(8);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_SiegeGiants;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamOrderIndex_C] = true;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamChaosIndex_C] = true;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(37);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercChaosMercCampPathing[1].lv_waypoint = PointFromId(34);
-    lv_junglecamp += 1;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_Knights;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(252);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(254);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(256);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[3] = PointFromId(250);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[4] = PointFromId(2072);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderLeashRegion = RegionFromId(9);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_Ogres;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamOrderIndex_C] = true;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamChaosIndex_C] = true;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(168);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercChaosMercCampPathing[1].lv_waypoint = PointFromId(168);
-    lv_junglecamp += 1;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_SiegeGiants;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(245);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(249);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(247);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderLeashRegion = RegionFromId(10);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_SiegeGiants;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamOrderIndex_C] = true;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamChaosIndex_C] = true;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(20);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercChaosMercCampPathing[1].lv_waypoint = PointFromId(17);
-    lv_junglecamp += 1;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_Knights;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(253);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(255);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(257);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[3] = PointFromId(251);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[4] = PointFromId(2071);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderLeashRegion = RegionFromId(14);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_Ogres;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamOrderIndex_C] = true;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamChaosIndex_C] = true;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(53);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercChaosMercCampPathing[1].lv_waypoint = PointFromId(53);
-    lv_junglecamp += 1;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_Knights;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(178);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(177);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(180);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[3] = PointFromId(1321);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[4] = PointFromId(1334);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderLeashRegion = RegionFromId(24);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_Ogres;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamOrderIndex_C] = true;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamChaosIndex_C] = true;
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(15);
-    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercChaosMercCampPathing[1].lv_waypoint = PointFromId(112);
-    libMapM_gv_jungleNumberOfCreepCamps = lv_junglecamp;
-    return true;
-}
-
-//--------------------------------------------------------------------------------------------------
-void gt_InitializeJungleCreepData_Init () {
-    gt_InitializeJungleCreepData = TriggerCreate("gt_InitializeJungleCreepData_Func");
-}
-
-//--------------------------------------------------------------------------------------------------
-// Trigger: Initialize Lane Data
-//--------------------------------------------------------------------------------------------------
-bool gt_InitializeLaneData_Func (bool testConds, bool runActions) {
+bool gt_HookupLaneData_Func (bool testConds, bool runActions) {
     // Variable Declarations
     int lv_structureCount;
     int lv_waypointCount;
@@ -355,157 +330,248 @@ bool gt_InitializeLaneData_Func (bool testConds, bool runActions) {
     libGame_gv_laneData[libGame_gv_laneCount].lv_orderStructures[lv_structureCount] = UnitFromId(210);
     libGame_gv_laneData[libGame_gv_laneCount].lv_chaosStructures[lv_structureCount] = UnitFromId(346);
     libGame_gv_laneData[libGame_gv_laneCount].lv_structureCount = lv_structureCount;
+    AddPointOfInterest(PointFromId(1221397806), 0.0, 0.0, "LaneStaging", libNtve_ge_GoalTeam_Order, 0);
+    AddPointOfInterest(PointFromId(1424460477), 0.0, 0.0, "LaneStaging", libNtve_ge_GoalTeam_Chaos, 0);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2245);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2350);
     lv_waypointCount += 1;
     libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(540);
     lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(853);
+    lv_waypointCount += 1;
     libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(579);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(166);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2117);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2119);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_heroMinChaosWaypointIndex = lv_waypointCount;
     lv_waypointCount += 1;
     libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(580);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(383);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2121);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(168);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2124);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(171);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2126);
     lv_waypointCount += 1;
     libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(581);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(384);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2127);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(88);
     lv_waypointCount += 1;
     libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(66);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(369);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(3549);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(3551);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2140);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2138);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_heroMaxOrderWaypointIndex = lv_waypointCount;
     lv_waypointCount += 1;
     libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(582);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(170);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2136);
     lv_waypointCount += 1;
     libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(53);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(370);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(169);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(167);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(78);
-    lv_waypointCount += 1;
     libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(80);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2246);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2351);
     libGame_gv_laneData[libGame_gv_laneCount].lv_waypointCount = lv_waypointCount;
     libGame_gv_laneCount += 1;
     lv_structureCount = 0;
     lv_waypointCount = 0;
     libGame_gv_laneData[libGame_gv_laneCount].lv_laneName = StringExternal("Param/Value/3D4242A8");
-    libGame_gv_laneData[libGame_gv_laneCount].lv_laneNamePreset = libGame_ge_LaneNamePresets_Bottom;
-    lv_structureCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_orderStructures[lv_structureCount] = UnitFromId(210);
-    libGame_gv_laneData[libGame_gv_laneCount].lv_chaosStructures[lv_structureCount] = UnitFromId(346);
-    libGame_gv_laneData[libGame_gv_laneCount].lv_structureCount = lv_structureCount;
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2245);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(536);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(822);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(823);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(824);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(825);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(34);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(37);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(112);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(542);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(1);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(14);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(15);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(17);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(20);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(30);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(31);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(39);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(91);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(95);
-    lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2246);
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypointCount = lv_waypointCount;
-    libGame_gv_laneCount += 1;
-    lv_structureCount = 0;
-    lv_waypointCount = 0;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_laneName = StringExternal("Param/Value/EAB18292");
     libGame_gv_laneData[libGame_gv_laneCount].lv_laneNamePreset = libGame_ge_LaneNamePresets_Middle;
     lv_structureCount += 1;
     libGame_gv_laneData[libGame_gv_laneCount].lv_orderStructures[lv_structureCount] = UnitFromId(210);
     libGame_gv_laneData[libGame_gv_laneCount].lv_chaosStructures[lv_structureCount] = UnitFromId(346);
     libGame_gv_laneData[libGame_gv_laneCount].lv_structureCount = lv_structureCount;
+    AddPointOfInterest(PointFromId(664992235), 0.0, 0.0, "LaneStaging", libNtve_ge_GoalTeam_Order, 0);
+    AddPointOfInterest(PointFromId(1113655737), 0.0, 0.0, "LaneStaging", libNtve_ge_GoalTeam_Chaos, 0);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2245);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2350);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(608);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(536);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(610);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2141);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(612);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(822);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(614);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2145);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_heroMinChaosWaypointIndex = lv_waypointCount;
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(616);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2149);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(618);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(823);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(619);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2144);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(617);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2151);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(615);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2152);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(613);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(824);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(611);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2155);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(609);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2157);
     lv_waypointCount += 1;
-    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2246);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(825);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2156);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2154);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(34);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_heroMaxOrderWaypointIndex = lv_waypointCount;
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2153);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(542);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2351);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypointCount = lv_waypointCount;
+    libGame_gv_laneCount += 1;
+    lv_structureCount = 0;
+    lv_waypointCount = 0;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_laneName = StringExternal("Param/Value/0C27DFA1");
+    libGame_gv_laneData[libGame_gv_laneCount].lv_laneNamePreset = libGame_ge_LaneNamePresets_Bottom;
+    lv_structureCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_orderStructures[lv_structureCount] = UnitFromId(210);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_chaosStructures[lv_structureCount] = UnitFromId(346);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_structureCount = lv_structureCount;
+    AddPointOfInterest(PointFromId(1022331236), 0.0, 0.0, "LaneStaging", libNtve_ge_GoalTeam_Order, 0);
+    AddPointOfInterest(PointFromId(1461079911), 0.0, 0.0, "LaneStaging", libNtve_ge_GoalTeam_Chaos, 0);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2350);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(75);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(90);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(93);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_heroMinChaosWaypointIndex = lv_waypointCount;
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(89);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(92);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(94);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(141);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(142);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(143);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(144);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(145);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(146);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(147);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(153);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(154);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_heroMaxOrderWaypointIndex = lv_waypointCount;
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(155);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(156);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2351);
     libGame_gv_laneData[libGame_gv_laneCount].lv_waypointCount = lv_waypointCount;
     return true;
 }
 
 //--------------------------------------------------------------------------------------------------
-void gt_InitializeLaneData_Init () {
-    gt_InitializeLaneData = TriggerCreate("gt_InitializeLaneData_Func");
+void gt_HookupLaneData_Init () {
+    gt_HookupLaneData = TriggerCreate("gt_HookupLaneData_Func");
 }
 
 //--------------------------------------------------------------------------------------------------
-// Trigger: Initialize Town Data
+// Trigger: Hookup Jungle Creep Data
 //--------------------------------------------------------------------------------------------------
-bool gt_InitializeTownData_Func (bool testConds, bool runActions) {
+bool gt_HookupJungleCreepData_Func (bool testConds, bool runActions) {
     // Variable Declarations
+    int lv_junglecamp;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_junglecamp += 1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_SiegeCamp1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(102);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(103);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(104);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[3] = PointFromId(58);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderLeashRegion = RegionFromId(10);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_SiegeCamp1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(92);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercChaosMercCampPathing[1].lv_waypoint = PointFromId(142);
+    lv_junglecamp += 1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_SiegeCamp1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(401);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(382);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(221);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[3] = PointFromId(108);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderLeashRegion = RegionFromId(3);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_SiegeCamp1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(144);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercChaosMercCampPathing[1].lv_waypoint = PointFromId(147);
+    lv_junglecamp += 1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_SiegeCamp1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(109);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(110);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(111);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[3] = PointFromId(96);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderLeashRegion = RegionFromId(11);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_SiegeCamp1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(2127);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercChaosMercCampPathing[1].lv_waypoint = PointFromId(2127);
+    lv_junglecamp += 1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_BossCamp1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(135);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(2202);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderLeashRegion = RegionFromId(7);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_defenderDamagesCoreOnCapture = true;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_BossCamp1;
+    libMapM_gv_jungleNumberOfCreepCamps = lv_junglecamp;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_HookupJungleCreepData_Init () {
+    gt_HookupJungleCreepData = TriggerCreate("gt_HookupJungleCreepData_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Hookup Town Data
+//--------------------------------------------------------------------------------------------------
+bool gt_HookupTownDataForField_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    unitgroup lv_buildingUnitGroup;
     int lv_lane;
     int lv_town;
 
     // Automatic Variable Declarations
     // Variable Initialization
+    lv_buildingUnitGroup = UnitGroupEmpty();
 
     // Actions
     if (!runActions) {
@@ -517,181 +583,94 @@ bool gt_InitializeTownData_Func (bool testConds, bool runActions) {
     libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
     libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamOrder;
     libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(2);
-    libGame_gv_townTownData[lv_town].lv_makesCoreVulnerableWhenKilled = true;
-    lv_town += 1;
-    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
-    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamOrder;
-    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(4);
+    lv_buildingUnitGroup = UnitGroup(null, c_playerAny, libGame_gv_townTownData[lv_town].lv_townRegion, UnitFilter((1 << c_targetFilterStructure), 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32))), 0);
+    libMTOD_gf_MMTodAddTownData(lv_buildingUnitGroup, lv_town, StringExternal("Param/Value/BBDE765B"));
     lv_lane = 2;
     lv_town += 1;
     libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
     libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamOrder;
-    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(12);
-    libGame_gv_townTownData[lv_town].lv_makesCoreVulnerableWhenKilled = true;
-    lv_town += 1;
-    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
-    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamOrder;
-    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(13);
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(6);
+    lv_buildingUnitGroup = UnitGroup(null, c_playerAny, libGame_gv_townTownData[lv_town].lv_townRegion, UnitFilter((1 << c_targetFilterStructure), 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32))), 0);
+    libMTOD_gf_MMTodAddTownData(lv_buildingUnitGroup, lv_town, StringExternal("Param/Value/554F843E"));
     lv_lane = 3;
     lv_town += 1;
     libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
     libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamOrder;
-    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(7);
-    libGame_gv_townTownData[lv_town].lv_makesCoreVulnerableWhenKilled = true;
-    lv_town += 1;
-    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
-    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamOrder;
-    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(11);
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(8);
+    lv_buildingUnitGroup = UnitGroup(null, c_playerAny, libGame_gv_townTownData[lv_town].lv_townRegion, UnitFilter((1 << c_targetFilterStructure), 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32))), 0);
+    libMTOD_gf_MMTodAddTownData(lv_buildingUnitGroup, lv_town, StringExternal("Param/Value/34F98C84"));
     lv_lane = 1;
     lv_town += 1;
     libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
     libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamChaos;
     libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(17);
-    libGame_gv_townTownData[lv_town].lv_makesCoreVulnerableWhenKilled = true;
-    lv_town += 1;
-    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
-    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamChaos;
-    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(21);
+    lv_buildingUnitGroup = UnitGroup(null, c_playerAny, libGame_gv_townTownData[lv_town].lv_townRegion, UnitFilter((1 << c_targetFilterStructure), 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32))), 0);
+    libMTOD_gf_MMTodAddTownData(lv_buildingUnitGroup, lv_town, StringExternal("Param/Value/692D406A"));
     lv_lane = 2;
     lv_town += 1;
     libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
     libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamChaos;
-    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(30);
-    libGame_gv_townTownData[lv_town].lv_makesCoreVulnerableWhenKilled = true;
-    lv_town += 1;
-    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
-    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamChaos;
-    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(22);
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(21);
+    lv_buildingUnitGroup = UnitGroup(null, c_playerAny, libGame_gv_townTownData[lv_town].lv_townRegion, UnitFilter((1 << c_targetFilterStructure), 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32))), 0);
+    libMTOD_gf_MMTodAddTownData(lv_buildingUnitGroup, lv_town, StringExternal("Param/Value/8E32A9E2"));
     lv_lane = 3;
     lv_town += 1;
     libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
     libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamChaos;
-    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(15);
-    libGame_gv_townTownData[lv_town].lv_makesCoreVulnerableWhenKilled = true;
-    lv_town += 1;
-    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
-    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamChaos;
-    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(25);
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(33);
+    lv_buildingUnitGroup = UnitGroup(null, c_playerAny, libGame_gv_townTownData[lv_town].lv_townRegion, UnitFilter((1 << c_targetFilterStructure), 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32))), 0);
+    libMTOD_gf_MMTodAddTownData(lv_buildingUnitGroup, lv_town, StringExternal("Param/Value/8BFA90EA"));
     libGame_gv_townTownCount = lv_town;
     return true;
 }
 
 //--------------------------------------------------------------------------------------------------
-void gt_InitializeTownData_Init () {
-    gt_InitializeTownData = TriggerCreate("gt_InitializeTownData_Func");
+void gt_HookupTownDataForField_Init () {
+    gt_HookupTownDataForField = TriggerCreate("gt_HookupTownDataForField_Func");
 }
 
 //--------------------------------------------------------------------------------------------------
-// Trigger: Initialize Region Data
+// Trigger: Hookup Region Data
 //--------------------------------------------------------------------------------------------------
-bool gt_InitializeRegionData_Func (bool testConds, bool runActions) {
+bool gt_HookupRegionData_Func (bool testConds, bool runActions) {
     // Automatic Variable Declarations
     // Actions
     if (!runActions) {
         return true;
     }
 
-    libMapM_gf_MapSetRepulseRegion(libGame_gv_teamOrderIndex_C, RegionFromId(6), PointFromId(199), PointFromId(731), PointFromId(794), null);
-    libMapM_gf_MapSetRepulseRegion(libGame_gv_teamChaosIndex_C, RegionFromId(3), PointFromId(97), PointFromId(201), PointFromId(205), null);
-    libMapM_gf_MapSetSafeRegion(libGame_gv_teamOrderIndex_C, RegionFromId(6));
-    libMapM_gf_MapSetSafeRegion(libGame_gv_teamChaosIndex_C, RegionFromId(3));
-    libMapM_gv_mMGardensDragonSpawnPoint = PointFromId(1306212500);
+    libMapM_gf_MapSetRepulseRegion(libGame_gv_teamOrderIndex_C, RegionFromId(5), PointFromId(1643), PointFromId(1645), PointFromId(1647), PointFromId(1649));
+    libMapM_gf_MapSetRepulseRegion(libGame_gv_teamChaosIndex_C, RegionFromId(1), PointFromId(1644), PointFromId(1646), PointFromId(1648), PointFromId(1650));
+    libMapM_gf_MapSetSafeRegion(libGame_gv_teamOrderIndex_C, RegionFromId(15));
+    libMapM_gf_MapSetSafeRegion(libGame_gv_teamChaosIndex_C, RegionFromId(13));
     return true;
 }
 
 //--------------------------------------------------------------------------------------------------
-void gt_InitializeRegionData_Init () {
-    gt_InitializeRegionData = TriggerCreate("gt_InitializeRegionData_Func");
+void gt_HookupRegionData_Init () {
+    gt_HookupRegionData = TriggerCreate("gt_HookupRegionData_Func");
 }
 
 //--------------------------------------------------------------------------------------------------
-// Trigger: Player Enters Vehicle
+// Trigger: Register Danger Units
 //--------------------------------------------------------------------------------------------------
-bool gt_PlayerEntersVehicle_Func (bool testConds, bool runActions) {
+bool gt_RegisterDangerUnits_Func (bool testConds, bool runActions) {
     // Automatic Variable Declarations
     // Actions
     if (!runActions) {
         return true;
     }
 
-    libGame_gf_UpdateUpgradesForPlayer(libGame_gf_ComputerPlayerInTeam(libGame_gf_TeamNumberOfPlayer(UnitGetOwner(libGame_gf_UseVehiclePassengerHero()))), libGame_gf_UseVehicleVehicleUnit(), libGame_gv_scalingTicks);
-    libNtve_gf_ShowHideDoodadsInRegion(true, RegionEntireMap(), "Storm_Doodad_DS19_Embers");
-    libCore_gf_SendActorMessageToDoodadsInRegion("ModelSwap Storm_Doodad_DS19_Streetlamp_On", RegionEntireMap(), "Storm_Doodad_DS19_Streetlamp");
-    libNtve_gf_ShowHideDoodadsInRegion(true, RegionEntireMap(), "Storm_Doodad_DS19_DragonFog");
+    libAIAI_gf_HeroAISetupUnitDangerTracking(UnitFromId(515));
+    libAIAI_gf_HeroAISetupUnitDangerTracking(UnitFromId(514));
+    libAIAI_gf_HeroAISetupUnitDangerTracking(UnitFromId(527));
+    libAIAI_gf_HeroAISetupUnitDangerTracking(UnitFromId(520));
     return true;
 }
 
 //--------------------------------------------------------------------------------------------------
-void gt_PlayerEntersVehicle_Init () {
-    gt_PlayerEntersVehicle = TriggerCreate("gt_PlayerEntersVehicle_Func");
-    libGame_gf_HeroEnteredVehicleInstant(gt_PlayerEntersVehicle);
-}
-
-//--------------------------------------------------------------------------------------------------
-// Trigger: Player Leaves Vehicle
-//--------------------------------------------------------------------------------------------------
-bool gt_PlayerLeavesVehicle_Func (bool testConds, bool runActions) {
-    // Automatic Variable Declarations
-    // Actions
-    if (!runActions) {
-        return true;
-    }
-
-    libNtve_gf_ShowHideDoodadsInRegion(false, RegionEntireMap(), "Storm_Doodad_DS19_Embers");
-    libCore_gf_SendActorMessageToDoodadsInRegion("ModelSwap Storm_Doodad_DS19_Streetlamp", RegionEntireMap(), "Storm_Doodad_DS19_Streetlamp");
-    libNtve_gf_ShowHideDoodadsInRegion(false, RegionEntireMap(), "Storm_Doodad_DS19_DragonFog");
-    return true;
-}
-
-//--------------------------------------------------------------------------------------------------
-void gt_PlayerLeavesVehicle_Init () {
-    gt_PlayerLeavesVehicle = TriggerCreate("gt_PlayerLeavesVehicle_Func");
-    libGame_gf_UnitStopsOccupyingVehicleInstant(gt_PlayerLeavesVehicle);
-}
-
-//--------------------------------------------------------------------------------------------------
-// Trigger: Periodically Make Rocks Glow
-//--------------------------------------------------------------------------------------------------
-bool gt_PeriodicallyMakeRocksGlow_Func (bool testConds, bool runActions) {
-    // Variable Declarations
-    int lv_rock;
-    int lv_team;
-    int lv_nearbyHeroCount;
-
-    // Automatic Variable Declarations
-    int auto26659EDF_ae;
-    const int auto26659EDF_ai = 1;
-    const int auto204CCE3D_ae = libCore_gv_bALMaxTeams;
-    const int auto204CCE3D_ai = 1;
-
-    // Variable Initialization
-
-    // Actions
-    if (!runActions) {
-        return true;
-    }
-
-    auto26659EDF_ae = gv_glowingRockCount;
-    lv_rock = 1;
-    for ( ; ( (auto26659EDF_ai >= 0 && lv_rock <= auto26659EDF_ae) || (auto26659EDF_ai < 0 && lv_rock >= auto26659EDF_ae) ) ; lv_rock += auto26659EDF_ai ) {
-        lv_team = 1;
-        for ( ; ( (auto204CCE3D_ai >= 0 && lv_team <= auto204CCE3D_ae) || (auto204CCE3D_ai < 0 && lv_team >= auto204CCE3D_ae) ) ; lv_team += auto204CCE3D_ai ) {
-            lv_nearbyHeroCount = UnitGroupCount(UnitGroupAlliance(libGame_gf_ComputerPlayerInTeam(lv_team), c_unitAllianceAlly, gv_glowingRocks[lv_rock].lv_searchRegion, UnitFilter((1 << c_targetFilterHeroic), 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 1), c_unitCountAlive);
-            if ((lv_nearbyHeroCount > 0)) {
-                ActorSend(gv_glowingRocks[lv_rock].lv_rockDoodads[lv_team], "Signal StartGlowing");
-            }
-            else {
-                ActorSend(gv_glowingRocks[lv_rock].lv_rockDoodads[lv_team], "Signal StopGlowing");
-            }
-        }
-    }
-    return true;
-}
-
-//--------------------------------------------------------------------------------------------------
-void gt_PeriodicallyMakeRocksGlow_Init () {
-    gt_PeriodicallyMakeRocksGlow = TriggerCreate("gt_PeriodicallyMakeRocksGlow_Func");
-    TriggerAddEventTimePeriodic(gt_PeriodicallyMakeRocksGlow, 1.0, c_timeGame);
+void gt_RegisterDangerUnits_Init () {
+    gt_RegisterDangerUnits = TriggerCreate("gt_RegisterDangerUnits_Func");
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -700,15 +679,13 @@ void gt_PeriodicallyMakeRocksGlow_Init () {
 void InitTriggers () {
     gt_InitializeMap_Init();
     gt_InitializeMapMechanic_Init();
-    gt_InitializeTribute_Init();
-    gt_InitializeGlobalVariables_Init();
-    gt_InitializeJungleCreepData_Init();
-    gt_InitializeLaneData_Init();
-    gt_InitializeTownData_Init();
-    gt_InitializeRegionData_Init();
-    gt_PlayerEntersVehicle_Init();
-    gt_PlayerLeavesVehicle_Init();
-    gt_PeriodicallyMakeRocksGlow_Init();
+    gt_MapMechanicIntroCallback_Init();
+    gt_HookupGlobalVariables_Init();
+    gt_HookupLaneData_Init();
+    gt_HookupJungleCreepData_Init();
+    gt_HookupTownDataForField_Init();
+    gt_HookupRegionData_Init();
+    gt_RegisterDangerUnits_Init();
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -716,6 +693,5 @@ void InitTriggers () {
 //--------------------------------------------------------------------------------------------------
 void InitMap () {
     InitLibs();
-    InitGlobals();
     InitTriggers();
 }

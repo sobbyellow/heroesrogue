@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Catalog>
-    <CScoreResultRoot id="DragonShireRoot">
-        <HeaderTable value="DragonShireHeroes"/>
+    <CScoreResultRoot id="TowersOfDoomRoot">
+        <HeaderTable value="TowersOfDoomHeroes"/>
     </CScoreResultRoot>
-    <CScoreResultScore id="DragonShireHeroes">
-        <ValueTable value="DragonNumberOfDragonCaptures"/>
-        <ValueTable value="DragonShrinesCaptured"/>
+    <CScoreResultScore id="TowersOfDoomHeroes">
+        <ValueTable value="AltarDamageDone"/>
     </CScoreResultScore>
 </Catalog>

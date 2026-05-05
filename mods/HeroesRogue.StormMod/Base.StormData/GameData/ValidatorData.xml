@@ -191,4 +191,115 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <WhichUnit Value="Caster" />
 </CValidatorUnitCompareTokenCount>
 
+
+<CValidatorUnitCompareBehaviorCount id="CasterDoesNotHaveTyrandeShootingStarCooldown">
+  <WhichUnit Value="Caster" />
+  <Value value="0" />
+  <Behavior value="TyrandeShootingStarCooldown" />
+</CValidatorUnitCompareBehaviorCount>
+
+
+<CValidatorUnitType id="NotGreymane">
+  <WhichUnit Value="Source" />
+  <Value value="HeroGreymane" />
+  <Find value="0" />
+</CValidatorUnitType>
+
+<CValidatorCombine id="HasWorgenFormOrNotGreymane">
+  <CombineArray value="GreymaneSourceHasWorgenForm" />
+  <CombineArray value="NotGreymane" />
+</CValidatorCombine>
+<CValidatorCombine id="DoesNotHaveWorgenFormOrNotGreymane">
+  <CombineArray value="GreymaneNotInWorgenForm" />
+  <CombineArray value="NotGreymane" />
+</CValidatorCombine>
+
+<CValidatorUnitType id="NotMisha">
+  <WhichUnit Value="Source" />
+  <Value value="RexxarMisha" />
+  <Find value="0" />
+</CValidatorUnitType>
+<CValidatorUnitType id="NotRexxar">
+  <WhichUnit Value="Source" />
+  <Value value="HeroRexxar" />
+  <Find value="0" />
+</CValidatorUnitType>
+<CValidatorUnitType id="NotOlaf">
+  <WhichUnit Value="Source" />
+  <Value value="HeroOlaf" />
+  <Find value="0" />
+</CValidatorUnitType>
+<CValidatorUnitType id="NotErik">
+  <WhichUnit Value="Source" />
+  <Value value="HeroErik" />
+  <Find value="0" />
+</CValidatorUnitType>
+<CValidatorUnitType id="NotBaleog">
+  <WhichUnit Value="Source" />
+  <Value value="HeroBaleog" />
+  <Find value="0" />
+</CValidatorUnitType>
+<CValidatorCombine id="NotDVa">
+  <Type value="And" />
+  <CombineArray value="NotHeroDVaMech" />
+  <CombineArray value="NotHeroDVaPilot" />
+</CValidatorCombine>
+<CValidatorUnitType id="NotHeroDVaMech">
+  <WhichUnit Value="Source" />
+  <Value value="HeroDVaMech" />
+  <Find value="0" />
+</CValidatorUnitType>
+<CValidatorUnitType id="NotHeroDVaPilot">
+  <WhichUnit Value="Source" />
+  <Value value="HeroDVaPilot" />
+  <Find value="0" />
+</CValidatorUnitType>
+<CValidatorCombine id="DVaSourceisPilotOrNotDVa">
+  <CombineArray value="DVaSourceisPilot" />
+  <CombineArray value="NotDVa" />
+</CValidatorCombine>
+<CValidatorCombine id="DVaSourceisMechOrNotDVa">
+  <CombineArray value="DVaSourceisMech" />
+  <CombineArray value="NotDVa" />
+</CValidatorCombine>
+
+<CValidatorUnitCompareBehaviorCount id="Has8StackSgtHammerTrojanMines">
+  <Value value="7" />
+  <Behavior value="SgtHammerTrojanMinesStack" />
+</CValidatorUnitCompareBehaviorCount>
+<CValidatorPlayerTalent id="SgtHammerHasTrojanMines">
+  <WhichPlayer Value="Caster" />
+  <Find value="1" />
+  <Value value="SgtHammerTrojanMines" />
+</CValidatorPlayerTalent>
+
+<CValidatorUnitCompareBehaviorCount id="Has8StackSgtHammerRubberBullets">
+  <Value value="7" />
+  <Behavior value="SgtHammerRubberBulletsStack" />
+</CValidatorUnitCompareBehaviorCount>
+
+<CValidatorUnitType id="CreatorIsNotMedivhRaven">
+  <WhichUnit Value="Creator" />
+  <Value value="HeroMedivhRaven" />
+  <Find value="0" />
+</CValidatorUnitType>
+
+<CValidatorUnitCompareBehaviorCount id="TargetDoesNotHaveGlobeCollector">
+  <Compare value="LE" />
+  <Behavior value="GlobeCollector" />
+</CValidatorUnitCompareBehaviorCount>
+<CValidatorUnitCompareBehaviorCount id="TargetHasGlobeCollector">
+  <Compare value="GT" />
+  <Behavior value="GlobeCollector" />
+</CValidatorUnitCompareBehaviorCount>
+
+<CValidatorUnitCompareBehaviorCount id="TargetDoesNotHaveTyrandeSentinelPvEHit">
+  <Compare value="LE" />
+  <Behavior value="TyrandeSentinelPvEHit" />
+</CValidatorUnitCompareBehaviorCount>
+<CValidatorUnitCompareBehaviorCount id="TargetDoesNotHaveLegallyBlind">
+  <Compare value="LE" />
+  <Behavior value="LegallyBlind" />
+</CValidatorUnitCompareBehaviorCount>
+
 </Catalog>

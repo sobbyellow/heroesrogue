@@ -359,4 +359,59 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Sound value="Wizard_MagicMissiles_Impact" />
 </CActorSound>
 
+  <CActorModel id="SgtHammerSiegeAttackSplashImpactFX2" parent="StormModelAnimationStyleOneShotUnit">
+    <On Terms="Effect.SgtHammerExplosiveShellsSplashSet; At Target" Send="Create" />
+    <HostSiteOps Ops="SOpAttachCenter" HoldPosition="1" HoldRotation="1" />
+    <Model value="SgtHammerSiegeAttackSplashImpact" />
+  </CActorModel>
+
+  <CActorSimple id="MercLordSizeScaling2">
+    <On Terms="ActorCreation" Send="TimerSet 0.600000 PhysicsRestart" />
+    <On Terms="ActorCreation" Target="_Unit" Send="PhysicsTerminate" />
+    <On Terms="ActorCreation" Target="_Unit" Send="SetScale 1.200000 0.500000 MercLordScale" />
+    <On Terms="ActorCreation" Target="_Unit" Send="SetScale 1.200000 0.500000 MercLordScale" />
+    <On Terms="TimerExpired; TimerName PhysicsRestart" Target="_Unit" Send="PhysicsInitialize" />
+    <On Terms="TimerExpired; TimerName DelayDestroy" Target="_Unit" Send="PhysicsInitialize" />
+    <On Terms="TimerExpired; TimerName DelayDestroy" Send="Destroy" />
+    <On Terms="Behavior.AffixMercenaryLordDamageBuff.On" Send="Create" />
+    <On Terms="Behavior.AffixMercenaryLordDamageBuff.Off" Send="TimerSet 0.600000 DelayDestroy" />
+    <On Terms="Behavior.AffixMercenaryLordDamageBuff.Off" Target="_Unit" Send="PhysicsTerminate" />
+    <On Terms="Behavior.AffixMercenaryLordDamageBuff.Off" Send="TimerKill PhysicsRestart" />
+    <On Terms="Behavior.AffixMercenaryLordDamageBuff.Off" Target="_Unit" Send="ClearScale 0.500000 MercLordScale" />
+  </CActorSimple>
+  <CActorModel id="MercenaryLordBuff2" parent="StormModelAnimationStyleContinuousUnit">
+    <Inherits index="BaseModelScale" value="1" />
+    <Inherits index="Scale" value="1" />
+    <On Terms="Behavior.AffixMercenaryLordDamageBuff.On" Send="Create" />
+    <On Terms="Behavior.AffixMercenaryLordDamageBuff.Off" Send="AnimBracketStop BSD" />
+    <HostSiteOps Ops="SOpShadow" />
+    <AutoScaleFactor value="1.500000" />
+  </CActorModel>
+
+  <CActorSite id="LiMingStormArmorImpactSiteActive" parent="SiteCenter">
+    <On Terms="Effect.LiMingStormArmorDamage.Start; At Target" Send="Create" />
+    <On Terms="ActorCreation" Send="RefSetFromRequest ::scope.Chain1Launch LiMingStormArmorLaunchSiteActive Implicit Find" />
+    <On Terms="ActorCreation" Send="Create LiMingStormArmorImpactSound" />
+    <On Terms="ActorCreation" Send="Create LiMingStormArmorStrike" />
+  </CActorSite>
+  <CActorSound id="LiMingStormArmorImpactSound" parent="HeroAttackImpactSoundOneShot">
+    <Sound value="Falstad_Thunderstorm_Impact" />
+  </CActorSound>
+  <CActorSite id="LiMingStormArmorLaunchSiteActive" parent="SiteWeapon">
+    <On Terms="Effect.LiMingStormArmorSearch.Start" Send="Create" />
+    <Host Subject="_Unit" Scope="Caster" Actor="Find" />
+  </CActorSite>
+  <CActorBeamSimple id="LiMingStormArmorStrike">
+    <Flags index="SuppressSaveLoad" value="1" />
+    <On Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death ContentPlayOnce" />
+    <On Terms="AnimBracketState.*.AfterClosing; AnimName BSD" Send="Destroy" />
+    <HostLaunch Subject="::Creator" />
+    <HostImpact Subject="::scope.Chain1Launch" />
+  </CActorBeamSimple>
+  <CModel id="LiMingStormArmorStrike" parent="PersistentSpellFX">
+    <Model value="Assets\Effects\Storm_FX_Falstad_Base_LightningRod_Strike\Storm_FX_Falstad_Base_LightningRod_Strike.m3" />
+    <ScaleMax X="2.000000" Y="2.000000" Z="2.000000" />
+    <ScaleMin X="2.000000" Y="2.000000" Z="2.000000" />
+  </CModel>
+
 </Catalog>
