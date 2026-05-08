@@ -303,10 +303,10 @@ bool libAffx_LostVikingsRaidboatTrigger_Func (bool testConds, bool runActions) {
     }
     libAffx_Wait(0.0625, c_timeGame);
     libAffx_SyncBehaviors(libGame_gv_players[player].lv_heroUnit, createdUnit);
-    return true;
     for (;; heroGroupCount -= 1) {
         if (heroGroupCount <= 0) { break; }
         heroUnit = UnitGroupUnitFromEnd(heroGroup, heroGroupCount);
+        libAffx_DebugPrint(UnitGetType(heroUnit));
         if (UnitGetType(heroUnit) != "HeroLostVikingsController") {
             libAffx_DebugPrint("Syncing " + UnitGetType(heroUnit) + " behaviors with " + UnitGetType(createdUnit));
             libAffx_SyncBehaviors(heroUnit, createdUnit);
