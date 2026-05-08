@@ -185,7 +185,7 @@ Affix/Tooltip/RegenerativeCore=Your Core regenerates <c val="#TooltipNumbers">2%
 Affix/Tooltip/Append/RegenerativeCore=
 Affix/Name/AllyDamage=Powerful
 Affix/Tooltip/AllyDamage=Increases Attack Damage of ALL allies by <c val="#TooltipNumbers">5%</c> <c val="747A84">(+5% per stack)</c>.
-Affix/Tooltip/Append/AllyDamage=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixAllyDamageBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
+Affix/Tooltip/Append/AllyDamage=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixAllyDamageBuff,Modification.DamageDealtFraction[Basic]*100" precision="0"/>%</c>
 Affix/Name/AllyDamageSpell=Spellcasting
 Affix/Tooltip/AllyDamageSpell=Increases Spell Power of ALL allies by <c val="#TooltipNumbers">5%</c> <c val="747A84">(+5% per stack)</c>.
 Affix/Tooltip/Append/AllyDamageSpell=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixAllyDamageSpellBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
