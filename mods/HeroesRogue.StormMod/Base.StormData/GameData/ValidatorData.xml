@@ -2,6 +2,11 @@
 <Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
 
+<CValidatorUnitCompareBehaviorCount id="AlwaysReturnsTrue">
+  <WhichUnit Value="Caster" />
+  <Value value="0" />
+  <Behavior value="HeroGenericUnusedBehavior" />
+</CValidatorUnitCompareBehaviorCount>
 <CValidatorUnitCompareBehaviorCount id="CasterDoesNotHaveAffixConversionReady">
   <WhichUnit Value="Caster" />
   <Value value="0" />

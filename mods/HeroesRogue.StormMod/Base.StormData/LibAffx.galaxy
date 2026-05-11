@@ -74,7 +74,7 @@ bool libAffx_HeroSelectionTrigger_Func (bool testConds, bool runActions) {
                     }
                     if (libAffx_debug_forcedHeroes) {
                         if (player == 6) {
-                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("Monk");
+                            libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("LostVikings");
                         } else if (player == 7) {
                             libGame_gv_players[player].lv_heroIndex = libCore_gf_GetIndexFromHero("MalGanis");
                         } else if (player == 8) {
@@ -472,24 +472,6 @@ void libAffx_Pause(bool pause) {
             if (TimerGetRemaining(libMapM_gv_jungleCreepCamps[i].lv_stateCreepRespawnTimer) > 0.0) {
                 TimerPause(libMapM_gv_jungleCreepCamps[i].lv_stateCreepRespawnTimer, false);
             }
-            if (libAffx_playersHeroIndex[i] == libCore_gf_GetIndexFromHero("LostVikings")) {
-                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_erikDeathTimer) > 0.0) {
-                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_erikDeathTimer, false);
-                }
-                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_olafDeathTimer) > 0.0) {
-                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_olafDeathTimer, false);
-                }
-                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_baleogDeathTimer) > 0.0) {
-                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_baleogDeathTimer, false);
-                }
-                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_checkpointReachedCarinRespawnTimer) > 0.0) {
-                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_checkpointReachedCarinRespawnTimer, false);
-                }
-            } else if (libAffx_playersHeroIndex[i] == libCore_gf_GetIndexFromHero("Rexxar")) {
-                if (TimerGetRemaining(libGDHL_gv_mishaDeathTimer[i]) > 0.0) {
-                    TimerPause(libGDHL_gv_mishaDeathTimer[i], false);
-                }
-            }
         }
 
         if (libCore_gv_mAPMapStringID == "Volskaya" && libAffx_pauseVLSK != null) {
@@ -527,6 +509,24 @@ void libAffx_Pause(bool pause) {
         for (i = 1; i <= libCore_gv_bALMaxPlayers; i += 1) {
             if (TimerGetRemaining(libGame_gv_players[i].lv_respawnTimer) > 0.0) {
                 TimerPause(libGame_gv_players[i].lv_respawnTimer, false);
+            }
+            if (libAffx_playersHeroIndex[i] == libCore_gf_GetIndexFromHero("LostVikings")) {
+                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_erikDeathTimer) > 0.0) {
+                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_erikDeathTimer, false);
+                }
+                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_olafDeathTimer) > 0.0) {
+                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_olafDeathTimer, false);
+                }
+                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_baleogDeathTimer) > 0.0) {
+                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_baleogDeathTimer, false);
+                }
+                if (TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[i].lv_checkpointReachedCarinRespawnTimer) > 0.0) {
+                    TimerPause(libGDHL_gv_lostVikingsPlayer[i].lv_checkpointReachedCarinRespawnTimer, false);
+                }
+            } else if (libAffx_playersHeroIndex[i] == libCore_gf_GetIndexFromHero("Rexxar")) {
+                if (TimerGetRemaining(libGDHL_gv_mishaDeathTimer[i]) > 0.0) {
+                    TimerPause(libGDHL_gv_mishaDeathTimer[i], false);
+                }
             }
             if (TimerGetRemaining(libGame_gv_players[i].lv_respawnSoundCueTimer) > 0.0) {
                 TimerPause(libGame_gv_players[i].lv_respawnSoundCueTimer, false);
@@ -3024,12 +3024,18 @@ void libAffx_ResetCommandTrigger_Init () {
 bool libAffx_TestCommandTrigger_Func (bool testConds, bool runActions) {
     int i;
     int i2;
-    int affix;
-    int affixes;
-    int affixesNegative;
-    int arg1;
-    bool arg2;
-    bool arg3;
+    string chatMessage;
+    string argument1;
+    string argument2;
+    string argument3;
+    int afxaddallAffixes;
+    int afxaddallAmount;
+    int nextmapValue;
+    int rerollsAmount;
+    int cooldownId;
+    int boonCurseAmount;
+    int boonCurseRarity;
+    int boonCurseId;
     if (testConds) {
         if (!libAffx_debug_enableCheatCommands) {
             return false;
@@ -3039,102 +3045,178 @@ bool libAffx_TestCommandTrigger_Func (bool testConds, bool runActions) {
         return true;
     }
 
-    if (StringWord(EventChatMessage(false), 1) == "test") {
-        libAffx_Print("Player: " + libCore_gf_GetHeroFromIndex(libGame_gv_players[libAffx_player].lv_heroIndex));
-        for (i = 1; i <= libAffx_rarityStarter; i += 1) {
-            affixes = 0;
-            affixesNegative = 0;
-            for (i2 = 1; i2 <= libAffx_registeredAffixes; i2 += 1) {
-                if (libAffx_affixes[i2].rarity == i && libAffx_affixes[i2].enabled) {
-                    if (!libAffx_affixes[i2].curse) {
-                        affixes += 1;
-                    } else {
-                        affixesNegative += 1;
-                    }
-                }
+    chatMessage = StringWord(EventChatMessage(false), 1);
+    argument1 = StringWord(EventChatMessage(false), 2);
+    argument2 = StringWord(EventChatMessage(false), 3);
+    argument3 = StringWord(EventChatMessage(false), 4);
+
+    if (chatMessage == "help" || chatMessage == "h") {
+        if (argument1 == "affixaddall" || argument1 == "afxaddall" || argument1 == "aaa") {
+            libAffx_Print("Adds every boon and curse.\nafxaddall [number of affixes] [optional arguments]\nOptional arguments: ignore (ignores requirements), hero (only adds hero-specific)");
+        } else if (argument1 == "nextmap" || argument1 == "nm") {
+            libAffx_Print("Moves you to the specified round number. Defaults to the next map.\nnextmap [map number]");
+        } else if (argument1 == "rerolls" || argument1 == "r") {
+            libAffx_Print("Adds the specified amount of rerolls. Default to 999.\nrerolls [rerolls amount]");
+        } else if (argument1 == "cooldown" || argument1 == "cd") {
+            libAffx_Print("Sets the cooldown of a boon/curse. Defaults to 0.\ncooldown <affix> [cooldown value]");
+        } else if (argument1 == "boon" || argument1 == "b") {
+            libAffx_Print("Queues up a boon. Defaults to 1 with common rarity.\nboon [amount] [rarity]");
+        } else if (argument1 == "curse" || argument1 == "c") {
+            libAffx_Print("Queues up a curse. Defaults to 1 with common rarity.\ncurse [amount] [rarity]");
+        } else if (argument1 == "affixadd" || argument1 == "afxadd" || argument1 == "affix" || argument1 == "afx") {
+            libAffx_Print("Adds a boon/curse with the id. Amount defaults to 1.\naffixadd | afxadd | affix | afx <affix> [ammount]");
+        } else {
+            libAffx_Print("## Commands ##");
+            libAffx_Print("boon [amount] [rarity]");
+            libAffx_Print("curse [amount] [rarity]");
+            libAffx_Print("afxadd <affix> [amount]");
+            libAffx_Print("afxaddall [number of affixes] [optional arguments]");
+            libAffx_Print("nextmap [map number]");
+            libAffx_Print("rerolls [rerolls amount]");
+            libAffx_Print("cooldown <affix> [cooldown value]");
+        }
+    } else if (chatMessage == "boon" || chatMessage == "b") {
+        if (argument1 != "") {
+            boonCurseAmount = StringToInt(argument1);
+        } else {
+            boonCurseAmount = 1;
+        }
+        if (argument2 != "") {
+            boonCurseRarity = libAffx_GetRarity(argument2);
+            if (boonCurseRarity == 0) {
+                boonCurseRarity = StringToInt(argument2);
             }
-            libAffx_Print(libAffx_GetRarityString(i) + " affixes: " + IntToString(affixes) + " positives and " + IntToString(affixesNegative) + " negatives");
+        } else {
+            boonCurseRarity = libAffx_rarityCommon;
         }
-    } else if (StringWord(EventChatMessage(false), 1) == "afxaddall") {
-        affixes = 0;
-        arg1 = 1;
-        if (StringWord(EventChatMessage(false), 2) != null) {
-            arg1 = StringToInt(StringWord(EventChatMessage(false), 2));
+
+        libAffx_QueueAffix(MaxI(boonCurseRarity, libAffx_rarityCommon), false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), boonCurseAmount, false);
+    } else if (chatMessage == "curse" || chatMessage == "c") {
+        if (argument1 != "") {
+            boonCurseAmount = StringToInt(argument1);
+        } else {
+            boonCurseAmount = 1;
         }
-        
-        if (StringWord(EventChatMessage(false), 3) == "ignore") { // Ignore requirements
-            arg2 = true;
-        } else if (StringWord(EventChatMessage(false), 3) == "hero") { // Hero-specific only
-            arg3 = true;
+        if (argument2 != "") {
+            boonCurseRarity = libAffx_GetRarity(argument2);
+            if (boonCurseRarity == 0) {
+                boonCurseRarity = StringToInt(argument2);
+            }
+        } else {
+            boonCurseRarity = libAffx_rarityCommon;
+        }
+
+        libAffx_QueueAffix(MaxI(boonCurseRarity, libAffx_rarityCommon), true, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), boonCurseAmount, false);
+    } else if (chatMessage == "affix" || chatMessage == "afx" || chatMessage == "affixadd" || chatMessage == "afxadd") {
+        if (argument1 == "") {
+            libAffx_Print("Usage: afxadd <affix> [amount]");
+        } else {
+            if (argument2 != "") {
+                boonCurseAmount = StringToInt(argument2);
+            } else {
+                boonCurseAmount = 1;
+            }
+            boonCurseId = libAffx_GetAffixId(argument1);
+            if (boonCurseId == 0) {
+                libAffx_Print("Could not find affix " + argument1);
+            } else {
+                libAffx_AddAffix(boonCurseId, boonCurseAmount);
+                libAffx_Print("Added " + IntToString(boonCurseAmount) + "x " + libAffx_affixes[boonCurseId].name);
+            }
+        }
+    } else if (chatMessage == "affixaddall" || chatMessage == "afxaddall" || chatMessage == "aaa") {
+        if (argument1 != "") {
+            afxaddallAmount = StringToInt(argument1);
+        } else {
+            afxaddallAmount = 1;
         }
         libAffx_debugCommandsAddAll = true;
         for (i = 1; i <= libAffx_registeredAffixes; i += 1) {
-            if (((libAffx_affixes[i].enabled && libAffx_affixes[i].allowedHero[libAffx_playersHeroIndex[libAffx_player]]) || arg2) && ((libAffx_affixes[i].max > 0 && libAffx_affixes[i].count <= libAffx_affixes[i].max) || (libAffx_affixes[i].max <= 0))) {
-                if (arg3 && !libAffx_affixes[i].heroExclusive) {
+            if (((libAffx_affixes[i].enabled && libAffx_affixes[i].allowedHero[libAffx_playersHeroIndex[libAffx_player]]) || argument2 == "ignore") && ((libAffx_affixes[i].max > 0 && libAffx_affixes[i].count <= libAffx_affixes[i].max) || (libAffx_affixes[i].max <= 0))) {
+                if (argument2 == "hero" && !libAffx_affixes[i].heroExclusive) {
                     continue;
                 }
                 if (libAffx_affixes[i].max <= 0) {
-                    affixes += arg1;
-                    libAffx_AddAffix(i, arg1);
+                    afxaddallAffixes += afxaddallAmount;
+                    libAffx_AddAffix(i, afxaddallAmount);
                 } else if (libAffx_affixes[i].count < libAffx_affixes[i].max) {
-                    affixes += libAffx_affixes[i].max - libAffx_affixes[i].count;
+                    afxaddallAffixes += libAffx_affixes[i].max - libAffx_affixes[i].count;
                     libAffx_AddAffix(i, libAffx_affixes[i].max - libAffx_affixes[i].count);
                 }
             }
         }
         libAffx_debugCommandsAddAll = false;
         libAffx_UpdateOwnedAffixes();
-        libAffx_Print("Added a total of " + IntToString(affixes) + " affixes!");
-    } else if (StringWord(EventChatMessage(false), 1) == "nextmap") {
+        libAffx_Print("Added a total of " + IntToString(afxaddallAffixes) + " affixes!");
+    } else if (chatMessage == "nextmap" || chatMessage == "nm") {
         libAffx_Print("Loading next map...");
-        if (libAffx_GetMapID(libCore_gv_mAPMapStringID) == libAffx_map1) {
-            GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorialmapmechanics.stormmap");
-            libAffx_nextMap = libAffx_GetMapString(libAffx_map2);
-        } else if (libAffx_GetMapID(libCore_gv_mAPMapStringID) == libAffx_map2) {
-            GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorial01.stormmap");
-            libAffx_nextMap = libAffx_GetMapString(libAffx_map3);
-        } else if (libAffx_GetMapID(libCore_gv_mAPMapStringID) == libAffx_map3) {
-            GameSetNextMap("heroes/singleplayermaps/(10)trymemode.stormmap");
-            libAffx_nextMap = libAffx_GetMapString(libAffx_map4);
-        } else if (libAffx_GetMapID(libCore_gv_mAPMapStringID) == libAffx_map4) {
+        if (argument1 != "") {
+            nextmapValue = StringToInt(argument1);
+            libAffx_currentRun = nextmapValue - 1;
+        } else {
+            nextmapValue = libAffx_currentRun;
+        }
+        if ((nextmapValue - 1) % 4 == 0) {
             GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorialveteran.stormmap");
             libAffx_nextMap = libAffx_GetMapString(libAffx_map1);
+        } else if ((nextmapValue - 1) % 4 == 0) {
+            GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorialmapmechanics.stormmap");
+            libAffx_nextMap = libAffx_GetMapString(libAffx_map2);
+        } else if ((nextmapValue - 1) % 4 == 0) {
+            GameSetNextMap("heroes/singleplayermaps/startingexperience/tutorial01.stormmap");
+            libAffx_nextMap = libAffx_GetMapString(libAffx_map3);
+        } else {
+            GameSetNextMap("heroes/singleplayermaps/(10)trymemode.stormmap");
+            libAffx_nextMap = libAffx_GetMapString(libAffx_map4);
         }
         libAffx_BankSave();
         Wait(1, c_timeGame);
         KickFromGame(PlayerGroupAll());
-    } else if (StringWord(EventChatMessage(false), 1) == "rerolls") {
-        libAffx_Print("Adding rerolls!");
-        libAffx_rerolls += 99;
-        libAffx_rerollsCurse += 99;
-    } else if (StringWord(EventChatMessage(false), 1) == "forceunpause") {
-        libAffx_Print("Forced unpause!");
-        libAffx_Pause(false);
-    } else if (StringWord(EventChatMessage(false), 1) == "testmap") {
-        GameSetNextMap(StringWord(EventChatMessage(false), 2));
-        KickFromGame(PlayerGroupAll());
-    } else if (StringWord(EventChatMessage(false), 1) == "camera") {
-        CameraSetValue(libAffx_player, StringToInt(StringWord(EventChatMessage(false), 2)), StringToFixed(StringWord(EventChatMessage(false), 3)), StringToFixed(StringWord(EventChatMessage(false), 4)), -1, 10);
-    } else if (StringWord(EventChatMessage(false), 1) == "cooldown" || StringWord(EventChatMessage(false), 1) == "cd") {
-        if (StringWord(EventChatMessage(false), 2) == "") {
-            libAffx_Print("Usage: cooldown <affix> (value)");
+    } else if (chatMessage == "rerolls" || chatMessage == "r") {
+        if (argument1 != "") {
+            rerollsAmount = StringToInt(argument1);
         } else {
-            affix = libAffx_GetAffixId(StringWord(EventChatMessage(false), 2));
-            if (affix == 0) {
-                libAffx_Print("Affix " + StringWord(EventChatMessage(false), 2) + " not found.");
-            } else if (StringWord(EventChatMessage(false), 3) == "") {
-                libAffx_affixes[affix].cooldown = 0;
+            rerollsAmount = 999;
+        }
+        libAffx_Print("Adding " + IntToString(rerollsAmount) + " rerolls!");
+        libAffx_rerolls += rerollsAmount;
+        libAffx_rerollsCurse += rerollsAmount;
+    } else if (chatMessage == "cooldown" || chatMessage == "cd") {
+        if (argument1 == "") {
+            libAffx_Print("Usage: cooldown <affix> [cooldown value]");
+        } else {
+            cooldownId = libAffx_GetAffixId(argument1);
+            if (cooldownId == 0) {
+                libAffx_Print("Affix " + argument1 + " not found.");
+            } else if (argument2 == "") {
+                libAffx_affixes[cooldownId].cooldown = 0;
             } else {
-                libAffx_affixes[affix].cooldown = StringToFixed(StringWord(EventChatMessage(false), 3));
+                libAffx_affixes[cooldownId].cooldown = StringToFixed(argument2);
             }
+            libAffx_Print("Cooldown of " + libAffx_affixes[cooldownId].name + " set to " + FixedToString(libAffx_affixes[cooldownId].cooldown, 0));
         }
-    } else if (StringWord(EventChatMessage(false), 1) == "curse") {
-        if (StringWord(EventChatMessage(false), 2) == "") {
-            libAffx_Print("Usage: curse <team>");
+    } else if (chatMessage == "forcepause") {
+        libAffx_Print("Forcefully paused!");
+        libAffx_Pause(true);
+    } else if (chatMessage == "forceunpause") {
+        libAffx_Print("Forcefully unpaused!");
+        libAffx_Pause(false);
+    } else if (chatMessage == "camera" || chatMessage == "c") {
+        if (argument1 == "" || argument2 == "") {
+            libAffx_Print("Usage: camera <camera type> <value>");
+        }
+        if (argument3 == "") {
+            CameraSetValue(libAffx_player, StringToInt(argument1), StringToFixed(argument2), 0, -1, 10);
         } else {
-            libMapM_gf_MMRavenTributeCollectionThresholdReached(StringToInt(StringWord(EventChatMessage(false), 2)));
+            CameraSetValue(libAffx_player, StringToInt(argument1), StringToFixed(argument2), StringToFixed(argument3), -1, 10);
         }
-    } else if (StringWord(EventChatMessage(false), 1) == "printallheroes") {
+    } else if (chatMessage == "ravencurse" || chatMessage == "rc") {
+        if (argument1 == "") {
+            libAffx_Print("Usage: ravencurse <team>");
+        } else {
+            libMapM_gf_MMRavenTributeCollectionThresholdReached(StringToInt(argument1));
+        }
+    } else if (chatMessage == "printheroindex") {
         for (i = 1; i <= 10; i += 1) {
             libAffx_Print("Player " + IntToString(i) + ": " + libCore_gf_GetHeroFromIndex(libGame_gv_players[i].lv_heroIndex));
         }
@@ -3143,85 +3225,31 @@ bool libAffx_TestCommandTrigger_Func (bool testConds, bool runActions) {
 }
 void libAffx_TestCommandTrigger_Init () {
     libAffx_TestCommandTrigger = TriggerCreate("libAffx_TestCommandTrigger_Func");
-    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "test", false);
-    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "testmap", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "help", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "h", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "affixaddall", false);
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "afxaddall", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "aaa", false);
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "nextmap", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "nm", false);
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "rerolls", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "r", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "forcepause", false);
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "forceunpause", false);
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "camera", false);
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "cooldown", false);
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "cd", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "ravencurse", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "rc", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "printheroindex", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "boon", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "b", false);
     TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "curse", false);
-    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "printallheroes", false);
-}
-
-bool libAffx_QueueAffixCommandTrigger_Func (bool testConds, bool runActions) {
-    int rarity;
-    int amount;
-    int affix;
-
-    if (testConds) {
-        if (StringWord(EventChatMessage(false), 1) != "afxq" && StringWord(EventChatMessage(false), 1) != "afxqueue" && StringWord(EventChatMessage(false), 1) != "afxadd" && StringWord(EventChatMessage(false), 1) != "afx") {
-            return false;
-        }
-        if (!libAffx_debug_enableCheatCommands) {
-            return false;
-        }
-    }
-
-    if (!runActions) {
-        return true;
-    }
-    if (StringWord(EventChatMessage(false), 1) == "afxq" || StringWord(EventChatMessage(false), 1) == "afxqueue") {
-        rarity = libAffx_rarityCommon;
-        amount = 1;
-        if (StringWord(EventChatMessage(false), 4) != null) {
-            amount = StringToInt(StringWord(EventChatMessage(false), 4));
-        }
-
-        if ((StringWord(EventChatMessage(false), 1) == null)) {
-            libAffx_Print("Usage: <afxq/afxqueue> [curse] [rarity] [amount]");
-        }
-        else {
-            if ((StringWord(EventChatMessage(false), 3) != null)) {
-                rarity = StringToInt(StringWord(EventChatMessage(false), 3));
-            }
-            if ((StringWord(EventChatMessage(false), 2) != null)) {
-                if (StringWord(EventChatMessage(false), 2) == "true" || StringWord(EventChatMessage(false), 2) == "1") {
-                    libAffx_QueueAffix(MaxI(rarity, libAffx_rarityCommon), true, UnitLevel(libGame_gv_players[libAffx_enemy].lv_heroUnit), amount, false);
-                } else {
-                    libAffx_QueueAffix(MaxI(rarity, libAffx_rarityCommon), false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), amount, false);
-                }
-            } else {
-                libAffx_QueueAffix(MaxI(rarity, libAffx_rarityCommon), false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), amount, false);
-            }
-        }
-    } else if (StringWord(EventChatMessage(false), 1) == "afx" || StringWord(EventChatMessage(false), 1) == "afxadd") {
-        amount = 1;
-        if ((StringWord(EventChatMessage(false), 2) == null)) {
-            libAffx_Print("Usage: <afx/afxadd> <affix name> [amount]");
-        } else {
-            if (StringWord(EventChatMessage(false), 3) != null) {
-                amount = StringToInt(StringWord(EventChatMessage(false), 3));
-            }
-            affix = libAffx_GetAffixId(StringWord(EventChatMessage(false), 2));
-            if (affix == 0) {
-                libAffx_Print("Could not find affix by the name " + StringWord(EventChatMessage(false), 2));
-            } else {
-                libAffx_AddAffix(affix, amount);
-                libAffx_Print("Added affix: " + libAffx_affixes[affix].name);
-            }
-        }
-    }
-    return true;
-}
-void libAffx_QueueAffixCommandTrigger_Init () {
-    libAffx_QueueAffixCommandTrigger = TriggerCreate("libAffx_QueueAffixCommandTrigger_Func");
-    TriggerAddEventChatMessage(libAffx_QueueAffixCommandTrigger, c_playerAny, "afxqueue", false);
-    TriggerAddEventChatMessage(libAffx_QueueAffixCommandTrigger, c_playerAny, "afxq", false);
-    TriggerAddEventChatMessage(libAffx_QueueAffixCommandTrigger, c_playerAny, "afxadd", false);
-    TriggerAddEventChatMessage(libAffx_QueueAffixCommandTrigger, c_playerAny, "afx", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "c", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "affixadd", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "afxadd", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "affix", false);
+    TriggerAddEventChatMessage(libAffx_TestCommandTrigger, c_playerAny, "afx", false);
 }
 
 bool libAffx_DifficultyUnitCreated_Func (bool testConds, bool runActions) {
@@ -3584,12 +3612,15 @@ bool libAffx_MapInitTrigger_Func (bool testConds, bool runActions) {
     UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringToText("Version " + libAffx_version));
 
     if (libAffx_currentRun == 1) {
-        //UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/GoldenBorder"));
         libAffx_rerolls += libAffx_rerollsStart;
         libAffx_rerollsCurse += libAffx_rerollsStart;
     } else {
         libAffx_rerolls += libAffx_rerollsPerGame;
         libAffx_rerollsCurse += libAffx_rerollsPerGame;
+    }
+
+    if (libAffx_debug_enableTryMeMode2 || libAffx_debug_enableCheatCommands) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringToText("Debug mode enabled!"));
     }
     
 
@@ -3625,7 +3656,6 @@ void libAffx_InitTriggers () {
     libAffx_CurateHeroesTrigger_Init();
     libAffx_MapInitLoadBankTrigger_Init();
     libAffx_MapInitTrigger_Init();
-    libAffx_QueueAffixCommandTrigger_Init();
     libAffx_LevelUpTrigger_Init();
     libAffx_TalentGainedTrigger_Init();
     libAffx_AffixSelectedTrigger_Init();

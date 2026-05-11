@@ -1587,6 +1587,35 @@
                 <Field Id="Trigger" Index="1"/>
             </String>
         </Instances>
+        <Instances Id="BriberyDeepPockets">
+            <Int Int="1">
+                <Field Id="Max"/>
+            </Int>
+            <Int Int="1">
+                <Field Id="AffixesRequiredMax"/>
+            </Int>
+            <String String="Epic">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="Assets/Textures/storm_ui_icon_talent_bribe.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="AA libAffx_BriberyDeepPockets">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="Shrines">
+                <Field Id="MapsExcluded"/>
+            </String>
+            <String String="DragonShire">
+                <Field Id="MapsExcluded" Index="1"/>
+            </String>
+            <String String="HauntedMines">
+                <Field Id="MapsExcluded" Index="2"/>
+            </String>
+            <User Type="Affix" Instance="Bribery">
+                <Field Id="AffixesRequired"/>
+            </User>
+        </Instances>
         <Instances Id="PathoftheWizard">
             <Int>
                 <Field Id="Max"/>
@@ -1605,9 +1634,6 @@
             </String>
             <String String="AA libAffx_PathoftheWizardAffixAdded">
                 <Field Id="Trigger" Index="1"/>
-            </String>
-            <String String="Wizard">
-                <Field Id="HeroesExcluded"/>
             </String>
             <String String="Wizard">
                 <Field Id="HeroTooltip"/>
@@ -2503,6 +2529,9 @@
             </String>
             <String String="1 3 Multiply Effect,MuradinDwarfTossDamageSearchDwarfLaunch,AreaArray[0].Radius 2">
                 <Field Id="CatalogModification" Index="6"/>
+            </String>
+            <String String="1 1 Set Abil,MuradinThunderclap,Cost.Charge.HideCount 0">
+                <Field Id="CatalogModification" Index="7"/>
             </String>
         </Instances>
         <Instances Id="UnstoppableAvatar">

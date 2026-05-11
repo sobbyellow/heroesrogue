@@ -1314,11 +1314,11 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </Modification>
 </CBehaviorBuff>
 
-  <CBehaviorBuff id="PreparedShield" parent="StormShield">
-    <DamageResponse>
-      <ModifyLimitVitalMaxFractionArray index="Life" value="0.3" />
-      <ModifyScoreArray index="0" Value="Healing" />
-    </DamageResponse>
-  </CBehaviorBuff>
+<CBehaviorBuff id="PreparedShield" parent="StormShield">
+  <DamageResponse>
+    <ModifyLimitVitalMaxFractionArray index="Life" value="0.3" />
+    <ModifyScoreArray index="0" Value="Healing" />
+  </DamageResponse>
+</CBehaviorBuff>
 
 </Catalog>
