@@ -142,8 +142,6 @@ int libAffx_GetBuddyCount(int player, unit ownerUnit) {
         return currentBuddies[player];
     }
 }
-const fixed buddyDamage = 142;
-const fixed buddyHealing = 154;
 bool libAffx_BuddyAI (bool testConds, bool runActions) {
     const int buddyIdleState = 1;
     const int buddyLeashingState = 2;
@@ -1789,6 +1787,14 @@ bool libAffx_ResurgenceoftheStormP (bool testConds, bool runActions) {
 // ---------------------------------------------------------------
 int briberyIndex;
 fixed briberyCooldown;
+fixed briberyCooldownRate = 0.0625;
+bool briberyAllowBosses;
+bool libAffx_BriberyCampIsBoss(int unitType) {
+    if (unitType == libMapM_ge_JungleCampDefenderTypes_GraveGolem || unitType == libMapM_ge_JungleCampDefenderTypes_BossCamp1 || unitType == libMapM_ge_JungleCampDefenderTypes_BossCamp2 || unitType == libMapM_ge_JungleCampDefenderTypes_BossCamp3) {
+        return true;
+    }
+    return false;
+}
 bool libAffx_BriberyAffixAdded (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
@@ -1802,6 +1808,7 @@ bool libAffx_BriberyP (bool testConds, bool runActions) {
     int i2;
     int unitCount;
     int campType;
+    int targetCamp;
     if (testConds) {
         if (libAffx_gamePaused) {
             return false;
@@ -1815,27 +1822,58 @@ bool libAffx_BriberyP (bool testConds, bool runActions) {
     }
 
     if (libAffx_affixes[briberyIndex].cooldown > 0) {
-        libAffx_affixes[briberyIndex].cooldown -= 0.0625;
+        libAffx_affixes[briberyIndex].cooldown -= briberyCooldownRate;
     } else {
-        for (i = 1; i <= libMapM_gv_jungleMaxCamps; i += 1) {
-            campType = libMapM_gv_jungleCreepCamps[i].lv_mapDataCampDefenderType;
-            if (campType == libMapM_ge_JungleCampDefenderTypes_GraveGolem || campType == libMapM_ge_JungleCampDefenderTypes_BossCamp1 || campType == libMapM_ge_JungleCampDefenderTypes_BossCamp2 || campType == libMapM_ge_JungleCampDefenderTypes_BossCamp3) {
-                continue;
-            }
-            unitCount = UnitGroupCount(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, c_unitCountAlive);
-            if (unitCount > 0 && !libNtve_gf_UnitIsInvulnerable(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1)) && !UnitHasBehavior2(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1), "JungleMercDefenderBirthInvulnerability") && libAffx_affixes[briberyIndex].cooldown <= 0) {
-                libAffx_affixes[briberyIndex].cooldown = briberyCooldown;
-                for (i2 = unitCount; i2 > 0; i2 -= 1) {
-                    UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "BribeSetAffix", UnitGroupUnitFromEnd(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, i2));
+        if (briberyAllowBosses) {
+            for (i = 1; i <= libMapM_gv_jungleMaxCamps; i += 1) {
+                campType = libMapM_gv_jungleCreepCamps[i].lv_mapDataCampDefenderType;
+                if (!libAffx_BriberyCampIsBoss(campType)) {
+                    continue;
                 }
-                libMapM_gv_jungleCreepCamps[i].customRespawnTime = libMapM_gv_jungleCreepCamps[i].lv_defenderRespawnTime / 2;
-                Wait(0.125, c_timeGame);
-                libGame_gv_capturePoints[libMapM_gv_jungleCreepCamps[i].lv_captureCapturePointIndex].lv_captureCounter = 999;
+                unitCount = UnitGroupCount(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, c_unitCountAlive);
+                if (unitCount > 0 && !libNtve_gf_UnitIsInvulnerable(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1)) && !UnitHasBehavior2(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1), "JungleMercDefenderBirthInvulnerability")) {
+                    targetCamp = i;
+                }
             }
+        }
+        if (targetCamp <= 0) {
+            for (i = 1; i <= libMapM_gv_jungleMaxCamps; i += 1) {
+                campType = libMapM_gv_jungleCreepCamps[i].lv_mapDataCampDefenderType;
+                if (libAffx_BriberyCampIsBoss(campType) && !briberyAllowBosses) {
+                    continue;
+                }
+                unitCount = UnitGroupCount(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, c_unitCountAlive);
+                if (unitCount > 0 && !libNtve_gf_UnitIsInvulnerable(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1)) && !UnitHasBehavior2(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1), "JungleMercDefenderBirthInvulnerability")) {
+                    targetCamp = i;
+                }
+            }
+        }
+        if (targetCamp > 0) {
+            libAffx_affixes[briberyIndex].cooldown = briberyCooldown;
+            unitCount = UnitGroupCount(libMapM_gv_jungleCreepCamps[targetCamp].lv_defenderUnitGroup, c_unitCountAlive);
+
+            for (i2 = unitCount; i2 > 0; i2 -= 1) {
+                UnitCreateEffectUnit(libGame_gv_players[libAffx_player].lv_heroUnit, "BribeSetAffix", UnitGroupUnitFromEnd(libMapM_gv_jungleCreepCamps[targetCamp].lv_defenderUnitGroup, i2));
+                libAffx_DebugPrint("Trying to bribe " + UnitGetType(UnitGroupUnitFromEnd(libMapM_gv_jungleCreepCamps[targetCamp].lv_defenderUnitGroup, i2)));
+            }
+            libMapM_gv_jungleCreepCamps[targetCamp].customRespawnTime = libMapM_gv_jungleCreepCamps[targetCamp].lv_defenderRespawnTime / 2;
+            Wait(0.125, c_timeGame);
+            libGame_gv_capturePoints[libMapM_gv_jungleCreepCamps[targetCamp].lv_captureCapturePointIndex].lv_captureCounter = 999;
         }
         Wait(1, c_timeGame);
     }
 
+    return true;
+}
+// ---------------------------------------------------------------
+// Deep Pockets
+// ---------------------------------------------------------------
+bool libAffx_BriberyDeepPockets (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    briberyAllowBosses = true;
+    briberyCooldownRate *= 1.5;
     return true;
 }
 // ---------------------------------------------------------------
@@ -4493,6 +4531,9 @@ bool libAffx_MuradinDualHammerTalentGained (bool testConds, bool runActions) {
         if (player != libAffx_player) {
             return false;
         }
+        if (talent != "MuradinMasteryStormhammerSledgehammer") {
+            return false;
+        }
     }
     if (!runActions) {
         return true;
@@ -4529,6 +4570,7 @@ bool libAffx_PacifismAffixAdded (bool testConds, bool runActions) {
     libAffx_pacifismIndex = libAffx_EventAffix();
     if (libAffx_BankLoadValueInt("PacifismReady") == 1) {
         UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/Pacifism"));
+        libAffx_QueueAffix(libAffx_rarityUncommon, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, true);
         libAffx_QueueAffix(libAffx_rarityRare, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, true);
         libAffx_QueueAffix(libAffx_rarityEpic, false, UnitLevel(libGame_gv_players[libAffx_player].lv_heroUnit), 1, true);
         libAffx_BankSaveValueInt("PacifismReady", 0);

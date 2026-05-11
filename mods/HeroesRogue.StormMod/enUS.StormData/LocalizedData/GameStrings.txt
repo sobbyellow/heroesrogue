@@ -202,12 +202,12 @@ Affix/Name/Experienced=Experienced
 Affix/Tooltip/Experienced=Increases experience gain for you and AI teammates by <c val="#TooltipNumbers">15%</c>.
 Affix/Tooltip/Append/Experienced=
 Affix/Name/KillContract=Kill Contract
-Affix/Tooltip/KillContract=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Get <c val="#TooltipNumbers"><d ref="Behavior,AffixKillContractQuestToken,Max"/></c> Hero Takedowns. Progress is lost between rounds.<n/><n/><c val="#TooltipQuest">Reward:</c> Gain <c val="#TooltipNumbers">1</c> <c val="ffffff">common Boon</c> and <c val="#TooltipNumbers">1</c> <c val="1eff00">uncommon Boon</c>.
+Affix/Tooltip/KillContract=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Get <c val="#TooltipNumbers"><d ref="Behavior,AffixKillContractQuestToken,Max"/></c> Hero Takedowns. Progress is lost between rounds.<n/><n/><c val="#TooltipQuest">Reward:</c> Gain <c val="#TooltipNumbers">1</c> <c val="ffffff">Common Boon</c> and <c val="#TooltipNumbers">1</c> <c val="1eff00">Uncommon Boon</c>.
 Affix/Tooltip/Append/KillContract=
 Button/Name/AffixKillContractQuestToken=Kill Contract
 Button/Tooltip/AffixKillContractQuestToken=<c val="#TooltipQuest">Takedowns: <c val="#TooltipNumbers" validator="AffixKillContractQuestNotComplete"><d ref="$BehaviorStackCount:AffixKillContractQuestToken$"/> / <d ref="Behavior,AffixKillContractQuestToken,Max"/></c>
 Affix/Name/StructureQuest=Destruction
-Affix/Tooltip/StructureQuest=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Destroy enemy Forts or Keeps.<n/><n/><c val="#TooltipQuest">Reward:</c> After destroying <c val="#TooltipNumbers">6</c> Forts and Keeps, gain <c val="#TooltipNumbers">1</c> <c val="ffffff">common Boon</c>.<n/><n/><c val="#TooltipQuest">Reward:</c> After destroying <c val="#TooltipNumbers">12</c> Forts and Keeps, gain <c val="#TooltipNumbers">1</c> <c val="1eff00">uncommon Boon</c>.<n/><n/><c val="#TooltipQuest">Reward:</c> After destroying <c val="#TooltipNumbers">24</c> Forts and Keeps, gain <c val="#TooltipNumbers">1</c> <c val="0070dd">rare Boon</c>.</n></n>Retain Quest progress after winning the game.
+Affix/Tooltip/StructureQuest=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Destroy enemy Forts or Keeps.<n/><n/><c val="#TooltipQuest">Reward:</c> After destroying <c val="#TooltipNumbers">6</c> Forts and Keeps, gain <c val="#TooltipNumbers">1</c> <c val="ffffff">Common Boon</c>.<n/><n/><c val="#TooltipQuest">Reward:</c> After destroying <c val="#TooltipNumbers">12</c> Forts and Keeps, gain <c val="#TooltipNumbers">1</c> <c val="1eff00">Uncommon Boon</c>.<n/><n/><c val="#TooltipQuest">Reward:</c> After destroying <c val="#TooltipNumbers">24</c> Forts and Keeps, gain <c val="#TooltipNumbers">1</c> <c val="0070dd">Rare Boon</c>.</n></n>Retain Quest progress after winning the game.
 Affix/Tooltip/Append/StructureQuest=
 Button/Name/AffixStructureQuestToken=Destruction
 Button/Tooltip/AffixStructureQuestToken=<c val="#TooltipQuest">Forts/Keeps destroyed: <c val="#TooltipNumbers" validator="AffixStructureQuestNotComplete"><d ref="$BehaviorStackCount:AffixStructureQuestToken$"/> / <d ref="Behavior,AffixStructureQuestToken,Max"/></c>
@@ -218,7 +218,7 @@ Affix/Name/GladiatorsMedallion=Gladiator's Medallion
 Affix/Tooltip/GladiatorsMedallion=<c val="#TooltipNumbers">Cooldown: 60 seconds</c> <c val="747A84">(-20s per stack)</c><n/><n/>Activate to become Unstoppable for <c val="#TooltipNumbers">2</c> seconds.
 Affix/Tooltip/Append/GladiatorsMedallion=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="Abil,AffixMedallion,Cost[0].Cooldown.TimeUse" precision="2"/></c><n/>Unstoppable duration: <c val="#TooltipNumbers"><d ref="Effect,AffixMedallionApplyCleanse,Duration" precision="2"/></c> seconds
 Affix/Name/BelligerentGladiator=Belligerent Gladiator
-Affix/Tooltip/BelligerentGladiator=Increases Gladiator's Medallion's Unstoppable duration by <c val="#TooltipNumbers">2</c> seconds.
+Affix/Tooltip/BelligerentGladiator=Increases the Unstoppable duration of <c val="#TooltipNumbers">Gladiator's Medallion</c> by <c val="#TooltipNumbers">2</c> seconds.
 Affix/Tooltip/Append/BelligerentGladiator=
 Button/Name/AffixMedallion=Gladiator's Medallion
 Button/Tooltip/AffixMedallion=Activate to become Unstoppable for <c val="#TooltipNumbers">2</c> seconds.
@@ -243,6 +243,9 @@ Affix/Tooltip/Append/ResurgenceoftheStorm=<n/><n/>Cooldown: <c val="#TooltipNumb
 Affix/Name/Bribery=Bribery
 Affix/Tooltip/Bribery=Automatically bribe a neutral Mercenary camp to your side every <c val="#TooltipNumbers">300</c> <c val="747A84">(-60s per stack)</c> seconds. Camps taken this way respawn <c val="#TooltipNumbers">50%</c> faster. Does not work on Bosses.
 Affix/Tooltip/Append/Bribery=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:briberyCooldown$" precision="2"/></c> seconds
+Affix/Name/BriberyDeepPockets=Deep Pockets
+Affix/Tooltip/BriberyDeepPockets=<c val="#TooltipNumbers">Bribery</c> will work on Bosses, Sentinels, and Support camps, prioritizing them over regular Camps.<n/><n/><c val="#AbilityPassive">Passive: </c><c val="#TooltipNumbers">Bribery</c>'s cooldown recharges <c val="#TooltipNumbers">50%</c> faster.
+Affix/Tooltip/Append/BriberyDeepPockets=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:briberyCooldown$" precision="2"/></c> seconds
 Affix/Name/PathoftheWizard=Path of the Wizard
 Affix/Tooltip/PathoftheWizard=Increases maximum Mana by <c val="#TooltipNumbers">10</c> <c val="747A84">(+10 per stack)</c> and Mana Regeneration by <c val="#TooltipNumbers">0.2</c> <c val="747A84">(+0.2 per stack)</c> per second per level.
 Affix/Tooltip/PathoftheWizard/Wizard=Increases maximum Mana by <c val="#TooltipNumbers">10</c> <c val="747A84">(+10 per stack)</c> and Mana Regeneration by <c val="#TooltipNumbers">0.2</c> <c val="747A84">(+0.2 per stack)</c> per second per level.<n/><n/>Better to be a wizard than a mage.
@@ -275,7 +278,7 @@ Affix/Name/ConvenientPortals=Convenient Portals
 Affix/Tooltip/ConvenientPortals=Creates a permanent Portal between the top lane and the bottom lane, only usable by your Team.
 Affix/Tooltip/Append/ConvenientPortals=
 Affix/Name/PeriodicRegenGlobes=Globe Huffer
-Affix/Tooltip/PeriodicRegenGlobes=Spawns a Regeneration Globe near a random allied Hero every <c val="#TooltipNumbers">12</c> <c val="747A84">(-4s per stack)</c> seconds, with you twice as likely to be chosen.<n/><n/>Your Regeneration Globes take <c val="#TooltipNumbers">100%</c> longer to turn Neutral.
+Affix/Tooltip/PeriodicRegenGlobes=Spawns a Regeneration Globe near a random allied Hero every <c val="#TooltipNumbers">12</c> <c val="747A84">(-4s per stack)</c> seconds, with you twice as likely to be chosen.<n/><n/><c val="#AbilityPassive">Passive: </c>Your Regeneration Globes take <c val="#TooltipNumbers">100%</c> longer to turn Neutral.
 Affix/Tooltip/Append/PeriodicRegenGlobes=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:globeHufferCooldown$" precision="2"/></c> seconds
 Affix/Name/UnendingHatred=True Unending Hatred
 Affix/Tooltip/UnendingHatred=Gain <c val="#TooltipNumbers">Nexus Blades</c> and <c val="#TooltipNumbers">Unending Hatred</c>. Increases Unending Hatred's Quest stacks obtained from all sources by <c val="#TooltipNumbers">25%</c>.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
@@ -355,7 +358,7 @@ Affix/Name/VeryHeavyImpact=Very Heavy Impact
 Affix/Tooltip/VeryHeavyImpact=Dwarf Toss Stuns enemies for <c val="#TooltipNumbers">0.75</c> seconds.
 Affix/Tooltip/Append/VeryHeavyImpact=
 Affix/Name/SecondStart=Second Start
-Affix/Tooltip/SecondStart=Gain <c val="#TooltipNumbers">1</c> more <c val="e6cc80">starter Boon</c>.<n/><n/>Obtain an additional <c val="c52020">Curse</c> every game.
+Affix/Tooltip/SecondStart=Gain <c val="#TooltipNumbers">1</c> more <c val="e6cc80">Starter Boon</c>.<n/><n/>Obtain an additional <c val="c52020">Curse</c> every game.
 Affix/Tooltip/Append/SecondStart=
 Affix/Name/AllTalents=All Talents
 Affix/Tooltip/AllTalents=Gain all talents in a tier whenever you reach a non-Heroic talent tier.
@@ -394,7 +397,7 @@ Affix/Name/FastPunch=Fast Puncher
 Affix/Tooltip/FastPunch=Haymaker gains <c val="#TooltipNumbers">1</c> additional charge.<n/><n/>Reduces Haymaker's cooldown by <c val="#TooltipNumbers">20</c> seconds.
 Affix/Tooltip/Append/FastPunch=
 Affix/Name/FastThunderClap=Thundering Smash
-Affix/Tooltip/FastThunderClap=Thunder Clap gains <c val="#TooltipNumbers">1</c> additional charges.<n/><n/>Reduces Thunder Clap's cooldown and Mana cost by <c val="#TooltipNumbers">40%</c>.
+Affix/Tooltip/FastThunderClap=Thunder Clap gains <c val="#TooltipNumbers">1</c> additional charges and reduces its cooldown and Mana cost by <c val="#TooltipNumbers">40%</c>.
 Affix/Tooltip/Append/FastThunderClap=
 Affix/Name/MuradinRAGE=RAGE!
 Affix/Tooltip/MuradinRAGE=Gain <c val="#TooltipNumbers">Bronzebeard Rage</c>.<n/><n/>Increases Bronzebeard Rage's radius by <c val="#TooltipNumbers">200%</c> and reduces its damage cooldown by <c val="#TooltipNumbers">0.5</c> seconds.
@@ -427,7 +430,7 @@ Button/Name/AffixFirstAid=First Aid
 Button/SimpleDisplayText/AffixFirstAid=Regenerate health.
 Button/Tooltip/AffixFirstAid=Regenerate health.
 Affix/Name/Promote=Promote
-Affix/Tooltip/Promote=Allied Minions take <c val="#TooltipNumbers">25%</c> reduced damage from non-Heroic enemies and deal <c val="#TooltipNumbers">50%</c> <c val="747A84">(+25% per stack)</c> increased damage to non-Heroic enemies.<n/><n/>Increases maximum Health of allied Minions by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c>.
+Affix/Tooltip/Promote=Allied Minions have <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c> increased maximum Health, take <c val="#TooltipNumbers">25%</c> reduced damage from non-Heroic enemies and deal <c val="#TooltipNumbers">50%</c> <c val="747A84">(+25% per stack)</c> increased damage to non-Heroic enemies.
 Affix/Tooltip/Append/Promote=<n/><n/>Damage bonus: <c val="#TooltipNumbers"><d ref="(Behavior,AffixPromoteDamage,DamageResponse.ModifyFraction-1)*100" player="11" precision="0"/>%</c><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="(Behavior,AffixPromoteDamage,Modification.VitalMaxFractionArray[Life])*100" player="11" precision="0"/>%</c>
 Affix/Name/RegenerativeWalls=Automatic Repairs
 Affix/Tooltip/RegenerativeWalls=Allied Structures regenerate <c val="#TooltipNumbers">35</c> <c val="747A84">(+35 per stack)</c> Health per second.<n/><n/>Does not affect your allied Core.
@@ -525,7 +528,7 @@ Affix/Name/LiMingStormArmor=Storm Armor
 Affix/Tooltip/LiMingStormArmor=Bathe yourself in electrical energy, shocking a random nearby enemy every second for <c val="#TooltipNumbers"><d ref="Effect,LiMingStormArmorDamage,Amount" precision="0"/></c> damage, prioritizing enemy Heroes.
 Affix/Tooltip/Append/LiMingStormArmor=
 Affix/Name/NazeeboRitualofBoons=Ritual of Boons
-Affix/Tooltip/NazeeboRitualofBoons=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Gain <c val="#TooltipNumbers">250</c> stacks of Voodoo Ritual. Progress is lost between rounds.<n/><n/><c val="#TooltipQuest">Reward:</c> Gain <c val="#TooltipNumbers">1</c> <c val="1eff00">uncommon Boon</c> and <c val="#TooltipNumbers">1</c> <c val="0070dd">rare Boon</c>.
+Affix/Tooltip/NazeeboRitualofBoons=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Gain <c val="#TooltipNumbers">250</c> stacks of Voodoo Ritual. Progress is lost between rounds.<n/><n/><c val="#TooltipQuest">Reward:</c> Gain <c val="#TooltipNumbers">1</c> <c val="1eff00">Uncommon Boon</c> and <c val="#TooltipNumbers">1</c> <c val="0070dd">Rare Boon</c>.
 Affix/Tooltip/Append/NazeeboRitualofBoons=
 Button/Name/WitchDoctorRitualofBoonsQuestToken=Ritual of Boons
 Button/Tooltip/WitchDoctorRitualofBoonsQuestToken=<c val="#TooltipQuest">Voodoo Ritual Stacks: <c val="#TooltipNumbers"><d ref="$BehaviorStackCount:WitchDoctorRitualofBoonsQuestToken$"/> / <d ref="Behavior,WitchDoctorRitualofBoonsQuestToken,Max"/></c>
@@ -639,7 +642,7 @@ Affix/Name/LostVikingsTrilogy=The Trilogy!
 Affix/Tooltip/LostVikingsTrilogy=Gain <c val="#TooltipNumbers">The Sequel!</c>.<n/><n/>Increases The Sequel!'s death timer reduction to <c val="#TooltipNumbers">80%</c>.
 Affix/Tooltip/Append/LostVikingsTrilogy=
 Affix/Name/LootBox=Loot Box
-Affix/Tooltip/LootBox=Gain <c val="#TooltipNumbers">2</c> random <c val="ffffff">common Boons</c> with a chance for higher rarity Boons.
+Affix/Tooltip/LootBox=Gain <c val="#TooltipNumbers">2</c> random <c val="ffffff">Common Boons</c> with a chance for higher rarity Boons.
 Affix/Tooltip/Append/LootBox=
 Affix/Name/Nimble=Nimble
 Affix/Tooltip/Nimble=You have a <c val="#TooltipNumbers">10%</c> chance to take no damage from enemy Heroes, increased to <c val="#TooltipNumbers">30%</c> against enemy Structures.
@@ -652,7 +655,7 @@ Affix/Name/ExperienceHoarder=Experience Hoarder
 Affix/Tooltip/ExperienceHoarder=Carry over <c val="#TooltipNumbers">20%</c> of your Experience after winning the game.
 Affix/Tooltip/Append/ExperienceHoarder=
 Affix/Name/Pacifism=Pacifism
-Affix/Tooltip/Pacifism=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Win a game without any Hero Takedowns and Assists.<n/><n/><c val="#TooltipQuest">Reward:</c> Gain <c val="#TooltipNumbers">1</c> <c val="0070dd">rare Boon</c> and <c val="#TooltipNumbers">1</c> <c val="a335ee">epic Boon</c>.
+Affix/Tooltip/Pacifism=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Win a game without any Hero Takedowns and Assists.<n/><n/><c val="#TooltipQuest">Reward:</c> Gain <c val="#TooltipNumbers">1</c> <c val="1eff00">Uncommon Boon</c>, <c val="#TooltipNumbers">1</c> <c val="0070dd">Rare Boon</c>, and <c val="#TooltipNumbers">1</c> <c val="a335ee">Epic Boon</c>.
 Affix/Tooltip/Append/Pacifism=
 
 Affix/Name/MythicCurseSabotage=Sabotage

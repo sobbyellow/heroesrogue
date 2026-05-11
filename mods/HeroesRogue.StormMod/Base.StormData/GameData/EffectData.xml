@@ -280,9 +280,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CEffectApplyBehavior>
   
   <CEffectSet id="BribeSetAffix">
-    <ValidatorArray value="TargetisBribable" />
-    <ValidatorArray value="MurkyNotInSafetyBubble" />
-    <EffectArray value="TalentBribeRemove20Token" />
     <EffectArray value="BribeKillEffect" />
   </CEffectSet>
   <CEffectModifyUnit id="StructureAmmoConsumeAmmo">
@@ -611,7 +608,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CEffectSet id="MuradinHeroWeaponImpactSet">
     <EffectArray value="MuradinWeaponHealthDamage" />
   </CEffectSet>
-  <CEffectDamage id="MuradinWeaponHealthDamage" parent="StormWeapon">
+  <CEffectDamage id="MuradinWeaponHealthDamage" parent="StormSpellPercentDamage">
     <Chance value="0" />
     <FlatModifierArray index="MuradinWeaponHealthDamage" Accumulator="MuradinCurrentHealthAccumulator" />
   </CEffectDamage>
