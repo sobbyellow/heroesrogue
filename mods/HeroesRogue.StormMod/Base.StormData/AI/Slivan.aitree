@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<tree root="00000000746F6F52" period="4">
+  <node name="FocusPlayer" type="FindBestTarget" id="534C4956414E4650" comment="Focus the nearest player.">
+    <property name="TargetTypes" valueSource="literal" value="Minion,Heroic,Summoned" />
+    <property name="ExcludeTypes" valueSource="literal" value="NoMinionAggro,Missile,Stasis,Dead,Invulnerable,Benign" />
+    <property name="BumpMaxDistanceToWeaponRange" valueSource="literal" value="true" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+    <property name="FocusTarget" valueSource="variable" value="Attack Target" />
+    <property name="FilterTargetsBehindGate" valueSource="literal" value="true" />
+    <property name="OutputTarget" value="Attack Target" />
+    <property name="DistanceFactor" valueSource="literal" value="2" />
+    <property name="LifeFractionFactor" valueSource="literal" value="0" />
+  </node>
+  <node name="FindPlayers" type="FindBestTarget" id="534C4956414E4649" comment="Search for nearby players to attack.">
+    <property name="TargetTypes" valueSource="literal" value="Tower,Minion,Heroic,Summoned" />
+    <property name="ExcludeTypes" valueSource="literal" value="NoMinionAggro,Missile,Stasis,Dead,Invulnerable,Benign" />
+    <property name="MaxTargetDistance" valueSource="literal" value="10" />
+    <property name="FilterTargetsBehindGate" valueSource="literal" value="true" />
+    <property name="OutputTarget" value="Attack Target" />
+    <property name="DistanceFactor" valueSource="literal" value="2" />
+    <property name="LifeFractionFactor" valueSource="literal" value="0" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="FindStructures" type="FindBestTarget" id="534C4956414E4653" comment="Search for nearby structures to attack.">
+    <property name="TargetTypes" valueSource="literal" value="AITargetableStructure" />
+    <property name="ExcludeTypes" valueSource="literal" value="NoMinionAggro,Missile,Stasis,Dead,Invulnerable,Benign" />
+    <property name="MaxTargetDistance" valueSource="literal" value="10" />
+    <property name="OutputTarget" value="Attack Target" />
+    <property name="DistanceFactor" valueSource="literal" value="2" />
+    <property name="LifeFractionFactor" valueSource="literal" value="0" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="FindTarget" type="Or" id="534C4956414E4654" comment="Search for the best target to attack.">
+    <insertChild id="534C4956414E4650" />
+    <insertChild id="534C4956414E4649" />
+    <insertChild id="534C4956414E4653" />
+  </node>
+  <node name="AttackTarget" type="Attack" id="534C4956414E414B" comment="Attack the target.">
+    <property name="TargetUnit" valueSource="variable" value="Attack Target" />
+  </node>
+  <node name="AttemptAttack" type="And" id="534C4956414E4154" comment="Attempt to find and attack a target.">
+    <variable name="Attack Target" type="Unit" />
+    <insertChild id="534C4956414E4654" />
+    <insertChild id="534C4956414E414B" />
+  </node>
+  <node name="SeekEnemies" type="MoveToPoint" id="534C4956414E5345" comment="If no targets are in range, move towards the heroes.">
+    <property name="StartRange" valueSource="literal" value="8" />
+    <property name="StopRange" valueSource="literal" value="1" />
+    <property name="Target" valueSource="intrinsic" value="ClosestEnemyHero" />
+  </node>
+  <node name="Root" type="Select" id="00000000746F6F52">
+    <insertChild id="534C4956414E4154" />
+    <insertChild id="534C4956414E5345" />
+  </node>
+</tree>

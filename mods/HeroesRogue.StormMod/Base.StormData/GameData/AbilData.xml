@@ -52,4 +52,51 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CmdButtonArray index="Execute" DefaultButtonFace="AffixFirstAid" />
 </CAbilEffectInstant>
 
+<CAbilEffectInstant id="AfxSlivanBossDrawIn">
+  <Effect value="SlivanBossDrawInInitialSet"/>
+  <Flags index="ChannelingMinimum" value="0"/>
+  <Cost>
+      <Cooldown Location="Unit" TimeUse="14"/>
+  </Cost>
+  <UninterruptibleArray index="Cast" value="1"/>
+  <UninterruptibleArray index="Channel" value="1"/>
+  <UninterruptibleArray index="Finish" value="1"/>
+  <CmdButtonArray index="Execute" DefaultButtonFace="AfxSlivanBossDrawIn"/>
+</CAbilEffectInstant>
+<CAbilEffectTarget id="AfxSlivanBossSlimeSpit">
+  <Effect value="SlivanBossSlimeSpitInitialSet"/>
+  <Flags index="ChannelingMinimum" value="0"/>
+  <Flags index="RequireTargetVision" value="0"/>
+  <Cost>
+      <Cooldown Location="Unit" TimeUse="7"/>
+  </Cost>
+  <Range value="500"/>
+  <Arc value="360"/>
+  <UninterruptibleArray index="Cast" value="1"/>
+  <UninterruptibleArray index="Channel" value="1"/>
+  <UninterruptibleArray index="Finish" value="1"/>
+  <CmdButtonArray index="Execute" DefaultButtonFace="AfxSlivanBossSlimeSpit"/>
+</CAbilEffectTarget>
+<CAbilEffectInstant id="AfxSlivanInfestedDrop">
+  <Effect value="SlivanInfestedDropCreatePersistent" />
+  <Flags index="RequireTargetVision" value="0" />
+  <Cost>
+    <Cooldown TimeUse="20" />
+  </Cost>
+  <CmdButtonArray index="Execute" DefaultButtonFace="AfxSlivanInfestedDrop">
+    <Flags index="AllowMinimap" value="0" />
+    <Flags index="Continuous" value="0" />
+  </CmdButtonArray>
+</CAbilEffectInstant>
+<CAbilEffectTarget id="AfxSlivanImpale">
+    <Effect value="SlivanImpaleInitialSet"/>
+    <Cost>
+        <Cooldown TimeUse="20"/>
+    </Cost>
+    <Range value="500"/>
+    <CmdButtonArray index="Execute" DefaultButtonFace="AfxSlivanImpale"/>
+    <Flags index="RequireTargetVision" value="0"/>
+    <Arc value="360"/>
+</CAbilEffectTarget>
+
 </Catalog>

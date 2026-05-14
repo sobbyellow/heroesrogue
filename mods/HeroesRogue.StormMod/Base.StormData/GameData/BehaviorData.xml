@@ -112,15 +112,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CBehaviorBuff id="AffixNanoBoostMana" parent="CarryBehaviorParent">
     <DisableValidatorArray value="TargetIsManaUser" />
     <Modification>
-      <VitalRegenArray index="Energy" value="3" />
-    </Modification>
-  </CBehaviorBuff>
-  <CBehaviorBuff id="AffixNanoBoostNoMana" parent="CarryBehaviorParent">
-    <Modification>
-      <HealDealtAdditiveMultiplier index="Life" value="0.15" />
-      <HealDealtAdditiveMultiplier index="Shields" value="0.15" />
-      <DamageDealtFraction index="Ability" value="0.15" />
-      <VitalDamageLeechScoreArray Value="Healing" />
+      <VitalRegenArray index="Energy" value="2" />
     </Modification>
   </CBehaviorBuff>
   <CBehaviorBuff id="AffixNexusRangeBuff" parent="CarryBehaviorParent">
@@ -1056,10 +1048,10 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <DisableValidatorArray value="LeoricDoesNotHaveUndying" />
   <Modification>
     <VitalMaxFractionArray index="Life" value="1.5" />
-    <HealDealtAdditiveMultiplier index="Life" value="1" />
-    <HealDealtAdditiveMultiplier index="Shields" value="1" />
-    <DamageDealtFraction index="Ability" value="1" />
-    <DamageDealtFraction index="Basic" value="1" />
+    <HealDealtAdditiveMultiplier index="Life" value="1.5" />
+    <HealDealtAdditiveMultiplier index="Shields" value="1.5" />
+    <DamageDealtFraction index="Ability" value="1.5" />
+    <DamageDealtFraction index="Basic" value="1.5" />
   </Modification>
 </CBehaviorBuff>
 
@@ -1320,5 +1312,96 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ModifyScoreArray index="0" Value="Healing" />
   </DamageResponse>
 </CBehaviorBuff>
+
+<CBehaviorBuff id="SlivanBossBirthDelay">
+  <Duration value="2.4" />
+  <Modification>
+    <ModifyFlags index="DisableAbils" value="1" />
+    <ModifyFlags index="DisableWeapons" value="1" />
+    <ModifyFlags index="SuppressMoving" value="1" />
+    <ModifyFlags index="SuppressTurning" value="1" />
+    <StateFlags index="Invulnerable" value="1" />
+    <StateFlags index="UnitAttrOnImmuneToAOE" value="1" />
+    <StateFlags index="UnitAttrOnNoMinionAggro" value="1" />
+    <StateFlags index="UnitAttrOnImmuneToSkillshots" value="1" />
+    <StateFlags index="SuppressCollision" value="1" />
+    <StateFlags index="SuppressFidgeting" value="1" />
+    <StateFlags index="Unselectable" value="1" />
+    <StateFlags index="Unstoppable" value="1" />
+    <StateFlags index="Untargetable" value="1" />
+  </Modification>
+</CBehaviorBuff>
+  <CBehaviorBuff id="SlivanBossDrawInPullTargetFound">
+    <Duration value="0.1875" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="SlivanBossDrawInPullNoDoubleHitBehavior">
+    <Duration value="0.125" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="SlivanBossDrawInPullBehavior" parent="PushPullParent">
+    <Duration value="0.375" />
+    <Modification>
+      <MoveSpeedMaximum value="21" />
+      <MoveSpeedMinimum value="21" />
+    </Modification>
+    <RevealUnit Value="Caster" />
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="SlivanRevealed" parent="StormReveal" />
+  <CBehaviorBuff id="SlivanPeriodicRevealer">
+    <Period value="0.25" />
+    <PeriodicEffect value="ScoutingDroneRevealerSearch" />
+    <DisplayDuration index="Ally" value="0" />
+    <DisplayDuration index="Enemy" value="0" />
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="SlivanBossAbilityScanDelay">
+    <Duration value="5" />
+    <FinalEffect value="SlivanBossAbilityScanApplyBehavior" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="SlivanBossAbilityScan">
+    <Period value="0.25" />
+    <PeriodicEffect value="SlivanBossAbilityScanSet" />
+  </CBehaviorBuff>
+
+  <CBehaviorTokenCounter id="SlivanQuest" parent="StormQuestToken">
+    <Max value="1" />
+    <AtMaxEvents index="0" EventId="QuestComplete" Effect="SlivanQuestComplete" />
+    <SortIndex value="20" />
+  </CBehaviorTokenCounter>
+
+  <CBehaviorBuff id="SlivanBossImpaleStunBehavior" parent="StormStun">
+    <TimeScaleSource Value="Global" />
+    <Duration value="2" />
+    <Modification>
+      <StateFlags index="SuppressFidgeting" value="1" />
+      <AbilLinkEnableArray value="SgtHammerSiegeMode" />
+      <AbilLinkEnableArray value="SgtHammerTankMode" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="SlivanBossCastingBehavior">
+    <Modification>
+      <BehaviorLinkDisableArray value="SlivanBossTransitionBehavior" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="SlivanBossDrawInStunNoDoubleHitBehavior">
+    <Duration value="0.125" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="SlivanBossDrawInStunBehavior" parent="StormStun">
+    <TimeScaleSource Value="Global" />
+    <Duration value="2" />
+    <Modification>
+      <StateFlags index="SuppressFidgeting" value="1" />
+      <AbilLinkEnableArray value="SgtHammerSiegeMode" />
+      <AbilLinkEnableArray value="SgtHammerTankMode" />
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorBuff id="SlivanBossSlimeSpitDoT" parent="StormDot">
+    <InfoIcon value="Assets\Textures\storm_temp_war3_btncorrosivebreath.dds" />
+    <TimeScaleSource Value="Global" />
+    <Duration value="0.375" />
+    <Period value="1" />
+    <PeriodicEffect value="SlivanBossSlimeSpitDoTDamage" />
+  </CBehaviorBuff>
+  
 
 </Catalog>

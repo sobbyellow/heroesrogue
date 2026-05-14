@@ -24,6 +24,7 @@ Label/Name/RarityLegendary=<c val="ff8000">Legendary
 Label/Name/RarityStarter=<c val="e6cc80">Starter
 Label/Name/RarityMythic=<c val="01ffff">Mythic
 Label/Name/RarityCurse=<c val="c52020">Curse
+Label/Name/RarityCurseChallenge=<c val="9B2400">Challenge
 Label/Name/RarityCurseMythic=<c val="A84987">
 Label/Name/RaritySuffixStackable= - Stackable</c>
 Label/Name/RaritySuffixInfinite= - Infinite</c>
@@ -144,10 +145,8 @@ Affix/Tooltip/Bloodlust=Increases Attack Speed by <c val="#TooltipNumbers">20%</
 Affix/Tooltip/Append/Bloodlust=<n/><n/>Attack Speed bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixBloodlust,Modification.AdditiveAttackSpeedFactor*100" precision="1"/>%</c><n/>Movement Speed bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixBloodlust,Modification.UnifiedMoveSpeedFactor*100" precision="1"/>%</c><n/>Lifesteal bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixBloodlust,Modification.VitalDamageLeechArray[Life].KindArray[Basic]*100" precision="1"/>%</c>
 Affix/Name/NanoBoost=Nano Boost
 Affix/Tooltip/NanoBoost=Increases Spell Power by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c> and recharge Basic Abilities <c val="#TooltipNumbers">75%</c> <c val="747A84">(+75% per stack)</c> faster.<n/><n/>Regenerate <c val="#TooltipNumbers">2</c> <c val="747A84">(+2 per stack)</c> Mana per second.
+Affix/Tooltip/NanoBoost/NoMana=Increases Spell Power by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c> and recharge Basic Abilities <c val="#TooltipNumbers">75%</c> <c val="747A84">(+75% per stack)</c> faster.
 Affix/Tooltip/Append/NanoBoost=<n/><n/>Spell Power bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixNanoBoost,Modification.DamageDealtFraction[Ability]*100" precision="1"/>%</c><n/>Cooldown reduction bonus: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_nanoBoostCDR$*100"precision="1"/>%</c><n/>Mana regeneration bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixNanoBoostMana,Modification.VitalRegenArray[Energy]" precision="1"/></c>
-Affix/Name/NanoBoostNoMana=Nano Boost
-Affix/Tooltip/NanoBoostNoMana=Increases Spell Power by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c> and recharge Basic Abilities <c val="#TooltipNumbers">75%</c> <c val="747A84">(+75% per stack)</c> faster.
-Affix/Tooltip/Append/NanoBoostNoMana=<n/><n/>Spell Power bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixNanoBoostNoMana,Modification.DamageDealtFraction[Ability]*100" precision="1"/>%</c><n/>Cooldown reduction bonus: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_nanoBoostCDR$*100"precision="1"/>%</c>
 Affix/Name/BlessingoftheDragons=Blessing of the Dragons
 Affix/Tooltip/BlessingoftheDragons=Your AI teammates gain <c val="#TooltipNumbers">500</c> <c val="747A84">(+500 per stack)</c> maximum Health and <c val="#TooltipNumbers">20%</c> <c val="747A84">(+20% per stack)</c> Movement Speed, and Basic Abilities recharge <c val="#TooltipNumbers">35%</c> <c val="747A84">(+35% per stack)</c> faster.
 Affix/Tooltip/Append/BlessingoftheDragons=<n/><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixBlessingoftheDragons,Modification.VitalMaxArray[Life]" precision="1"/></c><n/>Movement Speed bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixBlessingoftheDragons,Modification.UnifiedMoveSpeedFactor*100" precision="1"/>%</c><n/>Cooldown reduction bonus: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_blessingoftheDragonsCDR$*100"precision="1"/>%</c>
@@ -517,7 +516,7 @@ Affix/Tooltip/LiMingNeedMoreMana=Takedowns restore Mana equal to <c val="#Toolti
 Affix/Tooltip/Append/LiMingNeedMoreMana=
 Affix/Name/LiMingSelfishPower=Selfish Power
 Affix/Tooltip/LiMingSelfishPower=Increases Spell Power by <c val="#TooltipNumbers">10%</c> <c val="747A84">(+10% per stack)</c>.
-Affix/Tooltip/Append/LiMingSelfishPower=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,LiMingSelfishPowerBuff,Modification.DamageDealtFraction[Ability]*100" precision="1"/>%</c>
+Affix/Tooltip/Append/LiMingSelfishPower=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,LiMingSelfishPowerBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
 Affix/Name/LiMingFarshot=Farshot
 Affix/Tooltip/LiMingFarshot=Increases Magic Missiles's range by <c val="#TooltipNumbers">15%</c> <c val="747A84">(+15% per stack)</c>.
 Affix/Tooltip/Append/LiMingFarshot=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="-(Effect,WizardMagicMissilesLeftOffsetCP,InitialOffset.Y)-12" precision="2"/></c>
@@ -533,7 +532,7 @@ Affix/Tooltip/Append/NazeeboRitualofBoons=
 Button/Name/WitchDoctorRitualofBoonsQuestToken=Ritual of Boons
 Button/Tooltip/WitchDoctorRitualofBoonsQuestToken=<c val="#TooltipQuest">Voodoo Ritual Stacks: <c val="#TooltipNumbers"><d ref="$BehaviorStackCount:WitchDoctorRitualofBoonsQuestToken$"/> / <d ref="Behavior,WitchDoctorRitualofBoonsQuestToken,Max"/></c>
 Affix/Name/SharedPower=Shared Power
-Affix/Tooltip/SharedPower=Your AI teammates's stats scale with the difficulty.<n/><n/>Current stats scaling: <c val="#TooltipNumbers"><d ref="Behavior,AffixDifficultyBuff,Modification.DamageDealtFraction[Ability]" player="6" precision="0" />%</c>
+Affix/Tooltip/SharedPower=Your AI teammates's stats scale with the difficulty.<n/><n/>Current stats scaling: <c val="#TooltipNumbers"><d ref="Behavior,AffixDifficultyBuff,Modification.DamageDealtFraction[Ability]*100" precision="0" />%</c>
 Affix/Tooltip/Append/SharedPower=
 Affix/Name/GiantKiller=Giant Killer
 Affix/Tooltip/GiantKiller=Basic Attacks against enemy Heroes deal bonus damage equal to <c val="#TooltipNumbers">2%</c> <c val="747A84">(+1% per stack)</c> of the Hero's maximum Health.
@@ -655,7 +654,7 @@ Affix/Name/ExperienceHoarder=Experience Hoarder
 Affix/Tooltip/ExperienceHoarder=Carry over <c val="#TooltipNumbers">20%</c> of your Experience after winning the game.
 Affix/Tooltip/Append/ExperienceHoarder=
 Affix/Name/Pacifism=Pacifism
-Affix/Tooltip/Pacifism=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Win a game without any Hero Takedowns and Assists.<n/><n/><c val="#TooltipQuest">Reward:</c> Gain <c val="#TooltipNumbers">1</c> <c val="1eff00">Uncommon Boon</c>, <c val="#TooltipNumbers">1</c> <c val="0070dd">Rare Boon</c>, and <c val="#TooltipNumbers">1</c> <c val="a335ee">Epic Boon</c>.
+Affix/Tooltip/Pacifism=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Win a game without any personal Hero Takedowns and Assists.<n/><n/><c val="#TooltipQuest">Reward:</c> Gain <c val="#TooltipNumbers">1</c> <c val="1eff00">Uncommon Boon</c>, <c val="#TooltipNumbers">1</c> <c val="0070dd">Rare Boon</c>, and <c val="#TooltipNumbers">1</c> <c val="a335ee">Epic Boon</c>.
 Affix/Tooltip/Append/Pacifism=
 
 Affix/Name/MythicCurseSabotage=Sabotage
@@ -674,7 +673,7 @@ Affix/Name/MythicCurseCursed=Cursed
 Affix/Tooltip/MythicCurseCursed=Winning an objective no longer swaps a Curse to a Boon.<n/><n/>Obtain a <c val="c52020">Curse</c> every <c val="#TooltipNumbers">3</c> deaths. Counter is reset between rounds.<n/><n/>After reaching level <c val="#TooltipNumbers">20</c>, you and ALL allies lose <c val="#TooltipNumbers">5</c> Armor now and every minute.<n/>After reaching level <c val="#TooltipNumbers">30</c>, lose <c val="#TooltipNumbers">100</c> Armor every minute.
 Affix/Tooltip/Append/MythicCurseCursed=
 Affix/Name/MythicCurseEternal=Eternal
-Affix/Tooltip/MythicCurseEternal=Increases enemy Heroes's maximum Health by <c val="#TooltipNumbers">150%</c> and damage by <c val="#TooltipNumbers">100%</c>.
+Affix/Tooltip/MythicCurseEternal=Increases enemy Heroes's maximum Health, Spell Power and Attack Damage by <c val="#TooltipNumbers">150%</c>.
 Affix/Tooltip/Append/MythicCurseEternal=<n/><n/>Maximum Health bonus: <c val="#TooltipNumbers"><d ref="Behavior,MythicCurseEternalBuff,Modification.VitalMaxFractionArray[Life]*100" precision="0"/>%</c><n/>Damage bonus: <c val="#TooltipNumbers"><d ref="Behavior,MythicCurseEternalBuff,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c>
 
 Affix/Name/Conversion=Possession
@@ -827,7 +826,7 @@ Affix/Tooltip/Wrath=Reduces the duration of ALL Stuns, Slows, Roots, and Silence
 Affix/Tooltip/Append/Wrath=<n/><n/>Total modifier: <c val="#TooltipNumbers"><d ref="$GalaxyVar:affixCCDecreaseModifier$*100" precision="1"/>%</c>
 Affix/Name/Dodge=Dodge
 Affix/Tooltip/Dodge=Enemy Heroes have a <c val="#TooltipNumbers">3%</c> <c val="747A84">(+3% per stack)</c> chance to take no damage.
-Affix/Tooltip/Append/Dodge=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDodge,DamageResponse.Chance*100" player="6" precision="1"/>%</c>
+Affix/Tooltip/Append/Dodge=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="Behavior,AffixDodge,DamageResponse.Chance*100" player="6" precision="0"/>%</c>
 Affix/Name/ExpensiveAttacks=Expensive Attacks
 Affix/Tooltip/ExpensiveAttacks=Basic Attacks consume <c val="#TooltipNumbers">4</c> Mana.
 Affix/Tooltip/Append/ExpensiveAttacks=
@@ -876,4 +875,28 @@ Affix/Tooltip/Append/LongArmedGiants=
 Affix/Name/Prepared=Prepared
 Affix/Tooltip/Prepared=Enemy Heroes gain a Shield equal to <c val="#TooltipNumbers">30%</c> <c val="747A84">(+30% per stack)</c> of their maximum Health.<n/><n/>This Shield does not recharge and replenishes at the start of each game.
 Affix/Tooltip/Append/Prepared=<n/><n/>Total Shield: <c val="#TooltipNumbers"><d ref="Behavior,PreparedShield,DamageResponse.ModifyLimitVitalMaxFractionArray[Life]*100" player="6" precision="0" />%</c>.
-
+Affix/Name/Slivan=Slivan
+Affix/Tooltip/Slivan=Summons <c val="#TooltipNumbers">Slivan the Eternal Mother</c> on the enemy Team.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Defeat <c val="#TooltipNumbers">Slivan</c>.<n/><n/><c val="#TooltipQuest">Reward:</c> This curse becomes inactive. Summons a friendly <c val="#TooltipNumbers">Slivan</c> on your Team at the start of every game.
+Affix/Tooltip/Append/Slivan=
+Affix/Name/SlivanReward=Slivan
+Affix/Tooltip/SlivanReward=Summons <c val="#TooltipNumbers">Slivan the Eternal Mother</c> on your Team at the start of every game.
+Affix/Tooltip/Append/SlivanReward=
+Button/Name/SlivanQuest=Slivan
+Button/Tooltip/SlivanQuest=Defeat <c val="#TooltipNumbers">Slivan</c>
+Abil/Name/AfxSlivanInfestedDrop=Slivan Infested Drop
+Button/Name/AfxSlivanInfestedDrop=Slivan Infested Drop
+Button/Tooltip/AfxSlivanInfestedDrop=Bombard the nearby area with Drop Pods containing Roachlings.
+Button/SimpleDisplayText/AfxSlivanInfestedDrop=Bombard the nearby area with Drop Pods containing Roachlings.
+Abil/Name/AfxSlivanImpale=Slivan Impale
+Button/Name/AfxSlivanImpale=Slivan Impale
+Button/Tooltip/AfxSlivanImpale=Deal damage and Stun enemies in a straight line.
+Button/SimpleDisplayText/AfxSlivanImpale=Deal damage and Stun enemies in a straight line.
+Abil/Name/AfxSlivanBossSlimeSpit=Slivan Slime Spit
+Button/Name/AfxSlivanBossSlimeSpit=Slivan Slime Spit
+Button/Tooltip/AfxSlivanBossSlimeSpit=Spit a glob of slime that damages enemies in the area over time.
+Button/SimpleDisplayText/AfxSlivanBossSlimeSpit=Spit a glob of slime that damages enemies in the area over time.
+Abil/Name/AfxSlivanBossDrawIn=Slivan Draw In
+Button/Name/AfxSlivanBossDrawIn=Slivan Draw In
+Button/Tooltip/AfxSlivanBossDrawIn=Draws in and Stuns enemies in a circle around Slivan.
+Button/SimpleDisplayText/AfxSlivanBossDrawIn=Draws in and Stuns enemies in a circle around Slivan.
+Unit/Name/SlivanBoss=Slivan the Eternal Mother

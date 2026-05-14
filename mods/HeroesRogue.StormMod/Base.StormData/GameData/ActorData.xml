@@ -414,4 +414,371 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ScaleMin X="2.000000" Y="2.000000" Z="2.000000" />
   </CModel>
 
+  
+  <CActorModel id="SlivanBossMovetoCenterMovingFX" parent="StormModelAnimationStyleOneShotUnit">
+    <On Terms="Effect.SlivanBossMovetoCenterFXDummy.Start" Send="Create" />
+    <HostSiteOps Ops="SOpForwardCasterPoint SOpMoveBackBy2 SOp2DRotation" HoldPosition="1" HoldRotation="1" />
+  </CActorModel>
+  <CActorAction id="SlivanBossAttack" parent="GenericAttackStorm" effectAttack="SlivanBossWeaponSet">
+    <LaunchSiteOps HoldPosition="1" HoldRotation="1" />
+    <LaunchAttachQuery Methods="AMFilterHead" />
+    <LaunchAssets Model="SlivanBossAttackLaunchFX" Sound="SlivanBoss_AttackLaunch" />
+    <ImpactMap index="None" Sound="SlivanBoss_AttackImpact" />
+  </CActorAction>
+  <CActorModel id="SlivanBossDrawInPullWarningModel" parent="StormModelAnimationStyleOneShot">
+    <On Terms="Effect.SlivanBossDrawInComboDelayPersistent.Start" Send="Create" />
+    <On Terms="Effect.SlivanBossDrawInComboDelayPersistent.Stop" Send="Destroy" />
+    <On Terms="ActorCreation" Send="AnimSetTimeScale BSD 0.520000" />
+    <HostSiteOps Ops="SOpForwardOriginPointInverted" HoldPosition="1" HoldRotation="1" />
+    <Model value="SlivanBossDrawInPullWarning" />
+  </CActorModel>
+  <CActorModel id="SlivanBossDrawInStunWarningModel" parent="StormModelAnimationStyleContinuous">
+    <On Terms="Effect.SlivanBossDrawInChannelPersistent.Start" Send="Create" />
+    <On Terms="Effect.SlivanBossDrawInStunSearch.Start" Send="AnimBracketStop BSD" />
+    <On Terms="Effect.SlivanBossDrawInChannelPersistent.Stop" Send="Destroy" />
+    <On Terms="ActorCreation" Send="AnimSetTimeScale BSD 0.368000" />
+    <HostSiteOps Ops="SOpShadow SOpRotationRandomDisc" />
+    <Model value="SlivanBossDrawInStunWarning" />
+    <Scale value="2.750000" />
+  </CActorModel>
+  <CActorModel id="SlivanBossDrawInStunDust" parent="StormModelAnimationStyleOneShot">
+    <On Terms="Effect.SlivanBossDrawInComboDelayPersistent.Start; At Effect" Send="Create" />
+    <On Terms="Effect.SlivanBossDrawInStunDelayPersistent.Start; At Effect" Send="Create" />
+    <HostSiteOps Ops="SOpShadow" />
+  </CActorModel>
+  <CActorSound id="SlivanBoss_AttackLaunch" parent="SoundOneShot">
+    <Host Subject="::Creator" />
+    <Sound value="SlivanBoss_AttackPreLaunch" />
+    <Layers Sound="SlivanBoss_AttackLaunch" PlayDelay="200,200" PlayDelaySource="Actor" />
+  </CActorSound>
+  <CActorModel id="SlivanBossEnragedBuff" parent="StormModelAnimationStyleContinuousUnit">
+    <On Terms="Behavior.SlivanBossPhase4Behavior.On" Send="Create" />
+    <HostSiteOps Ops="SOpAttachTarget" />
+  </CActorModel>
+  <CActorModelMaterial id="SlivanBossBurrowedArmorGlaze" parent="BuffContinuous">
+    <On Terms="Behavior.SlivanBossBurrowedInvulnerable.On" Send="Create" />
+    <On Terms="ActorCreation" Send="ModelMaterialApplyTo ::Main" />
+    <On Terms="Behavior.SlivanBossBurrowedInvulnerable.Off" Send="AnimBracketStop BSD" />
+    <ModelFlags index="AutomateGlobalLoops" value="1" />
+  </CActorModelMaterial>
+  <CActorModel id="SlivanBossImpaleWarningModel" parent="StormModelAnimationStyleOneShot">
+    <On Terms="Effect.SlivanImpaleSpikePersistent.Start; At Effect" Send="Create" />
+    <HostSiteOps Ops="SOpShadow SOpRotationRandomDisc" />
+    <Model value="SlivanBossImpaleWarning" />
+  </CActorModel>
+  <CActorModel id="SlivanBossImpaleSpikesModel" parent="StormModelAnimationStyleOneShot">
+    <On Terms="Effect.SlivanBossImpaleSpikeModelSet.Start; At Effect" Send="Create" />
+    <On Terms="ModelEvent; ModelEventName SlivanBossImpaleStunStartSound" Send="Create SlivanBossImpaleSpikesSound" />
+    <On Terms="ModelEvent; ModelEventName SlivanBossImpaleStunEndSound" Send="Create SlivanBossImpaleEndSound" />
+    <HostSiteOps Ops="SOpShadow SOpRotationRandomDisc" />
+    <Model value="SlivanBossImpaleSpikes" />
+  </CActorModel>
+  <CActorModel id="SlivanBossImpaleDamageModel" parent="StormModelAnimationStyleOneShot">
+    <On Terms="Effect.SlivanBossImpaleDamage.Start; At Target" Send="Create" />
+    <Host Subject="_Unit" />
+    <HostSiteOps Ops="SOpAttachOrigin" HoldPosition="1" />
+    <Model value="SlivanBossImpaleDamage" />
+  </CActorModel>
+  <CActorSound id="SlivanBossImpaleDamageSound" parent="SoundOneShot">
+    <On Terms="Effect.SlivanBossImpaleDamage.Start; At Target" Send="Create" />
+    <Sound value="SlivanBoss_Impale_Impact" />
+  </CActorSound>
+  <CActorSound id="SlivanBossImpaleEndSound" parent="SoundOneShot">
+    <Host Subject="::Creator" />
+    <Sound value="SlivanBoss_Impale_BladesRetract" />
+  </CActorSound>
+  <CActorSound id="SlivanBossImpaleSpikesSound" parent="SoundOneShot">
+    <Host Subject="::Creator" />
+    <Sound value="SlivanBoss_Impale_BladesExtend" />
+  </CActorSound>
+  <CActorModel id="SlivanBossBurrowDust" parent="StormModelAnimationStyleContinuousUnit">
+    <HostSiteOps Ops="SOpAttachOrigin" HoldPosition="1" HoldRotation="1" />
+  </CActorModel>
+  <CActorModel id="SlivanBossBurrowedArmor" parent="StormModelAnimationStyleContinuousUnit">
+    <On Terms="Behavior.SlivanBossBurrowedInvulnerable.On" Send="Create" />
+    <On Terms="ActorCreation" Send="ModelMaterialApply SlivanBossBurrowedArmorGlaze" />
+    <On Terms="Behavior.SlivanBossPhase2Behavior.Off" Send="AnimBracketStop BSD" />
+    <HostSiteOps Ops="SOpAttachOrigin" HoldPosition="1" HoldRotation="1" />
+  </CActorModel>
+  <CActorSound id="SlivanBossDrawInCastRumble" parent="SoundOneShot">
+    <Sound value="SlivanBoss_DrawIn_Cast" />
+    <On Terms="Effect.SlivanBossDrawInChannelPersistent.Start; At Target" Send="Create" />
+  </CActorSound>
+  <CActorModel id="SlivanBossDrawInStunSpikesModel" parent="StormModelAnimationStyleOneShot">
+    <On Terms="Effect.SlivanBossDrawInStunSearch.Start; At Effect" Send="Create" />
+    <On Terms="ModelEvent; ModelEventName SlivanBossDrawInStunStartSound" Send="Create SlivanBossDrawInStunSpikesSound" />
+    <On Terms="ModelEvent; ModelEventName SlivanBossDrawInStunEndSound" Send="Create SlivanBossDrawInStunEndSound" />
+    <HostSiteOps Ops="SOpShadow SOpRotationRandomDisc" />
+    <Model value="SlivanBossDrawInStunSpikes" />
+  </CActorModel>
+  <CActorModel id="SlivanBossDrawInStunDamageModel" parent="StormModelAnimationStyleOneShot">
+    <On Terms="Effect.SlivanBossDrawInStunDamage.Start; At Target" Send="Create" />
+    <Host Subject="_Unit" />
+    <HostSiteOps Ops="SOpAttachOrigin" HoldPosition="1" />
+    <Model value="SlivanBossDrawInStunDamage" />
+  </CActorModel>
+  <CActorSound id="SlivanBossDrawInStunDamageSound" parent="SoundOneShot">
+    <On Terms="Effect.SlivanBossDrawInStunDamage.Start; At Target" Send="Create" />
+    <Sound value="SlivanBoss_DrawInStun_Impact" />
+  </CActorSound>
+  <CActorSound id="SlivanBossDrawInStunEndSound" parent="SoundOneShot">
+    <Host Subject="::Creator" />
+    <Sound value="SlivanBoss_DrawInStun_BladesRetract" />
+  </CActorSound>
+  <CActorSound id="SlivanBossDrawInStunSpikesSound" parent="SoundOneShot">
+    <Host Subject="::Creator" />
+    <Sound value="SlivanBoss_DrawInStun_BladesExtend" />
+  </CActorSound>
+  <CActorModel id="SlivanBossDrawInPullModel" parent="StormModelAnimationStyleOneShot">
+    <On Terms="Effect.SlivanBossDrawInPullCreatePersistent.Start" Send="Create" />
+    <HostSiteOps Ops="SOpForwardOriginPointInverted" HoldPosition="1" HoldRotation="1" />
+    <Model value="SlivanBossDrawInPull" />
+    <Scale value="1.150000" />
+  </CActorModel>
+  <CActorSound id="SlivanBossDrawInPullCast" parent="SoundOneShot">
+    <InheritType value="Continuous" />
+    <On Terms="Effect.SlivanBossDrawInPullCreatePersistent.Start; At Caster" Send="Create" />
+    <Host Subject="SlivanBossDrawInPullModel" />
+    <Sound value="SlivanBoss_DrawInPull_Cast_Blades" />
+  </CActorSound>
+  <CActorSound id="SlivanBossDrawInPullNoTargetSound" parent="SoundOneShot">
+    <On Terms="Effect.SlivanBossDrawInPullDummySoundSet.Start; ValidateUnit SlivanBossDrawInPullHasNoTarget; At Caster" Send="Create" />
+    <Host Subject="SlivanBossDrawInPullModel" />
+    <Sound value="SlivanBoss_DrawInPull_Pull" />
+    <InheritType value="Continuous" />
+  </CActorSound>
+  <CActorSound id="SlivanBossDrawInPullTargetFoundSound" parent="SoundOneShot">
+    <On Terms="Effect.SlivanBossDrawInPullDummySoundSet.Start; ValidateUnit SlivanBossDrawInPullHasTarget; At Caster" Send="Create" />
+    <Host Subject="SlivanBossDrawInPullModel" />
+    <Sound value="SlivanBoss_DrawInPull_PullTarget" />
+    <InheritType value="Continuous" />
+  </CActorSound>
+  <CActorSound id="SlivanBossDrawInPullFinish" parent="SoundOneShot">
+    <InheritType value="Continuous" />
+    <On Terms="Effect.SlivanBossDrawInPullSearch.Start; At Caster" Send="Create" />
+    <Host Subject="SlivanBossDrawInPullModel" />
+    <Sound value="SlivanBoss_DrawInPull_BladesRetract" />
+  </CActorSound>
+  <CActorSound id="SlivanBossDrawInPullImpactSound" parent="HeroAttackImpactSoundOneShot">
+    <On Terms="Effect.SlivanBossDrawInPullDamage.Start; At Target" Send="Create" />
+    <Host Subject="_Unit" />
+    <Sound value="SlivanBoss_DrawInPull_Impact" />
+  </CActorSound>
+  <CActorAction id="SlivanBossSlimeSpitAttackAction" parent="GenericAttackPointStorm" effectImpact="SlivanBossSlimeSpitImpactSet" effectLaunch="SlivanBossSlimeSpitLaunchMissile">
+    <On Terms="ActorCreation" Send="Create SlivanBoss_SlimeSpit_Launch" />
+    <LaunchAttachQuery Methods="AMFilterHead" />
+    <Missile value="SlivanBossSlimeSpitMissile" />
+  </CActorAction>
+  <CActorModel id="SlivanBossSlimeSpitDamage" parent="StormModelAddition">
+    <On Terms="ActorCreation; ValidateUnit TargetIsFat" Send="SetScale 1.440000" />
+    <On Terms="Behavior.SlivanBossSlimeSpitDoT.On" Send="Create" />
+    <On Terms="Behavior.SlivanBossSlimeSpitDoT.On" Send="Create SlivanBoss_SlimeSpit_Damage" />
+    <On Terms="Behavior.SlivanBossSlimeSpitDoT.Off" Send="AnimBracketStop BSD" />
+    <On Terms="Behavior.SlivanBossSlimeSpitDoT.Off" Target="SlivanBoss_SlimeSpit_Damage" Send="Destroy" />
+    <HostSiteOps Ops="SOpAttachCenter" />
+    <Scale value="1.200000" />
+  </CActorModel>
+  <CActorMissile id="SlivanBossSlimeSpitMissile" parent="StormMissileWithDeathEarly" unitName="SlivanBossSlimeSpitMissile" />
+  <CActorModel id="SlivanBossSlimeSpitPersistentModel" parent="StormModelAnimationStyleContinuous">
+    <Inherits index="TeamColor" value="1" />
+    <On Terms="Effect.SlivanBossSlimeSpitImpactCreatePersistent.Start; At Effect" Send="Create" />
+    <On Terms="Effect.SlivanBossSlimeSpitImpactCreatePersistent.Stop; FromEffectTreeDescendant" Send="AnimBracketStop BSD" />
+    <HostSiteOps Ops="SOpRotationRandomDisc SOpShadow" />
+  </CActorModel>
+  <CActorModel id="SlivanBossSlimeSpitWarningModel" parent="StormModelAnimationStyleContinuous">
+    <Inherits index="TeamColor" value="1" />
+    <On Terms="Effect.SlivanBossSlimeSpitChannelPersistent.Start; At Effect" Send="Create" />
+    <On Terms="Effect.SlivanBossSlimeSpitImpactSet.Start; FromEffectTreeDescendant" Send="AnimBracketStop BSD" />
+    <On Terms="Effect.SlivanBossSlimeSpitChannelPersistent.Stop" Send="AnimBracketStop BSD" />
+    <Model value="SlivanBossSlimeSpitPersistentRingModel" />
+  </CActorModel>
+  <CActorModel id="SlivanBossSlimeSpitPersistentRingModel" parent="StormModelAnimationStyleContinuous">
+    <Inherits index="TeamColor" value="1" />
+    <On Terms="ActorCreation" Send="Create SlivanBoss_SlimeSpit_Loop" />
+    <On Terms="ActorCreation" Send="Create SlivanBoss_SlimeSpit_Impact" />
+    <On Terms="ActorDestruction" Target="SlivanBoss_SlimeSpit_Loop" Send="Destroy" />
+    <On Terms="ActorDestruction" Target="SlivanBoss_SlimeSpit_Impact" Send="Create" />
+    <HostSiteOps Ops="SOpShadow" />
+  </CActorModel>
+  <CActorSound id="SlivanBoss_SlimeSpit_Damage" parent="SoundContinuous" />
+  <CActorSound id="SlivanBoss_SlimeSpit_Impact" parent="SoundOneShot" />
+  <CActorSound id="SlivanBoss_SlimeSpit_Loop" parent="SoundContinuous" />
+  <CActorSound id="SlivanBoss_SlimeSpit_End" parent="SoundOneShot" />
+  <CActorSound id="SlivanBoss_SlimeSpit_Launch" parent="SoundOneShot" />
+  <CActorSound id="SlivanBossWalkSound" parent="SoundContinuous">
+    <Host Subject="::Creator" />
+    <Sound value="SlivanBoss_FS" />
+  </CActorSound>
+  <CActorSound id="SlivanBoss_Birth" parent="SoundOneShot" />
+  <CActorSound id="SlivanBoss_Vox_Birth" parent="SoundOneShot">
+    <Inherits index="Visibility" value="0" />
+    <FogVisibility value="Visible" />
+    <Host Subject="::Creator" />
+    <SoundFlags index="UpdateVisibility" value="0" />
+  </CActorSound>
+  <CActorSound id="SlivanBoss_AttackImpact_GetHit" parent="SoundOneShot">
+    <Filter index="All" value="1" />
+    <VisibleToAtCreation index="Caster" value="1" />
+    <VisibleToAtCreation index="Source" value="1" />
+    <VisibleToAtCreation index="Target" value="1" />
+    <FilterPlayers index="0" value="1" />
+    <Inherits index="Visibility" value="0" />
+    <On Terms="Effect.SlivanBossWeaponDamage.Start; At Target" Send="Create" />
+  </CActorSound>
+  <CActorSound id="SlivanBoss_Vox_Aggro" parent="SoundOneShot" />
+  <CActorSound id="SlivanBoss_SpawnPods_Pods_Missile" parent="SoundContinuous" />
+  <CActorSound id="SlivanBoss_SpawnPods_Pods_Warning" parent="SoundOneShot" />
+  <CActorSound id="SlivanBoss_SpawnPods_Pods_Movement" parent="SoundContinuous">
+    <Host Subject="::Creator" />
+  </CActorSound>
+  <CActorSound id="SlivanBoss_SpawnPods_Pods_Vox_Sound" parent="SoundOneShot">
+    <Sound value="SlivanBoss_SpawnPods_Pods_Vox" />
+  </CActorSound>
+  <CActorSound id="SlivanBoss_SpawnPods_Pods_Explo" parent="SoundOneShot" />
+  <CActorSound id="SlivanBoss_SpawnPods_Pods_LaunchImpact" parent="SoundOneShot">
+    <Layers>
+      <Sound value="SlivanBoss_SpawnPods_Pods_Vox" />
+      <Chance value="50" />
+      <PlayDelay value="80,80" />
+      <PlayDelaySource value="Actor" />
+    </Layers>
+  </CActorSound>
+  <CActorSound id="SlivanBoss_SpawnPods_Pods_AttackImpact" parent="SoundOneShot">
+    <On Terms="Effect.SlivanPodSuicideSet.Start; At Target" Send="Create" />
+    <Filter index="All" value="1" />
+    <VisibleToAtCreation index="Caster" value="1" />
+    <VisibleToAtCreation index="Source" value="1" />
+    <VisibleToAtCreation index="Target" value="1" />
+    <FilterPlayers index="0" value="1" />
+    <Inherits index="Visibility" value="0" />
+  </CActorSound>
+  <CActorSound id="SlivanBoss_SpawnPods_Pods_ImpactUnit" parent="SoundOneShot">
+    <On Terms="Behavior.SlivanPodDoT.On" Send="Create" />
+  </CActorSound>
+  <CActorModel id="SlivanBossPodDamage" parent="StormModelAddition">
+    <On Terms="Behavior.SlivanPodDoT.On" Send="Create" />
+    <On Terms="Behavior.SlivanPodDoT.Off" Send="AnimBracketStop BSD" />
+    <HostSiteOps Ops="SOpAttachCenter" />
+  </CActorModel>
+  <CActorModel id="SlivanBossPodPrimedWarningModel" parent="StormModelAnimationStyleContinuousUnit">
+    <Inherits index="TeamColor" value="1" />
+    <HostSiteOps Ops="SOpShadow" />
+    <Model value="SlivanBossSpawnPodsWarningModel" />
+    <On Terms="ActorCreation" Send="Create SlivanBoss_SpawnPods_Pods_Warning" />
+    <Host Subject="::Creator" />
+  </CActorModel>
+  <CActorUnit id="SlivanBossPod" parent="StormMinionBase" unitName="SlivanBossPod">
+    <DeathArray index="Normal" ModelLink="SlivanBossPodDeath" SoundLink="SlivanBoss_SpawnPods_Pods_Death" />
+    <CustomUnitStatusFrame value="UnitStatus/MinionUnitStatusFrameWithDurationBars" />
+    <On Terms="UnitBirth" Send="AnimPlay Birth Spell,C 0 -1.000000 -1.000000 1.000000 AsTimeScale" />
+    <On Terms="ActorCreation" Send="Create SlivanBoss_SpawnPods_Pods_LaunchImpact" />
+    <On Terms="UnitMovementUpdate.*.Walk" Send="Create SlivanBoss_SpawnPods_Pods_Movement" />
+    <On Terms="UnitMovementUpdate.*.Stand" Target="SlivanBoss_SpawnPods_Pods_Movement" Send="Destroy" />
+    <On Terms="Behavior.SlivanPodSuicidePriming.On" Send="AnimPlay Spell Spell,A PlayForever" />
+    <On Terms="Behavior.SlivanPodSuicidePriming.On" Send="Create SlivanBossPodPrimedWarningModel" />
+    <On Terms="Effect.SlivanPodSuicideSet.Start" Send="StatusSet Suicide 1" />
+    <On Terms="UnitDeathCustomize; IsStatus Suicide 1" Send="DeathCustomize Variation0" />
+    <On Terms="UnitDeathCustomize; IsStatus Suicide 1" Send="Create SlivanBoss_SpawnPods_Pods_Explo" />
+    <On Terms="UnitDeathCustomize; IsStatus Suicide 1" Send="Create SlivanBoss_SpawnPods_Pods_Vox_Sound" />
+    <DeathCustoms AnimProps="Birth" ModelLink="SlivanBossPodSuicide" Name="Variation0" />
+    <WalkAnimMoveSpeed value="4" />
+  </CActorUnit>
+  <CActorModel id="SlivanBossBirthDust" parent="StormModelAnimationStyleOneShotUnit">
+    <Inherits index="Visibility" value="1" />
+    <HostSiteOps Ops="SOpAttachHardPoint" HoldPosition="1" HoldRotation="1" />
+  </CActorModel>
+  <CActorModel id="SlivanBossDeathActor" parent="UnitDeathModelWithDeathMotionGround">
+    <On Terms="ActorCreation" Send="SetTintColor 255,150,150 0.000000 OneShot Enrage" />
+    <On Terms="ActorCreation" Send="ClearTintColor 0.500000 Enrage" />
+  </CActorModel>
+  <CActorUnit id="SlivanBoss" parent="StormCreepStandard" unitName="SlivanBoss">
+    <On Terms="ActorCreation" Send="SetShowStatusBar" />
+    <On Terms="ActorCreation" Send="Create SlivanBoss_Birth" />
+    <On Terms="ActorCreation" Send="Create SlivanBoss_Vox_Birth" />
+    <On Terms="ActorCreation" Send="AnimPlay Birth Birth 0 0.000000 -1.000000 1.250000 AsTimeScale" />
+    <On Terms="ActorCreation" Send="Create SlivanBossBirthDust" />
+    <On Terms="AnimDone; AnimName Birth" Send="ModelSwap SlivanBoss" />
+    <On Terms="AnimDone; AnimName Birth" Send="AnimClear Birth 0.000000" />
+    <On Terms="AnimDone; AnimName Birth" Send="AnimBaselineStart" />
+    <On Terms="Behavior.SlivanBossBirthDelay.Off" Send="SetShowStatusBar 1" />
+    <On Terms="UnitMovementUpdate.*.Walk" Send="AnimClear Attack" />
+    <On Terms="UnitMovementUpdate.*.Walk" Send="AnimClear Spell" />
+    <On Terms="Behavior.SlivanBossPhase4Behavior.On" Send="SetTintColor 255,150,150" />
+    <On Terms="Abil.SlivanBossSlimeSpit.Start" Send="AnimClear Attack" />
+    <On Terms="Abil.SlivanBossSlimeSpit.Start" Send="AnimClear Spell" />
+    <On Terms="Effect.SlivanBossSlimeSpitChannelPersistent.Start" Send="AnimPlay Spell Spell,A 0 -1.000000 -1.000000 2.000000 AsTimeScale" />
+    <On Terms="Effect.SlivanBossDrawInChannelPersistent.Start" Send="AnimPlay Spell Walk PlayForever" />
+    <On Terms="Effect.SlivanBossDrawInAnimDummySet.Start" Send="AnimPlay Spell Spell,A 0 -1.000000 -1.000000 0.750000 AsTimeScale" />
+    <On Terms="Abil.SlivanBossSpawnPods.Start" Send="AnimClear Attack" />
+    <On Terms="Abil.SlivanBossSpawnPods.Start" Send="AnimClear Spell" />
+    <On Terms="Effect.SlivanBossSpawnPodsTriggerDummySet.Start" Send="AnimBracketStart SpawnPods Spell,Alternate,Start Spell,Alternate Spell,Alternate,End 0 2.000000 AsTimeScale" />
+    <On Terms="Effect.SlivanBossSpawnPodsStartLaunchingAnimSet.Start" Send="AnimBracketStop SpawnPods" />
+    <On Terms="Effect.SlivanBossSpawnPodsChannelPersistent.Start" Send="AnimBracketStart SpellShake Spell,Channel,Start Spell,Channel Spell,Channel,End 0 2.000000 AsTimeScale" />
+    <On Terms="Effect.SlivanBossSpawnPodsStopShakeSet.Start" Send="AnimBracketStop SpellShake" />
+    <On Terms="Behavior.SlivanBossBurrowed.On" Send="AnimBracketStart Burrow Stand,Work,Start Stand,Work Stand,Work,End" />
+    <On Terms="Behavior.SlivanBossBurrowed.On" Send="Create SlivanBossBurrowDust" />
+    <On Terms="Behavior.SlivanBossBurrowed.Off" Send="AnimBracketStop Burrow" />
+    <On Terms="Behavior.SlivanBossPhase2Behavior.Off" Target="SlivanBossBurrowDust" Send="AnimBracketStop BSD" />
+    <On Terms="UnitMovementUpdate.*.Walk" Send="Create SlivanBossWalkSound" />
+    <On Terms="UnitMovementUpdate.*.Stand" Target="SlivanBossWalkSound" Send="Destroy" />
+    <Model value="SlivanBossBirth" />
+    <ModelFlags index="OutlineOccluder" value="1" />
+    <DeathArray index="Normal" ModelLink="SlivanBossDeath" SoundLink="SlivanBoss_Death" VoiceLink="SlivanBoss_Vox_Death" />
+    <ImpactSound value="" />
+    <CustomUnitStatusFrame value="PvEBrawl/PVEBossUnitStatusFrameTemplate" />
+    <WalkAnimMoveSpeed value="4.3984" />
+    <MinimapIcon value="Assets\Textures\storm_ui_minimapicon_minesgolem.dds" />
+    <MinimapIconIsTeamColored value="1" />
+    <MinimapIconScale value="0.900000" />
+    <MinimapRenderPriority value="Merc" />
+    <MinimapUseSelectionColor value="0" />
+    <DeathActorModel value="SlivanBossDeathActor" />
+    <GroupIcon>
+      <Image value="Assets\Textures\Storm_UI_InGame_TargetInfoPanel_Slivan.dds" />
+    </GroupIcon>
+  </CActorUnit>
+  <CActorAction id="SlivanBossSpawnPods1AttackAction" parent="GenericAttackPointStorm" effectImpact="SlivanBossSpawnPodsImpactSet" effectLaunch="SlivanBossSpawnPods1LaunchSet">
+    <LaunchAttachQuery Methods="AMFilterHardpoint01" />
+    <LaunchAssets Model="SlivanBossSpawnPodsLaunchFX" Sound="Slivan_SpawnPods_Pods_Launch" />
+    <Missile value="SlivanBossSpawnPodsMissile" />
+  </CActorAction>
+  <CActorAction id="SlivanBossSpawnPods2AttackAction" parent="GenericAttackPointStorm" effectImpact="SlivanBossSpawnPodsImpactSet" effectLaunch="SlivanBossSpawnPods2LaunchSet">
+    <LaunchAttachQuery Methods="AMFilterHardpoint02" />
+    <LaunchAssets Model="SlivanBossSpawnPodsLaunchFX" Sound="Slivan_SpawnPods_Pods_Launch" />
+    <Missile value="SlivanBossSpawnPodsMissile" />
+  </CActorAction>
+  <CActorAction id="SlivanBossSpawnPods3AttackAction" parent="GenericAttackPointStorm" effectImpact="SlivanBossSpawnPodsImpactSet" effectLaunch="SlivanBossSpawnPods3LaunchSet">
+    <LaunchAttachQuery Methods="AMFilterHardpoint03" />
+    <Missile value="SlivanBossSpawnPodsMissile" />
+    <LaunchAssets Model="SlivanBossSpawnPodsLaunchFX" Sound="Slivan_SpawnPods_Pods_Launch" />
+  </CActorAction>
+  <CActorAction id="SlivanBossSpawnPods4AttackAction" parent="GenericAttackPointStorm" effectImpact="SlivanBossSpawnPodsImpactSet" effectLaunch="SlivanBossSpawnPods4LaunchSet">
+    <LaunchAttachQuery Methods="AMFilterHardpoint04" />
+    <Missile value="SlivanBossSpawnPodsMissile" />
+    <LaunchAssets Model="SlivanBossSpawnPodsLaunchFX" Sound="Slivan_SpawnPods_Pods_Launch" />
+  </CActorAction>
+  <CActorAction id="SlivanBossSpawnPods5AttackAction" parent="GenericAttackPointStorm" effectImpact="SlivanBossSpawnPodsImpactSet" effectLaunch="SlivanBossSpawnPods5LaunchSet">
+    <LaunchAttachQuery Methods="AMFilterHardpoint05" />
+    <Missile value="SlivanBossSpawnPodsMissile" />
+    <LaunchAssets Model="SlivanBossSpawnPodsLaunchFX" Sound="Slivan_SpawnPods_Pods_Launch" />
+  </CActorAction>
+  <CActorAction id="SlivanBossSpawnPods6AttackAction" parent="GenericAttackPointStorm" effectImpact="SlivanBossSpawnPodsImpactSet" effectLaunch="SlivanBossSpawnPods6LaunchSet">
+    <LaunchAttachQuery Methods="AMFilterHardpoint06" />
+    <Missile value="SlivanBossSpawnPodsMissile" />
+    <LaunchAssets Model="SlivanBossSpawnPodsLaunchFX" Sound="Slivan_SpawnPods_Pods_Launch" />
+  </CActorAction>
+  <CActorMissile id="SlivanBossSpawnPodsMissile" parent="StormMissileWithDeath" unitName="SlivanBossSpawnPodsMissile">
+    <On Terms="ActorCreation" Send="Create SlivanBoss_SpawnPods_Pods_Missile" />
+  </CActorMissile>
+  <CActorModel id="SlivanBossSpawnPodsWarningModel" parent="StormModelAnimationStyleContinuous">
+    <Inherits index="TeamColor" value="1" />
+    <On Terms="Effect.SlivanBossSpawnPodsLaunch1CreatePersistent.Stop; FromEffectTreeDescendant" Send="AnimBracketStop BSD" />
+    <On Terms="Effect.SlivanBossSpawnPodsLaunch2CreatePersistent.Stop; FromEffectTreeDescendant" Send="AnimBracketStop BSD" />
+    <On Terms="Effect.SlivanBossSpawnPodsLaunch3CreatePersistent.Stop; FromEffectTreeDescendant" Send="AnimBracketStop BSD" />
+    <On Terms="Effect.SlivanBossSpawnPodsLaunch4CreatePersistent.Stop; FromEffectTreeDescendant" Send="AnimBracketStop BSD" />
+    <On Terms="Effect.SlivanBossSpawnPodsLaunch5CreatePersistent.Stop; FromEffectTreeDescendant" Send="AnimBracketStop BSD" />
+    <On Terms="Effect.SlivanBossSpawnPodsLaunch6CreatePersistent.Stop; FromEffectTreeDescendant" Send="AnimBracketStop BSD" />
+    <On Terms="Effect.SlivanBossSpawnPodsImpactSet.Start; FromEffectTreeDescendant" Send="AnimBracketStop BSD" />
+  </CActorModel>
+
 </Catalog>

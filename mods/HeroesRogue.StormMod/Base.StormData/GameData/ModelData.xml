@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+<CModel id="SlivanBossMovetoCenterMovingFX" parent="PersistentSpellFX">
+    <Model value="Assets\Effects\Storm_Effect_Anubarak_Base_BurrowCharge_Burrow\Storm_Effect_Anubarak_Base_BurrowCharge_Burrow.m3" />
+    <ScaleMax X="1.500000" Y="1.500000" Z="1.500000" />
+    <ScaleMin X="1.500000" Y="1.500000" Z="1.500000" />
+  </CModel>
+  <CModel id="SlivanBossAttackLaunchFX" parent="LaunchFX">
+    <Model value="Assets\Effects\Storm_FX_Merc_SCZion_Boss_Attack\Storm_FX_Merc_SCZion_Boss_Attack.m3" />
+  </CModel>
+  <CModel id="SlivanBossDrawInPullWarning" parent="OneShotSpellFX">
+    <Model value="Assets\Effects\Storm_FX_ChoGall_Base_Upheaval_AOE\Storm_FX_ChoGall_Base_Upheaval_AOE.m3" />
+    <ScaleMax X="0.530000" Y="0.530000" Z="0.530000" />
+    <ScaleMin X="0.530000" Y="0.530000" Z="0.530000" />
+  </CModel>
+  <CModel id="SlivanBossDrawInStunWarning" parent="PersistentSpellFX">
+    <Model value="Assets\Effects\Storm_Effect_Kerrigan_Base_PsionicBlast_Target\Storm_Effect_Kerrigan_Base_PsionicBlast_Target.m3" />
+  </CModel>
+  <CModel id="SlivanBossDrawInStunDust" parent="OneShotSpellFX">
+    <Model value="Assets\Effects\Storm_Effect_Placeholder_YetiRock_Missile_Impact\Storm_Effect_Placeholder_YetiRock_Missile_Impact.m3" />
+  </CModel>
+  <CModel id="SlivanBossEnragedBuff" parent="PersistentSpellFX">
+    <Model value="Assets\Effects\Storm_Effect_Barbarian_Base_WrathOfTheBerserker\Storm_Effect_Barbarian_Base_WrathOfTheBerserker.m3" />
+    <ScaleMax X="3.000000" Y="3.000000" Z="3.000000" />
+    <ScaleMin X="3.000000" Y="3.000000" Z="3.000000" />
+  </CModel>
+  <CModel id="SlivanBossBurrowedArmorGlaze" parent="PersistentSpellFX">
+    <Model value="Assets\Effects\Glaze\Storm_Glaze_SCZionBoss_Base\Storm_Glaze_SCZionBoss_Base.m3" />
+  </CModel>
+  <CModel id="SlivanBossImpaleDamage" parent="ImpactFX">
+    <Model value="Assets\Effects\Storm_Effect_Kerrigan_Base_Spikes_Impact\Storm_Effect_Kerrigan_Base_Spikes_Impact.m3" />
+  </CModel>
+  <CModel id="SlivanBossImpaleSpikes" parent="OneShotSpellFX">
+    <Model value="Assets\Effects\Storm_Effect_Kerrigan_Base_PsionicBlast_Impact\Storm_Effect_Kerrigan_Base_PsionicBlast_Impact.m3" />
+    <Events>
+      <Anim value="Birth,00" />
+      <Name value="SlivanBossImpaleStunStartSound" />
+      <Type value="Custom" />
+      <Time value="0.010000" />
+    </Events>
+    <Events>
+      <Anim value="Death,00" />
+      <Name value="SlivanBossImpaleStunEndSound" />
+      <Type value="Custom" />
+      <Time value="0.010000" />
+    </Events>
+    <Radius value="0.050000" />
+    <RadiusLoose value="0.100000" />
+    <Tipability value="1.000000" />
+    <TipabilityLength value="1.000000" />
+  </CModel>
+  <CModel id="SlivanBossDrawInPull" parent="OneShotSpellFX">
+    <Model value="Assets\Effects\Storm_Effect_Kerrigan_Base_PrimalShackles\Storm_Effect_Kerrigan_Base_PrimalShackles.m3" />
+  </CModel>
+  <CModel id="SlivanBossDrawInStunSpikes" parent="OneShotSpellFX">
+    <Model value="Assets\Effects\Storm_Effect_Kerrigan_Base_PsionicBlast_Impact\Storm_Effect_Kerrigan_Base_PsionicBlast_Impact.m3" />
+    <Events>
+      <Anim value="Birth,00" />
+      <Name value="SlivanBossDrawInStunStartSound" />
+      <Type value="Custom" />
+      <Time value="0.010000" />
+    </Events>
+    <Events>
+      <Anim value="Death,00" />
+      <Name value="SlivanBossDrawInStunEndSound" />
+      <Type value="Custom" />
+      <Time value="0.010000" />
+    </Events>
+    <Radius value="0.050000" />
+    <RadiusLoose value="0.100000" />
+    <Tipability value="1.000000" />
+    <TipabilityLength value="1.000000" />
+  </CModel>
+  <CModel id="SlivanBossDrawInStunDamage" parent="ImpactFX">
+    <Model value="Assets\Effects\Storm_Effect_Kerrigan_Base_Spikes_Impact\Storm_Effect_Kerrigan_Base_Spikes_Impact.m3" />
+  </CModel>
+  <CModel id="SlivanBossImpaleWarning" parent="OneShotSpellFX">
+    <Model value="Assets\Effects\Storm_Effect_Kerrigan_Base_PsionicBlast_Target\Storm_Effect_Kerrigan_Base_PsionicBlast_Target.m3" />
+  </CModel>
+  <CModel id="SlivanBossSlimeSpitPersistentModel" parent="PersistentSpellFX">
+    <Model value="Assets\Effects\Storm_FX_Merc_SlivenPvE_Missile_Impact\Storm_FX_Merc_SlivenPvE_Missile_Impact.m3" />
+    <RadiusLoose value="3.000000" />
+  </CModel>
+  <CModel id="SlivanBossSlimeSpitDamage" parent="PersistentSpellFX">
+    <Model value="Assets\Effects\Storm_FX_Merc_SCZion_Boss_MissileBuff\Storm_FX_Merc_SCZion_Boss_MissileBuff.m3" />
+  </CModel>
+  <CModel id="SlivanBossSlimeSpitMissile" parent="MissileFX">
+    <Model value="Assets\Effects\Storm_FX_Merc_SCZion_Boss_Missile\Storm_FX_Merc_SCZion_Boss_Missile.m3" />
+  </CModel>
+  <CModel id="SlivanBossSlimeSpitPersistentRingModel" parent="PersistentSpellFX">
+    <Model value="Assets\Effects\Storm_FX_Merc_SCZion_Boss_Missile_Ground\Storm_FX_Merc_SCZion_Boss_Missile_Ground.m3" />
+    <RadiusLoose value="3.000000" />
+    <ScaleMax X="1.200000" Y="1.200000" Z="1.200000" />
+    <ScaleMin X="1.200000" Y="1.200000" Z="1.200000" />
+  </CModel>
+  <CModel id="SlivanBossSpawnPodsWarningModel" parent="PersistentSpellFX">
+    <Model value="Assets\UI\Cursors\Storm_UI_AOECursor_Fantasy_TeamColor\Storm_UI_AOECursor_Fantasy_TeamColor.m3" />
+    <RadiusLoose value="0.500000" />
+    <ScaleMax X="1.500000" Y="1.500000" />
+    <ScaleMin X="1.500000" Y="1.500000" />
+  </CModel>
+  <CModel id="SlivanBossPod" parent="Unit">
+    <Model value="Assets\Units\Mercs\Storm_Merc_SCZion_BossLocust\Storm_Merc_SCZion_BossLocust.m3" />
+    <RequiredAnims value="Assets\Units\Mercs\Storm_Merc_SCZion_BossLocust_RequiredAnims\Storm_Merc_SCZion_BossLocust_RequiredAnims.m3a" />
+    <Events>
+      <Anim value="Walk,00" />
+      <Name value="Merc_SlivanBoss_SpawnPods_Podling_Vox2" />
+      <Type value="Sound" />
+      <Payload value="Merc_SlivanBoss_SpawnPods_Podling_Vox2" />
+    </Events>
+    <Events>
+      <Anim value="Walk,00" />
+      <Name value="Merc_SlivanBoss_SpawnPods_Podling_Movement" />
+      <Type value="Sound" />
+      <Time value="0.171000" />
+      <Payload value="SlivanBoss_SpawnPods_Podling_Movement" />
+    </Events>
+  </CModel>
+  <CModel id="SlivanBossPodSuicide" parent="StormUnitDeath">
+    <Model value="Assets\Units\Mercs\Storm_Merc_SCZion_Baneling_Death\Storm_Merc_SCZion_Baneling_Death.m3" />
+  </CModel>
+  <CModel id="SlivanBossPodDeath" parent="StormUnitDeath">
+    <Model value="Assets\Effects\Storm_Pet_AbathurLocust_Base_Death\Storm_Pet_AbathurLocust_Base_Death.m3" />
+  </CModel>
+  <CModel id="SlivanBossPodDamage" parent="PersistentSpellFX">
+    <Model value="Assets\Effects\Storm_Effect_Placeholder_Poison_Cloud\Storm_Effect_Placeholder_Poison_Cloud.m3" />
+  </CModel>
+  <CModel id="SlivanBossSpawnPodsMissile" parent="MissileFX">
+    <Model value="Assets\Units\Mercs\Storm_Merc_SCZion_BossLocust_Projectile\Storm_Merc_SCZion_BossLocust_Projectile.m3" />
+  </CModel>
+  <CModel id="SlivanBossSpawnPodsLaunchFX" parent="LaunchFX">
+    <Model value="Assets\Units\Mercs\Storm_Merc_SCZion_BossLocust_Birth\Storm_Merc_SCZion_BossLocust_Birth.m3" />
+  </CModel>
+  <CModel id="SlivanBossBirth" parent="OneShotSpellFX">
+    <Model value="Assets\Units\Mercs\Storm_Merc_SCZion_Boss_Birth\Storm_Merc_SCZion_Boss_Birth.m3" />
+    <ScaleMax X="1.300000" Y="1.300000" Z="1.300000" />
+    <ScaleMin X="1.300000" Y="1.300000" Z="1.300000" />
+  </CModel>
+  <CModel id="SlivanBoss" parent="Unit">
+    <Model value="Assets\Units\Mercs\Storm_Merc_SCZion_Boss\Storm_Merc_SCZion_Boss.m3" />
+    <RequiredAnims value="Assets\Units\Mercs\Storm_Merc_SCZion_Boss_RequiredAnims\Storm_Merc_SCZion_Boss_RequiredAnims.m3a" />
+    <Events>
+      <Anim value="Stand,00" />
+      <Name value="Merc_SlimeBoss_Vox_Idle" />
+      <Type value="Sound" />
+      <Time value="0.500000" />
+      <Payload value="Merc_SlimeBoss_Vox_Idle" />
+    </Events>
+    <Events>
+      <Anim value="Spell,A,00" />
+      <Name value="Merc_SlimeBoss_SlimeSpit_PreLaunch" />
+      <Type value="Sound" />
+      <Payload value="Merc_SlimeBoss_SlimeSpit_PreLaunch" />
+    </Events>
+    <Events>
+      <Anim value="Spell,Alternate,Start,00" />
+      <Name value="Merc_SlimeBoss_SpawnPods_Pods_Spawn" />
+      <Type value="Sound" />
+      <Payload value="Merc_SlimeBoss_SpawnPods_Pods_Spawn" />
+    </Events>
+    <Events>
+      <Anim value="Spell,Alternate,Start,00" />
+      <Name value="Merc_SlimeBoss_SpawnPods_Pods_Spawn" />
+      <Type value="Sound" />
+      <Time value="0.232000" />
+      <Payload value="Merc_SlimeBoss_SpawnPods_Pods_Spawn" />
+    </Events>
+    <Events>
+      <Anim value="Spell,Alternate,Start,00" />
+      <Name value="Merc_SlimeBoss_SpawnPods_Pods_Spawn" />
+      <Type value="Sound" />
+      <Time value="0.456000" />
+      <Payload value="Merc_SlimeBoss_SpawnPods_Pods_Spawn" />
+    </Events>
+    <Events>
+      <Anim value="Spell,Alternate,End,00" />
+      <Name value="Merc_SlimeBoss_SpawnPods_Pods_Spawn" />
+      <Type value="Sound" />
+      <Payload value="Merc_SlimeBoss_SpawnPods_Pods_Spawn" />
+    </Events>
+    <Events>
+      <Anim value="Spell,Alternate,End,00" />
+      <Name value="Merc_SlimeBoss_SpawnPods_Pods_Spawn" />
+      <Type value="Sound" />
+      <Time value="0.230000" />
+      <Payload value="Merc_SlimeBoss_SpawnPods_Pods_Spawn" />
+    </Events>
+    <Events>
+      <Anim value="Spell,Alternate,End,00" />
+      <Name value="Merc_SlimeBoss_SpawnPods_Pods_Spawn" />
+      <Type value="Sound" />
+      <Time value="0.437000" />
+      <Payload value="Merc_SlimeBoss_SpawnPods_Pods_Spawn" />
+    </Events>
+    <Events>
+      <Anim value="Spell,Alternate,End,00" />
+      <Name value="Merc_SlimeBoss_SpawnPods_Pods_Spawn" />
+      <Type value="Sound" />
+      <Time value="0.550000" />
+      <Payload value="Merc_SlimeBoss_SpawnPods_Pods_Spawn" />
+    </Events>
+    <Events>
+      <Anim value="Spell,Alternate,End,00" />
+      <Name value="Merc_SlimeBoss_SpawnPods_Pods_Launch" />
+      <Type value="Sound" />
+      <Time value="0.100000" />
+      <Payload value="Merc_SlimeBoss_SpawnPods_Pods_Launch" />
+    </Events>
+    <Events>
+      <Anim value="Spell,Channel,Start,00" />
+      <Name value="Merc_SlimeBoss_SpawnPods_Pods_LaunchPre" />
+      <Type value="Sound" />
+      <Payload value="Merc_SlimeBoss_SpawnPods_Pods_LaunchPre" />
+    </Events>
+    <Events>
+      <Anim value="Stand,Work,Start,00" />
+      <Name value="Merc_SlimeBoss_Bury" />
+      <Type value="Sound" />
+      <Payload value="Merc_SlimeBoss_Bury" />
+    </Events>
+    <Events>
+      <Anim value="Stand,Work,End,00" />
+      <Name value="Merc_SlimeBoss_BuryOut" />
+      <Type value="Sound" />
+      <Payload value="Merc_SlimeBoss_BuryOut" />
+    </Events>
+    <Events>
+      <Anim value="Attack,00" />
+      <Name value="SlivanBoss_AttackLaunch" />
+      <Type value="Actor" />
+      <Payload value="SlivanBoss_AttackLaunch" />
+    </Events>
+    <Events>
+      <Anim value="Attack,01" />
+      <Name value="SlivanBoss_AttackLaunch" />
+      <Type value="Actor" />
+      <Payload value="SlivanBoss_AttackLaunch" />
+    </Events>
+    <ScaleMax X="1.300000" Y="1.300000" Z="1.300000" />
+    <ScaleMin X="1.300000" Y="1.300000" Z="1.300000" />
+  </CModel>
+  <CModel id="SlivanBossBirthDust" parent="OneShotSpellFX">
+    <Model value="Assets\Effects\Storm_FX_Merc_SCZion_Boss_Birth\Storm_FX_Merc_SCZion_Boss_Birth.m3" />
+  </CModel>
+  <CModel id="SlivanBossBurrowDust" parent="PersistentSpellFX">
+    <Model value="Assets\Effects\Storm_FX_Merc_SCZion_Boss_Burrow\Storm_FX_Merc_SCZion_Boss_Burrow.m3" />
+  </CModel>
+  <CModel id="SlivanBossBurrowedArmor" parent="PersistentSpellFX">
+    <Model value="Assets\Effects\Storm_FX_Merc_SCZion_Boss_Shield\Storm_FX_Merc_SCZion_Boss_Shield.m3" />
+  </CModel>
+  <CModel id="SlivanBossDeath" parent="StormUnitDeath">
+    <Model value="Assets\Units\Mercs\Storm_Merc_EscBrxBrawl_Boss_Death\Storm_Merc_EscBrxBrawl_Boss_Death.m3" />
+    <Events>
+      <Anim value="Death,00" />
+      <Name value="SlivanBoss_Death" />
+      <Type value="Sound" />
+      <Time value="0.001000" />
+      <Payload value="SlivanBoss_Death" />
+    </Events>
+  </CModel>
+</Catalog>

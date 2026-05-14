@@ -12,6 +12,10 @@ Singleplayer rogue-like mod for Heroes of the Storm.
 
 3- Start the game, open the menu in the bottom right (cog icon), press Challenges, and then press Play.
 
+**How to Uninstall:**
+
+- Remove or rename the maps and mods folder in order to access regular try mode.
+
 **Info:**
 
 - You gain permanent benefits or buffs called boons when reaching level 1, 4, 7, and 10. Choose one of three options or reroll if you do not like what you see.
@@ -35,6 +39,8 @@ Singleplayer rogue-like mod for Heroes of the Storm.
 - Rexxar: Most boons and curses apply to both Rexxar and Misha.
 
 - Cho'Gall: Most boons and curses apply to both Cho and Gall.
+
+- Abathur: Most boons and curses apply to both Symbiote and Ultimate Evolution.
 
 
 #### Disclaimer:

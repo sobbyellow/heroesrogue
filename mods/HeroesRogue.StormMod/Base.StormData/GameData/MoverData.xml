@@ -10,5 +10,28 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <MaxSpeed value="24" />
   </MotionPhases>
 </CMoverMissile>
+<CMoverMissile id="SlivanBossSlimeSpitMissile">
+    <MotionPhases>
+      <Driver value="Ballistic" />
+      <Acceleration value="-1" />
+      <MinSpeed value="20" />
+      <MaxSpeed value="20" />
+      <Gravity value="10" />
+      <ThrowBandYaw value="-360,-360,-360,-360" />
+      <ThrowBandPitch value="-360,-360,-360,-360" />
+      <YawPitchRoll value="5759.6484" />
+    </MotionPhases>
+  </CMoverMissile>
+  <CMoverMissile id="SlivanBossSpawnPodsMissile">
+    <MotionPhases>
+      <Driver value="Ballistic" />
+      <Acceleration value="-1" />
+      <Gravity value="20" />
+      <ThrowBandYaw value="-360,-360,-360,-360" />
+      <ThrowBandPitch value="-360,-360,-360,-360" />
+      <YawPitchRoll value="5759.6484" />
+      <FlightTime value="1,0.5" />
+    </MotionPhases>
+  </CMoverMissile>
 
 </Catalog>

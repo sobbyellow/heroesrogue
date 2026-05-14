@@ -307,4 +307,40 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Behavior value="LegallyBlind" />
 </CValidatorUnitCompareBehaviorCount>
 
+  <CValidatorUnitCompareCooldown id="SlivanInfestedDropNotOnCooldown">
+    <WhichUnit Value="Source"/>
+    <CooldownLink value="Abil/AfxSlivanInfestedDrop"/>
+    <Location value="Unit"/>
+    <Ability value="AfxSlivanInfestedDrop"/>
+  </CValidatorUnitCompareCooldown>
+
+  <CValidatorUnitCompareCooldown id="SlivanImpaleNotOnCooldown">
+    <WhichUnit Value="Source"/>
+    <CooldownLink value="Abil/AfxSlivanImpale"/>
+    <Location value="Unit"/>
+    <Ability value="AfxSlivanImpale"/>
+  </CValidatorUnitCompareCooldown>
+  <CValidatorUnitCompareBehaviorCount id="DoesNotHaveSlivanBossDrawInStunNoDoubleHitBehavior">
+      <Behavior value="SlivanBossDrawInStunNoDoubleHitBehavior"/>
+  </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareCooldown id="SlivanBossSlimeSpitNotOnCooldown">
+        <WhichUnit Value="Source"/>
+        <CooldownLink value="Abil/AfxSlivanBossSlimeSpit"/>
+        <Location value="Unit"/>
+        <Ability value="AfxSlivanBossSlimeSpit"/>
+    </CValidatorUnitCompareCooldown>
+    <CValidatorUnitCompareCooldown id="SlivanBossDrawInNotOnCooldown">
+        <WhichUnit Value="Source"/>
+        <CooldownLink value="Abil/AfxSlivanBossDrawIn"/>
+        <Location value="Unit"/>
+        <Ability value="AfxSlivanBossDrawIn"/>
+    </CValidatorUnitCompareCooldown>
+    <CValidatorUnitCompareBehaviorCount id="DoesNotHaveSlivanBossDrawInPullNoDoubleHitBehavior">
+        <Behavior value="SlivanBossDrawInPullNoDoubleHitBehavior"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="HasSlivanBossDrawInPullBehavior">
+        <Value value="1"/>
+        <Behavior value="SlivanBossDrawInPullBehavior"/>
+    </CValidatorUnitCompareBehaviorCount>
+
 </Catalog>
