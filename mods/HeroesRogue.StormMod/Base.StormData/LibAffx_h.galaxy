@@ -127,7 +127,7 @@ int libAffx_affixSelectionMaxCurrent = 3;
 
 const fixed libAffx_gameStartDelay = 2.25; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.14.3";
+const string libAffx_version = "0.14.4";
 
 struct libAffx_Filter {
     unitfilter unitFilter;
@@ -197,6 +197,7 @@ struct libAffx_AffixData {
     int maxLevel; // Maximum level requirement. 0 = No requirement
 
     bool curse;
+    bool challengeCurse;
     bool mythicCurse;
 
     bool enabled;
@@ -210,8 +211,10 @@ struct libAffx_AffixData {
     bool[libAffx_maxHeroes + 1] allowedHero; // List of Hero requirements.
     bool heroExclusive;
     bool[libAffx_maxHeroes + 1] heroTooltip; 
+    bool manalessTooltip;
     bool[libAffx_maxMaps + 1] allowedMap; // List of Map requirements
     int requiredDifficulty;
+    int requiredMapNumber;
 
     string[libAffx_maxTalentsAdd + 1] addTalents;
     string[libAffx_maxTalentsAdd + 1] showTalents;
@@ -260,6 +263,7 @@ int[libAffx_queueMax + 1] libAffx_queueAffixLevel;
 bool[libAffx_queueMax + 1] libAffx_queueAffixPreventUpgrade;
 int[libAffx_queueMax + 1] libAffx_queueAffixAmount;
 bool[libAffx_queueMax + 1] libAffx_queueAffixDisableReroll;
+int libAffx_queueAffixOverride;
 int libAffx_currentAffixRarity;
 bool libAffx_currentAffixCurse;
 int libAffx_currentAffixLevel;
@@ -387,7 +391,7 @@ trigger libAffx_RexxarTrigger;
 bool libAffx_debug_enableTryMeMode2 = false; // Try mode 2.0
 bool libAffx_debug_enableCheatCommands = false; // Enables cheat/debug commands
 bool libAffx_debug_disableHeroSelection = false; // Skips the Hero selection.
-string libAffx_debug_playerHero = "FaerieDragon"; // Player hero when hero selection is disabled.
+string libAffx_debug_playerHero = "Tinker"; // Player hero when hero selection is disabled.
 bool libAffx_debug_enableDebugLogging = false; // Enables debug logging
 bool libAffx_debug_forcedHeroes = false; // Enemy heroes are forced to predetermined heroes
 bool libAffx_debug_ignoreMap = false; // Ignores the saved map.
@@ -424,6 +428,8 @@ void libAffx_AddTalent(int lp_player, string talent); // Adds talent to player.
 void libAffx_ShowTalent(string talent, bool show); // Hides/shows talent from talent selection.
 int libAffx_GetMapID(string mapString);
 string libAffx_GetMapString(int map);
+unit libAffx_GetHeroUnit(int player);
+unit libAffx_GetPlayerUnit (int player);
 void libAffx_CatalogSetForAllPlayers(int type, string entry, string path, string value); // Sets catalog for all players.
 void libAffx_CatalogSetFixedForAllPlayers(int type, string entry, string path, fixed value); // Sets catalog for all players with fixed value.
 void libAffx_CatalogModifyForAllPlayers(string reference, string value); // Modifies catalog for all players.

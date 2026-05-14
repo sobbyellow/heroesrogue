@@ -2,7 +2,6 @@
 <Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
 
-
   <CUnit id="AffixBuddyDrone" parent="StormSummonActive">
     <FlagArray index="Untargetable" value="1" />
     <FlagArray index="Invulnerable" value="1" />
@@ -348,6 +347,45 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <HeroPlaystyleFlags index="Overconfident" value="1"/>
     <HeroPlaystyleFlags index="RoleAutoAttacker" value="1"/>
 </CUnit>
+
+  <CUnit id="SlivanBoss" parent="StormMonsterMajorBase">
+    <FogVisibility value="Visible" />
+    <WeaponArray Link="SlivanBoss" />
+    <BehaviorArray Link="SlivanBossAbilityScanDelay" />
+    <BehaviorArray Link="SlivanBossBirthDelay" />
+    <BehaviorArray Link="SlivanRevealed" />
+    <BehaviorArray Link="SlivanPeriodicRevealer" />
+    <BehaviorArray Link="UnitImmuneToDevouringMaw" />
+    <LifeStart value="75000" />
+    <LifeMax value="75000" />
+    <AbilArray Link="AfxSlivanBossSlimeSpit" />
+    <AbilArray Link="AfxSlivanInfestedDrop" />
+    <AbilArray Link="AfxSlivanBossDrawIn" />
+    <AbilArray Link="AfxSlivanImpale" />
+    <Attributes index="ImmuneToFriendlyAbilities" value="1" />
+    <CardLayouts index="0">
+      <LayoutButtons Face="AfxSlivanBossSlimeSpit" Type="AbilCmd" Slot="Ability1" AbilCmd="AfxSlivanBossSlimeSpit,Execute" />
+      <LayoutButtons Face="AfxSlivanInfestedDrop" Type="AbilCmd" Slot="Ability2" AbilCmd="AfxSlivanInfestedDrop,Execute" />
+      <LayoutButtons Face="AfxSlivanBossDrawIn" Type="AbilCmd" Slot="Ability3" AbilCmd="AfxSlivanBossDrawIn,Execute" />
+      <LayoutButtons Face="AfxSlivanImpale" Type="AbilCmd" Slot="Heroic" AbilCmd="AfxSlivanImpale,Execute" />
+    </CardLayouts>
+    <Speed value="$HeroBaseMovementSpeed" />
+    <Sight value="25" />
+    <Radius value="1.75" />
+    <InnerRadius value="1.75" />
+    <MinimapRadius value="0.375" />
+    <PushPriority value="9001" />
+    <Collide index="Ground" value="1" />
+    <Collide index="Colossus" value="1" />
+    <Collide index="ForceField" value="1" />
+    <OverlapIndex value="None" />
+    <AlliedPushPriority value="9001" />
+    <Attributes index="Heroic" value="1" />
+    <Attributes index="MapCreature" value="0" />
+    <AIThinkTree value="AI/Slivan.aitree" />
+    <FlagArray index="CreateAITreeOnSpawn" value="1" />
+  </CUnit>
+  <CUnit id="SlivanBossSlimeSpitMissile" parent="MISSILE_INVULNERABLE" />
 
 
 </Catalog>

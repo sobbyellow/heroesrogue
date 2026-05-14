@@ -1701,4 +1701,440 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
       <MultiplicativeModifierArray index="ThrallHealthyFrostwolf" Modifier="0"/>
   </CEffectCreateHealer>
 
+
+  <CEffectSet id="SlivanBossSlimeSpitInitialSet">
+    <EffectArray value="SlivanBossSlimeSpitChannelPersistent" />
+    <TargetLocationType value="Point" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="SlivanBossSlimeSpitChannelPersistent">
+    <Flags index="Channeled" value="1" />
+    <InitialEffect value="SlivanBossCastingApplyBehavior" />
+    <PeriodCount value="3" />
+    <PeriodicValidator value="CasterNotDead" />
+    <PeriodicEffectArray value="SlivanBossSlimeSpitAnimDummySet" />
+    <PeriodicEffectArray value="SlivanBossSlimeSpitLaunchMissile" />
+    <PeriodicEffectArray value="SlivanBossSlimeSpitOutroDummySet" />
+    <PeriodicPeriodArray value="0.75" />
+    <PeriodicPeriodArray value="0" />
+    <PeriodicPeriodArray value="0.25" />
+    <FinalEffect value="SlivanBossCastingRemoveBehavior" />
+  </CEffectCreatePersistent>
+  <CEffectSet id="SlivanBossSlimeSpitAnimDummySet">
+    <TargetLocationType value="Point" />
+  </CEffectSet>
+  <CEffectLaunchMissile id="SlivanBossSlimeSpitLaunchMissile">
+    <ImpactLocation Effect="SlivanBossSlimeSpitInitialSet" Value="TargetPoint" />
+    <ImpactEffect value="SlivanBossSlimeSpitImpactSet" />
+    <AmmoUnit value="SlivanBossSlimeSpitMissile" />
+    <Movers Link="SlivanBossSlimeSpitMissile" IfRangeLTE="500" />
+  </CEffectLaunchMissile>
+  <CEffectSet id="SlivanBossSlimeSpitImpactSet">
+    <EffectArray value="SlivanBossSlimeSpitImpactCreatePersistent" />
+    <TargetLocationType value="Point" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="SlivanBossSlimeSpitImpactCreatePersistent">
+    <PeriodCount value="80" />
+    <PeriodicEffectArray value="SlivanBossSlimeSpitDoTSearchArea" />
+    <PeriodicPeriodArray value="0.25" />
+    <RevealRadius value="3.5" />
+    <RevealFlags index="Unfog" value="1" />
+    <PeriodicValidator value="CasterNotDead" />
+  </CEffectCreatePersistent>
+  <CEffectEnumArea id="SlivanBossSlimeSpitDoTSearchArea">
+    <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Effect="SlivanBossSlimeSpitDoTApplyBehavior">
+      <Radius value="3" />
+    </AreaArray>
+  </CEffectEnumArea>
+  <CEffectApplyBehavior id="SlivanBossSlimeSpitDoTApplyBehavior">
+    <Behavior value="SlivanBossSlimeSpitDoT" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="SlivanBossSlimeSpitOutroDummySet">
+    <TargetLocationType value="Point" />
+  </CEffectSet>
+  <CEffectDamage id="SlivanBossSlimeSpitDoTDamage" parent="StormSpell">
+    <Visibility value="Hidden" />
+    <Amount value="200" />
+  </CEffectDamage>
+  <CEffectSet id="SlivanBossWeaponSet">
+    <EffectArray value="SlivanBossWeaponDamage" />
+  </CEffectSet>
+  <CEffectDamage id="SlivanBossWeaponDamage" parent="StormWeapon">
+    <Amount value="300" />
+  </CEffectDamage>
+
+  <CEffectApplyBehavior id="SlivanBossAbilityScanApplyBehavior">
+    <WhichUnit Value="Source" />
+    <Behavior value="SlivanBossAbilityScan" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="SlivanBossAbilityScanSet">
+    <EffectArray value="SlivanBossSlimeSpitScanSet" />
+    <EffectArray value="SlivanInfestedDropScanSearchArea" />
+    <EffectArray value="SlivanImpaleScanSearchArea" />
+    <EffectArray value="SlivanBossDrawInScanSearchArea" />
+  </CEffectSet>
+  <CEffectEnumArea id="SlivanBossDrawInScanSearchArea">
+    <ValidatorArray value="SlivanBossDrawInNotOnCooldown" />
+    <SearchFilters value="Heroic;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray MaxCount="1" Effect="SlivanBossDrawInIssueOrder">
+      <Radius value="10" />
+    </AreaArray>
+  </CEffectEnumArea>
+  <CEffectIssueOrder id="SlivanBossDrawInIssueOrder">
+    <WhichUnit Value="Source" />
+    <Abil value="AfxSlivanBossDrawIn" />
+  </CEffectIssueOrder>
+  <CEffectSet id="SlivanBossSlimeSpitScanSet">
+    <ValidatorArray value="SlivanBossSlimeSpitNotOnCooldown" />
+    <EffectArray value="SlivanBossSlimeSpitScanSearchArea" />
+    <EffectArray value="SlivanBossSlimeSpitScanSearchAreaSecondary" />
+  </CEffectSet>
+  <CEffectEnumArea id="SlivanBossSlimeSpitScanSearchArea">
+    <ValidatorArray value="SlivanBossSlimeSpitNotOnCooldown" />
+    <SearchFilters value="Heroic;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray MaxCount="1" Effect="SlivanBossSlimeSpitIssueOrder">
+      <InnerRadius value="8.5" />
+      <Radius value="40" />
+    </AreaArray>
+    <TargetSorts>
+      <SortArray value="TSRandom" />
+    </TargetSorts>
+  </CEffectEnumArea>
+  <CEffectEnumArea id="SlivanBossSlimeSpitScanSearchAreaSecondary">
+    <ValidatorArray value="SlivanBossSlimeSpitNotOnCooldown" />
+    <SearchFilters value="Heroic;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <TargetSorts>
+      <SortArray value="TSFarthestDistance" />
+    </TargetSorts>
+    <AreaArray MaxCount="1" Effect="SlivanBossSlimeSpitSecondaryOffsetPersistent">
+      <InnerRadius value="3" />
+      <Radius value="8" />
+    </AreaArray>
+  </CEffectEnumArea>
+  <CEffectCreatePersistent id="SlivanBossSlimeSpitSecondaryOffsetPersistent">
+    <PeriodCount value="1" />
+    <PeriodicEffectArray value="SlivanBossSlimeSpitIssueOrder" />
+    <PeriodicOffsetArray Y="-2.5" />
+  </CEffectCreatePersistent>
+  <CEffectIssueOrder id="SlivanBossSlimeSpitIssueOrder">
+    <WhichUnit Value="Source" />
+    <Abil value="AfxSlivanBossSlimeSpit" />
+    <Target Value="TargetPoint" />
+    <Player Value="Source" />
+  </CEffectIssueOrder>
+  <CEffectEnumArea id="SlivanImpaleScanSearchArea">
+    <ValidatorArray value="SlivanImpaleNotOnCooldown" />
+    <SearchFilters value="Heroic;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray MaxCount="1" Effect="SlivanImpaleIssueOrder">
+      <Radius value="15" />
+    </AreaArray>
+  </CEffectEnumArea>
+  <CEffectIssueOrder id="SlivanImpaleIssueOrder">
+    <WhichUnit Value="Source" />
+    <Abil value="AfxSlivanImpale" />
+  </CEffectIssueOrder>
+  <CEffectEnumArea id="SlivanInfestedDropScanSearchArea">
+    <ValidatorArray value="SlivanInfestedDropNotOnCooldown" />
+    <SearchFilters value="Heroic;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray MaxCount="1" Effect="SlivanInfestedDropIssueOrder">
+      <Radius value="15" />
+    </AreaArray>
+  </CEffectEnumArea>
+  <CEffectIssueOrder id="SlivanInfestedDropIssueOrder">
+    <WhichUnit Value="Source" />
+    <Abil value="AfxSlivanInfestedDrop" />
+  </CEffectIssueOrder>
+  <CEffectSet id="SlivanQuestComplete" />
+  <CEffectModifyTokenCount id="SlivanQuestIncrementToken" parent="BaseEffectModifyTokenCount">
+    <TokenId value="SlivanQuest" />
+    <EffectCategory index="Quest" value="1" />
+  </CEffectModifyTokenCount>
+  
+  <CEffectCreatePersistent id="SlivanInfestedDropCreatePersistent">
+    <PeriodCount value="4" />
+    <PeriodicEffectArray value="ZagaraInfestedDropInitialCreatePersistent" />
+    <PeriodicEffectArray value="ZagaraInfestedDropInitialCreatePersistent" />
+    <PeriodicEffectArray value="ZagaraInfestedDropInitialCreatePersistent" />
+    <PeriodicEffectArray value="ZagaraInfestedDropInitialCreatePersistent" />
+    <PeriodicOffsetArray X="5" Y="5" />
+    <PeriodicOffsetArray X="-5" Y="5" />
+    <PeriodicOffsetArray X="5" Y="-5" />
+    <PeriodicOffsetArray X="-5" Y="-5" />
+    <PeriodicPeriodArray value="0.25" />
+    <PeriodicPeriodArray value="0.25" />
+    <PeriodicPeriodArray value="0.25" />
+    <PeriodicPeriodArray value="0.25" />
+  </CEffectCreatePersistent>
+  <CEffectSet id="SlivanImpaleInitialSet">
+    <EffectArray value="SlivanImpaleInitialPersistent" />
+    <TargetLocationType value="Point" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="SlivanImpaleInitialPersistent">
+    <WhichLocation Value="SourcePoint" />
+    <OffsetVectorStartLocation Value="SourcePoint" />
+    <PeriodicEffectArray value="SlivanImpaleSpikePersistent" />
+    <PeriodicOffsetArray Y="-2" />
+    <PeriodicOffsetArray Y="-4" />
+    <PeriodicOffsetArray Y="-6" />
+    <PeriodicOffsetArray Y="-8" />
+    <PeriodicOffsetArray Y="-10" />
+    <PeriodicOffsetArray Y="-12" />
+    <PeriodicOffsetArray Y="-14" />
+    <PeriodicOffsetArray Y="-16" />
+    <PeriodicOffsetArray Y="-18" />
+    <PeriodicOffsetArray Y="-20" />
+    <PeriodicOffsetArray Y="-22" />
+    <PeriodicOffsetArray Y="-24" />
+    <PeriodicOffsetArray Y="-26" />
+    <PeriodicOffsetArray Y="-28" />
+    <PeriodicOffsetArray Y="-30" />
+    <PeriodicOffsetArray Y="-32" />
+    <PeriodicOffsetArray Y="-34" />
+    <PeriodicOffsetArray Y="-36" />
+    <PeriodicOffsetArray Y="-38" />
+    <PeriodicOffsetArray Y="-40" />
+    <PeriodicPeriodArray value="0.5" />
+    <PeriodCount value="20" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="SlivanImpaleSpikePersistent">
+    <InitialDelay value="1" />
+    <InitialEffect value="SlivanBossImpaleSpikeModelSet" />
+    <ValidatorArray value="TargetPointWalkable" />
+    <ExpireDelay value="0.125" />
+    <ExpireEffect value="SlivanBossImpaleSearch" />
+  </CEffectCreatePersistent>
+  <CEffectEnumArea id="SlivanBossImpaleSearch">
+    <ImpactLocation Value="TargetPoint" />
+    <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Effect="SlivanBossImpaleTargetSet">
+      <Radius value="1.5" />
+    </AreaArray>
+  </CEffectEnumArea>
+  <CEffectSet id="SlivanBossImpaleTargetSet">
+    <ValidatorArray value="noMarkers" />
+    <EffectArray value="SlivanBossImpaleStunApplyBehavior" />
+    <EffectArray value="SlivanBossImpaleDamage" />
+    <EffectArray value="CameraShakeMediumTauntingTotemSet" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="SlivanBossImpaleStunApplyBehavior">
+    <Behavior value="SlivanBossImpaleStunBehavior" />
+  </CEffectApplyBehavior>
+  <CEffectDamage id="SlivanBossImpaleDamage" parent="StormSpell">
+    <Amount value="350" />
+  </CEffectDamage>
+  <CEffectSet id="SlivanBossImpaleSpikeModelSet">
+    <TargetLocationType value="Point" />
+  </CEffectSet>
+  <CEffectSet id="SlivanBossDrawInInitialSet">
+    <EffectArray value="SlivanBossDrawInChannelPersistent" />
+    <TargetLocationType value="Point" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="SlivanBossDrawInChannelPersistent">
+    <WhichLocation Value="CasterPoint" />
+    <Flags index="Channeled" value="1" />
+    <InitialEffect value="SlivanBossCastingApplyBehavior" />
+    <PeriodCount value="3" />
+    <PeriodicValidator value="CasterNotDead" />
+    <PeriodicEffectArray value="SlivanBossDrawInRandomizationPersistent" />
+    <PeriodicEffectArray value="SlivanBossDrawInAnimDummySet" />
+    <PeriodicEffectArray value="SlivanBossDrawInOutroDummySet" />
+    <PeriodicPeriodArray value="0" />
+    <PeriodicPeriodArray value="0.4375" />
+    <PeriodicPeriodArray value="2.5625" />
+    <FinalEffect value="SlivanBossCastingRemoveBehavior" />
+  </CEffectCreatePersistent>
+  <CEffectRemoveBehavior id="SlivanBossCastingRemoveBehavior">
+    <BehaviorLink value="SlivanBossCastingBehavior" />
+    <WhichUnit Value="Caster" />
+  </CEffectRemoveBehavior>
+  <CEffectSet id="SlivanBossDrawInAnimDummySet" />
+  <CEffectSet id="SlivanBossDrawInOutroDummySet" />
+  <CEffectApplyBehavior id="SlivanBossCastingApplyBehavior">
+    <Behavior value="SlivanBossCastingBehavior" />
+    <WhichUnit Value="Caster" />
+  </CEffectApplyBehavior>
+  <CEffectCreatePersistent id="SlivanBossDrawInRandomizationPersistent">
+    <Flags index="RandomEffect" value="1" />
+    <PeriodCount value="1" />
+    <PeriodicEffectArray value="SlivanBossDrawInPositionPersistent1" />
+    <PeriodicEffectArray value="SlivanBossDrawInPositionPersistent2" />
+    <PeriodicEffectArray value="SlivanBossDrawInPositionPersistent3" />
+    <PeriodicEffectArray value="SlivanBossDrawInPositionPersistent4" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="SlivanBossDrawInPositionPersistent1">
+    <PeriodCount value="11" />
+    <PeriodicOffsetArray />
+    <PeriodicOffsetArray X="2.5" />
+    <PeriodicOffsetArray X="2.0224" Y="1.4694" />
+    <PeriodicOffsetArray X="0.7724" Y="2.3776" />
+    <PeriodicOffsetArray X="-0.7724" Y="2.3776" />
+    <PeriodicOffsetArray X="-2.0224" Y="1.4694" />
+    <PeriodicOffsetArray X="-2.5" />
+    <PeriodicOffsetArray X="-2.0224" Y="-1.4694" />
+    <PeriodicOffsetArray X="-0.7724" Y="-2.3776" />
+    <PeriodicOffsetArray X="0.7724" Y="-2.3776" />
+    <PeriodicOffsetArray X="2.0224" Y="-1.4694" />
+    <PeriodicEffectArray value="SlivanBossDrawInStunDelayPersistent" />
+    <PeriodicEffectArray value="SlivanBossDrawInComboDelayPersistent" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="SlivanBossDrawInPositionPersistent2">
+    <PeriodCount value="11" />
+    <PeriodicOffsetArray />
+    <PeriodicOffsetArray X="2.4755" Y="0.348" />
+    <PeriodicOffsetArray X="1.7983" Y="1.7365" />
+    <PeriodicOffsetArray X="0.434" Y="2.462" />
+    <PeriodicOffsetArray X="-1.096" Y="2.247" />
+    <PeriodicOffsetArray X="-2.2072" Y="1.1735" />
+    <PeriodicOffsetArray X="-2.4755" Y="-0.348" />
+    <PeriodicOffsetArray X="-1.7983" Y="-1.7365" />
+    <PeriodicOffsetArray X="-0.434" Y="-2.462" />
+    <PeriodicOffsetArray X="1.096" Y="-2.247" />
+    <PeriodicOffsetArray X="2.2072" Y="-1.1735" />
+    <PeriodicEffectArray value="SlivanBossDrawInStunDelayPersistent" />
+    <PeriodicEffectArray value="SlivanBossDrawInComboDelayPersistent" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="SlivanBossDrawInPositionPersistent3">
+    <PeriodCount value="11" />
+    <PeriodicOffsetArray />
+    <PeriodicOffsetArray X="2.403" Y="0.6892" />
+    <PeriodicOffsetArray X="1.539" Y="1.97" />
+    <PeriodicOffsetArray X="0.0871" Y="2.4985" />
+    <PeriodicOffsetArray X="-1.398" Y="2.0725" />
+    <PeriodicOffsetArray X="-2.349" Y="0.855" />
+    <PeriodicOffsetArray X="-2.403" Y="-0.6892" />
+    <PeriodicOffsetArray X="-1.539" Y="-1.97" />
+    <PeriodicOffsetArray X="-0.0871" Y="-2.4985" />
+    <PeriodicOffsetArray X="1.398" Y="-2.0725" />
+    <PeriodicOffsetArray X="2.349" Y="-0.855" />
+    <PeriodicEffectArray value="SlivanBossDrawInStunDelayPersistent" />
+    <PeriodicEffectArray value="SlivanBossDrawInComboDelayPersistent" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="SlivanBossDrawInPositionPersistent4">
+    <PeriodCount value="11" />
+    <PeriodicOffsetArray />
+    <PeriodicOffsetArray X="2.284" Y="1.0168" />
+    <PeriodicOffsetArray X="1.25" Y="2.165" />
+    <PeriodicOffsetArray X="-0.2612" Y="2.4863" />
+    <PeriodicOffsetArray X="-1.6728" Y="1.858" />
+    <PeriodicOffsetArray X="-2.4453" Y="0.5197" />
+    <PeriodicOffsetArray X="-2.284" Y="-1.0168" />
+    <PeriodicOffsetArray X="-1.25" Y="-2.165" />
+    <PeriodicOffsetArray X="0.2612" Y="-2.4863" />
+    <PeriodicOffsetArray X="1.6728" Y="-1.858" />
+    <PeriodicOffsetArray X="2.4453" Y="-0.5197" />
+    <PeriodicEffectArray value="SlivanBossDrawInStunDelayPersistent" />
+    <PeriodicEffectArray value="SlivanBossDrawInComboDelayPersistent" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="SlivanBossDrawInComboDelayPersistent">
+    <PeriodCount value="1" />
+    <PeriodicValidator value="CasterNotDead" />
+    <PeriodicEffectArray value="SlivanBossDrawInComboPersistent" />
+    <PeriodicPeriodArray value="1.375" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="SlivanBossDrawInComboPersistent">
+    <PeriodCount value="2" />
+    <PeriodicEffectArray value="SlivanBossDrawInPullCreatePersistent" />
+    <PeriodicEffectArray value="SlivanBossDrawInStunSearch" />
+    <PeriodicPeriodArray value="0.125" />
+    <PeriodicPeriodArray value="0.875" />
+    <PeriodicOffsetArray Y="1" />
+    <PeriodicOffsetArray />
+    <PeriodicValidator value="CasterNotDead" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="SlivanBossDrawInPullCreatePersistent">
+    <InitialEffect value="SlivanBossDrawInPullCheckForTargetSearch" />
+    <PeriodCount value="2" />
+    <PeriodicEffectArray value="SlivanBossDrawInPullDummySoundSet" />
+    <PeriodicEffectArray value="SlivanBossDrawInPullSearch" />
+    <PeriodicPeriodArray value="0" />
+    <PeriodicPeriodArray value="0.5" />
+    <PeriodicValidator value="CasterNotDead" />
+  </CEffectCreatePersistent>
+  <CEffectEnumArea id="SlivanBossDrawInPullCheckForTargetSearch">
+    <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Arc="39.9902" Effect="SlivanBossDrawInPullCheckForTargetApplyDummy">
+      <Radius value="8.2" />
+    </AreaArray>
+    <SearchFlags index="ExtendByUnitRadius" value="1" />
+  </CEffectEnumArea>
+  <CEffectApplyBehavior id="SlivanBossDrawInPullCheckForTargetApplyDummy">
+    <WhichUnit Value="Caster" />
+    <Behavior value="SlivanBossDrawInPullTargetFound" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="SlivanBossDrawInPullDummySoundSet" />
+  <CEffectEnumArea id="SlivanBossDrawInPullSearch">
+    <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Arc="39.9902" Effect="SlivanBossDrawInPullTargetSet">
+      <Radius value="8.2" />
+    </AreaArray>
+    <SearchFlags index="ExtendByUnitRadius" value="1" />
+  </CEffectEnumArea>
+  <CEffectSet id="SlivanBossDrawInPullTargetSet">
+    <EffectArray value="SlivanBossDrawInPullNoDoubleHitApplyBehavior" />
+    <EffectArray value="SlivanBossDrawInPullDamage" />
+    <EffectArray value="SlivanBossDrawInPullMovementPersistent" />
+    <ValidatorArray value="DoesNotHaveSlivanBossDrawInPullNoDoubleHitBehavior" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="SlivanBossDrawInPullMovementPersistent">
+    <WhichLocation Value="TargetUnit" />
+    <InitialEffect value="SlivanBossDrawInPullMovementSet" />
+    <FinalEffect value="SlivanBossDrawInPullRemoveBehavior" />
+    <PeriodCount value="6" />
+    <PeriodicValidator value="HasSlivanBossDrawInPullBehavior" />
+    <PeriodicEffectArray value="SlivanBossDrawInPullApplyForce" />
+    <PeriodicPeriodArray value="0.0625" />
+  </CEffectCreatePersistent>
+  <CEffectApplyForce id="SlivanBossDrawInPullApplyForce">
+    <WhichUnit Effect="SlivanBossDrawInPullMovementPersistent" />
+    <Amount value="-5" />
+  </CEffectApplyForce>
+  <CEffectRemoveBehavior id="SlivanBossDrawInPullRemoveBehavior">
+    <BehaviorLink value="SlivanBossDrawInPullBehavior" />
+    <Count value="1" />
+  </CEffectRemoveBehavior>
+  <CEffectSet id="SlivanBossDrawInPullMovementSet">
+    <EffectArray value="HeroRemovePushPullDebuffs" />
+    <EffectArray value="SlivanBossDrawInPullApplyBehavior" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="SlivanBossDrawInPullApplyBehavior">
+    <ValidatorArray index="0" value="TargetNotUnstoppable" />
+    <Behavior value="SlivanBossDrawInPullBehavior" />
+  </CEffectApplyBehavior>
+  <CEffectDamage id="SlivanBossDrawInPullDamage" parent="StormSpell">
+    <Amount value="300" />
+  </CEffectDamage>
+  <CEffectApplyBehavior id="SlivanBossDrawInPullNoDoubleHitApplyBehavior">
+    <Behavior value="SlivanBossDrawInPullNoDoubleHitBehavior" />
+  </CEffectApplyBehavior>
+  <CEffectCreatePersistent id="SlivanBossDrawInStunDelayPersistent">
+    <PeriodCount value="1" />
+    <PeriodicValidator value="CasterNotDead" />
+    <PeriodicEffectArray value="SlivanBossDrawInStunSearch" />
+    <PeriodicPeriodArray value="2.375" />
+  </CEffectCreatePersistent>
+  <CEffectEnumArea id="SlivanBossDrawInStunSearch">
+    <ImpactLocation Value="TargetPoint" />
+    <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Effect="SlivanBossDrawInStunTargetSet">
+      <Radius value="1.5" />
+    </AreaArray>
+  </CEffectEnumArea>
+  <CEffectSet id="SlivanBossDrawInStunTargetSet">
+    <EffectArray value="SlivanBossDrawInStunNoDoubleHitApplyBehavior" />
+    <EffectArray value="SlivanBossDrawInStunApplyBehavior" />
+    <EffectArray value="SlivanBossDrawInStunDamage" />
+    <EffectArray value="CameraShakeMediumTauntingTotemSet" />
+    <ValidatorArray value="DoesNotHaveSlivanBossDrawInStunNoDoubleHitBehavior" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="SlivanBossDrawInStunNoDoubleHitApplyBehavior">
+    <Behavior value="SlivanBossDrawInStunNoDoubleHitBehavior" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="SlivanBossDrawInStunApplyBehavior">
+    <Behavior value="SlivanBossDrawInStunBehavior" />
+  </CEffectApplyBehavior>
+  <CEffectDamage id="SlivanBossDrawInStunDamage" parent="StormSpell">
+    <Amount value="300" />
+  </CEffectDamage>
+  
+
 </Catalog>

@@ -79,4 +79,21 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <Icon value="Assets\Textures\storm_ui_icon_sgthammer_tankmode.dds" />
 </CButton>
 
+<CButton id="SlivanQuest" parent="StormButtonParent">
+  <Icon value="Assets\Textures\affix_icon_slivan.dds" />
+</CButton>
+<CButton id="AfxSlivanInfestedDrop" parent="StormButtonParent">
+  <Icon value="Assets\Textures\storm_ui_icon_zagara_infesteddrop.dds" />
+</CButton>
+<CButton id="AfxSlivanImpale">
+    <Icon value="Assets\Textures\storm_ui_icon_anubarak_impale.dds"/>
+    <SimpleDisplayText value="Button/SimpleDisplayText/AfxSlivanImpale"/>
+</CButton>
+<CButton id="AfxSlivanBossSlimeSpit" parent="StormButtonParent">
+    <Icon value="Assets\Textures\storm_temp_war3_btncorrosivebreath.dds"/>
+</CButton>
+<CButton id="AfxSlivanBossDrawIn" parent="StormButtonParent">
+    <Icon value="Assets\Textures\storm_ui_icon_kerrigan_primalgrasp.dds"/>
+</CButton>
+
 </Catalog>

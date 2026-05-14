@@ -15,4 +15,5 @@
   <Catalog path="GameData/WeaponData.xml"/>
   <Catalog path="GameData/RequirementData.xml"/>
   <Catalog path="GameData/SoundData.xml"/>
+  <Catalog path="GameData/ModelData.xml"/>
 </Includes>

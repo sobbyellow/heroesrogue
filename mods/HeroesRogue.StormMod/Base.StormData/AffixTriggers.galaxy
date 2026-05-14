@@ -80,14 +80,15 @@ bool libAffx_NanoBoostAffixAdded (bool testConds, bool runActions) {
     return true;
 }
 bool libAffx_NanoBoostBehaviorChange (bool testConds, bool runActions) {
+    unit heroUnit = EventUnit();
     if (!runActions) {
         return true;
     }
-    while ((UnitHasBehavior2(EventUnit(), "AffixNanoBoost") == true)) {
-        while ((UnitHasBehaviorWithCategoryFlag(EventUnit(), c_behaviorCategoryTimeStop) == true) || libAffx_gamePaused) {
+    while (UnitHasBehavior2(heroUnit, "AffixNanoBoost") || UnitHasBehavior2(heroUnit, "AffixNanoBoostNoMana")) {
+        while ((UnitHasBehaviorWithCategoryFlag(heroUnit, c_behaviorCategoryTimeStop) == true) || libAffx_gamePaused) {
             Wait(0.0625, c_timeGame);
         }
-        libGame_gf_StormUniversalModifyCooldownonUnitCDRforAbilities(EventUnit(), -(libAffx_nanoBoostCDR / 16), false, false, false);
+        libGame_gf_StormUniversalModifyCooldownonUnitCDRforAbilities(heroUnit, -(libAffx_nanoBoostCDR / 16), false, false, false);
         Wait(0.0625, c_timeGame);
     }
     return true;
@@ -1322,8 +1323,8 @@ bool libAffx_FortificationsAffixAdded (bool testConds, bool runActions) {
             libAffx_FortificationsCreateTower(11, "TownCannonTowerL2", Point(152, 70), 135);
         }
     } else if (libAffx_currentMap == libAffx_mapHauntedMines) {
-        libAffx_FortificationsCreateTower(1, "TownCannonTowerL2", Point(146, 204), 225);
-        libAffx_FortificationsCreateTower(2, "TownCannonTowerL2", Point(147, 166), 135);
+        libAffx_FortificationsCreateTower(1, "TownCannonTowerL2", Point(146, 202), 225);
+        libAffx_FortificationsCreateTower(2, "TownCannonTowerL2", Point(147, 168), 135);
         libAffx_FortificationsCreateTower(3, "TownCannonTowerL2", Point(154, 186), 180);
         libAffx_FortificationsCreateTower(4, "TownCannonTowerL3", Point(199, 186), 135);
         libAffx_FortificationsCreateTower(5, "TownCannonTowerL3", Point(205, 174), 225);
@@ -4647,6 +4648,114 @@ bool libAffx_PreparedOncePerGame (bool testConds, bool runActions) {
             if (heroUnit == null) { continue; }
             UnitBehaviorAdd(heroUnit, "PreparedShield", heroUnit, 1);
         }
+    }
+    return true;
+}
+// ---------------------------------------------------------------
+// Slivan
+// ---------------------------------------------------------------
+int slivanIndex;
+bool slivanSuppressRewards;
+bool[3] slivanSpawned;
+bool libAffx_SlivanAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    slivanIndex = libAffx_EventAffix();
+    return true;
+}
+bool libAffx_SlivanQuest (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    libAffx_AddBehavior(libAffx_player, "SlivanQuest", 1, false);
+    if (!slivanSpawned[libAffx_teamChaosIndex]) {
+        UnitCreate(1, "SlivanBoss", c_unitCreateIgnorePlacement, libAffx_teamChaos, libGame_gv_players[libAffx_enemy].lv_spawnPoint, 0, null);
+        slivanSpawned[libAffx_teamChaosIndex] = true;
+    }
+    
+    return true;
+}
+bool libAffx_SlivanUnitDied (bool testConds, bool runActions) {
+    unit slivan = EventUnit();
+    int player = UnitGetOwner(slivan);
+
+    if (testConds) {
+        if (UnitGetType(slivan) != "SlivanBoss") {
+            return false;
+        }
+        if (player != libAffx_teamChaos) {
+            return false;
+        }
+        if (slivanIndex == 0) {
+            return false;
+        }
+        if (libAffx_affixes[slivanIndex].quest.questDone) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_UnitCreateEffectUnit(libAffx_player, "SlivanQuestIncrementToken");
+    libAffx_affixes[slivanIndex].quest.questProgress += 1;
+    
+    return true;
+}
+bool libAffx_SlivanQuestComplete (bool testConds, bool runActions) {
+    int player = EventPlayerEffectUsedUnitOwner(c_effectPlayerCaster);
+    if (testConds) {
+        if (slivanIndex == 0) {
+            return false;
+        }
+        if (libAffx_affixes[slivanIndex].quest.questDone) {
+            return false;
+        }
+        if (player != libAffx_player) {
+            return false;
+        }
+        if (slivanSuppressRewards) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    libAffx_affixes[slivanIndex].quest.questDone = true;
+    libAffx_AddAffix(libAffx_GetAffixId("SlivanReward"), 1);
+    
+    return true;
+}
+bool libAffx_SlivanUnitBehaviorCreate (bool testConds, bool runActions) {
+    unit heroUnit = EventUnit();
+    if (testConds) {
+        if (!UnitHasBehavior2(heroUnit, "SlivanQuest")) {
+            return false;
+        }
+        if (slivanIndex == 0) {
+            return false;
+        }
+    }
+    if (!runActions) {
+        return true;
+    }
+    slivanSuppressRewards = true;
+    UnitSetTokenCount(heroUnit, "SlivanQuest", libAffx_affixes[slivanIndex].quest.questProgress, heroUnit);
+    libAffx_Wait(0.125, c_timeGame);
+    slivanSuppressRewards = false;
+
+    return true;
+}
+// ---------------------------------------------------------------
+// Slivan Reward
+// ---------------------------------------------------------------
+bool libAffx_SlivanRewardAffixAdded (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+    if (!slivanSpawned[libAffx_teamOrderIndex]) {
+        slivanSpawned[libAffx_teamOrderIndex] = true;
+        UnitCreate(1, "SlivanBoss", c_unitCreateIgnorePlacement, libAffx_teamOrder, libGame_gv_players[libAffx_player].lv_spawnPoint, 0, null);
     }
     return true;
 }

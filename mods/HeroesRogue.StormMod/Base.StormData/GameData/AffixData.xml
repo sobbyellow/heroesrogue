@@ -72,6 +72,7 @@
         <Fields Id="ExcludeChoGall" Type="Int"/>
         <Fields Id="NoRoll" Type="Int"/>
         <Fields Id="RequiredDifficulty" Type="Int"/>
+        <Fields Id="RequiredMapNumber" Type="Int"/>
         <Fields Id="HeroTooltip" Type="String" Count="90"/>
         <Fields Id="AffixesRequiredMax" Type="Int"/>
         <Instances Id="[Default]">
@@ -258,43 +259,11 @@
             <String String="1 2 Set Behavior,AffixNanoBoost,Modification.DamageDealtFraction[Ability] 0.15">
                 <Field Id="CatalogModification" Index="2"/>
             </String>
-            <String String="1 2 Set Behavior,AffixNanoBoost,Modification.VitalRegenArray[Energy] 2">
+            <String String="1 2 Set Behavior,AffixNanoBoostMana,Modification.VitalRegenArray[Energy] 2">
                 <Field Id="CatalogModification" Index="3"/>
             </String>
-            <String String="mana">
-                <Field Id="HeroTags"/>
-            </String>
-        </Instances>
-        <Instances Id="NanoBoostNoMana">
-            <Int Int="2">
-                <Field Id="Max"/>
-            </Int>
-            <String String="Legendary">
-                <Field Id="Rarity"/>
-            </String>
-            <String String="Assets/Textures/storm_ui_icon_ana_nano_bost.dds">
-                <Field Id="Icon"/>
-            </String>
-            <String String="BehaviorChange libAffx_NanoBoostBehaviorChange">
-                <Field Id="Trigger"/>
-            </String>
-            <String String="AA libAffx_NanoBoostAffixAdded">
-                <Field Id="Trigger" Index="1"/>
-            </String>
-            <String String="1 0 AffixNanoBoostNoMana">
-                <Field Id="Behavior"/>
-            </String>
-            <String String="1 2 Set Behavior,AffixNanoBoostNoMana,Modification.HealDealtAdditiveMultiplier[Life] 0.15">
-                <Field Id="CatalogModification"/>
-            </String>
-            <String String="1 2 Set Behavior,AffixNanoBoostNoMana,Modification.HealDealtAdditiveMultiplier[Shields] 0.15">
-                <Field Id="CatalogModification" Index="1"/>
-            </String>
-            <String String="1 2 Set Behavior,AffixNanoBoostNoMana,Modification.DamageDealtFraction[Ability] 0.15">
-                <Field Id="CatalogModification" Index="2"/>
-            </String>
-            <String String="!mana">
-                <Field Id="HeroTags"/>
+            <String String="NoMana">
+                <Field Id="HeroTooltip"/>
             </String>
         </Instances>
         <Instances Id="BlessingoftheDragons">
@@ -598,16 +567,16 @@
             <String String="0 2 Set Behavior,MythicCurseEternalBuff,Modification.VitalMaxFractionArray[Life] 1.5">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="0 2 Set Behavior,MythicCurseEternalBuff,Modification.HealDealtAdditiveMultiplier[Life] 1">
+            <String String="0 2 Set Behavior,MythicCurseEternalBuff,Modification.HealDealtAdditiveMultiplier[Life] 1.5">
                 <Field Id="CatalogModification" Index="1"/>
             </String>
-            <String String="0 2 Set Behavior,MythicCurseEternalBuff,Modification.HealDealtAdditiveMultiplier[Shields] 1">
+            <String String="0 2 Set Behavior,MythicCurseEternalBuff,Modification.HealDealtAdditiveMultiplier[Shields] 1.5">
                 <Field Id="CatalogModification" Index="2"/>
             </String>
-            <String String="0 2 Set Behavior,MythicCurseEternalBuff,Modification.DamageDealtFraction[Ability] 1">
+            <String String="0 2 Set Behavior,MythicCurseEternalBuff,Modification.DamageDealtFraction[Ability] 1.5">
                 <Field Id="CatalogModification" Index="3"/>
             </String>
-            <String String="0 2 Set Behavior,MythicCurseEternalBuff,Modification.DamageDealtFraction[Basic] 1">
+            <String String="0 2 Set Behavior,MythicCurseEternalBuff,Modification.DamageDealtFraction[Basic] 1.5">
                 <Field Id="CatalogModification" Index="4"/>
             </String>
         </Instances>
@@ -3578,19 +3547,19 @@
             <String String="10 0 AffixDodge">
                 <Field Id="Behavior" Index="4"/>
             </String>
-            <String String="6 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.04">
+            <String String="6 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.03">
                 <Field Id="CatalogModification"/>
             </String>
-            <String String="7 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.04">
+            <String String="7 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.03">
                 <Field Id="CatalogModification" Index="1"/>
             </String>
-            <String String="8 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.04">
+            <String String="8 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.03">
                 <Field Id="CatalogModification" Index="2"/>
             </String>
-            <String String="9 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.04">
+            <String String="9 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.03">
                 <Field Id="CatalogModification" Index="3"/>
             </String>
-            <String String="10 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.04">
+            <String String="10 2 Set Behavior,AffixDodge,DamageResponse.Chance 0.03">
                 <Field Id="CatalogModification" Index="4"/>
             </String>
         </Instances>
@@ -5463,6 +5432,58 @@
             </String>
             <String String="0 2 Set Behavior,PreparedShield,DamageResponse.ModifyLimitVitalMaxFractionArray[Life] 0.3">
                 <Field Id="CatalogModification"/>
+            </String>
+        </Instances>
+        <Instances Id="Slivan">
+            <Int Int="3">
+                <Field Id="Curse"/>
+            </Int>
+            <Int Int="1">
+                <Field Id="Quest"/>
+            </Int>
+            <Int Int="1">
+                <Field Id="QuestPersists"/>
+            </Int>
+            <Int Int="1">
+                <Field Id="LevelMin"/>
+            </Int>
+            <Int Int="7">
+                <Field Id="LevelMax"/>
+            </Int>
+            <String String="Assets/Textures/affix_icon_slivan.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Legendary">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="AA libAffx_SlivanAffixAdded">
+                <Field Id="Trigger"/>
+            </String>
+            <String String="Quest libAffx_SlivanQuest">
+                <Field Id="Trigger" Index="1"/>
+            </String>
+            <String String="UD libAffx_SlivanUnitDied">
+                <Field Id="Trigger" Index="2"/>
+            </String>
+            <String String="EU libAffx_SlivanQuestComplete SlivanQuestComplete">
+                <Field Id="Trigger" Index="3"/>
+            </String>
+            <String String="UBC libAffx_SlivanUnitBehaviorCreate SlivanQuest">
+                <Field Id="Trigger" Index="4"/>
+            </String>
+        </Instances>
+        <Instances Id="SlivanReward">
+            <Int Int="1">
+                <Field Id="NoRoll"/>
+            </Int>
+            <String String="Assets/Textures/affix_icon_slivan.dds">
+                <Field Id="Icon"/>
+            </String>
+            <String String="Mythic">
+                <Field Id="Rarity"/>
+            </String>
+            <String String="AA libAffx_SlivanRewardAffixAdded">
+                <Field Id="Trigger"/>
             </String>
         </Instances>
     </CUser>

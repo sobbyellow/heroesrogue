@@ -3,4 +3,669 @@
     <CSound id="DVaCrashStressSound" parent="TV">
         <AssetArray File="Base.StormAssets\Assets\Sounds\DVaCrashStressSound.ogg" FacialGroup=""/>
     </CSound>
+    <CSound id="Merc_SlimeBoss_SlimeSpit_Impact">
+    <Volume value="6.000000,6.000000" />
+  </CSound>
+  <CSound id="Merc_SlimeBoss_SlimeSpit_PreLaunch">
+    <DupeWait value="5000,5000" />
+    <Volume value="-3.000000,-3.000000" />
+  </CSound>
+  <CSound id="Merc_SlimeBoss_SpawnPods_Pods_Launch">
+    <AssetArray index="0">
+      <File value="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_SpawnPod_Launch_01.wav" />
+      <Pitch value="0.000000,0.000000" />
+      <Volume value="0.000000,0.000000" />
+      <Weight value="100" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <AssetArray index="1">
+      <File value="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_SpawnPod_Launch_02.wav" />
+      <Pitch value="0.000000,0.000000" />
+      <Volume value="0.000000,0.000000" />
+      <Weight value="100" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <AssetArray index="2">
+      <File value="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_SpawnPod_Launch_03.wav" />
+      <Pitch value="0.000000,0.000000" />
+      <Volume value="0.000000,0.000000" />
+      <Weight value="100" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <AssetArray index="3" removed="1" />
+    <AssetArray index="4" removed="1" />
+    <AssetArray index="5" removed="1" />
+    <AssetArray index="6" removed="1" />
+    <AssetArray index="7" removed="1" />
+    <AssetArray index="8" removed="1" />
+    <Pitch value="-2.000000,1.000000" />
+    <Volume value="-2.000000,0.000000" />
+  </CSound>
+  <CSound id="Merc_SlimeBoss_SpawnPods_Pods_LaunchImpact">
+    <Volume value="3.000000,5.000000" />
+  </CSound>
+  <CSound id="Merc_SlimeBoss_SpawnPods_Pods_LaunchPre">
+    <Volume value="-2.000000,0.000000" />
+    <AssetArray index="0" File="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_SpawnPod_PreLaunch_01.wav" FacialGroup="" />
+    <AssetArray index="1" File="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_SpawnPod_PreLaunch_02.wav" FacialGroup="" />
+    <AssetArray index="2" File="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_SpawnPod_PreLaunch_03.wav" FacialGroup="" />
+    <AssetArray index="3" removed="1" />
+    <Pitch value="0.000000,0.000000" />
+  </CSound>
+  <CSound id="Merc_SlimeBoss_SpawnPods_Pods_Spawn">
+    <Volume value="-6.000000,-3.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_AttackPreLaunch" parent="_FX_Map_Event">
+    <AssetArray File="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_Attack_PreLaunch_01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_Attack_PreLaunch_02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_Attack_PreLaunch_03.wav" FacialGroup="" />
+    <DupeMuteCount value="2" />
+    <Pitch value="-2.000000,2.000000" />
+    <SustainFade index="1" Time="300" />
+    <Volume value="-19.000000,-16.000000" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="22.000000" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_DrawIn_Cast" parent="_FX_Hero_Ult_AOE">
+    <AssetArray File="Assets\Sounds\Heroes\Thrall_Base\Thrall_Earthquake_Rumble01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Thrall_Base\Thrall_Earthquake_Rumble02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Thrall_Base\Thrall_Earthquake_Rumble03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Thrall_Base\Thrall_Earthquake_Rumble04.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Thrall_Base\Thrall_Earthquake_Rumble05.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Thrall_Base\Thrall_Earthquake_Rumble06.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Thrall_Base\Thrall_Earthquake_Rumble07.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Thrall_Base\Thrall_Earthquake_Rumble08.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Thrall_Base\Thrall_Earthquake_Rumble09.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Thrall_Base\Thrall_Earthquake_Rumble10.wav" FacialGroup="" />
+    <Category value="UIMovie" />
+    <CategoryLocal value="UIMovie" />
+    <StopActionArray Type="Category" Category="Alert" FadeTime="250" />
+    <StopActionArray Type="Category" Category="Flames" FadeTime="250" />
+    <CategoryDuckingLocal value="EscapeFromBraxis_SlivanBossWarning1" />
+  </CSound>
+  <CSound id="SlivanBoss_Roach_DropPod_Impact" parent="_FX_Hero_Spell_Impact">
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_InfestedDrop_Impact01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_InfestedDrop_Impact02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_InfestedDrop_Impact03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_InfestedDrop_Impact04.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_InfestedDrop_Impact05.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_InfestedDrop_Impact06.wav" FacialGroup="" />
+    <Category value="User28" />
+    <CategoryLocal value="Spell" />
+    <PanLevel value="0.750000" />
+    <Pitch value="3.000000,3.000000" />
+    <Volume value="2.000000,2.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_Roach_DropPod_Launch" parent="_FX_Hero_Spell_Secondary">
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_InfestedDrop_Launch01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_InfestedDrop_Launch02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_InfestedDrop_Launch03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_InfestedDrop_Launch04.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_InfestedDrop_Launch05.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_InfestedDrop_Launch06.wav" FacialGroup="" />
+    <Category value="UIMovie" />
+    <CategoryLocal value="UIMovie" />
+    <Pitch value="-2.000000,-2.000000" />
+    <Volume value="-3.000000,-3.000000" />
+    <CategoryDuckingLocal value="Local_Spell_Instacast" />
+    <CategoryDuckingLocalAlly value="NPC_Spell_InstaCast" />
+    <CategoryDuckingNonLocal value="NPC_Spell_InstaCast" />
+    <DupeWait value="1000,1000" />
+  </CSound>
+  <CSound id="SlivanBoss_AttackImpact_GetHit" parent="_FX_Map_Event">
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlivanBoss_Attack_Impact_1ch_01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlivanBoss_Attack_Impact_1ch_02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlivanBoss_Attack_Impact_1ch_03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlivanBoss_Attack_Impact_1ch_04.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlivanBoss_Attack_Impact_1ch_05.wav" FacialGroup="" />
+    <DupeMaximumMethod value="Replace" />
+    <DupeMuteCount value="2" />
+    <Pitch value="-1.000000,1.000000" />
+    <Volume value="-20.000000,-19.000000" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="22.000000" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_AttackLaunch" parent="_FX_Map_Event">
+    <AssetArray File="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_Attack_Launch_01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_Attack_Launch_02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_Attack_Launch_03.wav" FacialGroup="" />
+    <DupeMuteCount value="2" />
+    <Pitch value="-2.000000,2.000000" />
+    <SustainFade index="1" Time="300" />
+    <Volume value="-17.000000,-14.000000" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="22.000000" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_AttackImpact" parent="_FX_Map_Event">
+    <AssetArray File="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_Attack_Impact_01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_Attack_Impact_02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_Attack_Impact_03.wav" FacialGroup="" />
+    <DupeMaximumMethod value="Replace" />
+    <DupeMuteCount value="2" />
+    <Volume value="-6.000000,-3.000000" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="22.000000" Volume="-96.000000" />
+    <Pitch value="-2.000000,2.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_SpawnPods_Pods_LaunchImpact" parent="_FX_Map_Event">
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Impact_1ch_01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Impact_1ch_02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Impact_1ch_03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Impact_1ch_04.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Impact_1ch_05.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Impact_1ch_06.wav" FacialGroup="" />
+    <DupeMuteCount value="16" />
+    <Pitch value="-3.000000,1.000000" />
+    <Select value="Random" />
+    <SustainFade index="1" Time="300" />
+    <Volume value="-22.000000,-19.000000" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="20.000000" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_SpawnPods_Pods_AttackImpact" parent="_FX_Map_Event">
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_Attack_Impact_1ch_01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_Attack_Impact_1ch_02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_Attack_Impact_1ch_03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_Attack_Impact_1ch_04.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_Attack_Impact_1ch_05.wav" FacialGroup="" />
+    <DupeMaximumMethod value="Replace" />
+    <DupeMuteCount value="2" />
+    <Pitch value="4.000000,5.000000" />
+    <Volume value="-20.000000,-19.000000" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="22.000000" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_SpawnPods_Pods_Launch" parent="_FX_Map_Event">
+    <AssetArray>
+      <File value="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Activate01.wav" />
+      <Pitch value="-7.000000,-4.000000" />
+      <Volume value="-1.000000,-1.000000" />
+      <Weight value="20" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <AssetArray>
+      <File value="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Activate02.wav" />
+      <Pitch value="-7.000000,-4.000000" />
+      <Volume value="-1.000000,-1.000000" />
+      <Weight value="20" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <AssetArray>
+      <File value="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Activate03.wav" />
+      <Pitch value="-7.000000,-4.000000" />
+      <Volume value="-1.000000,-1.000000" />
+      <Weight value="20" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Launch_1ch_01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Launch_1ch_02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Launch_1ch_03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Launch_1ch_04.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Launch_1ch_05.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Launch_1ch_06.wav" FacialGroup="" />
+    <DupeMuteCount value="16" />
+    <PanLevel value="0.900000" />
+    <PanLevelNonLocal value="1.000000" />
+    <Pitch value="-3.000000,0.000000" />
+    <Select value="Random" />
+    <SustainFade index="1" Time="300" />
+    <Volume value="-15.000000,-12.000000" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="20.000000" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_SpawnPods_Pods_Warning" parent="_FX_Map_Event">
+    <AssetArray>
+      <File value="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Launch01.wav" />
+      <Pitch value="5.000000,5.000000" />
+      <Volume value="-6.000000,-6.000000" />
+      <Weight value="10" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <AssetArray>
+      <File value="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Launch02.wav" />
+      <Pitch value="5.000000,5.000000" />
+      <Volume value="-6.000000,-6.000000" />
+      <Weight value="10" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <AssetArray>
+      <File value="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Launch03.wav" />
+      <Pitch value="5.000000,5.000000" />
+      <Volume value="-6.000000,-6.000000" />
+      <Weight value="10" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <AssetArray>
+      <File value="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Launch04.wav" />
+      <Pitch value="5.000000,5.000000" />
+      <Volume value="-6.000000,-6.000000" />
+      <Weight value="10" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <AssetArray>
+      <File value="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Launch05.wav" />
+      <Pitch value="5.000000,5.000000" />
+      <Volume value="-6.000000,-6.000000" />
+      <Weight value="10" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_PopWarning_1ch_01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_PopWarning_1ch_02.wav" Pitch="-7.500000,-7.500000" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_PopWarning_1ch_03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_PopWarning_1ch_04.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_PopWarning_1ch_05.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_PopWarning_1ch_06.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_PopWarning_1ch_07.wav" Pitch="-3.000000,-3.000000" FacialGroup="" />
+    <AssetArray>
+      <File value="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_PopWarning_1ch_08.wav" />
+      <Pitch value="-1.000000,-1.000000" />
+      <Weight value="15" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <DupeMuteCount value="16" />
+    <Pitch value="-3.000000,0.000000" />
+    <Select value="Random" />
+    <SustainFade index="1" Time="300" />
+    <Volume value="-18.000000,-18.000000" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="20.000000" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_SpawnPods_Pods_Vox" parent="_FX_Map_Event">
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Vox_1ch_01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Vox_1ch_02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Vox_1ch_03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Vox_1ch_04.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Vox_1ch_05.wav" FacialGroup="" />
+    <DupeMuteCount value="16" />
+    <Select value="Random" />
+    <SustainFade index="1" Time="300" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="20.000000" Volume="-96.000000" />
+    <Pitch value="-4.000000,3.000000" />
+    <Volume value="-38.000000,-32.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_SpawnPods_Pods_Movement" parent="_FX_Map_Event">
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Movement_1ch_01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Movement_1ch_02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Movement_1ch_03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Movement_1ch_04.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Movement_1ch_05.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Movement_1ch_06.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_SpawnPod_Movement_1ch_07.wav" FacialGroup="" />
+    <DupeMuteCount value="6" />
+    <Select value="Random" />
+    <SustainFade index="1" Time="300" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="20.000000" Volume="-96.000000" />
+    <Pitch value="-3.000000,6.000000" />
+    <Volume value="-30.000000,-24.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_SpawnPods_Pods_Missile" parent="_FX_Map_Event">
+    <AssetArray File="Assets\Sounds\Heroes\Li Li_Base\Lili_Attack_Projectile01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Li Li_Base\Lili_Attack_Projectile02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Li Li_Base\Lili_Attack_Projectile03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Li Li_Base\Lili_Attack_Projectile04.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Li Li_Base\Lili_Attack_Projectile06.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Li Li_Base\Lili_Attack_Projectile09.wav" FacialGroup="" />
+    <DupeMuteCount value="5" />
+    <Pitch value="-3.000000,-1.000000" />
+    <Select value="Random" />
+    <SustainFade index="1" Time="300" />
+    <Volume value="-17.000000,-17.000000" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="20.000000" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_SpawnPods_Pods_ImpactUnit" parent="_FX_Map_Event">
+    <AssetArray File="Assets\Sounds\Generic\Test_NoSound.wav" FacialGroup="" />
+    <DupeMuteCount value="16" />
+    <Select value="Random" />
+    <SustainFade index="1" Time="300" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="20.000000" Volume="-96.000000" />
+    <Volume value="-9.000000,-9.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_SpawnPods_Pods_Explo" parent="_FX_Map_Event">
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact04.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact05.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact06.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact07.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact08.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact09.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact10.wav" FacialGroup="" />
+    <DupeMuteCount value="16" />
+    <Pitch value="-1.000000,1.000000" />
+    <Select value="Random" />
+    <SustainFade index="1" Time="300" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="20.000000" Volume="-96.000000" />
+    <Category value="Death" />
+    <Volume value="-3.000000,-2.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_SpawnPods_Pods_Death" parent="_FX_NPC_Death">
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact04.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact05.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact06.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact07.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact08.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact09.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact10.wav" FacialGroup="" />
+    <Flags index="AllowDuckingInPlayDelay" value="0" />
+    <Category value="Alert" />
+    <DupeMuteCount value="16" />
+    <Pitch value="-1.000000,2.000000" />
+    <Select value="Random" />
+    <SpeakerMix index="Center" value="0.000000" />
+    <SpeakerMix index="BackLeft" value="0.000000" />
+    <SpeakerMix index="BackRight" value="0.000000" />
+    <SpeakerMix index="SideLeft" value="0.000000" />
+    <SpeakerMix index="SideRight" value="0.000000" />
+    <SustainFade index="1" Time="300" />
+    <Volume value="-19.000000,-19.000000" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="20.000000" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_SlimeSpit_Launch" parent="_FX_Map_Event">
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_Spit_Launch_1ch_01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_Spit_Launch_1ch_02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_Spit_Launch_1ch_03.wav" FacialGroup="" />
+    <DupeMuteCount value="16" />
+    <Pitch value="-2.000000,0.000000" />
+    <Select value="Random" />
+    <SustainFade index="1" Time="300" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="24.000000" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_SlimeSpit_End" parent="_FX_Map_Event">
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_NydusWorm_PreUnload01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_NydusWorm_PreUnload02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_NydusWorm_PreUnload03.wav" FacialGroup="" />
+    <DupeMuteCount value="16" />
+    <Select value="Random" />
+    <SustainFade index="1" Time="300" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="20.000000" Volume="-96.000000" />
+    <Pitch value="6.000000,6.000000" />
+    <Volume value="-14.000000,-14.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_SlimeSpit_Impact" parent="_FX_Map_Event">
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact04.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact05.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact06.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact07.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact08.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact09.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Zagara_Base\Zagara_Banelings_Impact10.wav" FacialGroup="" />
+    <DupeMuteCount value="16" />
+    <Select value="Random" />
+    <SustainFade index="1" Time="300" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="24.000000" Volume="-96.000000" />
+    <Volume value="-1.000000,0.000000" />
+    <Pitch value="-1.000000,0.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_SlimeSpit_Damage" parent="_FX_Map_Event">
+    <AssetArray>
+      <File value="Assets\Sounds\Heroes\Dehaka_Base\Dehaka_Drag_Wet_Loop_01.wav" />
+      <LoopCount value="-1" />
+      <LoopTime value="0,352799" />
+      <Offset value="0,352799" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <AssetArray>
+      <File value="Assets\Sounds\Heroes\Dehaka_Base\Dehaka_Drag_Wet_Loop_02.wav" />
+      <LoopCount value="-1" />
+      <LoopTime value="0,352799" />
+      <Offset value="0,352799" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <DupeMuteCount value="16" />
+    <Select value="Random" />
+    <SustainFade index="1" Time="300" />
+    <Volume value="-4.000000,-4.000000" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="20.000000" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_SlimeSpit_Loop" parent="_FX_Map_Event">
+    <AssetArray>
+      <File value="Assets\Sounds\Heroes\Stitches_Base\Stitches_PutridBile_MainLoop01.wav" />
+      <LoopCount value="-1" />
+      <LoopTime value="0,454611" />
+      <Offset value="0,454611" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <AssetArray>
+      <File value="Assets\Sounds\Heroes\Stitches_Base\Stitches_PutridBile_MainLoop02.wav" />
+      <LoopCount value="-1" />
+      <LoopTime value="0,360143" />
+      <Offset value="0,360143" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <DupeMuteCount value="16" />
+    <OffsetFadeIn Volume="-96.000000" />
+    <OffsetFadeIn Time="500" />
+    <Pitch value="4.000000,4.000000" />
+    <Select value="Random" />
+    <Volume value="-19.000000,-19.000000" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="20.000000" Volume="-96.000000" />
+    <OffsetFadeOut />
+    <OffsetFadeOut Time="600" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_FS" parent="_FX_Map_Event">
+    <AssetArray>
+      <File value="Assets\Sounds\Heroes\Azmodan_Base\Azmodan_Footstep_Walk_Loop01.wav" />
+      <LoopCount value="-1" />
+      <LoopTime value="0,222223" />
+      <Offset value="0,222223" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <AssetArray>
+      <File value="Assets\Sounds\Heroes\Azmodan_Base\Azmodan_Footstep_Walk_Loop02.wav" />
+      <LoopCount value="-1" />
+      <LoopTime value="0,395301" />
+      <Offset value="0,395301" />
+      <Pitch value="-1.000000,0.000000" />
+      <FacialGroup value="" />
+    </AssetArray>
+    <DupeMuteCount value="1" />
+    <Select value="Random" />
+    <SustainFade index="1" Time="300" />
+    <Volume value="-38.000000,-38.000000" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="20.000000" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_Vox_Birth">
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_Vox_Birth_1ch_01.wav" FacialGroup="" />
+    <Flags index="Purgable" value="1" />
+    <Category value="Alert" />
+    <Mode value="3DWorld" />
+    <Pitch value="-6.000000,-3.000000" />
+    <ReverbBalance Room="0" />
+    <Volume value="-17.000000,-17.000000" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="30.000000" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_Vox_Death">
+    <AssetArray File="LocalizedData\Sounds\VO\DehakaMecha_VOX_GetHitLarge00.ogg" FacialGroup="" />
+    <AssetArray File="LocalizedData\Sounds\VO\DehakaMecha_VOX_Cheer04.ogg" FacialGroup="" />
+    <Flags index="Purgable" value="1" />
+    <Category value="Alert" />
+    <Mode value="3DWorld" />
+    <Pitch value="-2.000000,-2.000000" />
+    <ReverbBalance Room="0" />
+    <Volume value="-13.099999,-13.099999" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="30.000000" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_Vox_Aggro">
+    <AssetArray File="LocalizedData\Sounds\VO\DehakaMecha_VOX_Cheer03.ogg" FacialGroup="" />
+    <Flags index="Purgable" value="1" />
+    <Category value="Alert" />
+    <DupeDestroyCount value="3" />
+    <DupeDestroyCountPerPlayer value="1" />
+    <DupeMuteCount value="3" />
+    <DupeWait value="5000,5000" />
+    <Mode value="3DWorld" />
+    <Pitch value="-2.000000,-2.000000" />
+    <ReverbBalance Room="0" />
+    <Volume value="-11.099999,-11.099999" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="30.000000" Volume="-96.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_Birth" parent="_FX_Map_Event">
+    <AssetArray File="Assets\Sounds\Mercs\SCWarhead\Merc_SlimeBoss_Birth_1ch_01.wav" FacialGroup="" />
+    <DupeMuteCount value="1" />
+    <Select value="Random" />
+    <SustainFade index="1" Time="300" />
+    <VolumeRolloffPoints Distance="10.000000" />
+    <VolumeRolloffPoints Distance="20.000000" Volume="-96.000000" />
+    <Category value="UIMovie" />
+    <Volume value="-9.000000,-9.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_Death">
+    <AssetArray File="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_Death_01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_Death_02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Mutators\EscapeFromBraxis\PvEBrawlStarcraft_SlivanBoss_Death_03.wav" FacialGroup="" />
+    <Flags index="Ignorable" value="1" />
+    <Category value="Mission" />
+    <VolumeRolloffPoints Distance="15.000000" />
+    <VolumeRolloffPoints Distance="30.000000" Volume="-96.000000" />
+    <Volume value="3.000000,3.000000" />
+    <DupeWait value="10000,10000" />
+  </CSound>
+  <CSound id="SlivanBoss_Impale_BladesExtend" parent="_FX_Hero_Spell_Secondary">
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_ImpalingBlades_Up01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_ImpalingBlades_Up02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_ImpalingBlades_Up03.wav" FacialGroup="" />
+    <DupeDestroyCount value="8" />
+    <DupeHistoryCount value="2" />
+    <DupeMaximumMethod value="Replace" />
+    <DupeMuteCount value="8" />
+    <Pitch value="-0.500000,0.500000" />
+    <VariationMinimum value="2" />
+    <Select value="Random" />
+    <Volume value="-9.000000,-9.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_Impale_BladesRetract" parent="_FX_Hero_Spell_End">
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_ImpalingBlades_Retract01.wav" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_ImpalingBlades_Retract02.wav" />
+    <DupeDestroyCount value="8" />
+    <DupeHistoryCount value="1" />
+    <DupeMaximumMethod value="Replace" />
+    <DupeMuteCount value="8" />
+    <Pitch value="-1.000000,1.000000" />
+    <Volume value="-12.000000,-12.000000" />
+    <Select value="Random" />
+  </CSound>
+  <CSound id="SlivanBoss_Impale_Impact" parent="_FX_Hero_Spell_Impact">
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_ImpalingBlades_Impact01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_ImpalingBlades_Impact02.wav" FacialGroup="" />
+    <DupeDestroyCount value="2" />
+    <Pitch value="0.000000,1.000000" />
+    <VariationMinimum value="2" />
+    <PlayDelay value="50,50" />
+    <DupeMaximumMethod value="Replace" />
+    <Select value="Random" />
+    <Volume value="-9.000000,-9.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_DrawInPull_PullTarget" parent="_FX_Hero_Spell_Secondary">
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_PrimalGrasp_GraspTarget01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_PrimalGrasp_GraspTarget02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_PrimalGrasp_GraspTarget03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_PrimalGrasp_GraspTarget04.wav" FacialGroup="" />
+    <DupeDestroyCount value="2" />
+    <DupeMaximumMethod value="Replace" />
+    <Pitch value="-1.000000,1.000000" />
+    <PlayDelay value="500,500" />
+    <Select value="Random" />
+    <VariationMinimum value="2" />
+    <Volume value="-4.000000,-2.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_DrawInPull_Pull" parent="_FX_Hero_Spell_Secondary">
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_PrimalGrasp_Grasp01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_PrimalGrasp_Grasp02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_PrimalGrasp_Grasp03.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_PrimalGrasp_Grasp04.wav" FacialGroup="" />
+    <DupeDestroyCount value="2" />
+    <Pitch value="-1.000000,0.000000" />
+    <PlayDelay value="500,500" />
+    <VariationMinimum value="2" />
+    <DupeMaximumMethod value="Replace" />
+    <Select value="Random" />
+    <Volume value="-4.000000,-2.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_DrawInPull_Impact" parent="_FX_Hero_Spell_Impact">
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_PrimalGrasp_Impact01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_PrimalGrasp_Impact02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_PrimalGrasp_Impact03.wav" FacialGroup="" />
+    <DupeDestroyCount value="1" />
+    <Pitch value="-2.000000,0.000000" />
+    <VariationMinimum value="2" />
+    <DupeMaximumMethod value="Replace" />
+    <Select value="Random" />
+    <PlayDelay value="35,80" />
+    <Volume value="-1.000000,-1.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_DrawInPull_BladesRetract" parent="_FX_Hero_Spell_End">
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_PrimalGrasp_BladesRetract01.wav" />
+    <DupeDestroyCount value="2" />
+    <DupeHistoryCount value="3" />
+    <Volume value="-4.000000,-2.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_DrawInPull_Cast_Blades" parent="_FX_Hero_Spell_Warning">
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_PrimalGrasp_Cast_Blades01.wav" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_PrimalGrasp_Cast_Blades02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_PrimalGrasp_Cast_Blades03.wav" FacialGroup="" />
+    <DupeDestroyCount value="2" />
+    <DupeHistoryCount value="3" />
+    <VariationMinimum value="2" />
+    <Volume value="-1.000000,-1.000000" />
+    <VolumeRolloffPoints index="0" Distance="10.000000" Volume="-0.080000" />
+    <VolumeRolloffPoints index="1" Distance="25.000000" Volume="-96.000000" />
+    <LocalAllyVolumeAdjustment value="-2.000000,-2.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_DrawInStun_BladesExtend" parent="_FX_Hero_Spell_Secondary">
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_ImpalingBlades_Up01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_ImpalingBlades_Up02.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_ImpalingBlades_Up03.wav" FacialGroup="" />
+    <DupeDestroyCount value="8" />
+    <DupeHistoryCount value="2" />
+    <DupeMaximumMethod value="Replace" />
+    <DupeMuteCount value="8" />
+    <Pitch value="-0.500000,0.500000" />
+    <VariationMinimum value="2" />
+    <Select value="Random" />
+    <Volume value="-4.000000,-2.000000" />
+  </CSound>
+  <CSound id="SlivanBoss_DrawInStun_BladesRetract" parent="_FX_Hero_Spell_End">
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_ImpalingBlades_Retract01.wav" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_ImpalingBlades_Retract02.wav" />
+    <DupeDestroyCount value="8" />
+    <DupeHistoryCount value="1" />
+    <DupeMaximumMethod value="Replace" />
+    <DupeMuteCount value="8" />
+    <Pitch value="-1.000000,1.000000" />
+    <Volume value="-4.000000,-2.000000" />
+    <Select value="Random" />
+  </CSound>
+  <CSound id="SlivanBoss_DrawInStun_Impact" parent="_FX_Hero_Spell_Impact">
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_ImpalingBlades_Impact01.wav" FacialGroup="" />
+    <AssetArray File="Assets\Sounds\Heroes\Kerrigan_Base\Kerrigan_ImpalingBlades_Impact02.wav" FacialGroup="" />
+    <DupeDestroyCount value="2" />
+    <Pitch value="0.000000,1.000000" />
+    <VariationMinimum value="2" />
+    <PlayDelay value="50,50" />
+    <DupeMaximumMethod value="Replace" />
+    <Select value="Random" />
+    <Volume value="-4.000000,-2.000000" />
+  </CSound>
 </Catalog>
