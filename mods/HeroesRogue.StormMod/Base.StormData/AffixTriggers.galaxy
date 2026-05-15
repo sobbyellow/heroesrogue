@@ -84,7 +84,7 @@ bool libAffx_NanoBoostBehaviorChange (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    while (UnitHasBehavior2(heroUnit, "AffixNanoBoost") || UnitHasBehavior2(heroUnit, "AffixNanoBoostNoMana")) {
+    while (UnitHasBehavior2(heroUnit, "AffixNanoBoost")) {
         while ((UnitHasBehaviorWithCategoryFlag(heroUnit, c_behaviorCategoryTimeStop) == true) || libAffx_gamePaused) {
             Wait(0.0625, c_timeGame);
         }

@@ -127,7 +127,7 @@ int libAffx_affixSelectionMaxCurrent = 3;
 
 const fixed libAffx_gameStartDelay = 2.25; // Delay before loading affixes from the bank.
 
-const string libAffx_version = "0.14.4";
+const string libAffx_version = "0.14.5";
 
 struct libAffx_Filter {
     unitfilter unitFilter;
@@ -391,7 +391,7 @@ trigger libAffx_RexxarTrigger;
 bool libAffx_debug_enableTryMeMode2 = false; // Try mode 2.0
 bool libAffx_debug_enableCheatCommands = false; // Enables cheat/debug commands
 bool libAffx_debug_disableHeroSelection = false; // Skips the Hero selection.
-string libAffx_debug_playerHero = "Tinker"; // Player hero when hero selection is disabled.
+string libAffx_debug_playerHero = "Muradin"; // Player hero when hero selection is disabled.
 bool libAffx_debug_enableDebugLogging = false; // Enables debug logging
 bool libAffx_debug_forcedHeroes = false; // Enemy heroes are forced to predetermined heroes
 bool libAffx_debug_ignoreMap = false; // Ignores the saved map.
