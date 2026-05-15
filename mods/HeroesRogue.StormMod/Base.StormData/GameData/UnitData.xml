@@ -371,8 +371,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     </CardLayouts>
     <Speed value="$HeroBaseMovementSpeed" />
     <Sight value="25" />
-    <Radius value="1.75" />
-    <InnerRadius value="1.75" />
+    <Radius value="1.25" />
+    <InnerRadius value="1" />
     <MinimapRadius value="0.375" />
     <PushPriority value="9001" />
     <Collide index="Ground" value="1" />
