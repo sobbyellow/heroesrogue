@@ -1882,7 +1882,7 @@ bool libAffx_BriberyPeriodic (bool testConds, bool runActions) {
                     continue;
                 }
                 unitCount = UnitGroupCount(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, c_unitCountAlive);
-                if (unitCount > 0 && !libNtve_gf_UnitIsInvulnerable(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1)) && !UnitHasBehavior2(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1), "JungleMercDefenderBirthInvulnerability")) {
+                if (unitCount > 0 && !libNtve_gf_UnitIsInvulnerable(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1)) && !UnitHasBehavior2(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1), "JungleMercDefenderBirthInvulnerability") && UnitGetType(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1)) != "SkeletalPirate") {
                     targetCamp = i;
                 }
             }

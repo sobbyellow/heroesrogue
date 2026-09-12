@@ -2,7 +2,7 @@
 // Heroes Rogue
 // ============================================================
 
-const string libAffx_version = "0.16.2";
+const string libAffx_version = "0.16.3";
 
 const int libAffx_player = 1; // Player ID
 const int libAffx_enemy = 6; // First enemy player ID
@@ -917,6 +917,8 @@ int libAffx_EventAffixCount(); // Returns the current count
 void libAffx_CopyFilter(structref<libAffx_Filter> original, structref<libAffx_Filter> copyTo);
 void libAffx_AddRequiredUnitTypeFilter(structref<libAffx_Filter> filter, string unitType);
 void libAffx_AddExcludedUnitTypeFilter(structref<libAffx_Filter> filter, string unitType);
+bool libAffx_UnitIsMinion(unit unitVar);
+bool libAffx_UnitMatchesType(unit unitVar, structref<libAffx_Filter> filter);
 bool libAffx_UnitMatchesCriteria(unit unitVar, structref<libAffx_Filter> filter); // Check whether a unit matches the given criteria.
 void libAffx_AddUnitBehaviorCriteria(unit unitVar, string behavior, int stacks, structref<libAffx_Filter> filter); // Add a behavior to a unit if it matches criteria.
 void libAffx_UpdateUnitBehaviorCriteria(unit unitVar, string behavior, int stacks, structref<libAffx_Filter> filter); // Add a behavior to a unit if it matches criteria, and removes it if it doesn't.

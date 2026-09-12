@@ -2464,25 +2464,33 @@ void libAffx_AddExcludedUnitTypeFilter(structref<libAffx_Filter> filter, string 
     filter.excludedUnitTypeIndex += 1;
     filter.excludedUnitTypes[filter.excludedUnitTypeIndex] = unitType;
 }
+bool libAffx_UnitIsMinion(unit unitVar) {
+    string unitType = UnitGetType(unitVar);
+    if (unitType == "FootmanMinion" || unitType == "RangedMinion" || (UnitBehaviorCount(unitVar, "IsCatapultMinionOrCatapultReplacement") > 0) || unitType == "WizardMinion") {
+        return true;
+    }
+    return false;
+}
+bool libAffx_UnitMatchesType(unit unitVar, structref<libAffx_Filter> filter) {
+    int i;
+    for (i = 1; i <= libAffx_maxFilters; i += 1) {
+        if (filter.requiredUnitTypes[i] != null && filter.requiredUnitTypes[i] != "" && UnitGetType(unitVar) == filter.requiredUnitTypes[i]) {
+            return true;
+        } else if (i == 1 && filter.requiredUnitTypes[i] == "") {
+            return true;
+        }
+    }
+    return false;
+}
 bool libAffx_UnitMatchesCriteria(unit unitVar, structref<libAffx_Filter> filter) {
     int i;
-    bool matchesUnitType = false;
     if (filter.unitFilter != null && !UnitFilterMatch(unitVar, libAffx_player, filter.unitFilter)) {
         return false;
     }
     if (filter.requiredPlayer != 0 && filter.requiredPlayer != c_playerAny && UnitGetOwner(unitVar) != filter.requiredPlayer) {
         return false;
     }
-    for (i = 1; i <= libAffx_maxFilters; i += 1) {
-        if (filter.requiredUnitTypes[i] != null && filter.requiredUnitTypes[i] != "" && UnitGetType(unitVar) == filter.requiredUnitTypes[i]) {
-            matchesUnitType = true;
-            break;
-        } else if (i == 1 && filter.requiredUnitTypes[i] == "") {
-            matchesUnitType = true;
-            break;
-        }
-    }
-    if (matchesUnitType == false) {
+    if (!libAffx_UnitMatchesType(unitVar, filter)) {
         return false;
     }
     for (i = 1; i <= libAffx_maxFilters; i += 1) {
@@ -4747,6 +4755,9 @@ bool libAffx_MapInitTrigger_Func (bool testConds, bool runActions) {
     }
     
     if (libAffx_debug_disableHeroSelection) {
+        if (libAffx_debug_player1Hero == "") {
+            libAffx_debug_player1Hero = libCore_gf_GetHeroFromIndex(libGame_gf_HeroSelectionRandomlyPickAnyUnusedHero(libAffx_player, true, true));
+        }
         libGame_gv_players[libAffx_player].lv_heroIndex = libCore_gf_GetIndexFromHero(libAffx_debug_player1Hero);
         libCore_gf_DataLoadHeroDataIntoIndex(libCore_gf_GetHeroFromIndex(libGame_gv_players[libAffx_player].lv_heroIndex), libAffx_player);
         libGame_gf_HeroSelectionRandomlyPickSkin(libAffx_player);
