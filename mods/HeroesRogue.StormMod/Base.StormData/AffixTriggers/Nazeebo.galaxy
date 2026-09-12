@@ -115,8 +115,14 @@ bool libAffx_NazeeboZombieHandlerUnitDied (bool testConds, bool runActions) {
     unit heroUnit = libAffx_GetPlayerHeroUnit(libAffx_player);
     int killingPlayer = libNtve_gf_KillingPlayer();
     if (testConds) {
-        if (!UnitFilterMatch(deadUnit, c_playerAny, libAffx_filterEnemyMinions.unitFilter) && !libAffx_NazeeboZombieHandlerAllowFriendlies) {
-            return false;
+        if (libAffx_NazeeboZombieHandlerAllowFriendlies) {
+            if (!libAffx_UnitIsMinion(deadUnit)) {
+                return false;
+            }
+        } else {
+            if (!libAffx_UnitIsMinion(deadUnit) || UnitGetOwner(deadUnit) != libAffx_teamChaos) {
+                return false;
+            }
         }
         if (!UnitIsAlive(heroUnit)) {
             return false;
@@ -124,9 +130,6 @@ bool libAffx_NazeeboZombieHandlerUnitDied (bool testConds, bool runActions) {
         if (UnitFilterMatch(heroUnit, libAffx_player, UnitFilter(0, (1 << (c_targetFilterStasis - 32)), 0, 0))) {
             return false;
         }
-    }
-    if (!runActions) {
-        return true;
     }
     if ((DistanceBetweenPoints(UnitGetPosition(heroUnit), npcPosition) <= libAffx_NazeeboZombieHandlerRange) || killingPlayer == libAffx_player) {
         random = RandomInt(1, 100);
