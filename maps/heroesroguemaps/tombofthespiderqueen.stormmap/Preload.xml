@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Preload>
+<Actor id="SYSTEM_ActorConfig"/>
+<Actor id="ActorLightOmni"/>
+<Actor id="LightOmniBlue"/>
+<Actor id="LightOmniOrange"/>
+<Actor id="LightOmniOrangeLarge"/>
+<Actor id="LightOmniPurple"/>
+<Actor id="LightOmniPurpleLarge"/>
+<Actor id="LightOmniYellow"/>
+<Actor id="LightOmniYellowLarge"/>
+<Actor id="Storm_Doodad_LuxCrypt_GoldPiles" Variations="0,1,2,3,4,5,6,10"/>
+<Actor id="Storm_Doodad_LuxCrypt_Pedestals" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_LuxCrypt_Pools" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_LuxCrypt_Sarcophagi" Variations="0,1,4"/>
+<Actor id="Storm_Doodad_LuxCrypt_Spider_Pit" Variations="0,1"/>
+<Actor id="Storm_Doodad_LuxCrypt_CryptWall" Variations="3,4,5,6"/>
+<Actor id="Storm_Doodad_LuxCrypt_StartingBase"/>
+<Actor id="Storm_Doodad_LuxCrypt_StoneBlocks" Variations="0,1,2,4,7,11,12"/>
+<Actor id="Storm_Doodad_Luxoria_Curb_Slabs" Variations="10"/>
+<Actor id="LuxoriaWatchTowerCaptureMarker"/>
+<Actor id="Storm_Doodad_KingsCrest_DefeatedMinion" Variations="1,2,3"/>
+<Actor id="Storm_Effect_KingsCrest_Weather_Sunrays_Small"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_A"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_AA"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_AB"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_AC"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_B"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_BA"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_BB"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_C"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_CA"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_CB"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_CC"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_D"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_DA"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_DB"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_DD"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_E"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_EA"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_EB"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_EE"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_F"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_FA"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_FB"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_G"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_GA"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_GB"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_GG"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_H"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_HA"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_HB"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_HH"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_I"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_IA"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_IB"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_II"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_J"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_JA"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_JB"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_JJ"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_K"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_KK"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_L"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_LL"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_M"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_MM"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_N"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_NN"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_O"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_OO"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_P"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_PP"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_Q"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_QQ"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_R"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_RR"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_S"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_SS"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_T"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_TT"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_U"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_UU"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_V"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_VV"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_X"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_XX"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_Y"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_YY"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_Z"/>
+<Actor id="Storm_Doodad_LuxCrypt_Jungle_ZZ"/>
+<Actor id="Storm_Doodad_LuxCrypt_StartingBase_Background"/>
+<Actor id="StormLuxCryptHangingSpiderInteractive"/>
+<Actor id="Storm_Doodad_LuxCrypt_ArmorySwords" Variations="3,4"/>
+<Actor id="Storm_Doodad_LuxCrypt_CliffWall" Variations="0,1"/>
+<Actor id="Storm_Doodad_LuxCrypt_Curb" Variations="0,1,2,3,4,6,7,11,12,13,14,15,16"/>
+<Actor id="Storm_Doodad_LuxCrypt_Curtain"/>
+<Actor id="Storm_Doodad_LuxCrypt_Curtain_Large"/>
+<Actor id="Storm_Doodad_LuxCrypt_EggSacks" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_LuxCrypt_GoldPot"/>
+<Actor id="Storm_Doodad_LuxCrypt_Grate" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_LuxCrypt_Male_Moving"/>
+<Actor id="Storm_Doodad_LuxCrypt_Shelf_Bottles" Variations="4,6,7,11"/>
+<Actor id="Storm_Doodad_LuxCrypt_SmallRubble" Variations="1"/>
+<Actor id="Storm_Doodad_LuxCrypt_SpiderFountain"/>
+<Actor id="Storm_Doodad_LuxCrypt_StandingStatue"/>
+<Actor id="Storm_Doodad_LuxCrypt_Statue_Rubble" Variations="0,2"/>
+<Actor id="Storm_Doodad_LuxCrypt_TallColumn"/>
+<Actor id="Storm_Doodad_LuxCrypt_ThroneRoom"/>
+<Actor id="Storm_Doodad_LuxCrypt_TurnInRoomFloor"/>
+<Actor id="Storm_Doodad_LuxCrypt_Vases_Dirt" Variations="0,1,2,3"/>
+<Actor id="Storm_Doodad_LuxCrypt_Banner" Variations="0,2,3"/>
+<Actor id="Storm_Doodad_LuxCrypt_Brazier" Variations="0,1,3"/>
+<Actor id="Storm_Doodad_LuxCrypt_Candles" Variations="0,1,2,3,4,5,7,8,9,11,12,13,14,15,17,18,19,20,21,22,23"/>
+<Actor id="Storm_Doodad_LuxCrypt_CivilianInWeb" Variations="0,1"/>
+<Actor id="Storm_Doodad_LuxCrypt_SpiderEmblem"/>
+<Actor id="Storm_FX_Luxoria_Crypts_Fog"/>
+<Actor id="Storm_Doodad_LuxCrypt_Female_Mummy" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_LuxCrypt_Male_Mummy" Variations="0,2,3,4"/>
+<Actor id="Storm_Doodad_LuxCrypt_Columns" Variations="0,1"/>
+<Actor id="Storm_Doodad_LuxCrypt_Candelabra" Variations="0,1,3,4,5,6,9,10,11"/>
+<Actor id="Storm_Doodad_LuxCrypt_HangingWebs" Variations="0,1,2,3,4,5,6,7,8,9,10,11,12,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29"/>
+<Actor id="Storm_Doodad_LuxCrypt_Scrolls" Variations="1,3,5"/>
+<Actor id="Storm_Doodad_LuxCrypt_Spider" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_LuxCrypt_Vases" Variations="0,1,2,3"/>
+<Actor id="Storm_Doodad_LuxCrypt_TallWall" Variations="1,2,3,4,5,8,9,10,11,12,13,14,15,16,17,20,22,23,24"/>
+<Actor id="Storm_Doodad_LuxCrypt_TurnInRoom"/>
+<Actor id="Storm_Doodad_LuxCrypt_CorePlatform"/>
+<Actor id="Storm_Doodad_LuxCrypt_CoreRange" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_LuxCrypt_ArmoryProp" Variations="0"/>
+<Actor id="Storm_Doodad_LuxCrypt_Cocoon" Variations="0,1,2,3,4"/>
+<Actor id="Storm_Doodad_LuxCrypt_CaptureSlab"/>
+<Behavior id="DisableLaneTracking"/>
+<Model id="RavenLordTributeWarning"/>
+<Terrain id="StormLuxoriaCrypts"/>
+<Unit id="StormGameStartPathingBlockerDiagonal"/>
+<Unit id="StormGameStartPathingBlocker"/>
+<Unit id="TownGateL2VerticalLeftVisionBlocked" Variations="1"/>
+<Unit id="TownGateL2VerticalRightVisionBlocked" Variations="1"/>
+<Unit id="TownGateL215BLUR" Variations="2"/>
+<Unit id="TownGateL215BRUL" Variations="0,2"/>
+<Unit id="TownGateL3BLUR" Variations="1"/>
+<Unit id="TownGateL3BLURTLVisionBlocked" Variations="0"/>
+<Unit id="TownGateL3BRUL" Variations="0"/>
+<Unit id="TownGateL3BRULTRVisionBlocked" Variations="0"/>
+<Unit id="TownGateL315BRUL" Variations="0,2"/>
+<Unit id="TownGateL315BLUR" Variations="0,2"/>
+<Unit id="TownCannonTowerL2"/>
+<Unit id="TownCannonTowerL3"/>
+<Unit id="TownCannonTowerL3Standalone"/>
+<Unit id="TownMoonwellL2"/>
+<Unit id="TownMoonwellL3"/>
+<Unit id="TownTownHallL3"/>
+<Unit id="TownTownHallL2"/>
+<Unit id="HallOfStormsLocationUnit"/>
+<Unit id="KingsCore"/>
+<Unit id="TownWallRadial4L2" Variations="4"/>
+<Unit id="TownWallRadial4L3" Variations="0"/>
+<Unit id="TownWallRadial5L2" Variations="6,7"/>
+<Unit id="TownWallRadial5L3" Variations="4,6"/>
+<Unit id="TownWallRadial6L2" Variations="6,7"/>
+<Unit id="TownWallRadial6L3" Variations="7"/>
+<Unit id="TownWallRadial8L3" Variations="4"/>
+<Unit id="TownWallRadial9L3" Variations="5"/>
+<Unit id="TownWallRadial14L3" Variations="4"/>
+<Unit id="TownWallRadial15L3" Variations="5"/>
+<Unit id="TownWallRadial17L2" Variations="6,7"/>
+<Unit id="TownWallRadial17L3" Variations="5"/>
+<Unit id="TownWallRadial18L2" Variations="1,6,7"/>
+<Unit id="TownWallRadial18L3" Variations="5,7"/>
+<Unit id="TownWallRadial19L2" Variations="5"/>
+<Unit id="AbathurLocustNormal"/>
+<Unit id="LootBannerSconce"/>
+<Unit id="SoulCage"/>
+<Unit id="HarrisonJones"/>
+</Preload>

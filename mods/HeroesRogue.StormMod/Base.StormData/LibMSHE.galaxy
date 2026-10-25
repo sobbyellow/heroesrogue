@@ -26,19 +26,6 @@ void libMSHE_InitLibraries () {
     libMSHD_InitVariables();
 }
 
-void libMSHE_Wait(fixed duration, int inTimeType) {
-    fixed elapsed = 0.0;
-    while (elapsed < duration) {
-        if (libMSHE_paused) {
-            Wait(0.0625, inTimeType);
-        } else {
-            Wait(0.0625, inTimeType);
-            elapsed += 0.0625;
-        }
-    }
-}
-
-
 bool libMSHE_ApplyUltimatePunishment_Func(bool testConds, bool runActions) {
     if (!runActions) {
         return true;
@@ -51,57 +38,38 @@ bool libMSHE_ApplyUltimatePunishment_Func(bool testConds, bool runActions) {
 }
 
 bool libMSHE_PauseTrigger_Func(bool testConds, bool runActions) {
-
-    if (!runActions) {
-        return true;
+    if (TimerGetRemaining(libMSHE_gv_mMISShrineTimer) > 0.0) {
+        TimerPause(libMSHE_gv_mMISShrineTimer, libGame_paused);
     }
-
-    if (!libMSHE_paused) {
-        libMSHE_paused = true;
-        if (TimerGetRemaining(libMSHE_gv_mMISShrineTimer) > 0.0) {
-            TimerPause(libMSHE_gv_mMISShrineTimer, true);
-        }
-        if (TimerGetRemaining(libMSHE_gv_mMISExperince) > 0.0) {
-            TimerPause(libMSHE_gv_mMISExperince, true);
-        }
-        if (TimerGetRemaining(libMSHE_gv_mMISAffixTimer) > 0.0) {
-            TimerPause(libMSHE_gv_mMISAffixTimer, true);
-        }
-        if (TimerGetRemaining(libMSHE_gv_mMISObjectivePreviewTimer) > 0.0) {
-            TimerPause(libMSHE_gv_mMISObjectivePreviewTimer, true);
-        }
-        if (TimerGetRemaining(libMSHE_gv_mMISShrineWarningTimer) > 0.0) {
-            TimerPause(libMSHE_gv_mMISShrineWarningTimer, true);
-        }
-        if (TimerGetRemaining(libMSHE_gv_mMISCursedRefreshTimer) > 0.0) {
-            TimerPause(libMSHE_gv_mMISCursedRefreshTimer, true);
-        }
-        if (TimerGetRemaining(libMSHE_gv_mMISLongWarningTimer) > 0.0) {
-            TimerPause(libMSHE_gv_mMISLongWarningTimer, true);
-        }
-    } else {
-        libMSHE_paused = false;
-        if (TimerGetRemaining(libMSHE_gv_mMISShrineTimer) > 0.0) {
-            TimerPause(libMSHE_gv_mMISShrineTimer, false);
-        }
-        if (TimerGetRemaining(libMSHE_gv_mMISExperince) > 0.0) {
-            TimerPause(libMSHE_gv_mMISExperince, false);
-        }
-        if (TimerGetRemaining(libMSHE_gv_mMISAffixTimer) > 0.0) {
-            TimerPause(libMSHE_gv_mMISAffixTimer, false);
-        }
-        if (TimerGetRemaining(libMSHE_gv_mMISObjectivePreviewTimer) > 0.0) {
-            TimerPause(libMSHE_gv_mMISObjectivePreviewTimer, false);
-        }
-        if (TimerGetRemaining(libMSHE_gv_mMISShrineWarningTimer) > 0.0) {
-            TimerPause(libMSHE_gv_mMISShrineWarningTimer, false);
-        }
-        if (TimerGetRemaining(libMSHE_gv_mMISCursedRefreshTimer) > 0.0) {
-            TimerPause(libMSHE_gv_mMISCursedRefreshTimer, false);
-        }
-        if (TimerGetRemaining(libMSHE_gv_mMISLongWarningTimer) > 0.0) {
-            TimerPause(libMSHE_gv_mMISLongWarningTimer, false);
-        }
+    if (TimerGetRemaining(libMSHE_gv_mMISBuffTimer) > 0.0) {
+        TimerPause(libMSHE_gv_mMISBuffTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMSHE_gv_mMISExperince) > 0.0) {
+        TimerPause(libMSHE_gv_mMISExperince, libGame_paused);
+    }
+    if (TimerGetRemaining(libMSHE_gv_mMISAffixTimer) > 0.0) {
+        TimerPause(libMSHE_gv_mMISAffixTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMSHE_gv_mMISObjectivePreviewTimer) > 0.0) {
+        TimerPause(libMSHE_gv_mMISObjectivePreviewTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMSHE_gv_mMISShrineWarningTimer) > 0.0) {
+        TimerPause(libMSHE_gv_mMISShrineWarningTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMSHE_gv_mMISCursedRefreshTimer) > 0.0) {
+        TimerPause(libMSHE_gv_mMISCursedRefreshTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMSHE_gv_mMISLongWarningTimer) > 0.0) {
+        TimerPause(libMSHE_gv_mMISLongWarningTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMSHE_gv_mMISShrineReminderTimer) > 0.0) {
+        TimerPause(libMSHE_gv_mMISShrineReminderTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMSHE_gv_mMISShrineNotificationTimer) > 0.0) {
+        TimerPause(libMSHE_gv_mMISShrineNotificationTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMSHE_gv_mMISPunisherSpawnTimer) > 0.0) {
+        TimerPause(libMSHE_gv_mMISPunisherSpawnTimer, libGame_paused);
     }
 
     return true;
@@ -507,22 +475,22 @@ bool auto_libMSHE_gf_MMISGrantShrineRewardToTeam_TriggerFunc (bool testConds, bo
     else {
         libNtve_gf_SendActorMessageToUnit(lp_shrine, "Signal OpenLeft");
     }
-    Wait(0.8, c_timeGame);
+    libGame_Wait(0.8, c_timeGame);
     libSond_gf_SoundtrackApplyNewDefaultSoundtrackForPlayerGroup("MX_Event_Shrines_Punisher_In_Lane", PlayerGroupAll());
     libNtve_gf_SendActorMessageToUnit(lp_shrine, "Signal Birth");
     VisRevealerDestroy(libMSHE_gv_mMISRevealers[1]);
     VisRevealerDestroy(libMSHE_gv_mMISRevealers[2]);
-    Wait(3.0, c_timeGame);
+    libGame_Wait(3.0, c_timeGame);
     TriggerEnable(libMSHE_gt_MMISStartShrineTimer, true);
     if ((UnitHasBehavior2(lp_shrine, "FrozenShrine") == true)) {
         libMSHE_gf_MMISSpawnShrineMonster(libMSHE_ge_MMISShrineTypes_FrozenShrine, lp_team);
         libMSHE_gv_mMISTotalShrineCount -= 1;
-        Wait(1.0, c_timeGame);
+        libGame_Wait(1.0, c_timeGame);
         ActorSend(libNtve_gf_MainActorofUnit(lp_shrine), "Signal Deactivate");
         UnitBehaviorRemove(lp_shrine, "FrozenShrine", 1);
         UnitBehaviorRemove(lp_shrine, "MonsterShrine", 1);
         UnitBehaviorRemove(lp_shrine, "MacguffinActivated", 1);
-        Wait(0.5, c_timeGame);
+        libGame_Wait(0.5, c_timeGame);
         UnitSetOwner(lp_shrine, libCore_gv_cOMPUTER_Neutral, true);
         return true;
     }
@@ -530,12 +498,12 @@ bool auto_libMSHE_gf_MMISGrantShrineRewardToTeam_TriggerFunc (bool testConds, bo
     if ((UnitHasBehavior2(lp_shrine, "ArcaneShrine") == true)) {
         libMSHE_gf_MMISSpawnShrineMonster(libMSHE_ge_MMISShrineTypes_ArcaneShrine, lp_team);
         libMSHE_gv_mMISTotalShrineCount -= 1;
-        Wait(1.0, c_timeGame);
+        libGame_Wait(1.0, c_timeGame);
         ActorSend(libNtve_gf_MainActorofUnit(lp_shrine), "Signal Deactivate");
         UnitBehaviorRemove(lp_shrine, "ArcaneShrine", 1);
         UnitBehaviorRemove(lp_shrine, "CombatShrine", 1);
         UnitBehaviorRemove(lp_shrine, "MacguffinActivated", 1);
-        Wait(0.5, c_timeGame);
+        libGame_Wait(0.5, c_timeGame);
         UnitSetOwner(lp_shrine, libCore_gv_cOMPUTER_Neutral, true);
         return true;
     }
@@ -543,12 +511,12 @@ bool auto_libMSHE_gf_MMISGrantShrineRewardToTeam_TriggerFunc (bool testConds, bo
     if ((UnitHasBehavior2(lp_shrine, "BombardShrine") == true)) {
         libMSHE_gf_MMISSpawnShrineMonster(libMSHE_ge_MMISShrineTypes_BombardShrine, lp_team);
         libMSHE_gv_mMISTotalShrineCount -= 1;
-        Wait(1.0, c_timeGame);
+        libGame_Wait(1.0, c_timeGame);
         ActorSend(libNtve_gf_MainActorofUnit(lp_shrine), "Signal Deactivate");
         UnitBehaviorRemove(lp_shrine, "BombardShrine", 1);
         UnitBehaviorRemove(lp_shrine, "SiegeShrine", 1);
         UnitBehaviorRemove(lp_shrine, "MacguffinActivated", 1);
-        Wait(0.5, c_timeGame);
+        libGame_Wait(0.5, c_timeGame);
         UnitSetOwner(lp_shrine, libCore_gv_cOMPUTER_Neutral, true);
         return true;
     }
@@ -1270,7 +1238,7 @@ bool auto_libMSHE_gf_MMISUIPunisherSpawnTimer_TriggerFunc (bool testConds, bool 
     libMSHE_gf_MMTowerPushUISetEnergyGlobalProgressUnit(UnitLastCreated());
     while (true) {
         if ((TimerGetRemaining(libMSHE_gv_mMISPunisherSpawnTimer) <= 0.0)) {
-            Wait(1.0, c_timeGame);
+            libGame_Wait(1.0, c_timeGame);
             UnitRemove(UnitLastCreated());
             return true;
         }
@@ -1278,7 +1246,7 @@ bool auto_libMSHE_gf_MMISUIPunisherSpawnTimer_TriggerFunc (bool testConds, bool 
             lv_life += 1.835;
             UnitSetPropertyFixed(libMSHE_gv_mMISPunisher, c_unitPropLife, lv_life);
         }
-        Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     return true;
 }
@@ -1598,7 +1566,7 @@ bool libMSHE_gt_MMISCursedEventScoreTracker_Func (bool testConds, bool runAction
         TriggerEnable(libMSHE_gt_MMISCursedEventScoreTracker, false);
         TriggerEnable(libMSHE_gt_MMISCursedEventTimerRespawner, false);
         TriggerEnable(libMSHE_gt_MMISCursedEventMinionTracker, false);
-        Wait(0.125, c_timeGame);
+        libGame_Wait(0.125, c_timeGame);
         autoCEE0C33A_g = libMSHE_gv_mMISCursedCreatures;
         autoCEE0C33A_u = UnitGroupCount(autoCEE0C33A_g, c_unitCountAll);
         for (;; autoCEE0C33A_u -= 1) {
@@ -1649,11 +1617,11 @@ bool libMSHE_gt_MMISCursedEventTimerRespawner_Func (bool testConds, bool runActi
         auto82D5C579_n = (libMSHE_gv_mMISTotalMonsters_C - UnitGroupCount(libMSHE_gv_mMISCursedCreatures, c_unitCountAlive));
         for (auto82D5C579_i = 1; auto82D5C579_i <= auto82D5C579_n; auto82D5C579_i += 1) {
             if ((libMSHE_gv_mMISCursedEvent == true)) {
-                if (libMSHE_paused) {
-                    libMSHE_Wait(0.0625, c_timeGame);
+                if (libGame_paused) {
+                    libGame_Wait(0.0625, c_timeGame);
                 }
                 UnitIssueOrder(libMSHE_gv_mMISShrines[libMSHE_gv_mMISCurrentShrine], OrderTargetingPoint(AbilityCommand("CursedShrineSpawn", 0), RegionRandomPoint(libMSHE_gv_mMISRegions[libMSHE_gv_mMISCurrentShrine])), c_orderQueueReplace);
-                Wait(0.15, c_timeGame);
+                libGame_Wait(0.15, c_timeGame);
             }
 
         }
@@ -1995,7 +1963,7 @@ bool libMSHE_gt_MMISShrineUsedbyPlayer_Func (bool testConds, bool runActions) {
     libMSHE_gf_MMISTextTagScoreHandler(libGame_gv_teamOrderIndex_C, libGame_gv_teamChaosIndex_C, libMSHE_gv_mMISShrines[libMSHE_gv_mMISCurrentShrine]);
     for (autoCF944CF4_i = 1; autoCF944CF4_i <= autoCF944CF4_n; autoCF944CF4_i += 1) {
         UnitIssueOrder(libMSHE_gv_mMISShrines[libMSHE_gv_mMISCurrentShrine], OrderTargetingPoint(AbilityCommand("CursedShrineSpawn", 0), RegionRandomPoint(libMSHE_gv_mMISRegions[libMSHE_gv_mMISCurrentShrine])), c_orderQueueReplace);
-        Wait(0.15, c_timeGame);
+        libGame_Wait(0.15, c_timeGame);
     }
     TimerStart(libMSHE_gv_mMISCursedRefreshTimer, libMSHE_gv_mMDiabloShrineRefreshMonster_C, false, c_timeGame);
     return true;
@@ -2242,7 +2210,7 @@ bool libMSHE_gt_PunisherFixateOn_Func (bool testConds, bool runActions) {
 
     lv_punisher = EventUnit();
     libAIAI_gf_MinionAIUnhookUnitFromMinionAI(lv_punisher);
-    Wait(1.0, c_timeGame);
+    libGame_Wait(1.0, c_timeGame);
     if ((UnitIsAlive(lv_punisher) == true) && (UnitHasBehavior2(lv_punisher, "MercPunisherLanerFixate") == false)) {
         libGame_gf_CalculateSpawnedMinionGoalPointsFromLane(UnitGetOwner(lv_punisher), UnitGetPosition(lv_punisher), libMSHE_gv_mMDiabloShrinesPunisherPushLane);
         libAIAI_gf_MinionAIStartMinionAI(-1, lv_punisher, libGame_gv_spawnedMinionLane, libGame_gv_spawnedMinionFirstWaypointIndex, false, true, false, libGame_gf_EnemyTeam(libGame_gf_TeamNumberOfPlayer(UnitGetOwner(lv_punisher))), false);
@@ -2390,7 +2358,7 @@ bool libMSHE_gt_MMISUIHandler_Func (bool testConds, bool runActions) {
 
     TriggerEnable(TriggerGetCurrent(), false);
     while (true) {
-        if ((TimerIsPaused(libMSHE_gv_mMISShrineWarningTimer) == false) && !libMSHE_paused && (TimerGetRemaining(libMSHE_gv_mMISShrineWarningTimer) > 0.0)) {
+        if ((TimerIsPaused(libMSHE_gv_mMISShrineWarningTimer) == false) && !libGame_paused && (TimerGetRemaining(libMSHE_gv_mMISShrineWarningTimer) > 0.0)) {
             lv_state = libMSHE_ge_MMISUIModes_ShrineWarning;
             if ((lv_state != lv_lastState)) {
                 libMSHE_gf_MMTowerPushUISetMode(libMSHE_ge_MMISUIModes_ShrineWarning);
@@ -2461,7 +2429,7 @@ bool libMSHE_gt_MMISUIHandler_Func (bool testConds, bool runActions) {
 
             lv_lastState = lv_state;
         }
-        Wait(0.25, c_timeGame);
+        libGame_Wait(0.25, c_timeGame);
     }
     return true;
 }

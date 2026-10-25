@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CCliff id="BraxisCliff0">
+        <CliffMesh value="Storm_Cliff_Empty1"/>
+    </CCliff>
+    <CCliff id="BraxisCliff1">
+        <CliffMesh value="Storm_Cliff_Made1"/>
+    </CCliff>
+</Catalog>

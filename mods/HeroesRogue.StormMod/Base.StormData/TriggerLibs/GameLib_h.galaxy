@@ -1911,18 +1911,6 @@ trigger libGame_gt_DVaMechDies;
 bool libGame_paused = false;
 int libGame_winningTeam;
 
-
-void libGame_AddAbilityEffectMapping (string abil, string effect);
-string libGame_GetAblilityEffectMapping (string effect);
-
-const int libGame_abilityEffectMapMax = 100;
-int libGame_abilityEffectMapIndex;
-struct EffectAbilityMap {
-    string effect;
-    string ability;
-};
-EffectAbilityMap[libGame_abilityEffectMapMax + 1] libGame_abilityEffectMap;
-
 bool[libCore_gv_bALMaxPlayers + 1] libGame_diabloUsedSouls;
 
 int[libCore_gv_bALMaxTeams + 1] libGame_extraMinionsRanged;

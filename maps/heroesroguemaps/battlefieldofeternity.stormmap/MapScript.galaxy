@@ -1,0 +1,860 @@
+//==================================================================================================
+// 
+// Generated Map Script
+// 
+// Name:   Battlefield of Eternity
+// 
+//==================================================================================================
+include "TriggerLibs/NativeLib"
+include "TriggerLibs/HeroesLib"
+include "TriggerLibs/GameLib"
+include "TriggerLibs/MapMechanicsLib"
+include "TriggerLibs/AILib"
+include "TriggerLibs/UILib"
+include "TriggerLibs/StartingExperienceLib"
+include "TriggerLibs/SoundLib"
+include "TriggerLibs/GameDataHelperLib"
+include "TriggerLibs/SupportLib"
+include "LibMLHH"
+include "LibMLBD"
+include "LibTryMeMode"
+include "HRLibs/HeroesRogueLib"
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+void InitLibs () {
+    libNtve_InitLib();
+    libCore_InitLib();
+    libGame_InitLib();
+    libMapM_InitLib();
+    libAIAI_InitLib();
+    libUIUI_InitLib();
+    libStEx_InitLib();
+    libSond_InitLib();
+    libGDHL_InitLib();
+    libSprt_InitLib();
+    libMLHH_InitLib();
+    libMLBD_InitLib();
+    libHRGE_InitLib();
+    libTRYM_InitLib();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Global Variables
+//--------------------------------------------------------------------------------------------------
+timer[3] gv_demonChainsTimer;
+timer[3] gv_demonBaseTimer;
+timer[3] gv_demonChainsResetTimer;
+timer[3] gv_demonBaseResetTimer;
+bool[3] gv_demonChainsResetting;
+bool[3] gv_demonBaseResetting;
+
+void InitGlobals () {
+    int init_i;
+
+    for (init_i = 0; init_i <= 2; init_i += 1) {
+        gv_demonChainsTimer[init_i] = TimerCreate();
+    }
+    for (init_i = 0; init_i <= 2; init_i += 1) {
+        gv_demonBaseTimer[init_i] = TimerCreate();
+    }
+    for (init_i = 0; init_i <= 2; init_i += 1) {
+        gv_demonChainsResetTimer[init_i] = TimerCreate();
+    }
+    for (init_i = 0; init_i <= 2; init_i += 1) {
+        gv_demonBaseResetTimer[init_i] = TimerCreate();
+    }
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Variables
+//--------------------------------------------------------------------------------------------------
+trigger gt_InitializeMap;
+trigger gt_InitializeMapMechanic;
+trigger gt_MapMechanicIntroCallback;
+trigger gt_HookupGlobalVariables;
+trigger gt_HookupLaneData;
+trigger gt_HookupJungleCreepData;
+trigger gt_HookupTownData;
+trigger gt_HookupRegionData;
+trigger gt_CreateGiantDemons;
+trigger gt_DemonLookatandReaction;
+trigger gt_DemonTimerExpired;
+trigger gt_DemonResetTimerExpired;
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Initialize Map
+//--------------------------------------------------------------------------------------------------
+bool gt_InitializeMap_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TriggerExecute(libAIAI_gt_IncludeAI, true, false);
+    TriggerExecute(libGame_gt_IncludeGame, true, false);
+    TriggerExecute(libGDHL_gt_IncludeGameDataHelper, true, false);
+    TriggerExecute(libMapM_gt_IncludeMapMechanics, true, false);
+    TriggerExecute(libStEx_gt_IncludeStartingExperience, true, false);
+    TriggerExecute(libSond_gt_IncludeSound, true, false);
+    TriggerExecute(libSprt_gt_IncludeSupport, true, false);
+    TriggerExecute(libUIUI_gt_IncludeUI, true, false);
+    TriggerExecute(libMLHH_gt_IncludeHH, true, true);
+    TriggerExecute(gt_HookupGlobalVariables, true, true);
+    TriggerExecute(gt_HookupLaneData, true, true);
+    TriggerExecute(gt_HookupJungleCreepData, true, true);
+    TriggerExecute(gt_HookupTownData, true, true);
+    TriggerExecute(gt_HookupRegionData, true, true);
+    libMapM_gf_MapMechanicAdd(libMLBD_gv_mMBoEMechanicName_C, gt_InitializeMapMechanic);
+    libMLBD_gf_MMBOEInitRegions(RegionFromId(18), RegionFromId(19), RegionFromId(20));
+    libCore_gv_sYSGameMode = libCore_ge_GameModes_Sandbox;
+    libCore_gv_sYSTowns = true;
+    libCore_gv_sYSJungleCreepCamps = true;
+    libCore_gv_sYSJungleWatchTowers = true;
+    libCore_gv_sYSTowerAI = true;
+    libCore_gv_sYSMinionAI = true;
+    TriggerExecute(libCore_gt_InitializeStormMod, true, true);
+    TriggerExecute(gt_CreateGiantDemons, true, false);
+    libCore_gf_DataAnnouncerVOSetDefaultAnnouncerForPlayerGroup(libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false), "Angel");
+    libCore_gf_DataAnnouncerVOSetDefaultAnnouncerForPlayerGroup(libCore_gv_playerGroupFromPlayer[libCore_gv_oBSERVER_ObserverUIPlayer], "Angel");
+    libCore_gf_DataAnnouncerVOSetDefaultAnnouncerForPlayerGroup(libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamChaosIndex_C, false), "Demon");
+    libNtve_gf_SendActorMessageToUnit(UnitFromId(1043), "SetMinimapVisibility 1");
+    libNtve_gf_SendActorMessageToUnit(UnitFromId(1044), "SetMinimapVisibility 1");
+    UnitBehaviorAdd(UnitFromId(1043), "HealingFountainIgnoreLinkedMinimapIcons", UnitFromId(1043), 1);
+    UnitBehaviorAdd(UnitFromId(1044), "HealingFountainIgnoreLinkedMinimapIcons", UnitFromId(1044), 1);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_InitializeMap_Init () {
+    gt_InitializeMap = TriggerCreate("gt_InitializeMap_Func");
+    TriggerAddEventMapInit(gt_InitializeMap);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Initialize Map Mechanic
+//--------------------------------------------------------------------------------------------------
+bool gt_InitializeMapMechanic_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libMLBD_gf_MMBOESetLanerStartPoints(PointFromId(468), PointFromId(933));
+    libMLBD_gf_MMBOESetEventCombatPoints(PointFromId(605), PointFromId(907), PointFromId(908), PointFromId(909), PointFromId(911));
+    libMLBD_gf_MMBOESetMiddleStructureGroups(UnitGroup(null, libCore_gv_cOMPUTER_TeamOrder, RegionFromId(16), UnitFilter((1 << c_targetFilterStructure), 0, (1 << c_targetFilterNoMinionAggro) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0), UnitGroup(null, libCore_gv_cOMPUTER_TeamChaos, RegionFromId(15), UnitFilter((1 << c_targetFilterStructure), 0, (1 << c_targetFilterNoMinionAggro) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterInvulnerable - 32))), 0));
+    libStEx_gf_SetMapMechanicTutorialCallback(gt_MapMechanicIntroCallback);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_InitializeMapMechanic_Init () {
+    gt_InitializeMapMechanic = TriggerCreate("gt_InitializeMapMechanic_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Map Mechanic Intro Callback
+//--------------------------------------------------------------------------------------------------
+bool gt_MapMechanicIntroCallback_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    ActorSend(ActorFromDoodad(DoodadFromId(687)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(687)), "AliasAdd cine_Storm_Doodad_Heaven_Pot1");
+    ActorSend(ActorFromDoodad(DoodadFromId(694)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(694)), "AliasAdd cine_Storm_Doodad_Heaven1_Jungle_G");
+    ActorSend(ActorFromDoodad(DoodadFromId(495)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(495)), "AliasAdd cine_Storm_Doodad_Heaven_Pot2");
+    ActorSend(ActorFromDoodad(DoodadFromId(61)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(61)), "AliasAdd cine_Storm_Doodad_Heaven_Pot3");
+    ActorSend(ActorFromDoodad(DoodadFromId(1064)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(1064)), "AliasAdd Cine_Storm_Doodad_Heaven1_Jungle_A");
+    ActorSend(ActorFromDoodad(DoodadFromId(122)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(122)), "AliasAdd cine_Storm_Doodad_Hell1_Jungle_A");
+    ActorSend(ActorFromDoodad(DoodadFromId(129)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(129)), "AliasAdd cine_Scene01_HeavenStartingPlatform");
+    ActorSend(ActorFromDoodad(DoodadFromId(308)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(308)), "AliasAdd cine_Scene02_Storm_Doodad_Jungle_N");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(44)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(44)), "AliasAdd cine_scene04_tower_north");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(47)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(47)), "AliasAdd cine_Scene04_Tower_South");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(22)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(22)), "AliasAdd cine_Scene04_Gate");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(1619)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(1619)), "AliasAdd cine_Scene04_Moonwell");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(210)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(210)), "AliasAdd cine_Scene01_HeavenCore");
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_MapMechanicIntroCallback_Init () {
+    gt_MapMechanicIntroCallback = TriggerCreate("gt_MapMechanicIntroCallback_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Hookup Global Variables
+//--------------------------------------------------------------------------------------------------
+bool gt_HookupGlobalVariables_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libCore_gv_mAPMapStringID = "BattlefieldOfEternity";
+    libCore_gv_mAPMapImage = "CustomMiniMap.tga";
+    libGame_gv_teams[libGame_gv_teamOrderIndex_C].lv_core = UnitFromId(210);
+    libGame_gv_teams[libGame_gv_teamChaosIndex_C].lv_core = UnitFromId(346);
+    libCore_gv_mAPOrderBaseRegion = RegionFromId(5);
+    libCore_gv_mAPChaosBaseRegion = RegionFromId(1);
+    libCore_gv_mAPMapSoundtrack[0] = "MX_BoE_Intro";
+    libCore_gv_mAPMapSoundtrack[1] = "MX_BoE_LVL_1";
+    libCore_gv_mAPMapSoundtrack[2] = "MX_BoE_LVL_10";
+    libCore_gv_mAPMapSoundtrack[3] = "MX_BoE_LVL_20";
+    libMLBD_gv_mMBOEMiddleBannerSconce = UnitFromId(1369503944);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_HookupGlobalVariables_Init () {
+    gt_HookupGlobalVariables = TriggerCreate("gt_HookupGlobalVariables_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Hookup Lane Data
+//--------------------------------------------------------------------------------------------------
+bool gt_HookupLaneData_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_structureCount;
+    int lv_waypointCount;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libGame_gv_laneCount += 1;
+    lv_structureCount = 0;
+    lv_waypointCount = 0;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_laneName = StringExternal("Param/Value/55B57A74");
+    libGame_gv_laneData[libGame_gv_laneCount].lv_laneNamePreset = libGame_ge_LaneNamePresets_Top;
+    lv_structureCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_orderStructures[lv_structureCount] = UnitFromId(210);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_chaosStructures[lv_structureCount] = UnitFromId(346);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_structureCount = lv_structureCount;
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2245);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(540);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(579);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(166);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(580);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(383);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(168);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(171);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(581);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(384);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(588);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(66);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(202);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(369);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(582);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(170);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(53);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(370);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(169);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(167);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(78);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(23);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(80);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2246);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypointCount = lv_waypointCount;
+    libGame_gv_laneCount += 1;
+    lv_structureCount = 0;
+    lv_waypointCount = 0;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_laneName = StringExternal("Param/Value/3D4242A8");
+    libGame_gv_laneData[libGame_gv_laneCount].lv_laneNamePreset = libGame_ge_LaneNamePresets_Bottom;
+    lv_structureCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_orderStructures[lv_structureCount] = UnitFromId(210);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_chaosStructures[lv_structureCount] = UnitFromId(346);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_structureCount = lv_structureCount;
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2245);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(536);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(822);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(823);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(824);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(825);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(34);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(37);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(112);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(542);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(1);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(199);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(14);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(203);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(15);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(17);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(20);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(30);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(31);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(39);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(91);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(26);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(95);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2246);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypointCount = lv_waypointCount;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_HookupLaneData_Init () {
+    gt_HookupLaneData = TriggerCreate("gt_HookupLaneData_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Hookup Jungle Creep Data
+//--------------------------------------------------------------------------------------------------
+bool gt_HookupJungleCreepData_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_junglecamp;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_junglecamp += 1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_SiegeCamp1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(244);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCapturePointSplatModel = "MercCampCaptureBeaconHeaven";
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(242);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(248);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[3] = PointFromId(1537);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderLeashRegion = RegionFromId(7);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_defenderDefendersHaveStaggeredBirth = true;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_defenderDefendersStaggeredBirthPeriod = 0.25;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_SiegeCamp1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamOrderIndex_C] = true;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamChaosIndex_C] = true;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(588);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercChaosMercCampPathing[1].lv_waypoint = PointFromId(202);
+    lv_junglecamp += 1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_BruiserCamp1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(252);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCapturePointSplatModel = "MercCampCaptureBeaconHeaven";
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(250);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(2072);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[3] = PointFromId(256);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderLeashRegion = RegionFromId(8);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_BruiserCamp1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamOrderIndex_C] = true;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamChaosIndex_C] = true;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(542);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercChaosMercCampPathing[1].lv_waypoint = PointFromId(112);
+    lv_junglecamp += 1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_SiegeCamp1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(245);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCapturePointSplatModel = "MercCampCaptureBeaconHell";
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(249);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(247);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[3] = PointFromId(1538);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderLeashRegion = RegionFromId(3);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_defenderDefendersHaveStaggeredBirth = true;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_defenderDefendersStaggeredBirthPeriod = 0.25;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_SiegeCamp1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamOrderIndex_C] = true;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamChaosIndex_C] = true;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(14);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercChaosMercCampPathing[1].lv_waypoint = PointFromId(203);
+    lv_junglecamp += 1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_BruiserCamp1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(253);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataCapturePointSplatModel = "MercCampCaptureBeaconHell";
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(2071);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(251);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderSpawnPoints[3] = PointFromId(257);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataDefenderLeashRegion = RegionFromId(6);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_BruiserCamp1;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamOrderIndex_C] = true;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercMercCampHasSingleWaypoint[libGame_gv_teamChaosIndex_C] = true;
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(170);
+    libMapM_gv_jungleCreepCamps[lv_junglecamp].lv_mercChaosMercCampPathing[1].lv_waypoint = PointFromId(582);
+    libMapM_gv_jungleNumberOfCreepCamps = lv_junglecamp;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_HookupJungleCreepData_Init () {
+    gt_HookupJungleCreepData = TriggerCreate("gt_HookupJungleCreepData_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Hookup Town Data
+//--------------------------------------------------------------------------------------------------
+bool gt_HookupTownData_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_lane;
+    int lv_town;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_lane = 1;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamOrder;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(2);
+    libGame_gv_townTownData[lv_town].lv_makesCoreVulnerableWhenKilled = true;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamOrder;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(4);
+    lv_lane = 2;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamOrder;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(12);
+    libGame_gv_townTownData[lv_town].lv_makesCoreVulnerableWhenKilled = true;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamOrder;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(13);
+    UnitBehaviorAdd(UnitFromId(35), "DisableLaneTracking", UnitFromId(35), 1);
+    UnitBehaviorAdd(UnitFromId(38), "DisableLaneTracking", UnitFromId(38), 1);
+    UnitBehaviorAdd(UnitFromId(1043), "DisableLaneTracking", UnitFromId(1043), 1);
+    lv_lane = 1;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamChaos;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(17);
+    libGame_gv_townTownData[lv_town].lv_makesCoreVulnerableWhenKilled = true;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamChaos;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(21);
+    lv_lane = 2;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamChaos;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(30);
+    libGame_gv_townTownData[lv_town].lv_makesCoreVulnerableWhenKilled = true;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamChaos;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(22);
+    UnitBehaviorAdd(UnitFromId(766), "DisableLaneTracking", UnitFromId(766), 1);
+    UnitBehaviorAdd(UnitFromId(40), "DisableLaneTracking", UnitFromId(40), 1);
+    UnitBehaviorAdd(UnitFromId(1044), "DisableLaneTracking", UnitFromId(1044), 1);
+    libGame_gv_townTownCount = lv_town;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_HookupTownData_Init () {
+    gt_HookupTownData = TriggerCreate("gt_HookupTownData_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Hookup Region Data
+//--------------------------------------------------------------------------------------------------
+bool gt_HookupRegionData_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libMapM_gf_MapSetRepulseRegion(libGame_gv_teamOrderIndex_C, RegionFromId(23), PointFromId(921), PointFromId(929), PointFromId(927), null);
+    libMapM_gf_MapSetRepulseRegion(libGame_gv_teamChaosIndex_C, RegionFromId(24), PointFromId(617), PointFromId(920), PointFromId(919), null);
+    libMapM_gf_MapSetSafeRegion(libGame_gv_teamOrderIndex_C, RegionFromId(23));
+    libMapM_gf_MapSetSafeRegion(libGame_gv_teamChaosIndex_C, RegionFromId(24));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_HookupRegionData_Init () {
+    gt_HookupRegionData = TriggerCreate("gt_HookupRegionData_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Create Giant Demons
+//--------------------------------------------------------------------------------------------------
+bool gt_CreateGiantDemons_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    point lv_position;
+    fixed lv_facing;
+
+    // Automatic Variable Declarations
+    unitgroup autoD8C01A48_g;
+    int autoD8C01A48_u;
+    unit autoD8C01A48_var;
+    unitgroup auto0857180F_g;
+    int auto0857180F_u;
+    unit auto0857180F_var;
+
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    autoD8C01A48_g = UnitGroup("Hell_GiantDemon_Base", c_playerAny, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0);
+    autoD8C01A48_u = UnitGroupCount(autoD8C01A48_g, c_unitCountAll);
+    for (;; autoD8C01A48_u -= 1) {
+        autoD8C01A48_var = UnitGroupUnitFromEnd(autoD8C01A48_g, autoD8C01A48_u);
+        if (autoD8C01A48_var == null) { break; }
+        lv_facing = UnitGetFacing(autoD8C01A48_var);
+        lv_position = UnitGetPosition(autoD8C01A48_var);
+        UnitRemove(autoD8C01A48_var);
+    }
+    UnitCreate(1, "Hell_GiantDemon_Base", 0, libCore_gv_cOMPUTER_TeamOrder, lv_position, lv_facing, null);
+    libMLHH_gv_hHDemonGiantsBase[libGame_gv_teamOrderIndex_C] = UnitLastCreated();
+    libNtve_gf_SendActorMessageToUnit(UnitLastCreated(), "Signal Order");
+    UnitCreate(1, "Hell_GiantDemon_Base", 0, libCore_gv_cOMPUTER_TeamChaos, lv_position, lv_facing, null);
+    libMLHH_gv_hHDemonGiantsBase[libGame_gv_teamChaosIndex_C] = UnitLastCreated();
+    libNtve_gf_SendActorMessageToUnit(UnitLastCreated(), "Signal Chaos");
+    auto0857180F_g = UnitGroup("Hell_GiantDemon_Chains", c_playerAny, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0);
+    auto0857180F_u = UnitGroupCount(auto0857180F_g, c_unitCountAll);
+    for (;; auto0857180F_u -= 1) {
+        auto0857180F_var = UnitGroupUnitFromEnd(auto0857180F_g, auto0857180F_u);
+        if (auto0857180F_var == null) { break; }
+        lv_facing = UnitGetFacing(auto0857180F_var);
+        lv_position = UnitGetPosition(auto0857180F_var);
+        UnitRemove(auto0857180F_var);
+    }
+    UnitCreate(1, "Hell_GiantDemon_Chains", 0, libCore_gv_cOMPUTER_TeamOrder, lv_position, lv_facing, null);
+    libMLHH_gv_hHDemonGiantsChains[libGame_gv_teamOrderIndex_C] = UnitLastCreated();
+    libNtve_gf_SendActorMessageToUnit(UnitLastCreated(), "Signal Order");
+    UnitCreate(1, "Hell_GiantDemon_Chains", 0, libCore_gv_cOMPUTER_TeamChaos, lv_position, lv_facing, null);
+    libMLHH_gv_hHDemonGiantsChains[libGame_gv_teamChaosIndex_C] = UnitLastCreated();
+    libNtve_gf_SendActorMessageToUnit(UnitLastCreated(), "Signal Chaos");
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_CreateGiantDemons_Init () {
+    gt_CreateGiantDemons = TriggerCreate("gt_CreateGiantDemons_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Demon Lookat and Reaction
+//--------------------------------------------------------------------------------------------------
+bool gt_DemonLookatandReaction_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    unit lv_newLookAtTarget;
+
+    // Automatic Variable Declarations
+    region autoA5342DC9_val;
+    int auto0BD47C65_val;
+    int auto3F24D071_val;
+
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    autoA5342DC9_val = EventUnitRegion();
+    if (autoA5342DC9_val == RegionFromId(10)) {
+        auto0BD47C65_val = libGame_gf_TeamNumberOfPlayer(EventPlayer());
+        if (auto0BD47C65_val == libGame_gv_teamOrderIndex_C) {
+            if ((gv_demonBaseResetting[1] == false)) {
+                if ((UnitGroupCount(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamOrder, c_unitAllianceAlly, EventUnitRegion(), libCore_gv_filtersHeroic, 0), c_unitCountAlive) == 0)) {
+                    ActorLookAtTypeStop(libNtve_gf_MainActorofUnit(libMLHH_gv_hHDemonGiantsBase[libGame_gv_teamOrderIndex_C]), "SlowHeadOnlySubtle");
+                    TimerStart(gv_demonBaseTimer[libGame_gv_teamOrderIndex_C], 8.0, false, c_timeGame);
+                }
+                else {
+                    lv_newLookAtTarget = UnitGroupRandomUnit(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamOrder, c_unitAllianceAlly, EventUnitRegion(), libCore_gv_filtersHeroic, 0), c_unitCountAlive);
+                    ActorLookAtTypeStart(libNtve_gf_MainActorofUnit(libMLHH_gv_hHDemonGiantsBase[libGame_gv_teamOrderIndex_C]), "SlowHeadOnlySubtle", libNtve_gf_MainActorofUnit(lv_newLookAtTarget));
+                    Wait(1.0, c_timeGame);
+                    if ((UnitGroupCount(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamOrder, c_unitAllianceAlly, EventUnitRegion(), libCore_gv_filtersHeroic, 0), c_unitCountAlive) == 1)) {
+                        libNtve_gf_SendActorMessageToUnit(libMLHH_gv_hHDemonGiantsBase[libGame_gv_teamOrderIndex_C], "Signal Begin");
+                        libNtve_gf_SendActorMessageToUnit(libMLHH_gv_hHDemonGiantsBase[libGame_gv_teamOrderIndex_C], "StatusSet Looking 1");
+                    }
+
+                }
+            }
+
+        }
+        else if (auto0BD47C65_val == libGame_gv_teamChaosIndex_C) {
+            if ((gv_demonBaseResetting[2] == false)) {
+                if ((UnitGroupCount(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamChaos, c_unitAllianceAlly, EventUnitRegion(), libCore_gv_filtersHeroic, 0), c_unitCountAlive) == 0)) {
+                    ActorLookAtTypeStop(libNtve_gf_MainActorofUnit(libMLHH_gv_hHDemonGiantsBase[libGame_gv_teamChaosIndex_C]), "SlowHeadOnlySubtle");
+                    TimerStart(gv_demonBaseTimer[libGame_gv_teamChaosIndex_C], 8.0, false, c_timeGame);
+                }
+                else {
+                    lv_newLookAtTarget = UnitGroupRandomUnit(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamChaos, c_unitAllianceAlly, EventUnitRegion(), libCore_gv_filtersHeroic, 0), c_unitCountAlive);
+                    ActorLookAtTypeStart(libNtve_gf_MainActorofUnit(libMLHH_gv_hHDemonGiantsBase[libGame_gv_teamChaosIndex_C]), "SlowHeadOnlySubtle", libNtve_gf_MainActorofUnit(lv_newLookAtTarget));
+                    Wait(1.0, c_timeGame);
+                    if ((UnitGroupCount(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamChaos, c_unitAllianceAlly, EventUnitRegion(), libCore_gv_filtersHeroic, 0), c_unitCountAlive) == 1)) {
+                        libNtve_gf_SendActorMessageToUnit(libMLHH_gv_hHDemonGiantsBase[libGame_gv_teamChaosIndex_C], "Signal Begin");
+                        libNtve_gf_SendActorMessageToUnit(libMLHH_gv_hHDemonGiantsBase[libGame_gv_teamChaosIndex_C], "StatusSet Looking 1");
+                    }
+
+                }
+            }
+
+        }
+        else {
+        }
+    }
+    else if (autoA5342DC9_val == RegionFromId(9)) {
+        auto3F24D071_val = libGame_gf_TeamNumberOfPlayer(EventPlayer());
+        if (auto3F24D071_val == libGame_gv_teamOrderIndex_C) {
+            if ((gv_demonChainsResetting[1] == false)) {
+                if ((UnitGroupCount(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamOrder, c_unitAllianceAlly, EventUnitRegion(), libCore_gv_filtersHeroic, 0), c_unitCountAlive) == 0)) {
+                    ActorLookAtTypeStop(libNtve_gf_MainActorofUnit(libMLHH_gv_hHDemonGiantsChains[libGame_gv_teamOrderIndex_C]), "SlowHeadOnlySubtle");
+                    TimerStart(gv_demonChainsTimer[libGame_gv_teamOrderIndex_C], 8.0, false, c_timeGame);
+                }
+                else {
+                    lv_newLookAtTarget = UnitGroupRandomUnit(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamOrder, c_unitAllianceAlly, EventUnitRegion(), libCore_gv_filtersHeroic, 0), c_unitCountAlive);
+                    ActorLookAtTypeStart(libNtve_gf_MainActorofUnit(libMLHH_gv_hHDemonGiantsChains[libGame_gv_teamOrderIndex_C]), "SlowHeadOnlySubtle", libNtve_gf_MainActorofUnit(lv_newLookAtTarget));
+                    Wait(1.0, c_timeGame);
+                    if ((UnitGroupCount(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamOrder, c_unitAllianceAlly, EventUnitRegion(), libCore_gv_filtersHeroic, 0), c_unitCountAlive) == 1)) {
+                        libNtve_gf_SendActorMessageToUnit(libMLHH_gv_hHDemonGiantsChains[libGame_gv_teamOrderIndex_C], "Signal Begin");
+                        libNtve_gf_SendActorMessageToUnit(libMLHH_gv_hHDemonGiantsChains[libGame_gv_teamOrderIndex_C], "StatusSet Looking 1");
+                    }
+
+                }
+            }
+
+        }
+        else if (auto3F24D071_val == libGame_gv_teamChaosIndex_C) {
+            if ((gv_demonChainsResetting[2] == false)) {
+                if ((UnitGroupCount(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamChaos, c_unitAllianceAlly, EventUnitRegion(), libCore_gv_filtersHeroic, 0), c_unitCountAlive) == 0)) {
+                    ActorLookAtTypeStop(libNtve_gf_MainActorofUnit(libMLHH_gv_hHDemonGiantsChains[libGame_gv_teamChaosIndex_C]), "SlowHeadOnlySubtle");
+                    TimerStart(gv_demonChainsTimer[libGame_gv_teamChaosIndex_C], 8.0, false, c_timeGame);
+                }
+                else {
+                    lv_newLookAtTarget = UnitGroupRandomUnit(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamChaos, c_unitAllianceAlly, EventUnitRegion(), libCore_gv_filtersHeroic, 0), c_unitCountAlive);
+                    ActorLookAtTypeStart(libNtve_gf_MainActorofUnit(libMLHH_gv_hHDemonGiantsChains[libGame_gv_teamChaosIndex_C]), "SlowHeadOnlySubtle", libNtve_gf_MainActorofUnit(lv_newLookAtTarget));
+                    Wait(1.0, c_timeGame);
+                    if ((UnitGroupCount(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamChaos, c_unitAllianceAlly, EventUnitRegion(), libCore_gv_filtersHeroic, 0), c_unitCountAlive) == 1)) {
+                        libNtve_gf_SendActorMessageToUnit(libMLHH_gv_hHDemonGiantsChains[libGame_gv_teamChaosIndex_C], "Signal Begin");
+                        libNtve_gf_SendActorMessageToUnit(libMLHH_gv_hHDemonGiantsChains[libGame_gv_teamChaosIndex_C], "StatusSet Looking 1");
+                    }
+
+                }
+            }
+
+        }
+        else {
+        }
+    }
+    else {
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_DemonLookatandReaction_Init () {
+    gt_DemonLookatandReaction = TriggerCreate("gt_DemonLookatandReaction_Func");
+    TriggerAddEventUnitRegion(gt_DemonLookatandReaction, null, RegionFromId(10), true);
+    TriggerAddEventUnitRegion(gt_DemonLookatandReaction, null, RegionFromId(10), false);
+    TriggerAddEventUnitRegion(gt_DemonLookatandReaction, null, RegionFromId(9), true);
+    TriggerAddEventUnitRegion(gt_DemonLookatandReaction, null, RegionFromId(9), false);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Demon Timer Expired
+//--------------------------------------------------------------------------------------------------
+bool gt_DemonTimerExpired_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    timer auto2EC7FD4C_val;
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    auto2EC7FD4C_val = EventTimer();
+    if (auto2EC7FD4C_val == gv_demonBaseTimer[libGame_gv_teamOrderIndex_C]) {
+        if ((UnitGroupCount(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamOrder, c_unitAllianceAlly, RegionFromId(10), libCore_gv_filtersHeroic, 0), c_unitCountAlive) == 0)) {
+            gv_demonBaseResetting[libGame_gv_teamOrderIndex_C] = true;
+            libNtve_gf_SendActorMessageToUnit(libMLHH_gv_hHDemonGiantsBase[libGame_gv_teamOrderIndex_C], "Signal End");
+            TimerStart(gv_demonBaseResetTimer[libGame_gv_teamOrderIndex_C], 10.0, false, c_timeGame);
+        }
+        else {
+            TimerStart(gv_demonBaseTimer[libGame_gv_teamOrderIndex_C], 8.0, false, c_timeGame);
+        }
+    }
+    else if (auto2EC7FD4C_val == gv_demonChainsTimer[libGame_gv_teamOrderIndex_C]) {
+        if ((UnitGroupCount(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamOrder, c_unitAllianceAlly, RegionFromId(9), libCore_gv_filtersHeroic, 0), c_unitCountAlive) == 0)) {
+            gv_demonChainsResetting[libGame_gv_teamOrderIndex_C] = true;
+            libNtve_gf_SendActorMessageToUnit(libMLHH_gv_hHDemonGiantsChains[libGame_gv_teamOrderIndex_C], "Signal End");
+            TimerStart(gv_demonChainsResetTimer[libGame_gv_teamOrderIndex_C], 10.0, false, c_timeGame);
+        }
+        else {
+            TimerStart(gv_demonChainsTimer[libGame_gv_teamOrderIndex_C], 8.0, false, c_timeGame);
+        }
+    }
+    else if (auto2EC7FD4C_val == gv_demonBaseTimer[libGame_gv_teamChaosIndex_C]) {
+        if ((UnitGroupCount(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamChaos, c_unitAllianceAlly, RegionFromId(10), libCore_gv_filtersHeroic, 0), c_unitCountAlive) == 0)) {
+            gv_demonBaseResetting[libGame_gv_teamChaosIndex_C] = true;
+            libNtve_gf_SendActorMessageToUnit(libMLHH_gv_hHDemonGiantsBase[libGame_gv_teamChaosIndex_C], "Signal End");
+            TimerStart(gv_demonBaseResetTimer[libGame_gv_teamChaosIndex_C], 10.0, false, c_timeGame);
+        }
+        else {
+            TimerStart(gv_demonBaseTimer[libGame_gv_teamChaosIndex_C], 8.0, false, c_timeGame);
+        }
+    }
+    else if (auto2EC7FD4C_val == gv_demonChainsTimer[libGame_gv_teamChaosIndex_C]) {
+        if ((UnitGroupCount(UnitGroupAlliance(libCore_gv_cOMPUTER_TeamChaos, c_unitAllianceAlly, RegionFromId(9), libCore_gv_filtersHeroic, 0), c_unitCountAlive) == 0)) {
+            gv_demonChainsResetting[libGame_gv_teamChaosIndex_C] = true;
+            libNtve_gf_SendActorMessageToUnit(libMLHH_gv_hHDemonGiantsChains[libGame_gv_teamChaosIndex_C], "Signal End");
+            TimerStart(gv_demonChainsResetTimer[libGame_gv_teamChaosIndex_C], 10.0, false, c_timeGame);
+        }
+        else {
+            TimerStart(gv_demonChainsTimer[libGame_gv_teamChaosIndex_C], 8.0, false, c_timeGame);
+        }
+    }
+    else {
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_DemonTimerExpired_Init () {
+    gt_DemonTimerExpired = TriggerCreate("gt_DemonTimerExpired_Func");
+    TriggerAddEventTimer(gt_DemonTimerExpired, gv_demonBaseTimer[1]);
+    TriggerAddEventTimer(gt_DemonTimerExpired, gv_demonBaseTimer[2]);
+    TriggerAddEventTimer(gt_DemonTimerExpired, gv_demonChainsTimer[1]);
+    TriggerAddEventTimer(gt_DemonTimerExpired, gv_demonChainsTimer[2]);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Demon Reset Timer Expired
+//--------------------------------------------------------------------------------------------------
+bool gt_DemonResetTimerExpired_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    timer auto98138FD7_val;
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    auto98138FD7_val = EventTimer();
+    if (auto98138FD7_val == gv_demonBaseResetTimer[libGame_gv_teamOrderIndex_C]) {
+        gv_demonBaseResetting[libGame_gv_teamOrderIndex_C] = false;
+    }
+    else if (auto98138FD7_val == gv_demonBaseResetTimer[libGame_gv_teamChaosIndex_C]) {
+        gv_demonBaseResetting[libGame_gv_teamChaosIndex_C] = false;
+    }
+    else if (auto98138FD7_val == gv_demonChainsResetTimer[libGame_gv_teamOrderIndex_C]) {
+        gv_demonChainsResetting[libGame_gv_teamOrderIndex_C] = false;
+    }
+    else if (auto98138FD7_val == gv_demonChainsResetTimer[libGame_gv_teamChaosIndex_C]) {
+        gv_demonChainsResetting[libGame_gv_teamChaosIndex_C] = false;
+    }
+    else {
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_DemonResetTimerExpired_Init () {
+    gt_DemonResetTimerExpired = TriggerCreate("gt_DemonResetTimerExpired_Func");
+    TriggerAddEventTimer(gt_DemonResetTimerExpired, gv_demonBaseResetTimer[1]);
+    TriggerAddEventTimer(gt_DemonResetTimerExpired, gv_demonBaseResetTimer[2]);
+    TriggerAddEventTimer(gt_DemonResetTimerExpired, gv_demonChainsResetTimer[1]);
+    TriggerAddEventTimer(gt_DemonResetTimerExpired, gv_demonChainsResetTimer[2]);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Initialization
+//--------------------------------------------------------------------------------------------------
+void InitTriggers () {
+    gt_InitializeMap_Init();
+    gt_InitializeMapMechanic_Init();
+    gt_MapMechanicIntroCallback_Init();
+    gt_HookupGlobalVariables_Init();
+    gt_HookupLaneData_Init();
+    gt_HookupJungleCreepData_Init();
+    gt_HookupTownData_Init();
+    gt_HookupRegionData_Init();
+    gt_CreateGiantDemons_Init();
+    gt_DemonLookatandReaction_Init();
+    gt_DemonTimerExpired_Init();
+    gt_DemonResetTimerExpired_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Map Initialization
+//--------------------------------------------------------------------------------------------------
+void InitMap () {
+    InitLibs();
+    InitGlobals();
+    InitTriggers();
+}

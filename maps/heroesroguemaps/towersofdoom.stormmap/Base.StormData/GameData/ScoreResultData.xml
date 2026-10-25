@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CScoreResultRoot id="TowersOfDoomRoot">
+        <HeaderTable value="TowersOfDoomHeroes"/>
+    </CScoreResultRoot>
+    <CScoreResultScore id="TowersOfDoomHeroes">
+        <ValueTable value="AltarDamageDone"/>
+    </CScoreResultScore>
+</Catalog>

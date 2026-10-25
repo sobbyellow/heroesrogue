@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+  <CTerrainTex id="Storm_LuxCrypt_1">
+    <HeightMapOffset value="0.010000" />
+    <HeightMapScale value="2.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_LuxCrypt_2">
+    <HeightMapOffset value="0.010000" />
+    <HeightMapScale value="2.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_LuxCrypt_3">
+    <HeightMapOffset value="0.010000" />
+    <HeightMapScale value="2.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_LuxCrypt_4">
+    <HeightMapOffset value="0.010000" />
+    <HeightMapScale value="2.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_LuxCrypt_5">
+    <HeightMapOffset value="0.010000" />
+    <HeightMapScale value="3.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_LuxCrypt_6">
+    <HeightMapOffset value="1.000000" />
+    <HeightMapScale value="0.010000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_LuxCrypt_7">
+    <HeightMapScale value="100.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_LuxCrypt_8">
+    <HeightMapOffset value="0.010000" />
+    <HeightMapScale value="2.000000" />
+  </CTerrainTex>
+</Catalog>

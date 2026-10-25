@@ -64,53 +64,20 @@ void libMHtM_gf_MMHMInitializeHauntedMinesMechanics () {
     TriggerExecute(auto_libMHtM_gf_MMHMInitializeHauntedMinesMechanics_Trigger, false, false);
 }
 
-void libMHTM_Wait(fixed duration, int inTimeType) {
-    fixed elapsed = 0.0;
-    while (elapsed < duration) {
-        if (libMHTM_paused) {
-            Wait(0.0625, inTimeType);
-        } else {
-            Wait(0.0625, inTimeType);
-            elapsed += 0.0625;
-        }
-    }
-}
-
 bool libMHTM_PauseTrigger_Func(bool testConds, bool runActions) {
-
-    if (!runActions) {
-        return true;
+    if (TimerGetRemaining(libMHtM_gv_mMUnderworldPrepTimer) > 0.0) {
+        TimerPause(libMHtM_gv_mMUnderworldPrepTimer, libGame_paused);
     }
-    if (!libMHTM_paused) {
-        libMHTM_paused = true;
-        if (TimerGetRemaining(libMHtM_gv_mMUnderworldPrepTimer) > 0.0) {
-            TimerPause(libMHtM_gv_mMUnderworldPrepTimer, true);
-        }
-        if (TimerGetRemaining(libMHtM_gv_mMHM_EventCooldownTimer) > 0.0) {
-            TimerPause(libMHtM_gv_mMHM_EventCooldownTimer, true);
-        }
-        if (TimerGetRemaining(libMHTM_lv_summonTimer) > 0.0) {
-            TimerPause(libMHTM_lv_summonTimer, true);
-        }
-        if (TimerGetRemaining(libMHtM_gv_mMUnderworldMineTimer) > 0.0 && !TimerIsPaused(libMHtM_gv_mMUnderworldMineTimer)) {
-            TimerPause(libMHtM_gv_mMUnderworldMineTimer, true);
-            libMHtM_gv_mMUnderworldMineTimer_Paused = true;
-        }
-    } else {
-        libMHTM_paused = false;
-        if (TimerGetRemaining(libMHtM_gv_mMUnderworldPrepTimer) > 0.0) {
-            TimerPause(libMHtM_gv_mMUnderworldPrepTimer, false);
-        }
-        if (TimerGetRemaining(libMHtM_gv_mMHM_EventCooldownTimer) > 0.0) {
-            TimerPause(libMHtM_gv_mMHM_EventCooldownTimer, false);
-        }
-        if (TimerGetRemaining(libMHTM_lv_summonTimer) > 0.0) {
-            TimerPause(libMHTM_lv_summonTimer, false);
-        }
-        if (TimerGetRemaining(libMHtM_gv_mMUnderworldMineTimer) > 0.0 && libMHtM_gv_mMUnderworldMineTimer_Paused) {
-            TimerPause(libMHtM_gv_mMUnderworldMineTimer, false);
-            libMHtM_gv_mMUnderworldMineTimer_Paused = false;
-        }
+    if (TimerGetRemaining(libMHtM_gv_mMHM_EventCooldownTimer) > 0.0) {
+        TimerPause(libMHtM_gv_mMHM_EventCooldownTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMHTM_summonTimer) > 0.0) {
+        TimerPause(libMHTM_summonTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMHtM_gv_mMUnderworldMineTimer) > 0.0 && (libMHtM_gv_mMUnderworldMineTimer_Paused ||
+    !TimerIsPaused(libMHtM_gv_mMUnderworldMineTimer))) {
+        TimerPause(libMHtM_gv_mMUnderworldMineTimer, libGame_paused);
+        libMHtM_gv_mMUnderworldMineTimer_Paused = libGame_paused;
     }
 
     return true;
@@ -527,7 +494,7 @@ bool auto_libMHtM_gf_MMUnderworldSpawnMonsters_TriggerFunc (bool testConds, bool
         libMHtM_gv_mMUnderworldMinionGroups[lv_itGroupIndex].lv_defenderIndex = libAIAI_gf_LastCreatedDefenderAI();
         libMHtM_gv_mMUnderworldSkullTotal += (libMHtM_gv_mMUnderworldMinionGroups[lv_itGroupIndex].lv_minionCount * libMHtM_gv_mMUnderworldDropSkullsMinion);
         libMHtM_gv_mMUnderworldMinionGroups[lv_itGroupIndex].lv_regenGlobeDropped = false;
-        libMHTM_Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     libNtve_gf_CreateUnitsAtPoint2(1, "JungleCampIconUnit", 0, libCore_gv_cOMPUTER_Hostile, RegionGetCenter(libMHtM_gv_mMUnderworldBossRegion), null);
     libMHtM_gv_mMUnderworldBossIconUnit = UnitLastCreated();
@@ -568,7 +535,7 @@ bool auto_libMHtM_gf_MMUnderworldBossDroppingSkulls_TriggerFunc (bool testConds,
             libMHtM_gf_MMUnderworldBossDropsSkulls();
         }
 
-        libMHTM_Wait(0.25, c_timeGame);
+        libGame_Wait(0.25, c_timeGame);
     }
     return true;
 }
@@ -757,7 +724,7 @@ void libMHtM_gf_MMUnderworldSummonBoss () {
     TriggerExecute(libMHtM_gt_MMHMSummonedBossPingVisibility, true, false);
     TriggerExecute(libMHtM_gt_MMHMSummonedBossUIBar, true, false);
     while (!(((UnitIsAlive(libMHtM_gv_mMUnderworldSummonedBoss[1]) == true) || (UnitIsAlive(libMHtM_gv_mMUnderworldSummonedBoss[2]) == true)))) {
-        libMHTM_Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     SoundtrackStop(PlayerGroupAll(), c_soundtrackCategoryMusic, true);
     libSond_gf_SoundtrackApplyNewDefaultSoundtrackForPlayerGroup("Storm_Music_Mines_Golems_Event", PlayerGroupAll());
@@ -852,7 +819,7 @@ bool auto_libMHtM_gf_MMUnderworldSummonBossForTeam_TriggerFunc (bool testConds, 
     }
     else {
     }
-    libMHTM_Wait(libMHtM_gv_mMUnderworldSummonedBossDuration_C, c_timeGame);
+    libGame_Wait(libMHtM_gv_mMUnderworldSummonedBossDuration_C, c_timeGame);
     PingDestroy(lv_pingPreSpawn1);
     PingDestroy(lv_pingPreSpawn2);
     PingDestroy(lv_pingPreSpawnObserver);
@@ -871,12 +838,12 @@ bool auto_libMHtM_gf_MMUnderworldSummonBossForTeam_TriggerFunc (bool testConds, 
     StatEventAddDataFixed(StatEventLastCreated(), "SkullCount", libMHtM_gv_mMUnderworldSkullCollected[lp_team]);
     StatEventAddDataFixed(StatEventLastCreated(), "GameTime", libUIUI_gf_HeroesGameTime());
     StatEventSend(StatEventLastCreated());
-    libMHTM_Wait(1.0, c_timeGame);
+    libGame_Wait(1.0, c_timeGame);
     if ((lv_effect != null)) {
         libNtve_gf_KillModel(lv_effect);
     }
 
-    libMHTM_Wait(1.0, c_timeGame);
+    libGame_Wait(1.0, c_timeGame);
     UnitSetState(libMHtM_gv_mMUnderworldSummonedBoss[lp_team], c_unitStateTargetable, true);
     libNtve_gf_MakeUnitInvulnerable(libMHtM_gv_mMUnderworldSummonedBoss[lp_team], false);
     UnitSetState(libMHtM_gv_mMUnderworldSummonedBoss[lp_team], c_unitStateSelectable, true);
@@ -905,9 +872,9 @@ bool auto_libMHtM_gf_MMUnderworldSummonBossForTeam_TriggerFunc (bool testConds, 
     PingSetUnit(PingLastCreated(), libMHtM_gv_mMUnderworldSummonedBoss[lp_team]);
     PingSetScale(PingLastCreated(), 0.75);
     libCore_gf_StorePingForUnit(libMHtM_gv_mMUnderworldSummonedBoss[lp_team], libCore_gv_oBSERVER_ObserverUIPlayer, PingLastCreated());
-    libMHTM_Wait(3.0, c_timeGame);
+    libGame_Wait(3.0, c_timeGame);
     while (!((UnitIsAlive(libMHtM_gv_mMUnderworldSummonedBoss[lp_team]) == false))) {
-        libMHTM_Wait(1.0, c_timeGame);
+        libGame_Wait(1.0, c_timeGame);
     }
     PingDestroy(libCore_gf_PingStoredForUnit(libMHtM_gv_mMUnderworldSummonedBoss[lp_team], 1));
     libCore_gf_StorePingForUnit(libMHtM_gv_mMUnderworldSummonedBoss[lp_team], 1, c_invalidPingId);
@@ -937,9 +904,9 @@ bool auto_libMHtM_gf_MMUnderworldSummonBossForTeamSound_TriggerFunc (bool testCo
     // Automatic Variable Declarations
     // Implementation
     SoundPlayAtPointForPlayer(SoundLink("Event_Mines_Boss_Summon_Start", -1), c_maxPlayers, PlayerGroupAll(), libMHtM_gv_mMUnderworldSummonedBossLocation[lp_team], 1.0, 100.0, 0.0);
-    libMHTM_Wait(SoundLengthSync(SoundLink("Event_Mines_Boss_Summon_Start", -1)), c_timeGame);
+    libGame_Wait(SoundLengthSync(SoundLink("Event_Mines_Boss_Summon_Start", -1)), c_timeGame);
     SoundPlayAtPointForPlayer(SoundLink("Event_Mines_Boss_Summon_Loop", -1), c_maxPlayers, PlayerGroupAll(), libMHtM_gv_mMUnderworldSummonedBossLocation[lp_team], 1.0, 100.0, 0.0);
-    libMHTM_Wait((libMHtM_gv_mMUnderworldSummonedBossDuration_C - SoundLengthSync(SoundLink("Event_Mines_Boss_Summon_Start", -1))), c_timeGame);
+    libGame_Wait((libMHtM_gv_mMUnderworldSummonedBossDuration_C - SoundLengthSync(SoundLink("Event_Mines_Boss_Summon_Start", -1))), c_timeGame);
     SoundStop(SoundLastPlayed(), true);
     SoundPlayForPlayer(SoundLink("Event_Mines_Boss_Summon_End", -1), c_maxPlayers, libGame_gf_PlayersOnTeamHeroes(lp_team, false), 100.0, 0.0);
     return true;
@@ -1368,7 +1335,7 @@ bool libMHtM_gt_MMHMGatesOpened_Func (bool testConds, bool runActions) {
     }
 
     TriggerEnable(TriggerGetCurrent(), false);
-    libMHTM_Wait(libMHtM_gv_mMUnderworldStartTime_C, c_timeGame);
+    libGame_Wait(libMHtM_gv_mMUnderworldStartTime_C, c_timeGame);
     libMHtM_gf_MMUnderworldPrepare();
     return true;
 }
@@ -1391,7 +1358,7 @@ bool libMHtM_gt_MMHMEventCooldownTimerExpires_Func (bool testConds, bool runActi
     }
 
     SoundPlayForPlayer(SoundLink("Event_GraveGolem_Awaken", -1), c_maxPlayers, PlayerGroupAll(), 100.0, 0.0);
-    libMHTM_Wait(12.0, c_timeGame);
+    libGame_Wait(12.0, c_timeGame);
     libMHtM_gf_MMUnderworldPrepare();
     return true;
 }
@@ -1493,7 +1460,7 @@ bool libMHtM_gt_MMHMMinesOpened_Func (bool testConds, bool runActions) {
             return true;
         }
 
-        libMHTM_Wait(0.5, c_timeGame);
+        libGame_Wait(0.5, c_timeGame);
     }
     return true;
 }
@@ -1625,7 +1592,7 @@ bool libMHtM_gt_MMHMPingGatesWhileEventinProgress_Func (bool testConds, bool run
                 if (lv_itGate == null) { break; }
                 PingSetPlayerGroup(libCore_gf_PingStoredForUnit(lv_itGate, 1), lv_pingPlayers);
             }
-            libMHTM_Wait(1.0, c_timeGame);
+            libGame_Wait(1.0, c_timeGame);
         }
         auto6DE0B8BD_g = libMHtM_gv_mMUnderworldGatesAbove;
         auto6DE0B8BD_u = UnitGroupCount(auto6DE0B8BD_g, c_unitCountAll);
@@ -1635,7 +1602,7 @@ bool libMHtM_gt_MMHMPingGatesWhileEventinProgress_Func (bool testConds, bool run
             PingDestroy(libCore_gf_PingStoredForUnit(lv_itGate, 1));
             libCore_gf_StorePingForUnit(lv_itGate, 1, c_invalidPingId);
         }
-        libMHTM_Wait(9.0, c_timeGame);
+        libGame_Wait(9.0, c_timeGame);
     }
     return true;
 }
@@ -1726,13 +1693,13 @@ bool libMHtM_gt_MMHMMinesCleared_Func (bool testConds, bool runActions) {
         lv_groupIndex = libMHtM_gf_MMUnderworldMineMinionGroupIndex(auto58350EEC_var);
         UnitRemove(libMHtM_gv_mMUnderworldMinionGroups[lv_groupIndex].lv_iconUnit);
     }
-    libMHTM_Wait(3.0, c_timeGame);
+    libGame_Wait(3.0, c_timeGame);
     libMHtM_gv_mMUnderworldOpened = false;
     libMHtM_gv_mMUnderworldBossSummonEventCounter += 1;
     UnitKill(libMHtM_gv_mMUnderworldBoss);
     libMHtM_gf_MMUnderworldSummonBoss();
     while (!(((UnitIsAlive(libMHtM_gv_mMUnderworldSummonedBoss[1]) == true) || (UnitIsAlive(libMHtM_gv_mMUnderworldSummonedBoss[2]) == true)))) {
-        libMHTM_Wait(1.0, c_timeGame);
+        libGame_Wait(1.0, c_timeGame);
     }
     TriggerEnable(libMHtM_gt_MMHMSummonedBossDies, true);
     return true;
@@ -1768,7 +1735,7 @@ bool libMHtM_gt_MMHMStartToEnterGates_Func (bool testConds, bool runActions) {
 
     libMHtM_gv_mMUnderworldEnterGateIndex[lv_player] += 1;
     lv_localCastIndex = libMHtM_gv_mMUnderworldEnterGateIndex[lv_player];
-    libMHTM_Wait((lv_durationNotUnstoppable * 0.125), c_timeGame);
+    libGame_Wait((lv_durationNotUnstoppable * 0.125), c_timeGame);
     if ((UnitHasBehavior2(lv_heroUnit, "MacGuffinDummy") == true) && (libMHtM_gv_mMUnderworldEnterGateIndex[lv_player] == lv_localCastIndex)) {
         UnitBehaviorAdd(lv_heroUnit, "HauntedMinesUnstoppableDummy", lv_heroUnit, 1);
         libMHtM_gv_mMUnderworldEnterGateIndex[lv_player] = 0;
@@ -1892,7 +1859,7 @@ bool libMHtM_gt_MMHMEnteringGates_Func (bool testConds, bool runActions) {
     }
 
     SoundPlayOnUnitForPlayer(SoundLink("Event_Mines_EnterMinesEnd", -1), c_maxPlayers, PlayerGroupAll(), lv_heroUnit, 0.0, 100.0, 0.0);
-    libMHTM_Wait(0.125, c_timeGame);
+    libGame_Wait(0.125, c_timeGame);
     UnitSetState(lv_heroUnit, c_unitStateOrdersPaused, false);
     UnitIssueOrder(lv_heroUnit, DataTableGetOrder(true, libMHtM_gf_GetOrderDataTableValueString(lv_heroUnit)), c_orderQueueReplace);
     DataTableValueRemove(true, libMHtM_gf_GetOrderDataTableValueString(lv_heroUnit));
@@ -1957,7 +1924,7 @@ bool libMHtM_gt_MMHMEnteringGatesSummonedUnitSpecialInteraction_Func (bool testC
     }
 
     SoundPlayOnUnitForPlayer(SoundLink("Event_Mines_EnterMinesEnd", -1), c_maxPlayers, PlayerGroupAll(), lv_heroUnit, 0.0, 100.0, 0.0);
-    libMHTM_Wait(0.125, c_timeGame);
+    libGame_Wait(0.125, c_timeGame);
     UnitSetState(lv_heroUnit, c_unitStateOrdersPaused, false);
     UnitBehaviorRemove(lv_heroUnit, "HauntedMinesMineShaftInvulnerableUnstoppableBehavior", 1);
     UnitSetState(lv_heroUnit, c_unitStateTargetable, true);
@@ -2103,14 +2070,14 @@ bool libMHtM_gt_MMHMSkullDroppedShareVision_Func (bool testConds, bool runAction
             }
 
         }
-        libMHTM_Wait(1.0, c_timeGame);
+        libGame_Wait(1.0, c_timeGame);
     }
     lv_itPlayer = 1;
     for ( ; ( (autoE5D9C2B9_ai >= 0 && lv_itPlayer <= autoE5D9C2B9_ae) || (autoE5D9C2B9_ai < 0 && lv_itPlayer >= autoE5D9C2B9_ae) ) ; lv_itPlayer += autoE5D9C2B9_ai ) {
         libNtve_gf_ShareVisionofUnit(lv_newSkullUnit, true, lv_itPlayer);
     }
     while (!((UnitIsAlive(lv_newSkullUnit) == false))) {
-        libMHTM_Wait(1.0, c_timeGame);
+        libGame_Wait(1.0, c_timeGame);
     }
     lv_itPlayer = 1;
     for ( ; ( (auto0A1861E3_ai >= 0 && lv_itPlayer <= auto0A1861E3_ae) || (auto0A1861E3_ai < 0 && lv_itPlayer >= auto0A1861E3_ae) ) ; lv_itPlayer += auto0A1861E3_ai ) {
@@ -2224,7 +2191,7 @@ bool libMHtM_gt_MMHMSkullPickup_Func (bool testConds, bool runActions) {
     TextTagSetFogVisibility(TextTagLastCreated(), c_visTypeFog);
     libGame_gf_SendEventMapHauntedMinesSkullCollected(libMHtM_gv_mMUnderworldSkullCollected[1], libMHtM_gv_mMUnderworldSkullCollected[2], lv_collectingPlayer);
     if (((libMHtM_gv_mMUnderworldSkullCollected[1] + libMHtM_gv_mMUnderworldSkullCollected[2]) >= libMHtM_gv_mMUnderworldSkullTotal) && (lv_alliedSkullCount >= 80)) {
-        libMHTM_Wait(6.0, c_timeGame);
+        libGame_Wait(6.0, c_timeGame);
         libGame_gf_SendEventMapObjectiveCapturedByUnit(lv_collectingUnit);
     }
 
@@ -2306,7 +2273,7 @@ bool libMHtM_gt_MMHMSummonedBossPingVisibility_Func (bool testConds, bool runAct
             }
 
         }
-        libMHTM_Wait(0.2, c_timeGame);
+        libGame_Wait(0.2, c_timeGame);
     }
     return true;
 }
@@ -2781,7 +2748,7 @@ bool libMHtM_gt_MMHMMineScalingSnapshot_Func (bool testConds, bool runActions) {
             return true;
         }
 
-        libMHTM_Wait(1.0, c_timeGame);
+        libGame_Wait(1.0, c_timeGame);
     }
     return true;
 }
@@ -2848,19 +2815,19 @@ bool libMHtM_gt_MMHMUnderworldObjectiveUIHandler_Func (bool testConds, bool runA
         }
         else if (true) {
             if (((lv_lastState == libMHtM_ge_MMHMUnderworldState_Preparing) || (lv_lastState == libMHtM_ge_MMHMUnderworldState_CollectingSkulls))) {
-                libMHTM_Wait(0.5, c_timeGame);
+                libGame_Wait(0.5, c_timeGame);
                 continue;
             }
 
             lv_state = libMHtM_ge_MMHMUnderworldState_Idle;
             if ((lv_state != lv_lastState)) {
-                libMHTM_Wait(4.0, c_timeGame);
+                libGame_Wait(4.0, c_timeGame);
                 libUIUI_gf_MapMechanicsHauntedMinesShowHidePanel(false);
             }
 
             lv_lastState = lv_state;
         }
-        libMHTM_Wait(0.5, c_timeGame);
+        libGame_Wait(0.5, c_timeGame);
     }
     return true;
 }
@@ -2884,14 +2851,14 @@ bool libMHtM_gt_MMHMSummonedBossUIBar_Func (bool testConds, bool runActions) {
     const int auto7E879F4E_ai = 1;
 
     // Variable Initialization
-    libMHTM_lv_summonTimer = TimerCreate();
+    libMHTM_summonTimer = TimerCreate();
 
     // Actions
     if (!runActions) {
         return true;
     }
 
-    TimerStart(libMHTM_lv_summonTimer, libMHtM_gv_mMUnderworldSummonedBossDuration_C, false, c_timeGame);
+    TimerStart(libMHTM_summonTimer, libMHtM_gv_mMUnderworldSummonedBossDuration_C, false, c_timeGame);
     lv_itTeam = 1;
     for ( ; ( (auto7E879F4E_ai >= 0 && lv_itTeam <= auto7E879F4E_ae) || (auto7E879F4E_ai < 0 && lv_itTeam >= auto7E879F4E_ae) ) ; lv_itTeam += auto7E879F4E_ai ) {
         libNtve_gf_CreateUnitsWithDefaultFacing(1, "UnderworldSummonedBoss", c_unitCreateIgnorePlacement, libGame_gf_ComputerPlayerInTeam(lv_itTeam), Point(0.0, 0.0), null);
@@ -2915,19 +2882,19 @@ bool libMHtM_gt_MMHMSummonedBossUIBar_Func (bool testConds, bool runActions) {
     libUIUI_gf_MapMechanicsHauntedMinesSetUpGolemForObserver(lv_tempGolems[libGame_gv_teamOrderIndex_C], lv_tempGolems[libGame_gv_teamChaosIndex_C], libMHtM_gv_mMUnderworldSkullCollected[libGame_gv_teamOrderIndex_C], libMHtM_gv_mMUnderworldSkullCollected[libGame_gv_teamChaosIndex_C]);
     libUIUI_gf_MapMechanicsHauntedMinesSetMode(libUIUI_ge_MapMechanicsHauntedMinesModes_Golem);
     while (true) {
-        lv_current = (TimerGetElapsed(libMHTM_lv_summonTimer)*100/TimerGetDuration(libMHTM_lv_summonTimer));
+        lv_current = (TimerGetElapsed(libMHTM_summonTimer)*100/TimerGetDuration(libMHTM_summonTimer));
         if ((lv_current > 0.1)) {
             UnitSetPropertyFixed(lv_tempGolems[1], c_unitPropLifePercent, lv_current);
             UnitSetPropertyFixed(lv_tempGolems[2], c_unitPropLifePercent, lv_current);
         }
 
-        libMHTM_Wait(0.125, c_timeGame);
-        if ((TimerGetRemaining(libMHTM_lv_summonTimer) == 0.0)) {
+        libGame_Wait(0.125, c_timeGame);
+        if ((TimerGetRemaining(libMHTM_summonTimer) == 0.0)) {
             break;
         }
     }
     while (!(((UnitIsAlive(libMHtM_gv_mMUnderworldSummonedBoss[1]) == true) && (UnitIsAlive(libMHtM_gv_mMUnderworldSummonedBoss[2]) == true)))) {
-        libMHTM_Wait(0.25, c_timeGame);
+        libGame_Wait(0.25, c_timeGame);
     }
     libUIUI_gf_MapMechanicsHauntedMinesSetUpGolemForTeam(libMHtM_gv_mMUnderworldSummonedBoss[libGame_gv_teamOrderIndex_C], libMHtM_gv_mMUnderworldSkullCollected[libGame_gv_teamOrderIndex_C], libGame_gv_teamOrderIndex_C);
     libUIUI_gf_MapMechanicsHauntedMinesSetUpGolemForTeam(libMHtM_gv_mMUnderworldSummonedBoss[libGame_gv_teamChaosIndex_C], libMHtM_gv_mMUnderworldSkullCollected[libGame_gv_teamChaosIndex_C], libGame_gv_teamChaosIndex_C);

@@ -1,0 +1,23 @@
+include "HRLibs/HRTriggersLib"
+
+bool libHRGE_AlexstraszaDeathBinderScaling (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+    }
+    libHRGE_SetDefaultLevelScaling("Effect,AlexstraszaLifebinderDoTTarget,Amount", player);
+
+    return true;
+}
+bool libHRGE_AlexstraszaQuickTransformationAffixAdded (bool testConds, bool runActions) {
+    unit heroUnit = libHRGE_GetPlayerHeroUnit(libHRGE_player);
+    if (testConds) {
+        if (TimerGetElapsed(libGame_gv_gameTimer) > 130) {
+            return false;
+        }
+    }
+    UnitCreateEffectUnit(heroUnit, "AlexstraszaDragonqueen0CDModifyUnit", heroUnit);
+    return true;
+}

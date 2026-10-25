@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+  
+
+<CBehaviorBuff id="AffixCrashStressBehavior" parent="CarryBehaviorParent">
+  <Duration value="5.0"/>
+  <Modification>
+    <UnifiedMoveSpeedFactor value="-0.4" />
+    <SightMaximum value="4" />
+  </Modification>
+  <ArmorModification StackCount="1">
+    <AllArmorBonus value="-15"/>
+  </ArmorModification>
+</CBehaviorBuff>
+  
+</Catalog>

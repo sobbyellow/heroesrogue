@@ -1,0 +1,87 @@
+include "HRLibs/HRTriggersLib"
+
+// ============================================================
+// Teleporter
+// ============================================================
+bool libHRGE_LiMingTeleporterExecuteOncePerGame (bool testConds, bool runActions) {
+    libHRGE_CatalogReferenceSet("Abil,WizardTeleport,Cost[0].Cooldown.TimeUse", libHRGE_player, "0.5");
+    libHRGE_CatalogReferenceSet("Abil,WizardTeleport,Cost[0].Charge.TimeUse", libHRGE_player, "5");
+    libHRGE_CatalogReferenceSet("Abil,WizardTeleport,Cost[0].Charge.CountMax", libHRGE_player, "3");
+    libHRGE_CatalogReferenceSet("Abil,WizardTeleport,Cost[0].Charge.CountStart", libHRGE_player, "3");
+    libHRGE_CatalogReferenceSet("Abil,WizardTeleport,Cost[0].Charge.CountUse", libHRGE_player, "1");
+    libHRGE_CatalogReferenceSet("Effect,WizardArcaneLoopTeleport,Cost[0].ChargeTimeUse", libHRGE_player, "-0.5");
+    libHRGE_CatalogReferenceSet("Effect,WizardAetherWalkerInitialModifyPlayerTeleporter,Chance", libHRGE_player, "1");
+    libHRGE_CatalogReferenceSet("Effect,WizardAetherWalkerInitialModifyPlayer,Chance", libHRGE_player, "0");
+    libHRGE_CatalogReferenceSet("Effect,WizardAetherWalkerExpirationModifyPlayerTeleporter,Chance", libHRGE_player, "1");
+    libHRGE_CatalogReferenceSet("Effect,WizardAetherWalkerExpirationModifyPlayer,Chance", libHRGE_player, "0");
+    return true;
+}
+bool libHRGE_LiMingTeleporterLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+    }
+    libHRGE_SetLevelScaling("Effect,WizardTeleportCalamityPvEDamage,Amount", libHRGE_player, 0.03);
+    return true;
+}
+
+// ============================================================
+// Missile Barrage
+// ============================================================
+bool libHRGE_LiMingMissileBarrageLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+    }
+    libHRGE_SetLevelScaling("Effect,WizardMagicMissilesDamage2,Amount", libHRGE_player, 0.035);
+    libHRGE_SetLevelScaling("Effect,WizardMagicMissilesDamage2Structure,Amount", libHRGE_player, 0.035);
+    return true;
+}
+// ============================================================
+// Critical Power
+// ============================================================
+bool libHRGE_LiMingCriticalPowerHeroTakedown (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroParticipatedInTakedownKillingPlayer();
+    unit killerUnit = libGame_gv_players[player].lv_heroUnit;
+    unit deadUnit = libGame_gf_HeroParticipatedInTakedownKilledHero();
+
+    if (testConds) {
+        if ((player != libHRGE_player)) {
+            return false;
+        }
+        if (UnitTestState(deadUnit, c_unitStateHallucination)) {
+            return false;
+        }
+    }
+
+    UnitCreateEffectUnit(killerUnit, "LiMingCriticalPowerAddToken", killerUnit);
+    
+    return true;
+}
+// ============================================================
+// Need More Mana
+// ============================================================
+bool libHRGE_LiMingNeedMoreManaHeroTakedown (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroParticipatedInTakedownKillingPlayer();
+    unit killerUnit = libGame_gv_players[player].lv_heroUnit;
+    unit deadUnit = libGame_gf_HeroParticipatedInTakedownKilledHero();
+
+    if (testConds) {
+        if ((player != libHRGE_player)) {
+            return false;
+        }
+        if (UnitTestState(deadUnit, c_unitStateHallucination)) {
+            return false;
+        }
+    }
+
+    UnitCreateEffectUnit(killerUnit, "WizardDominanceManaHealerAffix", killerUnit);
+    
+    return true;
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CActorDoodad id="PayloadDoodad">
+        <EditorFlags index="NoAutoRotate" value="1"/>
+        <RandomScaleRange value="1.000000,1.000000"/>
+        <On Terms="ActorCreation" Send="AnimPlay Spell Spell,B PlayForever"/>
+    </CActorDoodad>
+    <CActorDoodad id="HanaPath1">
+        <On Terms="ActorCreation" Send="AnimSetPausedAll"/>
+        <On Terms="ActorCreation; !IsInEditor" Send="Destroy Immediate"/>
+        <EditorAnim value="Walk,End"/>
+        <EditorModel value="HanaPath1"/>
+        <Model value="Invisible"/>
+    </CActorDoodad>
+    <CActorDoodad id="HanaPath2">
+        <On Terms="ActorCreation" Send="AnimSetPausedAll"/>
+        <On Terms="ActorCreation; !IsInEditor" Send="Destroy Immediate"/>
+        <EditorAnim value="Walk,End"/>
+        <EditorModel value="HanaPath2"/>
+        <Model value="Invisible"/>
+    </CActorDoodad>
+    <CActorDoodad id="HanaPath3">
+        <On Terms="ActorCreation" Send="AnimSetPausedAll"/>
+        <On Terms="ActorCreation; !IsInEditor" Send="Destroy Immediate"/>
+        <EditorAnim value="Walk,End"/>
+        <EditorModel value="HanaPath3"/>
+        <Model value="Invisible"/>
+    </CActorDoodad>
+</Catalog>

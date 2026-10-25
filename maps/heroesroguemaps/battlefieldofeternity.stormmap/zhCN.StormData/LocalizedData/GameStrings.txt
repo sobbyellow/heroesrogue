@@ -1,0 +1,30 @@
+﻿﻿DocInfo/Author=暴雪娱乐
+DocInfo/DescLong=2兵线地图<n/>
+DocInfo/DescShort=5v5
+DocInfo/HowToPlaySummary00=2兵线地图
+DocInfo/HowToPlaySummaryHeaderTitle=永恒战场
+DocInfo/Name=永恒战场
+LoadingScreen/BattlefieldOfEternity/Help1=不朽者在决斗期间不会对对方造成伤害。如果想要获胜，那么就必须在防守我方不朽者的同时攻击敌方不朽者。
+LoadingScreen/TextBody=<s val="Storm_BoldExtendedXLarge">不朽之战</s><n/><s val="Storm_BoldExtendedMedium">来自天堂和地狱的不朽者们将在这场永恒之战中相互厮杀！</s><n/><n/><s val="Storm_BoldExtendedXLarge">击败敌方不朽者</s><n/><s val="Storm_BoldExtendedMedium">帮助你的不朽者击败敌人的不朽者！</s><n/><n/><s val="Storm_BoldExtendedXLarge">摧毁敌人堡垒</s><n/><s val="Storm_BoldExtendedMedium">和不朽者一起推进摧毁你的敌人！</s>
+LoadingScreen/Title=<s val="Storm_BoldExtendedXXLarge">永恒战场</c>
+MapInfo/Player00/Name=中立
+MapInfo/Player01/Name=玩家1
+MapInfo/Player02/Name=玩家2
+MapInfo/Player03/Name=玩家3
+MapInfo/Player04/Name=玩家4
+MapInfo/Player05/Name=玩家5
+MapInfo/Player06/Name=玩家6
+MapInfo/Player07/Name=玩家7
+MapInfo/Player08/Name=玩家8
+MapInfo/Player09/Name=玩家9
+MapInfo/Player10/Name=玩家10
+MapInfo/Player11/Name=秩序方
+MapInfo/Player12/Name=混沌方
+MapInfo/Player13/Name=敌对
+Param/Value/3D4242A8=底部
+Param/Value/55B57A74=顶部
+UI/ResourceToolTip0=使用金币为英雄购买物品。
+Variant001/Desc=蓝队对橙队。
+Variant001/ModeDesc=玩家可以选择英雄。
+Variant001/ModeName=标准模式
+Variant001/Name=5v5

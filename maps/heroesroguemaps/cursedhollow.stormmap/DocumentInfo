@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DocInfo>
+    <Icon>
+        <Value>Storm_UI_Gamemode_MapSelect_CursedHollow.png</Value>
+    </Icon>
+    <MatchMakerTag>
+        <Value>Hero</Value>
+    </MatchMakerTag>
+    <Dependencies>
+        <Value>bnet:Cursed Hollow (Mod)/0.0/1497,file:Mods\heroesmapmods/battlegroundmapmods/cursedhollow.stormmod</Value>
+    </Dependencies>
+    <ModifiableDependencies>
+        <Value>Mods/HeroesData.StormMod</Value>
+    </ModifiableDependencies>
+    <Preload>
+        <Value>GameLink:Model;RavenLordTributeWarning</Value>
+        <Value>GameLink:Unit;JungleGraveGolemLaner</Value>
+        <Value>GameLink:Unit;JungleGraveGolemDefender</Value>
+        <Value>GameLink:Unit;MercDefenderSiegeGiant</Value>
+        <Value>GameLink:Unit;MercLanerSiegeGiant</Value>
+        <Value>GameLink:Unit;JungleCampIconUnit</Value>
+        <Value>GameLink:Unit;RangedMinion</Value>
+        <Value>GameLink:Unit;CatapultMinion</Value>
+        <Value>GameLink:Unit;FootmanMinion</Value>
+        <Value>GameLink:Unit;WizardMinion</Value>
+        <Value>GameLink:Unit;MercLanerMeleeKnight</Value>
+        <Value>GameLink:Unit;MercLanerRangedMage</Value>
+        <Value>GameLink:Unit;MercDefenderMeleeKnight</Value>
+        <Value>GameLink:Unit;MercDefenderRangedMage</Value>
+        <Value>GameLink:Unit;RavenLordTribute</Value>
+    </Preload>
+</DocInfo>

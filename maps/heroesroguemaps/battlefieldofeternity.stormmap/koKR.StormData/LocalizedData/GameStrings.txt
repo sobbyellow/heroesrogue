@@ -1,0 +1,30 @@
+﻿﻿DocInfo/Author=블리자드 엔터테인먼트
+DocInfo/DescLong=2개의 공격로<n/>
+DocInfo/DescShort=5대5
+DocInfo/HowToPlaySummary00=2개의 공격로를 가진 전장입니다.
+DocInfo/HowToPlaySummaryHeaderTitle=영원의 전쟁터
+DocInfo/Name=영원의 전쟁터
+LoadingScreen/BattlefieldOfEternity/Help1=불멸자들은 대결 중 서로에게 피해를 주지 않습니다. 승리하려면 아군 불멸자를 지키며 적의 불멸자를 공격해야 합니다.
+LoadingScreen/TextBody=<s val="Storm_BoldExtendedXLarge">불멸자 전투</s><n/><s val="Storm_BoldExtendedMedium">천국과 지옥의 불멸자가 영원을 위한 전투를 펼칩니다!</s><n/><n/><s val="Storm_BoldExtendedXLarge">상대 팀 불멸자 처치</s><n/><s val="Storm_BoldExtendedMedium">아군 불멸자를 도와 상대 팀 불멸자를 처치하세요!</s><n/><n/><s val="Storm_BoldExtendedXLarge">상대 팀 요새 파괴</s><n/><s val="Storm_BoldExtendedMedium">아군 불멸자와 함께 적진을 파괴하세요!</s>
+LoadingScreen/Title=<s val="Storm_BoldExtendedXXLarge">영원의 전쟁터</c>
+MapInfo/Player00/Name=중립
+MapInfo/Player01/Name=플레이어 1
+MapInfo/Player02/Name=플레이어 2
+MapInfo/Player03/Name=플레이어 3
+MapInfo/Player04/Name=플레이어 4
+MapInfo/Player05/Name=플레이어 5
+MapInfo/Player06/Name=플레이어 6
+MapInfo/Player07/Name=플레이어 7
+MapInfo/Player08/Name=플레이어 8
+MapInfo/Player09/Name=플레이어 9
+MapInfo/Player10/Name=플레이어 10
+MapInfo/Player11/Name=질서
+MapInfo/Player12/Name=혼돈
+MapInfo/Player13/Name=적대
+Param/Value/3D4242A8=아래
+Param/Value/55B57A74=위
+UI/ResourceToolTip0=골드를 사용해서 영웅의 아이템을 살 수 있습니다.
+Variant001/Desc=파랑팀 대 주황팀
+Variant001/ModeDesc=플레이어가 영웅을 선택할 수 있습니다.
+Variant001/ModeName=일반
+Variant001/Name=5대5

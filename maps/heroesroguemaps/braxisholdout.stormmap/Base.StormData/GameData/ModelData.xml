@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CModel id="test" parent="Doodad">
+        <Model value="Assets\TerrainObjects\Storm_Doodad_SCBraxis_Shafts_A_TO\Storm_Doodad_SCBraxis_Shafts_A_TO.m3"/>
+        <EditorCategories value=""/>
+    </CModel>
+</Catalog>

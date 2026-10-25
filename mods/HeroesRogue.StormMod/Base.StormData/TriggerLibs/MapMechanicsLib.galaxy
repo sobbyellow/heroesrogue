@@ -664,7 +664,7 @@ bool auto_libMapM_gf_JungleInitializeCreepCampDelayMinimapIcons_TriggerFunc (boo
 
     // Automatic Variable Declarations
     // Implementation
-    Wait(lp_delayTime, c_timeGame);
+    libGame_Wait(lp_delayTime, c_timeGame);
     libNtve_gf_SendActorMessageToUnit(lp_unit, "SetMinimapVisibility 1");
     return true;
 }
@@ -1224,7 +1224,7 @@ bool auto_libMapM_gf_JungleRespawnCreepsForCamp_TriggerFunc (bool testConds, boo
     }
     libMapM_gv_jungleCreepCamps[lp_camp].lv_defenderDefendersBribedCount = 0;
     UnitGroupClear(libMapM_gv_jungleCreepCamps[lp_camp].lv_defenderUnitGroup);
-    Wait(0.125, c_timeGame);
+    libGame_Wait(0.125, c_timeGame);
     auto9754AF77_ae = libMapM_gv_jungleCreepCamps[lp_camp].lv_defenderNumberofCreeps;
     lv_i = 1;
     for ( ; ( (auto9754AF77_ai >= 0 && lv_i <= auto9754AF77_ae) || (auto9754AF77_ai < 0 && lv_i >= auto9754AF77_ae) ) ; lv_i += auto9754AF77_ai ) {
@@ -1248,7 +1248,7 @@ bool auto_libMapM_gf_JungleRespawnCreepsForCamp_TriggerFunc (bool testConds, boo
             UnitBehaviorAdd(lv_newUnit, "JungleCreepPassive", lv_newUnit, 1);
             UnitBehaviorSetDurationRemaining(lv_newUnit, "JungleMercDefenderBirthInvulnerability", (UnitBehaviorDuration(lv_newUnit, "JungleMercDefenderBirthInvulnerability") - lv_StaggeredBirth));
             lv_StaggeredBirth += libMapM_gv_jungleCreepCamps[lp_camp].lv_defenderDefendersStaggeredBirthPeriod;
-            Wait(libMapM_gv_jungleCreepCamps[lp_camp].lv_defenderDefendersStaggeredBirthPeriod, c_timeGame);
+            libGame_Wait(libMapM_gv_jungleCreepCamps[lp_camp].lv_defenderDefendersStaggeredBirthPeriod, c_timeGame);
         }
 
     }
@@ -1259,7 +1259,7 @@ bool auto_libMapM_gf_JungleRespawnCreepsForCamp_TriggerFunc (bool testConds, boo
     libMapM_gv_jungleCreepCamps[lp_camp].lv_stateCurrentMercScalingTicks = 0;
     libGame_gf_JungleUpdateScalingForCamp(lp_camp, libGame_gv_scalingTicks);
     libGame_gf_SendEventJungleCampSpawning(lp_camp);
-    Wait((libMapM_gv_bALJungleBirthDelay - lv_StaggeredBirth), c_timeGame);
+    libGame_Wait((libMapM_gv_bALJungleBirthDelay - lv_StaggeredBirth), c_timeGame);
     if (((libMapM_gv_jungleCreepCamps[lp_camp].lv_mapDataCampType == libMapM_ge_JungleCampTypes_MercCamp) || (libMapM_gv_jungleCreepCamps[lp_camp].lv_mapDataCampType == libMapM_ge_JungleCampTypes_DoubloonCamp))) {
         UnitSetOwner(libMapM_gv_jungleCreepCamps[lp_camp].lv_campIconUnit, 0, true);
         libNtve_gf_SendActorMessageToGameRegion(libMapM_gv_jungleCreepCamps[lp_camp].lv_mapDataDefenderLeashRegion, "Signal OwnerNeutral");
@@ -1452,10 +1452,10 @@ bool auto_libMapM_gf_JungleHibernateCampDefender_TriggerFunc (bool testConds, bo
     UnitBehaviorRemoveCategory(lp_defender, c_behaviorCategoryDamageOverTime);
     UnitBehaviorAddPlayer(lp_defender, "GardensMercCampPreHibernator", UnitGetOwner(lp_defender), 1);
     libNtve_gf_SendActorMessageToUnit(lp_defender, "SetOpacity 0.000000 2.500000");
-    Wait(0.125, c_timeGame);
+    libGame_Wait(0.125, c_timeGame);
     libNtve_gf_SendActorMessageToUnit(lp_defender, "AnimSetPausedAll");
     libNtve_gf_PauseUnit(lp_defender, true);
-    Wait(3.0, c_timeGame);
+    libGame_Wait(3.0, c_timeGame);
     if ((libMapM_gv_jungleAllCampsShouldBeHibernating == true)) {
         UnitBehaviorAddPlayer(lp_defender, "GardensMercCampHibernator", UnitGetOwner(lp_defender), 1);
     }
@@ -1500,7 +1500,7 @@ bool auto_libMapM_gf_JungleStopHibernatingCampDefender_TriggerFunc (bool testCon
     UnitBehaviorRemove(lp_defender, "GardensMercCampPreHibernator", 1);
     libNtve_gf_SendActorMessageToUnit(lp_defender, "AnimSetPausedAll 0");
     libNtve_gf_SendActorMessageToUnit(lp_defender, "SetOpacity 1.000000 2.000000");
-    Wait(2.0, c_timeGame);
+    libGame_Wait(2.0, c_timeGame);
     libNtve_gf_MakeUnitInvulnerable(lp_defender, false);
     UnitSetState(lp_defender, c_unitStateTargetable, true);
     UnitSetState(lp_defender, c_unitStateStatusBar, true);
@@ -2321,7 +2321,7 @@ bool auto_libMapM_gf_PlayMapMechanicIntroForPlayer_TriggerFunc (bool testConds, 
         lv_fadeDuration = 0.75;
         CutsceneFade(false, lv_fadeDuration, Color(0,0,0), 0.0, libCore_gv_playerGroupFromPlayer[lp_player], false);
         libStEx_gf_CinematicFade(false, lv_fadeDuration, Color(0.00, 0.00, 0.00), lp_player);
-        Wait(lv_fadeDuration, c_timeGame);
+        libGame_Wait(lv_fadeDuration, c_timeGame);
     }
 
     CutsceneStop(libMapM_gv_mMIntroCutscene[lp_player]);
@@ -2350,18 +2350,18 @@ bool auto_libMapM_gf_PlayMapMechanicIntroForPlayer_TriggerFunc (bool testConds, 
     if ((libNtve_gf_UnitGroupIsDead(libGame_gv_players[lp_player].lv_heroUnitGroup) == true)) {
         CutsceneFade(true, lv_fadeDuration, Color(0,0,0), 0.0, libCore_gv_playerGroupFromPlayer[lp_player], false);
         libStEx_gf_CinematicFade(true, lv_fadeDuration, Color(0.00, 0.00, 0.00), lp_player);
-        Wait(lv_fadeDuration, c_timeGame);
+        libGame_Wait(lv_fadeDuration, c_timeGame);
     }
     else {
         UISetMode(libCore_gv_playerGroupFromPlayer[lp_player], c_uiModeConsole, lv_fadeDuration);
         CutsceneFade(true, lv_fadeDuration, Color(0,0,0), 0.0, libCore_gv_playerGroupFromPlayer[lp_player], false);
         libStEx_gf_CinematicFade(true, lv_fadeDuration, Color(0.00, 0.00, 0.00), lp_player);
-        Wait(0.5, c_timeGame);
+        libGame_Wait(0.5, c_timeGame);
         UnitGroupSelect(libGame_gv_players[lp_player].lv_heroUnitGroup, lp_player, true);
         UISetMode(libCore_gv_playerGroupFromPlayer[lp_player], c_uiModeConsole, c_transitionDurationImmediate);
         libUIUI_gf_UIPartyFrameShowHidePartyFramePanelForPlayer(true, lp_player);
         libUIUI_gf_UIGameUIShowHideConsolePanelForPlayer(true, lp_player);
-        Wait((lv_fadeDuration - 0.5), c_timeGame);
+        libGame_Wait((lv_fadeDuration - 0.5), c_timeGame);
     }
     libGame_gv_players[lp_player].lv_heroSpawnReady = true;
     return true;
@@ -2440,13 +2440,13 @@ bool auto_libMapM_gf_MapMechanicDisplayAnnouncement_TriggerFunc (bool testConds,
     libNtve_gf_CreateDialogItemLabel(DialogLastCreated(), 200, 50, c_anchorCenter, 0, 0, lv_msg, ColorWithAlpha(0,0,0,0), lp_writeOut, lp_writeOutDuration);
     DialogControlSetFullDialog(DialogControlLastCreated(), lp_players, true);
     libNtve_gf_SetDialogItemStyle(DialogControlLastCreated(), "Storm_Map_Announcement", lp_players);
-    Wait(lp_duration, c_timeGame);
+    libGame_Wait(lp_duration, c_timeGame);
     if ((libMapM_gv_mMAnnouncementDialog != lv_dlg)) {
         return true;
     }
 
     DialogControlFadeTransparency(DialogControlLastCreated(), lp_players, 2.0, 100.0);
-    Wait(2.0, c_timeGame);
+    libGame_Wait(2.0, c_timeGame);
     if ((libMapM_gv_mMAnnouncementDialog != lv_dlg)) {
         return true;
     }
@@ -2522,9 +2522,9 @@ bool auto_libMapM_gf_MMAnnouncementClearnup_TriggerFunc (bool testConds, bool ru
 
     // Automatic Variable Declarations
     // Implementation
-    Wait(lp_duration, c_timeGame);
+    libGame_Wait(lp_duration, c_timeGame);
     DialogControlFadeTransparency(lp_label, lp_players, 2.0, 100.0);
-    Wait(2.0, c_timeGame);
+    libGame_Wait(2.0, c_timeGame);
     DialogDestroy(lp_dlg);
     return true;
 }
@@ -2663,13 +2663,13 @@ void libMapM_gf_MapMechanicRunConversation (string lp_convoOrder, string lp_conv
 
     // Implementation
     while (!((libMapM_gv_mMRunConversationDoneCount == 0))) {
-        Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     libMapM_gf_MMRunConversationIndividual(lp_convoOrder, libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false));
     libMapM_gf_MMRunConversationIndividual(lp_convoChaos, libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamChaosIndex_C, false));
     libMapM_gf_MMRunConversationIndividual(lp_convoObserver, libCore_gv_playerGroupFromPlayer[libCore_gv_oBSERVER_ObserverUIPlayer]);
     while (true) {
-        Wait(0.125, c_timeGame);
+        libGame_Wait(0.125, c_timeGame);
         autoC1B27D67_ae = libMapM_gv_mMRunConversationDoneCount;
         lv_itIndex = 1;
         for ( ; ( (autoC1B27D67_ai >= 0 && lv_itIndex <= autoC1B27D67_ae) || (autoC1B27D67_ai < 0 && lv_itIndex >= autoC1B27D67_ae) ) ; lv_itIndex += autoC1B27D67_ai ) {
@@ -2751,7 +2751,7 @@ bool auto_libMapM_gf_MapSetRepulseRegion_TriggerFunc (bool testConds, bool runAc
     libMapM_gv_mMRepulseRegionPunchTarget[lp_team][2] = lp_punchTargetLocation2;
     libMapM_gv_mMRepulseRegionPunchTarget[lp_team][3] = lp_punchTargetLocation3;
     libMapM_gv_mMRepulseRegionPunchTarget[lp_team][4] = lp_punchTargetLocation4;
-    Wait(2.0, c_timeGame);
+    libGame_Wait(2.0, c_timeGame);
     TriggerExecute(libMapM_gt_MMRepulseRegionPunchBehavior, true, false);
     return true;
 }
@@ -2775,7 +2775,7 @@ bool auto_libMapM_gf_MMRepulseRegionAddToPunchedGroup_TriggerFunc (bool testCond
     // Automatic Variable Declarations
     // Implementation
     UnitGroupAdd(libMapM_gv_mMRepulseRegionPunchedGroup, lp_punchedUnit);
-    Wait(1.0, c_timeGame);
+    libGame_Wait(1.0, c_timeGame);
     UnitGroupRemove(libMapM_gv_mMRepulseRegionPunchedGroup, lp_punchedUnit);
     return true;
 }
@@ -2896,7 +2896,7 @@ bool auto_libMapM_gf_CreateSnapshotOfUnitForBothTeams_TriggerFunc (bool testCond
     for ( ; ( (auto9F88AE3B_ai >= 0 && lv_i <= auto9F88AE3B_ae) || (auto9F88AE3B_ai < 0 && lv_i >= auto9F88AE3B_ae) ) ; lv_i += auto9F88AE3B_ai ) {
         libNtve_gf_ShareVisionofUnit(lp_unit, true, libGame_gf_ComputerPlayerInTeam(lv_i));
     }
-    Wait(0.0625, c_timeGame);
+    libGame_Wait(0.0625, c_timeGame);
     lv_i = 1;
     for ( ; ( (auto05932E8B_ai >= 0 && lv_i <= auto05932E8B_ae) || (auto05932E8B_ai < 0 && lv_i >= auto05932E8B_ae) ) ; lv_i += auto05932E8B_ai ) {
         libNtve_gf_ShareVisionofUnit(lp_unit, false, libGame_gf_ComputerPlayerInTeam(lv_i));
@@ -3248,7 +3248,7 @@ bool auto_libMapM_gf_MMRavenPlayCurseSound_TriggerFunc (bool testConds, bool run
     SoundPlayForPlayer(SoundLink("Event_RavenCurse_CurseStart", -1), c_maxPlayers, PlayerGroupAll(), 100.0, 0.0);
     SoundPlayForPlayer(SoundLink("Event_RavenCurse_CurseMid", -1), c_maxPlayers, PlayerGroupAll(), 100.0, 0.0);
     libMapM_gv_mMRavenCurseSound = SoundLastPlayed();
-    Wait(2.0, c_timeReal);
+    libGame_Wait(2.0, c_timeReal);
     lv_enemyTeam = libGame_gf_EnemyTeam(lp_cursedTeam);
     libMapM_gf_MMRavenTransmissionCurseActiveQ(lp_cursedTeam);
     return true;
@@ -3699,7 +3699,7 @@ bool auto_libMapM_gf_MMGardensDragonChangeDragonballTowerOwnership_TriggerFunc (
     libGame_gf_SendEventMapDragonShireObeliskOwnershipChange(lp_newOwner, libMapM_gv_mMGardensDragonDragonTowers[lp_dragonballTowerIndex].lv_shrineUnit, lp_capturingPlayers);
     ActorSend(libNtve_gf_MainActorofUnit(libMapM_gv_mMGardensDragonDragonTowers[lp_dragonballTowerIndex].lv_shrineUnit), "Signal ActiveSoundTog");
     TriggerExecute(libMapM_gt_MMGardensDragonDragonTowerCheckObeliskStatus, true, false);
-    Wait(0.125, c_timeGame);
+    libGame_Wait(0.125, c_timeGame);
     autoAAB21751_g = PlayerGroupAll();
     lv_player = -1;
     while (true) {
@@ -5677,7 +5677,7 @@ bool libMapM_gt_JungleSiegeGiantTaunt_Func (bool testConds, bool runActions) {
     lv_target = EventPlayerEffectUsedUnit(c_effectUnitTarget);
     ActorLookAtTypeStart(libNtve_gf_MainActorofUnit(lv_siegeGiant), "MedHeadOnly", libNtve_gf_MainActorofUnit(lv_target));
     while (!(((UnitHasBehavior2(lv_siegeGiant, "MercDefenderSiegeGiantTauntProcLookAt") == false) || (UnitHasBehavior2(lv_siegeGiant, "JungleCreepPassive") == false)))) {
-        Wait(1.0, c_timeGame);
+        libGame_Wait(1.0, c_timeGame);
     }
     libNtve_gf_SimpleLookAtStop(lv_siegeGiant, "MedHeadOnly");
     return true;
@@ -5912,7 +5912,7 @@ bool libMapM_gt_MMRepulseRegionPunchBehavior_Func (bool testConds, bool runActio
 
             }
         }
-        Wait(0.125, c_timeGame);
+        libGame_Wait(0.125, c_timeGame);
     }
     return true;
 }
@@ -5990,7 +5990,7 @@ bool libMapM_gt_MMSafeRegionBehavior_Func (bool testConds, bool runActions) {
 
             }
         }
-        Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     return true;
 }
@@ -6246,7 +6246,7 @@ bool libMapM_gt_MMRavenSpawnTribute_Func (bool testConds, bool runActions) {
         libMapM_gf_MMRavenTransmissionFirstEventStartQ();
         TriggerExecute(libMapM_gt_MMRavenObjectiveUIHandler, true, false);
     }
-    Wait(2.0, c_timeGame);
+    libGame_Wait(2.0, c_timeGame);
     SoundPlayAtPointForPlayer(SoundLink("Event_RavenCurse_TributeSpawn", -1), c_maxPlayers, PlayerGroupAll(), lv_spawnPoint, 2.0, 100.0, 0.0);
     libCore_gf_CreateMinimapPingStorm(PlayerGroupAll(), "StormAlert", lv_spawnPoint, ColorWithAlpha(100.00, 100.00, 0.00, 0.00), 6.0);
     libGame_gf_SendEventMapCursedHollowTributeWarning(lv_spawnPoint);
@@ -6265,7 +6265,7 @@ bool libMapM_gt_MMRavenSpawnTribute_Func (bool testConds, bool runActions) {
     libNtve_gf_WaitForTimer(libMapM_gv_mMRavenTributeSpawnTimer, 0.0, false);
     UnitKill(libMapM_gv_mMRavenTributeWarning);
     libNtve_gf_CreateModelAtPoint("RavenLordTributeSpawn", lv_spawnPoint);
-    Wait(0.5, c_timeReal);
+    libGame_Wait(0.5, c_timeReal);
     ActorSend(libNtve_gf_ActorLastCreated(), "AnimBracketStop BSD");
     libCore_gf_CreateMinimapPingStorm(PlayerGroupAll(), "StormAlert", lv_spawnPoint, ColorWithAlpha(100.00, 100.00, 0.00, 0.00), 3.0);
     libMapM_gf_ShareVisionofUnitForBothTeams(UnitLastCreated());
@@ -6275,7 +6275,7 @@ bool libMapM_gt_MMRavenSpawnTribute_Func (bool testConds, bool runActions) {
     TriggerEnable(libMapM_gt_MMRavenTributeObtained, true);
     libGame_gf_SendEventMapCursedHollowTributeSpawned(UnitLastCreated());
     libMapM_gv_mMRavenEventFirstTime = false;
-    Wait(1.0, c_timeGame);
+    libGame_Wait(1.0, c_timeGame);
     libUIUI_gf_AttachHelpButtonToUnit(UnitLastCreated(), libMapM_gt_MMHelpbuttonClicked, StringExternal("Param/Value/lib_MapM_E2F763F8"), 110, 135);
     autoF1C7D990_g = libCore_gv_playerGroupFromPlayer[libCore_gv_oBSERVER_ObserverUIPlayer];
     lv_itPlayer = -1;
@@ -6284,7 +6284,7 @@ bool libMapM_gt_MMRavenSpawnTribute_Func (bool testConds, bool runActions) {
         	if (lv_itPlayer<0) { break; }
         	libUIUI_gf_ShowHideHelpButtonOnUnitForPlayer(lv_itPlayer, false, UnitLastCreated());
     }
-    Wait(0.5, c_timeGame);
+    libGame_Wait(0.5, c_timeGame);
     auto4CE6CAAB_g = libCore_gv_activeHumanPlayers;
     lv_itPlayer = -1;
     while (true) {
@@ -6592,7 +6592,7 @@ bool libMapM_gt_MMRavenCurseStartLightTransition_Func (bool testConds, bool runA
     }
 
     libGame_gf_SpecialLightingEventStart("StormRavenCourtCurseTransition", PlayerGroupAll(), 1.0);
-    Wait(1.0, c_timeGame);
+    libGame_Wait(1.0, c_timeGame);
     libGame_gf_SpecialLightingEventStart("StormRavenCourtCurseFinal", PlayerGroupAll(), 2.0);
     return true;
 }
@@ -6669,7 +6669,7 @@ bool libMapM_gt_MMRavenCurseFinished_Func (bool testConds, bool runActions) {
         TimerStart(libMapM_gv_mMRavenObjectivePreviewTimer, libMapM_gv_mMRavenObjectivePreviewLongDelay, false, c_timeGame);
     }
 
-    Wait(libMapM_gv_mMRavenTributePostCurseWaitTime, c_timeGame);
+    libGame_Wait(libMapM_gv_mMRavenTributePostCurseWaitTime, c_timeGame);
     libMapM_gf_MMRavenStartSpawnTimer5090();
     return true;
 }
@@ -6720,9 +6720,9 @@ bool libMapM_gt_MMRavenObjectiveUIHandler_Func (bool testConds, bool runActions)
         if ((libMapM_gv_mMRavenCurseLifted == true)) {
             lv_state = libMapM_ge_MMRavenCurseState_Lifted;
             libUIUI_gf_MapMechanicsRavenCourtSetModeForTeam(libUIUI_ge_MapMechanicsRavenCourtModes_NoActivity, 0);
-            Wait(8.0, c_timeGame);
+            libGame_Wait(8.0, c_timeGame);
             while (!((libMapM_gv_mMRavenCurseLifted == false))) {
-                Wait(0.25, c_timeGame);
+                libGame_Wait(0.25, c_timeGame);
             }
             lv_lastState = lv_state;
         }
@@ -6771,7 +6771,7 @@ bool libMapM_gt_MMRavenObjectiveUIHandler_Func (bool testConds, bool runActions)
             lv_lastState = lv_state;
         }
         libMapM_gf_MMRavenObjectiveUIUpdateText();
-        Wait(0.25, c_timeGame);
+        libGame_Wait(0.25, c_timeGame);
     }
     return true;
 }
@@ -6913,7 +6913,7 @@ bool libMapM_gt_MMRavenDebugStartNexten_Func (bool testConds, bool runActions) {
     if ((TriggerIsEnabled(libMapM_gt_MMRavenStartSpawning) == true)) {
         TimerStart(libMapM_gv_mMRavenStartTimer, 1.0, false, c_timeGame);
         while (!((TriggerIsEnabled(libMapM_gt_MMRavenStartSpawning) == false))) {
-            Wait(0.25, c_timeGame);
+            libGame_Wait(0.25, c_timeGame);
         }
     }
 
@@ -6949,7 +6949,7 @@ bool libMapM_gt_MMRavenDebugStartCurseec_Func (bool testConds, bool runActions) 
     if ((TriggerIsEnabled(libMapM_gt_MMRavenStartSpawning) == true)) {
         TimerStart(libMapM_gv_mMRavenStartTimer, 1.0, false, c_timeGame);
         while (!((TriggerIsEnabled(libMapM_gt_MMRavenStartSpawning) == false))) {
-            Wait(0.25, c_timeGame);
+            libGame_Wait(0.25, c_timeGame);
         }
     }
 
@@ -7675,7 +7675,7 @@ bool libMapM_gt_MMGardensDragonDragonKnightDiesorExpires_Func (bool testConds, b
     libGame_gf_SendEventMapDragonShireDragonEnds();
     ActorSend(libCore_gf_ActorStoredForUnit(libMapM_gv_mMGardensDragonUnit, 1), "Destroy");
     libMapM_gf_MMGardensDragonDragonHasLeftArtHooks();
-    Wait(0.5, c_timeGame);
+    libGame_Wait(0.5, c_timeGame);
     libMapM_gf_MMDragonballsTransmissionDragonExpireQ();
     return true;
 }
@@ -7785,7 +7785,7 @@ bool libMapM_gt_MMGardensDragonObjectiveUIHandler_Func (bool testConds, bool run
 
             lv_lastState = lv_state;
         }
-        Wait(0.25, c_timeGame);
+        libGame_Wait(0.25, c_timeGame);
     }
     return true;
 }

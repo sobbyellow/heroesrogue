@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DocInfo>
+    <Icon>
+        <Value>Assets\Textures\ui_ingame_mapmechanic_loadscreen_hanamura_rework.dds</Value>
+    </Icon>
+    <MatchMakerTag>
+        <Value>Hero</Value>
+    </MatchMakerTag>
+    <Dependencies>
+        <Value>bnet:Hanamura (Mod)/0.0/1074,file:Mods\HeroesMapMods\BattlegroundMapMods\Hanamura.StormMod</Value>
+    </Dependencies>
+    <ModifiableDependencies>
+        <Value>Mods/HeroesData.StormMod</Value>
+        <Value>Mods\heroesmapmods/battlegroundmapmods/overwatchdata.stormmod</Value>
+    </ModifiableDependencies>
+    <Preload>
+        <Value>GameLink:Model;OverwatchBossRingOfFireModel</Value>
+    </Preload>
+</DocInfo>

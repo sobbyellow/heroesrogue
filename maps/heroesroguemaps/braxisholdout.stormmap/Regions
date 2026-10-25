@@ -1,0 +1,814 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Regions>
+    <region id="2">
+        <name value="Lane 1 - Order - Town 1"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="46.7243,116.46,70.2761,140.5407"/>
+        </shape>
+        <shape type="rect">
+            <quad value="64.75,96,76.75,118"/>
+        </shape>
+    </region>
+    <region id="13">
+        <name value="Lane 2 - Order - Town 2"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="85.5,55.119,112.1318,77.8818"/>
+        </shape>
+    </region>
+    <region id="17">
+        <name value="Lane 1 - Chaos - Town 1"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="175.5,122.7211,201.346,148.5"/>
+        </shape>
+        <shape type="rect">
+            <quad value="171.25,105.5,183.25,123.5"/>
+        </shape>
+    </region>
+    <region id="21">
+        <name value="Lane 1 - Chaos - Town 2"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="135.6254,139.2502,164.3752,159.7502"/>
+        </shape>
+    </region>
+    <region id="9">
+        <name value="Merc Camp - Grave Golem 1"/>
+        <color value="255,255,0,0"/>
+        <shape type="circle">
+            <center value="124.0002,108.0002"/>
+            <radius value="12"/>
+        </shape>
+        <shape type="rect">
+            <quad value="109,105,114.5,115"/>
+        </shape>
+        <shape type="rect">
+            <quad value="108,105,109,114"/>
+        </shape>
+        <shape type="rect">
+            <quad value="139,103,140,110"/>
+        </shape>
+        <shape type="rect">
+            <quad value="132,100,139,110"/>
+        </shape>
+        <shape type="rect">
+            <quad value="131,113.5,134,117"/>
+        </shape>
+        <shape type="rect">
+            <quad value="133.5,110,138,115"/>
+        </shape>
+        <shape type="rect">
+            <quad value="110,102.5,113.5,106"/>
+        </shape>
+        <shape type="rect">
+            <quad value="114,99,117,102"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="114.5,95.5,135.5,99.5"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="113,116,134.5,121"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="109,114,115,116"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="133,100,139,102"/>
+        </shape>
+        <shape type="rect">
+            <quad value="138,110,140,111"/>
+        </shape>
+    </region>
+    <region id="4">
+        <name value="Lane 1 - Order - Town 2"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="84.2502,132.5937,110.8544,156.7526"/>
+        </shape>
+    </region>
+    <region id="22">
+        <name value="Lane 2 - Chaos - Town 2"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="136.5983,58.9023,162.4287,83.4025"/>
+        </shape>
+    </region>
+    <region id="32">
+        <name value="Merc Camp - Orange - Hard 1"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="154.0002,93.5002"/>
+            <radius value="12"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="140,81.5,166,90"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="158,90,167.5,106.5"/>
+        </shape>
+    </region>
+    <region id="30">
+        <name value="Lane 2 - Chaos - Town 1"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="175.2722,76,201,101"/>
+        </shape>
+    </region>
+    <region id="3">
+        <name value="Order Safe Zone Punt Region"/>
+        <color value="255,128,128,0"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="31.5407,95.277"/>
+            <radius value="3"/>
+        </shape>
+    </region>
+    <region id="6">
+        <name value="Order Safe Zone Region"/>
+        <color value="255,64,0,128"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="28.8024,92.3535"/>
+            <radius value="4.8564"/>
+        </shape>
+    </region>
+    <region id="16">
+        <name value="Lane 2 - Order - Town 1"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="49.2504,63.8752,75.7502,93.3774"/>
+        </shape>
+    </region>
+    <region id="11">
+        <name value="Zerg - Bottom Spawn Region (Order) (Attacks Chaos)"/>
+        <shape type="rect">
+            <quad value="102.1025,24.4523,105.1025,27.4523"/>
+        </shape>
+    </region>
+    <region id="28">
+        <name value="Merc Camp - Orange - Medium 1"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="141.0002,122.0002"/>
+            <radius value="12"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="129.0004,121.0004,138.0004,129.0004"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="129.0004,118.0004,138.0004,121.0004"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="131,110,146,114"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="130.5,114,143,116"/>
+        </shape>
+        <shape type="diamond">
+            <negative/>
+            <center value="137.75,131.75"/>
+            <width value="13.4335"/>
+            <height value="5.6562"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="149,114,153,118"/>
+        </shape>
+    </region>
+    <region id="1">
+        <name value="Zerg - Top Spawn Region (Chaos) (Attacks Order)"/>
+        <shape type="rect">
+            <quad value="142.7402,191.3222,145.7402,194.3222"/>
+        </shape>
+    </region>
+    <region id="15">
+        <name value="Order - Lane 1 - Keep - Forward Defense"/>
+        <invisible/>
+        <shape type="diamond">
+            <center value="46.5007,144.5014"/>
+            <width value="3.8886"/>
+            <height value="4.0615"/>
+        </shape>
+    </region>
+    <region id="18">
+        <name value="Order - Lane 1 - Keep - Rear Defense"/>
+        <invisible/>
+        <shape type="diamond">
+            <center value="46,141.5"/>
+            <width value="3.8886"/>
+            <height value="9.545"/>
+        </shape>
+    </region>
+    <region id="20">
+        <name value="Chaos - Lane 2 - Keep - Rear Defense"/>
+        <shape type="diamond">
+            <center value="201,75.5"/>
+            <width value="3.8886"/>
+            <height value="9.545"/>
+        </shape>
+    </region>
+    <region id="23">
+        <name value="Chaos - Lane 2 - Keep - Forward Defense"/>
+        <shape type="diamond">
+            <center value="201.5004,73.5002"/>
+            <width value="3.8886"/>
+            <height value="3.8852"/>
+        </shape>
+    </region>
+    <region id="31">
+        <name value="Chaos - Lane 1 - Keep - Forward Defense"/>
+        <shape type="diamond">
+            <center value="200.0007,148.0017"/>
+            <width value="3.6643"/>
+            <height value="3.7526"/>
+        </shape>
+    </region>
+    <region id="33">
+        <name value="Chaos - Lane 1 - Keep - Rear Defense"/>
+        <shape type="rect">
+            <quad value="195.5,142.7507,205.5,146.2507"/>
+        </shape>
+    </region>
+    <region id="34">
+        <name value="Order - Lane 2 - Keep - Forward Defense"/>
+        <invisible/>
+        <shape type="diamond">
+            <center value="48.002,68.002"/>
+            <width value="3.5241"/>
+            <height value="3.5354"/>
+        </shape>
+    </region>
+    <region id="35">
+        <name value="Order - Lane 2 - Keep - Rear Defense"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="42.5004,69.7502,52.5004,73.2502"/>
+        </shape>
+    </region>
+    <region id="36">
+        <name value="Order Repulsor and Heal Region"/>
+        <shape type="diamond">
+            <center value="27.0695,87.026"/>
+            <width value="11.5808"/>
+            <height value="17.3002"/>
+        </shape>
+        <shape type="circle">
+            <center value="30.4543,90.754"/>
+            <radius value="3.0498"/>
+        </shape>
+    </region>
+    <region id="37">
+        <name value="Chaos Repulsor and Heal Region"/>
+        <color value="255,255,128,0"/>
+        <shape type="diamond">
+            <center value="220.9218,128.9365"/>
+            <width value="11.3261"/>
+            <height value="17.6716"/>
+        </shape>
+        <shape type="circle">
+            <center value="217.611,125.5095"/>
+            <radius value="3.0498"/>
+        </shape>
+    </region>
+    <region id="38">
+        <name value="Merc Camp - Blue - Hard 1"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="94.0002,122.5002"/>
+            <radius value="12"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="82.5,126,104.5,134.5"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="81,109,90,126"/>
+        </shape>
+    </region>
+    <region id="24">
+        <name value="Zerg - Top Spawn Region (Order) (Attacks Chaos)"/>
+        <shape type="rect">
+            <quad value="90.452,189.566,93.452,192.566"/>
+        </shape>
+    </region>
+    <region id="39">
+        <name value="Zerg - Bottom Spawn Region (Chaos) (Attacks Order)"/>
+        <shape type="rect">
+            <quad value="153.2937,26.2336,156.2937,29.2336"/>
+        </shape>
+    </region>
+    <region id="40">
+        <name value="Bottom Beacon Ownership Region"/>
+        <shape type="rect">
+            <quad value="107,73.5,134.5,105"/>
+        </shape>
+    </region>
+    <region id="41">
+        <name value="Top Beacon Ownership Region"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="114.2502,111.2502,141.7502,142.7502"/>
+        </shape>
+    </region>
+    <region id="8">
+        <name value="Merc Camp - Blue - Medium 1"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="106.5002,94.0002"/>
+            <radius value="12"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="111,87,118.5,95"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="109.5,95,118.5,98"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="102.5,102.0004,117.5,106.0004"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="104.5,100.0004,117.0004,102.0004"/>
+        </shape>
+        <shape type="diamond">
+            <negative/>
+            <center value="109.7504,84.2504"/>
+            <width value="13.4335"/>
+            <height value="5.6562"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="94.5004,98.0004,98.5004,102.0004"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="109.5,87.5,112.5,92.5"/>
+        </shape>
+    </region>
+    <region id="10">
+        <name value="Zerg - Top Spawn Holding Pen (Order)"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="98.4897,179.0195"/>
+            <radius value="2.704"/>
+        </shape>
+        <shape type="circle">
+            <center value="99.9897,175.0195"/>
+            <radius value="2.704"/>
+        </shape>
+        <shape type="circle">
+            <center value="98.7397,178.5195"/>
+            <radius value="4.38"/>
+        </shape>
+        <shape type="diamond">
+            <negative/>
+            <center value="93.9904,176.0202"/>
+            <width value="2.121"/>
+            <height value="11.3125"/>
+        </shape>
+    </region>
+    <region id="12">
+        <name value="Zerg - Bottom Spawn Holding Pen (Order)"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="108.2541,36.6672"/>
+            <radius value="4.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="109.504,40.417"/>
+            <radius value="3.0207"/>
+        </shape>
+    </region>
+    <region id="19">
+        <name value="Zerg - Top Spawn Holding Pen (Chaos)"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="138.75,175.75"/>
+            <radius value="2.8503"/>
+        </shape>
+        <shape type="circle">
+            <center value="139.0007,177.5007"/>
+            <radius value="2.8503"/>
+        </shape>
+        <shape type="circle">
+            <center value="140.0004,180.5004"/>
+            <radius value="2.8503"/>
+        </shape>
+        <shape type="circle">
+            <center value="139.5,178.5"/>
+            <radius value="4.301"/>
+        </shape>
+    </region>
+    <region id="25">
+        <name value="Top Lane Cable Region"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="106.8303,84.5817,134.2268,179.8222"/>
+        </shape>
+    </region>
+    <region id="26">
+        <name value="Bottom Lane Cable Region"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="107.0063,38.4865,134.4028,133.727"/>
+        </shape>
+    </region>
+    <region id="27">
+        <name value="Elevator Region"/>
+        <shape type="rect">
+            <quad value="120.0002,104.0002,128,112"/>
+        </shape>
+    </region>
+    <region id="47">
+        <name value="Beam Region Top Left"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="103.2402,164.3444"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="106.2373,159.8444"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="109.7373,154.8444"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="112.2373,150.8444"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="115.7402,145.8476"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="119.2402,140.8476"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="100.0703,168.4277"/>
+            <radius value="4.6096"/>
+        </shape>
+    </region>
+    <region id="48">
+        <name value="Beam Region Top Right"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="136.0002,171.0002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="134.0002,165.0002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="122.5002,141.0002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="124.5002,145.5002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="127.0002,150.5002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="129.0002,155.5002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="131.5002,160.5002"/>
+            <radius value="4.6096"/>
+        </shape>
+    </region>
+    <region id="49">
+        <name value="Beam Region Bottom Left"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="121.0002,90.0002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="111.0002,48.5002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="112.5002,54.0002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="114.0002,59.5002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="115.0002,64.5002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="116.0002,70.0002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="117.5002,76.5002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="119.0002,83.0002"/>
+            <radius value="4.6096"/>
+        </shape>
+    </region>
+    <region id="50">
+        <name value="Beam Region Bottom Right"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="121.5002,90.5002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="126.0002,85.5002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="145.0002,49.0002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="142.5002,53.5002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="138.5002,59.5002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="135.0002,65.0002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="132.0002,72.0002"/>
+            <radius value="4.6096"/>
+        </shape>
+        <shape type="circle">
+            <center value="129.0002,78.5002"/>
+            <radius value="4.6096"/>
+        </shape>
+    </region>
+    <region id="14">
+        <name value="Zerg - Bottom Spawn Holding Pen (Chaos)"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="150,37"/>
+            <radius value="3.905"/>
+        </shape>
+        <shape type="circle">
+            <center value="147.25,40.25"/>
+            <radius value="2.8503"/>
+        </shape>
+    </region>
+    <region id="43">
+        <name value="Zerg - Top Spawn 1 (Order)"/>
+        <shape type="circle">
+            <center value="102.8818,177.1765"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <center value="101.1665,173.3803"/>
+            <radius value="2.2075"/>
+        </shape>
+    </region>
+    <region id="51">
+        <name value="Zerg - Top Spawn 3 (Order)"/>
+        <shape type="circle">
+            <center value="97.5837,179.8244"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="102.8818,177.1767"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="97.0034,174.2263"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="102.8815,177.1762"/>
+            <radius value="3.4"/>
+        </shape>
+    </region>
+    <region id="52">
+        <name value="Zerg - Top Spawn 1 (Chaos)"/>
+        <shape type="circle">
+            <center value="136.2194,178.0695"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <center value="138.5888,174.3803"/>
+            <radius value="2.21"/>
+        </shape>
+    </region>
+    <region id="55">
+        <name value="Zerg - Bottom Spawn 2 (Chaos)"/>
+        <shape type="circle">
+            <center value="150.9973,41.7744"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="145.1186,38.8242"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="146.8352,42.6206"/>
+            <radius value="2.2075"/>
+        </shape>
+    </region>
+    <region id="56">
+        <name value="Zerg - Bottom Spawn 3 (Chaos)"/>
+        <shape type="circle">
+            <center value="150.4172,36.177"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="145.1186,38.8242"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="150.9973,41.7744"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="145.1186,38.8242"/>
+            <radius value="3.4"/>
+        </shape>
+    </region>
+    <region id="57">
+        <name value="Zerg - Bottom Spawn 1 (Chaos)"/>
+        <shape type="circle">
+            <center value="145.119,38.8242"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <center value="146.8354,42.6206"/>
+            <radius value="2.2075"/>
+        </shape>
+    </region>
+    <region id="58">
+        <name value="Zerg - Bottom Spawn 1 (Order)"/>
+        <shape type="circle">
+            <center value="112.0454,37.787"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <center value="108.7851,41.9675"/>
+            <radius value="2.2075"/>
+        </shape>
+    </region>
+    <region id="60">
+        <name value="Zerg - Top Spawn 3 (Chaos)"/>
+        <shape type="circle">
+            <center value="140.6577,181.5056"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="136.2194,178.0695"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="142.3288,175.9812"/>
+            <radius value="3.4"/>
+        </shape>
+    </region>
+    <region id="53">
+        <name value="Zerg - Bottom Spawn 2 (Order)"/>
+        <shape type="circle">
+            <center value="105.6718,40.0195"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="108.7851,41.9672"/>
+            <radius value="2.2075"/>
+        </shape>
+    </region>
+    <region id="54">
+        <name value="Zerg - Bottom Spawn 3 (Order)"/>
+        <shape type="circle">
+            <center value="107.3425,34.4956"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="112.0454,37.7873"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="105.6718,40.0197"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="112.0454,37.787"/>
+            <radius value="3.4"/>
+        </shape>
+    </region>
+    <region id="59">
+        <name value="Zerg - Top Spawn 2 (Chaos)"/>
+        <shape type="circle">
+            <center value="142.3288,175.9816"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="136.2194,178.0695"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="138.5888,174.3803"/>
+            <radius value="2.21"/>
+        </shape>
+    </region>
+    <region id="42">
+        <name value="Zerg - Top Spawn 2 (Order)"/>
+        <shape type="circle">
+            <center value="97.0036,174.2265"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="102.8818,177.1765"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="101.1665,173.3803"/>
+            <radius value="2.2075"/>
+        </shape>
+    </region>
+    <region id="29">
+        <name value="Base Visibility Blue Team"/>
+        <shape type="rect">
+            <quad value="15.5,85,72.5,126"/>
+        </shape>
+        <shape type="diamond">
+            <center value="47.5,86"/>
+            <width value="36.0585"/>
+            <height value="34.6445"/>
+        </shape>
+        <shape type="diamond">
+            <center value="50.5,125"/>
+            <width value="32.5234"/>
+            <height value="31.1093"/>
+        </shape>
+    </region>
+    <region id="5">
+        <name value="Base Visibility Orange Team"/>
+        <shape type="rect">
+            <quad value="175,90,227,131"/>
+        </shape>
+        <shape type="diamond">
+            <center value="200.5002,130"/>
+            <width value="36.0585"/>
+            <height value="34.6445"/>
+        </shape>
+        <shape type="diamond">
+            <center value="197.5002,91"/>
+            <width value="32.5234"/>
+            <height value="31.1093"/>
+        </shape>
+    </region>
+</Regions>

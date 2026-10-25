@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+  
+  <CAbilEffectTarget id="TyrandeLightofElune">
+    <TargetFilters value="-;Neutral,Missile,Stasis,Dead" />
+  </CAbilEffectTarget>
+
+  <CEffectSet id="LightofEluneSet">
+    <ValidatorArray index="0" value="TyrandeLightofEluneValidatorCombine" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="TyrandeLightofEluneKaldoreiResistanceTalentApplyArmorStack">
+    <ValidatorArray value="TargetIsAllyorSelf" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="TyrandeLightofEluneQuickeningBlessingApplyMoveSpeedBehavior">
+    <ValidatorArray value="TargetIsAllyorSelf" />
+  </CEffectApplyBehavior>
+  <CEffectRemoveBehavior id="TyrandeLightofEluneCelestialAttunementTalentRemoveStuns">
+    <ValidatorArray value="TargetIsAllyorSelf" />
+  </CEffectRemoveBehavior>
+  <CEffectCreateHealer id="LightofEluneHealTarget">
+    <ValidatorArray value="TargetIsAllyorSelf" />
+  </CEffectCreateHealer>
+  <CEffectSet id="LightofEluneTargetSet">
+    <EffectArray value="LightofEluneDamageTarget" />
+    <EffectArray value="LightofEluneSearch" />
+  </CEffectSet>
+
+  <CEffectEnumArea id="LightofEluneSearch">
+    <Chance value="0" />
+    <SearchFilters value="-;Neutral,Missile,Stasis,Dead" />
+    <ExcludeArray Effect="LightofEluneTargetSet" Value="Target" />
+    <AreaArray Effect="LightofEluneAreaSet">
+      <Radius value="2.5" />
+    </AreaArray>
+    <ImpactLocation Value="TargetPoint" />
+    <SearchFlags index="ExtendByUnitRadius" value="1" />
+  </CEffectEnumArea>
+  <CEffectSet id="LightofEluneAreaSet">
+    <ValidatorArray value="TyrandeLightofEluneValidatorCombine" />
+    <EffectArray value="LightofEluneHealTarget" />
+    <EffectArray value="LightofEluneDamageTarget" />
+    <EffectArray value="TyrandeLightofEluneQuickeningBlessingApplyMoveSpeedBehavior" />
+    <EffectArray value="TyrandeLightofEluneCelestialAttunementTalentRemoveStuns" />
+  </CEffectSet>
+
+  <CEffectDamage id="LightofEluneDamageTarget" parent="StormSpell">
+    <ValidatorArray value="TargetIsEnemy" />
+    <MultiplicativeModifierArray index="EverlastingLight" Validator="TyrandeEverlastingLightCombine" Modifier="0.8" Crit="1" />
+    <Amount value="270" />
+  </CEffectDamage>
+
+  <CAbilEffectInstant id="TyrandeNightElfBond">
+    <CmdButtonArray index="Execute" DefaultButtonFace="TyrandeNightElfBond" />
+  </CAbilEffectInstant>
+
+  <CBehaviorAbility id="AffixTyrandeStarfallBehaviorAbility">
+    <Buttons Face="TyrandeStarfall" Type="AbilCmd" AbilCmd="TyrandeStarfall,Execute" />
+  </CBehaviorAbility>
+
+  <CBehaviorBuff id="TyrandePermanentCloakDisableController" parent="StormPersistentCloakController" />
+  <CBehaviorBuff id="TyrandePermanentCloak" parent="StormPersistentCloak">
+    <Period value="0.0625" />
+    <EnableEffect value="HoldFireApplyInitialBehavior" />
+    <DisableEffect value="ApplyGenericDecloakCaster" />
+  </CBehaviorBuff>
+
+  <CEffectSet id="SentinelShotImpactSet">
+    <EffectArray value="TyrandeSentinelShotDamageAddToken" />
+  </CEffectSet>
+  <CEffectSet id="TyrandeHeroWeaponImpactSet">
+    <EffectArray value="TyrandeTheMarkAddToken" />
+    <EffectArray value="TyrandeMeteorShowerSearch" />
+  </CEffectSet>
+  <CEffectSet id="TyrandeHeroWeaponHuntressFuryTalentMissileImpactSet">
+    <EffectArray value="TyrandeTheMarkAddToken" />
+  </CEffectSet>
+  <CEffectSet id="TyrandeLunarFlareSearchSet">
+    <EffectArray value="LunarFlareSecondFlareDelayPersistent" />
+  </CEffectSet>
+  <CEffectSet id="TyrandeShadowstalkInitialSet">
+    <EffectArray value="TyrandeShadowstalkApplyUnrevealable" />
+  </CEffectSet>
+
+  <CButton id="TyrandeNightElfBond" parent="StormButtonParent">
+    <Icon value="Assets\Textures\affix_icon_night_elf_bond.dds" />
+  </CButton>
+
+  <CEffectCreateHealer id="LightofEluneHealTarget">
+    <MultiplicativeModifierArray index="TyrandeElunesReach" Validator="TyrandeElunesReachGTR8Range" Modifier="0" Crit="0" />
+  </CEffectCreateHealer>
+
+  <CEffectDamage id="SentinelShotDamage">
+    <MultiplicativeModifierArray index="ElunesRanger" Accumulator="TyrandeSentinelShotDamageAccumulator" />
+  </CEffectDamage>
+
+  <CEffectDamage id="SentinelShotDamagePvE" parent="StormSpell">
+    <Visibility value="Hidden" />
+    <Amount value="60" />
+    <MultiplicativeModifierArray index="ElunesRanger" Accumulator="TyrandeSentinelShotDamageAccumulator" />
+    <MultiplicativeModifierArray index="Ranger" Validator="HasTyrandeSentinelRanger" Accumulator="TyrandeSentinelShotRangerAccumulator" />
+  </CEffectDamage>
+
+  <CEffectDamage id="TyrandeHeroWeaponDamage">
+    <Amount>
+      <AccumulatorArray value="TyrandeTheMarkAccumulator" />
+    </Amount>
+  </CEffectDamage>
+
+  <CEffectDamage id="TyrandeHuntressFuryDamage">
+    <Amount>
+      <AccumulatorArray value="TyrandeTheMarkAccumulator" />
+    </Amount>
+  </CEffectDamage>
+
+  <CEffectModifyPlayer id="LunarFlareQuestRangeUpgrade">
+    <EffectArray Reference="Effect,TyrandeMeteorShowerSearch,AreaArray[0].Radius" Value="$TyrandeLunarBlazeRangeIncrease" />
+  </CEffectModifyPlayer>
+  <CEffectApplyBehavior id="TyrandeSentinelApplyPierceBuff">
+    <WhichUnit Value="Source" />
+    <Behavior value="TyrandeSentinelPierceBuff" />
+    <ValidatorArray index="0" value="HasPierceQuestCompleteOrHasAffixPierceQuestComplete" />
+  </CEffectApplyBehavior>
+
+  <CBehaviorTokenCounter id="TyrandeSentinelShotDamageTokenCounter" parent="StormQuestToken">
+    <Face value="TyrandeSentinelShotDamageTokenCounter" />
+    <Max value="10000" />
+    <ConditionalEvents Compare="GE" CompareValue="20">
+      <Event EventId="QuestMilestone" Effect="LunarFlareQuestPierceUpgrade" />
+    </ConditionalEvents>
+  </CBehaviorTokenCounter>
+  <CBehaviorTokenCounter id="TyrandeTheMarkTokenCounter" parent="StormQuestToken">
+    <Face value="TyrandeTheMarkTokenCounter" />
+    <Max value="30300" />
+  </CBehaviorTokenCounter>
+  <CEffectModifyTokenCount id="TyrandeSentinelShotDamageAddToken" parent="BaseEffectModifyTokenCount">
+    <Chance value="0" />
+    <ValidatorArray value="TargetIsHero" />
+    <EffectCategory index="Quest" value="1" />
+    <TokenId value="TyrandeSentinelShotDamageTokenCounter" />
+  </CEffectModifyTokenCount>
+  
+  <CAccumulatorToken id="TyrandeSentinelShotDamageAccumulator" parent="BaseAccumulator">
+    <SourceEffect value="SentinelShotDamage" />
+    <ApplicationRule value="Add" />
+    <TokenId value="TyrandeSentinelShotDamageTokenCounter" />
+    <Scale value="0.05" />
+    <MaxAccumulation value="500" />
+  </CAccumulatorToken>
+  <CAccumulatorToken id="TyrandeTheMarkAccumulator" parent="BaseAccumulator">
+    <SourceEffect value="TyrandeHeroWeaponDamage" />
+    <ApplicationRule value="Add" />
+    <TokenId value="TyrandeTheMarkTokenCounter" />
+    <Scale value="0.4" />
+    <MaxAccumulation value="9999" />
+  </CAccumulatorToken>
+
+  <CEffectModifyTokenCount id="TyrandeTheMarkAddToken" parent="BaseEffectModifyTokenCount">
+    <Chance value="0" />
+    <ValidatorArray value="TargetIsHero" />
+    <EffectCategory index="Quest" value="1" />
+    <TokenId value="TyrandeTheMarkTokenCounter" />
+  </CEffectModifyTokenCount>
+
+
+  <CEffectEnumArea id="TyrandeMeteorShowerSearch">
+    <ValidatorArray value="CasterDoesNotHaveTyrandeMeteorShowerCooldown" />
+    <Chance value="0" />
+    <SearchFilters value="Visible;Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden,Invulnerable,Benign" />
+    <TargetSorts RequestCount="1" RequestPercentage="1">
+      <SortArray value="TSHeroic" />
+      <SortArray value="TSRandom" />
+    </TargetSorts>
+    <AreaArray MaxCount="1" Effect="TyrandeMeteorShowerProcSet">
+      <Radius value="10.5" />
+    </AreaArray>
+  </CEffectEnumArea>
+
+  <CEffectSet id="TyrandeMeteorShowerProcSet">
+    <EffectArray value="TyrandeMeteorShowerCooldownApplyBehavior" />
+    <EffectArray value="TyrandeMeteorShowerLunarFlareInitialPersistent" />
+  </CEffectSet>
+
+  <CEffectCreatePersistent id="TyrandeMeteorShowerLunarFlareInitialPersistent">
+    <PeriodicPeriodArray value="0" />
+    <PeriodicEffectArray value="LunarFlareInitialPersistent" />
+    <PeriodCount value="1" />
+  </CEffectCreatePersistent>
+
+  <CEffectApplyBehavior id="TyrandeMeteorShowerCooldownApplyBehavior">
+    <WhichUnit Value="Caster" />
+    <Behavior value="TyrandeMeteorShowerCooldown" />
+  </CEffectApplyBehavior>
+
+  <CBehaviorBuff id="TyrandeMeteorShowerCooldown">
+    <Duration value="3.5" />
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="TyrandeSentinelPvEHit">
+    <Duration value="0.25" />
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="TyrandeSentinelHarshMoonlightTalentSlowPvE" parent="StormSlowParent">
+    <Duration value="3" />
+    <Modification>
+      <UnifiedMoveSpeedFactor value="-0.35" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="TyrandeSentinelHarshMoonlightTalentDamageReductionPvE" parent="StormDamageReduction">
+    <BehaviorCategories index="DebuffAbilityPower" value="1" />
+    <BehaviorCategories index="DebuffAutoattackDPS" value="1" />
+    <Duration value="3" />
+    <Modification>
+      <DamageDealtFraction index="Splash" value="-0.35" />
+      <DamageDealtFraction index="Basic" value="-0.35" />
+      <DamageDealtFraction index="Ability" value="-0.35" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CEffectCreatePersistent id="LunarFlareSecondFlareDelayPersistent">
+    <Chance value="0" />
+    <ExpireDelay value="1.75" />
+    <ExpireEffect value="LunarFlareSecondFlareInitialPersistent" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="LunarFlareSecondFlareInitialPersistent">
+    <ExpireDelay value="0.75" />
+    <ExpireEffect value="TyrandeLunarSecondFlareSearchSet" />
+    <RevealRadius value="1.5" />
+    <RevealFlags index="Unfog" value="1" />
+  </CEffectCreatePersistent>
+  <CEffectSet id="TyrandeLunarSecondFlareSearchSet">
+    <EffectArray value="LunarFlareImpactSearchArea" />
+    <EffectArray value="TyrandeLunarFlareCreatePersistentReveal" />
+  </CEffectSet>
+  
+  <CEffectApplyBehavior id="TyrandeShadowstalkApplyUnrevealable">
+    <Behavior value="ShadowstalkerUnrevealable" />
+    <Chance value="0" />
+    <ValidatorArray index="0" value="TargetNotDead" />
+  </CEffectApplyBehavior>
+  
+  
+  <CEffectApplyBehavior id="ApplyNightElfBondMalfurion">
+    <Behavior value="NightElfBondMalfurion" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="NightElfBondMalfurionOrderSet">
+    <EffectArray value="NightElfBondMalfurionOrderAttack" />
+    <EffectArray value="NightElfBondMalfurionMalfurionSearchEnemiesMoonfire" />
+    <EffectArray value="NightElfBondMalfurionMalfurionSearchEnemiesRoot" />
+    <EffectArray value="NightElfBondMalfurionOrderMalfurionInnervate" />
+    <EffectArray value="NightElfBondMalfurionOrderMalfurionRegrowth" />
+    <EffectArray value="NightElfBondMalfurionOrderMove" />
+  </CEffectSet>
+  <CEffectIssueOrder id="NightElfBondMalfurionOrderMalfurionMoonfire">
+    <ValidatorArray value="NightElfBondMalfurionLT6RangeOfTyrande" />
+    <WhichUnit Value="Source" />
+    <Abil value="MalfurionMoonfire" />
+    <Target Value="TargetUnit" />
+  </CEffectIssueOrder>
+  <CEffectIssueOrder id="NightElfBondMalfurionOrderMalfurionEntanglingRoots">
+    <ValidatorArray value="NightElfBondMalfurionLT6RangeOfTyrande" />
+    <WhichUnit Value="Source" />
+    <Abil value="MalfurionEntanglingRoots" />
+    <Target Value="TargetUnit" />
+  </CEffectIssueOrder>
+  <CEffectIssueOrder id="NightElfBondMalfurionOrderMalfurionInnervate">
+    <ValidatorArray value="NightElfBondMalfurionLT6RangeOfTyrande" />
+    <WhichUnit Value="Source" />
+    <Abil value="MalfurionInnervate" />
+    <Target Value="CasterUnit" />
+  </CEffectIssueOrder>
+  <CEffectIssueOrder id="NightElfBondMalfurionOrderMalfurionRegrowth">
+    <ValidatorArray value="NightElfBondMalfurionLT6RangeOfTyrande" />
+    <WhichUnit Value="Source" />
+    <Abil value="MalfurionRegrowth" />
+    <Target Value="CasterUnit" />
+  </CEffectIssueOrder>
+  <CEffectIssueOrder id="NightElfBondMalfurionOrderAttack">
+    <ValidatorArray value="NightElfBondMalfurionLT6RangeOfTyrandeAndGT4" />
+    <WhichUnit Value="Source" />
+    <Abil value="attack" />
+    <Target Value="CasterPoint" />
+  </CEffectIssueOrder>
+  <CEffectIssueOrder id="NightElfBondMalfurionOrderMove">
+    <ValidatorArray value="NightElfBondMalfurionGT6RangeOfTyrande" />
+    <WhichUnit Value="Source" />
+    <Abil value="move" />
+    <Target Value="CasterPoint" />
+  </CEffectIssueOrder>
+  <CEffectEnumArea id="NightElfBondMalfurionMalfurionSearchEnemiesMoonfire">
+    <SearchFilters value="Visible;Self,Player,Ally,Neutral,ImmuneToAOE,NoMinionAggro,Missile,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray MaxCount="1" Effect="NightElfBondMalfurionOrderMalfurionMoonfire">
+      <Radius value="9" />
+    </AreaArray>
+    <TargetSorts>
+      <SortArray value="TSHeroic" />
+      <SortArray value="TSMerc" />
+      <SortArray value="TSMinion" />
+      <SortArray value="TSDistance" />
+    </TargetSorts>
+  </CEffectEnumArea>
+  <CEffectEnumArea id="NightElfBondMalfurionMalfurionSearchEnemiesRoot">
+    <SearchFilters value="Visible,Heroic;Self,Player,Ally,Neutral,ImmuneToAOE,NoMinionAggro,Missile,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray MaxCount="1" Effect="NightElfBondMalfurionOrderMalfurionEntanglingRoots">
+      <Radius value="8" />
+    </AreaArray>
+    <TargetSorts>
+      <SortArray value="TSHeroic" />
+    </TargetSorts>
+  </CEffectEnumArea>
+  <CEffectDamage id="NightElfBondDamage" parent="StormSpellPercentDamage">
+    <SourceButtonFace value="TyrandeNightElfBond" />
+    <Amount value="500000" />
+  </CEffectDamage>
+
+  <CValidatorLocationCompareRange id="NightElfBondMalfurionGT4RangeOfTyrande">
+    <WhichLocation Value="TargetUnit" />
+    <Compare value="GT" />
+    <Range value="4" />
+  </CValidatorLocationCompareRange>
+  <CValidatorLocationCompareRange id="NightElfBondMalfurionGT6RangeOfTyrande">
+    <WhichLocation Value="TargetUnit" />
+    <Compare value="GT" />
+    <Range value="6" />
+  </CValidatorLocationCompareRange>
+  <CValidatorLocationCompareRange id="NightElfBondMalfurionLT6RangeOfTyrande">
+    <WhichLocation Value="TargetUnit" />
+    <Compare value="LT" />
+    <Range value="6" />
+  </CValidatorLocationCompareRange>
+  <CValidatorCombine id="NightElfBondMalfurionLT6RangeOfTyrandeAndGT4">
+    <Type value="And" />
+    <CombineArray value="NightElfBondMalfurionLT6RangeOfTyrande" />
+    <CombineArray value="NightElfBondMalfurionGT4RangeOfTyrande" />
+  </CValidatorCombine>
+  <CValidatorUnitCompareBehaviorCount id="TargetDoesNotHaveTyrandeSentinelPvEHit">
+    <Compare value="LE" />
+    <Behavior value="TyrandeSentinelPvEHit" />
+  </CValidatorUnitCompareBehaviorCount>
+  <CValidatorLocationCompareRange id="TyrandeElunesReachGTR8Range">
+    <WhichLocation Value="TargetUnit" />
+    <Compare value="GT" />
+    <Range value="8" />
+  </CValidatorLocationCompareRange>
+  <CValidatorCombine id="HasPierceQuestCompleteOrHasAffixPierceQuestComplete">
+    <CombineArray value="HasPierceQuestComplete" />
+    <CombineArray value="HasAffixPierceQuestComplete" />
+  </CValidatorCombine>
+  <CValidatorUnitCompareTokenCount id="HasAffixPierceQuestComplete">
+    <Compare value="GE" />
+    <Value value="20" />
+    <TokenId value="TyrandeSentinelShotDamageTokenCounter" />
+    <WhichUnit Value="Caster" />
+  </CValidatorUnitCompareTokenCount>
+
+
+  <CValidatorUnitCompareBehaviorCount id="CasterDoesNotHaveTyrandeMeteorShowerCooldown">
+    <WhichUnit Value="Caster" />
+    <Value value="0" />
+    <Behavior value="TyrandeMeteorShowerCooldown" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  <CEffectEnumArea id="SentinelShotMissileSearchPvE">
+    <Chance value="0" />
+    <SearchFilters value="-;Heroic,Player,Ally,Neutral,ImmuneToSkillshots,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray Effect="TyrandeSentinelShotImpactSetPvE">
+      <RectangleWidth value="1.25" />
+      <RectangleHeight value="2.25" />
+    </AreaArray>
+    <RevealerParams Duration="4" ShapeExpansion="7">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+    <LaunchLocation Value="OriginPoint" />
+  </CEffectEnumArea>
+
+  <CEffectSet id="TyrandeSentinelShotImpactSetPvE">
+    <EffectArray value="SentinelShotRevealerPersistent" />
+    <EffectArray value="SentinelShotDamagePvE" />
+    <EffectArray value="TyrandeSentinelHarshMoonlightTalentProcSetPvE" />
+    <EffectArray value="TyrandeSentinelPvEHitApplyBehavior" />
+    <EffectArray value="CameraShakeLightTauntingTotemSet" />
+    <ValidatorArray value="noMarkers" />
+    <ValidatorArray value="SourceNotDead" />
+    <ValidatorArray value="TargetDoesNotHaveTyrandeSentinelPvEHit" />
+  </CEffectSet>
+
+  <CEffectApplyBehavior id="TyrandeSentinelPvEHitApplyBehavior">
+    <Behavior value="TyrandeSentinelPvEHit" />
+  </CEffectApplyBehavior>
+
+  <CEffectApplyBehavior id="TyrandeSentinelHarshMoonlightTalentApplyDamageReductionPvE">
+    <ValidatorArray index="0" value="TyrandeHasHarshMoonlightTalent" />
+    <Behavior value="TyrandeSentinelHarshMoonlightTalentDamageReductionPvE" />
+  </CEffectApplyBehavior>
+  <CEffectApplyBehavior id="TyrandeSentinelHarshMoonlightTalentApplySlowPvE" parent="StormSlowApply">
+    <ValidatorArray index="0" value="TyrandeHasHarshMoonlightTalent" />
+    <Behavior value="TyrandeSentinelHarshMoonlightTalentSlowPvE" />
+  </CEffectApplyBehavior>
+  <CEffectSet id="TyrandeSentinelHarshMoonlightTalentProcSetPvE">
+    <ValidatorArray value="TyrandeHasHarshMoonlightTalent" />
+    <EffectArray value="TyrandeSentinelHarshMoonlightTalentApplyDamageReductionPvE" />
+    <EffectArray value="TyrandeSentinelHarshMoonlightTalentApplySlowPvE" />
+  </CEffectSet>
+
+  <CValidatorCombine id="TyrandeLightofEluneValidatorCombine">
+    <CombineArray value="TyrandeLightofEluneValidator" />
+    <CombineArray value="TyrandeOverflowingLightCombine" />
+    <CombineArray value="TyrandeElunesWrathCombine" />
+  </CValidatorCombine>
+
+  <CValidatorCombine id="TyrandeOverflowingLightCombine">
+    <Type value="And" />
+    <CombineArray value="TyrandeHasOverflowingLight" />
+    <CombineArray value="TyrandeOverflowingLightValidator" />
+  </CValidatorCombine>
+  <CValidatorCombine id="TyrandeElunesWrathCombine">
+    <Type value="And" />
+    <CombineArray value="TyrandeHasElunesWrath" />
+    <CombineArray value="TyrandeElunesWrathValidator" />
+  </CValidatorCombine>
+
+  <CBehaviorBuff id="TyrandeOverflowingLightCarry" parent="CarryBehaviorParent" />
+  <CBehaviorBuff id="TyrandeElunesWrathCarry" parent="CarryBehaviorParent" />
+
+  <CValidatorUnitCompareBehaviorCount id="TyrandeHasOverflowingLight">
+    <WhichUnit Value="Caster" />
+    <Compare value="GT" />
+    <Behavior value="TyrandeOverflowingLightCarry" />
+  </CValidatorUnitCompareBehaviorCount>
+  <CValidatorUnitCompareBehaviorCount id="TyrandeHasElunesWrath">
+    <WhichUnit Value="Caster" />
+    <Compare value="GT" />
+    <Behavior value="TyrandeElunesWrathCarry" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  <CValidatorUnitFilters id="TyrandeElunesWrathValidator">
+    <Filters value="-;Player,Ally,Neutral,Missile,Stasis,Dead,Hidden,Invulnerable" />
+  </CValidatorUnitFilters>
+  <CValidatorUnitFilters id="TyrandeOverflowingLightValidator">
+    <Filters value="-;Heroic,Neutral,Enemy,Structure,ImmuneToFriendlyAbilities,Missile,Stasis,Dead" />
+  </CValidatorUnitFilters>
+  <CValidatorUnitFilters id="TyrandeLightofEluneValidator">
+    <Filters value="Heroic;Neutral,Enemy,Structure,ImmuneToFriendlyAbilities,Missile,Stasis,Dead" />
+  </CValidatorUnitFilters>
+
+  <CButton id="TyrandeSentinelShotDamageTokenCounter" parent="StormButtonParent">
+    <Icon value="Assets\Textures\storm_ui_icon_tyrande_sentinel.dds" />
+  </CButton>
+  <CButton id="TyrandeTheMarkTokenCounter" parent="StormButtonParent">
+    <Icon value="Assets\Textures\storm_ui_icon_talent_autoattack_damage.dds" />
+  </CButton>
+  
+  <CActorAction id="SentinelShotImpactActionPvE" parent="RangedHeroAttack" effectAttack="TyrandeSentinelShotImpactSetPvE">
+    <ImpactMap index="None" Model="TyrandeSentinelShotImpact" />
+  </CActorAction>
+  
+  <CActorSound id="TyrandeLunarFlareTargetSound3" parent="SoundOneShot">
+    <On Terms="Effect.LunarFlareSecondFlareInitialPersistent.Start" Send="Create" />
+    <Sound value="Tyrande_LunarFlare_TargetEffect" />
+  </CActorSound>
+  <CActorSound id="TyrandeLunarFlareFlybySound3" parent="SoundContinuous">
+    <Sound value="Tyrande_SearingArrow_FlyBy" />
+    <On Terms="Effect.LunarFlareSecondFlareInitialPersistent.Start" Send="Create" />
+    <On Terms="Effect.LunarFlareSecondFlareInitialPersistent.Stop" Send="Destroy" />
+  </CActorSound>
+  <CActorModel id="TyrandeLunarFlareImpact3" parent="StormModelNoAnims">
+    <On Terms="ActorCreation" Send="AnimPlay Birth Birth NonLooping" />
+    <On Terms="ActorOrphan" Send="Destroy" />
+    <On Terms="ActorCreation" Send="TimerSet 0.500000 Impact" />
+    <On Terms="TimerExpired; TimerName Impact" Send="AnimClear Birth" />
+    <On Terms="TimerExpired; TimerName Impact" Send="AnimPlay Death Death" />
+    <On Terms="Effect.LunarFlareSecondFlareInitialPersistent.Start; At Effect" Send="Create" />
+    <On Terms="AnimDone; AnimName Death" Send="Destroy" />
+    <HostSiteOps Ops="SOpShadow" />
+    <Scale value="1.200000" />
+    <ModelFlags index="AutomateGlobalLoops" value="1" />
+  </CActorModel>
+  <CModel id="TyrandeLunarFlareImpact3" parent="PersistentSpellFX">
+      <Model value="Assets\Effects\Storm_Effect_Tyrande_Base_LunarFlare_Impact\Storm_Effect_Tyrande_Base_LunarFlare_Impact.m3"/>
+      <RadiusLoose value="1.000000"/>
+  </CModel>
+  
+  <CActorModel id="TyrandeLightofEluneImpact">
+    <On Terms="Effect.LightofEluneAreaSet.Start; At Target" Send="Create" />
+    <On Terms="ActorCreation; ValidateEffect TargetIsEnemy" Send="SetTintColor {255,100,255 1}" />
+  </CActorModel>
+
+</Catalog>

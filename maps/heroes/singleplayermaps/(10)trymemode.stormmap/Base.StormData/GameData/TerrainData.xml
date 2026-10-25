@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Catalog>
-    <CTerrain id="StormEgyptWorld">
-        <DoubleLambert value="0"/>
-        <FOWPlaneEnabled value="0"/>
-        <FogDensity value="0.020000"/>
-        <FogStartingHeight value="-24.000000"/>
-    </CTerrain>
-    <CTerrain id="StormKingsCrestGardens">
-        <DoubleLambert value="0"/>
-    </CTerrain>
+  <CTerrain id="Braxis">
+    <FogEnabled value="0" />
+    <FogDensity value="0.000000" />
+    <FOWPlaneEnabled value="0" />
+    <HeightMapEnabled value="1" />
+    <DoubleLambert value="0" />
+  </CTerrain>
+  <CTerrain id="Braxis2">
+    <FogEnabled value="0" />
+    <FogDensity value="0.000000" />
+    <FOWPlaneEnabled value="0" />
+    <HeightMapEnabled value="1" />
+    <DoubleLambert value="0" />
+  </CTerrain>
 </Catalog>

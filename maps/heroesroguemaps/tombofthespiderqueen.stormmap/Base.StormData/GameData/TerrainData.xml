@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+  <CTerrain id="StormEgyptWorld">
+    <Ambience value="" />
+    <FixedSkyboxModel value="" />
+    <NonFixedSkyboxModel value="" />
+    <FOWColor value="255,15,26,55" />
+    <DoubleLambert value="0" />
+  </CTerrain>
+  <CTerrain id="StormLuxoriaCrypts">
+    <FogColor value="255,96,82,171" />
+    <FogDensity value="1.000000" />
+    <FogStartingHeight value="0.000000" />
+    <HeightMapEnabled value="1" />
+    <FogNearPlane value="0.000000" />
+    <FogFalloff value="0.400000" />
+    <DoubleLambert value="0" />
+  </CTerrain>
+</Catalog>

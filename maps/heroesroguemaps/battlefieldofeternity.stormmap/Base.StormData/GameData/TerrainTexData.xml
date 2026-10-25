@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+  <CTerrainTex id="Storm_HeavenAndHell2_01">
+    <HeightMapScale value="3.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_HeavenAndHell_01">
+    <HeightMapScale value="3.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_HeavenAndHell_07">
+    <HeightMapScale value="1.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_HeavenAndHell_08">
+    <HeightMapScale value="10.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_HeavenAndHell_09">
+    <HeightMapScale value="3.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_HeavenAndHell_10">
+    <HeightMapScale value="10.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_HeavenAndHell_11">
+    <HeightMapScale value="5.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_HeavenAndHell_12">
+    <HeightMapScale value="5.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_HeavenAndHell_13">
+    <HeightMapScale value="10.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_HeavenAndHell_14">
+    <HeightMapScale value="5.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_HeavenAndHell_15">
+    <HeightMapScale value="10.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_HeavenAndHell_16">
+    <HeightMapScale value="1.000000" />
+  </CTerrainTex>
+</Catalog>

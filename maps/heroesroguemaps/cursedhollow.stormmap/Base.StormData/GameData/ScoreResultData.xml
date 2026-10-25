@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CScoreResultRoot id="CursedHollowRoot">
+        <HeaderTable value="CursedHollowHeroes"/>
+    </CScoreResultRoot>
+    <CScoreResultScore id="CursedHollowHeroes">
+        <ValueTable value="RavenTributesCollected"/>
+        <ValueTable value="CurseDamageDone"/>
+    </CScoreResultScore>
+</Catalog>

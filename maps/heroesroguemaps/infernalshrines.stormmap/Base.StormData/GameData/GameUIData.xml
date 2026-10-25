@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CGameUI id="Dflt">
+        <LoadingScreenHelp Text="LoadingScreen/InfernalShrines/Help1"/>
+    </CGameUI>
+</Catalog>

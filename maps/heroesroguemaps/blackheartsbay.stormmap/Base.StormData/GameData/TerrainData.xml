@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CTerrain id="StormKingsCrestDocks">
+        <FogEnabled value="0"/>
+        <FogColor value="255,23,27,28"/>
+        <HeightMapEnabled value="1"/>
+        <FogFalloff value="0.900000"/>
+        <FOWColor value="255,10,9,23"/>
+        <CliffSets index="0" value="StormKingsCrestDocksCliff1"/>
+        <CliffSets index="1" value="StormKingsCrestDocksCliff0"/>
+        <DoubleLambert value="0"/>
+    </CTerrain>
+</Catalog>

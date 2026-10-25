@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CModel id="DragonballCaptureBeacon">
+        <Model value="Assets\Doodads\Storm_Doodad_DS19_ShrineSplatGlow\Storm_Doodad_DS19_ShrineSplatGlow.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath00">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_00.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath01">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_01.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath02">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_02.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath03">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_03.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath04">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_04.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath05">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_05.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath06">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_06.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath07">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_07.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath08">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_08.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath09">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_09.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath10">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_10.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath11">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_11.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath12">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_12.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath13">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_13.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath14">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_14.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath15">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_15.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath16">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_16.m3"/>
+    </CModel>
+    <CModel id="StormKingsCrestWallDeath17">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall_Death\Storm_Building_KingsCrest_TownWall_Death_17.m3"/>
+    </CModel>
+    <CModel id="Storm_Effect_StartingBase_Base_Vortex">
+        <Model value="assets\doodads\storm_fx_startingbase_wcav_vortex\storm_fx_startingbase_wcav_vortex.m3"/>
+        <ScaleMax X="1.500000" Y="1.500000" Z="1.500000"/>
+        <ScaleMin X="1.500000" Y="1.500000" Z="1.500000"/>
+    </CModel>
+    <CModel id="TheLittleKingPlatform">
+        <Model value="Assets\Doodads\Storm_Doodad_DS19_Knight_Statue\Storm_Doodad_DS19_Knight_Statue_01.m3"/>
+        <ScaleMax X="1.000000" Y="1.000000" Z="1.000000"/>
+        <ScaleMin X="1.000000" Y="1.000000" Z="1.000000"/>
+    </CModel>
+    <CModel id="TownGateBirthModel">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Gate_Birth\Storm_Building_DS19KingsCrest_Gate_Birth.m3"/>
+    </CModel>
+    <CModel id="TownGateDamaged">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Gate_Damage\Storm_Building_DS19KingsCrest_Gate_Damage.m3"/>
+    </CModel>
+    <CModel id="TownGateDamagedDeath00">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Gate_Damage\Storm_Building_DS19KingsCrest_Gate_Damage_00.m3"/>
+    </CModel>
+    <CModel id="TownGateDamagedDeath01">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Gate_Damage\Storm_Building_DS19KingsCrest_Gate_Damage_01.m3"/>
+    </CModel>
+    <CModel id="TownGateDamagedDeath02">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Gate_Damage\Storm_Building_DS19KingsCrest_Gate_Damage_02.m3"/>
+    </CModel>
+    <CModel id="TownGateDamagedDeath03">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Gate_Damage\Storm_Building_DS19KingsCrest_Gate_Damage_03.m3"/>
+    </CModel>
+    <CModel id="TownGateL2">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Gate\Storm_Building_DS19KingsCrest_Gate.m3"/>
+    </CModel>
+    <CModel id="TownGateL3">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Gate\Storm_Building_DS19KingsCrest_Gate.m3"/>
+    </CModel>
+    <CModel id="TownMercCampCaptureBeacon">
+        <Model value="Assets\Doodads\Storm_Doodad_DS19_MercSplatGlow\Storm_Doodad_DS19_MercSplatGlow.m3"/>
+        <ScaleMax X="0.800000" Y="0.800000" Z="0.800000"/>
+        <ScaleMin X="0.800000" Y="0.800000" Z="0.800000"/>
+    </CModel>
+    <CModel id="TownMoonwellKingsCrestDeath">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_ManaWell_Death\Storm_Building_DS19KingsCrest_ManaWell_Death.m3"/>
+    </CModel>
+    <CModel id="TownMoonwellL1">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_ManaWell\Storm_Building_DS19KingsCrest_ManaWell.m3"/>
+    </CModel>
+    <CModel id="TownMoonwellL2">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_ManaWell\Storm_Building_DS19KingsCrest_ManaWell.m3"/>
+    </CModel>
+    <CModel id="TownMoonwellL3">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_ManaWell\Storm_Building_DS19KingsCrest_ManaWell.m3"/>
+    </CModel>
+    <CModel id="TownTowerKingsCrestDead">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_Rubble\Storm_Building_DS19KingsCrest_Tower_Rubble_00.m3"/>
+    </CModel>
+    <CModel id="TownTowerKingsCrestDeath">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_Rubble_Death\Storm_Building_DS19KingsCrest_Tower_Rubble_Death_00.m3"/>
+    </CModel>
+    <CModel id="TownTowerL1KingsCrest">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower\Storm_Building_DS19KingsCrest_Tower_00.m3"/>
+    </CModel>
+    <CModel id="TownTowerL1KingsCrestBirthModel">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_Birth\Storm_Building_DS19KingsCrest_Tower_Birth_00.m3"/>
+    </CModel>
+    <CModel id="TownTowerL1KingsCrestDamageHeavy">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamageHeavy\Storm_Building_DS19KingsCrest_Tower_DamageHeavy_00.m3"/>
+    </CModel>
+    <CModel id="TownTowerL1KingsCrestDamageLight">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamageLight\Storm_Building_DS19KingsCrest_Tower_DamageLight_00.m3"/>
+    </CModel>
+    <CModel id="TownTowerL1KingsCrestExplosionDamageHeavy">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamLight_Exp_Base\Storm_Building_DS19KingsCrest_Tower_DamLight_Exp_Base_00.m3"/>
+    </CModel>
+    <CModel id="TownTowerL1KingsCrestExplosionDamageHeavyBase">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamHeavy_Exp_Base\Storm_Building_DS19KingsCrest_Tower_DamHeavy_Exp_Base_00.m3"/>
+    </CModel>
+    <CModel id="TownTowerL1KingsCrestExplosionDamageHeavyTurret">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamHeavy_Exp_Turret\Storm_Building_DS19KingsCrest_Tower_DamHeavy_Exp_Turret_00.m3"/>
+    </CModel>
+    <CModel id="TownTowerL1KingsCrestExplosionDamageLightBase">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamLight_Exp_Base\Storm_Building_DS19KingsCrest_Tower_DamLight_Exp_Base_00.m3"/>
+    </CModel>
+    <CModel id="TownTowerL1KingsCrestExplosionDamageLightTurret">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamLight_Exp_Turret\Storm_Building_DS19KingsCrest_Tower_DamLight_Exp_Turret_00.m3"/>
+    </CModel>
+    <CModel id="TownTowerL1KingsCrestExplosionDead">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_Rubble_Explosion\Storm_Building_DS19KingsCrest_Tower_Rubble_Explosion_00.m3"/>
+    </CModel>
+    <CModel id="TownTowerL1KingsCrestExplosionDeadBase">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_Rubble_Explosion_Base\Storm_Building_DS19KingsCrest_Tower_Rubble_Explosion_Base_00.m3"/>
+    </CModel>
+    <CModel id="TownTowerL1KingsCrestExplosionDeadTurret">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_Rubble_Explosion_Turret\Storm_Building_DS19KingsCrest_Tower_Rubble_Explosion_Turret_00.m3"/>
+    </CModel>
+    <CModel id="TownTowerL2KingsCrest">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower\Storm_Building_DS19KingsCrest_Tower_01.m3"/>
+    </CModel>
+    <CModel id="TownTowerL2KingsCrestBirthModel">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_Birth\Storm_Building_DS19KingsCrest_Tower_Birth_01.m3"/>
+    </CModel>
+    <CModel id="TownTowerL2KingsCrestDamageHeavy">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamageHeavy\Storm_Building_DS19KingsCrest_Tower_DamageHeavy_01.m3"/>
+    </CModel>
+    <CModel id="TownTowerL2KingsCrestDamageLight">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamageLight\Storm_Building_DS19KingsCrest_Tower_DamageLight_01.m3"/>
+    </CModel>
+    <CModel id="TownTowerL2KingsCrestExplosionDamageHeavyBase">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamHeavy_Exp_Base\Storm_Building_DS19KingsCrest_Tower_DamHeavy_Exp_Base_01.m3"/>
+    </CModel>
+    <CModel id="TownTowerL2KingsCrestExplosionDamageHeavyTurret">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamHeavy_Exp_Turret\Storm_Building_DS19KingsCrest_Tower_DamHeavy_Exp_Turret_01.m3"/>
+    </CModel>
+    <CModel id="TownTowerL2KingsCrestExplosionDamageLightBase">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamLight_Exp_Base\Storm_Building_DS19KingsCrest_Tower_DamLight_Exp_Base_01.m3"/>
+    </CModel>
+    <CModel id="TownTowerL2KingsCrestExplosionDamageLightTurret">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamLight_Exp_Turret\Storm_Building_DS19KingsCrest_Tower_DamLight_Exp_Turret_01.m3"/>
+    </CModel>
+    <CModel id="TownTowerL2KingsCrestExplosionDeadBase">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_Rubble_Explosion_Base\Storm_Building_DS19KingsCrest_Tower_Rubble_Explosion_Base_01.m3"/>
+    </CModel>
+    <CModel id="TownTowerL2KingsCrestExplosionDeadTurret">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_Rubble_Explosion_Turret\Storm_Building_DS19KingsCrest_Tower_Rubble_Explosion_Turret_01.m3"/>
+    </CModel>
+    <CModel id="TownTowerL3KingsCrest">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower\Storm_Building_DS19KingsCrest_Tower_02.m3"/>
+    </CModel>
+    <CModel id="TownTowerL3KingsCrestBirthModel">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_Birth\Storm_Building_DS19KingsCrest_Tower_Birth_02.m3"/>
+    </CModel>
+    <CModel id="TownTowerL3KingsCrestDamageHeavy">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamageHeavy\Storm_Building_DS19KingsCrest_Tower_DamageHeavy_02.m3"/>
+    </CModel>
+    <CModel id="TownTowerL3KingsCrestDamageLight">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamageLight\Storm_Building_DS19KingsCrest_Tower_DamageLight_02.m3"/>
+    </CModel>
+    <CModel id="TownTowerL3KingsCrestExplosionDamageHeavyBase">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamageHeavy_Explosion\Storm_Building_DS19KingsCrest_Tower_DamageHeavy_Explosion_02.m3"/>
+    </CModel>
+    <CModel id="TownTowerL3KingsCrestExplosionDamageHeavyTurret">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamHeavy_Exp_Turret\Storm_Building_DS19KingsCrest_Tower_DamHeavy_Exp_Turret_02.m3"/>
+    </CModel>
+    <CModel id="TownTowerL3KingsCrestExplosionDamageLightBase">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamLight_Exp_Base\Storm_Building_DS19KingsCrest_Tower_DamLight_Exp_Base_02.m3"/>
+    </CModel>
+    <CModel id="TownTowerL3KingsCrestExplosionDamageLightTurret">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_DamLight_Exp_Turret\Storm_Building_DS19KingsCrest_Tower_DamLight_Exp_Turret_02.m3"/>
+    </CModel>
+    <CModel id="TownTowerL3KingsCrestExplosionDeadBase">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_Rubble_Explosion_Base\Storm_Building_DS19KingsCrest_Tower_Rubble_Explosion_Base_02.m3"/>
+    </CModel>
+    <CModel id="TownTowerL3KingsCrestExplosionDeadTurret">
+        <Model value="Assets\Buildings\Storm_Building_DS19KingsCrest_Tower_Rubble_Explosion_Turret\Storm_Building_DS19KingsCrest_Tower_Rubble_Explosion_Turret_02.m3"/>
+    </CModel>
+    <CModel id="TownTownHallL2">
+        <Model value="assets\buildings\storm_building_kingscrest_fort\storm_building_kingscrest_fort.m3"/>
+        <ScaleMax X="1.000000" Y="1.000000" Z="1.000000"/>
+        <ScaleMin X="1.000000" Y="1.000000" Z="1.000000"/>
+    </CModel>
+    <CModel id="TownTownHallL2Damage">
+        <Model value="assets\buildings\storm_building_kingscrest_fort_damage\storm_building_kingscrest_fort_damage.m3"/>
+        <ScaleMax X="1.000000" Y="1.000000" Z="1.000000"/>
+        <ScaleMin X="1.000000" Y="1.000000" Z="1.000000"/>
+    </CModel>
+    <CModel id="TownTownHallL2Death">
+        <Model value="assets\buildings\storm_building_kingscrest_fort_death\storm_building_kingscrest_fort_death.m3"/>
+        <ScaleMax X="1.000000" Y="1.000000" Z="1.000000"/>
+        <ScaleMin X="1.000000" Y="1.000000" Z="1.000000"/>
+    </CModel>
+    <CModel id="TownTownHallL2ExplosionDamage">
+        <Model value="assets\buildings\storm_building_kingscrest_fort_explosion\storm_building_kingscrest_fort_explosion.m3"/>
+        <ScaleMax X="1.000000" Y="1.000000" Z="1.000000"/>
+        <ScaleMin X="1.000000" Y="1.000000" Z="1.000000"/>
+    </CModel>
+    <CModel id="TownTownHallL3">
+        <Model value="assets\buildings\storm_building_kingscrest_keep\storm_building_kingscrest_keep.m3"/>
+        <ScaleMax X="1.000000" Y="1.000000" Z="1.000000"/>
+        <ScaleMin X="1.000000" Y="1.000000" Z="1.000000"/>
+    </CModel>
+    <CModel id="TownTownHallL3BirthModel">
+        <Model value="assets\buildings\storm_building_kingscrest_keep_birth\storm_building_kingscrest_keep_birth.m3"/>
+        <ScaleMax X="1.000000" Y="1.000000" Z="1.000000"/>
+        <ScaleMin X="1.000000" Y="1.000000" Z="1.000000"/>
+    </CModel>
+    <CModel id="TownTownHallL3Damage">
+        <Model value="assets\buildings\storm_building_kingscrest_keep_damage\storm_building_kingscrest_keep_damage.m3"/>
+        <ScaleMax X="1.000000" Y="1.000000" Z="1.000000"/>
+        <ScaleMin X="1.000000" Y="1.000000" Z="1.000000"/>
+    </CModel>
+    <CModel id="TownTownHallL3Death">
+        <Model value="assets\buildings\storm_building_kingscrest_keep_death\storm_building_kingscrest_keep_death.m3"/>
+        <ScaleMax X="1.000000" Y="1.000000" Z="1.000000"/>
+        <ScaleMin X="1.000000" Y="1.000000" Z="1.000000"/>
+    </CModel>
+    <CModel id="TownTownHallL3ExplosionDamage">
+        <Model value="assets\buildings\storm_building_kingscrest_keep_damage_explosion\storm_building_kingscrest_keep_damage_explosion.m3"/>
+        <ScaleMax X="1.000000" Y="1.000000" Z="1.000000"/>
+        <ScaleMin X="1.000000" Y="1.000000" Z="1.000000"/>
+    </CModel>
+    <CModel id="TownWallKingsCrest">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall\Storm_Building_KingsCrest_TownWall.m3"/>
+    </CModel>
+    <CModel id="WallRadial0">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall\Storm_Building_KingsCrest_TownWall.m3"/>
+    </CModel>
+    <CModel id="WallRadial1">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall\Storm_Building_KingsCrest_TownWall.m3"/>
+    </CModel>
+    <CModel id="WallRadial2">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall\Storm_Building_KingsCrest_TownWall.m3"/>
+    </CModel>
+    <CModel id="WallRadial3">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall\Storm_Building_KingsCrest_TownWall.m3"/>
+    </CModel>
+    <CModel id="WallRadial4">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall\Storm_Building_KingsCrest_TownWall.m3"/>
+    </CModel>
+    <CModel id="WallRadial5">
+        <Model value="Assets\Buildings\Storm_Building_KingsCrest_TownWall\Storm_Building_KingsCrest_TownWall.m3"/>
+    </CModel>
+</Catalog>

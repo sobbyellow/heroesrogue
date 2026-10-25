@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CLight id="StormCastleWorld">
+        <ToDInfoArray Id="StormCastleWorld" AmbientColor="0.294118,0.313726,0.329412" Colorize="1">
+            <Param index="HDRExposure" value="1.500000"/>
+            <Param index="HDRWhitePoint" value="1.850000"/>
+            <Param index="TerrainSpecularExp" value="11.210000"/>
+            <Param index="TerrainHDRSpecular" value="3.750000"/>
+            <Param index="CreepSpecularExp" value="30.000000"/>
+            <Param index="CreepHDRSpecMultiplier" value="3.000000"/>
+            <Param index="ColorizationContrast" value="1.066000"/>
+            <Param index="ColorizationHue" value="0.001000"/>
+            <Param index="ColorizationBlend" value="0.300000"/>
+        </ToDInfoArray>
+    </CLight>
+    <CLight id="StormHeaven">
+        <ToDInfoArray index="0">
+            <Id value="StormHeaven"/>
+            <AmbientColor value="0.427451,0.337255,0.470588"/>
+            <OperatorHDR value="4"/>
+            <Colorize value="1"/>
+            <Param index="HDRExposure" value="1.400000"/>
+            <Param index="HDRBloomThreshold" value="0.900000"/>
+            <Param index="HDRWhitePoint" value="1.850000"/>
+            <Param index="TerrainSpecularExp" value="16.000000"/>
+            <Param index="CreepSpecularExp" value="30.000000"/>
+            <Param index="CreepHDRSpecMultiplier" value="3.000000"/>
+            <Param index="ColorizationInputHigh" value="0.975000"/>
+            <Param index="ColorizationBlend" value="0.000000"/>
+            <Param index="AOOcclusionRadius" value="1.000000"/>
+            <Param index="AONoOcclusion" value="3.000000"/>
+            <Param index="AOOcclusionPower" value="2.000000"/>
+            <Param index="AODetailOcclusionRadius" value="0.010000"/>
+            <Param index="AODetailNoOcclusion" value="0.060000"/>
+            <Param index="AODetailOcclusionPower" value="4.000000"/>
+            <DirectionalLight index="Key">
+                <Color value="1.000000,1.000000,0.882353"/>
+                <ColorMultiplier value="1.000000"/>
+                <SpecularColor value="1.000000,1.000000,1.000000"/>
+                <Direction value="0.511001,0.173959,-0.841794"/>
+            </DirectionalLight>
+            <DirectionalLight index="Fill" Color="1.000000,0.721569,0.537255" Direction="-0.757475,0.652452,-0.023211"/>
+            <DirectionalLight index="Back" Color="0.647059,0.819608,1.000000" Direction="-0.479305,-0.877648,0.000000"/>
+            <LightRegions index="0">
+                <UseDefault value="0"/>
+                <AmbientColor value="0.003922,0.003922,0.003922"/>
+                <AmbientEnvironmentMultiplier value="0.000000"/>
+                <SpecularColor value="0.003922,0.003922,0.003922"/>
+                <SpecularMultiplier value="0.000000"/>
+                <DiffuseColor index="Key" value="0.003922,0.003922,0.003922"/>
+                <DiffuseColor index="Fill" value="0.003922,0.003922,0.003922"/>
+                <DiffuseColor index="Back" value="0.003922,0.003922,0.003922"/>
+                <DiffuseMultiplier index="Key" value="0.000000"/>
+                <DiffuseMultiplier index="Fill" value="0.000000"/>
+                <DiffuseMultiplier index="Back" value="0.000000"/>
+            </LightRegions>
+        </ToDInfoArray>
+        <ToDInfoArray>
+            <Id value="StormHeaven"/>
+            <AmbientColor value="0.529412,0.423529,0.584314"/>
+            <OperatorHDR value="4"/>
+            <Colorize value="1"/>
+            <Param index="HDRExposure" value="1.400000"/>
+            <Param index="HDRBloomThreshold" value="0.900000"/>
+            <Param index="HDRWhitePoint" value="1.850000"/>
+            <Param index="TerrainSpecularExp" value="16.000000"/>
+            <Param index="CreepSpecularExp" value="30.000000"/>
+            <Param index="CreepHDRSpecMultiplier" value="3.000000"/>
+            <Param index="ColorizationInputHigh" value="0.975000"/>
+            <Param index="ColorizationBlend" value="0.000000"/>
+            <Param index="AOOcclusionRadius" value="1.000000"/>
+            <Param index="AONoOcclusion" value="3.000000"/>
+            <Param index="AOOcclusionPower" value="2.000000"/>
+            <Param index="AODetailOcclusionRadius" value="0.010000"/>
+            <Param index="AODetailNoOcclusion" value="0.060000"/>
+            <Param index="AODetailOcclusionPower" value="4.000000"/>
+            <DirectionalLight index="Key">
+                <Color value="1.000000,1.000000,0.756863"/>
+                <SpecularColor value="0.956863,0.956863,1.000000"/>
+                <SpecColorMultiplier value="1.250000"/>
+                <Direction value="0.590980,0.086004,-0.802088"/>
+            </DirectionalLight>
+            <DirectionalLight index="Fill" Color="1.000000,0.725490,0.541176" ColorMultiplier="0.250000" Direction="-0.731824,0.677914,-0.069756"/>
+            <DirectionalLight index="Back" Color="0.584314,0.709804,1.000000" ColorMultiplier="1.250000" Direction="-0.496362,-0.815411,-0.297874"/>
+        </ToDInfoArray>
+    </CLight>
+    <CLight id="StormKingsCrestALL">
+        <ToDInfoArray index="0">
+            <Id value="BASRavenCourtFinal"/>
+            <AmbientColor value="0.517647,0.454902,0.627451"/>
+            <OperatorHDR value="4"/>
+            <Colorize value="1"/>
+            <Param index="HDRExposure" value="1.650000"/>
+            <Param index="HDRBloomThreshold" value="0.900000"/>
+            <Param index="HDRWhitePoint" value="1.850000"/>
+            <Param index="TerrainSpecularExp" value="73.000000"/>
+            <Param index="CreepSpecularExp" value="30.000000"/>
+            <Param index="CreepHDRSpecMultiplier" value="3.000000"/>
+            <Param index="ColorizationInputHigh" value="0.975000"/>
+            <Param index="ColorizationHue" value="-0.000000"/>
+            <Param index="ColorizationBlend" value="0.000000"/>
+            <DirectionalLight index="Key" Color="0.886275,0.886275,0.792157" ColorMultiplier="1.150000" SpecularColor="0.909804,0.913725,1.000000"/>
+            <DirectionalLight index="Fill" Color="0.349020,0.349020,0.313726" ColorMultiplier="0.300000"/>
+            <DirectionalLight index="Back" Color="0.890196,0.890196,0.776471" ColorMultiplier="0.020000" Direction="0.663789,-0.136981,-0.735269"/>
+        </ToDInfoArray>
+        <ToDInfoArray>
+            <Id value="StormKingsCrestALL"/>
+            <AmbientColor value="0.584314,0.568627,0.549020"/>
+            <OperatorHDR value="4"/>
+            <Colorize value="1"/>
+            <Param index="HDRExposure" value="1.500000"/>
+            <Param index="HDRWhitePoint" value="1.850000"/>
+            <Param index="TerrainSpecularExp" value="73.000000"/>
+            <Param index="CreepSpecularExp" value="30.000000"/>
+            <Param index="CreepHDRSpecMultiplier" value="0.500000"/>
+            <Param index="ColorizationContrast" value="1.066000"/>
+            <Param index="ColorizationHue" value="0.001000"/>
+            <Param index="ColorizationBlend" value="0.300000"/>
+            <DirectionalLight index="Key">
+                <Color value="0.937255,0.329412,0.329412"/>
+                <ColorMultiplier value="1.000000"/>
+                <SpecColorMultiplier value="1.250000"/>
+                <Direction value="0.647974,-0.127480,-0.750919"/>
+            </DirectionalLight>
+            <DirectionalLight index="Fill" Color="0.160784,0.250980,0.552941" ColorMultiplier="0.300000" Direction="-0.836095,0.266028,-0.479764"/>
+            <DirectionalLight index="Back" Color="0.113725,0.368627,0.572549" ColorMultiplier="1.500000" Direction="-0.871676,-0.196760,0.448851"/>
+        </ToDInfoArray>
+    </CLight>
+    <CLight id="StormKingsCrestFilmicTest">
+        <ToDInfoArray>
+            <Id value="StormKingsCrestFilmicTest"/>
+            <AmbientColor value="0.584314,0.568627,0.549020"/>
+            <OperatorHDR value="4"/>
+            <Colorize value="1"/>
+            <Param index="HDRExposure" value="1.500000"/>
+            <Param index="HDRWhitePoint" value="1.850000"/>
+            <Param index="TerrainSpecularExp" value="73.000000"/>
+            <Param index="CreepSpecularExp" value="30.000000"/>
+            <Param index="CreepHDRSpecMultiplier" value="3.000000"/>
+            <Param index="ColorizationContrast" value="1.066000"/>
+            <Param index="ColorizationHue" value="0.001000"/>
+            <Param index="ColorizationBlend" value="0.300000"/>
+        </ToDInfoArray>
+    </CLight>
+    <CLight id="Char">
+        <ToDInfoArray>
+            <Id value="MarSaraDayTest"/>
+            <AmbientColor value="0.584314,0.568627,0.549020"/>
+            <OperatorHDR value="4"/>
+            <Colorize value="1"/>
+            <Param index="HDRExposure" value="1.500000"/>
+            <Param index="HDRWhitePoint" value="1.850000"/>
+            <Param index="TerrainSpecularExp" value="11.210000"/>
+            <Param index="TerrainHDRSpecular" value="3.750000"/>
+            <Param index="CreepSpecularExp" value="30.000000"/>
+            <Param index="CreepHDRSpecMultiplier" value="3.000000"/>
+            <Param index="ColorizationContrast" value="1.066000"/>
+            <Param index="ColorizationHue" value="0.001000"/>
+            <Param index="ColorizationBlend" value="0.300000"/>
+            <DirectionalLight index="Key" Color="0.941176,0.925490,0.901961" Direction="0.647974,-0.127480,-0.750919"/>
+            <DirectionalLight index="Fill" Color="0.160784,0.250980,0.552941" ColorMultiplier="0.300000" Direction="-0.836095,0.266028,-0.479764"/>
+            <DirectionalLight index="Back" Color="0.113725,0.368627,0.572549" ColorMultiplier="1.500000" Direction="-0.871676,-0.196760,0.448851"/>
+        </ToDInfoArray>
+    </CLight>
+    <CLight id="CustomLight">
+        <ToDInfoArray>
+            <Id value="CustomLight"/>
+            <AmbientColor value="0.584314,0.568627,0.549020"/>
+            <OperatorHDR value="4"/>
+            <Colorize value="1"/>
+            <Param index="HDRExposure" value="1.500000"/>
+            <Param index="HDRWhitePoint" value="1.850000"/>
+            <Param index="TerrainSpecularExp" value="73.000000"/>
+            <Param index="CreepSpecularExp" value="30.000000"/>
+            <Param index="CreepHDRSpecMultiplier" value="0.500000"/>
+            <Param index="ColorizationContrast" value="1.066000"/>
+            <Param index="ColorizationHue" value="0.001000"/>
+            <Param index="ColorizationBlend" value="0.300000"/>
+            <DirectionalLight index="Key">
+                <Color value="0.941176,0.925490,0.901961"/>
+                <ColorMultiplier value="1.000000"/>
+                <SpecColorMultiplier value="1.250000"/>
+                <Direction value="0.647974,-0.127480,-0.750919"/>
+            </DirectionalLight>
+            <DirectionalLight index="Fill" Color="0.160784,0.250980,0.552941" ColorMultiplier="0.300000" Direction="-0.836095,0.266028,-0.479764"/>
+            <DirectionalLight index="Back" Color="0.113725,0.368627,0.572549" ColorMultiplier="1.500000" Direction="-0.871676,-0.196760,0.448851"/>
+        </ToDInfoArray>
+    </CLight>
+    <CLight id="StormShrines" parent="default">
+        <ToDInfoArray index="0">
+            <Id value="StormShrines"/>
+            <AmbientColor value="0.509804,0.447059,0.584314"/>
+            <OperatorHDR value="4"/>
+            <Colorize value="1"/>
+            <Param index="HDRExposure" value="1.400000"/>
+            <Param index="HDRBloomThreshold" value="0.900000"/>
+            <Param index="HDRWhitePoint" value="1.850000"/>
+            <Param index="TerrainSpecularExp" value="16.000000"/>
+            <Param index="CreepSpecularExp" value="30.000000"/>
+            <Param index="CreepHDRSpecMultiplier" value="3.000000"/>
+            <Param index="ColorizationInputHigh" value="0.975000"/>
+            <Param index="ColorizationBlend" value="0.000000"/>
+            <Param index="AOOcclusionRadius" value="1.000000"/>
+            <Param index="AONoOcclusion" value="3.000000"/>
+            <Param index="AOOcclusionPower" value="2.000000"/>
+            <Param index="AODetailOcclusionRadius" value="0.010000"/>
+            <Param index="AODetailNoOcclusion" value="0.060000"/>
+            <Param index="AODetailOcclusionPower" value="4.000000"/>
+            <DirectionalLight index="Key" Color="1.000000,1.000000,0.784314" SpecColorMultiplier="1.250000" Direction="0.511001,0.173959,-0.841794"/>
+            <DirectionalLight index="Fill" Color="0.501961,0.439216,0.549020" ColorMultiplier="0.250000" Direction="-0.757475,0.652452,-0.023211"/>
+            <DirectionalLight index="Back" Color="0.647059,0.819608,1.000000" ColorMultiplier="1.250000" Direction="-0.546101,-0.837398,-0.023211"/>
+            <LightRegions index="1">
+                <UseDefault value="0"/>
+                <AmbientColor value="0.682353,0.313726,0.403922"/>
+                <AmbientEnvironmentMultiplier value="1.000000"/>
+                <SpecularColor value="0.972549,0.674510,0.458824"/>
+                <SpecularMultiplier value="2.000000"/>
+                <FogColor value="0.992157,0.047059,0.000000"/>
+                <DiffuseColor index="Key" value="1.000000,1.000000,1.000000"/>
+                <DiffuseColor index="Fill" value="0.431373,0.329412,0.505882"/>
+                <DiffuseColor index="Back" value="0.976471,0.847059,0.686275"/>
+                <DiffuseMultiplier index="Key" value="0.500000"/>
+                <DiffuseMultiplier index="Fill" value="0.250000"/>
+                <DiffuseMultiplier index="Back" value="1.250000"/>
+            </LightRegions>
+            <LightRegions index="2">
+                <UseDefault value="0"/>
+                <AmbientColor value="0.925490,0.819608,0.235294"/>
+                <AmbientEnvironmentMultiplier value="0.000000"/>
+                <SpecularColor value="0.988235,0.980392,0.588235"/>
+                <SpecularMultiplier value="2.000000"/>
+                <FogColor value="0.000000,0.000000,0.000000"/>
+                <DiffuseColor index="Key" value="0.980392,0.839216,0.537255"/>
+                <DiffuseColor index="Fill" value="0.992157,0.980392,0.435294"/>
+                <DiffuseColor index="Back" value="1.000000,0.976471,0.650980"/>
+                <DiffuseMultiplier index="Key" value="3.500000"/>
+                <DiffuseMultiplier index="Fill" value="1.000000"/>
+                <DiffuseMultiplier index="Back" value="1.000000"/>
+            </LightRegions>
+            <LightRegions index="3">
+                <UseDefault value="0"/>
+                <AmbientColor value="0.984314,0.376471,0.011765"/>
+                <AmbientEnvironmentMultiplier value="0.000000"/>
+                <SpecularColor value="0.949020,0.827451,0.447059"/>
+                <SpecularMultiplier value="2.000000"/>
+                <FogColor value="0.003922,0.003922,0.003922"/>
+                <DiffuseColor index="Key" value="0.992157,0.482353,0.176471"/>
+                <DiffuseColor index="Fill" value="0.956863,0.513726,0.211765"/>
+                <DiffuseColor index="Back" value="0.972549,0.839216,0.321569"/>
+                <DiffuseMultiplier index="Key" value="3.500000"/>
+                <DiffuseMultiplier index="Fill" value="1.000000"/>
+                <DiffuseMultiplier index="Back" value="1.000000"/>
+            </LightRegions>
+        </ToDInfoArray>
+    </CLight>
+</Catalog>

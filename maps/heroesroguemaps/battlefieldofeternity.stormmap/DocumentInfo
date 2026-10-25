@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DocInfo>
+    <Icon>
+        <Value>Storm_UI_Gamemode_MapSelect_BattleOfEternity.png</Value>
+    </Icon>
+    <MatchMakerTag>
+        <Value>Hero</Value>
+    </MatchMakerTag>
+    <Dependencies>
+        <Value>bnet:Battlefield of Eternity (Mod)/0.0/1291,file:Mods\heroesmapmods/battlegroundmapmods/battlefieldofeternity.stormmod</Value>
+    </Dependencies>
+    <ModifiableDependencies>
+        <Value>Mods/HeroesData.StormMod</Value>
+    </ModifiableDependencies>
+</DocInfo>

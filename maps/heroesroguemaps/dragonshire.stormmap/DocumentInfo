@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DocInfo>
+    <Icon>
+        <Value>Storm_UI_Gamemode_MapSelect_Dragonshire.png</Value>
+    </Icon>
+    <MatchMakerTag>
+        <Value>Hero</Value>
+    </MatchMakerTag>
+    <Dependencies>
+        <Value>bnet:Dragon Shire (Mod)/0.0/1498,file:Mods\heroesmapmods/battlegroundmapmods/dragonshire.stormmod</Value>
+    </Dependencies>
+    <ModifiableDependencies>
+        <Value>Mods/HeroesData.StormMod</Value>
+    </ModifiableDependencies>
+    <Preload>
+        <Value>GameLink:Unit;MercDefenderSiegeGiant</Value>
+        <Value>GameLink:Unit;MercLanerSiegeGiant</Value>
+        <Value>GameLink:Unit;JungleCampIconUnit</Value>
+        <Value>GameLink:Unit;RangedMinion</Value>
+        <Value>GameLink:Unit;CatapultMinion</Value>
+        <Value>GameLink:Unit;FootmanMinion</Value>
+        <Value>GameLink:Unit;WizardMinion</Value>
+        <Value>GameLink:Actor;TownWallRadial0L2</Value>
+        <Value>GameLink:Unit;MercDefenderMeleeKnight</Value>
+        <Value>GameLink:Unit;MercLanerRangedMage</Value>
+        <Value>GameLink:Unit;MercDefenderRangedMage</Value>
+        <Value>GameLink:Unit;MercLanerMeleeKnight</Value>
+        <Value>GameLink:Unit;VehicleDragon</Value>
+    </Preload>
+</DocInfo>

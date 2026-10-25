@@ -1,0 +1,197 @@
+include "HRLibs/HRTriggersLib"
+
+int[libCore_gv_talents_MaxTiers_C + 1] libHRGE_NazeeboTalents;
+fixed libHRGE_NazeeboZombieHandlerRange = 12;
+fixed libHRGE_NazeeboZombieHandlerChance = 0.5;
+fixed libHRGE_NazeeboZombieHandlerAdditionalChance = 0;
+bool libHRGE_NazeeboZombieHandlerAllowFriendlies = false;
+fixed libHRGE_NazeeboHardyBonesModifier;
+int libHRGE_NazeeboManyRitualsTotal;
+fixed libHRGE_NazeeboMasterWebweaverChance = 0.5;
+string libHRGE_instanceNazeeboRitualofBoons = "NazeeboRitualofBoons";
+
+// ============================================================
+// Nazeebo - Add an empty talent when all talents on a tier are unavailable
+// ============================================================
+bool libHRGE_NazeeboTalent7 (bool testConds, bool runActions) {
+    libHRGE_NazeeboTalents[3] += 1;
+    if (libHRGE_NazeeboTalents[3] == 3) {
+        libHRGE_ShowTalent("DoNothing7", true);
+    }
+    return true;
+}
+// ============================================================
+// Diseased Zombies
+// ============================================================
+bool libHRGE_NazeeboDiseasedZombiesUnitDied (bool testConds, bool runActions) {
+    unit deadUnit = EventUnit();
+    int owner = UnitGetOwner(deadUnit);
+    int random;
+    if (testConds) {
+        if (owner != libHRGE_player) {
+            return false;
+        }
+        if (UnitGetType(deadUnit) != "WitchDoctorZombieWallUnit" && UnitGetType(deadUnit) != "WitchDoctorZombieWallDeadRushTalentUnit") {
+            return false;
+        }
+        if (PlayerHasTalent(owner, "WitchDoctorDeadRush") && UnitGetType(deadUnit) == "WitchDoctorZombieWallUnit") {
+            return false;
+        }
+    }
+    random = RandomInt(1, 100);
+    if (random <= libHRGE_NazeeboMasterWebweaverChance * 100) {
+        UnitCreateEffectUnit(libGame_gv_players[libHRGE_player].lv_heroUnit, "NazeeboCorpseSpidersSpawnImpactSet", deadUnit);
+    }
+    return true;
+}
+// ============================================================
+// Diseased Toads
+// ============================================================
+bool libHRGE_NazeeboDiseasedToadsUnitDied (bool testConds, bool runActions) {
+    unit deadUnit = EventUnit();
+    int owner = UnitGetOwner(deadUnit);
+    int random;
+    if (testConds) {
+        if (owner != libHRGE_player) {
+            return false;
+        }
+        if (UnitGetType(deadUnit) != "WitchDoctorPlagueofToadsUnit") {
+            return false;
+        }
+    }
+    random = RandomInt(1, 100);
+    if (random <= libHRGE_NazeeboMasterWebweaverChance * 100) {
+        UnitCreateEffectUnit(libGame_gv_players[libHRGE_player].lv_heroUnit, "NazeeboCorpseSpidersSpawnImpactSet", deadUnit);
+    }
+    return true;
+}
+
+// ============================================================
+// Power Ritual
+// ============================================================
+bool libHRGE_NazeeboPowerRitualScaling (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+    }
+    libHRGE_SetDefaultLevelScaling("Effect,WitchDoctorHeroWeaponDamageSplash,Amount", player);
+
+    return true;
+}
+
+// ============================================================
+// Zombie Handler
+// ============================================================
+bool libHRGE_NazeeboZombieHandlerAffixAdded (bool testConds, bool runActions) {
+    libHRGE_CatalogReferenceSet("Sound,WitchDoctor_Zombie_AttackLaunch,Volume", libHRGE_player, "-20,-20");
+    libHRGE_CatalogReferenceSet("Sound,WitchDoctor_Zombie_Attack_Impact,Volume", libHRGE_player, "-20,-20");
+    libHRGE_CatalogReferenceSet("Sound,WitchDoctor_Zombie_Birth,Volume", libHRGE_player, "-8,-8");
+    libHRGE_CatalogReferenceSet("Sound,WitchDoctor_Zombie_Chase_Vox,Volume", libHRGE_player, "-20,-20");
+    libHRGE_CatalogReferenceSet("Sound,WitchDoctor_Zombie_Death,Volume", libHRGE_player, "-20,-20");
+    
+    return true;
+}
+bool libHRGE_NazeeboZombieHandlerUnitDied (bool testConds, bool runActions) {
+    unit deadUnit = EventUnit();
+    point npcPosition = UnitGetPosition(deadUnit);
+    int random;
+    unit heroUnit = libHRGE_GetPlayerHeroUnit(libHRGE_player);
+    int killingPlayer = libNtve_gf_KillingPlayer();
+    if (testConds) {
+        if (libHRGE_NazeeboZombieHandlerAllowFriendlies) {
+            if (!libHRGE_UnitIsMinion(deadUnit)) {
+                return false;
+            }
+        } else {
+            if (!libHRGE_UnitIsMinion(deadUnit) || UnitGetOwner(deadUnit) != libHRGE_teamChaos) {
+                return false;
+            }
+        }
+        if (!UnitIsAlive(heroUnit)) {
+            return false;
+        }
+        if (UnitFilterMatch(heroUnit, libHRGE_player, UnitFilter(0, (1 << (c_targetFilterStasis - 32)), 0, 0))) {
+            return false;
+        }
+    }
+    if ((DistanceBetweenPoints(UnitGetPosition(heroUnit), npcPosition) <= libHRGE_NazeeboZombieHandlerRange) || killingPlayer == libHRGE_player) {
+        random = RandomInt(1, 100);
+        if (random <= libHRGE_NazeeboZombieHandlerChance * 100) {
+            UnitCreateEffectPoint(heroUnit, "NazeeboZombieHandlerCreatePersistent", npcPosition);
+        }
+        if (random <= libHRGE_NazeeboZombieHandlerAdditionalChance * 100) {
+            UnitCreateEffectPoint(heroUnit, "NazeeboZombieHandlerCreatePersistent", npcPosition);
+        }
+    }
+    return true;
+}
+// ============================================================
+// Hardy Bones
+// ============================================================
+bool libHRGE_NazeeboHardyBonesAffixAdded (bool testConds, bool runActions) {
+    libHRGE_NazeeboHardyBonesModifier = 0.25 * libHRGE_EventAffixCount();
+    
+    return true;
+}
+// ============================================================
+// Never Ending Swarm
+// ============================================================
+bool libHRGE_NazeeboNeverEndingSwarmAffixAdded (bool testConds, bool runActions) {
+    libHRGE_NazeeboZombieHandlerChance = 1;
+    libHRGE_NazeeboZombieHandlerAllowFriendlies = true;
+    
+    return true;
+}
+// ============================================================
+// Many Rituals
+// ============================================================
+bool libHRGE_NazeeboManyRitualsAffixAdded (bool testConds, bool runActions) {
+    unit heroUnit = libGame_gv_players[libHRGE_player].lv_heroUnit;
+    int amount = 20 * libHRGE_EventAffixCountAdded();
+
+    if (libHRGE_EventAffixCount() == libHRGE_EventAffixCountAdded()) {
+        amount += 20;
+    }
+
+    libHRGE_AddUnitTokenCount(heroUnit, "WitchDoctorVoodooRitual", amount);
+    libHRGE_AddUnitTokenCount(heroUnit, "WitchDoctorVoodooRitualTokenCounter", amount);
+    libHRGE_AddUnitTokenCount(heroUnit, "WitchDoctorVoodooRitualVileInfectionTokenCounter", amount);
+    libHRGE_AddUnitTokenCount(heroUnit, "WitchDoctorThingOfTheDeepQuestToken", amount);
+    libHRGE_AddUnitTokenCount(heroUnit, "WitchDoctorRitualofBoonsQuestToken", amount);
+
+    libHRGE_NazeeboManyRitualsTotal += amount;
+    
+    return true;
+}
+// ============================================================
+// Ritual of Boons
+// ============================================================
+
+bool libHRGE_NazeeboRitualofBoonsQuest (bool testConds, bool runActions) {
+    libHRGE_AddPlayerBehavior(libHRGE_player, "WitchDoctorRitualofBoonsQuestToken", 1, false);
+    
+    return true;
+}
+bool libHRGE_NazeeboRitualofBoonsQuestComplete (bool testConds, bool runActions) {
+    if (testConds) {
+        if (libHRGE_AffixQuestDone(libHRGE_instanceNazeeboRitualofBoons)) {
+            return false;
+        }
+    }
+    libHRGE_QueueBoon(libHRGE_rarityUncommon, 1, false, true);
+    libHRGE_QueueBoon(libHRGE_rarityRare, 1, false, true);
+    libHRGE_SetAffixQuestDone(libHRGE_instanceNazeeboRitualofBoons, true);
+    
+    return true;
+}
+// ============================================================
+// Toad Master
+// ============================================================
+bool libHRGE_NazeeboToadMasterMilestone (bool testConds, bool runActions) {
+    libHRGE_CatalogReferenceModify("Effect,WitchDoctorPlagueofToadsInitialPersistent,PeriodCount", libHRGE_player, "2", c_upgradeOperationAdd);
+    
+    return true;
+}

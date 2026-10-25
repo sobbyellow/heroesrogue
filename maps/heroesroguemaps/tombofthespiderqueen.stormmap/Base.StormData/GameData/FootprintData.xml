@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CFootprint id="TownWallRadialTotSQSpecificOrder">
+        <Layers index="Check" Area="-2,-2,3,3">
+            <Sets index="0">
+                <Negative index="BlockVision" value="1"/>
+            </Sets>
+            <Rows value="....."/>
+            <Rows value="...xx"/>
+            <Rows value="xxxx."/>
+            <Rows value="xxx.."/>
+            <Rows value="xxx.."/>
+        </Layers>
+        <Layers index="Place" Area="-2,-2,3,3">
+            <Sets index="0">
+                <Positive index="BlockVision" value="1"/>
+            </Sets>
+            <Rows value="....."/>
+            <Rows value="...xx"/>
+            <Rows value="xxxx."/>
+            <Rows value="xxx.."/>
+            <Rows value="xxx.."/>
+        </Layers>
+        <Shape>
+            <Radius value="2.9155"/>
+            <Offsets value="0.5,-0.5;1.5,-0.5;0,1;1,1;-2.5,-1.5;1.5,1.5;-1.5,-2.5;2.5,0.5"/>
+            <Borders value="0,6,2;1,0,2;2,3,2;3,5,2;4,2,2;5,7,2;6,4,2;7,1,2"/>
+        </Shape>
+    </CFootprint>
+    <CFootprint id="TownWallRadialTotSQSpecificChaos">
+        <Layers index="Check" Area="-2,-2,3,3">
+            <Sets index="0">
+                <Negative index="BlockVision" value="1"/>
+            </Sets>
+            <Rows value="....."/>
+            <Rows value="xx..."/>
+            <Rows value=".xxxx"/>
+            <Rows value="..xxx"/>
+            <Rows value="..xxx"/>
+        </Layers>
+        <Layers index="Place" Area="-2,-2,3,3">
+            <Sets index="0">
+                <Positive index="BlockVision" value="1"/>
+            </Sets>
+            <Rows value="....."/>
+            <Rows value="xx..."/>
+            <Rows value=".xxxx"/>
+            <Rows value="..xxx"/>
+            <Rows value="..xxx"/>
+        </Layers>
+        <Shape>
+            <Radius value="2.9155"/>
+            <Offsets value="-1.5,-0.5;-0.5,-0.5;-1,1;0,1;-2.5,0.5;-1.5,1.5;1.5,-2.5;2.5,-1.5"/>
+            <Borders value="0,4,2;1,0,2;2,3,2;3,7,2;4,5,2;5,2,2;6,1,2;7,6,2"/>
+        </Shape>
+    </CFootprint>
+</Catalog>

@@ -1,0 +1,30 @@
+﻿﻿DocInfo/Author=Blizzard Entertainment
+DocInfo/DescLong=Mappa a due corsie<n/>
+DocInfo/DescShort=5v5
+DocInfo/HowToPlaySummary00=Mappa a 2 corsie
+DocInfo/HowToPlaySummaryHeaderTitle=Campi di Battaglia Eterni
+DocInfo/Name=Campi di Battaglia Eterni
+LoadingScreen/BattlefieldOfEternity/Help1=Gli Immortali non si danneggiano a vicenda durante lo scontro. Per vincere, attaccate l'Immortale nemico e difendete quello alleato.
+LoadingScreen/TextBody=<s val="Storm_BoldExtendedXLarge">Scontro fra Immortali</s><n/><s val="Storm_BoldExtendedMedium">Immortali del Paradiso e degli Inferi si scontrano per l'eternità!</s><n/><n/><s val="Storm_BoldExtendedXLarge">Sconfiggete l'Immortale nemico</s><n/><s val="Storm_BoldExtendedMedium">Aiutate l'Immortale alleato a sconfiggere il nemico!</s><n/><n/><s val="Storm_BoldExtendedXLarge">Devastate i forti nemici</s><n/><s val="Storm_BoldExtendedMedium">Avanzate assieme all'Immortale alleato per distruggere il nemico!</s>
+LoadingScreen/Title=<s val="Storm_BoldExtendedXXLarge">Campi di Battaglia Eterni</c>
+MapInfo/Player00/Name=Neutrale
+MapInfo/Player01/Name=Giocatore 1
+MapInfo/Player02/Name=Giocatore 2
+MapInfo/Player03/Name=Giocatore 3
+MapInfo/Player04/Name=Giocatore 4
+MapInfo/Player05/Name=Giocatore 5
+MapInfo/Player06/Name=Giocatore 6
+MapInfo/Player07/Name=Giocatore 7
+MapInfo/Player08/Name=Giocatore 8
+MapInfo/Player09/Name=Giocatore 9
+MapInfo/Player10/Name=Giocatore 10
+MapInfo/Player11/Name=Ordine
+MapInfo/Player12/Name=Caos
+MapInfo/Player13/Name=Nemico
+Param/Value/3D4242A8=Basso
+Param/Value/55B57A74=Alto
+UI/ResourceToolTip0=L'oro serve ad acquistare oggetti per il tuo eroe.
+Variant001/Desc=La squadra blu contro la squadra arancione.
+Variant001/ModeDesc=I giocatori possono scegliere i propri eroi.
+Variant001/ModeName=Standard
+Variant001/Name=5v5

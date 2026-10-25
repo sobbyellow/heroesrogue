@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CCliffMesh id="Storm_Cliff_Empty0">
+        <CliffHeights index="0" value="-8.000000"/>
+        <WeldNormals value="0"/>
+    </CCliffMesh>
+    <CCliffMesh id="Storm_Cliff_Empty1">
+        <CliffHeights index="0" value="-8.000000"/>
+        <WeldNormals value="0"/>
+    </CCliffMesh>
+    <CCliffMesh id="Storm_Cliff_Natural1">
+        <WeldNormals value="1"/>
+    </CCliffMesh>
+</Catalog>

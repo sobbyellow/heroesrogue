@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DocInfo>
+    <Icon>
+        <Value>Storm_UI_Gamemode_MapSelect_TombOfTheSpiderQueen.png</Value>
+    </Icon>
+    <MatchMakerTag>
+        <Value>Hero</Value>
+    </MatchMakerTag>
+    <Dependencies>
+        <Value>bnet:Tomb of the Spider Queen (Mod)/0.0/1364,file:Mods\heroesmapmods/battlegroundmapmods/tombofthespiderqueen.stormmod</Value>
+    </Dependencies>
+    <ModifiableDependencies>
+        <Value>Mods/HeroesData.StormMod</Value>
+        <Value>Mods\heroesmapmods/battlegroundmapmods/tombofthespiderqueen.stormmod</Value>
+    </ModifiableDependencies>
+    <Preload>
+        <Value>GameLink:Model;RavenLordTributeWarning</Value>
+    </Preload>
+</DocInfo>

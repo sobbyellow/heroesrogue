@@ -9,6 +9,7 @@
     <DataComponent Type="plob">Objects</DataComponent>
     <DataComponent Type="regi">Regions</DataComponent>
     <DataComponent Type="attr">Attributes</DataComponent>
+    <DataComponent Type="cuts">Cutscenes/Index</DataComponent>
     <DataComponent Type="text" Locale="koKR">GameText</DataComponent>
     <DataComponent Type="text" Locale="esES">GameText</DataComponent>
     <DataComponent Type="text" Locale="deDE">GameText</DataComponent>

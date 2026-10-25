@@ -1,0 +1,30 @@
+﻿DocInfo/Author=Blizzard Entertainment
+DocInfo/DescLong=Karte mit 2 Wegen<n/>
+DocInfo/DescShort=5vs5
+DocInfo/HowToPlaySummary00=Karte mit 2 Wegen
+DocInfo/HowToPlaySummaryHeaderTitle=Schlachtfeld der Ewigkeit
+DocInfo/Name=Schlachtfeld der Ewigkeit
+LoadingScreen/BattlefieldOfEternity/Help1=Die Unsterblichen fügen einander keinen Schaden zu. Greife den gegnerischen Unsterblichen an und beschütze den deines Teams, damit er gewinnt.
+LoadingScreen/TextBody=<s val="Storm_BoldExtendedXLarge">Duell zwischen Unsterblichen</s><n/><s val="Storm_BoldExtendedMedium">Unsterbliche Krieger des Himmels und der Hölle tragen einen ewigen Kampf aus!</s><n/><n/><s val="Storm_BoldExtendedXLarge">Besiegt den Unsterblichen des Gegners</s><n/><s val="Storm_BoldExtendedMedium">Helft eurem Unsterblichen, seinen Widersacher zu besiegen!</s><n/><n/><s val="Storm_BoldExtendedXLarge">Zerstört gegnerische Forts</s><n/><s val="Storm_BoldExtendedMedium">Dringt mit eurem Unsterblichen in gegnerisches Terrain vor!</s>
+LoadingScreen/Title=<s val="Storm_BoldExtendedXXLarge">Schlachtfeld der Ewigkeit</c>
+MapInfo/Player00/Name=Neutral
+MapInfo/Player01/Name=Spieler 1
+MapInfo/Player02/Name=Spieler 2
+MapInfo/Player03/Name=Spieler 3
+MapInfo/Player04/Name=Spieler 4
+MapInfo/Player05/Name=Spieler 5
+MapInfo/Player06/Name=Spieler 6
+MapInfo/Player07/Name=Spieler 7
+MapInfo/Player08/Name=Spieler 8
+MapInfo/Player09/Name=Spieler 9
+MapInfo/Player10/Name=Spieler 10
+MapInfo/Player11/Name=Befehl
+MapInfo/Player12/Name=Chaos
+MapInfo/Player13/Name=Feindlich
+Param/Value/3D4242A8=Unten
+Param/Value/55B57A74=Oben
+UI/ResourceToolTip0=Mit Gold kannst du Gegenstände für deinen Helden kaufen.
+Variant001/Desc=Blaues Team vs. orangefarbenes Team.
+Variant001/ModeDesc=Spieler können ihre Helden auswählen.
+Variant001/ModeName=Standard
+Variant001/Name=5vs5

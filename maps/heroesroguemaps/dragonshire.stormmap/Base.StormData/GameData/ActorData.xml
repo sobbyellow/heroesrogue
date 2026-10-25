@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+  <CActorUnit id="GardensDragonShrineTargetMoon">
+    <Filter index="All" value="1" />
+    <Scale value="1.000000,1.000000,0.625000" />
+  </CActorUnit>
+  <CActorUnit id="GardensDragonShrineTargetSun">
+    <Filter index="All" value="1" />
+    <Scale value="1.000000,1.000000,0.625000" />
+  </CActorUnit>
+  <CActorUnit id="MercLanerSiegeGiant">
+    <On Terms="UnitDeathCustomize; ModelVariation 1" Send="DeathCustomize Variation1" />
+    <On Terms="UnitDeathCustomize; ModelVariation 2" Send="DeathCustomize Variation2" />
+    <On Terms="Signal.*.VariationSet0" Send="ModelSwap MercSiegeGiantGardens 0" />
+    <On Terms="Signal.*.VariationSet1" Send="ModelSwap MercSiegeGiantGardens 1" />
+    <On Terms="Signal.*.VariationSet2" Send="ModelSwap MercSiegeGiantGardens 2" />
+    <On Terms="Signal.*.VariationSet3" Send="ModelSwap MercSiegeGiantGardens 3" />
+    <Model value="MercSiegeGiantGardens" />
+    <BuildModel value="MercSiegeGiantGardens" />
+    <DeathArray index="Normal" ModelLink="MercSiegeGiantGardensDeath00" />
+    <DeathArray index="Blast" ModelLink="MercSiegeGiantGardensDeath00" />
+    <DeathArray index="Disintegrate" ModelLink="MercSiegeGiantGardensDeath00" />
+    <DeathArray index="Eat" ModelLink="MercSiegeGiantGardensDeath00" />
+    <DeathArray index="Electrocute" ModelLink="MercSiegeGiantGardensDeath00" />
+    <DeathArray index="Eviscerate" ModelLink="MercSiegeGiantGardensDeath00" />
+    <DeathArray index="Fire" ModelLink="MercSiegeGiantGardensDeath00" />
+    <DeathArray index="Freeze" ModelLink="MercSiegeGiantGardensDeath00" />
+    <DeathArray index="Impact" ModelLink="MercSiegeGiantGardensDeath00" />
+    <DeathArray index="Morph" ModelLink="MercSiegeGiantGardensDeath00" />
+    <DeathArray index="Silentkill" ModelLink="MercSiegeGiantGardensDeath00" />
+    <DeathArray index="Squish" ModelLink="MercSiegeGiantGardensDeath00" />
+    <PlacementModel value="MercSiegeGiantGardens" />
+    <DeathCustoms ModelLink="MercSiegeGiantGardensDeath01" Name="Variation1" />
+    <DeathCustoms ModelLink="MercSiegeGiantGardensDeath02" Name="Variation2" />
+  </CActorUnit>
+  <CActorUnit id="MercDefenderSiegeGiant">
+    <Model value="MercSiegeGiantGardens" />
+    <On Terms="UnitDeathCustomize; ModelVariation 0" Send="DeathCustomize Variation0" />
+    <On Terms="UnitDeathCustomize; ModelVariation 1" Send="DeathCustomize Variation1" />
+    <On Terms="UnitDeathCustomize; ModelVariation 2" Send="DeathCustomize Variation2" />
+    <DeathCustoms ModelLink="MercSiegeGiantDefenderKnightNonDeath00" Name="Variation0" />
+    <DeathCustoms ModelLink="MercSiegeGiantDefenderKnightNonDeath01" Name="Variation1" />
+    <DeathCustoms ModelLink="MercSiegeGiantDefenderKnightNonDeath02" Name="Variation2" />
+    <DeathArray index="Normal" ModelLink="MercSiegeGiantDefenderKnightNonDeath00" />
+    <DeathArray index="Blast" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderKnightNonDeath00" />
+    <DeathArray index="Disintegrate" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderKnightNonDeath00" />
+    <DeathArray index="Eat" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderKnightNonDeath00" />
+    <DeathArray index="Electrocute" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderKnightNonDeath00" />
+    <DeathArray index="Eviscerate" ModelLink="MercSiegeGiantDefenderKnightNonDeath00" />
+    <DeathArray index="Fire" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderKnightNonDeath00" />
+    <DeathArray index="Freeze" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderKnightNonDeath00" />
+    <DeathArray index="Impact" ModelLink="MercSiegeGiantDefenderKnightNonDeath00" />
+    <DeathArray index="Morph" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderKnightNonDeath00" />
+    <DeathArray index="Silentkill" ModelLink="MercSiegeGiantDefenderKnightNonDeath00" />
+    <DeathArray index="Squish" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderKnightNonDeath00" />
+  </CActorUnit>
+  <CActorMissile id="MercDefenderSiegeGiantAttackMissile">
+    <Model value="MercLanerSiegeGiantAttackMissileGardens" />
+    <DeathArray index="Normal" ModelLink="MercLanerSiegeGiantAttackMissileGardens" />
+  </CActorMissile>
+  <CActorMissile id="MercLanerSiegeGiantAttackMissile">
+    <Model value="MercLanerSiegeGiantAttackMissileGardens" />
+    <DeathArray index="Normal" ModelLink="MercLanerSiegeGiantAttackMissileGardens" />
+  </CActorMissile>
+  <CActorModel id="SiegeGiantRangedAttackImpactModel" />
+  <CActorUnit id="Storm_Doodad_HealingPad">
+    <Model value="HealingPadKingsCrest" />
+    <BuildModel value="HealingPadKingsCrest" />
+    <PlacementModel value="HealingPadKingsCrest" />
+  </CActorUnit>
+  <CActorUnit id="TheLittleKingPlatform">
+    <Remove Terms="ActorCreation" Send="Create TheLittleKing" />
+  </CActorUnit>
+  <CActorUnit id="TownTownHallL2">
+    <TeamColorStyle value="DS19_Primary_Override" />
+  </CActorUnit>
+  <CActorUnit id="TownTownHallL3">
+    <TeamColorStyle value="DS19_Primary_Override" />
+  </CActorUnit>
+</Catalog>

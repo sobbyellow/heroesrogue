@@ -80,6 +80,8 @@ struct libPBU2_gs_CurateHeroSelectionUI {
     int lv_lockButton;
     int lv_debugCrazyBtn;
     int lv_debugRerollBtn;
+
+    bool[libPBU2_gv_curateHeroSelectionUIRoleHeroCountRow_C + 1][libPBU2_gv_curateHeroSelectionUIRoleHeroCountCol_C + 1] heroGolden;
 };
 
 struct libPBU2_gs_CurateHeroSelectionSetting {
@@ -102,9 +104,6 @@ trigger libPBU2_gv_curateHeroSelectionUIHeroListInitCallback;
 trigger libPBU2_DifficultyDialogTrigger;
 trigger libPBU2_HowToPlayDialogTrigger;
 
-int libPBU2_Cho;
-int libPBU2_Gall;
-
 int libPBU2_difficultyDialogLabel;
 int libPBU2_difficultyDialogNormal;
 int libPBU2_difficultyDialogHeroic;
@@ -116,8 +115,6 @@ int libPBU2_informationDialogBG;
 int libPBU2_informationDialogText;
 int libPBU2_informationDialogClose;
 bool libPBU2_heroSelected;
-
-int libPBU2_difficulty = 1;
 
 // Function Declarations
 void libPBU2_gf_CurateHSUIInitialize ();
@@ -148,7 +145,6 @@ trigger libPBU2_gt_IncludeMMPvEBrawlModUI;
 trigger libPBU2_gt_CurateHSUIButtonClicked;
 trigger libPBU2_gt_CurateHSUICountdownTimerExpires;
 trigger libPBU2_gt_CurateHSUIForceSelection;
-trigger libPBU2_timerExpired;
 
 // Library Initialization
 void libPBU2_InitVariables ();

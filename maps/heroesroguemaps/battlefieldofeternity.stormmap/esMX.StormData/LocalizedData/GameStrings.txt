@@ -1,0 +1,30 @@
+﻿﻿DocInfo/Author=Blizzard Entertainment
+DocInfo/DescLong=Mapa de 2 vías<n/>
+DocInfo/DescShort=5 vs. 5
+DocInfo/HowToPlaySummary00=Mapa de 2 vías
+DocInfo/HowToPlaySummaryHeaderTitle=Campo de batalla de la Eternidad
+DocInfo/Name=Campo de batalla de la Eternidad
+LoadingScreen/BattlefieldOfEternity/Help1=Los Inmortales no se infligen daño durante el duelo. Para ganar, debes atacar al Inmortal enemigo y defender al tuyo.
+LoadingScreen/TextBody=<s val="Storm_BoldExtendedXLarge">Combate entre Inmortales</s><n/><s val="Storm_BoldExtendedMedium">¡Los Inmortales del Cielo y el Infierno se enfrentan en una batalla por la eternidad!</s><n/><n/><s val="Storm_BoldExtendedXLarge">Derrota al Inmortal enemigo</s><n/><s val="Storm_BoldExtendedMedium">¡Ayuda a tu Inmortal a derrotar al Inmortal enemigo!</s><n/><n/><s val="Storm_BoldExtendedXLarge">Devasta los fuertes enemigos</s><n/><s val="Storm_BoldExtendedMedium">¡Ataca junto a tu Inmortal para destruir al enemigo!</s>
+LoadingScreen/Title=<s val="Storm_BoldExtendedXXLarge">Campo de batalla de la Eternidad</c>
+MapInfo/Player00/Name=Neutral
+MapInfo/Player01/Name=Jugador 1
+MapInfo/Player02/Name=Jugador 2
+MapInfo/Player03/Name=Jugador 3
+MapInfo/Player04/Name=Jugador 4
+MapInfo/Player05/Name=Jugador 5
+MapInfo/Player06/Name=Jugador 6
+MapInfo/Player07/Name=Jugador 7
+MapInfo/Player08/Name=Jugador 8
+MapInfo/Player09/Name=Jugador 9
+MapInfo/Player10/Name=Jugador 10
+MapInfo/Player11/Name=Orden
+MapInfo/Player12/Name=Caos
+MapInfo/Player13/Name=Hostil
+Param/Value/3D4242A8=Inferior
+Param/Value/55B57A74=Superior
+UI/ResourceToolTip0=Usa el oro para comprar artículos para tu héroe.
+Variant001/Desc=El equipo azul contra el equipo naranja.
+Variant001/ModeDesc=Los jugadores pueden elegir a sus héroes.
+Variant001/ModeName=Estándar
+Variant001/Name=5 vs. 5

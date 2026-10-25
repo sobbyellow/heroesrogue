@@ -1,0 +1,36 @@
+include "HRLibs/HRTriggersLib"
+
+// ============================================================
+// Crash Stress
+// ============================================================
+bool libHRGE_DVaCrashStressUnitDied (bool testConds, bool runActions) {
+    unit deadUnit = EventUnit();
+    int deadPlayer = EventPlayer();
+    unit dvaUnit = libGame_gv_players[deadPlayer].lv_heroUnit;
+    soundlink soundLink = SoundLink("DVaCrashStressSound", -1);
+    sound hSound;
+
+    if (testConds) {
+        if (deadPlayer != libHRGE_player) {
+            return false;
+        }
+		if (UnitGetType(libGame_gv_players[deadPlayer].lv_heroUnit) != "HeroDVaPilot") {
+            return false;
+		}
+        if (deadUnit == libGame_gv_players[deadPlayer].lv_heroUnit) {
+			return false;
+        }
+        if (UnitTestState(deadUnit, c_unitStateHallucination)) {
+            return false;
+        }
+    }
+
+    UnitBehaviorAdd(dvaUnit, "AffixCrashStressBehavior", dvaUnit, 1);
+    libHRGE_MuteAllChannelsExcept(PlayerGroupAll(), true, c_soundCategoryTV);
+    SoundPlay(soundLink, PlayerGroupAll(), 200, 0.0);
+    hSound = SoundLastPlayed();
+    SoundWait(hSound, 5.0, 0);
+    libHRGE_MuteAllChannelsExcept(PlayerGroupAll(), false, c_soundCategoryTV);
+
+	return true;
+}

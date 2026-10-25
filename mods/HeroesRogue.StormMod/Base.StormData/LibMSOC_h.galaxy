@@ -190,8 +190,6 @@ trigger libMSOC_gt_MMTombSpiderQueenDebugShowSoulsCollected;
 trigger libMSOC_gt_MMTombSpiderQueenDebugKillSouleaters;
 trigger libMSOC_gt_MMTombSpiderQueenDebugNeutralSoul;
 
-bool libMSOC_paused = false;
-
 // Library Initialization
 void libMSOC_InitVariables ();
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CUnit id="TownGateL315BLURGarden">
+        <Facing value="83.9904"/>
+    </CUnit>
+    <CUnit id="TownGateL315BRULGarden">
+        <Facing value="277.998"/>
+    </CUnit>
+    <CUnit id="XelNagaWatchTower">
+        <Sight value="20"/>
+    </CUnit>
+</Catalog>

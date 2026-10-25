@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DocInfo>
+    <Icon>
+        <Value>Storm_UI_Gamemode_MapSelect_BlackheartsBay_CN.png</Value>
+    </Icon>
+    <MatchMakerTag>
+        <Value>Hero</Value>
+    </MatchMakerTag>
+    <Dependencies>
+        <Value>bnet:Heroes of the Storm (Data Mod)/0.0/999,file:Mods/HeroesData.StormMod</Value>
+        <Value>bnet:Blackheart's Bay (Mod)/0.0/1097,file:Mods\heroesmapmods/battlegroundmapmods/blackheartsbay.stormmod</Value>
+    </Dependencies>
+    <ModifiableDependencies>
+        <Value>Mods/HeroesData.StormMod</Value>
+        <Value>Mods\heroesmapmods/battlegroundmapmods/blackheartsbay.stormmod</Value>
+    </ModifiableDependencies>
+    <Preload>
+        <Value>GameLink:Model;JungleGhostShip</Value>
+        <Value>GameLink:Model;DocksCaptainsChest</Value>
+        <Value>GameLink:Model;DocksPirateCaptain</Value>
+        <Value>GameLink:Unit;JungleGraveGolemLaner</Value>
+        <Value>GameLink:Unit;JungleGraveGolemDefender</Value>
+        <Value>GameLink:Unit;MercDefenderSiegeGiant</Value>
+        <Value>GameLink:Unit;SkeletalPirate</Value>
+        <Value>GameLink:Unit;MercLanerSiegeGiant</Value>
+        <Value>GameLink:Unit;RangedMinion</Value>
+        <Value>GameLink:Unit;CatapultMinion</Value>
+        <Value>GameLink:Unit;FootmanMinion</Value>
+        <Value>GameLink:Unit;WizardMinion</Value>
+        <Value>GameLink:Unit;JungleCampIconUnit</Value>
+        <Value>GameLink:Unit;MercDefenderMeleeKnight</Value>
+        <Value>GameLink:Unit;MercDefenderRangedMage</Value>
+        <Value>GameLink:Unit;MercLanerMeleeKnight</Value>
+        <Value>GameLink:Unit;MercLanerRangedMage</Value>
+        <Value>GameLink:Actor;TownWallRadial0L2</Value>
+    </Preload>
+</DocInfo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CSound id="LoadingMusic_OLDDragonshire" parent="MUSIC">
+        <AssetArray File="Assets\Music\MX_LoadingScreen_Dragonshire.ogg" Offset="22050,22050" FacialGroup=""/>
+        <OffsetFadeOut/>
+        <OffsetFadeOut Time="3042" Volume="-96.000000"/>
+        <SpeakerMix index="Center" value="0.000000"/>
+        <SpeakerMix index="BackLeft" value="0.000000"/>
+        <SpeakerMix index="BackRight" value="0.000000"/>
+        <SpeakerMix index="SideLeft" value="0.000000"/>
+        <SpeakerMix index="SideRight" value="0.000000"/>
+        <SustainFade index="1" Time="3000" Volume="-96.000000"/>
+        <Volume value="-10.000000,-10.000000"/>
+    </CSound>
+</Catalog>

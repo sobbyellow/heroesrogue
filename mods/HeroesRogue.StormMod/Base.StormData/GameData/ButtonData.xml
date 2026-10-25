@@ -11,6 +11,9 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CButton id="AffixDestructionToken" parent="StormButtonParent">
   <Icon value="Assets\Textures\affix_icon_structure_quest.dds" />
 </CButton>
+<CButton id="AffixPacifismToken" parent="StormButtonParent">
+  <Icon value="Assets\Textures\affix_icon_pacifism.dds"/>
+</CButton>
 
 <CButton id="AffixGladiatorsMedallion" parent="StormButtonParent">
   <Icon value="Assets\Textures\storm_ui_icon_trinket_medallion.dds" />

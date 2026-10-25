@@ -1,37 +1,14 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Catalog>
-    <CSound id="LoadingMusic_OLDBlackhearts" parent="MUSIC">
-        <AssetArray File="Assets\Music\MX_LoadingScreen_Blackhearts_Bay4_Alt.ogg" Offset="88200,88200" FacialGroup=""/>
+    <CSound id="LoadingMusic" parent="MUSIC">
+        <AssetArray File="Assets\Music\MX_KingsCrest_Dark01_AltAmbient.ogg"/>
         <OffsetFadeOut/>
         <OffsetFadeOut Time="3042" Volume="-96.000000"/>
+        <SustainFade index="1" Time="3000" Volume="-96.000000"/>
         <SpeakerMix index="Center" value="0.000000"/>
         <SpeakerMix index="BackLeft" value="0.000000"/>
         <SpeakerMix index="BackRight" value="0.000000"/>
         <SpeakerMix index="SideLeft" value="0.000000"/>
         <SpeakerMix index="SideRight" value="0.000000"/>
-        <SustainFade index="1" Time="3000" Volume="-96.000000"/>
-        <Volume value="-10.000000,-10.000000"/>
-    </CSound>
-    <CSound id="BuildingWall_Impact" parent="_FX_Hero_Attack_GetHit">
-        <EditorCategories value="Race:Neutral"/>
-        <AssetArray File="Assets\Sounds\Impact_FX\Impact_GetHit_Vs_Wood01.wav" FacialGroup=""/>
-        <AssetArray File="Assets\Sounds\Impact_FX\Impact_GetHit_Vs_Wood02.wav" FacialGroup=""/>
-        <AssetArray File="Assets\Sounds\Impact_FX\Impact_GetHit_Vs_Wood03.wav" FacialGroup=""/>
-        <AssetArray File="Assets\Sounds\Impact_FX\Impact_GetHit_Vs_Wood04.wav" FacialGroup=""/>
-        <AssetArray File="Assets\Sounds\Impact_FX\Impact_GetHit_Vs_Wood05.wav" FacialGroup=""/>
-        <DupeMaximumMethod value="Replace"/>
-        <Pitch value="-1.000000,1.000000"/>
-        <Volume value="-10.000000,-10.000000"/>
-    </CSound>
-    <CSound id="BuildingTower_Impact" parent="_FX_Hero_Attack_GetHit">
-        <EditorCategories value="Race:Neutral"/>
-        <AssetArray File="Assets\Sounds\Impact_FX\Impact_GetHit_Vs_Wood01.wav" FacialGroup=""/>
-        <AssetArray File="Assets\Sounds\Impact_FX\Impact_GetHit_Vs_Wood02.wav" FacialGroup=""/>
-        <AssetArray File="Assets\Sounds\Impact_FX\Impact_GetHit_Vs_Wood03.wav" FacialGroup=""/>
-        <AssetArray File="Assets\Sounds\Impact_FX\Impact_GetHit_Vs_Wood04.wav" FacialGroup=""/>
-        <AssetArray File="Assets\Sounds\Impact_FX\Impact_GetHit_Vs_Wood05.wav" FacialGroup=""/>
-        <DupeMaximumMethod value="Replace"/>
-        <Pitch value="-1.000000,1.000000"/>
-        <Volume value="-10.000000,-10.000000"/>
     </CSound>
 </Catalog>

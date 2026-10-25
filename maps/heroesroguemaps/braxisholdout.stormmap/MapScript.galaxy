@@ -1,0 +1,748 @@
+//==================================================================================================
+// 
+// Generated Map Script
+// 
+// Name:   Braxis Holdout
+// 
+//==================================================================================================
+include "TriggerLibs/NativeLib"
+include "TriggerLibs/HeroesLib"
+include "TriggerLibs/GameLib"
+include "TriggerLibs/MapMechanicsLib"
+include "TriggerLibs/AILib"
+include "TriggerLibs/UILib"
+include "TriggerLibs/StartingExperienceLib"
+include "TriggerLibs/SoundLib"
+include "TriggerLibs/GameDataHelperLib"
+include "TriggerLibs/SupportLib"
+include "Lib566061C9"
+include "LibSCHO"
+include "LibTryMeMode"
+include "HRLibs/HeroesRogueLib"
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+void InitLibs () {
+    libNtve_InitLib();
+    libCore_InitLib();
+    libGame_InitLib();
+    libMapM_InitLib();
+    libAIAI_InitLib();
+    libUIUI_InitLib();
+    libStEx_InitLib();
+    libSond_InitLib();
+    libGDHL_InitLib();
+    libSprt_InitLib();
+    lib566061C9_InitLib();
+    libSCHO_InitLib();
+    libHRGE_InitLib();
+    libTRYM_InitLib();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Global Function Declarations
+//--------------------------------------------------------------------------------------------------
+void gf_HookupGlobalVariables ();
+void gf_HookupLaneData ();
+void gf_HookupJungleCreepData ();
+void gf_HookupTownData ();
+void gf_HookupRegionData ();
+void gf_HookupSCVFlare ();
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Variables
+//--------------------------------------------------------------------------------------------------
+trigger gt_InitializeMap;
+trigger gt_InitializeMapMechanic;
+trigger gt_MapMechanicIntroCallback;
+trigger gt_OpenGatesTimerStartsDisplayTimers;
+trigger gt_RegenGlobeGeneratorGainsBehavior;
+trigger gt_RegenGlobeGeneratorCreatesGlobe;
+
+//--------------------------------------------------------------------------------------------------
+// Global Functions
+//--------------------------------------------------------------------------------------------------
+void gf_HookupGlobalVariables () {
+    // Automatic Variable Declarations
+    // Implementation
+    libCore_gv_mAPMapStringID = "BraxisHoldout";
+    libGame_gv_teams[libGame_gv_teamOrderIndex_C].lv_core = UnitFromId(210);
+    libGame_gv_teams[libGame_gv_teamChaosIndex_C].lv_core = UnitFromId(346);
+    libCore_gv_mAPOrderBaseRegion = RegionFromId(29);
+    libCore_gv_mAPChaosBaseRegion = RegionFromId(5);
+    libSCHO_gv_mMHO_ArchangelElevator = DoodadFromId(1208);
+    libSCHO_gv_mMHO_ArchangelElevatorRegion = RegionFromId(27);
+    libSCHO_gv_mMHO_TopCaptureSlab = DoodadFromId(173);
+    libSCHO_gv_mMHO_BottomCaptureSlab = DoodadFromId(834);
+    libSCHO_gv_mMHO_TopCableRegion = RegionFromId(25);
+    libSCHO_gv_mMHO_BottomCableRegion = RegionFromId(26);
+    libSCHO_gv_mMHO_HiveCages[libGame_gv_teamOrderIndex_C].lv_northSoundRegion = RegionFromId(47);
+    libSCHO_gv_mMHO_HiveCages[libGame_gv_teamChaosIndex_C].lv_northSoundRegion = RegionFromId(48);
+    libSCHO_gv_mMHO_HiveCages[libGame_gv_teamOrderIndex_C].lv_southSoundRegion = RegionFromId(49);
+    libSCHO_gv_mMHO_HiveCages[libGame_gv_teamChaosIndex_C].lv_southSoundRegion = RegionFromId(50);
+    libSCHO_gv_mMHO_UpArrows[0] = DoodadFromId(1723);
+    libSCHO_gv_mMHO_UpArrows[1] = DoodadFromId(1725);
+    libSCHO_gv_mMHO_UpArrows[2] = DoodadFromId(1466);
+    libSCHO_gv_mMHO_UpArrows[3] = DoodadFromId(1189);
+    libSCHO_gv_mMHO_UpArrows[4] = DoodadFromId(1193);
+    libSCHO_gv_mMHO_UpArrows[5] = DoodadFromId(1191);
+    libSCHO_gv_mMHO_UpArrows[6] = DoodadFromId(1195);
+    libSCHO_gv_mMHO_UpArrows[7] = DoodadFromId(1320);
+    libSCHO_gv_mMHO_UpArrows[8] = DoodadFromId(1286);
+    libSCHO_gv_mMHO_DownArrows[0] = DoodadFromId(1269);
+    libSCHO_gv_mMHO_DownArrows[1] = DoodadFromId(1236);
+    libSCHO_gv_mMHO_DownArrows[2] = DoodadFromId(1319);
+    libSCHO_gv_mMHO_DownArrows[3] = DoodadFromId(1240);
+    libSCHO_gv_mMHO_DownArrows[4] = DoodadFromId(1192);
+    libSCHO_gv_mMHO_DownArrows[5] = DoodadFromId(1194);
+    libSCHO_gv_mMHO_DownArrows[6] = DoodadFromId(1227);
+    libSCHO_gv_mMHO_DownArrows[7] = DoodadFromId(1190);
+    libSCHO_gv_mMHO_DownArrows[8] = DoodadFromId(1461);
+    libSCHO_gv_mMHO_DownArrows[9] = DoodadFromId(1724);
+    libSCHO_gv_mMHO_CaptureCables[1] = DoodadFromId(1097);
+    libSCHO_gv_mMHO_CaptureCables[2] = DoodadFromId(1686);
+    libSCHO_gv_mMHO_CaptureCables[3] = DoodadFromId(837);
+    libSCHO_gv_mMHO_CaptureCables[4] = DoodadFromId(1685);
+    libSCHO_gv_mMHO_CaptureCables[5] = DoodadFromId(1684);
+    libSCHO_gv_mMHO_CaptureCables[6] = DoodadFromId(1595);
+    libCore_gv_mAPMapSoundtrack[0] = "MX_BraxisHoldout_Intro";
+    libCore_gv_mAPMapSoundtrack[1] = "MX_BraxisHoldout_LVL_1";
+    libCore_gv_mAPMapSoundtrack[2] = "MX_BraxisHoldout_LVL_10";
+    libCore_gv_mAPMapSoundtrack[3] = "MX_BraxisHoldout_LVL_20";
+}
+
+void gf_HookupLaneData () {
+    // Variable Declarations
+    int lv_structureCount;
+    int lv_waypointCount;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Implementation
+    libGame_gv_laneCount += 1;
+    lv_structureCount = 0;
+    lv_waypointCount = 0;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_laneName = StringExternal("Param/Value/EDA45569");
+    libGame_gv_laneData[libGame_gv_laneCount].lv_laneNamePreset = libGame_ge_LaneNamePresets_Top;
+    lv_structureCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_orderStructures[lv_structureCount] = UnitFromId(210);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_chaosStructures[lv_structureCount] = UnitFromId(346);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_structureCount = lv_structureCount;
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2350);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(540);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(853);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(579);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2117);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2119);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(580);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2121);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2124);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2126);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(581);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2127);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(959742536);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(208424479);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(3551);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2140);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2138);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(582);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2136);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(53);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2134);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2131);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(78);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2130);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(80);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2351);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypointCount = lv_waypointCount;
+    libGame_gv_laneCount += 1;
+    lv_structureCount = 0;
+    lv_waypointCount = 0;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_laneName = StringExternal("Param/Value/656106AB");
+    libGame_gv_laneData[libGame_gv_laneCount].lv_laneNamePreset = libGame_ge_LaneNamePresets_Bottom;
+    lv_structureCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_orderStructures[lv_structureCount] = UnitFromId(210);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_chaosStructures[lv_structureCount] = UnitFromId(346);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_structureCount = lv_structureCount;
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2350);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(371);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2129);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(372);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2132);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2133);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(373);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2135);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(374);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2137);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2139);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(3552);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(3550);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(375);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2128);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(376);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2125);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2123);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2122);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(377);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2120);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2118);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(378);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2114);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(380);
+    lv_waypointCount += 1;
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypoints[lv_waypointCount] = PointFromId(2351);
+    libGame_gv_laneData[libGame_gv_laneCount].lv_waypointCount = lv_waypointCount;
+}
+
+void gf_HookupJungleCreepData () {
+    // Variable Declarations
+    int lv_jungleCamp;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Implementation
+    lv_jungleCamp += 1;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_SiegeCamp1;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(180);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(177);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(178);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderLeashRegion = RegionFromId(8);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCapturePointSplatModel = "MercCampCaptureBeaconSlabSplat";
+    libSCHO_gv_mMHO_FactoryMercCampDoodads[lv_jungleCamp] = DoodadFromId(644);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_SiegeCamp1;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(3552);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mercChaosMercCampPathing[2].lv_waypoint = PointFromId(2139);
+    lv_jungleCamp += 1;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_BruiserCamp1;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(1367);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(1047);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(4052);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderSpawnPoints[3] = PointFromId(878);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderSpawnPoints[4] = PointFromId(3963);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderLeashRegion = RegionFromId(38);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCapturePointSplatModel = "MercCampCaptureBeaconSlabSplat";
+    libSCHO_gv_mMHO_FactoryMercCampDoodads[lv_jungleCamp] = DoodadFromId(510);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_BruiserCamp1;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(2126);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mercChaosMercCampPathing[2].lv_waypoint = PointFromId(2126);
+    lv_jungleCamp += 1;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_SiegeCamp1;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(401);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(382);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(221);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderLeashRegion = RegionFromId(28);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCapturePointSplatModel = "MercCampCaptureBeaconSlabSplat";
+    libSCHO_gv_mMHO_FactoryMercCampDoodads[lv_jungleCamp] = DoodadFromId(645);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_SiegeCamp1;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(2140);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mercChaosMercCampPathing[2].lv_waypoint = PointFromId(3551);
+    lv_jungleCamp += 1;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_BruiserCamp1;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(1440);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(1126);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderSpawnPoints[2] = PointFromId(4054);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderSpawnPoints[3] = PointFromId(1045);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderSpawnPoints[4] = PointFromId(3964);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderLeashRegion = RegionFromId(32);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCapturePointSplatModel = "MercCampCaptureBeaconSlabSplat";
+    libSCHO_gv_mMHO_FactoryMercCampDoodads[lv_jungleCamp] = DoodadFromId(504);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_BruiserCamp1;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(2125);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mercChaosMercCampPathing[2].lv_waypoint = PointFromId(2125);
+    lv_jungleCamp += 1;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCampType = libMapM_ge_JungleCampTypes_MercCamp;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCampDefenderType = libMapM_ge_JungleCampDefenderTypes_BossCamp1;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCampCaptainSpawnPoint = PointFromId(543046413);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderSpawnPoints[1] = PointFromId(29);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataDefenderLeashRegion = RegionFromId(9);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataCapturePointSplatModel = "MercCampCaptureBeaconElevatorSlabSplat";
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mapDataMercSpawnType = libMapM_ge_JungleCampMercTypes_BossCamp1;
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mercOrderMercCampPathing[1].lv_waypoint = PointFromId(959742536);
+    libMapM_gv_jungleCreepCamps[lv_jungleCamp].lv_mercChaosMercCampPathing[1].lv_waypoint = PointFromId(375);
+    libMapM_gv_jungleNumberOfCreepCamps = lv_jungleCamp;
+}
+
+void gf_HookupTownData () {
+    // Variable Declarations
+    int lv_lane;
+    int lv_town;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Implementation
+    lv_lane = 1;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamOrder;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(2);
+    libGame_gv_townTownData[lv_town].lv_makesCoreVulnerableWhenKilled = true;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamOrder;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(4);
+    lv_lane = 2;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamOrder;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(16);
+    libGame_gv_townTownData[lv_town].lv_makesCoreVulnerableWhenKilled = true;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamOrder;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(13);
+    UnitBehaviorAdd(UnitFromId(565), "DisableLaneTracking", UnitFromId(565), 1);
+    UnitBehaviorAdd(UnitFromId(83), "DisableLaneTracking", UnitFromId(83), 1);
+    UnitBehaviorAdd(UnitFromId(569), "DisableLaneTracking", UnitFromId(569), 1);
+    UnitBehaviorAdd(UnitFromId(567), "DisableLaneTracking", UnitFromId(567), 1);
+    lv_lane = 1;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamChaos;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(17);
+    libGame_gv_townTownData[lv_town].lv_makesCoreVulnerableWhenKilled = true;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamChaos;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(21);
+    lv_lane = 2;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamChaos;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(30);
+    libGame_gv_townTownData[lv_town].lv_makesCoreVulnerableWhenKilled = true;
+    lv_town += 1;
+    libGame_gv_townTownData[lv_town].lv_lane = lv_lane;
+    libGame_gv_townTownData[lv_town].lv_owner = libCore_gv_cOMPUTER_TeamChaos;
+    libGame_gv_townTownData[lv_town].lv_townRegion = RegionFromId(22);
+    UnitBehaviorAdd(UnitFromId(566), "DisableLaneTracking", UnitFromId(566), 1);
+    UnitBehaviorAdd(UnitFromId(82), "DisableLaneTracking", UnitFromId(82), 1);
+    UnitBehaviorAdd(UnitFromId(568), "DisableLaneTracking", UnitFromId(568), 1);
+    UnitBehaviorAdd(UnitFromId(570), "DisableLaneTracking", UnitFromId(570), 1);
+    libGame_gv_townTownCount = lv_town;
+}
+
+void gf_HookupRegionData () {
+    // Automatic Variable Declarations
+    // Implementation
+    libMapM_gf_MapSetRepulseRegion(libGame_gv_teamOrderIndex_C, RegionFromId(36), PointFromId(865), PointFromId(867), PointFromId(866), null);
+    libMapM_gf_MapSetRepulseRegion(libGame_gv_teamChaosIndex_C, RegionFromId(37), PointFromId(868), PointFromId(869), PointFromId(870), null);
+    libMapM_gf_MapSetSafeRegion(libGame_gv_teamOrderIndex_C, RegionFromId(36));
+    libMapM_gf_MapSetSafeRegion(libGame_gv_teamChaosIndex_C, RegionFromId(37));
+}
+
+void gf_HookupSCVFlare () {
+    // Automatic Variable Declarations
+    // Implementation
+    libSCHO_gf_MakeSCVUnitsMoveAround(UnitFromId(580503176), UnitFromId(267033009), UnitFromId(12486291), PointFromId(1322817650), PointFromId(578218016), PointFromId(161882684), PointFromId(1297894319));
+    libSCHO_gf_MakeSCVUnitsMoveAround(UnitFromId(2012463290), UnitFromId(2012463290), UnitFromId(1052735599), PointFromId(1599987902), PointFromId(1466840585), PointFromId(1466840585), PointFromId(438787066));
+    libSCHO_gf_MakeSCVUnitsMoveAround(UnitFromId(1527765722), UnitFromId(10739854), UnitFromId(10739854), PointFromId(1927727923), PointFromId(1476530305), PointFromId(329977221), PointFromId(329977221));
+    libSCHO_gf_MakeSCVUnitsMoveAround(UnitFromId(2021780064), UnitFromId(1334197743), UnitFromId(1681212598), PointFromId(1144011589), PointFromId(217463650), PointFromId(455796227), PointFromId(712760396));
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Initialize Map
+//--------------------------------------------------------------------------------------------------
+bool gt_InitializeMap_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TriggerExecute(libAIAI_gt_IncludeAI, true, false);
+    TriggerExecute(libGame_gt_IncludeGame, true, false);
+    TriggerExecute(libGDHL_gt_IncludeGameDataHelper, true, false);
+    TriggerExecute(libMapM_gt_IncludeMapMechanics, true, false);
+    TriggerExecute(libStEx_gt_IncludeStartingExperience, true, false);
+    TriggerExecute(libSond_gt_IncludeSound, true, false);
+    TriggerExecute(libSprt_gt_IncludeSupport, true, false);
+    TriggerExecute(libUIUI_gt_IncludeUI, true, false);
+    TriggerExecute(lib566061C9_gt_IncludeMMSC, true, false);
+    TriggerExecute(libSCHO_gt_IncludeHoldOut, true, false);
+    gf_HookupGlobalVariables();
+    gf_HookupLaneData();
+    gf_HookupJungleCreepData();
+    gf_HookupTownData();
+    gf_HookupRegionData();
+    gf_HookupSCVFlare();
+    libMapM_gf_MapMechanicAdd(libSCHO_gv_mMSC1MechanicName_C, gt_InitializeMapMechanic);
+    libSCHO_gf_MMHOSetArchangelLanerStartPoints(PointFromId(1150), PointFromId(1151), PointFromId(29));
+    libCore_gv_sYSGameMode = libCore_ge_GameModes_Sandbox;
+    libCore_gv_sYSTowns = true;
+    libCore_gv_sYSJungleCreepCamps = true;
+    libCore_gv_sYSJungleWatchTowers = true;
+    libCore_gv_sYSTowerAI = true;
+    libCore_gv_sYSMinionAI = true;
+    TriggerExecute(libCore_gt_InitializeStormMod, true, false);
+    libCore_gf_DataAnnouncerVOSetDefaultAnnouncerForPlayerGroup(PlayerGroupAll(), "Cook");
+    libNtve_gf_SendActorMessageToUnit(UnitFromId(83), "SetMinimapVisibility 1");
+    libNtve_gf_SendActorMessageToUnit(UnitFromId(82), "SetMinimapVisibility 1");
+    UnitBehaviorAdd(UnitFromId(83), "HealingFountainIgnoreLinkedMinimapIcons", UnitFromId(83), 1);
+    UnitBehaviorAdd(UnitFromId(82), "HealingFountainIgnoreLinkedMinimapIcons", UnitFromId(82), 1);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_InitializeMap_Init () {
+    gt_InitializeMap = TriggerCreate("gt_InitializeMap_Func");
+    TriggerAddEventMapInit(gt_InitializeMap);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Initialize Map Mechanic
+//--------------------------------------------------------------------------------------------------
+bool gt_InitializeMapMechanic_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_spawnPoints;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libSCHO_gv_mMHO_Chaos_TopSpawnRegion = RegionFromId(1);
+    libSCHO_gv_mMHO_Chaos_BottomSpawnRegion = RegionFromId(39);
+    libSCHO_gv_mMHO_Order_TopSpawnRegion = RegionFromId(24);
+    libSCHO_gv_mMHO_Order_BottomSpawnRegion = RegionFromId(11);
+    libSCHO_gv_mMHOSpawnCageRegions[(libSCHO_ge_MMHOSpawnCageQuadrants_OrderTop)].lv_frontSpawnRegion = RegionFromId(43);
+    libSCHO_gv_mMHOSpawnCageRegions[(libSCHO_ge_MMHOSpawnCageQuadrants_OrderTop)].lv_middleSpawnRegion = RegionFromId(42);
+    libSCHO_gv_mMHOSpawnCageRegions[(libSCHO_ge_MMHOSpawnCageQuadrants_OrderTop)].lv_backSpawnRegion = RegionFromId(51);
+    libSCHO_gv_mMHOSpawnCageRegions[(libSCHO_ge_MMHOSpawnCageQuadrants_ChaosTop)].lv_frontSpawnRegion = RegionFromId(52);
+    libSCHO_gv_mMHOSpawnCageRegions[(libSCHO_ge_MMHOSpawnCageQuadrants_ChaosTop)].lv_middleSpawnRegion = RegionFromId(59);
+    libSCHO_gv_mMHOSpawnCageRegions[(libSCHO_ge_MMHOSpawnCageQuadrants_ChaosTop)].lv_backSpawnRegion = RegionFromId(60);
+    libSCHO_gv_mMHOSpawnCageRegions[(libSCHO_ge_MMHOSpawnCageQuadrants_OrderBottom)].lv_frontSpawnRegion = RegionFromId(58);
+    libSCHO_gv_mMHOSpawnCageRegions[(libSCHO_ge_MMHOSpawnCageQuadrants_OrderBottom)].lv_middleSpawnRegion = RegionFromId(53);
+    libSCHO_gv_mMHOSpawnCageRegions[(libSCHO_ge_MMHOSpawnCageQuadrants_OrderBottom)].lv_backSpawnRegion = RegionFromId(54);
+    libSCHO_gv_mMHOSpawnCageRegions[(libSCHO_ge_MMHOSpawnCageQuadrants_ChaosBottom)].lv_frontSpawnRegion = RegionFromId(57);
+    libSCHO_gv_mMHOSpawnCageRegions[(libSCHO_ge_MMHOSpawnCageQuadrants_ChaosBottom)].lv_middleSpawnRegion = RegionFromId(55);
+    libSCHO_gv_mMHOSpawnCageRegions[(libSCHO_ge_MMHOSpawnCageQuadrants_ChaosBottom)].lv_backSpawnRegion = RegionFromId(56);
+    libSCHO_gv_mMHO_Order_TopHoldingPenRegion = RegionFromId(10);
+    libSCHO_gv_mMHO_Chaos_TopHoldingPenRegion = RegionFromId(19);
+    libSCHO_gv_mMHO_Order_BottomHoldingPenRegion = RegionFromId(12);
+    libSCHO_gv_mMHO_Chaos_BottomHoldingPenRegion = RegionFromId(14);
+    libSCHO_gv_mMHO_Chaos_BottomHoldingPenPingPoint = PointFromId(2046099627);
+    libSCHO_gv_mMHO_Chaos_TopHoldingPenPingPoint = PointFromId(2041390912);
+    libSCHO_gv_mMHO_Order_BottomHoldingPenPingPoint = PointFromId(1584807458);
+    libSCHO_gv_mMHO_Order_TopHoldingPenPingPoint = PointFromId(408546672);
+    libSCHO_gv_mMHO_Order_TopUltraliskPoints[1] = PointFromId(550);
+    libSCHO_gv_mMHO_Order_TopUltraliskPoints[2] = PointFromId(695);
+    libSCHO_gv_mMHO_Chaos_TopUltraliskPoints[1] = PointFromId(1352);
+    libSCHO_gv_mMHO_Chaos_TopUltraliskPoints[2] = PointFromId(1351);
+    libSCHO_gv_mMHO_Order_BottomUltraliskPoints[1] = PointFromId(1392);
+    libSCHO_gv_mMHO_Order_BottomUltraliskPoints[2] = PointFromId(931);
+    libSCHO_gv_mMHO_Chaos_BottomUltraliskPoints[1] = PointFromId(571);
+    libSCHO_gv_mMHO_Chaos_BottomUltraliskPoints[2] = PointFromId(930);
+    libSCHO_gv_mMHO_BottomCaptureBeacon = PointFromId(411);
+    libSCHO_gv_mMHO_TopCaptureBeacon = PointFromId(412);
+    libSCHO_gv_mMHO_BottomBeaconOwnershipRegion = RegionFromId(40);
+    libSCHO_gv_mMHO_TopBeaconOwnershipRegion = RegionFromId(41);
+    libSCHO_gv_mMHO_HiveCages[1].lv_north = UnitFromId(240);
+    libSCHO_gv_mMHO_HiveCages[1].lv_south = UnitFromId(696);
+    libSCHO_gv_mMHO_HiveCages[2].lv_north = UnitFromId(451);
+    libSCHO_gv_mMHO_HiveCages[2].lv_south = UnitFromId(386);
+    libSCHO_gv_mMHO_BeaconAntennae.lv_north = UnitFromId(1464);
+    libSCHO_gv_mMHO_BeaconAntennae.lv_south = UnitFromId(1463);
+    libSCHO_gv_mMHO_AttackPointsFort[1][1] = PointFromId(959742536);
+    libSCHO_gv_mMHO_AttackPointsFort[1][2] = PointFromId(208424479);
+    libSCHO_gv_mMHO_AttackPointsFort[1][3] = PointFromId(3551);
+    libSCHO_gv_mMHO_AttackPointsFort[1][4] = PointFromId(2140);
+    libSCHO_gv_mMHO_AttackPointsFort[1][5] = PointFromId(2136);
+    libSCHO_gv_mMHO_AttackPointsFort[1][6] = PointFromId(53);
+    libSCHO_gv_mMHO_AttackPointsKeep[1][1] = PointFromId(959742536);
+    libSCHO_gv_mMHO_AttackPointsKeep[1][2] = PointFromId(208424479);
+    libSCHO_gv_mMHO_AttackPointsKeep[1][3] = PointFromId(3551);
+    libSCHO_gv_mMHO_AttackPointsKeep[1][4] = PointFromId(2140);
+    libSCHO_gv_mMHO_AttackPointsKeep[1][5] = PointFromId(2136);
+    libSCHO_gv_mMHO_AttackPointsKeep[1][6] = PointFromId(53);
+    libSCHO_gv_mMHO_AttackPointsKeep[1][7] = PointFromId(2134);
+    libSCHO_gv_mMHO_AttackPointsKeep[1][8] = PointFromId(78);
+    libSCHO_gv_mMHO_AttackPointsKeep[1][9] = PointFromId(2130);
+    libSCHO_gv_mMHO_AttackPointsFort[2][1] = PointFromId(3551);
+    libSCHO_gv_mMHO_AttackPointsFort[2][2] = PointFromId(208424479);
+    libSCHO_gv_mMHO_AttackPointsFort[2][3] = PointFromId(959742536);
+    libSCHO_gv_mMHO_AttackPointsFort[2][4] = PointFromId(2127);
+    libSCHO_gv_mMHO_AttackPointsFort[2][5] = PointFromId(2126);
+    libSCHO_gv_mMHO_AttackPointsFort[2][6] = PointFromId(2124);
+    libSCHO_gv_mMHO_AttackPointsKeep[2][1] = PointFromId(3551);
+    libSCHO_gv_mMHO_AttackPointsKeep[2][2] = PointFromId(208424479);
+    libSCHO_gv_mMHO_AttackPointsKeep[2][3] = PointFromId(959742536);
+    libSCHO_gv_mMHO_AttackPointsKeep[2][4] = PointFromId(2127);
+    libSCHO_gv_mMHO_AttackPointsKeep[2][5] = PointFromId(2126);
+    libSCHO_gv_mMHO_AttackPointsKeep[2][6] = PointFromId(2124);
+    libSCHO_gv_mMHO_AttackPointsKeep[2][7] = PointFromId(2121);
+    libSCHO_gv_mMHO_AttackPointsKeep[2][8] = PointFromId(579);
+    libSCHO_gv_mMHO_AttackPointsKeep[2][9] = PointFromId(853);
+    libSCHO_gv_mMHO_AttackPointsFort[3][1] = PointFromId(3552);
+    libSCHO_gv_mMHO_AttackPointsFort[3][2] = PointFromId(3550);
+    libSCHO_gv_mMHO_AttackPointsFort[3][3] = PointFromId(375);
+    libSCHO_gv_mMHO_AttackPointsFort[3][4] = PointFromId(2128);
+    libSCHO_gv_mMHO_AttackPointsFort[3][5] = PointFromId(2125);
+    libSCHO_gv_mMHO_AttackPointsFort[3][6] = PointFromId(2123);
+    libSCHO_gv_mMHO_AttackPointsKeep[3][1] = PointFromId(3552);
+    libSCHO_gv_mMHO_AttackPointsKeep[3][2] = PointFromId(3550);
+    libSCHO_gv_mMHO_AttackPointsKeep[3][3] = PointFromId(375);
+    libSCHO_gv_mMHO_AttackPointsKeep[3][4] = PointFromId(2128);
+    libSCHO_gv_mMHO_AttackPointsKeep[3][5] = PointFromId(2125);
+    libSCHO_gv_mMHO_AttackPointsKeep[3][6] = PointFromId(2123);
+    libSCHO_gv_mMHO_AttackPointsKeep[3][7] = PointFromId(2122);
+    libSCHO_gv_mMHO_AttackPointsKeep[3][8] = PointFromId(378);
+    libSCHO_gv_mMHO_AttackPointsKeep[3][9] = PointFromId(2114);
+    libSCHO_gv_mMHO_AttackPointsFort[4][1] = PointFromId(375);
+    libSCHO_gv_mMHO_AttackPointsFort[4][2] = PointFromId(3550);
+    libSCHO_gv_mMHO_AttackPointsFort[4][3] = PointFromId(3552);
+    libSCHO_gv_mMHO_AttackPointsFort[4][4] = PointFromId(2139);
+    libSCHO_gv_mMHO_AttackPointsFort[4][5] = PointFromId(2135);
+    libSCHO_gv_mMHO_AttackPointsFort[4][6] = PointFromId(373);
+    libSCHO_gv_mMHO_AttackPointsKeep[4][1] = PointFromId(375);
+    libSCHO_gv_mMHO_AttackPointsKeep[4][2] = PointFromId(3550);
+    libSCHO_gv_mMHO_AttackPointsKeep[4][3] = PointFromId(3552);
+    libSCHO_gv_mMHO_AttackPointsKeep[4][4] = PointFromId(2139);
+    libSCHO_gv_mMHO_AttackPointsKeep[4][5] = PointFromId(2135);
+    libSCHO_gv_mMHO_AttackPointsKeep[4][6] = PointFromId(373);
+    libSCHO_gv_mMHO_AttackPointsKeep[4][7] = PointFromId(2132);
+    libSCHO_gv_mMHO_AttackPointsKeep[4][8] = PointFromId(372);
+    libSCHO_gv_mMHO_AttackPointsKeep[4][9] = PointFromId(2129);
+    libStEx_gf_SetMapMechanicTutorialCallback(gt_MapMechanicIntroCallback);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_InitializeMapMechanic_Init () {
+    gt_InitializeMapMechanic = TriggerCreate("gt_InitializeMapMechanic_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Map Mechanic Intro Callback
+//--------------------------------------------------------------------------------------------------
+bool gt_MapMechanicIntroCallback_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    ActorSend(ActorFromDoodad(DoodadFromId(834)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(834)), "AliasAdd cine_braxis_capture_slab_bot_Neutral");
+    ActorSend(ActorFromDoodad(DoodadFromId(173)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(173)), "AliasAdd cine_braxis_capture_slab_top_Neutral");
+    ActorSend(ActorFromDoodad(DoodadFromId(522)), "ExternalFinderAdd");
+    ActorSend(ActorFromDoodad(DoodadFromId(522)), "AliasAdd cine_braxis_starting_platform_blue");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(1463)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(1463)), "AliasAdd cine_capture_antenna_bot");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(210)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(210)), "AliasAdd cine_blue_core");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(92)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(92)), "AliasAdd cine_wall_botRed_R");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(88)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(88)), "AliasAdd cine_tower_botRed_R");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(89)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(89)), "AliasAdd cine_gate_botRed");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(85)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(85)), "AliasAdd cine_tower_botRed_L");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(81)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(81)), "AliasAdd cine_wall_botRed_L");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(201)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(201)), "AliasAdd cine_fort_botRed");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(3953)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(3953)), "AliasAdd cine_moonwell_botRed");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(86)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(86)), "AliasAdd cine_wall_botBlue_R");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(77)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(77)), "AliasAdd cine_tower_botBlue_R");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(77)), "AliasAdd cine_tower_botBlue_R_dead");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(61)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(61)), "AliasAdd cine_tower_botBlue_L");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(61)), "AliasAdd cine_tower_botBlue_L_dead");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(79)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(79)), "AliasAdd cine_gate_botBlue");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(79)), "AliasAdd cine_gate_botBlue_dead");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(892)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(892)), "AliasAdd cine_wall_botBlue_L");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(161)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(161)), "AliasAdd cine_fort_botBlue");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(3958)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(3958)), "AliasAdd cine_moonwell_botBlue");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(3958)), "AliasAdd cine_moonwell_botBlue_dead");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(51)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(51)), "AliasAdd cine_wall_topRed_R");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(44)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(44)), "AliasAdd cine_tower_topRed_R");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(50)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(50)), "AliasAdd cine_gate_topRed");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(42)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(42)), "AliasAdd cine_tower_topRed_L");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(55)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(55)), "AliasAdd cine_wall_topRed_L");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(202)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(202)), "AliasAdd cine_fort_topRed");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(3957)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(3957)), "AliasAdd cine_moonwell_topRed");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(386)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(386)), "AliasAdd cine_capture_cell_BotRight");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(240)), "ExternalFinderAdd");
+    ActorSend(libNtve_gf_MainActorofUnit(UnitFromId(240)), "AliasAdd cine_capture_cell_TopLeft");
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_MapMechanicIntroCallback_Init () {
+    gt_MapMechanicIntroCallback = TriggerCreate("gt_MapMechanicIntroCallback_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Open Gates Timer Starts - Display Timers
+//--------------------------------------------------------------------------------------------------
+bool gt_OpenGatesTimerStartsDisplayTimers_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libSCHO_gf_MMHODisplayRegenGlobeGeneratorTimer(UnitFromId(134));
+    libSCHO_gf_MMHODisplayRegenGlobeGeneratorTimer(UnitFromId(229));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_OpenGatesTimerStartsDisplayTimers_Init () {
+    gt_OpenGatesTimerStartsDisplayTimers = TriggerCreate("gt_OpenGatesTimerStartsDisplayTimers_Func");
+    TriggerAddEventTimer(gt_OpenGatesTimerStartsDisplayTimers, libGame_gv_openTheGatesTimer);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Regen Globe Generator Gains Behavior
+//--------------------------------------------------------------------------------------------------
+bool gt_RegenGlobeGeneratorGainsBehavior_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((libGame_gv_gameOver == false))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libSCHO_gf_MMHODisplayRegenGlobeGeneratorTimer(EventUnit());
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_RegenGlobeGeneratorGainsBehavior_Init () {
+    gt_RegenGlobeGeneratorGainsBehavior = TriggerCreate("gt_RegenGlobeGeneratorGainsBehavior_Func");
+    TriggerAddEventUnitBehaviorChange(gt_RegenGlobeGeneratorGainsBehavior, UnitRefFromUnit(UnitFromId(134)), "GenerateRegenGlobe", c_unitBehaviorChangeActivate);
+    TriggerAddEventUnitBehaviorChange(gt_RegenGlobeGeneratorGainsBehavior, UnitRefFromUnit(UnitFromId(229)), "GenerateRegenGlobe", c_unitBehaviorChangeActivate);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Regen Globe Generator Creates Globe
+//--------------------------------------------------------------------------------------------------
+bool gt_RegenGlobeGeneratorCreatesGlobe_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((UnitGetType(EventUnitCreatedUnit()) == "RegenGlobeNeutral"))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    AIAddCollectable(EventUnitCreatedUnit(), "CollectHealthPack", 1.0);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_RegenGlobeGeneratorCreatesGlobe_Init () {
+    gt_RegenGlobeGeneratorCreatesGlobe = TriggerCreate("gt_RegenGlobeGeneratorCreatesGlobe_Func");
+    TriggerAddEventUnitCreated(gt_RegenGlobeGeneratorCreatesGlobe, null, null, null);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Initialization
+//--------------------------------------------------------------------------------------------------
+void InitTriggers () {
+    gt_InitializeMap_Init();
+    gt_InitializeMapMechanic_Init();
+    gt_MapMechanicIntroCallback_Init();
+    gt_OpenGatesTimerStartsDisplayTimers_Init();
+    gt_RegenGlobeGeneratorGainsBehavior_Init();
+    gt_RegenGlobeGeneratorCreatesGlobe_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Map Initialization
+//--------------------------------------------------------------------------------------------------
+void InitMap () {
+    InitLibs();
+    InitTriggers();
+}

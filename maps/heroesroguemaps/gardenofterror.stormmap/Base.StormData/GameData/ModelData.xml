@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CModel id="GraveGolemRootsLaunchFX">
+        <Model value="Assets\Effects\Storm_FX_FloweringShambler_Base_Entangle_Missile\Storm_FX_FloweringShambler_Base_Entangle_Missile.m3"/>
+    </CModel>
+    <CModel id="BindingRootsModel">
+        <Model value="Assets\Effects\Storm_FX_FloweringShambler_Base_Entangle\Storm_FX_FloweringShambler_Base_Entangle.m3"/>
+    </CModel>
+    <CModel id="BindingRootsImpact">
+        <Model value="Assets\Effects\Storm_FX_FloweringShambler_Base_Entangle_Impact\Storm_FX_FloweringShambler_Base_Entangle_Impact.m3"/>
+    </CModel>
+    <CModel id="GraveGolemMegaStunHandAttach">
+        <Model value="Assets\Effects\Storm_FX_FloweringShambler_Base_MegaStun_Weapon\Storm_FX_FloweringShambler_Base_MegaStun_Weapon.m3"/>
+    </CModel>
+    <CModel id="MegaStunWarningModel">
+        <Model value="Assets\Effects\Storm_FX_FloweringShambler_Base_MegaStun\Storm_FX_FloweringShambler_Base_MegaStun.m3"/>
+    </CModel>
+    <CModel id="UseVehicleBeam" parent="PersistentSpellFX">
+        <Model value="Assets\Effects\Storm_Effect_Merc_Boss_Gardens_Lignify_Beam\Storm_Effect_Merc_Boss_Gardens_Lignify_Beam.m3"/>
+    </CModel>
+</Catalog>

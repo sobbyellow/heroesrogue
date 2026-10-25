@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Preload>
+<Actor id="SYSTEM_ActorConfig"/>
+<Actor id="ActorLightSpot"/>
+<Actor id="Storm_Doodad_KingsCrest_Gardens_CoreRange" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_Crates" Variations="11"/>
+<Actor id="Storm_Doodad_KingsCrest_Weaponracks" Variations="2,5"/>
+<Actor id="Storm_Doodad_KingsCrest_TombStones" Variations="0,1,2,3,4,5"/>
+<Actor id="Storm_Doodad_KingsCrest_ChiseledRock_Small" Variations="0,1,2,3,4,5,6,7,8,9"/>
+<Actor id="Storm_Doodad_KingsCrest_Campfire" Variations="1"/>
+<Actor id="Storm_Doodad_KingsCrest_RavenCourt_CurtainLarge" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_RavenCourt_Curtain" Variations="0,2,3"/>
+<Actor id="StormKingsCrestCurtainRavenCourtNoVisionBlocking" Variations="2"/>
+<Actor id="Storm_Doodad_KingsCrest_LumberMill"/>
+<Actor id="Storm_Doodad_KingsCrest_RockWalls_Mine" Variations="2,4,5"/>
+<Actor id="Storm_Doodad_KingsCrest_BigChunkyRock" Variations="0,1,2,3,4,5"/>
+<Actor id="Storm_Doodad_KingsCrest_GnarledFence" Variations="0,1,2,5,6"/>
+<Actor id="Storm_Doodad_KingsCrest_Stump" Variations="0,1,2,3,4"/>
+<Actor id="Storm_Doodad_KingsCrest_Candles" Variations="0,1,2,3,4"/>
+<Actor id="Storm_Doodad_KingsCrest_GroundFog" Variations="0,1"/>
+<Actor id="Storm_Effect_KingsCrest_Rain"/>
+<Actor id="StormDoodadWinterCrestBannerSmallRaven"/>
+<Actor id="StormDoodadWinterCrestBannerSmallNecro"/>
+<Actor id="StormDoodadWinterCrestCaptureBannerSmall"/>
+<Actor id="StormDoodadWinterCrestCaptureBannerLarge"/>
+<Actor id="StormDoodadWintercrestCorePlatform"/>
+<Actor id="StormDoodadWinterCrestFortressTower"/>
+<Actor id="Storm_Doodad_WinterCrest_Archway_Base"/>
+<Actor id="Storm_Doodad_WinterCrest_ArmsGrabbing"/>
+<Actor id="Storm_Doodad_WinterCrest_Barn" Variations="0,1,2,3,5"/>
+<Actor id="Storm_Doodad_WinterCrest_Barracks" Variations="0,1,2,3,4,5"/>
+<Actor id="Storm_Doodad_WinterCrest_BlackCastleBuilding" Variations="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,34,35,36,38,39,40,41"/>
+<Actor id="Storm_Doodad_WinterCrest_Blacksmith" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_WinterCrest_Bush" Variations="0,1,2,3"/>
+<Actor id="Storm_Doodad_WinterCrest_Coffin" Variations="1"/>
+<Actor id="Storm_Doodad_WinterCrest_Curb_Slabs" Variations="0,1,2,3,4,5,6,7,8,10,12"/>
+<Actor id="Storm_Doodad_WinterCrest_Curb_Slabs_Snow" Variations="0,1,2,3,4,5,6,7,8,9,10,11,12"/>
+<Actor id="Storm_Doodad_WinterCrest_DMZ_RangeIndicator" Variations="1,2,3,4,5,6,8,9"/>
+<Actor id="Storm_Doodad_WinterCrest_Fireflies" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_WinterCrest_FortressWall" Variations="0,1,2,3"/>
+<Actor id="Storm_Doodad_WinterCrest_Ghost"/>
+<Actor id="Storm_Doodad_WinterCrest_Ghost_Knight"/>
+<Actor id="Storm_Doodad_WinterCrest_HangingLantern" Variations="0"/>
+<Actor id="Storm_Doodad_WinterCrest_HauntedTree" Variations="0,1,2,3,4,5,6,7,8"/>
+<Actor id="Storm_Doodad_WinterCrest_HayBundle" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_WinterCrest_House" Variations="0,1,7,8"/>
+<Actor id="Storm_Doodad_WinterCrest_IronFence" Variations="0,1,2,3,4"/>
+<Actor id="Storm_Doodad_WinterCrest_LampPost"/>
+<Actor id="Storm_Doodad_WinterCrest_Logs" Variations="0,1,2,3,4,5,6"/>
+<Actor id="Storm_Doodad_WinterCrest_Mausoleum" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_WinterCrest_MineKit" Variations="0,3,4,6,7,8,11,12,13,14,17,18,19,20,22,23,24,25,26,27,28,37,38"/>
+<Actor id="Storm_Doodad_WinterCrest_Peasant_Spectral_Male" Variations="0,1,4,6,7"/>
+<Actor id="Storm_Doodad_WinterCrest_Pumpkins" Variations="1,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18"/>
+<Actor id="Storm_Doodad_WinterCrest_RollingFog" Variations="0,1"/>
+<Actor id="Storm_Doodad_WinterCrest_SmeltingPot"/>
+<Actor id="Storm_Doodad_WinterCrest_Smoke" Variations="1,2"/>
+<Actor id="Storm_Doodad_WinterCrest_SmokeStack"/>
+<Actor id="Storm_Doodad_WinterCrest_SpookyEyes" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_WinterCrest_TeamColorLight" Variations="0,1,2,3"/>
+<Actor id="Storm_Doodad_WinterCrest_Tree" Variations="0,1,2,3,4,5,6,7,8"/>
+<Actor id="Storm_Doodad_WinterCrest_Waypoint_Wall"/>
+<Actor id="Storm_Doodad_Wintercrest_Lavapot"/>
+<Actor id="Storm_Doodad_WinterCrest_CastleBuilding_Kit" Variations="2,11,12,14"/>
+<Actor id="StromWinterCrestRaven"/>
+<AnnouncerPack id="Necromancer"/>
+<AnnouncerPack id="RavenLord"/>
+<Goal id="LaneStaging"/>
+<Terrain id="StormKingsCrestWinterRavenCourt"/>
+<Unit id="StormGameStartPathingBlocker"/>
+<Unit id="TownGateL215BLUR" Variations="1,3"/>
+<Unit id="TownGateL215BRUL" Variations="1,2,3"/>
+<Unit id="TownCannonTowerL2"/>
+<Unit id="TownMoonwellL2"/>
+<Unit id="TownTownHallL2"/>
+<Unit id="HallOfStormsLocationUnit"/>
+<Unit id="KingsCore"/>
+<Unit id="TownWallRadial4L2" Variations="14,16"/>
+<Unit id="TownWallRadial5L2" Variations="8"/>
+<Unit id="TownWallRadial6L2" Variations="17"/>
+<Unit id="TownWallRadial7L2" Variations="6"/>
+<Unit id="TownWallRadial16L2" Variations="8"/>
+<Unit id="TownWallRadial17L2" Variations="9"/>
+<Unit id="TownWallRadial18L2" Variations="6"/>
+<Unit id="TownWallRadial19L2" Variations="15,17"/>
+<Unit id="LootBannerSconce"/>
+<Unit id="SpiritHealer"/>
+<Unit id="BaseProtectionCannonExtraHigh"/>
+<Unit id="BaseProtectionCannonHigh"/>
+<Unit id="BaseProtectionCannonLow"/>
+<Unit id="BaseProtectionCannonMid"/>
+<Unit id="BaseProtectionTowerGround"/>
+<Unit id="BaseProtectionTowerHigh"/>
+<Unit id="BaseProtectionTowerMid"/>
+<Unit id="FortressArchwayVerticalRight"/>
+<Unit id="FortressArchwayVerticalLeft"/>
+<Unit id="FortressArchwayCurvedUL"/>
+<Unit id="FortressArchwayCurvedDL"/>
+<Unit id="FortressArchwayCurvedUR"/>
+<Unit id="FortressArchwayCurvedDR"/>
+<Unit id="MercWinterCrestHorsemanEntrance"/>
+<Unit id="PathingBlockerToDWall"/>
+<Unit id="ScoringAltar"/>
+<Unit id="WaygateEntrance"/>
+<Unit id="WaygateUnit"/>
+</Preload>

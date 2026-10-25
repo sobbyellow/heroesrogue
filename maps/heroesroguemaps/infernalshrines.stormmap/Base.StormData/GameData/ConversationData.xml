@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CConversation id="ShrinesVO">
+        <Lines index="42">
+            <Id value="Line00043"/>
+            <Text value="Conversation/ShrinesVO/Line00043"/>
+            <Sound value="ShrinesVO_Angel_043"/>
+            <OverlapPrevious value="500"/>
+            <AnimProps value="Talk"/>
+            <AnimBlendIn value="-1"/>
+            <AnimBlendOut value="-1"/>
+            <SpeakerCharacter value="Angel"/>
+            <Tags value="Angel"/>
+        </Lines>
+    </CConversation>
+</Catalog>

@@ -1,0 +1,30 @@
+﻿﻿DocInfo/Author=暴雪娛樂
+DocInfo/DescLong=雙路線地圖<n/>
+DocInfo/DescShort=5對5
+DocInfo/HowToPlaySummary00=雙路線地圖
+DocInfo/HowToPlaySummaryHeaderTitle=永恆戰場
+DocInfo/Name=永恆戰場
+LoadingScreen/BattlefieldOfEternity/Help1=不朽戰士互相攻擊時不會對彼此造成傷害。必須攻擊敵人的不朽戰士，並且保護我方的不朽戰士才能獲勝。
+LoadingScreen/TextBody=<s val="Storm_BoldExtendedXLarge">不朽戰士的對決</s><n/><s val="Storm_BoldExtendedMedium">天堂與地獄的不朽戰士，展開永無止盡的對決！</s><n/><n/><s val="Storm_BoldExtendedXLarge">打倒敵人的不朽戰士</s><n/><s val="Storm_BoldExtendedMedium">協助我方的不朽戰士擊敗對方！</s><n/><n/><s val="Storm_BoldExtendedXLarge">摧毀敵人的堡壘</s><n/><s val="Storm_BoldExtendedMedium">和你的不朽戰士一同推進，消滅敵人！</s>
+LoadingScreen/Title=<s val="Storm_BoldExtendedXXLarge">永恆戰場</c>
+MapInfo/Player00/Name=中立
+MapInfo/Player01/Name=玩家1
+MapInfo/Player02/Name=玩家2
+MapInfo/Player03/Name=玩家3
+MapInfo/Player04/Name=玩家4
+MapInfo/Player05/Name=玩家5
+MapInfo/Player06/Name=玩家6
+MapInfo/Player07/Name=玩家7
+MapInfo/Player08/Name=玩家8
+MapInfo/Player09/Name=玩家9
+MapInfo/Player10/Name=玩家10
+MapInfo/Player11/Name=秩序
+MapInfo/Player12/Name=混沌
+MapInfo/Player13/Name=敵對
+Param/Value/3D4242A8=下路
+Param/Value/55B57A74=上路
+UI/ResourceToolTip0=金幣可以用來購買英雄的物品。
+Variant001/Desc=藍隊對抗橘隊。
+Variant001/ModeDesc=玩家可以選擇自己的英雄。
+Variant001/ModeName=標準模式
+Variant001/Name=5對5

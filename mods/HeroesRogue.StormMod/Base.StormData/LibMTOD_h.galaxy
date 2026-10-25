@@ -222,10 +222,8 @@ trigger libMTOD_gt_MMToDDebugWarningOn;
 trigger libMTOD_gt_MMToDDebugAltarsOn;
 trigger libMTOD_gt_MMToDDebugEventStart;
 
-void libMTOD_Wait(fixed duration, int inTimeType);
 bool libMTOD_PauseTrigger_Func(bool testConds, bool runActions);
 
-bool libMTOD_paused = false;
 bool libMTOD_gv_mMToDSixCapTimer_Paused = false;
 
 // Library Initialization

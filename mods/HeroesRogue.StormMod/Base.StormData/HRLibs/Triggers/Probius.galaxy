@@ -1,0 +1,139 @@
+include "HRLibs/HRTriggersLib"
+
+int libHRGE_PylonExpansionAmount;
+int libHRGE_ProbiusZealotCost = 5;
+int libHRGE_ProbiusStalkerCost = 10;
+int libHRGE_ProbiusImmortalCost = 30;
+
+int libHRGE_ProbiusTurboDurationIncrease;
+
+// ============================================================
+// Cannon Rush
+// ============================================================
+bool libHRGE_ProbiusCannonRushUnitCreated (bool testConds, bool runActions) {
+    unit createdUnit = EventUnitCreatedUnit();
+    int owner = UnitGetOwner(createdUnit);
+    if (testConds) {
+        if (UnitGetType(createdUnit) != "ProbiusPhotonCannon") {
+            return false;
+        }
+        if (owner != libHRGE_player) {
+            return false;
+        }
+    }
+    UnitBehaviorAdd(createdUnit, "ProbiusPhotonCannonExtenderBehavior", createdUnit, 1);
+    return true;
+}
+// ============================================================
+// Optimized Ordnance
+// ============================================================
+bool libHRGE_ProbiusOptimizedOrdnance (bool testConds, bool runActions) {
+    unit createdUnit = EventUnitCreatedUnit();
+    int owner = UnitGetOwner(createdUnit);
+    if (testConds) {
+        if (UnitGetType(createdUnit) != "ProbiusPhotonCannon") {
+            return false;
+        }
+        if (owner != libHRGE_player) {
+            return false;
+        }
+    }
+    UnitBehaviorAdd(createdUnit, "ProbiusOptimizedOrdnanceAttackSpeedBehavior", createdUnit, 1);
+    return true;
+}
+// ============================================================
+// Turbo
+// ============================================================
+bool libHRGE_ProbiusTurboAffixAdded (bool testConds, bool runActions) {
+    int affixCount = libHRGE_EventAffixCount();
+    libHRGE_ProbiusTurboDurationIncrease = affixCount * 1;
+    return true;
+}
+// ============================================================
+// Plasma Shields
+// ============================================================
+bool libHRGE_ProbiusPlasmaShields (bool testConds, bool runActions) {
+    unit createdUnit = EventUnitCreatedUnit();
+    int owner = UnitGetOwner(createdUnit);
+    if (testConds) {
+        if (UnitGetType(createdUnit) != "ProbiusPhotonCannon" && UnitGetType(createdUnit) != "ProbiusPylon") {
+            return false;
+        }
+        if (owner != libHRGE_player) {
+            return false;
+        }
+    }
+    UnitBehaviorAdd(createdUnit, "ProbiusPlasmaShieldsBehavior", createdUnit, 8);
+    UnitBehaviorAdd(createdUnit, "ProbiusPlasmaShieldsController", createdUnit, 1);
+    return true;
+}
+// ============================================================
+// Pylon Expansion
+// ============================================================
+bool libHRGE_ProbiusPylonExpansionAffixAdded (bool testConds, bool runActions) {
+    int amount = libHRGE_EventAffixCountAdded();
+    libHRGE_PylonExpansionAmount += amount;
+    libHPRO_gv_heroProbiusWarpInPylonMaxNumberofPylons += amount;
+    libHPRO_gv_heroProbiusWarpInPylonConstructAdditionalPylonsMaxNumberofPylons += amount;
+    return true;
+}
+// ============================================================
+// Efficient Warp
+// ============================================================
+bool libHRGE_ProbiusEfficientWarpAffixAdded (bool testConds, bool runActions) {
+    libHRGE_ProbiusZealotCost -= 1;
+    libHRGE_ProbiusStalkerCost -= 2;
+    libHRGE_ProbiusImmortalCost -= 6;
+    return true;
+}
+// ============================================================
+// Hardened Shield
+// ============================================================
+bool libHRGE_ProbiusHardenedShieldUnitCreated (bool testConds, bool runActions) {
+    unit createdUnit = EventUnitCreatedUnit();
+    int owner = UnitGetOwner(createdUnit);
+    if (testConds) {
+        if (UnitGetType(createdUnit) != "ProbiusImmortal") {
+            return false;
+        }
+        if (owner != libHRGE_player) {
+            return false;
+        }
+    }
+    UnitBehaviorAdd(createdUnit, "ImmortalHardenedShield", createdUnit, 1);
+    return true;
+}
+// ============================================================
+// Rapid Disruptors
+// ============================================================
+bool libHRGE_ProbiusRapidDisruptorsUnitCreated (bool testConds, bool runActions) {
+    unit createdUnit = EventUnitCreatedUnit();
+    int owner = UnitGetOwner(createdUnit);
+    if (testConds) {
+        if (UnitGetType(createdUnit) != "ProbiusStalker") {
+            return false;
+        }
+        if (owner != libHRGE_player) {
+            return false;
+        }
+    }
+    UnitBehaviorAdd(createdUnit, "ProbiusRapidDisruptorsAttackSpeedBehavior", createdUnit, 1);
+    return true;
+}
+// ============================================================
+// Zealot Armor
+// ============================================================
+bool libHRGE_ProbiusReinforcedPowerSuitUnitCreated (bool testConds, bool runActions) {
+    unit createdUnit = EventUnitCreatedUnit();
+    int owner = UnitGetOwner(createdUnit);
+    if (testConds) {
+        if (UnitGetType(createdUnit) != "ProbiusZealot") {
+            return false;
+        }
+        if (owner != libHRGE_player) {
+            return false;
+        }
+    }
+    UnitBehaviorAdd(createdUnit, "ProbiusReinforcedPowerSuitBehavior", createdUnit, 1);
+    return true;
+}

@@ -1,0 +1,142 @@
+const int libHRGE_FortificationsMax = 13;
+const int libHRGE_DestructionMaxRewards = 3;
+const int libHRGE_WeakPointDuration = 4;
+const fixed libHRGE_RingofMagicModifier = 0.15;
+const fixed libHRGE_RingofMagicModifierPerStack = 0.075;
+const fixed libHRGE_StormShieldModifier = 0.25;
+const fixed libHRGE_OverwhelmingPowerCDRModifier = 0.5;
+const fixed libHRGE_NanoBoostCDRModifier = 0.75;
+const fixed libHRGE_BlessingoftheDragonsCDRModifier = 0.35;
+const fixed libHRGE_BadBargainModifier = 0.5;
+const fixed libHRGE_ChronoBoostCDRModifier = 0.2;
+const fixed libHRGE_ChainedDownModifier = 0.25;
+const fixed libHRGE_AutoMULECooldown = 60;
+const fixed libHRGE_AutoMULECDRPerStack = 20;
+const fixed libHRGE_ResurgenceoftheStormCooldown = 300;
+const fixed libHRGE_ResurgenceoftheStormCooldownLostVikings = 180;
+const fixed libHRGE_ResurgenceoftheStormCDRPerStack = 60;
+const fixed libHRGE_ResurgenceoftheStormDeathTimer = 5;
+const fixed libHRGE_DivineInterventionCooldown = 300;
+const fixed libHRGE_DivineInterventionCDRPerStack = 150;
+const fixed libHRGE_BriberyCooldown = 300;
+const fixed libHRGE_BriberyCDRPerStack = 60;
+const fixed libHRGE_RelentlessModifier = 0.15;
+const fixed libHRGE_GlobeHufferCooldown = 12;
+const fixed libHRGE_GlobeHufferCDRPerStack = 4;
+const fixed libHRGE_LastMomentsCooldown = 300;
+const fixed libHRGE_LastMomentsCDRPerStack = 150;
+const fixed libHRGE_VeryBadBargainCooldown = 60;
+const fixed libHRGE_VeryBadBargainModifier = -0.02;
+const fixed libHRGE_MacGuffinModifier = 0.5;
+const fixed libHRGE_MacGuffinModifierPerStack = 0.25;
+const fixed libHRGE_InvasionStatsModifier = 0.25;
+const fixed libHRGE_UnyieldingDefenseModifier = 0.1;
+const fixed libHRGE_ArmyOfBUDDYsDamageHealingPenalty = 0.85;
+const fixed libHRGE_PrivateMedivacCooldown = 60;
+const fixed libHRGE_WeakenModifier = 0.1;
+const fixed libHRGE_QuickMountModifier = 0.5;
+const fixed libHRGE_ExperienceHoarderModifier = 0.2;
+
+fixed libHRGE_InvasionSpawnRate = 0.25;
+fixed libHRGE_InvasionExp = 0.2;
+fixed[libCore_gv_bALMaxPlayers + 1] libHRGE_PathoftheAssassinInitialValue;
+fixed[libCore_gv_bALMaxPlayers + 1] libHRGE_PathoftheAssassinStackingValue;
+fixed libHRGE_PathoftheAssassinInitialValueTooltip;
+fixed libHRGE_PathoftheAssassinStackingValueTooltip;
+fixed libHRGE_AutoMULECurrentCooldown;
+fixed libHRGE_SecondWindCurrentCooldown;
+fixed libHRGE_DivineInterventionCurrentCooldown;
+fixed libHRGE_NanoBoostCurrentCDRModifier;
+fixed libHRGE_BlessingoftheDragonsCurrentCDRModifier;
+fixed libHRGE_BadBargainCurrentModifier;
+fixed libHRGE_ChronoBoostCurrentCDRModifier;
+fixed libHRGE_ChainedDownCurrentModifier;
+fixed libHRGE_ResurgenceoftheStormCurrentCooldown;
+fixed libHRGE_BriberyCurrentCooldown;
+fixed libHRGE_BriberyCooldownModifier = 1;
+fixed libHRGE_GlobeHufferCurrentCooldown;
+fixed libHRGE_RelentlessCurrentModifier;
+fixed libHRGE_RingofMagicCurrentModifier;
+fixed libHRGE_LastMomentsCurrentCooldown;
+fixed libHRGE_MacGuffinCurrentModifier;
+fixed libHRGE_ExperiencedCurrentModifier;
+fixed libHRGE_WeakenCurrentModifier;
+int[libCore_gv_bALMaxPlayers + 1] libHRGE_BuddyCount;
+int[libCore_gv_bALMaxPlayers + 1] libHRGE_CurrentBuddyCount1;
+int[libCore_gv_bALMaxPlayers + 1] libHRGE_CurrentBuddyCount2;
+int[libCore_gv_bALMaxPlayers + 1] libHRGE_CurrentBuddyCount3;
+int libHRGE_BuddyCountPlayer1;
+int libHRGE_FortificationsTotal = 0;
+int libHRGE_ToxicFieldCount;
+int libHRGE_PathoftheFighterBonus;
+int libHRGE_ClonedCount;
+bool libHRGE_DestructionSuppressRewards;
+bool[libHRGE_DestructionMaxRewards + 1] libHRGE_DestructionFinished;
+bool libHRGE_KillContractSuppressRewards;
+bool libHRGE_SlivanSuppressRewards;
+bool[libHRGE_FortificationsMax + 1] libHRGE_FortificationsSpawned;
+bool libHRGE_BriberyAllowBosses;
+bool[libCore_gv_bALMaxTeams + 1] libHRGE_SlivanSpawned;
+unit libHRGE_PurificationProtocolTargetUnit;
+int libHRGE_grenadierTotalHeroes;
+int libHRGE_cursedDeaths;
+bool libHRGE_invasionActive;
+int libHRGE_invasionModifier;
+unit libHRGE_payloadBoosterUnit;
+
+string libHRGE_instanceKillContract = "KillContract";
+string libHRGE_instanceDestruction = "Destruction";
+string libHRGE_instanceBadBargain = "BadBargain";
+string libHRGE_instanceBuddy = "Buddy";
+string libHRGE_instanceResurgenceoftheStorm = "ResurgenceoftheStorm";
+string libHRGE_instanceBribery = "Bribery";
+string libHRGE_instanceToxicField = "ToxicField";
+string libHRGE_instancePathoftheWizard = "PathoftheWizard";
+string libHRGE_instancePathoftheWarrior = "PathoftheWarrior";
+string libHRGE_instancePathoftheAssassin = "PathoftheAssassin";
+string libHRGE_instanceDivineIntervention = "DivineIntervention";
+string libHRGE_instanceTalentDisadvantage = "TalentDisadvantage";
+string libHRGE_instanceLastMoments = "LastMoments";
+string libHRGE_instanceCursed = "Cursed";
+string libHRGE_instanceVeryBadBargain = "VeryBadBargain";
+string libHRGE_instanceExperienceHoarder = "ExperienceHoarder";
+string libHRGE_instancePacifism = "Pacifism";
+string libHRGE_instanceSlivan = "Slivan";
+string libHRGE_instanceAutoMULE = "AutoMULE";
+string libHRGE_instanceInvasion = "Invasion";
+string libHRGE_instancePrivateMedivac = "PrivateMedivac";
+
+libHRGE_Filter libHRGE_filterAlteracsLegacy;
+libHRGE_Filter libHRGE_filterInfernalPunishment;
+libHRGE_Filter libHRGE_filterAmmunitionTowers;
+libHRGE_Filter libHRGE_filterAmmunitionForts;
+libHRGE_Filter libHRGE_filterCitadel;
+libHRGE_Filter libHRGE_filterSabotage;
+
+
+include "HRLibs/HeroesRogueLib"
+include "HRLibs/Triggers/Nazeebo"
+include "HRLibs/Triggers/LostVikings"
+include "HRLibs/Triggers/Illidan"
+include "HRLibs/Triggers/Tyrande"
+include "HRLibs/Triggers/Muradin"
+include "HRLibs/Triggers/Thrall"
+include "HRLibs/Triggers/LiMing"
+include "HRLibs/Triggers/SgtHammer"
+include "HRLibs/Triggers/Probius"
+include "HRLibs/Triggers/Alexstrasza"
+include "HRLibs/Triggers/Ana"
+include "HRLibs/Triggers/Anduin"
+include "HRLibs/Triggers/Auriel"
+include "HRLibs/Triggers/Brightwing"
+include "HRLibs/Triggers/Deckard"
+include "HRLibs/Triggers/Kharazim"
+include "HRLibs/Triggers/LiLi"
+include "HRLibs/Triggers/LtMorales"
+include "HRLibs/Triggers/Lucio"
+include "HRLibs/Triggers/Malfurion"
+include "HRLibs/Triggers/Rehgar"
+include "HRLibs/Triggers/Stukov"
+include "HRLibs/Triggers/Uther"
+include "HRLibs/Triggers/Whitemane"
+include "HRLibs/Triggers/DVa"

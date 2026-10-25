@@ -16,7 +16,7 @@ include "TriggerLibs/SoundLib"
 include "TriggerLibs/GameDataHelperLib"
 include "TriggerLibs/SupportLib"
 include "LibTryMeMode"
-include "LibAffx"
+include "HRLibs/HeroesRogueLib"
 
 //--------------------------------------------------------------------------------------------------
 // Library Initialization
@@ -32,7 +32,7 @@ void InitLibs () {
     libSond_InitLib();
     libGDHL_InitLib();
     libSprt_InitLib();
-    libAffx_InitLib();
+    libHRGE_InitLib();
     libTRYM_InitLib();
 }
 

@@ -1,0 +1,63 @@
+include "HRLibs/HRTriggersLib"
+
+const fixed libHRGE_WhitemaneArdentZealModifier = 0.25;
+
+
+bool libHRGE_WhitemaneArdentZealAbilityDamageTracker (bool testConds, bool runActions) {
+    fixed damageAbsorbed = EventUnitDamageAbsorbed();
+    unit sourceUnit = EventUnitDamageSourceUnit();
+    unit eventUnit = EventUnit();
+    int player = UnitGetOwner(sourceUnit);
+    string damageEffect = EventUnitDamageEffect();
+
+    if (testConds) {
+        if (UnitTypeTestAttribute(UnitGetType(eventUnit), c_unitAttributeHeroic)) {
+            return false;
+        }
+        if (UnitBehaviorCount(sourceUnit, "WhitemaneZealCasterBehavior") <= 0) {
+            return false;
+        }
+        if (damageEffect == "WhitemaneZealDamage" || damageEffect == "AffixWeakPointDamage") {
+            return false;
+        }
+        if (!UnitHasBehavior2(sourceUnit, "WhitemaneArdentZealCarry")) {
+            return false;
+        }
+    }
+
+    libHWHI_gv_heroWhitemaneZealCombinedHeal[player] += (damageAbsorbed * libHRGE_WhitemaneArdentZealModifier);
+    return true;
+}
+bool libHRGE_WhitemaneArdentZealBasicDamageTracker (bool testConds, bool runActions) {
+    fixed damageAbsorbed = EventUnitDamageAbsorbed();
+    unit sourceUnit = EventUnitDamageSourceUnit();
+    unit eventUnit = EventUnit();
+    int player = UnitGetOwner(sourceUnit);
+    string damageEffect = EventUnitDamageEffect();
+
+    if (testConds) {
+        if (UnitTypeTestAttribute(UnitGetType(eventUnit), c_unitAttributeHeroic)) {
+            return false;
+        }
+        if (UnitBehaviorCount(sourceUnit, "WhitemaneZealCasterBehavior") <= 0) {
+            return false;
+        }
+        if (damageEffect == "WhitemaneZealDamage" || damageEffect == "AffixWeakPointDamage") {
+            return false;
+        }
+        if (!UnitHasBehavior2(sourceUnit, "WhitemaneArdentZealCarry")) {
+            return false;
+        }
+    }
+
+    libHWHI_gv_heroWhitemaneZealCombinedHeal[player] += (damageAbsorbed * libHRGE_WhitemaneArdentZealModifier);
+    return true;
+}
+
+bool libHRGE_WhitemaneArdentZealOncePerGame (bool testConds, bool runActions) {
+    trigger zealNonHeroicAbilityDamageTracker = TriggerCreate("libHRGE_WhitemaneArdentZealAbilityDamageTracker");
+    trigger zealNonHeroicBasicDamageTracker = TriggerCreate("libHRGE_WhitemaneArdentZealBasicDamageTracker");
+    TriggerAddDamageEvent(zealNonHeroicAbilityDamageTracker, "HeroWhitemane", null, c_unitDamageTypeAbility, c_unitDamageEither, null);
+    TriggerAddDamageEvent(zealNonHeroicBasicDamageTracker, "HeroWhitemane", null, c_unitDamageTypeBasic, c_unitDamageEither, null);
+    return true;
+}

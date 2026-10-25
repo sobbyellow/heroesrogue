@@ -1,0 +1,17 @@
+include "HRLibs/HRTriggersLib"
+
+// ============================================================
+// Lightning Rod
+// ============================================================
+bool libHRGE_ThrallLightningRodExecuteOncePerGame (bool testConds, bool runActions) {
+    libHRGE_heroCountsAsMeleeAndRanged = true;
+    return true;
+}
+// ============================================================
+// Quests Galore
+// ============================================================
+bool libHRGE_ThrallQuestsGaloreExecuteOncePerGame (bool testConds, bool runActions) {
+    TalentTreeSetSelectedHeroTalent(libHRGE_player, 4, 1);
+    libGame_gf_TalentsUpdateChoicePanelForPlayer(libHRGE_player);
+    return true;
+}

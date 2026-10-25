@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DocInfo>
+    <Icon>
+        <Value>Storm_UI_Gamemode_MapSelect_TowersofDoom.png</Value>
+    </Icon>
+    <MatchMakerTag>
+        <Value>Hero</Value>
+    </MatchMakerTag>
+    <Dependencies>
+        <Value>bnet:Towers of Doom (Mod)/0.0/1332,file:Mods\heroesmapmods/battlegroundmapmods/towersofdoom.stormmod</Value>
+    </Dependencies>
+    <ModifiableDependencies>
+        <Value>Mods/HeroesData.StormMod</Value>
+        <Value>Mods\heroesmapmods/battlegroundmapmods/towersofdoom.stormmod</Value>
+    </ModifiableDependencies>
+</DocInfo>

@@ -119,34 +119,34 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <On Terms="Effect.AffixGladiatorsMedallionCleanseApplyBehavior.Start" Send="Create" />
   </CActorModel>
 
-  <CActorAction id="ZaryaParticleGrenadeAttackAffix" parent="GenericAttackPointStorm" effectImpact="ZaryaParticleGrenadeTargetSearchAffix" effectLaunch="ZaryaParticleGrenadeLaunchMissileAffix">
+  <CActorAction id="ZaryaParticleGrenadeAttackAffix" parent="GenericAttackPointStorm" effectImpact="AffixZaryaParticleGrenadeTargetSearch" effectLaunch="AffixZaryaParticleGrenadeLaunchMissile">
     <LaunchAttachQuery Methods="Weapon 0" />
     <LaunchAssets Model="ZaryaParticleGrenadeLaunch" />
     <LaunchModel value="ZaryaParticleGrenadeLaunchAction" />
     <Missile value="ZaryaParticleGrenadeMissile" />
   </CActorAction>
   <CActorSound id="ZaryaParticleGrenadeMissileSound">
-    <On Terms="Effect.ZaryaParticleGrenadeLaunchMissileAffix" Send="Create" />
-    <On Terms="Effect.ZaryaParticleGrenadeTargetSearchAffix.Start" Send="Destroy" />
+    <On Terms="Effect.AffixZaryaParticleGrenadeLaunchMissile" Send="Create" />
+    <On Terms="Effect.AffixZaryaParticleGrenadeTargetSearch.Start" Send="Destroy" />
   </CActorSound>
   <CActorModel id="ZaryaParticleGrenadeExplosion">
-    <On Terms="Effect.ZaryaParticleGrenadeTargetSearchAffix.Start" Send="Create" />
+    <On Terms="Effect.AffixZaryaParticleGrenadeTargetSearch.Start" Send="Create" />
   </CActorModel>
   <CActorModel id="ZaryaParticleGrenadePinpointAccuracyExplosion">
-    <On Terms="Effect.ZaryaParticleGrenadeTargetSearchAffix.Start; ValidateEffect ZaryaHasParticleGrenadePinpointAccuracy" Send="Create" />
+    <On Terms="Effect.AffixZaryaParticleGrenadeTargetSearch.Start; ValidateEffect ZaryaHasParticleGrenadePinpointAccuracy" Send="Create" />
   </CActorModel>
   <CActorForceSphere id="ZaryaParticleGrenadeForceAffix">
     <Magnitude value="60.000000" />
     <Radius value="3.000000" />
     <Duration value="0.150000" />
-    <On Terms="Effect.ZaryaParticleGrenadeTargetSearchAffix.Start; At Effect" Send="Create" />
+    <On Terms="Effect.AffixZaryaParticleGrenadeTargetSearch.Start; At Effect" Send="Create" />
     <ForceFlags index="FallOff" value="0" />
   </CActorForceSphere>
   <CActorSound id="ZaryaParticleGrenadeImpactSound">
-    <On Terms="Effect.ZaryaParticleGrenadeTargetSearchAffix.Start" Send="Create" />
+    <On Terms="Effect.AffixZaryaParticleGrenadeTargetSearch.Start" Send="Create" />
   </CActorSound>
   <CActorModel id="ZaryaParticleGrenadeDamageImpact">
-    <On Terms="Effect.ZaryaParticleGrenadeDamageAffix.Start; At Target" Send="Create" />
+    <On Terms="Effect.AffixZaryaParticleGrenadeDamage.Start; At Target" Send="Create" />
   </CActorModel>
 
   

@@ -2,6 +2,33 @@
 <Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
 
+  <CEffectDamage id="ToxicNestDamage">
+    <SourceButtonFace value="AbathurToxicNest" />
+  </CEffectDamage>
+  <CEffectDamage id="TychusGrenadeDamage">
+    <SourceButtonFace value="TychusGrenade" />
+  </CEffectDamage>
+  <CEffectDamage id="AnaBioticGrenadeEnemyImpactDamage">
+    <SourceButtonFace value="AnaBioticGrenade" />
+  </CEffectDamage>
+  <CEffectDamage id="AffixZaryaParticleGrenadeDamage" parent="StormSpell">
+    <SourceButtonFace value="ZaryaParticleGrenade" />
+    <Amount value="240" />
+    <AttributeFactor index="Structure" value="-0.5" />
+  </CEffectDamage>
+  <CEffectDamage id="ArtanisSpearofAdunPurifierBeamDamage">
+    <SourceButtonFace value="ArtanisSpearofAdunPurifierBeam" />
+  </CEffectDamage>
+
+  <CEffectCreateUnit id="AffixToxicNestCreateUnit">
+    <WhichLocation Value="TargetPoint" />
+    <SpawnUnit value="AbathurToxicNest" />
+    <SpawnRange value="6" />
+    <SpawnEffect value="AbathurToxicNestApplyArmingBehavior" />
+    <CreateFlags index="OffsetByRadius" value="0" />
+    <CreateFlags index="NormalizeSpawnOffset" value="0" />
+  </CEffectCreateUnit>
+
   <CEffectSet id="EmptySetDummy" />
 
   <CEffectEnumArea id="CheatRevealerSearch">
@@ -300,42 +327,38 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CEffectSet>
   <CEffectSet id="AffixGrenadierGrenadeDummySet" />
 
-  <CEffectLaunchMissile id="ZaryaParticleGrenadeLaunchMissileAffix">
+  <CEffectLaunchMissile id="AffixZaryaParticleGrenadeLaunchMissile">
     <ImpactLocation Value="TargetPoint" />
-    <ImpactEffect value="ZaryaParticleGrenadeImpactCreatePersistentAffix" />
+    <ImpactEffect value="AffixZaryaParticleGrenadeImpactCreatePersistent" />
     <AmmoUnit value="ZaryaParticleGrenadeMissile" />
     <ImpactRange value="0.4" />
     <Movers Link="ZaryaParticleGrenadeMissileNear" IfRangeLTE="6" />
     <Movers Link="ZaryaParticleGrenadeMissile" />
     <LaunchEffect value="ZaryaParticleGrenadeMissileLandingSoonApplyBehavior" />
   </CEffectLaunchMissile>
-  <CEffectCreatePersistent id="ZaryaParticleGrenadeImpactCreatePersistentAffix">
+  <CEffectCreatePersistent id="AffixZaryaParticleGrenadeImpactCreatePersistent">
     <ExpireDelay value="0.5" />
     <PeriodCount value="1" />
-    <PeriodicEffectArray value="ZaryaParticleGrenadeTargetSearchAffix" />
+    <PeriodicEffectArray value="AffixZaryaParticleGrenadeTargetSearch" />
     <RevealRadius value="2.25" />
     <RevealFlags index="Unfog" value="1" />
-    <AINotifySettings AreaEffect="ZaryaParticleGrenadeTargetSearchAffix">
+    <AINotifySettings AreaEffect="AffixZaryaParticleGrenadeTargetSearch">
       <Flags index="Disabled" value="1" />
     </AINotifySettings>
   </CEffectCreatePersistent>  
-  <CEffectEnumArea id="ZaryaParticleGrenadeTargetSearchAffix">
+  <CEffectEnumArea id="AffixZaryaParticleGrenadeTargetSearch">
     <ImpactLocation Value="TargetPoint" />
     <SearchFilters value="-;Player,Ally,Neutral,ImmuneToAOE,Missile,Stasis,Dead,Hidden,Invulnerable" />
     <SearchFlags index="DoActorSearch" value="1" />
-    <AreaArray Effect="ZaryaParticleGrenadeExplosionSetAffix">
+    <AreaArray Effect="AffixZaryaParticleGrenadeExplosionSet">
       <Radius value="2.25" />
     </AreaArray>
   </CEffectEnumArea>
-  <CEffectSet id="ZaryaParticleGrenadeExplosionSetAffix">
-    <EffectArray value="ZaryaParticleGrenadeDamageAffix" />
+  <CEffectSet id="AffixZaryaParticleGrenadeExplosionSet">
+    <EffectArray value="AffixZaryaParticleGrenadeDamage" />
     <EffectArray value="ApplyAbilityImpactReveal" />
     <EffectArray value="StormSuicide" />
   </CEffectSet>
-  <CEffectDamage id="ZaryaParticleGrenadeDamageAffix" parent="StormSpell">
-    <Amount value="240" />
-    <AttributeFactor index="Structure" value="-0.5" />
-  </CEffectDamage>
 
   <CEffectSet id="AffixLavaWave">
     <TargetLocationType value="Point"/>
@@ -419,7 +442,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <EffectArray value="AffixAncientBlessingsAoEDamage" />
   </CEffectSet>
   <CEffectDamage id="AffixAncientBlessingsAoEDamage" parent="StormSpell">
-    <Amount value="62" />
+    <Amount value="78" />
     <SourceButtonFace value="DeckardAncientBlessings" />
   </CEffectDamage>
 

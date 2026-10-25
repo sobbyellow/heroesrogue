@@ -22,59 +22,21 @@ void libGRDN_InitLibraries () {
     libSond_InitVariables();
 }
 
-
-
-void libGRDN_Wait(fixed duration, int inTimeType) {
-    fixed elapsed = 0.0;
-    while (elapsed < duration) {
-        if (libGRDN_paused) {
-            Wait(0.0625, inTimeType);
-        } else {
-            Wait(0.0625, inTimeType);
-            elapsed += 0.0625;
-        }
-    }
-}
-
 bool libGRDN_PauseTrigger_Func(bool testConds, bool runActions) {
-
-    if (!runActions) {
-        return true;
+    if (TimerGetRemaining(libGRDN_gv_eventPreviewTimer) > 0.0) {
+        TimerPause(libGRDN_gv_eventPreviewTimer, libGame_paused);
     }
-    if (!libGRDN_paused) {
-        libGRDN_paused = true;
-        if (TimerGetRemaining(libGRDN_gv_eventPreviewTimer) > 0.0) {
-            TimerPause(libGRDN_gv_eventPreviewTimer, true);
-        }
-        if (TimerGetRemaining(libGRDN_gv_eventWarningTimer) > 0.0) {
-            TimerPause(libGRDN_gv_eventWarningTimer, true);
-        }
-        if (TimerGetRemaining(libGRDN_gv_eventStartTimer) > 0.0) {
-            TimerPause(libGRDN_gv_eventStartTimer, true);
-        }
-        if (TimerGetRemaining(libGRDN_gv_terrorSpawnTimer) > 0.0) {
-            TimerPause(libGRDN_gv_terrorSpawnTimer, true);
-        }
-        if (TimerGetRemaining(libGRDN_WarningSlideoutTimer) > 0.0) {
-            TimerPause(libGRDN_WarningSlideoutTimer, true);
-        }
-    } else {
-        libGRDN_paused = false;
-        if (TimerGetRemaining(libGRDN_gv_eventPreviewTimer) > 0.0) {
-            TimerPause(libGRDN_gv_eventPreviewTimer, false);
-        }
-        if (TimerGetRemaining(libGRDN_gv_eventWarningTimer) > 0.0) {
-            TimerPause(libGRDN_gv_eventWarningTimer, false);
-        }
-        if (TimerGetRemaining(libGRDN_gv_eventStartTimer) > 0.0) {
-            TimerPause(libGRDN_gv_eventStartTimer, false);
-        }
-        if (TimerGetRemaining(libGRDN_gv_terrorSpawnTimer) > 0.0) {
-            TimerPause(libGRDN_gv_terrorSpawnTimer, false);
-        }
-        if (TimerGetRemaining(libGRDN_WarningSlideoutTimer) > 0.0) {
-            TimerPause(libGRDN_WarningSlideoutTimer, false);
-        }
+    if (TimerGetRemaining(libGRDN_gv_eventWarningTimer) > 0.0) {
+        TimerPause(libGRDN_gv_eventWarningTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libGRDN_gv_eventStartTimer) > 0.0) {
+        TimerPause(libGRDN_gv_eventStartTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libGRDN_gv_terrorSpawnTimer) > 0.0) {
+        TimerPause(libGRDN_gv_terrorSpawnTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libGRDN_WarningSlideoutTimer) > 0.0) {
+        TimerPause(libGRDN_WarningSlideoutTimer, libGame_paused);
     }
 
     return true;
@@ -239,7 +201,7 @@ bool auto_libGRDN_gf_SpawnSeedatLocation_TriggerFunc (bool testConds, bool runAc
         libSond_gf_SoundtrackApplyNewDefaultSoundtrackForPlayerGroup("MX_GardenOfTerror_EventWarning", PlayerGroupAll());
     }
 
-    libGRDN_Wait(libGRDN_gv_seedSpawnTime_C, c_timeGame);
+    libGame_Wait(libGRDN_gv_seedSpawnTime_C, c_timeGame);
     libGRDN_gf_ShowHideObjectivePreviewatLocation(false, lp_location);
     if ((libGRDN_gv_firstSeedEventWarningPlayed == false)) {
         SoundtrackStop(PlayerGroupAll(), c_soundtrackCategoryMusic, true);
@@ -420,7 +382,7 @@ bool auto_libGRDN_gf_FollowTerrortoLane_TriggerFunc (bool testConds, bool runAct
             lv_timeSinceLastRedirect = 0.0;
         }
 
-        libGRDN_Wait(lv_unburrowCheckInterval_C, c_timeGame);
+        libGame_Wait(lv_unburrowCheckInterval_C, c_timeGame);
         lv_timeSinceLastRedirect += lv_unburrowCheckInterval_C;
     }
     UnitCreateEffectUnit(lp_terrorUnit, "GardenTerrorBurrowEnemyFoundSet", lp_terrorUnit);
@@ -678,7 +640,7 @@ bool auto_libGRDN_gf_ShowSeedWarningSlideoutwithTimer_TriggerFunc (bool testCond
     DialogControlSetVisible(libGRDN_gv_gardenUI.lv_eventWarningFrame, PlayerGroupAll(), true);
     while ((TimerGetRemaining(libGRDN_WarningSlideoutTimer) > 0.0)) {
         libNtve_gf_SetDialogItemText(libGRDN_gv_gardenUI.lv_eventWarningTimerLabel, IntToText(lv_displayedTime), PlayerGroupAll());
-        libGRDN_Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
         lv_displayedTime = (FixedToInt(TimerGetRemaining(libGRDN_WarningSlideoutTimer)) + 1);
     }
     DialogControlSendAnimationEvent(libGRDN_gv_gardenUI.lv_eventWarningFrame, PlayerGroupAll(), "PlaySlideOut");
@@ -720,17 +682,17 @@ bool auto_libGRDN_gf_PingUnitUntilitsDead_TriggerFunc (bool testConds, bool runA
         if ((lv_isFirstPing == true)) {
             if ((lp_longFirstPing == true)) {
                 libCore_gf_CreateMinimapPingStorm(PlayerGroupAll(), "StormAlertSilent", UnitGetPosition(lp_unit), Color(100.00, 100.00, 0.00), lv_longPingTime_C);
-                libGRDN_Wait((lv_longPingTime_C + lv_timeBetweenPings_C), c_timeGame);
+                libGame_Wait((lv_longPingTime_C + lv_timeBetweenPings_C), c_timeGame);
             }
             else {
                 libCore_gf_CreateMinimapPingStorm(PlayerGroupAll(), "StormAlertSilent", UnitGetPosition(lp_unit), Color(100.00, 100.00, 0.00), lv_shortPingTime_C);
-                libGRDN_Wait((lv_shortPingTime_C + lv_timeBetweenPings_C), c_timeGame);
+                libGame_Wait((lv_shortPingTime_C + lv_timeBetweenPings_C), c_timeGame);
             }
             lv_isFirstPing = false;
         }
         else {
             libCore_gf_CreateMinimapPingStorm(PlayerGroupAll(), "StormAlert", UnitGetPosition(lp_unit), Color(100.00, 100.00, 0.00), lv_shortPingTime_C);
-            libGRDN_Wait((lv_shortPingTime_C + lv_timeBetweenPings_C), c_timeGame);
+            libGame_Wait((lv_shortPingTime_C + lv_timeBetweenPings_C), c_timeGame);
         }
     }
     return true;

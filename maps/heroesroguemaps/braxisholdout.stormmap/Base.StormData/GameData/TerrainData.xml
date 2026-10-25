@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+  <CTerrain id="Braxis">
+    <FogEnabled value="0" />
+    <FogDensity value="0.000000" />
+    <FOWPlaneEnabled value="0" />
+    <HeightMapEnabled value="1" />
+    <DoubleLambert value="0" />
+  </CTerrain>
+  <CTerrain id="Braxis2">
+    <FogEnabled value="0" />
+    <FogDensity value="0.000000" />
+    <FOWPlaneEnabled value="0" />
+    <HeightMapEnabled value="1" />
+    <DoubleLambert value="0" />
+  </CTerrain>
+</Catalog>

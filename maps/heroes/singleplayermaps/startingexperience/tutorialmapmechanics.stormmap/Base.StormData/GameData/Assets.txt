@@ -1,0 +1,1 @@
+UI/StormObjectives_RavenCurseIcon=Assets\Textures\storm_objectivesdoubloonicon.dds

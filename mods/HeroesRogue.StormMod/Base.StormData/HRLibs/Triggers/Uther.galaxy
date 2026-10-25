@@ -1,0 +1,16 @@
+include "HRLibs/HRTriggersLib"
+
+bool libHRGE_UtherRetributionEffectUsed (bool testConds, bool runActions) {
+    unit playerUnit = EventPlayerEffectUsedUnit(c_effectUnitCaster);
+    int player = UnitGetOwner(playerUnit);
+    fixed deathTimer = libCore_gf_HeroDeathTime(player, UnitLevel(playerUnit));
+    if (deathTimer < CatalogFieldValueGetAsFixed(c_gameCatalogBehavior, "SpiritOfRedemptionSpiritFormBuff", "Duration", player)) {
+        if (UnitGetType(playerUnit) == "HeroUther" && PlayerHasTalent(player, "UtherMasteryRedemption") && libGame_UtherRedemptionIsReady(playerUnit)) {
+        } else {
+            libGame_gf_HeroDeathStartRespawnTimer(player, MaxF(0, TimerGetRemaining(libGame_gv_players[player].lv_respawnTimer) - MaxF(0, UnitBehaviorDuration(playerUnit, "SpiritOfRedemptionSpiritFormBuff") - CatalogFieldValueGetAsFixed(c_gameCatalogBehavior, "SpiritOfRedemptionSpiritFormBuff", "Duration", 0)) - CatalogFieldValueGetAsFixed(c_gameCatalogBehavior, "UtherEternalVanguardRezDelay", "Duration", player) * 2));
+        }
+    }
+    UnitBehaviorSetDuration(playerUnit, "SpiritOfRedemptionSpiritFormBuff", 0.0625);
+
+    return true;
+}

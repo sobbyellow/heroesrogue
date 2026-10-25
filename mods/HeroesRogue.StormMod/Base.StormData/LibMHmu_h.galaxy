@@ -1,0 +1,116 @@
+include "TriggerLibs/HeroesLib"
+include "TriggerLibs/MapMechanicsLib"
+include "LibNPLD_h"
+
+//--------------------------------------------------------------------------------------------------
+// Library: Hanamura
+//--------------------------------------------------------------------------------------------------
+// Constants
+const int libMHmu_gv_hanamuraCoreBarrageCount = 1;
+const string libMHmu_gv_hanamuraMechanicName_C = "Hanamura";
+const int libMHmu_gv_mapMechanic_CooldownTimer_Duration = 180;
+const int libMHmu_gv_mapMechanic_PayloadWarningCoundown_Duration_C = 10;
+const int libMHmu_gv_swordsmanCampXPValue = 0;
+const int libMHmu_gv_visionCampXPValue = 300;
+const int libMHmu_gv_payloadShotCount_C = 12;
+
+// Structures
+struct libMHmu_gs_Hanamura {
+    timer lv_mapMechanic_ObjectivePreviewTimer;
+    timer lv_mapMechanic_ObjectivePreviewDelay;
+    unit[libCore_gv_bALMaxTeams + 1] lv_mapMechanic_PreviewUnit;
+    unit[libCore_gv_bALMaxTeams + 1] lv_mapMechanic_DestinationUnit;
+    unit lv_mapMechanic_WarningUnit;
+    bool lv_mapMechanic_FirstPayloadSpawned;
+    actor[4] lv_hanamuraActorOnlyGates;
+};
+
+struct libMHmu_gs_Elevator {
+    timer lv_elevatorInitialRaiseTimer;
+    timer lv_elevatorRaiseTimer;
+    timer lv_elevatorLowerTimer;
+    bool lv_elevatorWasLowered;
+    fixed lv_elevatorLowerTime;
+};
+
+// Variable Declarations
+int libMHmu_gv_mapMechanic_WarningTimer_Duration;
+libMHmu_gs_Hanamura libMHmu_gv_hanamura;
+timer libMHmu_gv_hanamuraMM10secondcountdownTimer;
+bool libMHmu_gv_hanamuraUseVisionCamps;
+int[libMapM_gv_jungleMaxMercGroups + 1] libMHmu_gv_mercCamp_TeamOwner;
+unit[libMapM_gv_jungleMaxMercGroups + 1] libMHmu_gv_mercCamp_VisionUnit;
+fixed libMHmu_gv_henchmenBirthStunDelay;
+unit[libCore_gv_bALMaxPlayers + 1] libMHmu_gv_heroInTargetMode;
+string[libCore_gv_bALMaxTeams + 1][libNPLD_gv_pathCountPerTeam_C + 1] libMHmu_gv_payloadPaths;
+point[libCore_gv_bALMaxTeams + 1] libMHmu_gv_payloadPathSpawnPoint;
+int libMHmu_gv_missileInFlightCount;
+int libMHmu_gv_progress;
+timer libMHmu_gv_elevator_Forced_Lower_Timer;
+unit libMHmu_gv_elevator_PathingBlocker_Unit;
+doodad libMHmu_gv_elevator_Doodad;
+region libMHmu_gv_elevator_Region;
+point libMHmu_gv_elevator_Point;
+bool libMHmu_gv_elevator_WaitingToLower;
+libMHmu_gs_Elevator libMHmu_gv_elevator;
+timer[libCore_gv_bALMaxPlayers + 1] libMHmu_gv_eOMPusherTimer;
+
+// Function Declarations
+void libMHmu_gf_InitSwordsmanMercCampBruiserCamp1 ();
+void libMHmu_gf_InitVisionMercCampBruiserCamp3 ();
+void libMHmu_gf_InitKnightsMercCampBruiserCamp3 ();
+void libMHmu_gf_AllDefendersAreStandingonTheirSpawnPoints (int lp_camp);
+void libMHmu_gf_OrderDefendertoLookatCenter (int lp_campID, unit lp_defender);
+void libMHmu_gf_HenchmenCustomRespawnCreepsForCamp (int lp_camp, int lp_newOwningPlayer);
+void libMHmu_gf_HenchmenRuntopointandlookatmiddle (unit lp_henchman, int lp_campID);
+fixed libMHmu_gf_ReturnTownHealth (int lp_town, int lp_owner);
+int libMHmu_gf_ReturnHigherHealthTown (int lp_owningTeam, int lp_townIndex_1, int lp_townIndex_2);
+int libMHmu_gf_GetTownForPayloadAttack (int lp_ignoredTownindex, int lp_attackingTeam);
+unit libMHmu_gf_GetTargetForPayloadAttack (unit lp_previousTarget, int lp_team_OwnedPayload, int lp_town);
+void libMHmu_gf_MakePayloadAttack (int lp_attackingTeam);
+void libMHmu_gf_ElevatorAddRemoveUnpathableUnit (bool lp_addRemove);
+void libMHmu_gf_ElevatorAttempttoLowerMonitor ();
+void libMHmu_gf_PayloadSpawning ();
+void libMHmu_gf_PayloadsSpawned ();
+void libMHmu_gf_PayloadsPathCompletedOrder ();
+void libMHmu_gf_PayloadsPathCompletedChaos ();
+void libMHmu_gf_ShowWarningTimer ();
+void libMHmu_gf_ShowWarningIndicator (int lp_team);
+void libMHmu_gf_ShowDestinationIndicator (int lp_team);
+void libMHmu_gf_DestroyDestinationIndicator (int lp_team);
+void libMHmu_gf_EOMInitializeEndofMatchAward ();
+int libMHmu_gf_ppathGetPathID (string lp_inputString);
+
+// Trigger Declarations
+trigger libMHmu_gt_HanamuraCoreBarrageProc;
+trigger libMHmu_gt_MapInitialization;
+trigger libMHmu_gt_MapMechanicInitialized;
+trigger libMHmu_gt_OpenTheGatesTimerExpires;
+trigger libMHmu_gt_MapMechanicTimerExpires;
+trigger libMHmu_gt_MapMechanicWarningExpires;
+trigger libMHmu_gt_MapMechanic10SecondCountdownTimerExpires;
+trigger libMHmu_gt_HenchmenCreateVisionUnits;
+trigger libMHmu_gt_ReconCampTaken;
+trigger libMHmu_gt_InitializeMinionData;
+trigger libMHmu_gt_InitializeMinionScalingData;
+trigger libMHmu_gt_PayloadTargetOn;
+trigger libMHmu_gt_PayloadTargetOff;
+trigger libMHmu_gt_PayloadReachesDestination;
+trigger libMHmu_gt_KeepOrFortGetsTakenOver;
+trigger libMHmu_gt_PayloadAttackLaunch;
+trigger libMHmu_gt_PayloadAttackImpact;
+trigger libMHmu_gt_ElevatorAddUnpathableLocationAtStart;
+trigger libMHmu_gt_ElevatorStartInitialTimer;
+trigger libMHmu_gt_ElevatorInitialTimerExpires;
+trigger libMHmu_gt_ElevatorRaiseTimerExpires;
+trigger libMHmu_gt_ElevatorForcedLower;
+trigger libMHmu_gt_EOMInitializePusherBehaviors;
+trigger libMHmu_gt_EOMPusherAdded;
+trigger libMHmu_gt_EOMPusherRemoved;
+trigger libMHmu_gt_EOMReportPushingScore;
+trigger libMHmu_gt_EventStart;
+trigger libMHmu_gt_ppath;
+
+// Library Initialization
+void libMHmu_InitVariables ();
+

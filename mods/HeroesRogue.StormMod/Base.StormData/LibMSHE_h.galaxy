@@ -189,8 +189,6 @@ trigger libMSHE_gt_MMISDebugLongShrineTimer;
 trigger libMSHE_gt_MMISDebugShowObjectiveTimer;
 trigger libMSHE_gt_MMISDebugDisableEvent;
 
-bool libMSHE_paused = false;
-
 // Library Initialization
 void libMSHE_InitVariables ();
 

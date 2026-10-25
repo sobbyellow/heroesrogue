@@ -1,0 +1,38 @@
+include "HRLibs/HRTriggersLib"
+
+bool libHRGE_AurielResAllOncePerGame (bool testConds, bool runActions) {
+    
+    return true;
+}
+bool libHRGE_AurielResAllEffectUsed (bool testConds, bool runActions) {
+    int i;
+    unit caster = EventPlayerEffectUsedUnit(c_effectUnitCaster);
+    unit heroUnit;
+    unitgroup heroGroup;
+    int heroGroupCount;
+    string heroType;
+    for (i = 1; i <= 5; i += 1) {
+        heroGroup = libGame_gv_players[i].lv_heroUnitGroup;
+        heroGroupCount = UnitGroupCount(heroGroup, c_unitCountDead);
+        for (;; heroGroupCount -= 1) {
+            if (heroGroupCount <= 0) { break; }
+            heroUnit = UnitGroupUnitFromEnd(heroGroup, heroGroupCount);
+            if (heroUnit == null || UnitHasBehavior2(heroUnit, "AurielResurrectActivelyResurrecting") || UnitFilterMatch(heroUnit, c_playerAny, UnitFilter(1 << c_targetFilterImmuneToFriendlyAbilities, 0, 0, 0))) { continue; }
+            heroType = UnitGetType(heroUnit);
+            if (heroType == "HeroUther" && ((PlayerHasTalent(i, "UtherMasteryRedemption") == true) && (UnitHasBehavior2(heroUnit, "RedemptionCooldown") == false))) {
+                continue;
+            } else if (heroType == "HeroGall" || heroType == "RexxarMisha" || heroType == "HeroDeathwing") {
+                continue;
+            } else if (heroType == "HeroBaleog") {
+                UnitCreateEffectUnit(caster, "AurielResurrectInitialDummy", libHAUR_gv_heroAurielResurrectLostVikingsArray[i][1].lv_spiritUnit);
+            } else if (heroType == "HeroBaleog") {
+                UnitCreateEffectUnit(caster, "AurielResurrectInitialDummy", libHAUR_gv_heroAurielResurrectLostVikingsArray[i][2].lv_spiritUnit);
+            } else if (heroType == "HeroBaleog") {
+                UnitCreateEffectUnit(caster, "AurielResurrectInitialDummy", libHAUR_gv_heroAurielResurrectLostVikingsArray[i][3].lv_spiritUnit);
+            } else {
+                UnitCreateEffectUnit(caster, "AurielResurrectInitialDummy", libHAUR_gv_heroAurielResurrectSpirit[i]);
+            }
+        }
+    }
+    return true;
+}

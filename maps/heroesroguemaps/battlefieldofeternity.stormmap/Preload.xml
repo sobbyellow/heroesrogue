@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Preload>
+<Actor id="SYSTEM_ActorConfig"/>
+<Actor id="JungleNodeCaptureMarker"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_FF"/>
+<Actor id="Storm_Doodad_Heaven_Clouds"/>
+<Actor id="Storm_Doodad_Hell_CurtainLarge"/>
+<Actor id="Storm_Doodad_Heaven_CurtainLarge"/>
+<Actor id="Storm_Doodad_Heaven_DefeatedMinions" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_Heaven_JungleKit" Variations="0,8"/>
+<Actor id="Storm_Doodad_Heaven_MercCampProps" Variations="0,1"/>
+<Actor id="Storm_Doodad_Heaven_Sunray"/>
+<Actor id="Storm_Doodad_Heaven_WeaponRack"/>
+<Actor id="Storm_Doodad_Hell_DefeatedMinions" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_Hell_Embers"/>
+<Actor id="Storm_Doodad_Hell_JungleKit" Variations="6,8,27"/>
+<Actor id="Storm_Doodad_Hell_JungleKit_Rocks" Variations="1,2,4,5,7,11,12,15,16"/>
+<Actor id="Storm_Doodad_Hell_Pot" Variations="0,3,4"/>
+<Actor id="Storm_Doodad_Hell_Pot_Footprint" Variations="1,2,3,4"/>
+<Actor id="Storm_Doodad_HvH1_CraterSplat"/>
+<Actor id="Strom_Doodad_Heaven_Pot_Footprint" Variations="0,1,2,3,4"/>
+<Actor id="Storm_Doodad_Heaven_CoreRange" Variations="0,1"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_AA"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_BB"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_CC"/>
+<Actor id="Storm_Doodad_Heaven_CurbDetails" Variations="3,4,6,8,10,11,12,13"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_V"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_W"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_X"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_Y"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_Z"/>
+<Actor id="Storm_Doodad_Hell_GroundDecal" Variations="0,1,2,4,5,6,7,9,10,12,14"/>
+<Actor id="Storm_Doodad_Hell_TransitionWall"/>
+<Actor id="Storm_Doodad_Hell_UpperWall" Variations="2,4,5,6,7,10,15,22,25,30,35"/>
+<Actor id="Storm_Doodad_HvH_Spine_Glow" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_AA"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_BB"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_CC"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_DD"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_EE"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_I"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_J"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_N"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_O"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_P"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_Q"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_R"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_S"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_T"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_U"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_V"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_W"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_X"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_Y"/>
+<Actor id="Storm_Doodad_Heaven_ArchWall" Variations="1,2,3,4"/>
+<Actor id="Storm_Doodad_Heaven_CaptureSlab"/>
+<Actor id="Storm_Doodad_Heaven_EdgeFountain"/>
+<Actor id="Storm_Doodad_Heaven_StartingPlatform"/>
+<Actor id="Storm_Doodad_Hell1_Curb" Variations="0,1,2,3,4,5,7,8,9,10,11,12"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_G"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_H"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_I"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_K"/>
+<Actor id="Storm_Doodad_Hell_CaptureSlab"/>
+<Actor id="Storm_Doodad_Hell_LavaWell" Variations="0,2"/>
+<Actor id="Storm_Doodad_Hell_StartingPlatform2"/>
+<Actor id="Storm_Doodad_Heaven_EdgePillar" Variations="0,1"/>
+<Actor id="Storm_Doodad_Heaven_Fountain" Variations="0"/>
+<Actor id="Storm_Doodad_Heaven_Grate" Variations="1,2,3,4"/>
+<Actor id="Storm_Doodad_Heaven_Statue" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_Heaven_Tree" Variations="2,4"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_L"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_M"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_N"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_O"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_P"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_Q"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_R"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_S"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_T"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_U"/>
+<Actor id="Storm_Doodad_Hell_Chain_A"/>
+<Actor id="Storm_Doodad_Hell_Chain_B"/>
+<Actor id="Storm_Doodad_Hell_Chain_C"/>
+<Actor id="Storm_Doodad_Hell_CoreRange" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_Hell_Grate" Variations="1,2,3,4"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_B"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_C"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_D"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_E"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_F"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_J"/>
+<Actor id="Storm_Doodad_Hell_OuterWall" Variations="0,2,3,4,5,6,7,8,10,15,20,25,30,35"/>
+<Actor id="Storm_Doodad_HvH_Divide" Variations="0,1,2,3,4"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_F"/>
+<Actor id="Storm_Doodad_Heaven_OuterWall" Variations="0,3,4,6,10,11,13,14,21,28,35"/>
+<Actor id="Storm_Doodad_Hell1_Jungle_A"/>
+<Actor id="Storm_Doodad_Hell_EdgeWall"/>
+<Actor id="Storm_Doodad_HvH_RingsofEternity" Variations="0,1,2,4"/>
+<Actor id="Storm_Doodad_Heaven_CurbThick" Variations="4,6,8,9,10,11,12,13,14,15,16,17"/>
+<Actor id="Storm_Doodad_Heaven_CurbThin" Variations="0,1,2,3,6,8,9,10,11"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_A"/>
+<Actor id="Storm_Doodad_Heaven_GroundDecal" Variations="2"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_B"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_C"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_D"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_E"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_G"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_H"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_K"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_L"/>
+<Actor id="Storm_Doodad_Heaven1_Jungle_M"/>
+<Actor id="Storm_Doodad_Heaven1_MercCamp_A"/>
+<Actor id="Storm_Doodad_Heaven_CrystalPatch" Variations="0,1,3,4"/>
+<Actor id="Storm_Doodad_Heaven_CrystalShine"/>
+<Actor id="Storm_Doodad_HvH_Rubble" Variations="0,1,2,3,4"/>
+<Actor id="Storm_Doodad_HvH_Creep_Glow" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_Hell_Rock_MercCampA"/>
+<Actor id="HiddenHeavenModelforCutscenes"/>
+<Actor id="HiddenHellModelforCutscenes"/>
+<AnnouncerPack id="Angel"/>
+<AnnouncerPack id="Demon"/>
+<Behavior id="HealingFountainIgnoreLinkedMinimapIcons"/>
+<Behavior id="DisableLaneTracking"/>
+<Sound id="Amb_3D_BoE_Heaven_Waterfall"/>
+<Terrain id="StormHeavenAndHellTransition"/>
+<TerrainObject id="StormDoodadHeaven1JungleATO"/>
+<TerrainObject id="StormDoodadHeaven1JungleBTO"/>
+<TerrainObject id="StormDoodadHeaven1JungleCTO"/>
+<TerrainObject id="StormDoodadHeaven1JungleDTO"/>
+<TerrainObject id="StormDoodadHeaven1JungleFTO"/>
+<TerrainObject id="StormDoodadHell1JungleATO"/>
+<TerrainObject id="StormDoodadHell1JungleCTO"/>
+<TerrainObject id="StormDoodadHell1JungleDTO"/>
+<TerrainObject id="StormDoodadHell1JungleFTO"/>
+<Unit id="StormGameStartPathingBlockerDiagonal"/>
+<Unit id="StormGameStartPathingBlocker"/>
+<Unit id="TownGateL215BLUR" Variations="2"/>
+<Unit id="TownGateL215BRUL" Variations="2,3"/>
+<Unit id="TownGateL3VerticalLeftVisionBlocked" Variations="1"/>
+<Unit id="TownGateL3VerticalRightVisionBlocked" Variations="0"/>
+<Unit id="TownGateL3BLURTLVisionBlocked" Variations="1"/>
+<Unit id="TownGateL3BLURBRVisionBlocked" Variations="1"/>
+<Unit id="TownGateL3BRULBLVisionBlocked" Variations="2"/>
+<Unit id="TownGateL3BRULTRVisionBlocked" Variations="0"/>
+<Unit id="TownCannonTowerL2"/>
+<Unit id="TownCannonTowerL3"/>
+<Unit id="TownCannonTowerL3Standalone"/>
+<Unit id="TownMoonwellL2"/>
+<Unit id="TownMoonwellL3"/>
+<Unit id="TownTownHallL3"/>
+<Unit id="TownTownHallL2"/>
+<Unit id="HallOfStormsLocationUnit"/>
+<Unit id="KingsCore"/>
+<Unit id="TownWallRadial2L3" Variations="3"/>
+<Unit id="TownWallRadial3L3" Variations="0"/>
+<Unit id="TownWallRadial5L2" Variations="2,5"/>
+<Unit id="TownWallRadial6L2" Variations="9"/>
+<Unit id="TownWallRadial8L3" Variations="1"/>
+<Unit id="TownWallRadial9L3" Variations="0"/>
+<Unit id="TownWallRadial14L3" Variations="3"/>
+<Unit id="TownWallRadial15L3" Variations="2"/>
+<Unit id="TownWallRadial17L2" Variations="3,7"/>
+<Unit id="TownWallRadial18L2" Variations="0"/>
+<Unit id="TownWallRadial20L3" Variations="1"/>
+<Unit id="TownWallRadial21L3" Variations="0"/>
+<Unit id="LootBannerSconce"/>
+<Unit id="WeaponRackSpecialHell"/>
+<Unit id="Hell_GiantDemon_Base"/>
+<Unit id="Hell_GiantDemon_Chains"/>
+</Preload>

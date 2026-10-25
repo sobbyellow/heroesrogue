@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CUnit id="HallOfStormsLocationUnit"/>
+    <CUnit id="TownGateL315BLURGarden">
+        <Facing value="83.9904"/>
+    </CUnit>
+    <CUnit id="TownGateL315BRULGarden">
+        <Facing value="277.998"/>
+    </CUnit>
+    <CUnit id="TownGateL3BRULBLVisionBlocked">
+        <Facing value="315"/>
+    </CUnit>
+    <CUnit id="TownGateL3BRULTRVisionBlocked">
+        <Facing value="135"/>
+    </CUnit>
+    <CUnit id="TownGateL3VerticalLeftVisionBlocked">
+        <Facing value="270"/>
+    </CUnit>
+    <CUnit id="XelNagaWatchTower">
+        <Sight value="20"/>
+    </CUnit>
+</Catalog>

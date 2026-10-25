@@ -1,0 +1,190 @@
+include "TriggerLibs/HeroesLib"
+
+//--------------------------------------------------------------------------------------------------
+// Library: Battlefield of Eternity (Mod)
+//--------------------------------------------------------------------------------------------------
+// Preset Declarations
+const int libMLBD_ge_MMBOEBossCutsceneType_None = 0;
+const int libMLBD_ge_MMBOEBossCutsceneType_EventStart = 1;
+const int libMLBD_ge_MMBOEBossCutsceneType_EventMid = 2;
+const int libMLBD_ge_MMBOEBossCutsceneType_HeavenVictory = 3;
+const int libMLBD_ge_MMBOEBossCutsceneType_HellVictory = 4;
+const int libMLBD_ge_MMBOEEventStage_Idle = 0;
+const int libMLBD_ge_MMBOEEventStage_Warning = 1;
+const int libMLBD_ge_MMBOEEventStage_Duel1 = 2;
+const int libMLBD_ge_MMBOEEventStage_Duel2 = 3;
+const int libMLBD_ge_MMBOEEventStage_PushingPrep = 4;
+const int libMLBD_ge_MMBOEEventStage_Pushing = 5;
+const int libMLBD_ge_MMBOEUIModes_Idle = 0;
+const int libMLBD_ge_MMBOEUIModes_Warning = 1;
+const int libMLBD_ge_MMBOEUIModes_Duel = 2;
+const int libMLBD_ge_MMBOEUIModes_PushingPrep = 3;
+const int libMLBD_ge_MMBOEUIModes_Pushing = 4;
+
+// Constants
+const string libMLBD_gv_mMBoEMechanicName_C = "BattlefieldOfEternity";
+const fixed libMLBD_gv_mMBossDuelInitialDelay_C = 180.0;
+const fixed libMLBD_gv_mMBossDuelWarningDelayLong_C = 30.0;
+const fixed libMLBD_gv_mMBossDuelEventCooldown_C = 105.0;
+const fixed libMLBD_gv_mMBossDuelLaningPrepDelay_C = 15.0;
+const int libMLBD_gv_mMBossDuelPlayerHeaven_C = 13;
+const int libMLBD_gv_mMBossDuelPlayerHell_C = 14;
+const fixed libMLBD_gv_mMBossDuelMeaningfulTownHPDifference_C = 0.0;
+const fixed libMLBD_gv_bALBossDuelLaningShieldScale = 1.0;
+const int libMLBD_gv_mMBossDuelBaseXP = 750;
+const int libMLBD_gv_mMBossDuelXPScaling = 35;
+const int libMLBD_gv_mMBOEExplosionsTargetTrackingArraySize = 5;
+const int libMLBD_gv_mMBOEExplosionsJungleTargetMax = 5;
+const int libMLBD_gv_mMBOEExplosionsLanerTargetMax = 3;
+const fixed libMLBD_gv_mMBOEExplosionsMaxRange = 8.5;
+const fixed libMLBD_gv_mMBOEExplosionsMinRange = 6.0;
+const fixed libMLBD_gv_mMBOEExplosionsMinDistanceApart = 3.5;
+
+// Structures
+struct libMLBD_gs_MMBOEPanel {
+    int lv_mainPanel;
+    int lv_bossSpawnFrame;
+    int lv_bossSpawnInfoLabel;
+    int lv_bossSpawnTimerLabel;
+    int[3] lv_bossDuelFrame;
+    int[3][3] lv_bossDuelHud;
+    int[3][3] lv_bossDuelHPBar;
+    int[3][3] lv_bossDuelHPBarLabel_AfterDeath;
+    int lv_bossLaningFrame;
+    int[3][3] lv_bossLaningPortraitHud;
+    int lv_bossLaningShieldBar;
+    int lv_bossLaningHPBar;
+    int lv_bossLaningInfoLabel;
+    int lv_bossLaningTimerLabel;
+    bool[3] lv_bossHudPulsed;
+};
+
+// Variable Declarations
+fixed libMLBD_gv_mMBossDuelWarningDelay;
+int libMLBD_gv_mMBOETimes;
+unit[libCore_gv_bALMaxTeams + 1] libMLBD_gv_mMBOEBosses;
+unit libMLBD_gv_mMBOEBossesLaning;
+unit[libCore_gv_bALMaxTeams + 1] libMLBD_gv_mMBOEBossPathingBlockers;
+point[11][libCore_gv_bALMaxTeams + 1] libMLBD_gv_mMBOEBossSpawnLocationPair;
+fixed[libCore_gv_bALMaxPlayers + 1] libMLBD_gv_mMBOEDamageDoneToBoss;
+int libMLBD_gv_mMBOEBossSpawnLocationPairCount;
+point libMLBD_gv_mMBOEBossSpawnLocationCenter;
+string[libCore_gv_bALMaxTeams + 1] libMLBD_gv_mMBOEBossUnitTypes;
+string[libCore_gv_bALMaxTeams + 1] libMLBD_gv_mMBOEBossLaningUnitTypes;
+int[libCore_gv_bALMaxTeams + 1] libMLBD_gv_mMBOEBossPing;
+point[3] libMLBD_gv_mMBOEBossLanerStartPoints;
+int[3] libMLBD_gv_mMBOEBossSpawnLocationIndexes;
+timer libMLBD_gv_mMBOEEventInitDelayTimer;
+timer libMLBD_gv_mMBOEEventWarningTimer;
+int libMLBD_gv_mMBOEEventWinningTeam;
+timer libMLBD_gv_mMBOEEventPrepLaningTimer;
+timer libMLBD_gv_mMBOEEventCooldownTimer;
+timer libMLBD_gv_mMBOEEventLongWarningTimeTimer;
+int libMLBD_gv_mMBOEEventDurationTimer;
+doodad[3] libMLBD_gv_mMBOEBossStatues;
+bool libMLBD_gv_mMBOESuppressExplosions;
+int[libCore_gv_bALMaxTeams + 1] libMLBD_gv_mMBOELastBossAttackers;
+unit libMLBD_gv_mMBOEMiddleBannerSconce;
+int libMLBD_gv_mMBOEEventStage;
+unit[libCore_gv_bALMaxTeams + 1] libMLBD_gv_mMBOEDuelPreviewUnits;
+string[libCore_gv_bALMaxTeams + 1] libMLBD_gv_mMBOEDuelPreviewUnitTypes;
+fixed libMLBD_gv_mMBOEDuelPreviewDelay;
+int libMLBD_gv_mMBOELaningPathLine;
+bool libMLBD_gv_mMBOELaningPathLineCreated;
+point libMLBD_gv_mMBOELaningRallyPoint;
+int[libCore_gv_bALMaxTeams + 1] libMLBD_gv_mMBOELaningBossPing;
+unitgroup libMLBD_gv_mMBOEOrderMiddleStructures;
+unitgroup libMLBD_gv_mMBOEChaosMiddleStructures;
+int[libCore_gv_bALMaxTeams + 1] libMLBD_gv_mMBOE_AICustomUnitValue;
+int libMLBD_gv_mMBOE_BossLanerPathCurrentIndex;
+int libMLBD_gv_mMBOE_BossLanerPathIndexMax;
+region libMLBD_gv_mMBOEHeavenRegion;
+region libMLBD_gv_mMBOEHellRegion;
+region libMLBD_gv_mMBOENeutralRegion;
+string[libCore_gv_bALMaxEnginePlayerCount + 1] libMLBD_gv_mMUnderworldAmbience;
+libMLBD_gs_MMBOEPanel libMLBD_gv_mMBOEPanel;
+unit libMLBD_gv_mMBOEUIBossLaningSpawningUnit;
+bool libMLBD_gv_mMBOEDebugUsed;
+bool libMLBD_gv_mMBOEShowBossPositions;
+fixed libMLBD_gv_mMBOEXPValue;
+
+// Function Declarations
+void libMLBD_gf_MMBOESetLanerStartPoints (point lp_lane1, point lp_lane2);
+void libMLBD_gf_MMBOESetEventCombatPoints (point lp_north, point lp_south, point lp_west, point lp_east, point lp_center);
+void libMLBD_gf_MMBOEPlayCutscene (int lp_cutscene, point lp_point);
+int libMLBD_gf_MMBOEHHPlayer (int lp_team);
+void libMLBD_gf_MMBOEDuelWarningStart ();
+int libMLBD_gf_MMBOEOppositePair (int lp_pairIndex);
+void libMLBD_gf_MMBOECalculateNewSpawnLocations (int lp_stage);
+void libMLBD_gf_MMBOEDuelPreviewSetup (bool lp_showImmediately);
+void libMLBD_gf_MMBOEDuelStart ();
+string libMLBD_gf_MMBOEBossPingModel (int lp_team);
+void libMLBD_gf_MMBOESpawnBoss (int lp_team, point lp_location);
+void libMLBD_gf_MMBOEDuelEnd ();
+void libMLBD_gf_MMBOEDuelEndShakingCamera (point lp_targetLocation);
+void libMLBD_gf_MMBOEDuelEndShakingCameraForPlayer (int lp_player, point lp_targetLocation);
+int libMLBD_gf_MMBOEBADBossSpawnLocation1stRound (int lp_team);
+int libMLBD_gf_MMBOEBADBossSpawnLocation2ndRound (int lp_team);
+void libMLBD_gf_MMBOESetMiddleStructureGroups (unitgroup lp_orderMiddleStructures, unitgroup lp_chaosMiddleStructures);
+fixed libMLBD_gf_MMBOETownHealth (int lp_town, int lp_player);
+int libMLBD_gf_MMBOETownComparison (int lp_town1, int lp_town2, int lp_player);
+int libMLBD_gf_MMBOEBossPushingLane (int lp_team);
+void libMLBD_gf_MMBOECalculateBossRallyPoint ();
+void libMLBD_gf_MMBOECreateFlyerPathLine (bool lp_fly, bool lp_manage);
+void libMLBD_gf_MMBOECreateGroundPathLine (unit lp_unit, bool lp_new_Path);
+void libMLBD_gf_MMBOESpawnLaningBoss (int lp_team, point lp_location);
+void libMLBD_gf_MMBOEDuelMidBossPings ();
+void libMLBD_gf_MMBOEUpdateAmbience (int lp_player);
+void libMLBD_gf_MMBOEChangeAmbience (string lp_ambience, string lp_reverb, playergroup lp_players);
+void libMLBD_gf_MMBOEInitRegions (region lp_heavenRegion, region lp_hellRegion, region lp_neutralRegion);
+void libMLBD_gf_MMBOEUIInit (int lp_parentPanel);
+void libMLBD_gf_MMBOEUIShowHidePanel (bool lp_showHide);
+void libMLBD_gf_MMBOEUISetMode (int lp_mode);
+void libMLBD_gf_MMBOEUISetBossSpawnTime (fixed lp_mode);
+void libMLBD_gf_MMBOEUISetBosses (unit lp_mode, unit lp_mode2);
+void libMLBD_gf_MMBOEUISetBossHP ();
+void libMLBD_gf_MMBOEUISetBossKilled (int lp_mode);
+void libMLBD_gf_MMBOEUISetLaningBoss (bool lp_preparing, unit lp_mode);
+void libMLBD_gf_MMBOEUISetLaningPrepareTime (fixed lp_time);
+void libMLBD_gf_MMBOEUIBossLaningPreparing ();
+void libMLBD_gf_MMBOETransmissionDuelWarningQ ();
+void libMLBD_gf_MMBOETransmissionDuelStartQ ();
+void libMLBD_gf_MMBOETransmissionDuelFlyStartQ ();
+void libMLBD_gf_MMBOETransmissionDuelEndQ (int lp_winningTeam);
+void libMLBD_gf_MMBOETransmissionBossPushingQ (int lp_winningTeam);
+void libMLBD_gf_MMBOETransmissionBossRetreatedQ (int lp_winningTeam);
+void libMLBD_gf_MMBOEExplosionsLogic (int lp_maxTargets, string lp_explosionEffect, unit lp_castingUnit);
+void libMLBD_gf_MMBOEAwardBossXP (unit lp_bossUnit, fixed lp_killedUnitXPAward);
+
+// Trigger Declarations
+trigger libMLBD_gt_MMBOEInit;
+trigger libMLBD_gt_MMBOEPingDataInit;
+trigger libMLBD_gt_MMBOEGatesOpened;
+trigger libMLBD_gt_MMBOELongWarningTime;
+trigger libMLBD_gt_MMBOEDuelDurationTimer;
+trigger libMLBD_gt_MMBOEBossAttackedHeaven;
+trigger libMLBD_gt_MMBOEBossAttackedHell;
+trigger libMLBD_gt_MMBOEBossTakesDamage;
+trigger libMLBD_gt_MMBOEBossDied;
+trigger libMLBD_gt_MMBOEUpdateBossLanerPath;
+trigger libMLBD_gt_MMBOEBossFightPing;
+trigger libMLBD_gt_MMBOEBossLaningKilled;
+trigger libMLBD_gt_GameOver;
+trigger libMLBD_gt_MMBOEPlayerMovesCamera;
+trigger libMLBD_gt_MMBOEUIModInitialize;
+trigger libMLBD_gt_MMBOEUIHandler;
+trigger libMLBD_gt_MMBOEDebugTownLife;
+trigger libMLBD_gt_MMBOEDebugStartWithWarning;
+trigger libMLBD_gt_MMBOEDebugStartImmediately;
+trigger libMLBD_gt_MMBOEDebugPlayCutscene;
+trigger libMLBD_gt_MMBOEDebugTransmission;
+trigger libMLBD_gt_MMBOEDebugDisableEvent;
+trigger libMLBD_gt_MMBOEDebugShowBossPositions;
+trigger libMLBD_gt_MMBOEDuelBossReacquireAttackTarget;
+trigger libMLBD_gt_MMBOEDuelBossVoidPrisonReacquireAttackTarget;
+trigger libMLBD_gt_MMBOEDemonicExplosionsAbilityUsed;
+trigger libMLBD_gt_MMBOEAngelicExplosionsAbilityUsed;
+
+// Library Initialization
+void libMLBD_InitVariables ();
+

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CGameUI id="Dflt">
+        <MapMechanicScoreValue value="CarriedMechanic"/>
+        <LoadingScreenHelp Text="LoadingScreen/BlackheartsBay/Help1"/>
+    </CGameUI>
+</Catalog>

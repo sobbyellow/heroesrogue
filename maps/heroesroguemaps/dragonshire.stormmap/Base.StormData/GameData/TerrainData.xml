@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CTerrain id="StormDragonShire">
+        <TextureProp value="kingscrestgardens"/>
+        <EditorCategories value="Climate:SpacePlatform"/>
+        <Lighting value="DS19"/>
+        <Camera value="BlizzardAllStars"/>
+        <Ambience value="KingsCrestAmbientDay"/>
+        <ReverbAmbient value="BetaVerb"/>
+        <MinimapBackgroundColor value="255,0,0,32"/>
+        <BlendTextures value="StormDS193"/>
+        <BlendTextures value="StormDS197"/>
+        <BlendTextures value="StormDS195"/>
+        <BlendTextures value="StormDS192"/>
+        <BlendTextures value="StormDS191"/>
+        <BlendTextures value="StormDS194"/>
+        <BlendTextures value="StormDS198"/>
+        <BlendTextures value="StormDS196"/>
+        <HardTiles value="MarSaraTile"/>
+        <CliffSets value="StormCastleCliff0"/>
+        <CliffSets value="StormCastleCliff1"/>
+        <FogEnabled value="1"/>
+        <FogColor value="255,86,68,45"/>
+        <FogDensity value="0.020000"/>
+        <FogFalloff value="0.200000"/>
+        <FogStartingHeight value="-0.900000"/>
+        <FOWColor value="255,5,3,12"/>
+        <HeightFlags index="AirSmoothing" value="0"/>
+        <HeightMapEnabled value="1"/>
+        <DoubleLambert value="0"/>
+    </CTerrain>
+</Catalog>

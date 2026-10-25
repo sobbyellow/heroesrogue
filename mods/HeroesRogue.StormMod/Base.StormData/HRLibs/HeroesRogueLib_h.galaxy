@@ -1,0 +1,1292 @@
+// ============================================================
+// Heroes Rogue
+// ============================================================
+
+const string libHRGE_version = "0.18.0";
+
+const int libHRGE_player = 1; // Human player index
+const int libHRGE_enemy = 6; // First enemy AI index
+
+const int libHRGE_teamOrder = libCore_gv_cOMPUTER_TeamOrder;
+const int libHRGE_teamChaos = libCore_gv_cOMPUTER_TeamChaos;
+const int libHRGE_teamOrderIndex = libGame_gv_teamOrderIndex_C;
+const int libHRGE_teamChaosIndex = libGame_gv_teamChaosIndex_C;
+
+const int libHRGE_maxHeroes = 91;
+const int libHRGE_maxSyncBehaviors = 1000;
+const int libHRGE_maxFilters = 100;
+const int libHRGE_maxAffixes = 1000;
+const int libHRGE_maxOwnedAffixesPerPage = 90;
+const int libHRGE_maxQueue = 100;
+const int libHRGE_maxEligibleAffixes = libHRGE_maxAffixes; // Maximum affixes that can be eligible for a slot when rolling
+const int libHRGE_maxAffixSelection = 5;
+const int libHRGE_maxAffixTypes = 2;
+const int libHRGE_maxOptionDialogs = 20;
+const int libHRGE_maxAchievements = libHRGE_maxHeroes + 9;
+const int libHRGE_maxGeneralBehaviors = 1000;
+const int libHRGE_maxScalingTriggers = 1000;
+
+const int libHRGE_affixTypeBoon     = 1;
+const int libHRGE_affixTypeCurse    = 2;
+
+// ============================================================
+// Rarity IDs
+// ============================================================
+
+const int libHRGE_maxRarities       =   9;
+
+const int libHRGE_rarityCommon      =   1;
+const int libHRGE_rarityUncommon    =   2;
+const int libHRGE_rarityRare        =   3;
+const int libHRGE_rarityEpic        =   4;
+const int libHRGE_rarityLegendary   =   5;
+const int libHRGE_rarityStarter     =   6;
+const int libHRGE_rarityMythic      =   7;
+const int libHRGE_rarityMilestone   =   8;
+const int libHRGE_rarityChallenge   =   9;
+
+// ============================================================
+// Map IDs
+// ============================================================
+
+const string libHRGE_mapTutorialVeteran         = "heroes/singleplayermaps/startingexperience/tutorialveteran.stormmap";
+const string libHRGE_mapTutorialMapMechanics    = "heroes/singleplayermaps/startingexperience/tutorialmapmechanics.stormmap";
+const string libHRGE_mapTutorial01              = "heroes/singleplayermaps/startingexperience/tutorial01.stormmap";
+const string libHRGE_mapTryMeMode               = "heroes/singleplayermaps/(10)trymemode.stormmap";
+const int libHRGE_mapTutorialVeteranIndex       = 1;
+const int libHRGE_mapTutorialMapMechanicsIndex  = 2;
+const int libHRGE_mapTutorial01Index            = 3;
+const int libHRGE_mapTryMeModeIndex             = 4;
+
+const int libHRGE_mapMaxIndex = 4;
+
+const int libHRGE_startingMap = libHRGE_mapTutorialVeteranIndex;
+
+// ============================================================
+// Difficulty IDs
+// ============================================================
+
+const int libHRGE_difficultyNormal = 1;
+const int libHRGE_difficultyHeroic = 2;
+const int libHRGE_difficultyMythic = 3;
+
+// ============================================================
+// Trigger IDs
+// ============================================================
+
+const int libHRGE_triggerAffixAdded                  =   1;     // Runs immediately and at the start of every game
+const int libHRGE_triggerGameStart                   =   2;     // Runs one time at the start of the game, regardless of stack count
+const int libHRGE_triggerOncePerGame                 =   3;     // Runs immediately and at the start of every game. Can only run once per game
+const int libHRGE_triggerOneTime                     =   4;     // Runs immediately. Does not run at the start of the game
+const int libHRGE_triggerNPCTakedown                 =   5;     // Runs on any NPC takedown
+const int libHRGE_triggerHeroTakedown                =   6;     // Runs on any Hero takedown
+const int libHRGE_triggerUnitCreated                 =   7;     // Runs when any unit is created
+const int libHRGE_triggerUnitDied                    =   8;     // Runs when any unit dies
+const int libHRGE_triggerUnitBehaviorChange          =   9;     // Runs when a unit receives specified behavior
+const int libHRGE_triggerUnitBehaviorCreate          =   10;    // 
+const int libHRGE_triggerUnitBehaviorChangeCategory  =   11;    // Runs when a unit receives behavior with the specified category
+const int libHRGE_triggerUnitChangeOwner             =   12;    // Runs when a unit changes ownership
+const int libHRGE_triggerPlayerEffectUsed            =   13;    // Runs when any player triggers the specified effect
+const int libHRGE_triggerHeroLevelUp                 =   14;    // Runs immediately once and on Hero level up
+const int libHRGE_triggerHeroRespawn                 =   15;    // Runs when Hero respawns
+const int libHRGE_triggerHeroKilled                  =   16;    // Runs when a Hero is killed
+const int libHRGE_triggerHeroGainTalent              =   17;    // Runs when a Hero gains a Talent
+const int libHRGE_triggerScaling                     =   18;    // Same as libHRGE_triggerHeroLevelUp but also runs regardless of stack count
+const int libHRGE_triggerQuest                       =   19;    // Runs immediately if affix quest is NOT complete
+const int libHRGE_triggerPeriodic                    =   20;    // Runs periodically. Default: 0.0625s
+const int libHRGE_triggerWin                         =   21;    // Executes when enemy core dies.
+const int libHRGE_triggerAnyAffixAdded               =   22;    // Executes when ANY affix is added that has an affix added trigger.
+const int libHRGE_triggerExecute                     =   23;    // Obsolete, converts into libHRGE_triggerAffixAdded
+const int libHRGE_triggerUnitDamaged                 =   24;    // Runs when a unit takes damage.
+
+// ============================================================
+// Catalog Modification IDs
+// ============================================================
+
+const int libHRGE_catalogTypeFlat                        =   1;     // Base value
+const int libHRGE_catalogTypePerStack                    =   2;     // Value * total stacks
+const int libHRGE_catalogTypePerStackDelta               =   3;     // Value * added stacks
+const int libHRGE_catalogTypePerStackDeltaExclFirst      =   4;     // Value * added stacks (excluding first stack)
+const int libHRGE_catalogTypeBase                        =   5;     // Catalog base value (operation) value * total stacks
+const int libHRGE_catalogTypeBaseDelta                   =   6;     // Catalog base value (operation) value * added stacks
+const int libHRGE_catalogTypeBaseMult                    =   7;     // Catalog base value (operation) 1 + (value * total stacks)
+const int libHRGE_catalogTypeString                      =   8;     // Sets catalog value to a string
+
+// ============================================================
+// Bank
+// ============================================================
+
+const string libHRGE_bank = "HRSave";
+const string libHRGE_bankSettings = "HRSettings";
+const string libHRGE_bankAchievements = "HRAchievements";
+
+const string libHRGE_bankSection = "Save Data";
+const string libHRGE_bankSectionSettings = "Settings";
+const string libHRGE_bankSectionStats = "Stats";
+const string libHRGE_bankSectionAchievements = "Achievements";
+
+const string libHRGE_bankOld = "PlayerSettings";
+const string libHRGE_bankSectionOld = "Affix Data";
+const string libHRGE_bankSectionSettingsOld = "Heroes Rogue Settings";
+const string libHRGE_bankSectionStatsOld = "Heroes Rogue Stats";
+const string libHRGE_bankSectionAchievementsOld = "Heroes Rogue Achievements";
+
+// ============================================================
+// Events
+// ============================================================
+
+const string libHRGE_eventAffixAddedID = "EventAffix";
+const string libHRGE_eventAffixAddedParam = "AffixAdded";
+const string libHRGE_eventAffixAddedParam2 = "AmountAdded";
+const string libHRGE_eventAffixAddedParam3 = "AffixAddedInstance";
+
+const string libHRGE_eventPausedID = "GamePaused";
+const string libHRGE_eventPausedParam = "IsGamePaused";
+
+// ============================================================
+// Config
+// ============================================================
+
+const int libHRGE_milestoneRound = 5;
+const int libHRGE_winningRound = 10;
+
+const int libHRGE_rerollsStart = 3;
+const int libHRGE_rerollsPerGame = 1; 
+const int libHRGE_bansStart = 3; 
+const int libHRGE_bansPerGame = 1; 
+
+const fixed libHRGE_gameStartDelay = 2.25; // Wait for Heroes to finish spawning in
+const fixed libHRGE_disableHotkeysDuration = 0.25; // How long hotkeys such as picking affixes are disabled for, to prevent misclicks
+const fixed libHRGE_disableDialogControlDuration = 0.25; // How long dialog controls such as picking/banning affixes buttons are disabled for, to prevent misclicks
+
+const fixed libHRGE_mythicModifier = 0.05;
+const fixed libHRGE_mythicModifierXP = 0.02;
+const fixed libHRGE_mythicModifierPerRound = 0.0125;
+const fixed libHRGE_heroicModifier = 0.05;
+const fixed libHRGE_heroicModifierXP = 0.01;
+
+const string libHRGE_mythicCurse1 = "Sappers";
+const string libHRGE_mythicCurse2 = "ArmoredUp";
+const string libHRGE_mythicCurse3 = "WeakPoint";
+const string libHRGE_mythicCurse4 = "Placeholder";
+const string libHRGE_mythicCurse5 = "Invasion";
+const string libHRGE_mythicCurse6 = "Eternal";
+
+// ============================================================
+// Dialog Variables
+// ============================================================
+
+const fixed libHRGE_globalTextWriteoutDuration = 1.0; 
+const int libHRGE_affixItemSpacing = 490;
+const int libHRGE_affixItemWidth = 465;
+const int libHRGE_affixItemHeight = 850;
+const int libHRGE_affixItemOffsetY = 140;
+const int libHRGE_affixItemIconWidth = 200;
+const int libHRGE_affixItemIconHeight = 200;
+const int libHRGE_affixItemIconOffsetX = 0;
+const int libHRGE_affixItemIconOffsetY = 120;
+const int libHRGE_affixItemIconOverlayWidth = 256;
+const int libHRGE_affixItemIconOverlayHeight = 256;
+const int libHRGE_affixItemIconOverlayOffsetX = 0;
+const int libHRGE_affixItemIconOverlayOffsetY = 92;
+const int libHRGE_affixItemNameWidth = 385;
+const int libHRGE_affixItemNameHeight = 100;
+const int libHRGE_affixItemNameOffsetX = 0;
+const int libHRGE_affixItemNameOffsetY = 305;
+const int libHRGE_affixItemTooltipWidth = 390;
+const int libHRGE_affixItemTooltipHeight = 600;
+const int libHRGE_affixItemTooltipOffsetX = 0;
+const int libHRGE_affixItemTooltipOffsetY = 385;
+const int libHRGE_affixItemRarityWidth = 360;
+const int libHRGE_affixItemRarityHeight = 100;
+const int libHRGE_affixItemRarityOffsetX = 0;
+const int libHRGE_affixItemRarityOffsetY = 740;
+const int libHRGE_affixItemRarityBanOffsetY = 670;
+const int libHRGE_affixItemBackgroundWidth = 0;
+const int libHRGE_affixItemBackgroundHeight = 5;
+const int libHRGE_affixItemBackgroundOffsetX = 0;
+const int libHRGE_affixItemBackgroundOffsetY = -5;
+const int libHRGE_affixItemAffixBackgroundWidth = 71;
+const int libHRGE_affixItemAffixBackgroundHeight = 60;
+const int libHRGE_affixItemAffixBackgroundOffsetX = 2;
+const int libHRGE_affixItemAffixBackgroundOffsetY = -30;
+const int libHRGE_affixItemSelectButtonOffsetX = 0;
+const int libHRGE_affixItemSelectButtonOffsetY = 12;
+const int libHRGE_affixItemBanButtonOffsetX = 0;
+const int libHRGE_affixItemBanButtonOffsetY = 720;
+const int libHRGE_affixSelectionTitleWidth = 1000;
+const int libHRGE_affixSelectionTitleHeight = 60;
+const int libHRGE_affixSelectionTitleOffsetX = 0;
+const int libHRGE_affixSelectionTitleOffsetY = 45;
+const int libHRGE_affixRerollButtonOffsetX = 0;
+const int libHRGE_affixRerollButtonOffsetY = 980;
+const int libHRGE_affixRerollButtonWidth = 300;
+const int libHRGE_affixRerollButtonHeight = 100;
+const int libHRGE_affixRerollLabelWidth = 325;
+const int libHRGE_affixRerollLabelHeight = 100;
+const int libHRGE_affixRerollLabelOffsetX = 0;
+const int libHRGE_affixRerollLabelOffsetY = 1035;
+const int libHRGE_affixBanLabelWidth = 325;
+const int libHRGE_affixBanLabelHeight = 100;
+const int libHRGE_affixBanLabelOffsetX = 0;
+const int libHRGE_affixBanLabelOffsetY = 1060;
+const int libHRGE_settingsButtonWidth = 94;
+const int libHRGE_settingsButtonHeight = 94;
+const int libHRGE_settingsButtonOffsetX = 240;
+const int libHRGE_settingsButtonOffsetY = 0;
+const int libHRGE_runAndDifficultyLabelWidth = 200;
+const int libHRGE_runAndDifficultyLabelHeight = 25;
+const int libHRGE_runAndDifficultyLabelOffsetX = 15;
+const int libHRGE_runAndDifficultyLabelOffsetY = 15;
+const int libHRGE_versionLabelWidth = 200;
+const int libHRGE_versionLabelHeight = 25;
+const int libHRGE_versionLabelOffsetX = 15;
+const int libHRGE_versionLabelOffsetY = 40;
+const int libHRGE_ownedAffixesButtonWidth = 270;
+const int libHRGE_ownedAffixesButtonHeight = 94;
+const int libHRGE_ownedAffixesButtonOffsetX = 0;
+const int libHRGE_ownedAffixesButtonOffsetY = 0;
+const int libHRGE_ownedAffixesLabelWidth = 500;
+const int libHRGE_ownedAffixesLabelHeight = 50;
+const int libHRGE_ownedAffixesLabelOffsetX = 0;
+const int libHRGE_ownedAffixesLabelOffsetY = 50;
+const int libHRGE_ownedAffixesPagesButtonWidth = 282;
+const int libHRGE_ownedAffixesPagesButtonHeight = 94;
+const int libHRGE_ownedAffixesIconWidth = 95;
+const int libHRGE_ownedAffixesIconHeight = 95;
+const int libHRGE_ownedAffixesIconOffsetX = 0;
+const int libHRGE_ownedAffixesIconOffsetY = 0;
+const int libHRGE_ownedAffixesIconOverlayWidth = 123;
+const int libHRGE_ownedAffixesIconOverlayHeight = 123;
+const int libHRGE_ownedAffixesIconOverlayOffsetX = 0;
+const int libHRGE_ownedAffixesIconOverlayOffsetY = 0;
+const int libHRGE_ownedAffixesNameWidth = 143;
+const int libHRGE_ownedAffixesNameHeight = 45;
+const int libHRGE_ownedAffixesNameOffsetX = 0;
+const int libHRGE_ownedAffixesNameOffsetY = 75;
+const int libHRGE_ownedAffixesCooldownWidth = 100;
+const int libHRGE_ownedAffixesCooldownHeight = 100;
+const int libHRGE_ownedAffixesCooldownOffsetX = 0;
+const int libHRGE_ownedAffixesCooldownOffsetY = 0;
+const int libHRGE_ownedAffixesAffixWidth = 136;
+const int libHRGE_ownedAffixesAffixHeight = 150;
+const int libHRGE_optionsCogButtonWidth = 94;
+const int libHRGE_optionsCogButtonHeight = 94;
+const int libHRGE_optionsCogButtonOffsetX = 250;
+const int libHRGE_optionsCogButtonOffsetY = 0;
+const int libHRGE_optionsLabelWidth = 500;
+const int libHRGE_optionsLabelHeight = 50;
+const int libHRGE_optionsLabelOffsetX = 0;
+const int libHRGE_optionsLabelOffsetY = 50;
+const int libHRGE_optionsCheckboxLabelWidth = 600;
+const int libHRGE_optionsCheckboxLabelHeight = 50;
+const int libHRGE_optionsCheckboxSpacingX = 260;
+const int libHRGE_optionsCheckboxSpacingY = 60;
+const int libHRGE_optionsSpacingX = 0;
+const int libHRGE_optionsSpacingY = 60;
+const int libHRGE_optionsButtonSpacingX = 0;
+const int libHRGE_optionsButtonSpacingY = 120;
+const int libHRGE_optionsButtonWidth = 360;
+const int libHRGE_optionsButtonHeight = 94;
+const int libHRGE_optionsRestartFrameWidth = 700;
+const int libHRGE_optionsRestartFrameHeight = 300;
+const int libHRGE_optionsRestartLabelWidth = 600;
+const int libHRGE_optionsRestartLabelHeight = 100;
+const int libHRGE_optionsRestartLabelOffsetX = 0;
+const int libHRGE_optionsRestartLabelOffsetY = -60;
+const int libHRGE_optionsRestartButtonWidth = 250;
+const int libHRGE_optionsRestartButtonHeight = 95;
+const int libHRGE_optionsRestartButtonYesOffsetX = -140;
+const int libHRGE_optionsRestartButtonYesOffsetY = 70;
+const int libHRGE_optionsRestartButtonNoOffsetX = 140;
+const int libHRGE_optionsRestartButtonNoOffsetY = 70;
+const int libHRGE_gameoverLabelWidth = 750;
+const int libHRGE_gameoverLabelHeight = 130;
+const int libHRGE_gameoverLabelOffsetX = 0;
+const int libHRGE_gameoverLabelOffsetY = 100;
+const int libHRGE_gameoverButtonWidth = 325;
+const int libHRGE_gameoverButtonHeight = 100;
+const int libHRGE_gameoverContinueButtonOffsetX = 0;
+const int libHRGE_gameoverContinueButtonOffsetY = 225;
+const int libHRGE_gameoverRestartButtonOffsetX = 0;
+const int libHRGE_gameoverRestartButtonOffsetY = 325;
+const int libHRGE_gameoverExitButtonOffsetX = 0;
+const int libHRGE_gameoverExitButtonOffsetY = 425;
+const int libHRGE_gameoverStatsWidth = 500;
+const int libHRGE_gameoverStatsHeight = 1000;
+const int libHRGE_gameoverStatsLeftOffsetX = -600;
+const int libHRGE_gameoverStatsLeftOffsetY = 170;
+const int libHRGE_gameoverStatsMiddleOffsetX = 0;
+const int libHRGE_gameoverStatsMiddleOffsetY = 170;
+const int libHRGE_gameoverStatsRightOffsetX = 600;
+const int libHRGE_gameoverStatsRightOffsetY = 170;
+const int libHRGE_gameoverExitFrameWidth = 700;
+const int libHRGE_gameoverExitFrameHeight = 300;
+const int libHRGE_gameoverExitButtonWidth = 250;
+const int libHRGE_gameoverExitButtonHeight = 95;
+const int libHRGE_gameoverExitButtonYesOffsetX = -140;
+const int libHRGE_gameoverExitButtonYesOffsetY = 70;
+const int libHRGE_gameoverExitButtonNoOffsetX = 140;
+const int libHRGE_gameoverExitButtonNoOffsetY = 70;
+const int libHRGE_achievementsLabelWidth = 500;
+const int libHRGE_achievementsLabelHeight = 50;
+const int libHRGE_achievementsLabelOffsetX = 0;
+const int libHRGE_achievementsLabelOffsetY = 50;
+const int libHRGE_achievementsCloseButtonWidth = 250;
+const int libHRGE_achievementsCloseButtonHeight = 95;
+const int libHRGE_achievementsCloseButtonOffsetX = 0;
+const int libHRGE_achievementsCloseButtonOffsetY = 500;
+const int libHRGE_achievementsResetButtonWidth = 350;
+const int libHRGE_achievementsResetButtonHeight = 95;
+const int libHRGE_achievementsResetButtonOffsetX = 650;
+const int libHRGE_achievementsResetButtonOffsetY = 500;
+const int libHRGE_achievementsColumns = 15;
+const int libHRGE_achievementsItemWidth = 80;
+const int libHRGE_achievementsItemHeight = 80;
+const int libHRGE_achievementsItemOverlayWidth = 100;
+const int libHRGE_achievementsItemOverlayHeight = 100;
+const int libHRGE_achievementsItemSpacingX = 55;
+const int libHRGE_achievementsItemSpacingY = 42;
+const int libHRGE_achievementsItemLabelWidth = 125;
+const int libHRGE_achievementsItemLabelHeight = 50;
+const int libHRGE_achievementsItemLabelSpacingY = 62;
+const int libHRGE_achievementsItemsOffsetY = -50;
+const int libHRGE_achievementsResetFrameWidth = 700;
+const int libHRGE_achievementsResetFrameHeight = 300;
+const int libHRGE_achievementsResetLabelWidth = 600;
+const int libHRGE_achievementsResetLabelHeight = 100;
+const int libHRGE_achievementsResetLabelOffsetX = 0;
+const int libHRGE_achievementsResetLabelOffsetY = -60;
+
+// ============================================================
+// Achievement IDs
+// ============================================================
+
+const int libHRGE_achievementTypeWinOnHero      = 1;
+const int libHRGE_achievementTypeWinNoDeaths    = 2;
+const int libHRGE_achievementTypeWinNoObjLost   = 3;
+const int libHRGE_achievementTypeWinNoRerolls   = 4;
+const int libHRGE_achievementTypeWinNoBans      = 5;
+const int libHRGE_achievementTypeWinTimer       = 6;
+const int libHRGE_achievementTypeWinRound       = 7;
+
+// ============================================================
+// Textures
+// ============================================================
+
+const string libHRGE_textureAffixBackground = "Assets/Textures/affix_bg.dds";
+const string libHRGE_textureBlackout = "Assets/Textures/affix_blackout.dds";
+const string libHRGE_textureBlackoutDark = "Assets/Textures/affix_blackout_dark.dds";
+const string libHRGE_textureSettingsCog = "Assets/Textures/affix_settings.dds";
+const string libHRGE_textureAchievementNoneOverlay = "Assets/Textures/Achievements/icon_overlay_black.dds";
+const string libHRGE_textureAchievementNormalOverlay = "Assets/Textures/Achievements/icon_overlay.dds";
+const string libHRGE_textureAchievementHeroicOverlay = "Assets/Textures/Achievements/icon_overlay_heroic.dds";
+const string libHRGE_textureAchievementMythicOverlay = "Assets/Textures/Achievements/icon_overlay_mythic.dds";
+
+// ============================================================
+// Affix User Data
+// ============================================================
+
+const string libHRGE_affixUserData = "Affix";
+
+const string libHRGE_affixUserIndex                 = "Index";
+const string libHRGE_affixUserApplied               = "Applied";
+const string libHRGE_affixUserInit                  = "Init";
+const string libHRGE_affixUserIcon                  = "Icon";
+const string libHRGE_affixUserCount                 = "Count";
+const string libHRGE_affixUserMax                   = "Max";
+const string libHRGE_affixUserRarity                = "Rarity";
+const string libHRGE_affixUserWeight                = "Weight";
+const string libHRGE_affixUserMinLevel              = "LevelMin";
+const string libHRGE_affixUserMaxLevel              = "LevelMax";
+const string libHRGE_affixUserType                  = "Type";
+const string libHRGE_affixUserCurseSkips            = "SkipCurses";
+const string libHRGE_affixUserEnabled               = "Enabled";
+const string libHRGE_affixUserAffixesExcluded       = "AffixesExcluded";
+const string libHRGE_affixUserAffixesExcludedCount  = "AffixesExcludedCount";
+const string libHRGE_affixUserAffixesRequired       = "AffixesRequired";
+const string libHRGE_affixUserAffixesRequiredCount  = "AffixesRequiredCount";
+const string libHRGE_affixUserHeroesExcluded        = "HeroesExcluded";
+const string libHRGE_affixUserHeroesExcludedCount   = "HeroesExcludedCount";
+const string libHRGE_affixUserHeroSpecific          = "HeroSpecific";
+const string libHRGE_affixUserHeroTags              = "HeroTags";
+const string libHRGE_affixUserHeroTagsCount         = "HeroTagsCount";
+const string libHRGE_affixUserMapsExcluded          = "MapsExcluded";
+const string libHRGE_affixUserMapsExcludedCount     = "MapsExcludedCount";
+const string libHRGE_affixUserMapSpecific           = "MapSpecific";
+const string libHRGE_affixUserTalentsAdd            = "TalentsAdd";
+const string libHRGE_affixUserTalentsAddCount       = "TalentsAddCount";
+const string libHRGE_affixUserTalentsDisable        = "TalentsDisable";
+const string libHRGE_affixUserTalentsDisableCount   = "TalentsDisableCount";
+const string libHRGE_affixUserTalentsShow           = "TalentsShow";
+const string libHRGE_affixUserTalentsShowCount      = "TalentsShowCount";
+const string libHRGE_affixUserTalentsRequired       = "TalentsRequired";
+const string libHRGE_affixUserTalentsRequiredCount  = "TalentsRequiredCount";
+const string libHRGE_affixUserBehaviorsAdd          = "BehaviorsAdd";
+const string libHRGE_affixUserBehaviorsAddCount     = "BehaviorsAddCount";
+const string libHRGE_affixUserBehaviorsRemove       = "BehaviorsRemove";
+const string libHRGE_affixUserBehaviorsRemoveCount  = "BehaviorsRemoveCount";
+const string libHRGE_affixUserBehaviorsSync         = "BehaviorsSync";
+const string libHRGE_affixUserBehaviorsSyncCount    = "BehaviorsSyncCount";
+const string libHRGE_affixUserExcludeChoGall        = "ExcludeChoGall";
+const string libHRGE_affixUserTrigger               = "Trigger";
+const string libHRGE_affixUserTriggerCount          = "TriggerCount";
+const string libHRGE_affixUserQuest                 = "Quest";
+const string libHRGE_affixUserQuestDone             = "QuestDone";
+const string libHRGE_affixUserQuestProgress         = "QuestProgress";
+const string libHRGE_affixUserQuestPersists         = "QuestPersists";
+const string libHRGE_affixUserQuestRetain           = "QuestRetain";
+const string libHRGE_affixUserQuestRetainToken      = "QuestRetainToken";
+const string libHRGE_affixUserQuestRetainCount      = "QuestRetainCount";
+const string libHRGE_affixUserCooldownLink          = "CooldownLink";
+const string libHRGE_affixUserCooldownHidden        = "CooldownHidden";
+const string libHRGE_affixUserNoRoll                = "NoRoll";
+const string libHRGE_affixUserMinimumDifficulty     = "MinimumDifficulty";
+const string libHRGE_affixUserMaximumDifficulty     = "MaximumDifficulty";
+const string libHRGE_affixUserMinimumRound          = "MinimumRound";
+const string libHRGE_affixUserMaximumRound          = "MaximumRound";
+const string libHRGE_affixUserHeroTooltip           = "HeroTooltip";
+const string libHRGE_affixUserHeroTooltipCount      = "HeroTooltipCount";
+const string libHRGE_affixUserAffixesRequiredMax    = "AffixesRequiredMax";
+const string libHRGE_affixUserAlwaysAppendTooltip   = "AlwaysAppendTooltip";
+const string libHRGE_affixUserIgnoredForStats       = "IgnoredForStats";
+const string libHRGE_affixUserCatalogModifications  = "CatalogModification";
+const string libHRGE_affixUserCatalogModsCount      = "CatalogModificationCount";
+const string libHRGE_affixUserCustomValue           = "CustomValue";
+const string libHRGE_affixUserBanned                = "Banned";
+const string libHRGE_affixUserScaling               = "Scaling";
+const string libHRGE_affixUserScalingCount          = "ScalingCount";
+
+const int libHRGE_affixUserTypeBoon  = 0;
+const int libHRGE_affixUserTypeCurse = 1;
+
+const string libHRGE_affixUserTagAll            = "ALL";
+const string libHRGE_affixUserTagMount          = "MOUNT"; // Heroes that use regular mounts
+const string libHRGE_affixUserTagMana           = "MANA";
+const string libHRGE_affixUserTagMelee          = "MELEE";
+const string libHRGE_affixUserTagRanged         = "RANGED";
+const string libHRGE_affixUserTagStarter        = "STARTER"; // Heroes that have unique starter boons
+const string libHRGE_affixUserTagTank           = "TANK";
+const string libHRGE_affixUserTagBruiser        = "BRUISER";
+const string libHRGE_affixUserTagRangedAssassin = "RANGEDASSASSIN";
+const string libHRGE_affixUserTagMeleeAssassin  = "MELEEASSASSIN";
+const string libHRGE_affixUserTagHealer         = "HEALER";
+const string libHRGE_affixUserTagSupport        = "SUPPORT";
+
+const string libHRGE_behaviorCategoryCrowdControl = "CC";
+const string libHRGE_behaviorCategoryBlind = "BLIND";
+const string libHRGE_behaviorCategorySlow = "SLOW";
+const string libHRGE_behaviorCategoryRoot = "ROOT";
+const string libHRGE_behaviorCategoryStun = "STUN";
+const string libHRGE_behaviorCategorySilence = "SILENCE";
+
+const string libHRGE_affixUserTriggerAffixAdded                 = "AFFIXADDED"; // Runs immediately and at the start of every game
+const string libHRGE_affixUserTriggerAnyAffixAdded              = "ANYAFFIXADDED"; // Executes when ANY affix is added that has an affix added trigger.
+const string libHRGE_affixUserTriggerGameStart                  = "GAMESTART"; // Runs one time at the start of the game, regardless of stack count
+const string libHRGE_affixUserTriggerOncePerGame                = "ONCEPERGAME"; // Runs immediately and at the start of every game. Can only run once per game
+const string libHRGE_affixUserTriggerOneTime                    = "ONETIME"; // Runs immediately. Does not run at the start of the game
+const string libHRGE_affixUserTriggerNPCTakedown                = "NPCTAKEDOWN"; // Runs on any NPC takedown
+const string libHRGE_affixUserTriggerHeroTakedown               = "HEROTAKEDOWN"; // Runs on any Hero takedown
+const string libHRGE_affixUserTriggerUnitCreated                = "UNITCREATED"; // Runs when any unit is created
+const string libHRGE_affixUserTriggerUnitDied                   = "UNITDIED"; // Runs when any unit dies
+const string libHRGE_affixUserTriggerUnitDamaged                = "UNITDAMAGED"; // Runs when a unit takes damage.
+const string libHRGE_affixUserTriggerUnitBehaviorChange         = "UNITBEHAVIORCHANGE"; // Runs when a unit receives specified behavior
+const string libHRGE_affixUserTriggerUnitBehaviorCreate         = "UNITBEHAVIORCREATE"; // 
+const string libHRGE_affixUserTriggerUnitBehaviorChangeCategory = "UNITBEHAVIORCHANGECATEGORY"; // Runs when a unit receives behavior with the specified category
+const string libHRGE_affixUserTriggerUnitChangeOwner            = "UNITCHANGEOWNER"; // Runs when a unit changes ownership
+const string libHRGE_affixUserTriggerPlayerEffectUsed           = "PLAYEREFFECTUSED"; // Runs when any player triggers the specified effect
+const string libHRGE_affixUserTriggerHeroLevelUp                = "HEROLEVELUP"; // Runs immediately once and on Hero level up
+const string libHRGE_affixUserTriggerHeroRespawn                = "HERORESPAWN"; // Runs when Hero respawns
+const string libHRGE_affixUserTriggerHeroKilled                 = "HEROKILLED"; // Runs when a Hero is killed
+const string libHRGE_affixUserTriggerHeroGainTalent             = "HEROGAINTALENT"; // Runs when a Hero gains a Talent
+const string libHRGE_affixUserTriggerScaling                    = "SCALING"; // Same as LevelUp but also runs regardless of stack count
+const string libHRGE_affixUserTriggerQuest                      = "QUEST"; // Runs immediately if affix quest is NOT complete
+const string libHRGE_affixUserTriggerPeriodic                   = "PERIODIC"; // Runs periodically. Default: 0.0625s
+const string libHRGE_affixUserTriggerWin                        = "WIN"; // Executes when enemy core dies.
+const string libHRGE_affixUserTriggerPaused                     = "PAUSED"; // Executes when game is paused.
+const string libHRGE_affixUserTriggerTimer                      = "TIMER"; // Executes when timer runs out. Optional argument1 to start the timer with a duration, argument2 to make it periodic.
+
+const string libHRGE_affixUserFilterAll                         = "ALL";
+const string libHRGE_affixUserFilterAITeammates                 = "AITEAMMATES";
+const string libHRGE_affixUserFilterAllAllies                   = "ALLALLIES";
+const string libHRGE_affixUserFilterAlliedHeroes                = "ALLIEDHEROES";
+const string libHRGE_affixUserFilterAlliedStructures            = "ALLIEDSTRUCTURES";
+const string libHRGE_affixUserFilterAlliedStructuresExclCore    = "ALLIEDSTRUCTURESEXCLCORE";
+const string libHRGE_affixUserFilterAlliedCore                  = "ALLIEDCORE";
+const string libHRGE_affixUserFilterAlliedMinions               = "ALLIEDMINIONS";
+const string libHRGE_affixUserFilterAlliedMinionsRanged         = "ALLIEDMINIONSRANGED";
+const string libHRGE_affixUserFilterAlliedMinionsCatapult       = "ALLIEDMINIONSCATAPULT";
+const string libHRGE_affixUserFilterAlliedMinionsMelee          = "ALLIEDMINIONSMELEE";
+const string libHRGE_affixUserFilterAlliedMinionsWizard         = "ALLIEDMINIONSWIZARD";
+const string libHRGE_affixUserFilterAlliedMercenaries           = "ALLIEDMERCENARIES";
+const string libHRGE_affixUserFilterAlliedSummons               = "ALLIEDSUMMONS";
+const string libHRGE_affixUserFilterAlliedSiegeGiants           = "ALLIEDSIEGEGIANTS";
+const string libHRGE_affixUserFilterAllEnemies                  = "ALLENEMIES";
+const string libHRGE_affixUserFilterEnemyHeroes                 = "ENEMYHEROES";
+const string libHRGE_affixUserFilterEnemyStructures             = "ENEMYSTRUCTURES";
+const string libHRGE_affixUserFilterEnemyStructuresExclCore     = "ENEMYSTRUCTURESEXCLCORE";
+const string libHRGE_affixUserFilterEnemyCore                   = "ENEMYCORE";
+const string libHRGE_affixUserFilterEnemyMinions                = "ENEMYMINIONS";
+const string libHRGE_affixUserFilterEnemyMinionsRanged          = "ENEMYMINIONSRANGED";
+const string libHRGE_affixUserFilterEnemyMinionsCatapult        = "ENEMYMINIONSCATAPULT";
+const string libHRGE_affixUserFilterEnemyMinionsMelee           = "ENEMYMINIONSMELEE";
+const string libHRGE_affixUserFilterEnemyMinionsWizard          = "ENEMYMINIONSWIZARD";
+const string libHRGE_affixUserFilterEnemyMercenaries            = "ENEMYMERCENARIES";
+const string libHRGE_affixUserFilterEnemySummons                = "ENEMYSUMMONS";
+const string libHRGE_affixUserFilterEnemySiegeGiants            = "ENEMYSIEGEGIANTS";
+
+const string libHRGE_affixUserCatalogTypeFlat                   = "FLAT";                   // Catalog Value <Operation> Value
+const string libHRGE_affixUserCatalogTypePerStack               = "PERSTACK";               // Catalog Value <Operation> (Value x Total Stacks)
+const string libHRGE_affixUserCatalogTypePerStackDelta          = "PERSTACKDELTA";          // Catalog Value <Operation> (Value x Added Stacks)
+const string libHRGE_affixUserCatalogTypePerStackDeltaExclFirst = "PERSTACKDELTAEXCLFIRST"; // Catalog Value <Operation> (Value x Added Stacks), excluding the 1st affix stack
+const string libHRGE_affixUserCatalogTypeBase                   = "BASE";                   // Catalog Base Value <Operation> (Value x Total Stacks)
+const string libHRGE_affixUserCatalogTypeBaseDelta              = "BASEDELTA";              // Catalog Base Value <Operation> (Value x Added Stacks)
+const string libHRGE_affixUserCatalogTypeBaseMult               = "BASEMULT";               // Catalog Base Value <Operation> 1 + (Value x Total Stacks)
+const string libHRGE_affixUserCatalogTypeString                 = "STRING";                 // Sets Catalog Value to a String
+
+const string libHRGE_affixUserCatalogOperationSet        = "SET";
+const string libHRGE_affixUserCatalogOperationAdd        = "ADD";
+const string libHRGE_affixUserCatalogOperationSubtract   = "SUBTRACT";
+const string libHRGE_affixUserCatalogOperationMultiply   = "MULTIPLY";
+const string libHRGE_affixUserCatalogOperationDivide     = "DIVIDE";
+const string libHRGE_affixUserCatalogOperationString     = "STRING";
+
+const string libHRGE_affixUserRarityCommon      = "COMMON";
+const string libHRGE_affixUserRarityUncommon    = "UNCOMMON";
+const string libHRGE_affixUserRarityRare        = "RARE";
+const string libHRGE_affixUserRarityEpic        = "EPIC";
+const string libHRGE_affixUserRarityLegendary   = "LEGENDARY";
+const string libHRGE_affixUserRarityStarter     = "STARTER";
+const string libHRGE_affixUserRarityMythic      = "MYTHIC";
+const string libHRGE_affixUserRarityMilestone   = "MILESTONE";
+const string libHRGE_affixUserRarityChallenge   = "CHALLENGE";
+
+const string libHRGE_affixBehaviorNoSync = "NoSync";
+
+const int libHRGE_affixOperationAll             =   1;
+const int libHRGE_affixOperationAddToAll        =   2;
+const int libHRGE_affixOperationUnitCreated     =   3;
+const int libHRGE_affixOperationUnitChangeOwner =   4;
+
+// ============================================================
+// Structs
+// ============================================================
+
+struct libHRGE_DialogAffixSelectionItem {
+    int background;
+    int affixBackground;
+    int selectButton;
+    int banButton;
+    int icon;
+    int iconOverlay;
+    int nameLabel;
+    int tooltipLabel;
+    int rarityLabel;
+};
+
+struct libHRGE_DialogAffixSelection {
+    int dialog;
+    int titleLabel;
+    int rerollButton;
+    int rerollLabel;
+    int banLabel;
+    libHRGE_DialogAffixSelectionItem[libHRGE_maxAffixSelection + 1] items;
+};
+
+struct libHRGE_DialogOwnedAffixesItem {
+    int icon;
+    int iconOverlay;
+    int nameLabel;
+    int cooldownLabel;
+};
+
+struct libHRGE_DialogOwnedAffixes {
+    int dialog;
+    int label;
+    int nextButton;
+    int previousButton;
+    libHRGE_DialogOwnedAffixesItem[libHRGE_maxOwnedAffixesPerPage + 1] items;
+};
+
+struct libHRGE_DialogOptionsItem {
+    int label;
+    int button;
+    int checkbox;
+    int pulldown;
+};
+
+struct libHRGE_DialogOptions {
+    int dialog;
+    int label;
+    int optionIndex;
+    int frame;
+    libHRGE_DialogOptionsItem[libHRGE_maxOptionDialogs + 1] option;
+};
+
+struct libHRGE_DialogGameover {
+    int dialog;
+    int label;
+    int continueButton;
+    int restartButton;
+    int exitButton;
+    int leftStats;
+    int middleStats;
+    int rightStats;
+};
+
+struct libHRGE_DialogAchievementsItem {
+    int button;
+    int label;
+    int overlay;
+};
+
+struct libHRGE_DialogAchievements {
+    int dialog;
+    int label;
+    int closeButton;
+    int resetButton;
+    libHRGE_DialogAchievementsItem[libHRGE_maxAchievements + 1] achievement;
+};
+
+struct libHRGE_Filter {
+    string name;
+    unitfilter unitFilter;
+    int requiredPlayer;
+    string[libHRGE_maxFilters + 1] requiredUnitTypes;
+    int requiredUnitTypeIndex;
+    string[libHRGE_maxFilters + 1] excludedUnitTypes;
+    int excludedUnitTypeIndex;
+};
+
+struct libHRGE_QueuedAffix {
+    int overrideAffix;
+    int rarity;
+    bool curse;
+    int level;
+    bool lockRarity;
+    int choiceCount;
+    bool rerollDisabled;
+};
+
+struct libHRGE_Achievement {
+    string name;
+    int difficulty;
+    bool earned;
+    int type;
+    int hero;
+    string icon;
+    int round;
+    int time;
+    int timeRequired;
+    int roundRequired;
+};
+
+// ============================================================
+// Filters
+// ============================================================
+
+libHRGE_Filter libHRGE_filterAllAllies;
+libHRGE_Filter libHRGE_filterAlliedHeroes;
+libHRGE_Filter libHRGE_filterAITeammates;
+libHRGE_Filter libHRGE_filterAlliedStructures;
+libHRGE_Filter libHRGE_filterAlliedStructuresExcludingCore;
+libHRGE_Filter libHRGE_filterAlliedCore;
+libHRGE_Filter libHRGE_filterAlliedMinions;
+libHRGE_Filter libHRGE_filterAlliedMinionsRanged;
+libHRGE_Filter libHRGE_filterAlliedMinionsCatapult;
+libHRGE_Filter libHRGE_filterAlliedMinionsMelee;
+libHRGE_Filter libHRGE_filterAlliedMinionsWizard;
+libHRGE_Filter libHRGE_filterAlliedMercenaries;
+libHRGE_Filter libHRGE_filterAlliedSummons;
+libHRGE_Filter libHRGE_filterAlliedSiegeGiants;
+
+libHRGE_Filter libHRGE_filterDifficulty;
+libHRGE_Filter libHRGE_filterAllEnemies;
+libHRGE_Filter libHRGE_filterEnemyHeroes;
+libHRGE_Filter libHRGE_filterEnemyStructures;
+libHRGE_Filter libHRGE_filterEnemyStructuresExcludingCore;
+libHRGE_Filter libHRGE_filterEnemyCore;
+libHRGE_Filter libHRGE_filterEnemyMinions;
+libHRGE_Filter libHRGE_filterEnemyMinionsRanged;
+libHRGE_Filter libHRGE_filterEnemyMinionsCatapult;
+libHRGE_Filter libHRGE_filterEnemyMinionsMelee;
+libHRGE_Filter libHRGE_filterEnemyMinionsWizard;
+libHRGE_Filter libHRGE_filterEnemyMercenaries;
+libHRGE_Filter libHRGE_filterEnemySummons;
+libHRGE_Filter libHRGE_filterEnemySiegeGiants;
+
+
+// ============================================================
+// Rarity Data
+// ============================================================
+
+fixed libHRGE_commonToUncommon    =   0.25;
+fixed libHRGE_commonToRare        =   0.05;
+fixed libHRGE_commonToEpic        =   0.025;
+fixed libHRGE_commonToLegendary   =   0.005;
+
+fixed libHRGE_uncommonToRare      =   0.125;
+fixed libHRGE_uncommonToEpic      =   0.075;
+fixed libHRGE_uncommonToLegendary =   0.01;
+
+fixed libHRGE_rareToEpic          =   0.20;
+fixed libHRGE_rareToLegendary     =   0.015;
+
+fixed libHRGE_epicToLegendary     =   0.02;
+
+// ============================================================
+// Affix Data
+// ============================================================
+
+int libHRGE_registeredAffixes; // Number of affixes loaded into the game.
+int[libHRGE_maxAffixSelection + 1] libHRGE_rolledAffixes;
+
+int libHRGE_currentAffixSelection = 3; // Number of affixes the player can pick from.
+
+int libHRGE_maxCurseSwapsFromObjectives = 1; // How many curses can be turned into boons per game from winning the Objective
+
+fixed libHRGE_mythicDifficultyXPModifier;
+fixed libHRGE_heroicDifficultyXPModifier;
+
+int libHRGE_rerolls; // Number of rerolls available.
+int libHRGE_rerollsCurse; // Number of curse rerolls available.
+int libHRGE_bans; // Number of bans available
+
+int libHRGE_rerollsUsed;
+int libHRGE_rerollsCurseUsed;
+int libHRGE_bansUsed;
+
+int libHRGE_boonsNextGame;
+int libHRGE_boonsQueued;
+int libHRGE_cursesNextGame;
+int libHRGE_cursesQueued;
+bool libHRGE_startingBoonsQueued;
+
+int libHRGE_ownedAffixesCurrentPage = 1;
+int libHRGE_ownedAffixesMaxPages;
+int libHRGE_ownedAffixesPerRow = 15;
+int[libHRGE_maxAffixTypes + 1][libHRGE_maxAffixes + 1] libHRGE_ownedAffixes;
+int[libHRGE_maxAffixTypes + 1] libHRGE_ownedAffixesIndex;
+
+bool libHRGE_heroCountsAsMeleeAndRanged;
+
+string[libHRGE_maxGeneralBehaviors + 1] libHRGE_generalBehaviors;
+string[libHRGE_maxGeneralBehaviors + 1] libHRGE_generalFilters;
+int libHRGE_generalBehaviorsIndex;
+
+int[libHRGE_maxScalingTriggers + 1] libHRGE_scalingPlayers;
+string[libHRGE_maxScalingTriggers + 1] libHRGE_scalingReferences;
+fixed[libHRGE_maxScalingTriggers + 1] libHRGE_scalingModifiers;
+int[libHRGE_maxScalingTriggers + 1] libHRGE_scalingHeroes;
+int libHRGE_scalingIndex;
+
+bool libHRGE_mapInit = false;
+
+// ============================================================
+// Achievements Data
+// ============================================================
+
+libHRGE_Achievement[libHRGE_maxAchievements + 1] libHRGE_achievements;
+int libHRGE_achievementsIndex;
+int libHRGE_lastRegisteredAchievement;
+
+// ============================================================
+// Player Data
+// ============================================================
+
+int libHRGE_playerSelectedHero; // The player's Hero index that was loaded from the Bank.
+
+string[libCore_gv_bALMaxPlayers + 1][libHRGE_maxSyncBehaviors] libHRGE_syncBehaviors;
+int[libCore_gv_bALMaxPlayers + 1] libHRGE_syncBehaviorIndex;
+
+bool[libCore_gv_bALMaxPlayers + 1][libCore_gv_talents_MaxTiers_C + 1] libHRGE_allTalentsSelected;
+
+// ============================================================
+// Queue
+// ============================================================
+
+libHRGE_QueuedAffix[libHRGE_maxQueue + 1] libHRGE_queue;
+libHRGE_QueuedAffix libHRGE_currentQueue;
+
+int libHRGE_queueCount; // Number of affixes in the queue.
+bool libHRGE_processingQueue;
+fixed libHRGE_processQueueTimeElapsed;
+
+// ============================================================
+// Other
+// ============================================================
+
+int libHRGE_map; // The current map.
+
+int libHRGE_difficulty = libHRGE_difficultyNormal;
+
+int libHRGE_currentRun; // Number of the current run.
+bool libHRGE_gamePaused; // Whether the game is paused.
+
+int libHRGE_objectivesWonThisGame;
+int libHRGE_objectivesWonCounter;
+int libHRGE_objectivesLostThisGame;
+int libHRGE_skipCurseCounter;
+
+int libHRGE_cursesSkipped;
+int libHRGE_cursesSwapped;
+
+int[libCore_gv_bALMaxTeams + 1][libHRGE_maxHeroes + 1] libHRGE_heroCounter;
+
+bool[libHRGE_maxHeroes + 1] libHRGE_goldenHero;
+
+// ============================================================
+// Dialog IDs
+// ============================================================
+
+int libHRGE_dialogBackdrop;
+int libHRGE_dialogControlBackdrop;
+
+libHRGE_DialogAffixSelection libHRGE_dialogAffixSelection;
+libHRGE_DialogOwnedAffixes libHRGE_dialogOwnedAffixes;
+libHRGE_DialogOptions libHRGE_dialogOptions;
+libHRGE_DialogOptions libHRGE_dialogOptionsRestart;
+int libHRGE_dialogControlOptionsSpeedUpDeath;
+int libHRGE_dialogControlOptionsSpeedUpGates;
+int libHRGE_dialogControlOptionsDisplayPicksBans;
+int libHRGE_dialogControlOptionsAchievementsButton;
+int libHRGE_dialogControlOptionsRestartButton;
+int libHRGE_dialogControlOptionsReturnButton;
+
+int libHRGE_dialogControlOwnedAffixesButton;
+int libHRGE_dialogControlOptionsButton;
+int libHRGE_dialogControlRunLabel;
+
+int libHRGE_dialogControls;
+int libHRGE_dialogInfo;
+
+libHRGE_DialogGameover libHRGE_dialogGameover;
+libHRGE_DialogOptions libHRGE_dialogGameoverExit;
+libHRGE_DialogAchievements libHRGE_dialogAchievements;
+libHRGE_DialogOptions libHRGE_dialogAchievementsReset;
+
+// ============================================================
+// Triggers
+// ============================================================
+
+trigger libHRGE_PrintDialogPressedTrigger;
+trigger libHRGE_HeroSelectionTrigger;
+trigger libHRGE_MapInitTrigger;
+trigger libHRGE_TestCommandTrigger;
+trigger libHRGE_ResetCommandTrigger;
+trigger libHRGE_GameOverCallbackTrigger;
+trigger libHRGE_MapInitLoadBankTrigger;
+trigger libHRGE_CurateHeroesTrigger;
+trigger libHRGE_PauseVLSKTrigger;
+trigger libHRGE_PauseMSHETrigger;
+trigger libHRGE_PauseMSOCTrigger;
+trigger libHRGE_PauseMHTMTrigger;
+trigger libHRGE_PauseMTODTrigger;
+trigger libHRGE_PauseGRDNTrigger;
+trigger libHRGE_PauseBBAYTrigger;
+trigger libHRGE_PauseMLCPTrigger;
+trigger libHRGE_PauseMHMUTrigger;
+trigger libHRGE_PauseMLBDTrigger;
+trigger libHRGE_PauseSCHOTrigger;
+trigger libHRGE_AffixHotkeyPressedTrigger;
+trigger libHRGE_ObjectiveWonTrigger;
+trigger libHRGE_ObjectiveLostTrigger;
+trigger libHRGE_ProcessQueueTimeElapsedTrigger;
+trigger libHRGE_DifficultyUnitCreatedTrigger;
+trigger libHRGE_DifficultyUnitChangeOwner;
+trigger libHRGE_DVaCallMechCompletedTrigger;
+trigger libHRGE_DVaRespawnTrigger;
+trigger libHRGE_DVaEjectTrigger;
+trigger libHRGE_SpeedUpTrigger;
+trigger libHRGE_SpeedUpDeathTrigger;
+trigger libHRGE_SpeedUpDeathUnitDiedTrigger;
+trigger libHRGE_AbathurSymbioteTrigger;
+trigger libHRGE_AbathurUltimateEvolutionTrigger;
+trigger libHRGE_ChenStormEarthFireTrigger;
+trigger libHRGE_LostVikingsRaidboatTrigger;
+trigger libHRGE_RexxarMishaRespawnTrigger;
+trigger libHRGE_SamuroMirrorImageTrigger;
+trigger libHRGE_NovaHoloCloneTrigger;
+trigger libHRGE_GeneralUnitCreatedTrigger;
+trigger libHRGE_GeneralUnitChangeOwnerTrigger;
+trigger libHRGE_ScalingTrigger;
+
+// ============================================================
+// DEBUG
+// ============================================================
+
+bool libHRGE_debug_enableTryMeMode2; // Try mode 2.0
+bool libHRGE_debug_enableCheatCommands; // Enables cheat/debug commands
+bool libHRGE_debug_disableHeroSelection; // Skips the Hero selection.
+bool libHRGE_debug_enableDebugLogging; // Enables debug logging
+bool libHRGE_debug_ignoreMap; // Ignores the saved map.
+bool libHRGE_debug_disablePausing; // Disables pause features
+bool libHRGE_debug_disableAffixQueue; // Disables queueing affixes.
+string[libCore_gv_bALMaxPlayers + 1] libHRGE_debug_playerHero; // Player heroes when hero selection is disabled.
+bool libHRGE_debug_printDialogControls;
+bool libHRGE_debugCommandAddAll;
+
+
+// ============================================================
+// Functions
+// ============================================================
+
+void libHRGE_DisplayDebugMessage(string printText); // Display a message in chat when debug logging is enabled
+void libHRGE_DisplayChatMessage(text chatMessage); // Display a message in chat
+int libHRGE_HeroSelectionPickHero(int player);
+void libHRGE_HeroSelectionTrigger_Init ();
+bool libHRGE_IsCooldownModifiableAbility (string ability);
+void libHRGE_ModifyAllCooldowns (unit targetUnit, fixed cooldownChange, bool includeTrait, bool includeHeroic, bool includeMount); // Adds or subtracts ability cooldowns of the target unit.
+void libHRGE_ResetCooldowns(unit playerUnit); // Sets all ability cooldowns of the unit to 0.
+void libHRGE_MuteAllChannelsExcept(playergroup pg, bool mute, int except);
+void libHRGE_SyncBehaviors(unit sourceUnit, unit targetUnit);
+void libHRGE_DVaTriggers_Init ();
+void libHRGE_AbathurTriggers_Init();
+void libHRGE_ChenTriggers_Init();
+void libHRGE_RexxarTriggers_Init();
+void libHRGE_SamuroTriggers_Init();
+void libHRGE_NovaTriggers_Init();
+void libHRGE_LostVikingsTriggers_Init();
+void libHRGE_Wait(fixed duration, int inTimeType); // Elapses time when game is not paused.
+bool libHRGE_GateIsOpen();
+bool libHRGE_TimerFinished(timer checkTimer); // Check if a timer ran and finished
+void libHRGE_PauseTimerIfRunning(timer timerToPause, bool pause);
+string libHRGE_IntToTimeString(int time);
+text libHRGE_IntToTimeText(int time);
+void libHRGE_Pause(bool pause); // Pauses various game systems.
+void libHRGE_PauseUnpause(); // Pauses when not paused or unpauses when paused.
+string libHRGE_GetAffixRarityLabel(int affix);
+string libHRGE_GetAffixStackLabel(int affix);
+color libHRGE_GetAffixColor(int affix);
+string libHRGE_GetAffixTextureSuffix(int affix);
+string libHRGE_GetCountSuffix(int count, int maxCount);
+int libHRGE_GetCurrentMapPathIndex();
+string libHRGE_GetMapPathFromIndex(int index);
+int libHRGE_GetRarityIndex(string rarityString);
+string libHRGE_GetRarityString(int rarity);
+text libHRGE_GetAffixTitleLabel();
+text libHRGE_GetAffixRerollLabel();
+text libHRGE_GetDifficultyLabel(int difficulty);
+text libHRGE_GetAffixTooltip(int affix, bool small);
+bool libHRGE_IsAffixBannable(int affix);
+bool libHRGE_IsCurrentQueueBannable();
+bool libHRGE_IsCurrentQueueRerollable();
+int libHRGE_GetRolledAffixCount();
+bool libHRGE_IsAnyRolledAffixBannable();
+bool libHRGE_ShouldShowBefore(int affix1, int affix2);
+bool libHRGE_IsAffixSelectionDialogVisible();
+bool libHRGE_IsOwnedAffixesDialogVisible();
+bool libHRGE_IsOptionsDialogVisible();
+bool libHRGE_IsGameoverDialogVisible();
+bool libHRGE_IsGameoverExitDialogVisible();
+bool libHRGE_IsAchievementsDialogVisible();
+bool libHRGE_IntToBoolean(int value);
+unit libHRGE_GetPlayerDVaMech(int player);
+bool libHRGE_AnyDialogVisible();
+int libHRGE_CreateDialogControlImage(int dialog, string image, int width, int height, int anchor, int offsetX, int offsetY, text tooltip);
+int libHRGE_CreateDialogControlImageWithColor(int dialog, string image, int width, int height, int anchor, int offsetX, int offsetY, text tooltip, color imageColor);
+int libHRGE_CreateDialogControlButton(int dialog);
+int libHRGE_CreateDialogControlCheckbox(int dialog);
+int libHRGE_CreateDialogControlPulldown(int dialog);
+int libHRGE_CreateDialogControlLabel(int dialog, text label, string style, int width, int height, int anchor, int offsetX, int offsetY, color labelColor, bool writeOut);
+void libHRGE_SetDialogControlImage(int dialogControl, string image);
+void libHRGE_SetDialogControlText(int dialogControl, text dialogText);
+void libHRGE_SetDialogControlColor(int dialogControl, color dialogColor);
+void libHRGE_SetDialogControlPosition(int dialogControl, int anchor, int offsetX, int offsetY);
+void libHRGE_SetDialogControlEnabled(int dialogControl, bool enabled);
+void libHRGE_SetDialogControlVisible(int dialogControl, bool visible);
+void libHRGE_SetDialogVisible(int dialog, bool visible);
+void libHRGE_SetDialogControlSize(int dialogControl, int width, int height);
+void libHRGE_SetDialogControlTooltip(int dialogControl, text tooltip);
+void libHRGE_SetDialogControlChecked(int dialogControl, bool checked);
+void libHRGE_ShowBackdrop(bool show);
+void libHRGE_SetBackdropDark(bool dark);
+int libHRGE_CreateOptionDialogCheckbox(text optionText);
+int libHRGE_CreateOptionDialogButton(text buttonText);
+void libHRGE_CreateUI();
+void libHRGE_UpdateInfoDialog();
+void libHRGE_CreateAchievementsDialogItem(int achievement);
+void libHRGE_CreateAchievementsDialog();
+void libHRGE_UpdateAchievementsDialog();
+void libHRGE_ShowAchievementsDialog(bool show);
+void libHRGE_CreateGameoverDialog();
+void libHRGE_UpdateGameoverDialog();
+void libHRGE_ShowGameoverDialog(bool show);
+void libHRGE_ShowGameoverExitDialog(bool show);
+void libHRGE_CreateOptionsDialog();
+void libHRGE_UpdateOptionsDialog();
+void libHRGE_ShowOptionsDialog(bool show);
+void libHRGE_UpdateOptionsRestartDialog();
+void libHRGE_ShowOptionsRestartDialog(bool show);
+void libHRGE_CreateAffixSelectionDialogItem(int index, int offsetX, int offsetY);
+void libHRGE_CreateAffixSelectionDialog();
+void libHRGE_UpdateAffixSelectionPosDialogItem(int index, int offsetX, int offsetY);
+void libHRGE_UpdateAffixSelectionDialogItem(int index, int rolledCount);
+void libHRGE_UpdateAffixSelectionDialog();
+void libHRGE_ShowAffixSelectionDialogItem(int index, bool show);
+void libHRGE_ShowAffixSelectionDialog(bool show); // Show dialog for affix selection.
+void libHRGE_SortOwnedAffixes();
+void libHRGE_CreateOwnedAffixesDialogItem(int index);
+void libHRGE_CreateOwnedAffixesDialog();
+void libHRGE_UpdateOwnedAffixesDialogItem(int slotIndex, int pageStart, int pageAffixes, int totalRows);
+void libHRGE_UpdateOwnedAffixesDialog();
+void libHRGE_ShowOwnedAffixesDialogItem(int index, bool show);
+void libHRGE_ShowOwnedAffixesDialog(bool show);
+void libHRGE_CountOwnedAffixes();
+void libHRGE_DialogControlTriggers_Init();
+void libHRGE_SpeedUpDeathUnitDiedTrigger_Init();
+void libHRGE_SpeedUpTrigger_Init();
+void libHRGE_SelectAllTalentsOnTier(int player, int tier);
+void libHRGE_SelectAllTalents(int player, int level, bool excludeHeroics);
+void libHRGE_DummyTalentChoicesFromTalentName(int lp_player, string talent); // Adds talent data to the player's index 0 talent choices.
+void libHRGE_AddTalent(int player, string talent); // Adds talent to player.
+void libHRGE_ShowTalent(string talent, bool show); // Hides/shows talent from talent selection.
+void libHRGE_DisableTalent(string talent, bool disable);
+void libHRGE_CatalogSetForAllPlayers(int type, string entry, string path, string value); // Sets catalog for all players.
+void libHRGE_CatalogSetFixedForAllPlayers(int type, string entry, string path, fixed value); // Sets catalog for all players with fixed value.
+void libHRGE_CatalogModifyForAllPlayers(string reference, string value); // Modifies catalog for all players.
+void libHRGE_SendAffixAddedEvent (int affix, int amount);
+int libHRGE_EventAffix(); // Returns the triggering affix.
+int libHRGE_EventAffixCountAdded(); // Returns the stack count added for the triggering affix.
+string libHRGE_EventAffixInstance();  // Returns the triggering affix instance.
+int libHRGE_EventAffixCount(); // Returns the current total count.
+void libHRGE_SendPausedEvent (bool paused);
+bool libHRGE_IsGamePaused();
+void libHRGE_CopyFilter(structref<libHRGE_Filter> original, structref<libHRGE_Filter> copyTo);
+void libHRGE_AddRequiredUnitTypeFilter(structref<libHRGE_Filter> filter, string unitType);
+void libHRGE_AddExcludedUnitTypeFilter(structref<libHRGE_Filter> filter, string unitType);
+bool libHRGE_UnitIsMinion(unit unitVar);
+bool libHRGE_CampIsBoss(int unitType);
+bool libHRGE_UnitMatchesType(unit unitVar, structref<libHRGE_Filter> filter);
+bool libHRGE_UnitMatchesFilter(unit unitVar, structref<libHRGE_Filter> filter); // Check whether a unit matches the given filter.
+void libHRGE_AddUnitBehaviorFilter(unit unitVar, string behavior, int stacks, structref<libHRGE_Filter> filter); // Add a behavior to a unit if it matches the filter.
+void libHRGE_UpdateUnitBehaviorFilter(unit unitVar, string behavior, int stacks, structref<libHRGE_Filter> filter); // Add a behavior to a unit if it matches the filter, and removes it if it doesn't.
+void libHRGE_SetUnitPropertyFilter(unit unitVar, int inProp, fixed value, structref<libHRGE_Filter> filter);
+void libHRGE_UnitCreateEffectUnitToAllFilter (unit caster, string effect, structref<libHRGE_Filter> filter);
+void libHRGE_UnitSetPropertyFixedToAllFilter (int inProp, fixed value, structref<libHRGE_Filter> filter);
+void libHRGE_AddUnitBehaviorToAllFilter (string behavior, int stacks, structref<libHRGE_Filter> filter);
+void libHRGE_RemoveUnitBehaviorFromAllFilter (string behavior, int stacks, structref<libHRGE_Filter> filter);
+void libHRGE_SendActorMessageToPlayer(int player, string actorMessage);
+void libHRGE_SetPlayerPropertyFixed (int player, int inProp, fixed value, bool applyToAllUnits);
+void libHRGE_AddUnitPropertyFixed (unit unitVar, int inProp, fixed value);
+void libHRGE_AddPlayerPropertyFixed (int player, int inProp, fixed value, bool applyToAllUnits);
+bool libHRGE_PlayerHasAffixBehavior(int player, string behavior);
+void libHRGE_AddSyncBehavior(int player, string behavior);
+void libHRGE_AddUnitBehavior(unit targetUnit, string behavior, unit casterUnit, int stacks, bool sync);
+void libHRGE_AddPlayerBehaviorWithExclusionAndSync (int player, string behavior, int stacks, bool applyToAllUnits, string excludeUnit, bool sync);
+void libHRGE_AddPlayerBehaviorWithExclusion (int player, string behavior, int stacks, bool applyToAllUnits, string excludeUnit);
+void libHRGE_AddPlayerBehaviorSync (int player, string behavior, int stacks, bool applyToAllUnits, bool sync);
+void libHRGE_AddPlayerBehavior(int player, string behavior, int stacks, bool applyToAllUnits);
+void libHRGE_RemovePlayerBehavior (int player, string behavior, int stacks, bool applyToAllUnits);
+void libHRGE_ModifyPlayerTokenCount (int player, int tokens, string quest);
+void libHRGE_AddUnitTokenCount(unit unitToAdd, string tokenBehavior, fixed value);
+bool libHRGE_PlayerHasBehavior (int player, string behavior);
+int libHRGE_PlayerBehaviorCount (int player, string behavior);
+void libHRGE_UnitCreateEffectUnit (int player, string effect);
+unit libHRGE_GetPlayerUnitWithBehavior(int player, string behavior);
+unit libHRGE_GetPlayerHeroUnit (int player);
+string libHRGE_GetPlayerHero (int player);
+bool libHRGE_PlayerIsHumanOrChoGallPair(int player); // Check whether player is human player OR player is Cho'Gall while either Cho or Gall is human player
+bool libHRGE_PlayerIsChoGallPair(int player);
+void libHRGE_SetLevelScalingAndValue(string reference, int player, fixed scaling, fixed value); // Modify catalog with specified scaling scaling and value
+void libHRGE_SetLevelScaling(string reference, int player, fixed scaling); // Modify catalog with specified scaling scaling
+void libHRGE_SetDefaultLevelScaling(string reference, int player); // Modify catalog with default 4% scaling
+string libHRGE_GetCatalogDefaultValue(string reference);
+fixed libHRGE_CatalogReferenceGetAsFixed(string reference, int player);
+void libHRGE_CatalogFieldValueSetFixed(int catalog, string entry, string fieldPath, int player, fixed value);
+void libHRGE_CatalogReferenceSet (string reference, int player, string value);
+void libHRGE_CatalogReferenceModify (string reference, int player, string value, int operation);
+void libHRGE_ApplyCatalogModificationBaseMult(string reference, int player, string valueString, fixed value, int stacks, string operation, fixed mult);
+void libHRGE_ApplyCatalogModificationBase(string reference, int player, string valueString, fixed value, int stacks, string operation);
+void libHRGE_ApplyAffix(int affix, int amount);
+void libHRGE_AddAffix(int affix, int count);
+void libHRGE_SetAffix(int affix, int count);
+void libHRGE_RemoveAffix(int affix);
+int libHRGE_BankGetStats(string key);
+string libHRGE_BankLoadValueString(string key);
+int libHRGE_BankLoadValueInt(string key);
+fixed libHRGE_BankLoadValueFixed(string key);
+void libHRGE_BankSaveValueString(string key, string value);
+void libHRGE_BankSaveValueInt(string key, int value);
+void libHRGE_BankSaveValueFixed(string key, fixed value);
+void libHRGE_SaveBankSettings();
+void libHRGE_LoadBankSettings();
+void libHRGE_SaveBankAchievements();
+void libHRGE_LoadBankAchievements();
+void libHRGE_SaveBank();
+void libHRGE_LoadBank();
+void libHRGE_MigrateBankSection(string source, string sourceSection, string destination, string destinationSection);
+void libHRGE_MigrateBank(); // One-time migration from old to new storm banks
+void libHRGE_ResetBank();
+void libHRGE_ResetBankAchievements();
+void libHRGE_ResetBankSettings();
+void libHRGE_GameOverCallbackTrigger_Init ();
+int libHRGE_RollRarity(int baseRarity, bool curse); // Roll rarity to upgrade.
+bool libHRGE_AffixAlreadyRolled(int affix);
+int libHRGE_RollAffix(int rarity, bool curse, int level, bool lockRarity); // Returns an affix that matches the criteria and all requirements.
+void libHRGE_ProcessQueueTimeElapsed_Init();
+void libHRGE_ShowRolledAffixes();
+void libHRGE_RollForSlot(int slot);
+void libHRGE_RollAffixChoices(); // Rolls affixes and provides the player with the selection.
+void libHRGE_AdvanceQueue(); // Moves the queue forward by 1.
+void libHRGE_ProcessCurrentEntry();
+void libHRGE_SwapCurseToBoon();
+void libHRGE_SkipCurse();
+void libHRGE_ProcessQueue(); // Goes through the affix queue.
+void libHRGE_EnqueueAffix(structref<libHRGE_QueuedAffix> request, int amountToQueue); // Add an affix request to the queue and then process it
+void libHRGE_Enqueue(int choiceCount, int amountToQueue, int rarity, int level, bool curse, bool lockRarity, bool rerollDisabled);
+void libHRGE_QueueBoon(int rarity, int amountToQueue, bool rerollDisabled, bool lockRarity); // Queue a boon
+void libHRGE_QueueBoonWithChoiceCount(int choiceCount, int rarity, int amountToQueue, bool rerollDisabled, bool lockRarity); // Queue a boon with specified choice count.
+void libHRGE_QueueMythicCurse(int amountToQueue); // Queue a mythic curse
+void libHRGE_QueueCurse(int amountToQueue, bool rerollDisabled); // Queue a curse
+void libHRGE_RerollAffixes();
+void libHRGE_BanAffix(int selectionIndex);
+void libHRGE_SelectAffix(int selectionIndex);
+void libHRGE_AffixHotkeyPressedTrigger_Init();
+void libHRGE_AffixHotkeyRerollPressed_Init();
+void libHRGE_AffixALTPressedReleased_Init();
+int libHRGE_GetSelectButtonIndex(int dialogControl);
+int libHRGE_GetBanButtonIndex(int dialog);
+void libHRGE_ObjectiveTriggers_Init();
+void libHRGE_ResetCommandTrigger_Init ();
+void libHRGE_AddTestCommand(string command);
+void libHRGE_TestCommandTrigger_Init ();
+void libHRGE_Difficulty_Init();
+void libHRGE_ApplyDifficulty();
+bool libHRGE_IsCurseLevel(int level);
+bool libHRGE_IsQueueAffixNextGameLevel(int level); // Levels at which boons and curses will queue to the next game when not obtained in the current game.
+void libHRGE_BoonsCursesLevelUp_Init ();
+void libHRGE_PrintDialogPressedTrigger_Init();
+void libHRGE_UpdateTalentDialogs(int player, int tier);
+void libHRGE_MapInitLoadBankTrigger_Init ();
+void libHRGE_MapInitTrigger_Init ();
+void libHRGE_CurateHeroesTrigger_Init ();
+int libHRGE_GetAchievementId(string achievementName);
+void libHRGE_ResetAllAchievements();
+void libHRGE_GrantAchievement(int achievement);
+bool libHRGE_AchievementHasRoundAndTimeNumber(int achievement);
+void libHRGE_UpdateAchievementRoundNumber(int achievement);
+void libHRGE_UpdateAchievementTime(int achievement);
+void libHRGE_EvaluateAchievement(int achievement);
+void libHRGE_EvaluateAllAchievements();
+int libHRGE_LastRegisteredAchievement();
+int libHRGE_RegisterAchievement(string name, int achievementType);
+void libHRGE_InitAchievements();
+string libHRGE_GetAffixInstance(int affix);
+int libHRGE_GetAffixIndex(string instance);
+int libHRGE_GetAffixFieldCount(string affixInstance, string field);
+string libHRGE_GetAffixIcon(string instance);
+void libHRGE_SetAffixIcon(string instance, string texturePath);
+int libHRGE_GetAffixCount(string instance);
+void libHRGE_SetAffixCount(string instance, int count);
+void libHRGE_AddAffixCount(string instance, int count);
+int libHRGE_GetAffixMax(string instance);
+void libHRGE_SetAffixMax(string instance, int max);
+int libHRGE_GetAffixRarity(string instance);
+void libHRGE_SetAffixRarity(string instance, int rarity);
+int libHRGE_GetAffixWeight(string instance);
+void libHRGE_SetAffixWeight(string instance, int weight);
+void libHRGE_AddAffixWeight(string instance, int weight);
+int libHRGE_GetAffixMinLevel(string instance);
+int libHRGE_GetAffixMaxLevel(string instance);
+void libHRGE_SetAffixRequiredLevel(string instance, int minLevel, int maxLevel);
+int libHRGE_GetAffixType(string instance);
+void libHRGE_SetAffixType(string instance, int type);
+bool libHRGE_AffixIsBoon(string instance);
+bool libHRGE_AffixIsCurse(string instance);
+int libHRGE_GetAffixCurseSkips(string instance);
+void libHRGE_SetAffixCurseSkips(string instance, int curseSkips);
+bool libHRGE_AffixIsEnabled(string instance);
+void libHRGE_SetAffixEnabled(string instance, bool enabled);
+string libHRGE_GetAffixExcluded(string instance, int index);
+bool libHRGE_AffixIsExcluded(string instance);
+string libHRGE_GetAffixRequired(string instance, int index);
+bool libHRGE_AffixPrerequisitesNotMet(string instance);
+string libHRGE_GetAffixHero(string instance);
+bool libHRGE_AffixIsHeroExclusive(string instance);
+string libHRGE_GetAffixHeroTags(string instance, int index);
+string libHRGE_GetAffixExcludedHero(string instance, int index);
+bool libHRGE_HeroIsMeleeAndRanged(string hero);
+bool libHRGE_HeroIsMelee(string hero);
+bool libHRGE_HeroIsRanged(string hero);
+bool libHRGE_HeroUsesRegularMount(string hero);
+bool libHRGE_HeroIsGolden(string hero);
+bool libHRGE_HeroFailsTag(string tag, string hero);
+bool libHRGE_IsHeroExcludedForAffix(string instance);
+string libHRGE_GetAffixMap(string instance);
+string libHRGE_GetAffixExcludedMaps(string instance, int index);
+bool libHRGE_IsMapExcludedForAffix(string instance);
+bool libHRGE_AffixIsApplied(string instance);
+void libHRGE_SetAffixApplied(string instance, bool applied);
+bool libHRGE_AffixIsInitialized(string instance);
+void libHRGE_SetAffixInitialized(string instance, bool init);
+string libHRGE_GetAffixAddTalents(string instance, int index);
+string libHRGE_GetAffixDisableTalents(string instance, int index);
+string libHRGE_GetAffixShowTalents(string instance, int index);
+string libHRGE_GetAffixRequiredTalents(string instance, int index);
+bool libHRGE_IsMissingTalentsForAffix(string instance);
+string libHRGE_GetAffixScaling(string instance, int index);
+string libHRGE_GetAffixAddBehaviors(string instance, int index);
+string libHRGE_GetAffixRemoveBehaviors(string instance, int index);
+string libHRGE_GetAffixSyncBehaviors(string instance, int index);
+bool libHRGE_AffixExcludesChoGall(string instance);
+void libHRGE_SetAffixChoGallExcluded(string instance, bool excluded);
+string libHRGE_GetAffixTriggers(string instance, int index);
+timer libHRGE_GetCurrentAffixTimer();
+timer libHRGE_GetAffixPrimaryTimer(string instance);
+bool libHRGE_AffixCooldownReady(string instance);
+bool libHRGE_AffixIsQuest(string instance);
+bool libHRGE_AffixQuestDone(string instance);
+void libHRGE_SetAffixQuestDone(string instance, bool quest);
+fixed libHRGE_GetAffixQuestProgress(string instance);
+void libHRGE_SetAffixQuestProgress(string instance, fixed progress);
+void libHRGE_AddAffixQuestProgress(string instance, fixed progress);
+bool libHRGE_AffixQuestPersists(string instance);
+void libHRGE_SetAffixQuestPersists(string instance, bool persists);
+string libHRGE_GetQuestRetain(string instance, int index);
+fixed libHRGE_GetAffixQuestToken(string instance, int index);
+void libHRGE_SetAffixQuestToken(string instance, int index, fixed token);
+string libHRGE_GetAffixCooldownLink(string instance);
+void libHRGE_SetAffixCooldownLink(string instance, string cooldownLink);
+bool libHRGE_AffixCooldownHidden(string instance);
+void libHRGE_SetAffixCooldownHidden(string instance, bool hidden);
+bool libHRGE_AffixCannotRoll(string instance);
+void libHRGE_SetAffixNoRoll(string instance, bool noRoll);
+int libHRGE_GetAffixMinDifficulty(string instance);
+int libHRGE_GetAffixMaxDifficulty(string instance);
+void libHRGE_SetAffixRequiredDifficulty(string instance, int minDifficulty, int maxDifficulty);
+int libHRGE_GetAffixMinRound(string instance);
+int libHRGE_GetAffixMaxRound(string instance);
+void libHRGE_SetAffixRequiredRound(string instance, int minRound, int maxRound);
+string libHRGE_GetHeroTooltip(string instance, int index);
+bool libHRGE_AffixRequiresMaxStacks(string instance);
+void libHRGE_SetAffixRequiresMaxStacks(string instance, bool requiresMax);
+bool libHRGE_AffixAlwaysAppendTooltip(string instance);
+void libHRGE_SetAffixAlwaysAppendTooltip(string instance, bool alwaysAppend);
+bool libHRGE_AffixIgnoredForStats(string instance);
+void libHRGE_SetAffixIgnoredForStats(string instance, bool ignored);
+string libHRGE_GetCatalogModifications(string instance, int index);
+string libHRGE_GetAffixCustomValue(string instance);
+void libHRGE_SetAffixCustomValue(string instance, string value);
+bool libHRGE_AffixIsBanned(string instance);
+void libHRGE_SetAffixBanned(string instance, bool banned);
+void libHRGE_ResolveTalents(int affix);
+void libHRGE_ResolveBehaviors(int affix, int addedCount);
+trigger libHRGE_GetOrCreateTrigger(string triggerName);
+void libHRGE_ResolveImmediateTriggers();
+void libHRGE_ResolveTriggers(int affix);
+void libHRGE_ResolveQuestTokens(int affix);
+int libHRGE_GetUpgradeOperation(string operation);
+void libHRGE_ResolveCatalogModifications(int affix, int addedCount);
+void libHRGE_AddScaling(string instance, int player, string reference, fixed modifier);
+void libHRGE_AddGeneralBehavior(string behavior, string filter);
+void libHRGE_ResolveGeneralBehavior(unit targetUnit, string behavior, string filter, int operation);
+void libHRGE_ResolveScaling(int index, int player);
+void libHRGE_ScalingTriggers_Init();
+void libHRGE_GeneralTriggers_Init();
+void libHRGE_AddDefaultExcludedUnits(structref<libHRGE_Filter> filter);
+void libHRGE_InitDebugOptions();
+void libHRGE_InitFilters();
+void libHRGE_InitLibraries();
+void libHRGE_InitVariables();
+void libHRGE_InitTriggers();

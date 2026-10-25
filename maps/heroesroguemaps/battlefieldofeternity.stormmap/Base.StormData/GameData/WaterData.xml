@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CWater id="KingsCrestGardens">
+        <State index="0">
+            <Name value="[Default]"/>
+            <Height value="7.100000"/>
+            <Color value="0.058824,0.286275,0.494118,0.151000"/>
+            <ColorFallOff value="0.089000"/>
+            <Specularity value="275.000000"/>
+            <SpecularScaler value="15.380000"/>
+            <UvRate value="0.000292,0.000956,0.000000,0.000000"/>
+            <MeshRoughness value="0.459000"/>
+            <TextureRoughness value="0.712000"/>
+            <ReflectionDistortion value="0.142000"/>
+            <RefractionDistortion value="0.004700"/>
+            <MinReflection value="0.162000"/>
+            <ReflectivityPower value="1.730000"/>
+        </State>
+    </CWater>
+</Catalog>

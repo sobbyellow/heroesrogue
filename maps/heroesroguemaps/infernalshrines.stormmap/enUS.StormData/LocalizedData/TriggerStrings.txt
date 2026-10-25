@@ -1,0 +1,31 @@
+﻿Category/Name/28807812=== DATA HOOKUPS ==
+Category/Name/6B8D9182=Demon Giants
+Category/Name/78D4F82D=== INITIALIZATION ==
+Trigger/Name/228EDE9A=Hookup Jungle Creep Data
+Trigger/Name/392221D0=Create Giant Demons
+Trigger/Name/3DEBFC54=Hookup Global Variables
+Trigger/Name/47C9E316=Hookup Lane Data
+Trigger/Name/4976A24C=Hookup Region Data
+Trigger/Name/5511FB6B=Map Mechanic Intro Callback
+Trigger/Name/841EE88A=Demon Timer Expired
+Trigger/Name/9E83EB9F=Initialize Map Mechanic
+Trigger/Name/9EBEFD2B=Initialize Visibility Revealers
+Trigger/Name/E3FFA290=Demon Reset Timer Expired
+Trigger/Name/FA4B29FB=Initialize Map
+Trigger/Name/FA4FE7B8=Hookup Town Data
+Trigger/Name/FFBDC829=Demon Lookat and Reaction
+Variable/Name/140D0100=Demon - Chains Reset Timer
+Variable/Name/2457928E=Waypoint Count
+Variable/Name/26EF7B16=Structure Count
+Variable/Name/77D1E500=Facing
+Variable/Name/8D6239FA=Demon - Base Timer
+Variable/Name/905997A7=Demon - Base Reset Timer
+Variable/Name/9448310A=Demon - Chains Resetting
+Variable/Name/9A4F7824=Lane
+Variable/Name/B09C6750=Town
+Variable/Name/B37266B6=New Look At Target
+Variable/Name/B9F84F33=CampType
+Variable/Name/C4E50B7E=Demon - Base Resetting
+Variable/Name/D1266910=Demon - Chains Timer
+Variable/Name/D87510AE=jungle camp
+Variable/Name/E65C8557=Position

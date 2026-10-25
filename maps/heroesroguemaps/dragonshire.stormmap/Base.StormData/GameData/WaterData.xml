@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CWater id="KingsCrestGardens">
+        <State index="0">
+            <Name value="[Default]"/>
+            <Height value="7.100000"/>
+            <Color value="0.000000,0.200000,0.329412,0.100000"/>
+            <ColorFallOff value="0.100000"/>
+            <CausticsFallOff value="0.058000"/>
+            <Specularity value="80.000000"/>
+            <SpecularScaler value="1.200000"/>
+            <UvRate value="0.000292,0.000956,0.000000,0.000000"/>
+            <UvRotate value="2.729171"/>
+            <MeshRoughness value="0.459000"/>
+            <TextureRoughness value="0.712000"/>
+            <ReflectionDistortion value="0.006000"/>
+            <RefractionDistortion value="0.006000"/>
+            <MinReflection value="0.000000"/>
+            <ReflectivityPower value="4.590000"/>
+        </State>
+        <ReflectionCubeMap value="Assets\Textures\Reflection_BelShir.dds"/>
+    </CWater>
+    <CWater id="KingsCrestGardens2">
+        <State index="0">
+            <Name value="[Default]"/>
+            <Height value="7.100000"/>
+            <Color value="0.011765,0.129412,0.090196,0.500000"/>
+            <ColorFallOff value="0.070000"/>
+            <CausticsFallOff value="0.058000"/>
+            <Specularity value="80.000000"/>
+            <SpecularScaler value="1.000000"/>
+            <UvRate value="0.000292,0.000956,0.000000,0.000000"/>
+            <UvRotate value="2.729171"/>
+            <MeshRoughness value="0.201000"/>
+            <TextureRoughness value="0.712000"/>
+            <ReflectionDistortion value="0.006000"/>
+            <RefractionDistortion value="0.006000"/>
+            <MinReflection value="0.060000"/>
+            <ReflectivityPower value="4.000000"/>
+        </State>
+        <BeachShoreline value="Storm_Shoreline_WavesBeach"/>
+        <CliffShoreline value="Storm_Shoreline_WavesBeach"/>
+        <ReflectionCubeMap value="Assets\Textures\Reflection_BelShir.dds"/>
+    </CWater>
+</Catalog>

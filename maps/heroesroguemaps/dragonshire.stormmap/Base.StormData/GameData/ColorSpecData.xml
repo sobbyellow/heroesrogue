@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CColorSpec id="DS19_ColorAllianceUIEnemy_Override">
+        <Color index="Diffuse" value="219,0,0"/>
+        <Color index="Emissive" value="128,0,0"/>
+    </CColorSpec>
+</Catalog>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CLight id="CustomLight">
+        <ToDInfoArray index="0">
+            <Id value="StormEgyptWorld"/>
+            <AmbientEnvironmentMultiplier value="0.417000"/>
+            <OperatorHDR value="4"/>
+            <Colorize value="1"/>
+            <Param index="HDRExposure" value="1.000000"/>
+            <Param index="HDRBloomThreshold" value="0.900000"/>
+            <Param index="HDRWhitePoint" value="1.850000"/>
+            <Param index="TerrainSpecularExp" value="27.170000"/>
+            <Param index="TerrainHDRSpecular" value="2.170000"/>
+            <Param index="CreepSpecularExp" value="30.000000"/>
+            <Param index="CreepHDRSpecMultiplier" value="3.000000"/>
+            <Param index="ColorizationInputHigh" value="0.975000"/>
+            <Param index="ColorizationHue" value="-0.000000"/>
+            <Param index="ColorizationBlend" value="0.000000"/>
+            <DirectionalLight index="Key" ColorMultiplier="1.550000" SpecColorMultiplier="2.500000">
+                <Color X="0.149020" Y="0.211765" Z="0.658824"/>
+                <SpecularColor X="0.384314" Y="0.486275" Z="0.858824"/>
+                <Direction X="0.538372" Y="-0.109827" Z="-0.835520"/>
+            </DirectionalLight>
+            <DirectionalLight index="Fill" ColorMultiplier="0.650000">
+                <Color X="0.674510" Y="0.431373" Z="0.674510"/>
+                <Direction X="-0.871676" Y="0.196760" Z="-0.448851"/>
+            </DirectionalLight>
+            <DirectionalLight index="Back" ColorMultiplier="1.000000">
+                <Color X="0.156863" Y="0.305882" Z="0.800000"/>
+                <Direction X="-0.485044" Y="0.421791" Z="-0.766044"/>
+            </DirectionalLight>
+            <DirectionalLight index="Shadow" ColorMultiplier="0.124000">
+                <Color Z="0.505882"/>
+                <Direction Z="1.000000"/>
+            </DirectionalLight>
+        </ToDInfoArray>
+    </CLight>
+</Catalog>

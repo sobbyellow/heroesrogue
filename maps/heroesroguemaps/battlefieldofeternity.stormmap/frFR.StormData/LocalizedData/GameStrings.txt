@@ -1,0 +1,30 @@
+﻿﻿DocInfo/Author=Blizzard Entertainment
+DocInfo/DescLong=Carte à 2 voies<n/>
+DocInfo/DescShort=5c5
+DocInfo/HowToPlaySummary00=Carte à 2 voies
+DocInfo/HowToPlaySummaryHeaderTitle=Les champs de l’éternité
+DocInfo/Name=Les champs de l’éternité
+LoadingScreen/BattlefieldOfEternity/Help1=Les Immortels ne s’infligent pas de dégâts quand ils s’affrontent. Pour gagner, attaquez l’Immortel de l’ennemi tout en défendant le vôtre.
+LoadingScreen/TextBody=<s val="Storm_BoldExtendedXLarge">Combat des Immortels</s><n/><s val="Storm_BoldExtendedMedium">Des Immortels des Cieux et des Enfers s'affrontent pour l’éternité !</s><n/><n/><s val="Storm_BoldExtendedXLarge">Terrassez l’Immortel ennemi</s><n/><s val="Storm_BoldExtendedMedium">Aidez votre Immortel à vaincre son adversaire !</s><n/><n/><s val="Storm_BoldExtendedXLarge">Dévastez les forts ennemis</s><n/><s val="Storm_BoldExtendedMedium">Progressez en compagnie de votre Immortel pour anéantir votre ennemi !</s>
+LoadingScreen/Title=<s val="Storm_BoldExtendedXXLarge">Les champs de l’éternité</c>
+MapInfo/Player00/Name=Neutre
+MapInfo/Player01/Name=Joueur 1
+MapInfo/Player02/Name=Joueur 2
+MapInfo/Player03/Name=Joueur 3
+MapInfo/Player04/Name=Joueur 4
+MapInfo/Player05/Name=Joueur 5
+MapInfo/Player06/Name=Joueur 6
+MapInfo/Player07/Name=Joueur 7
+MapInfo/Player08/Name=Joueur 8
+MapInfo/Player09/Name=Joueur 9
+MapInfo/Player10/Name=Joueur 10
+MapInfo/Player11/Name=Ordonner
+MapInfo/Player12/Name=Chaos
+MapInfo/Player13/Name=Hostile
+Param/Value/3D4242A8=Bas
+Param/Value/55B57A74=Haut
+UI/ResourceToolTip0=L’or s’utilise en achetant des objets pour votre héros.
+Variant001/Desc=L’équipe bleue contre l’équipe orange.
+Variant001/ModeDesc=Les joueurs peuvent choisir leur héros.
+Variant001/ModeName=Standard
+Variant001/Name=5c5

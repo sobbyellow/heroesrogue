@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CActorUnit id="MercLanerMeleeKnight">
+        <DeathArray index="Normal" SoundLink="Merc_BlackKnight_Death"/>
+    </CActorUnit>
+    <CActorUnit id="MercDefenderMeleeKnight">
+        <DeathArray index="Normal" SoundLink="Merc_BlackKnight_Death"/>
+    </CActorUnit>
+    <CActorUnit id="MercLanerRangedKnight">
+        <DeathArray index="Normal" SoundLink="Merc_BlackWizard_Death"/>
+    </CActorUnit>
+    <CActorUnit id="MercDefenderRangedMage">
+        <DeathArray index="Normal" SoundLink="Merc_BlackWizard_Death"/>
+    </CActorUnit>
+    <CActorModel id="TownTownHallL2ExplosionDamage">
+        <Model value="TownTownHallL2RavenCourtExplosionDamage"/>
+    </CActorModel>
+    <CActorModel id="TownTownHallL3ExplosionDamage">
+        <Model value="TownTownHallL3RavenCourtExplosionDamage"/>
+    </CActorModel>
+    <CActorUnit id="KingsCore">
+        <DeathArray index="Normal" ModelLink="CoreKingsCrestRavenCourtDeath" SoundLink="Doodad_Core_RavenCourt_Death"/>
+    </CActorUnit>
+    <CActorUnit id="XelNagaWatchTower">
+        <Model value="KingsCrestRavenCourtWatchTower"/>
+    </CActorUnit>
+    <CActorDoodad id="Storm_Doodad_KingsCrest_StartingPlatform">
+        <Model value="storm_kingscrest_startingplatform_ravencourt"/>
+    </CActorDoodad>
+    <CActorUnit id="MercLanerSiegeGiant">
+        <DeathArray index="Blast" ModelLink="MercSiegeGiantDeath"/>
+        <DeathArray index="Disintegrate" ModelLink="MercSiegeGiantDeath"/>
+        <DeathArray index="Eat" ModelLink="MercSiegeGiantDeath"/>
+        <DeathArray index="Electrocute" ModelLink="MercSiegeGiantDeath"/>
+        <DeathArray index="Eviscerate" ModelLink="MercSiegeGiantDeath"/>
+        <DeathArray index="Fire" ModelLink="MercSiegeGiantDeath"/>
+        <DeathArray index="Freeze" ModelLink="MercSiegeGiantDeath"/>
+        <DeathArray index="Impact" ModelLink="MercSiegeGiantDeath"/>
+        <DeathArray index="Morph" ModelLink="MercSiegeGiantDeath"/>
+        <DeathArray index="Silentkill" ModelLink="MercSiegeGiantDeath"/>
+        <DeathArray index="Squish" ModelLink="MercSiegeGiantDeath"/>
+    </CActorUnit>
+    <CActorUnit id="MercDefenderSiegeGiant">
+        <DeathArray index="Blast" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderNonDeath"/>
+        <DeathArray index="Disintegrate" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderNonDeath"/>
+        <DeathArray index="Eat" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderNonDeath"/>
+        <DeathArray index="Electrocute" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderNonDeath"/>
+        <DeathArray index="Fire" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderNonDeath"/>
+        <DeathArray index="Freeze" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderNonDeath"/>
+        <DeathArray index="Morph" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderNonDeath"/>
+        <DeathArray index="Squish" AnimProps="Unpowered" ModelLink="MercSiegeGiantDefenderNonDeath"/>
+    </CActorUnit>
+</Catalog>

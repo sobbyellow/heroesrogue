@@ -1,0 +1,10 @@
+﻿Actor/Name/Storm_Doodad_KingsCrest_RavenCourt_CoreRange=Storm_Doodad_KingsCrest_RavenCourt_CoreRange
+Actor/Name/UnknownActor=Unknown Actor
+Cliff/Name/BraxisCliffFaceless0=BraxisCliffFaceless0 
+CliffMesh/Name/Storm_Cliff_Empty0=Storm_Cliff_Empty0
+CliffMesh/Name/Storm_Cliff_Empty1=Storm_Cliff_Empty1
+Light/Name/CustomLight=CustomLight
+Light/Name/EditorTestLight=Default
+Model/Name/Storm_Doodad_KingsCrest_RavenCourt_CoreRange=Storm_Doodad_KingsCrest_RavenCourt_CoreRange
+Model/Name/test=test
+Sound/Name/LoadingMusic_OLDCursedHollow=LoadingMusic_OLDCursedHollow

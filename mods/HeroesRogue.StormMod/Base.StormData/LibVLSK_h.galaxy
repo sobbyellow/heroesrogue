@@ -235,7 +235,8 @@ trigger libVLSK_gt_SetPortraitIconGunner;
 trigger libVLSK_gt_PlayDeathJitter;
 trigger libVLSK_gt_PlaySlideout;
 
-bool libVLSK_paused = false;
+timer libVLSK_pingDurationTimerPilot;
+timer libVLSK_pingDurationTimerGunner;
 
 // Library Initialization
 void libVLSK_InitVariables ();

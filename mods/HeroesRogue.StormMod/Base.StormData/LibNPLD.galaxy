@@ -1,0 +1,1011 @@
+include "TriggerLibs/NativeLib"
+include "TriggerLibs/HeroesLib"
+include "TriggerLibs/GameLib"
+include "TriggerLibs/UILib"
+include "TriggerLibs/StartingExperienceLib"
+include "LibMHmu_h"
+
+include "LibNPLD_h"
+
+//--------------------------------------------------------------------------------------------------
+// Library: Neutral Payload (Unified)
+//--------------------------------------------------------------------------------------------------
+// External Library Initialization
+void libNPLD_InitLibraries () {
+    libNtve_InitVariables();
+    libCore_InitVariables();
+    libGame_InitVariables();
+    libUIUI_InitVariables();
+    libStEx_InitVariables();
+    libMHmu_InitVariables();
+}
+
+// Variable Initialization
+bool libNPLD_InitVariables_completed = false;
+
+void libNPLD_InitVariables () {
+    int init_i1;
+
+    if (libNPLD_InitVariables_completed) {
+        return;
+    }
+
+    libNPLD_InitVariables_completed = true;
+
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxTeams; init_i1 += 1) {
+        libNPLD_gv_neutralPayload.lv_pathIndex_Team[init_i1] = 3;
+    }
+    libNPLD_gv_preanimationRange = 2.5;
+    libNPLD_gv_hanamura.lv_payloadPanel = c_invalidDialogControlId;
+    libNPLD_gv_hanamura.lv_warningTimerFrame = c_invalidDialogControlId;
+    libNPLD_gv_hanamura.lv_warningTimerLabel = c_invalidDialogControlId;
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxTeams; init_i1 += 1) {
+        libNPLD_gv_hanamura.lv_attackingStructureFrame[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxTeams; init_i1 += 1) {
+        libNPLD_gv_hanamura.lv_attackingStructureLabel[init_i1] = c_invalidDialogControlId;
+    }
+    libNPLD_gv_hanamura.lv_payloadPanel_ActivePayloadStatus = c_invalidDialogControlId;
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxTeams; init_i1 += 1) {
+        libNPLD_gv_hanamura.lv_background_New[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxTeams; init_i1 += 1) {
+        libNPLD_gv_hanamura.lv_progressFrame_New[init_i1] = c_invalidDialogControlId;
+    }
+    for (init_i1 = 0; init_i1 <= libCore_gv_bALMaxTeams; init_i1 += 1) {
+        libNPLD_gv_hanamura.lv_progressBar_New[init_i1] = c_invalidDialogControlId;
+    }
+    libNPLD_gv_hanamura.lv_unitStatusBar_New = c_invalidDialogControlId;
+}
+
+// Functions
+void libNPLD_gf_PayloadReachedDestination (trigger t) {
+    // Automatic Variable Declarations
+    // Implementation
+    TriggerAddEventGeneric(t, libNPLD_gv_eventID_PayloadReachedDestination_C);
+}
+
+void libNPLD_gf_SendInstantEventPayloadReachedDestination (int lp_playerThatEnteredVehicle) {
+    // Automatic Variable Declarations
+    // Implementation
+    DataTableSetInt(false, TriggerEventParamName(libNPLD_gv_eventID_PayloadReachedDestination_C, libNPLD_gv_eventParam_UnitStopsOccupyingVehicle_Vehicle_C), lp_playerThatEnteredVehicle);
+    TriggerSendInstantEvent(libNPLD_gv_eventID_PayloadReachedDestination_C);
+}
+
+int libNPLD_gf_UnitStopsOccupyingVehicleVehicle () {
+    // Automatic Variable Declarations
+    // Implementation
+    return DataTableGetInt(false, TriggerEventParamName(libNPLD_gv_eventID_PayloadReachedDestination_C, libNPLD_gv_eventParam_UnitStopsOccupyingVehicle_Vehicle_C));
+}
+
+void libNPLD_gf_CreateNeutralPayload () {
+    // Automatic Variable Declarations
+    // Implementation
+    libNPLD_gf_DestroyPayloadWarningPath();
+    libNPLD_gv_neutralPayload.lv_destinationReached = false;
+    libNPLD_gv_neutralPayload.lv_isContested = false;
+    libNPLD_gv_neutralPayload.lv_movingToStart = false;
+    libNPLD_gv_neutralPayload.lv_payload_ActorFlipped180 = false;
+    libNtve_gf_UnitCreateFacingPoint(1, "Payload_Neutral", c_unitCreateIgnorePlacement, libCore_gv_cOMPUTER_Neutral, libMHmu_gv_elevator_Point, libNPLD_gv_neutralPayload.lv_pathWaypoints[libGame_gv_teamOrderIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamOrderIndex_C]][1], null);
+    libNPLD_gv_neutralPayload.lv_unit = UnitLastCreated();
+    ActorSend(libNtve_gf_MainActorofUnit(libNPLD_gv_neutralPayload.lv_unit), "AnimHookSet BSD ::global.PayloadElevatorAttachment BSD");
+    ActorSend(ActorFrom("::global.PayloadElevatorAttachment"), "SetOpacity");
+    SoundPlayForPlayer(SoundLink("UI_Game_Ping_Payload_Ready", -1), c_maxPlayers, PlayerGroupAll(), 100.0, 0.0);
+    libNPLD_gf_ShowActivePayloadPathonMinimap();
+    RemovePointOfInterest(libNPLD_gv_neutralPayload.lv_pathWaypoints_StartLocation, "PrepareForPayload", libNtve_ge_GoalTeam_Both);
+    AddUnitOfInterest(libNPLD_gv_neutralPayload.lv_unit, 8.0, 0.0, "EscortPayload", libNtve_ge_GoalTeam_Both, 0);
+    libNtve_gf_SetDialogItemUnit(libNPLD_gv_hanamura.lv_unitStatusBar_New, UnitLastCreated(), PlayerGroupAll());
+    DialogControlSetVisible(libNPLD_gv_hanamura.lv_payloadPanel_ActivePayloadStatus, PlayerGroupAll(), true);
+    DialogControlSetAnimationState(libNPLD_gv_hanamura.lv_payloadPanel_ActivePayloadStatus, PlayerGroupAll(), "OrderPath", IntToString(libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamOrderIndex_C]));
+    DialogControlSetAnimationState(libNPLD_gv_hanamura.lv_payloadPanel_ActivePayloadStatus, PlayerGroupAll(), "ChaosPath", IntToString(libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamChaosIndex_C]));
+    libGame_Wait(0.0625, c_timeGame);
+    ActorSend(ActorFrom("::global.PayloadElevatorAttachment"), "Destroy");
+    libNPLD_gf_PayloadPathsCreateandStartBaseAnimations();
+}
+
+void libNPLD_gf_Payload_MoveToTeamDestination (int lp_team) {
+    // Variable Declarations
+    int lv_pointIndex;
+    int lv_pathIndex_Team;
+    int lv_pathIndex_Enemy_Team;
+    int lv_enemyTeam;
+
+    // Automatic Variable Declarations
+    int autoAE2DD01D_ae;
+    const int autoAE2DD01D_ai = 1;
+    const int autoD3450C5A_ae = 0;
+    const int autoD3450C5A_ai = -1;
+    int autoF1134768_ae;
+    const int autoF1134768_ai = 1;
+
+    // Variable Initialization
+    lv_pathIndex_Team = libNPLD_gv_neutralPayload.lv_pathIndex_Team[lp_team];
+    lv_pathIndex_Enemy_Team = libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gf_EnemyTeam(lp_team)];
+    lv_enemyTeam = libGame_gf_EnemyTeam(lp_team);
+
+    // Implementation
+    UnitIssueOrder(libNPLD_gv_neutralPayload.lv_unit, Order(AbilityCommand("stop", 0)), c_orderQueueReplace);
+    libNPLD_gf_FlipPayload();
+    if ((libNPLD_gv_neutralPayload.lv_teamWithProgress == lv_enemyTeam)) {
+        lv_pointIndex = libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[lv_enemyTeam];
+        for ( ; ( (autoD3450C5A_ai >= 0 && lv_pointIndex <= autoD3450C5A_ae) || (autoD3450C5A_ai < 0 && lv_pointIndex >= autoD3450C5A_ae) ) ; lv_pointIndex += autoD3450C5A_ai ) {
+            UnitIssueOrder(libNPLD_gv_neutralPayload.lv_unit, OrderTargetingPoint(AbilityCommand("PayloadMove", 0), libNPLD_gv_neutralPayload.lv_pathWaypoints[lv_enemyTeam][libNPLD_gv_neutralPayload.lv_pathIndex_Team[lv_enemyTeam]][lv_pointIndex]), c_orderQueueAddToEnd);
+        }
+        autoF1134768_ae = libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[lp_team][lv_pathIndex_Team];
+        lv_pointIndex = 1;
+        for ( ; ( (autoF1134768_ai >= 0 && lv_pointIndex <= autoF1134768_ae) || (autoF1134768_ai < 0 && lv_pointIndex >= autoF1134768_ae) ) ; lv_pointIndex += autoF1134768_ai ) {
+            UnitIssueOrder(libNPLD_gv_neutralPayload.lv_unit, OrderTargetingPoint(AbilityCommand("PayloadMove", 0), libNPLD_gv_neutralPayload.lv_pathWaypoints[lp_team][lv_pathIndex_Team][lv_pointIndex]), c_orderQueueAddToEnd);
+        }
+    }
+    else {
+        autoAE2DD01D_ae = libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[lp_team][lv_pathIndex_Team];
+        lv_pointIndex = (libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[lp_team] + 1);
+        for ( ; ( (autoAE2DD01D_ai >= 0 && lv_pointIndex <= autoAE2DD01D_ae) || (autoAE2DD01D_ai < 0 && lv_pointIndex >= autoAE2DD01D_ae) ) ; lv_pointIndex += autoAE2DD01D_ai ) {
+            UnitIssueOrder(libNPLD_gv_neutralPayload.lv_unit, OrderTargetingPoint(AbilityCommand("PayloadMove", 0), libNPLD_gv_neutralPayload.lv_pathWaypoints[lp_team][lv_pathIndex_Team][lv_pointIndex]), c_orderQueueAddToEnd);
+        }
+    }
+    while (true) {
+        if (((libNPLD_gv_neutralPayload.lv_destination_Team != lp_team) || (libNPLD_gv_neutralPayload.lv_destinationReached == true))) {
+            break;
+        }
+
+        if ((libNtve_gf_UnitInRegion(libNPLD_gv_neutralPayload.lv_unit, RegionCircle(libNPLD_gv_neutralPayload.lv_pathWaypoints[lp_team][lv_pathIndex_Team][libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[lp_team][lv_pathIndex_Team]], 0.1)) == true)) {
+            libStEx_gf_MoveUnit(libNPLD_gv_neutralPayload.lv_unit, libNPLD_gv_neutralPayload.lv_pathWaypoints[lp_team][lv_pathIndex_Team][libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[lp_team][lv_pathIndex_Team]], true);
+            libNPLD_gf_Payload_ReachesDestination(lp_team);
+            return ;
+        }
+
+        if ((libNtve_gf_UnitInRegion(libNPLD_gv_neutralPayload.lv_unit, RegionCircle(libMHmu_gv_elevator_Point, 1.0)) == true) && (libNPLD_gv_neutralPayload.lv_teamWithProgress != lp_team)) {
+            libNPLD_gf_PayloadPathsCrossingCenterNudgeAnimations(lp_team);
+            libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[libNPLD_gv_neutralPayload.lv_teamWithProgress] = 0;
+            libNPLD_gv_neutralPayload.lv_teamWithProgress = lp_team;
+            if ((lp_team == libGame_gv_teamOrderIndex_C)) {
+                UnitBehaviorAdd(libNPLD_gv_neutralPayload.lv_unit, "Payload_HasOrderProgress", libNPLD_gv_neutralPayload.lv_unit, 1);
+            }
+            else {
+                UnitBehaviorAdd(libNPLD_gv_neutralPayload.lv_unit, "Payload_HasChaosProgress", libNPLD_gv_neutralPayload.lv_unit, 1);
+            }
+        }
+
+        if ((OrderGetTargetPoint(UnitOrder(libNPLD_gv_neutralPayload.lv_unit, 0)) == libNPLD_gv_neutralPayload.lv_pathWaypoints[lp_team][lv_pathIndex_Team][(libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[lp_team] + 2)]) && (libNPLD_gv_neutralPayload.lv_pathWaypoints[lp_team][lv_pathIndex_Team][(libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[lp_team] + 2)] != null)) {
+            libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[lp_team] += 1;
+            if ((libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[lv_enemyTeam] >= 1)) {
+                libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[lv_enemyTeam] -= 1;
+            }
+
+            libNPLD_gf_ShowActivePayloadPathonMinimap();
+        }
+
+        if ((libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[lv_enemyTeam] >= 1) && (OrderGetTargetPoint(UnitOrder(libNPLD_gv_neutralPayload.lv_unit, 0)) == libNPLD_gv_neutralPayload.lv_pathWaypoints[lv_enemyTeam][lv_pathIndex_Enemy_Team][(libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[lv_enemyTeam] - 0)]) && (libNtve_gf_UnitInRegion(libNPLD_gv_neutralPayload.lv_unit, RegionCircle(OrderGetTargetPoint(UnitOrder(libNPLD_gv_neutralPayload.lv_unit, 0)), 0.25)) == true)) {
+            libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[lv_enemyTeam] -= 1;
+        }
+
+        libNPLD_gf_ShowActivePayloadPathonMinimap();
+        libNPLD_gf_PayloadPathsSetProgressTeamandAnimations();
+        libGame_Wait(0.0625, c_timeGame);
+    }
+}
+
+trigger auto_libNPLD_gf_Payload_ReachesDestination_Trigger = null;
+int auto_libNPLD_gf_Payload_ReachesDestination_lp_team;
+
+void libNPLD_gf_Payload_ReachesDestination (int lp_team) {
+    auto_libNPLD_gf_Payload_ReachesDestination_lp_team = lp_team;
+
+    if (auto_libNPLD_gf_Payload_ReachesDestination_Trigger == null) {
+        auto_libNPLD_gf_Payload_ReachesDestination_Trigger = TriggerCreate("auto_libNPLD_gf_Payload_ReachesDestination_TriggerFunc");
+    }
+
+    TriggerExecute(auto_libNPLD_gf_Payload_ReachesDestination_Trigger, false, false);
+}
+
+bool auto_libNPLD_gf_Payload_ReachesDestination_TriggerFunc (bool testConds, bool runActions) {
+    int lp_team = auto_libNPLD_gf_Payload_ReachesDestination_lp_team;
+
+    // Variable Declarations
+    int lv_townIndex_TownToAttack;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Implementation
+    libNPLD_gf_SendInstantEventPayloadReachedDestination(lp_team);
+    UnitCreateEffectUnit(libNPLD_gv_neutralPayload.lv_unit, "RegenGlobePickupSearchSet", libNPLD_gv_neutralPayload.lv_unit);
+    PathDestroy(libNPLD_gv_neutralPayload.lv_pathDisplay_Order);
+    PathDestroy(libNPLD_gv_neutralPayload.lv_pathDisplay_Chaos);
+    UnitBehaviorAdd(libNPLD_gv_neutralPayload.lv_unit, "Payload_ReachedDestination", libNPLD_gv_neutralPayload.lv_unit, 1);
+    UnitKill(libCore_gf_UnitStoredForUnit(libNPLD_gv_neutralPayload.lv_unit, 1));
+    libNtve_gf_SendActorMessageToUnit(libNPLD_gv_neutralPayload.lv_unit, "Signal PayloadReachedDestination");
+    libNPLD_gv_neutralPayload.lv_destinationReached = true;
+    UnitSetOwner(libNPLD_gv_neutralPayload.lv_unit, libGame_gf_ComputerPlayerInTeam(lp_team), false);
+    SoundPlayForPlayer(SoundLink("UI_Game_Payload_Delivered_Ally", -1), c_maxPlayers, libGame_gf_PlayersOnTeamHeroes(lp_team, false), 100.0, 0.0);
+    SoundPlayForPlayer(SoundLink("UI_Game_Payload_Delivered_Enemy", -1), c_maxPlayers, libGame_gf_PlayersOnTeamHeroes(libGame_gf_EnemyTeam(lp_team), false), 100.0, 0.0);
+    libNPLD_gf_SetNewPayloadPathForTeam(lp_team);
+    libGame_Wait(1.0, c_timeGame);
+    UnitBehaviorRemove(libNPLD_gv_neutralPayload.lv_unit, "NeutralPayloadDisableAttackTurret", 1);
+    if ((libNPLD_gv_neutralPayload.lv_payload_ActorFlipped180 == true)) {
+        UnitCreateEffectPoint(libNPLD_gv_neutralPayload.lv_unit, "PayloadAttackCoreModifyTurretPoint", PointWithOffsetPolar(UnitGetPosition(libNPLD_gv_neutralPayload.lv_unit), 1.0, 180.0));
+    }
+    else {
+        UnitCreateEffectPoint(libNPLD_gv_neutralPayload.lv_unit, "PayloadAttackCoreModifyTurretPoint", PointWithOffsetPolar(UnitGetPosition(libNPLD_gv_neutralPayload.lv_unit), 1.0, 0.0));
+    }
+    DialogControlSendAnimationEvent(libNPLD_gv_hanamura.lv_payloadPanel_ActivePayloadStatus, PlayerGroupAll(), "Hide");
+    while (!((libNPLD_gv_neutralPayload.lv_completedReward == true))) {
+        libGame_Wait(1.0, c_timeGame);
+    }
+    libNPLD_gv_neutralPayload.lv_completedReward = false;
+    libNPLD_gv_neutralPayload.lv_teamWithProgress = 0;
+    libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[libGame_gv_teamOrderIndex_C] = 0;
+    libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[libGame_gv_teamChaosIndex_C] = 0;
+    return true;
+}
+
+void libNPLD_gf_FlipPayload () {
+    // Automatic Variable Declarations
+    // Implementation
+    if (((UnitGetOwner(libNPLD_gv_neutralPayload.lv_unit) == libCore_gv_cOMPUTER_TeamChaos) || (UnitGetOwner(libNPLD_gv_neutralPayload.lv_unit) == 0))) {
+        if ((libNPLD_gv_neutralPayload.lv_payload_ActorFlipped180 == false)) {
+            UnitCreateEffectUnit(libNPLD_gv_neutralPayload.lv_unit, "PayloadReverseCreatePersistent", libNPLD_gv_neutralPayload.lv_unit);
+            libNPLD_gv_neutralPayload.lv_payload_ActorFlipped180 = true;
+        }
+
+    }
+    else {
+        if ((libNPLD_gv_neutralPayload.lv_payload_ActorFlipped180 == true)) {
+            UnitCreateEffectUnit(libNPLD_gv_neutralPayload.lv_unit, "PayloadForwardCreatePersistent", libNPLD_gv_neutralPayload.lv_unit);
+            libNPLD_gv_neutralPayload.lv_payload_ActorFlipped180 = false;
+        }
+
+    }
+}
+
+void libNPLD_gf_CalculatePayloadPathDistances () {
+    // Variable Declarations
+    int lv_itTeam;
+    int lv_itPath;
+
+    // Automatic Variable Declarations
+    const int autoE8D00ED1_ae = libCore_gv_bALMaxTeams;
+    const int autoE8D00ED1_ai = 1;
+    const int autoAC40B192_ae = libNPLD_gv_pathCountPerTeam_C;
+    const int autoAC40B192_ai = 1;
+
+    // Variable Initialization
+
+    // Implementation
+    lv_itTeam = 1;
+    for ( ; ( (autoE8D00ED1_ai >= 0 && lv_itTeam <= autoE8D00ED1_ae) || (autoE8D00ED1_ai < 0 && lv_itTeam >= autoE8D00ED1_ae) ) ; lv_itTeam += autoE8D00ED1_ai ) {
+        lv_itPath = 1;
+        for ( ; ( (autoAC40B192_ai >= 0 && lv_itPath <= autoAC40B192_ae) || (autoAC40B192_ai < 0 && lv_itPath >= autoAC40B192_ae) ) ; lv_itPath += autoAC40B192_ai ) {
+            libNPLD_gv_neutralPayload.lv_totaldistance_Path[lv_itTeam][lv_itPath] = libNPLD_gf_CalculatePayloadTravelDistancetoDestination(lv_itTeam, lv_itPath);
+        }
+    }
+}
+
+fixed libNPLD_gf_CalculatePayloadTravelDistancetoDestination (int lp_team, int lp_pathIndex) {
+    // Variable Declarations
+    fixed lv_totalDistance;
+    int lv_itPoints;
+    fixed lv_distance;
+
+    // Automatic Variable Declarations
+    int auto51CB6D38_ae;
+    const int auto51CB6D38_ai = 1;
+
+    // Variable Initialization
+
+    // Implementation
+    auto51CB6D38_ae = (libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[lp_team][lp_pathIndex] - 1);
+    lv_itPoints = 0;
+    for ( ; ( (auto51CB6D38_ai >= 0 && lv_itPoints <= auto51CB6D38_ae) || (auto51CB6D38_ai < 0 && lv_itPoints >= auto51CB6D38_ae) ) ; lv_itPoints += auto51CB6D38_ai ) {
+        lv_distance = DistanceBetweenPoints(libNPLD_gv_neutralPayload.lv_pathWaypoints[lp_team][lp_pathIndex][lv_itPoints], libNPLD_gv_neutralPayload.lv_pathWaypoints[lp_team][lp_pathIndex][(lv_itPoints + 1)]);
+        lv_totalDistance += lv_distance;
+    }
+    return lv_totalDistance;
+}
+
+fixed libNPLD_gf_PayloadCurrentDistance () {
+    // Variable Declarations
+    int lv_itPoints;
+    fixed lv_totalDistance;
+    fixed lv_distance;
+    int lv_team_WithProgress;
+    int lv_path_WithProgress;
+
+    // Automatic Variable Declarations
+    int autoBD2238C3_ae;
+    const int autoBD2238C3_ai = 1;
+
+    // Variable Initialization
+    lv_team_WithProgress = libNPLD_gv_neutralPayload.lv_teamWithProgress;
+    lv_path_WithProgress = libNPLD_gv_neutralPayload.lv_pathIndex_Team[lv_team_WithProgress];
+
+    // Implementation
+    autoBD2238C3_ae = (libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[lv_team_WithProgress] - 1);
+    lv_itPoints = 0;
+    for ( ; ( (autoBD2238C3_ai >= 0 && lv_itPoints <= autoBD2238C3_ae) || (autoBD2238C3_ai < 0 && lv_itPoints >= autoBD2238C3_ae) ) ; lv_itPoints += autoBD2238C3_ai ) {
+        lv_distance = DistanceBetweenPoints(libNPLD_gv_neutralPayload.lv_pathWaypoints[lv_team_WithProgress][lv_path_WithProgress][lv_itPoints], libNPLD_gv_neutralPayload.lv_pathWaypoints[lv_team_WithProgress][lv_path_WithProgress][(lv_itPoints + 1)]);
+        lv_totalDistance += lv_distance;
+    }
+    if ((libNPLD_gv_neutralPayload.lv_pathWaypoints[lv_team_WithProgress][lv_path_WithProgress][libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[lv_team_WithProgress]] != null)) {
+        lv_totalDistance += DistanceBetweenPoints(UnitGetPosition(libNPLD_gv_neutralPayload.lv_unit), libNPLD_gv_neutralPayload.lv_pathWaypoints[lv_team_WithProgress][lv_path_WithProgress][libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[lv_team_WithProgress]]);
+    }
+
+    return lv_totalDistance;
+}
+
+void libNPLD_gf_SetNewPayloadPathForTeam (int lp_team) {
+    // Automatic Variable Declarations
+    // Implementation
+    if ((libNPLD_gv_neutralPayload.lv_pathIndex_Team[lp_team] == 1)) {
+        libNPLD_gv_neutralPayload.lv_pathIndex_Team[lp_team] = 3;
+    }
+    else {
+        libNPLD_gv_neutralPayload.lv_pathIndex_Team[lp_team] -= 1;
+    }
+}
+
+void libNPLD_gf_InitializePathAnimationRates () {
+    // Automatic Variable Declarations
+    // Implementation
+    libNPLD_gv_pathAnimationRate[1][1] = 0.3979;
+    libNPLD_gv_pathAnimationRate[1][2] = 0.4863;
+    libNPLD_gv_pathAnimationRate[1][3] = 0.5747;
+    libNPLD_gv_pathAnimationRate[2][1] = 0.2501;
+    libNPLD_gv_pathAnimationRate[2][2] = 0.3057;
+    libNPLD_gv_pathAnimationRate[2][3] = 0.3612;
+    libNPLD_gv_pathAnimationRate[3][1] = 0.2775;
+    libNPLD_gv_pathAnimationRate[3][2] = 0.334;
+    libNPLD_gv_pathAnimationRate[3][3] = 0.4008;
+}
+
+bool libNPLD_gf_PayloadNearElevator () {
+    // Automatic Variable Declarations
+    // Implementation
+    if ((DistanceBetweenPoints(UnitGetPosition(libNPLD_gv_neutralPayload.lv_unit), libMHmu_gv_elevator_Point) <= libNPLD_gv_preanimationRange)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void libNPLD_gf_ShowActivePayloadPathonMinimap () {
+    // Variable Declarations
+    int lv_pathIndex_teamWithProgress;
+    int lv_pathIndex_teamWithoutProgress;
+    int lv_waypointIndex;
+    int lv_team_withProgress;
+    int lv_team_withoutProgress;
+    int lv_pathDisplay_teamWithProgress;
+    int lv_pathDisplay_teamWithoutProgress;
+    fixed lv_pathWidth;
+
+    // Automatic Variable Declarations
+    int auto9A78343E_ae;
+    const int auto9A78343E_ai = 1;
+    int auto4C946E13_ae;
+    const int auto4C946E13_ai = 1;
+    int autoEA8B284B_ae;
+    const int autoEA8B284B_ai = 1;
+    const int auto79811036_ae = 0;
+    const int auto79811036_ai = -1;
+    int autoDD100EF3_ae;
+    const int autoDD100EF3_ai = 1;
+
+    // Variable Initialization
+    lv_pathWidth = 0.5;
+
+    // Implementation
+    if ((UnitIsAlive(libNPLD_gv_neutralPayload.lv_unit) == false)) {
+        return ;
+    }
+
+    PathDestroy(libNPLD_gv_neutralPayload.lv_pathDisplay_Order);
+    PathDestroy(libNPLD_gv_neutralPayload.lv_pathDisplay_Chaos);
+    PathCreateForUnit(PlayerGroupAll(), libNPLD_gv_neutralPayload.lv_unit);
+    libNPLD_gv_neutralPayload.lv_pathDisplay_Order = PathLastCreated();
+    PathCreateForUnit(PlayerGroupAll(), libNPLD_gv_neutralPayload.lv_unit);
+    libNPLD_gv_neutralPayload.lv_pathDisplay_Chaos = PathLastCreated();
+    PathSetOwnerPlayerId(libNPLD_gv_neutralPayload.lv_pathDisplay_Order, libCore_gv_cOMPUTER_TeamOrder);
+    PathSetOwnerPlayerId(libNPLD_gv_neutralPayload.lv_pathDisplay_Chaos, libCore_gv_cOMPUTER_TeamChaos);
+    lv_team_withProgress = libNPLD_gv_neutralPayload.lv_teamWithProgress;
+    if ((libNPLD_gv_neutralPayload.lv_teamWithProgress != 0)) {
+        if ((lv_team_withProgress == libGame_gv_teamOrderIndex_C)) {
+            lv_team_withoutProgress = libGame_gv_teamChaosIndex_C;
+            lv_pathDisplay_teamWithProgress = libNPLD_gv_neutralPayload.lv_pathDisplay_Order;
+            lv_pathDisplay_teamWithoutProgress = libNPLD_gv_neutralPayload.lv_pathDisplay_Chaos;
+        }
+        else {
+            lv_team_withoutProgress = libGame_gv_teamOrderIndex_C;
+            lv_pathDisplay_teamWithProgress = libNPLD_gv_neutralPayload.lv_pathDisplay_Chaos;
+            lv_pathDisplay_teamWithoutProgress = libNPLD_gv_neutralPayload.lv_pathDisplay_Order;
+        }
+        lv_pathIndex_teamWithProgress = libNPLD_gv_neutralPayload.lv_pathIndex_Team[lv_team_withProgress];
+        lv_pathIndex_teamWithoutProgress = libNPLD_gv_neutralPayload.lv_pathIndex_Team[lv_team_withoutProgress];
+    }
+
+    PathSetLineTexture(libNPLD_gv_neutralPayload.lv_pathDisplay_Order, c_pathLocationMinimap, "Assets\\Textures\\waypointline.dds");
+    PathSetLineWidth(libNPLD_gv_neutralPayload.lv_pathDisplay_Order, c_pathLocationWorld, lv_pathWidth);
+    PathSetVisible(libNPLD_gv_neutralPayload.lv_pathDisplay_Order, c_pathLocationWorld, false);
+    PathSetVisible(libNPLD_gv_neutralPayload.lv_pathDisplay_Order, c_pathLocationMinimap, true);
+    PathSetDestinationPoint(libNPLD_gv_neutralPayload.lv_pathDisplay_Order, libNPLD_gv_neutralPayload.lv_pathWaypoints[libGame_gv_teamOrderIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamOrderIndex_C]][libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[libGame_gv_teamOrderIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamOrderIndex_C]]]);
+    PathSetStepModel(libNPLD_gv_neutralPayload.lv_pathDisplay_Order, c_pathLocationWorld, "Assets\\Units\\Test\\InvisibleUnit\\InvisibleUnit.m3");
+    PathSetLineTexture(libNPLD_gv_neutralPayload.lv_pathDisplay_Chaos, c_pathLocationMinimap, "Assets\\Textures\\waypointline.dds");
+    PathSetLineWidth(libNPLD_gv_neutralPayload.lv_pathDisplay_Chaos, c_pathLocationWorld, lv_pathWidth);
+    PathSetVisible(libNPLD_gv_neutralPayload.lv_pathDisplay_Chaos, c_pathLocationWorld, false);
+    PathSetVisible(libNPLD_gv_neutralPayload.lv_pathDisplay_Chaos, c_pathLocationMinimap, true);
+    PathSetDestinationPoint(libNPLD_gv_neutralPayload.lv_pathDisplay_Chaos, libNPLD_gv_neutralPayload.lv_pathWaypoints[libGame_gv_teamChaosIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamChaosIndex_C]][libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[libGame_gv_teamChaosIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamChaosIndex_C]]]);
+    PathSetStepModel(libNPLD_gv_neutralPayload.lv_pathDisplay_Chaos, c_pathLocationWorld, "Assets\\Units\\Test\\InvisibleUnit\\InvisibleUnit.m3");
+    if ((libNPLD_gv_neutralPayload.lv_teamWithProgress != 0)) {
+        autoEA8B284B_ae = (libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[lv_team_withProgress][lv_pathIndex_teamWithProgress] - 1);
+        lv_waypointIndex = (libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[lv_team_withProgress] + 1);
+        for ( ; ( (autoEA8B284B_ai >= 0 && lv_waypointIndex <= autoEA8B284B_ae) || (autoEA8B284B_ai < 0 && lv_waypointIndex >= autoEA8B284B_ae) ) ; lv_waypointIndex += autoEA8B284B_ai ) {
+            PathAddWayPoint(lv_pathDisplay_teamWithProgress, libNPLD_gv_neutralPayload.lv_pathWaypoints[lv_team_withProgress][lv_pathIndex_teamWithProgress][lv_waypointIndex]);
+        }
+        lv_waypointIndex = libNPLD_gv_neutralPayload.lv_pathWaypoints_LastWaypointReached[lv_team_withProgress];
+        for ( ; ( (auto79811036_ai >= 0 && lv_waypointIndex <= auto79811036_ae) || (auto79811036_ai < 0 && lv_waypointIndex >= auto79811036_ae) ) ; lv_waypointIndex += auto79811036_ai ) {
+            PathAddWayPoint(lv_pathDisplay_teamWithoutProgress, libNPLD_gv_neutralPayload.lv_pathWaypoints[lv_team_withProgress][lv_pathIndex_teamWithProgress][lv_waypointIndex]);
+        }
+        autoDD100EF3_ae = (libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[lv_team_withoutProgress][lv_pathIndex_teamWithoutProgress] - 1);
+        lv_waypointIndex = 0;
+        for ( ; ( (autoDD100EF3_ai >= 0 && lv_waypointIndex <= autoDD100EF3_ae) || (autoDD100EF3_ai < 0 && lv_waypointIndex >= autoDD100EF3_ae) ) ; lv_waypointIndex += autoDD100EF3_ai ) {
+            PathAddWayPoint(lv_pathDisplay_teamWithoutProgress, libNPLD_gv_neutralPayload.lv_pathWaypoints[lv_team_withoutProgress][lv_pathIndex_teamWithoutProgress][lv_waypointIndex]);
+        }
+    }
+    else {
+        auto9A78343E_ae = (libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[libGame_gv_teamOrderIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamOrderIndex_C]] - 1);
+        lv_waypointIndex = 1;
+        for ( ; ( (auto9A78343E_ai >= 0 && lv_waypointIndex <= auto9A78343E_ae) || (auto9A78343E_ai < 0 && lv_waypointIndex >= auto9A78343E_ae) ) ; lv_waypointIndex += auto9A78343E_ai ) {
+            PathAddWayPoint(libNPLD_gv_neutralPayload.lv_pathDisplay_Order, libNPLD_gv_neutralPayload.lv_pathWaypoints[libGame_gv_teamOrderIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamOrderIndex_C]][lv_waypointIndex]);
+        }
+        auto4C946E13_ae = (libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[libGame_gv_teamChaosIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamChaosIndex_C]] - 1);
+        lv_waypointIndex = 1;
+        for ( ; ( (auto4C946E13_ai >= 0 && lv_waypointIndex <= auto4C946E13_ae) || (auto4C946E13_ai < 0 && lv_waypointIndex >= auto4C946E13_ae) ) ; lv_waypointIndex += auto4C946E13_ai ) {
+            PathAddWayPoint(libNPLD_gv_neutralPayload.lv_pathDisplay_Chaos, libNPLD_gv_neutralPayload.lv_pathWaypoints[libGame_gv_teamChaosIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamChaosIndex_C]][lv_waypointIndex]);
+        }
+    }
+}
+
+void libNPLD_gf_PayloadPathsCreateandStartBaseAnimations () {
+    // Variable Declarations
+    int lv_teamID;
+    int lv_activePathID;
+
+    // Automatic Variable Declarations
+    const int autoE9A0635D_ae = libCore_gv_bALMaxTeams;
+    const int autoE9A0635D_ai = 1;
+
+    // Variable Initialization
+
+    // Implementation
+    lv_teamID = 1;
+    for ( ; ( (autoE9A0635D_ai >= 0 && lv_teamID <= autoE9A0635D_ae) || (autoE9A0635D_ai < 0 && lv_teamID >= autoE9A0635D_ae) ) ; lv_teamID += autoE9A0635D_ai ) {
+        libNtve_gf_CreateActorWithPointFacing(libMHmu_gv_payloadPaths[lv_teamID][libNPLD_gv_neutralPayload.lv_pathIndex_Team[lv_teamID]], libMHmu_gv_payloadPathSpawnPoint[lv_teamID]);
+        libNPLD_gv_activePathonMap[lv_teamID][1] = libNtve_gf_ActorLastCreated();
+        ActorSend(libNPLD_gv_activePathonMap[lv_teamID][1], "AnimPlay ForwardMotion GLstand PlayForever 0.000000");
+        ActorSend(libNPLD_gv_activePathonMap[lv_teamID][1], "Signal Invert");
+        libNtve_gf_CreateActorWithPointFacing(libMHmu_gv_payloadPaths[lv_teamID][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gf_EnemyTeam(lv_teamID)]], libMHmu_gv_payloadPathSpawnPoint[libGame_gf_EnemyTeam(lv_teamID)]);
+        libNPLD_gv_activePathonMap[lv_teamID][2] = libNtve_gf_ActorLastCreated();
+        ActorSend(libNPLD_gv_activePathonMap[lv_teamID][2], "AnimPlay BackwardMotion Custom PlayForever 0.000000");
+    }
+}
+
+void libNPLD_gf_PayloadPathsSetProgressTeamandAnimations () {
+    // Variable Declarations
+    bool lv_preAnimate;
+
+    // Automatic Variable Declarations
+    int auto9CD4DFE3_val;
+
+    // Variable Initialization
+
+    // Implementation
+    if (((UnitHasBehavior2(libNPLD_gv_neutralPayload.lv_unit, "PayloadObstaclesInTheWay") == true) || (UnitHasBehaviorWithCategoryFlag(libNPLD_gv_neutralPayload.lv_unit, c_behaviorCategoryDebuffStasis) == true) || (UnitHasBehaviorWithCategoryFlag(libNPLD_gv_neutralPayload.lv_unit, c_behaviorCategoryTimeStop) == true) || (libNPLD_gv_neutralPayload.lv_destination_Team == 0))) {
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][1], "AnimSetPaused Progress");
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][2], "AnimSetPaused Progress");
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][1], "AnimSetPaused Progress");
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][2], "AnimSetPaused Progress");
+        return ;
+    }
+
+    lv_preAnimate = libNPLD_gf_PayloadNearElevator();
+    auto9CD4DFE3_val = UnitGetOwner(libNPLD_gv_neutralPayload.lv_unit);
+    if (auto9CD4DFE3_val == libCore_gv_cOMPUTER_TeamOrder) {
+        if ((libNPLD_gv_neutralPayload.lv_teamWithProgress == libGame_gv_teamChaosIndex_C)) {
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][1], "Signal Backward");
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][1], "AnimSetPaused Progress 0");
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][2], "Signal Forward");
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][2], "AnimSetPaused Progress 0");
+            if ((lv_preAnimate == true)) {
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][1], "Signal Forward");
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][1], "AnimSetPaused Progress 0");
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][2], "Signal Backward");
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][2], "AnimSetPaused Progress 0");
+            }
+
+        }
+        else {
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][1], "Signal Forward");
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][1], "AnimSetPaused Progress 0");
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][2], "Signal Backward");
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][2], "AnimSetPaused Progress 0");
+            if ((lv_preAnimate == true)) {
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][2], "Signal Forward");
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][2], "AnimSetPaused Progress 0");
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][1], "Signal Backward");
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][1], "AnimSetPaused Progress 0");
+            }
+
+        }
+        libNPLD_gf_PayloadPathsUpdateAnimationSpeed();
+    }
+    else if (auto9CD4DFE3_val == libCore_gv_cOMPUTER_TeamChaos) {
+        if ((libNPLD_gv_neutralPayload.lv_teamWithProgress == libGame_gv_teamOrderIndex_C)) {
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][1], "Signal Backward");
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][1], "AnimSetPaused Progress 0");
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][2], "Signal Forward");
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][2], "AnimSetPaused Progress 0");
+            if ((lv_preAnimate == true)) {
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][1], "Signal Backward");
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][1], "AnimSetPaused Progress 0");
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][2], "Signal Forward");
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][2], "AnimSetPaused Progress 0");
+            }
+
+        }
+        else {
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][1], "Signal Forward");
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][1], "AnimSetPaused Progress 0");
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][2], "Signal Backward");
+            ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][2], "AnimSetPaused Progress 0");
+            if ((lv_preAnimate == true)) {
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][2], "Signal Forward");
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][2], "AnimSetPaused Progress 0");
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][1], "Signal Backward");
+                ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][1], "AnimSetPaused Progress 0");
+            }
+
+        }
+        libNPLD_gf_PayloadPathsUpdateAnimationSpeed();
+    }
+    else {
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][1], "AnimSetPaused Progress");
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][2], "AnimSetPaused Progress");
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][1], "AnimSetPaused Progress");
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][2], "AnimSetPaused Progress");
+    }
+}
+
+void libNPLD_gf_PayloadPathsDestroyActivePaths () {
+    // Variable Declarations
+    int lv_teamID;
+    int lv_activePathID;
+
+    // Automatic Variable Declarations
+    const int autoE9DB2CA7_ae = libCore_gv_bALMaxTeams;
+    const int autoE9DB2CA7_ai = 1;
+
+    // Variable Initialization
+
+    // Implementation
+    lv_teamID = 1;
+    for ( ; ( (autoE9DB2CA7_ai >= 0 && lv_teamID <= autoE9DB2CA7_ae) || (autoE9DB2CA7_ai < 0 && lv_teamID >= autoE9DB2CA7_ae) ) ; lv_teamID += autoE9DB2CA7_ai ) {
+        ActorSend(libNPLD_gv_activePathonMap[lv_teamID][1], "AnimBracketStop BSD");
+        ActorSend(libNPLD_gv_activePathonMap[lv_teamID][2], "AnimBracketStop BSD");
+    }
+}
+
+void libNPLD_gf_PayloadPathsUpdateAnimationSpeed () {
+    // Variable Declarations
+    int lv_payloadOwningTeam;
+    int lv_escortCount;
+    int lv_pathID;
+    string lv_actorMessageString;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_payloadOwningTeam = libNPLD_gv_neutralPayload.lv_destination_Team;
+    lv_actorMessageString = "";
+
+    // Implementation
+    if ((UnitBehaviorCount(libNPLD_gv_neutralPayload.lv_unit, "Payload_AllyMonitor_1") > 0)) {
+        lv_escortCount = 1;
+    }
+    else if ((UnitBehaviorCount(libNPLD_gv_neutralPayload.lv_unit, "Payload_AllyMonitor_2") > 0)) {
+        lv_escortCount = 2;
+    }
+    else if ((UnitBehaviorCount(libNPLD_gv_neutralPayload.lv_unit, "Payload_AllyMonitor_3") > 0)) {
+        lv_escortCount = 3;
+    }
+    else if (true) {
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][1], "AnimSetPaused Progress");
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][2], "AnimSetPaused Progress");
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][1], "AnimSetPaused Progress");
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][2], "AnimSetPaused Progress");
+    }
+    if ((lv_escortCount == 0)) {
+        return ;
+    }
+
+    if ((libNPLD_gv_neutralPayload.lv_teamWithProgress == lv_payloadOwningTeam)) {
+        lv_pathID = libNPLD_gv_neutralPayload.lv_pathIndex_Team[lv_payloadOwningTeam];
+    }
+    else {
+        lv_pathID = libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gf_EnemyTeam(lv_payloadOwningTeam)];
+    }
+    lv_actorMessageString = ("AnimSetTimeScaleAbsolute Progress " + FixedToString(libNPLD_gv_pathAnimationRate[lv_pathID][lv_escortCount], c_fixedPrecisionAny));
+    ActorSendAsText(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][1], StringToText(lv_actorMessageString));
+    ActorSendAsText(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][2], StringToText(lv_actorMessageString));
+    ActorSendAsText(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][1], StringToText(lv_actorMessageString));
+    ActorSendAsText(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][2], StringToText(lv_actorMessageString));
+}
+
+void libNPLD_gf_PayloadPathsCrossingCenterNudgeAnimations (int lp_teamID) {
+    // Automatic Variable Declarations
+    // Implementation
+    if ((libNPLD_gv_neutralPayload.lv_teamWithProgress != 0)) {
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][1], "Signal ResetPath");
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamOrderIndex_C][2], "Signal ResetPath");
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][1], "Signal ResetPath");
+        ActorSend(libNPLD_gv_activePathonMap[libGame_gv_teamChaosIndex_C][2], "Signal ResetPath");
+    }
+
+}
+
+void libNPLD_gf_ShowPayloadPath_Warning () {
+    // Variable Declarations
+    int lv_waypointIndex;
+
+    // Automatic Variable Declarations
+    int auto5E573E48_ae;
+    const int auto5E573E48_ai = 1;
+    int autoAC653D97_ae;
+    const int autoAC653D97_ai = 1;
+
+    // Variable Initialization
+
+    // Implementation
+    libNtve_gf_CreateUnitsWithDefaultFacing(1, "Payload_Neutral_Warning", c_unitCreateIgnorePlacement, 0, libNPLD_gv_neutralPayload.lv_pathWaypoints_StartLocation, null);
+    libNPLD_gv_neutralPayload.lv_warningUnit = UnitLastCreated();
+    PathCreateForUnit(PlayerGroupAll(), libNPLD_gv_neutralPayload.lv_warningUnit);
+    libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamOrderIndex_C] = PathLastCreated();
+    PathCreateForUnit(PlayerGroupAll(), libNPLD_gv_neutralPayload.lv_warningUnit);
+    libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamChaosIndex_C] = PathLastCreated();
+    PathSetOwnerPlayerId(libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamOrderIndex_C], libCore_gv_cOMPUTER_TeamOrder);
+    PathSetOwnerPlayerId(libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamChaosIndex_C], libCore_gv_cOMPUTER_TeamChaos);
+    PathSetLineTexture(libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamOrderIndex_C], c_pathLocationMinimap, "Assets\\Textures\\storm_waypointline.dds");
+    PathSetVisible(libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamOrderIndex_C], c_pathLocationWorld, false);
+    PathSetVisible(libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamOrderIndex_C], c_pathLocationMinimap, true);
+    PathSetDestinationPoint(libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamOrderIndex_C], libNPLD_gv_neutralPayload.lv_pathWaypoints[libGame_gv_teamOrderIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamOrderIndex_C]][libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[libGame_gv_teamOrderIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamOrderIndex_C]]]);
+    PathSetLineTexture(libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamChaosIndex_C], c_pathLocationMinimap, "Assets\\Textures\\storm_waypointline.dds");
+    PathSetVisible(libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamChaosIndex_C], c_pathLocationWorld, false);
+    PathSetVisible(libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamChaosIndex_C], c_pathLocationMinimap, true);
+    PathSetDestinationPoint(libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamChaosIndex_C], libNPLD_gv_neutralPayload.lv_pathWaypoints[libGame_gv_teamChaosIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamChaosIndex_C]][libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[libGame_gv_teamChaosIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamChaosIndex_C]]]);
+    auto5E573E48_ae = (libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[libGame_gv_teamOrderIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamOrderIndex_C]] - 1);
+    lv_waypointIndex = 1;
+    for ( ; ( (auto5E573E48_ai >= 0 && lv_waypointIndex <= auto5E573E48_ae) || (auto5E573E48_ai < 0 && lv_waypointIndex >= auto5E573E48_ae) ) ; lv_waypointIndex += auto5E573E48_ai ) {
+        PathAddWayPoint(libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamOrderIndex_C], libNPLD_gv_neutralPayload.lv_pathWaypoints[libGame_gv_teamOrderIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamOrderIndex_C]][lv_waypointIndex]);
+    }
+    autoAC653D97_ae = (libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[libGame_gv_teamChaosIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamChaosIndex_C]] - 1);
+    lv_waypointIndex = 1;
+    for ( ; ( (autoAC653D97_ai >= 0 && lv_waypointIndex <= autoAC653D97_ae) || (autoAC653D97_ai < 0 && lv_waypointIndex >= autoAC653D97_ae) ) ; lv_waypointIndex += autoAC653D97_ai ) {
+        PathAddWayPoint(libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamChaosIndex_C], libNPLD_gv_neutralPayload.lv_pathWaypoints[libGame_gv_teamChaosIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamChaosIndex_C]][lv_waypointIndex]);
+    }
+    libCore_gf_CreateMinimapPingStormWithPlayerId(PlayerGroupAll(), "OWHanaPayloadWarning", libNPLD_gv_neutralPayload.lv_pathWaypoints_StartLocation, ColorWithAlpha(0,0,0,0), 5.0, 0);
+    libCore_gf_CreateMinimapPingStormWithPlayerId(PlayerGroupAll(), "OWHanaPayloadWarning", libNPLD_gv_neutralPayload.lv_pathWaypoints[libGame_gv_teamOrderIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamOrderIndex_C]][libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[libGame_gv_teamOrderIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamOrderIndex_C]]], ColorWithAlpha(0,0,0,0), 5.0, 0);
+    libCore_gf_CreateMinimapPingStormWithPlayerId(PlayerGroupAll(), "OWHanaPayloadWarning", libNPLD_gv_neutralPayload.lv_pathWaypoints[libGame_gv_teamChaosIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamChaosIndex_C]][libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[libGame_gv_teamChaosIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamChaosIndex_C]]], ColorWithAlpha(0,0,0,0), 5.0, 0);
+}
+
+void libNPLD_gf_DestroyPayloadWarningPath () {
+    // Automatic Variable Declarations
+    // Implementation
+    UnitRemove(libNPLD_gv_neutralPayload.lv_warningUnit);
+    PathDestroy(libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamOrderIndex_C]);
+    PathDestroy(libNPLD_gv_neutralPayload.lv_warningPathDisplay[libGame_gv_teamChaosIndex_C]);
+}
+
+void libNPLD_gf_MapMechanicUIInit (int lp_parentPanel) {
+    // Automatic Variable Declarations
+    // Implementation
+    DialogControlCreateInPanelFromTemplate(lp_parentPanel, c_triggerControlTypePanel, "HanamuraRework/HanamuraReworkVictoryShotsStatusPanel");
+    libNPLD_gv_hanamura.lv_payloadPanel = DialogControlLastCreated();
+    DialogControlHookup(libNPLD_gv_hanamura.lv_payloadPanel, c_triggerControlTypePanel, "AttackingCoreFrame_Order");
+    libNPLD_gv_hanamura.lv_attackingStructureFrame[libGame_gv_teamOrderIndex_C] = DialogControlLastCreated();
+    DialogControlHookup(libNPLD_gv_hanamura.lv_attackingStructureFrame[libGame_gv_teamOrderIndex_C], c_triggerControlTypeLabel, "BackgroundImage/ActiveNotificationLabel");
+    libNPLD_gv_hanamura.lv_attackingStructureLabel[libGame_gv_teamOrderIndex_C] = DialogControlLastCreated();
+    DialogControlHookup(libNPLD_gv_hanamura.lv_payloadPanel, c_triggerControlTypePanel, "AttackingCoreFrame_Chaos");
+    libNPLD_gv_hanamura.lv_attackingStructureFrame[libGame_gv_teamChaosIndex_C] = DialogControlLastCreated();
+    DialogControlHookup(libNPLD_gv_hanamura.lv_attackingStructureFrame[libGame_gv_teamChaosIndex_C], c_triggerControlTypeLabel, "BackgroundImage/ActiveNotificationLabel");
+    libNPLD_gv_hanamura.lv_attackingStructureLabel[libGame_gv_teamChaosIndex_C] = DialogControlLastCreated();
+    DialogControlCreateInPanelFromTemplate(lp_parentPanel, c_triggerControlTypePanel, "HanamuraRework/HanamuraReworkPayloadWarningTimerPanel");
+    DialogControlHookup(DialogControlLastCreated(), c_triggerControlTypePanel, "PayloadSpawningFrame");
+    libNPLD_gv_hanamura.lv_warningTimerFrame = DialogControlLastCreated();
+    DialogControlHookup(libNPLD_gv_hanamura.lv_warningTimerFrame, c_triggerControlTypeLabel, "CountdownLabel");
+    libNPLD_gv_hanamura.lv_warningTimerLabel = DialogControlLastCreated();
+    DialogControlSetVisible(libNPLD_gv_hanamura.lv_payloadPanel, PlayerGroupAll(), false);
+    DialogControlCreateInPanelFromTemplate(lp_parentPanel, c_triggerControlTypePanel, "HanamuraRework/HanamuraReworkActivePaylaodStatusPanel");
+    libNPLD_gv_hanamura.lv_payloadPanel_ActivePayloadStatus = DialogControlLastCreated();
+    DialogControlHookup(libNPLD_gv_hanamura.lv_payloadPanel_ActivePayloadStatus, c_triggerControlTypeUnitStatus, "HanamuraUI_UnitStatusFrame");
+    libNPLD_gv_hanamura.lv_unitStatusBar_New = DialogControlLastCreated();
+    DialogControlHookup(libNPLD_gv_hanamura.lv_payloadPanel_ActivePayloadStatus, c_triggerControlTypePanel, "ProgressFrame_Order");
+    libNPLD_gv_hanamura.lv_progressFrame_New[libGame_gv_teamOrderIndex_C] = DialogControlLastCreated();
+    DialogControlHookup(libNPLD_gv_hanamura.lv_payloadPanel_ActivePayloadStatus, c_triggerControlTypePanel, "ProgressFrame_Chaos");
+    libNPLD_gv_hanamura.lv_progressFrame_New[libGame_gv_teamChaosIndex_C] = DialogControlLastCreated();
+    DialogControlSetVisible(libNPLD_gv_hanamura.lv_payloadPanel_ActivePayloadStatus, PlayerGroupAll(), false);
+}
+
+// Triggers
+//--------------------------------------------------------------------------------------------------
+// Trigger: Init Payload Paths
+//--------------------------------------------------------------------------------------------------
+bool libNPLD_gt_InitPayloadPaths_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libNPLD_gf_CalculatePayloadPathDistances();
+    libNPLD_gf_InitializePathAnimationRates();
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libNPLD_gt_InitPayloadPaths_Init () {
+    libNPLD_gt_InitPayloadPaths = TriggerCreate("libNPLD_gt_InitPayloadPaths_Func");
+    libCore_gf_IncludeModInitialization(libNPLD_gt_InitPayloadPaths);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Payload_OrderMonitor_Enabled
+//--------------------------------------------------------------------------------------------------
+bool libNPLD_gt_Payload_OrderMonitor_Enabled_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((UnitHasBehavior2(libNPLD_gv_neutralPayload.lv_unit, "Payload_ReachedDestination") == false))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libNPLD_gv_neutralPayload.lv_destination_Team = libGame_gv_teamOrderIndex_C;
+    UnitSetOwner(libNPLD_gv_neutralPayload.lv_unit, libCore_gv_cOMPUTER_TeamOrder, false);
+    libNPLD_gf_Payload_MoveToTeamDestination(libGame_gv_teamOrderIndex_C);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libNPLD_gt_Payload_OrderMonitor_Enabled_Init () {
+    libNPLD_gt_Payload_OrderMonitor_Enabled = TriggerCreate("libNPLD_gt_Payload_OrderMonitor_Enabled_Func");
+    TriggerAddEventUnitBehaviorChange(libNPLD_gt_Payload_OrderMonitor_Enabled, UnitRefFromVariable("libNPLD_gv_neutralPayload.lv_unit"), "Payload_OrderMonitor", c_unitBehaviorChangeActivate);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Payload_ChaosMonitor_Enabled
+//--------------------------------------------------------------------------------------------------
+bool libNPLD_gt_Payload_ChaosMonitor_Enabled_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((UnitHasBehavior2(libNPLD_gv_neutralPayload.lv_unit, "Payload_ReachedDestination") == false))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libNPLD_gv_neutralPayload.lv_destination_Team = libGame_gv_teamChaosIndex_C;
+    UnitSetOwner(libNPLD_gv_neutralPayload.lv_unit, libCore_gv_cOMPUTER_TeamChaos, false);
+    libNPLD_gf_Payload_MoveToTeamDestination(libGame_gv_teamChaosIndex_C);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libNPLD_gt_Payload_ChaosMonitor_Enabled_Init () {
+    libNPLD_gt_Payload_ChaosMonitor_Enabled = TriggerCreate("libNPLD_gt_Payload_ChaosMonitor_Enabled_Func");
+    TriggerAddEventUnitBehaviorChange(libNPLD_gt_Payload_ChaosMonitor_Enabled, UnitRefFromVariable("libNPLD_gv_neutralPayload.lv_unit"), "Payload_ChaosMonitor", c_unitBehaviorChangeActivate);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Payload_ContestedMonitor_Enabled
+//--------------------------------------------------------------------------------------------------
+bool libNPLD_gt_Payload_ContestedMonitor_Enabled_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((UnitHasBehavior2(libNPLD_gv_neutralPayload.lv_unit, "Payload_ReachedDestination") == false))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libNPLD_gv_neutralPayload.lv_destination_Team = 0;
+    libNPLD_gv_neutralPayload.lv_isContested = true;
+    UnitSetOwner(libNPLD_gv_neutralPayload.lv_unit, libCore_gv_cOMPUTER_Neutral, false);
+    libNPLD_gf_PayloadPathsSetProgressTeamandAnimations();
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libNPLD_gt_Payload_ContestedMonitor_Enabled_Init () {
+    libNPLD_gt_Payload_ContestedMonitor_Enabled = TriggerCreate("libNPLD_gt_Payload_ContestedMonitor_Enabled_Func");
+    TriggerAddEventUnitBehaviorChange(libNPLD_gt_Payload_ContestedMonitor_Enabled, UnitRefFromVariable("libNPLD_gv_neutralPayload.lv_unit"), "Payload_ContestedMonitor", c_unitBehaviorChangeActivate);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Payload_ContestedMonitor_Disabled
+//--------------------------------------------------------------------------------------------------
+bool libNPLD_gt_Payload_ContestedMonitor_Disabled_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((UnitHasBehavior2(libNPLD_gv_neutralPayload.lv_unit, "Payload_ReachedDestination") == false))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libNPLD_gv_neutralPayload.lv_isContested = false;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libNPLD_gt_Payload_ContestedMonitor_Disabled_Init () {
+    libNPLD_gt_Payload_ContestedMonitor_Disabled = TriggerCreate("libNPLD_gt_Payload_ContestedMonitor_Disabled_Func");
+    TriggerAddEventUnitBehaviorChange(libNPLD_gt_Payload_ContestedMonitor_Disabled, UnitRefFromVariable("libNPLD_gv_neutralPayload.lv_unit"), "Payload_ContestedMonitor", c_unitBehaviorChangeDeactivate);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Payload_UnattendedMonitor_Enabled
+//--------------------------------------------------------------------------------------------------
+bool libNPLD_gt_Payload_UnattendedMonitor_Enabled_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((UnitHasBehavior2(libNPLD_gv_neutralPayload.lv_unit, "Payload_ReachedDestination") == false))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+    libNPLD_gv_neutralPayload.lv_destination_Team = 0;
+    UnitSetOwner(libNPLD_gv_neutralPayload.lv_unit, libCore_gv_cOMPUTER_Neutral, false);
+    libGame_Wait(0.125, c_timeGame);
+    libNPLD_gf_PayloadPathsSetProgressTeamandAnimations();
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libNPLD_gt_Payload_UnattendedMonitor_Enabled_Init () {
+    libNPLD_gt_Payload_UnattendedMonitor_Enabled = TriggerCreate("libNPLD_gt_Payload_UnattendedMonitor_Enabled_Func");
+    TriggerAddEventUnitBehaviorChange(libNPLD_gt_Payload_UnattendedMonitor_Enabled, UnitRefFromVariable("libNPLD_gv_neutralPayload.lv_unit"), "Payload_UnattendedMonitor", c_unitBehaviorChangeActivate);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Player Creates Turret From Map Mechanic Ability
+//--------------------------------------------------------------------------------------------------
+bool libNPLD_gt_PlayerCreatesTurretFromMapMechanicAbility_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((UnitGetType(EventUnitCreatedUnit()) == "OverwatchTurretPayloadPlayer"))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UnitXPAddXP(EventUnitCreatedUnit(), "OverwatchTurretPlayerScaling", libGame_gv_teams[libGame_gf_TeamNumberOfPlayer(UnitGetOwner(EventUnit()))].lv_teamLevel);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libNPLD_gt_PlayerCreatesTurretFromMapMechanicAbility_Init () {
+    libNPLD_gt_PlayerCreatesTurretFromMapMechanicAbility = TriggerCreate("libNPLD_gt_PlayerCreatesTurretFromMapMechanicAbility_Func");
+    TriggerAddEventUnitCreated(libNPLD_gt_PlayerCreatesTurretFromMapMechanicAbility, null, "MapMechanicAbilityTarget", null);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Payload_GainsTurret
+//--------------------------------------------------------------------------------------------------
+bool libNPLD_gt_Payload_GainsTurret_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libNtve_gf_CreateUnitsWithDefaultFacing(1, "OverwatchTurretPayloadPlayer", c_unitCreateIgnorePlacement, libGame_gf_ComputerPlayerInTeam(libGame_gf_TeamNumberOfPlayer(UnitBehaviorEffectPlayer(EventUnit(), "Payload_HasTurret", c_effectPlayerCaster, 0))), UnitGetPosition(libNPLD_gv_neutralPayload.lv_unit), null);
+    UnitCreateEffectUnit(UnitLastCreated(), "Payload_LinkActor", libNPLD_gv_neutralPayload.lv_unit);
+    libCore_gf_StoreUnitForUnit(libNPLD_gv_neutralPayload.lv_unit, 1, UnitLastCreated());
+    while ((UnitIsAlive(libNPLD_gv_neutralPayload.lv_unit) == true) && (UnitIsAlive(UnitLastCreated()) == true)) {
+        libStEx_gf_MoveUnit(UnitLastCreated(), UnitGetPosition(libNPLD_gv_neutralPayload.lv_unit), false);
+        libGame_Wait(0.0625, c_timeGame);
+    }
+    if ((UnitIsAlive(libNPLD_gv_neutralPayload.lv_unit) == true) && (UnitIsAlive(UnitLastCreated()) == false)) {
+        UnitBehaviorRemove(libNPLD_gv_neutralPayload.lv_unit, "Payload_HasTurret", 1);
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libNPLD_gt_Payload_GainsTurret_Init () {
+    libNPLD_gt_Payload_GainsTurret = TriggerCreate("libNPLD_gt_Payload_GainsTurret_Func");
+    TriggerAddEventUnitBehaviorChange(libNPLD_gt_Payload_GainsTurret, null, "Payload_HasTurret", c_unitBehaviorChangeCreate);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Initialize UI
+//--------------------------------------------------------------------------------------------------
+bool libNPLD_gt_InitializeUI_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libNPLD_gf_MapMechanicUIInit(libUIUI_gv_mapMechanicsPanel.lv_mainPanel);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libNPLD_gt_InitializeUI_Init () {
+    libNPLD_gt_InitializeUI = TriggerCreate("libNPLD_gt_InitializeUI_Func");
+    libCore_gf_IncludeModInitialization(libNPLD_gt_InitializeUI);
+}
+
+void libNPLD_InitTriggers () {
+    libNPLD_gt_InitPayloadPaths_Init();
+    libNPLD_gt_Payload_OrderMonitor_Enabled_Init();
+    libNPLD_gt_Payload_ChaosMonitor_Enabled_Init();
+    libNPLD_gt_Payload_ContestedMonitor_Enabled_Init();
+    libNPLD_gt_Payload_ContestedMonitor_Disabled_Init();
+    libNPLD_gt_Payload_UnattendedMonitor_Enabled_Init();
+    libNPLD_gt_PlayerCreatesTurretFromMapMechanicAbility_Init();
+    libNPLD_gt_Payload_GainsTurret_Init();
+    libNPLD_gt_InitializeUI_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+bool libNPLD_InitLib_completed = false;
+
+void libNPLD_InitLib () {
+    if (libNPLD_InitLib_completed) {
+        return;
+    }
+
+    libNPLD_InitLib_completed = true;
+
+    libNPLD_InitLibraries();
+    libNPLD_InitVariables();
+    libNPLD_InitTriggers();
+}
+
+include "LibMHmu"
+

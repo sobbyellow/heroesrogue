@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+  <CActorDoodad id="Storm_Doodad_DS19_Barrel">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Buildings">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Bush">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Clouds">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_CoreRange">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+    <Aliases value="_CreepEngulfable" />
+    <CreepHeightClass value="Default" />
+    <CreepRateGrow value="Grow" />
+    <CreepRateShrink value="Shrink" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Dock">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_DragonFog">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Embers">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Flags">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Fountain">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Grass">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Hedges">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_AA">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_A">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_BB">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_B">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_CC">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_C">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_FF">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_F">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_GG">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_G">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_HH">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_H">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_II">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_I">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_JJ">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_J">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_KK">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_K">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_MM">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_M">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_NN">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_N">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_OO">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_O">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_PP">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_P">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_Q">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_R">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_S">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_T">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_U">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Jungle_V">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Knight_Statue">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Maypole">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_MercSplat">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Rocks">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+    <On Terms="Signal.*.HiddenFromOrder; ValidatePlayer IsOrderPlayer" Send="ModelSwap Invisible" />
+    <On Terms="Signal.*.HiddenFromChaos; ValidatePlayer IsChaosPlayer" Send="ModelSwap Invisible" />
+    <On Terms="Signal.*.StartGlowing; IsStatus IsGlowing 0" Send="AnimBracketStart Glowing Stand,Work,Start Stand,Work Stand,Work,End" />
+    <On Terms="Signal.*.StartGlowing; IsStatus IsGlowing 0" Send="StatusSet IsGlowing 1" />
+    <On Terms="Signal.*.StopGlowing; IsStatus IsGlowing 1" Send="AnimBracketStop Glowing" />
+    <On Terms="Signal.*.StopGlowing; IsStatus IsGlowing 1" Send="StatusSet IsGlowing 0" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_RoseEmblem">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+    <Aliases value="_CreepEngulfable" />
+    <CreepHeightClass value="Default" />
+    <CreepRateGrow value="Grow" />
+    <CreepRateShrink value="Shrink" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_ShrineSplat">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Stand">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_StartingPlatform">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+    <On Terms="ActorCreation" Send="Create StartingBaseVortex" />
+    <Aliases value="_CreepEngulfable" />
+    <CreepHeightClass value="Default" />
+    <CreepRateGrow value="Grow" />
+    <CreepRateShrink value="Shrink" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_StoneBridge_BLUR">
+    <Model value="Storm_Doodad_DS19_StoneBridge" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+    <RandomScaleRange value="1.000000,1.000000" />
+    <Aliases value="_CreepEngulfable" />
+    <CreepHeightClass value="Default" />
+    <CreepRateGrow value="Grow" />
+    <CreepRateShrink value="Shrink" />
+    <Footprint value="StormGardensBridgeDiagonalFootprintBLUR" />
+    <Facing value="315" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_StoneBridge_ULBR">
+    <Model value="Storm_Doodad_DS19_StoneBridge" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+    <RandomScaleRange value="1.000000,1.000000" />
+    <Aliases value="_CreepEngulfable" />
+    <CreepHeightClass value="Default" />
+    <CreepRateGrow value="Grow" />
+    <CreepRateShrink value="Shrink" />
+    <Footprint value="StormGardensBridgeDiagonalFootprintULBR" />
+    <Facing value="225" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Streetlamp_On">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Streetlamp">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Sunray">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_TerrainSplats">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Throne">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Trees">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_Trim">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_WaterRipple">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_DS19_WaterSpigot">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_AA">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_A">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_BB">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_B">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_CC">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_C">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_FF">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_F">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_GG">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_G">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_HH">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_H">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_II">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_I">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_JJ">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_J">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_KK">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_K">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_MM">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_M">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_NN">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_N">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_OO">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_O">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_PP">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_P">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_Q">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_R">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_S">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_T">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CActorDoodad id="Storm_Doodad_KingsCrest_Dragon_Jungle_U">
+    <RandomScaleRange value="1.000000,1.000000" />
+    <EditorFlags index="NoAutoRotate" value="1" />
+  </CActorDoodad>
+  <CModel id="Storm_Doodad_DS19_Barrel">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Barrel\Storm_Doodad_DS19_Barrel.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Buildings">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Buildings\Storm_Doodad_DS19_Buildings.m3" />
+    <VariationCount value="38" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Bush">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Bush\Storm_Doodad_DS19_Bush.m3" />
+    <VariationCount value="13" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Clouds">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Clouds\Storm_Doodad_DS19_Clouds.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_CoreRange">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_CoreRange\Storm_Doodad_DS19_CoreRange.m3" />
+    <Flags index="ShowCreepEngulfmentEvenOnLow" value="1" />
+    <VariationCount value="3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Dock">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Dock\Storm_Doodad_DS19_Dock.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_DragonFog">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_DragonFog\Storm_Doodad_DS19_DragonFog.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Embers">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Embers\Storm_Doodad_DS19_Embers.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Flags">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Flags\Storm_Doodad_DS19_Flags.m3" />
+    <VariationCount value="2" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Fountain">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Fountain\Storm_Doodad_DS19_Fountain.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Grass">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Grass\Storm_Doodad_DS19_Grass.m3" />
+    <VariationCount value="8" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Hedges">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Hedges\Storm_Doodad_DS19_Hedges.m3" />
+    <VariationCount value="25" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_AA">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_AA\Storm_Doodad_DS19_Jungle_AA.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_A">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_A\Storm_Doodad_DS19_Jungle_A.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_BB">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_BB\Storm_Doodad_DS19_Jungle_BB.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_B">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_B\Storm_Doodad_DS19_Jungle_B.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_CC">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_CC\Storm_Doodad_DS19_Jungle_CC.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_C">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_C\Storm_Doodad_DS19_Jungle_C.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_FF">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_FF\Storm_Doodad_DS19_Jungle_FF.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_F">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_F\Storm_Doodad_DS19_Jungle_F.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_GG">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_GG\Storm_Doodad_DS19_Jungle_GG.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_G">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_G\Storm_Doodad_DS19_Jungle_G.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_HH">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_HH\Storm_Doodad_DS19_Jungle_HH.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_H">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_H\Storm_Doodad_DS19_Jungle_H.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_II">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_II\Storm_Doodad_DS19_Jungle_II.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_I">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_I\Storm_Doodad_DS19_Jungle_I.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_JJ">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_JJ\Storm_Doodad_DS19_Jungle_JJ.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_J">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_J\Storm_Doodad_DS19_Jungle_J.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_KK">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_KK\Storm_Doodad_DS19_Jungle_KK.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_K">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_K\Storm_Doodad_DS19_Jungle_K.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_MM">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_MM\Storm_Doodad_DS19_Jungle_MM.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_M">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_M\Storm_Doodad_DS19_Jungle_M.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_NN">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_NN\Storm_Doodad_DS19_Jungle_NN.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_N">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_N\Storm_Doodad_DS19_Jungle_N.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_OO">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_OO\Storm_Doodad_DS19_Jungle_OO.m3" />
+    <VariationCount value="2" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_O">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_O\Storm_Doodad_DS19_Jungle_O.m3" />
+    <VariationCount value="2" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_PP">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_PP\Storm_Doodad_DS19_Jungle_PP.m3" />
+    <VariationCount value="2" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_P">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_P\Storm_Doodad_DS19_Jungle_P.m3" />
+    <VariationCount value="2" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_Q">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_Q\Storm_Doodad_DS19_Jungle_Q.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_R">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_R\Storm_Doodad_DS19_Jungle_R.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_S">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_S\Storm_Doodad_DS19_Jungle_S.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_T">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_T\Storm_Doodad_DS19_Jungle_T.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_U">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_U\Storm_Doodad_DS19_Jungle_U.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Jungle_V">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Jungle_V\Storm_Doodad_DS19_Jungle_V.m3" />
+    <VariationCount value="5" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Knight_Statue">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Knight_Statue\Storm_Doodad_DS19_Knight_Statue.m3" />
+    <VariationCount value="2" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Maypole">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Maypole\Storm_Doodad_DS19_Maypole.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_MercSplat">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_MercSplat\Storm_Doodad_DS19_MercSplat.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Rocks">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Rocks\Storm_Doodad_DS19_Rocks.m3" />
+    <VariationCount value="7" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_RoseEmblem">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_RoseEmblem\Storm_Doodad_DS19_RoseEmblem.m3" />
+    <Flags index="ShowCreepEngulfmentEvenOnLow" value="1" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_ShrineSplat">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_ShrineSplat\Storm_Doodad_DS19_ShrineSplat.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Stand">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Stand\Storm_Doodad_DS19_Stand.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_StartingPlatform">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_StartingPlatform\Storm_Doodad_DS19_StartingPlatform.m3" />
+    <Flags index="ShowCreepEngulfmentEvenOnLow" value="1" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_StoneBridge">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_StoneBridge\Storm_Doodad_DS19_StoneBridge.m3" />
+    <Flags index="ShowCreepEngulfmentEvenOnLow" value="1" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Streetlamp_On">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Streetlamp_On\Storm_Doodad_DS19_Streetlamp_On.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Streetlamp">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Streetlamp\Storm_Doodad_DS19_Streetlamp.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Sunray">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Sunray\Storm_Doodad_DS19_Sunray.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_TerrainSplats">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_TerrainSplats\Storm_Doodad_DS19_TerrainSplats.m3" />
+    <VariationCount value="12" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Throne">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Throne\Storm_Doodad_DS19_Throne.m3" />
+    <VariationCount value="2" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Trees">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Trees\Storm_Doodad_DS19_Trees.m3" />
+    <VariationCount value="12" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_Trim">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_Trim\Storm_Doodad_DS19_Trim.m3" />
+    <VariationCount value="6" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_WaterRipple">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_WaterRipple\Storm_Doodad_DS19_WaterRipple.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_DS19_WaterSpigot">
+    <Model value="Assets\Doodads\Storm_Doodad_DS19_WaterSpigot\Storm_Doodad_DS19_WaterSpigot.m3" />
+  </CModel>
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_AA" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_A" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_BB" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_B" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_CC" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_C" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_FF" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_F" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_GG" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_G" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_HH" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_H" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_II" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_I" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_JJ" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_J" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_KK" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_K" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_MM" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_M" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_NN" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_N" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_OO" parent="Doodad">
+    <VariationCount value="2" />
+  </CModel>
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_O" parent="Doodad">
+    <VariationCount value="2" />
+  </CModel>
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_PP" parent="Doodad">
+    <VariationCount value="2" />
+  </CModel>
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_P" parent="Doodad">
+    <VariationCount value="2" />
+  </CModel>
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_Q" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_R" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_S" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_T" parent="Doodad" />
+  <CModel id="Storm_Doodad_KingsCrest_Dragon_Jungle_U" parent="Doodad" />
+</Catalog>

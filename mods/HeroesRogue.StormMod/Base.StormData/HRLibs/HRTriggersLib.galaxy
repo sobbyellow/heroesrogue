@@ -1,0 +1,3002 @@
+
+include "HRLibs/HeroesRogueLib_h"
+include "HRLibs/HRTriggersLib_h"
+
+// ============================================================
+// Nano Boost
+// ============================================================
+bool libHRGE_NanoBoostAffixAdded (bool testConds, bool runActions) {
+    libHRGE_NanoBoostCurrentCDRModifier = libHRGE_NanoBoostCDRModifier * libHRGE_EventAffixCount();
+    return true;
+}
+bool libHRGE_NanoBoostBehaviorChange (bool testConds, bool runActions) {
+    unit heroUnit = EventUnit();
+    while (UnitHasBehavior2(heroUnit, "AffixNanoBoost")) {
+        while ((UnitHasBehaviorWithCategoryFlag(heroUnit, c_behaviorCategoryTimeStop) == true) || libHRGE_gamePaused) {
+            Wait(0.0625, c_timeGame);
+        }
+        libHRGE_ModifyAllCooldowns(heroUnit, -(libHRGE_NanoBoostCurrentCDRModifier / 16), false, false, false);
+        Wait(0.0625, c_timeGame);
+    }
+    return true;
+}
+// ============================================================
+// Blessing of the Dragons
+// ============================================================
+bool libHRGE_BlessingoftheDragonsAffixAdded (bool testConds, bool runActions) {
+    libHRGE_BlessingoftheDragonsCurrentCDRModifier = libHRGE_BlessingoftheDragonsCDRModifier * libHRGE_EventAffixCount();
+    return true;
+}
+bool libHRGE_BlessingoftheDragonsBehaviorChange (bool testConds, bool runActions) {
+    while ((UnitHasBehavior2(EventUnit(), "AffixBlessingoftheDragons") == true)) {
+        while ((UnitHasBehaviorWithCategoryFlag(EventUnit(), c_behaviorCategoryTimeStop) == true) || libHRGE_gamePaused) {
+            Wait(0.0625, c_timeGame);
+        }
+        libHRGE_ModifyAllCooldowns(EventUnit(), -(libHRGE_BlessingoftheDragonsCurrentCDRModifier / 16), false, false, false);
+        Wait(0.0625, c_timeGame);
+    }
+    return true;
+}
+// ============================================================
+// BUDDY
+// ============================================================
+void libHRGE_AddBuddy(int player, unit ownerUnit, int count) {
+    if (UnitGetType(ownerUnit) == "HeroErik") {
+        libHRGE_CurrentBuddyCount3[player] += count;
+    } else if (UnitGetType(ownerUnit) == "HeroBaleog" || UnitGetType(ownerUnit) == "RexxarMisha") {
+        libHRGE_CurrentBuddyCount2[player] += count;
+    } else {
+        libHRGE_CurrentBuddyCount1[player] += count;
+    }
+}
+int libHRGE_GetBuddyCount(int player, unit ownerUnit) {
+    if (UnitGetType(ownerUnit) == "HeroErik") {
+        return libHRGE_CurrentBuddyCount3[player];
+    } else if (UnitGetType(ownerUnit) == "HeroBaleog" || UnitGetType(ownerUnit) == "RexxarMisha") {
+        return libHRGE_CurrentBuddyCount2[player];
+    } else {
+        return libHRGE_CurrentBuddyCount1[player];
+    }
+}
+bool libHRGE_BuddyAI (bool testConds, bool runActions) {
+    const int buddyIdleState = 1;
+    const int buddyLeashingState = 2;
+    const int buddyMovingState = 3;
+    const int buddyCirclingState = 4;
+
+    fixed buddyFollowRange = 8;
+    fixed buddyTeleportRange = buddyFollowRange * 3;
+
+    unit ownerUnit = EventPlayerEffectUsedUnit(c_effectUnitCaster);
+    unit buddyUnit;
+    int ownerPlayer = EventPlayerEffectUsedUnitOwner(c_effectPlayerCaster);
+    int currentState = buddyIdleState;
+    fixed circleAngle;
+    unit activeUnit;
+    if (testConds) {
+        if (UnitGetType(ownerUnit) == "HeroLostVikingsController") {
+            return false;
+        }
+        if (UnitGetType(ownerUnit) == "LongboatRaidBoat") {
+            return false;
+        }
+        if (libHRGE_CurrentBuddyCount1[ownerPlayer] >= libHRGE_BuddyCount[ownerPlayer]) {
+            return false;
+        }
+    }
+
+    libNtve_gf_CreateUnitsAtPoint2(1, "AffixBuddyDrone", 0, ownerPlayer, PointWithOffsetPolar(UnitGetPosition(ownerUnit), 1.5, libNtve_gf_RandomAngle()), ownerUnit);
+    buddyUnit = UnitLastCreated();
+    UnitGroupAdd(libGame_gv_players[ownerPlayer].lv_summonedUnitGroup, buddyUnit);
+    libHRGE_AddBuddy(ownerPlayer, ownerUnit, 1);
+    circleAngle = RandomFixed(0, 360);
+    while ((UnitIsAlive(buddyUnit) == true) && (UnitIsAlive(ownerUnit) == true) && (UnitHasBehavior2(ownerUnit, "Dead") == false)) {
+        circleAngle += 2.15;
+        if (circleAngle >= 360) {
+            circleAngle -= 360;
+        }
+        if (UnitGetType(ownerUnit) == "HeroAbathur" && UnitHasBehavior2(ownerUnit, "SymbioteCasterDummyBehavior")) { 
+            activeUnit = libGDHL_gv_heroAbathurSymbioteUnit[ownerPlayer];
+        } else if (UnitGetType(ownerUnit) == "HeroAbathur" && UnitHasBehavior2(ownerUnit, "AbathurUltimateEvolutionVehicleCasterBehavior")) { 
+            activeUnit = libGame_gv_players[ownerPlayer].lv_activeVehicle;
+        } else if (libGame_gv_players[ownerPlayer].lv_activeVehicle != null && libNtve_gf_UnitIsInsideTransport(ownerUnit)) {
+            activeUnit = UnitTransport(ownerUnit);
+        } else if (UnitGetType(ownerUnit) == "HeroDVaPilot" && libNtve_gf_UnitIsInsideTransport(ownerUnit)) {
+            activeUnit = UnitTransport(ownerUnit);
+        } else if (UnitHasBehavior2(ownerUnit, "LongboatRaidHideVikings")) {
+            activeUnit = libGDHL_gv_lostVikingsPlayer[ownerPlayer].lv_boat;
+        } else {
+            activeUnit = ownerUnit;
+        }
+        
+        while (UnitHasBehaviorWithCategoryFlag(activeUnit, c_behaviorCategoryTimeStop)) {
+            UnitGroupRemove(libGame_gv_players[ownerPlayer].lv_summonedUnitGroup, buddyUnit);
+            UnitKill(buddyUnit);
+            Wait(0.0625, c_timeGame);
+        }
+        // Heal owner
+        if (UnitGroupCount(UnitGetTrackedUnitGroup(buddyUnit, "AffixBuddyHealUnitTracker"), c_unitCountAll) <= 0) {
+            if (UnitHasBehavior2(activeUnit, "StormEarthFireCasterBehavior")) {
+                UnitIssueOrder(buddyUnit, OrderTargetingUnit(AbilityCommand("AffixBuddyHeal", 0), UnitGroupUnit(libGDHL_gv_heroChenStormEarthFireUnits[ownerPlayer].lv_stormEarthFireUnits, 1)), c_orderQueueReplace);
+                UnitIssueOrder(buddyUnit, OrderTargetingUnit(AbilityCommand("AffixBuddyHeal", 0), UnitGroupUnit(libGDHL_gv_heroChenStormEarthFireUnits[ownerPlayer].lv_stormEarthFireUnits, 2)), c_orderQueueReplace);
+                UnitIssueOrder(buddyUnit, OrderTargetingUnit(AbilityCommand("AffixBuddyHeal", 0), UnitGroupUnit(libGDHL_gv_heroChenStormEarthFireUnits[ownerPlayer].lv_stormEarthFireUnits, 3)), c_orderQueueReplace);
+            } else if (ownerPlayer == libGDHL_gv_chogallPairs[libHRGE_teamOrderIndex].lv_gallPlayer) {
+                UnitIssueOrder(buddyUnit, OrderTargetingUnit(AbilityCommand("AffixBuddyHeal", 0), libGame_gv_players[libGDHL_gv_chogallPairs[libHRGE_teamOrderIndex].lv_choPlayer].lv_heroUnit), c_orderQueueReplace);
+            } else if (UnitGetType(activeUnit) == "AbathurSymbiote" && UnitTypeTestAttribute(UnitGetType(libGDHL_gv_heroAbathurSymbioteHost[ownerPlayer]), c_unitAttributeHeroic)) {
+                UnitIssueOrder(buddyUnit, OrderTargetingUnit(AbilityCommand("AffixBuddyHeal", 0), libGDHL_gv_heroAbathurSymbioteHost[ownerPlayer]), c_orderQueueReplace);
+            } else {
+                UnitIssueOrder(buddyUnit, OrderTargetingUnit(AbilityCommand("AffixBuddyHeal", 0), activeUnit), c_orderQueueReplace);
+            }
+        }
+        // Movement
+        if (UnitOrderCount(buddyUnit) <= 1) {
+            if ((DistanceBetweenPoints(UnitGetPosition(buddyUnit), UnitGetPosition(activeUnit)) >= buddyTeleportRange)) {
+                UnitSetPosition(buddyUnit, PointWithOffsetPolar(UnitGetPosition(activeUnit), 1.5, libNtve_gf_RandomAngle()), false);
+                UnitIssueOrder(buddyUnit, Order(AbilityCommand("stop", 0)), c_orderQueueReplace);
+                currentState = buddyIdleState;
+            }
+            else if ((DistanceBetweenPoints(UnitGetPosition(buddyUnit), UnitGetPosition(activeUnit)) >= buddyFollowRange) && (currentState != buddyLeashingState)) {
+                UnitIssueOrder(buddyUnit, OrderTargetingPoint(AbilityCommand("move", 0), PointWithOffsetPolar(UnitGetPosition(activeUnit), -1.0, UnitGetFacing(activeUnit))), c_orderQueueReplace);
+                currentState = buddyLeashingState;
+            }
+
+            if (currentState == buddyIdleState && UnitOrderCount(buddyUnit) != 0 && OrderGetAbilityCommand(UnitOrder(activeUnit, 0)) == AbilityCommand("move", 0)) {
+                if ((DistanceBetweenPoints(OrderGetTargetPosition(UnitOrder(activeUnit, 0)), UnitGetPosition(buddyUnit)) > buddyFollowRange)) {
+                    UnitIssueOrder(buddyUnit, OrderTargetingPoint(AbilityCommand("move", 0), PointWithOffsetPolar(OrderGetTargetPosition(UnitOrder(activeUnit, 0)), 1.0, UnitGetFacing(activeUnit))), c_orderQueueReplace);
+                    currentState = buddyMovingState;
+                }
+            }
+            
+            if (currentState == buddyIdleState && UnitOrderCount(buddyUnit) == 0) {
+                currentState = buddyCirclingState;
+                UnitIssueOrder(buddyUnit, OrderTargetingPoint(AbilityCommand("move", 0), PointWithOffsetPolar(UnitGetPosition(activeUnit), buddyFollowRange / 1.75, circleAngle)), c_orderQueueReplace);
+            } else if (currentState == buddyCirclingState) {
+                UnitIssueOrder(buddyUnit, OrderTargetingPoint(AbilityCommand("move", 0), PointWithOffsetPolar(UnitGetPosition(activeUnit), buddyFollowRange / 1.75, circleAngle)), c_orderQueueReplace);
+            } else if (currentState == buddyMovingState) {
+                if ((UnitOrderCount(buddyUnit) == 0)) {
+                    currentState = buddyIdleState;
+                } else {
+                    if ((UnitOrderCount(activeUnit) == 0)) {
+                        if ((DistanceBetweenPoints(UnitGetPosition(buddyUnit), UnitGetPosition(activeUnit)) <= buddyFollowRange)) {
+                            UnitIssueOrder(buddyUnit, Order(AbilityCommand("stop", 0)), c_orderQueueReplace);
+                            currentState = buddyIdleState;
+                        }
+                    }
+                    else if ((OrderGetAbilityCommand(UnitOrder(activeUnit, 0)) == AbilityCommand("move", 0))) {
+                        if ((DistanceBetweenPoints(OrderGetTargetPosition(UnitOrder(activeUnit, 0)), OrderGetTargetPosition(UnitOrder(buddyUnit, 0))) > buddyFollowRange / 2)) {
+                            UnitIssueOrder(buddyUnit, OrderTargetingPoint(AbilityCommand("move", 0), PointWithOffsetPolar(OrderGetTargetPosition(UnitOrder(activeUnit, 0)), 1.0, UnitGetFacing(activeUnit))), c_orderQueueReplace);
+                            currentState = buddyMovingState;
+                        }
+                    }
+                }
+            } else if (currentState == buddyLeashingState) {
+                if ((DistanceBetweenPoints(UnitGetPosition(buddyUnit), UnitGetPosition(activeUnit)) <= buddyFollowRange)) {
+                    UnitIssueOrder(buddyUnit, Order(AbilityCommand("stop", 0)), c_orderQueueReplace);
+                    currentState = buddyIdleState;
+                }
+                else {
+                    if ((DistanceBetweenPoints(UnitGetPosition(buddyUnit), UnitGetPosition(activeUnit)) <= buddyFollowRange) && (UnitOrderCount(buddyUnit) == 0)) {
+                        if ((UnitOrderCount(activeUnit) == 0)) {
+                            currentState = buddyIdleState;
+                        }
+                        else {
+                            UnitIssueOrder(buddyUnit, OrderTargetingPoint(AbilityCommand("move", 0), PointWithOffsetPolar(UnitGetPosition(activeUnit), 1.0, UnitGetFacing(activeUnit))), c_orderQueueReplace);
+                            currentState = buddyLeashingState;
+                        }
+                    }
+                    else {
+                        if ((DistanceBetweenPoints(UnitGetPosition(buddyUnit), UnitGetPosition(activeUnit)) > buddyFollowRange) && (UnitOrderCount(buddyUnit) == 0)) {
+                            UnitIssueOrder(buddyUnit, OrderTargetingPoint(AbilityCommand("move", 0), PointWithOffsetPolar(UnitGetPosition(activeUnit), 1.0, UnitGetFacing(activeUnit))), c_orderQueueReplace);
+                            currentState = buddyLeashingState;
+                        }
+                        else {
+                            if ((DistanceBetweenPoints(UnitGetPosition(buddyUnit), OrderGetTargetPoint(UnitOrder(buddyUnit, 0))) <= buddyFollowRange) && (DistanceBetweenPoints(UnitGetPosition(buddyUnit), UnitGetPosition(activeUnit)) > buddyFollowRange)) {
+                                UnitIssueOrder(buddyUnit, OrderTargetingPoint(AbilityCommand("move", 0), PointWithOffsetPolar(UnitGetPosition(activeUnit), 1.0, UnitGetFacing(activeUnit))), c_orderQueueReplace);
+                                currentState = buddyLeashingState;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    libHRGE_AddBuddy(ownerPlayer, ownerUnit, -1);
+    UnitGroupRemove(libGame_gv_players[ownerPlayer].lv_summonedUnitGroup, buddyUnit);
+    UnitKill(buddyUnit);
+    UnitBehaviorRemove(ownerUnit, "AffixBuddyDroneOwner", 1);
+
+    return true;
+}
+bool libHRGE_BuddyCheck (bool testConds, bool runActions) {
+    unit user = EventPlayerEffectUsedUnit(c_effectUnitCaster);
+    int player = EventPlayerEffectUsedUnitOwner(c_effectPlayerCaster);
+    int i;
+    int totalBuddies = libHRGE_CurrentBuddyCount1[player] + libHRGE_CurrentBuddyCount2[player] + libHRGE_CurrentBuddyCount3[player];
+    if (testConds) {
+        if (totalBuddies >= libHRGE_BuddyCount[player]) {
+            return false;
+        }
+        if (!UnitIsAlive(user)) {
+            return false;
+        }
+    }
+    for (i = 1; i <= (libHRGE_BuddyCount[player] - totalBuddies); i += 1) {
+        totalBuddies = libHRGE_CurrentBuddyCount1[player] + libHRGE_CurrentBuddyCount2[player] + libHRGE_CurrentBuddyCount3[player];
+        if (totalBuddies >= libHRGE_BuddyCount[player]) {
+            break;
+        }
+        if (UnitGetType(user) == "HeroErik") {
+            if (libHRGE_CurrentBuddyCount3[player] < libHRGE_CurrentBuddyCount1[player] && libHRGE_CurrentBuddyCount3[player] < libHRGE_CurrentBuddyCount2[player]) {
+                UnitCreateEffectUnit(user, "AffixBuddyDroneApplyOwner", user);
+            }
+        } else if (UnitGetType(user) == "HeroBaleog") {
+            if (libHRGE_CurrentBuddyCount2[player] < libHRGE_CurrentBuddyCount1[player] && libHRGE_CurrentBuddyCount2[player] <= libHRGE_CurrentBuddyCount3[player]) {
+                UnitCreateEffectUnit(user, "AffixBuddyDroneApplyOwner", user);
+            }
+        } else if (UnitGetType(user) == "HeroOlaf") {
+            if (libHRGE_CurrentBuddyCount1[player] <= libHRGE_CurrentBuddyCount2[player] && libHRGE_CurrentBuddyCount1[player] <= libHRGE_CurrentBuddyCount3[player]) {
+                UnitCreateEffectUnit(user, "AffixBuddyDroneApplyOwner", user);
+            }
+        } else if (UnitGetType(user) == "RexxarMisha") {
+            if (libHRGE_CurrentBuddyCount2[player] < libHRGE_CurrentBuddyCount1[player]) {
+                UnitCreateEffectUnit(user, "AffixBuddyDroneApplyOwner", user);
+            }
+        } else if (UnitGetType(user) == "HeroRexxar") {
+            if (libHRGE_CurrentBuddyCount1[player] <= libHRGE_CurrentBuddyCount2[player]) {
+                UnitCreateEffectUnit(user, "AffixBuddyDroneApplyOwner", user);
+            }
+        } else {
+            UnitCreateEffectUnit(user, "AffixBuddyDroneApplyOwner", user);
+        }
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+
+    return true;
+}
+bool libHRGE_BuddyScaling (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int count = libHRGE_GetAffixCount(libHRGE_instanceBuddy);
+    if (testConds) {
+        if (libGame_gf_TeamNumberOfPlayer(player) != libHRGE_teamOrderIndex) {
+            return false;
+        }
+    }
+    if (count > 0) {
+        libHRGE_SetLevelScalingAndValue("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", player, 0.04, StringToFixed(libHRGE_GetCatalogDefaultValue("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate")) * 0.75);
+        libHRGE_SetLevelScalingAndValue("Effect,AffixBuddyDroneMissileDamage,Amount", player, 0.04, StringToFixed(libHRGE_GetCatalogDefaultValue("Effect,AffixBuddyDroneMissileDamage,Amount")) * 0.75);
+    } else {
+        libHRGE_SetDefaultLevelScaling("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", player);
+        libHRGE_SetDefaultLevelScaling("Effect,AffixBuddyDroneMissileDamage,Amount", player);
+    }
+
+    return true;
+}
+bool libHRGE_BuddyAffixAdded (bool testConds, bool runActions) {
+    int count = libHRGE_EventAffixCount();
+    libHRGE_CatalogModifyForAllPlayers("Behavior,AffixBuddyDroneController,Period", FixedToString(4 - (count - 1), 2));
+    libHRGE_CatalogModifyForAllPlayers("Effect,AffixBuddyHealCreatePersistent,PeriodicPeriodArray[0]", FixedToString(3 - 0.25 * (count - 1), 2));
+    return true;
+}
+bool libHRGE_BuddyOncePerGame (bool testConds, bool runActions) {
+    string hero;
+    int i;
+    for (i = 1; i <= 5; i += 1) {
+        hero = libCore_gf_GetHeroFromIndex(libGame_gv_players[i].lv_heroIndex);
+        if (hero == "LostVikings") {
+            libHRGE_BuddyCount[i] = 3;
+        } else if (hero == "Rexxar") {
+            libHRGE_BuddyCount[i] = 2;
+        } else {
+            libHRGE_BuddyCount[i] = 1;
+        }
+    }
+    libHRGE_AddPlayerBehaviorWithExclusion(libHRGE_player, "AffixBuddyDroneSpawnBehavior", 1, true, "HeroDVaMech");
+    return true;
+}
+
+// ============================================================
+// Memory Shortage
+// ============================================================
+bool libHRGE_MemoryShortage (bool testConds, bool runActions) {
+    int amount = libHRGE_EventAffixCount();
+    int difficulty;
+    int i;
+    
+    if (amount == 1) {
+        difficulty = libAIAI_ge_HeroAIDifficulty_HeroAIVeryHard;
+    } else if (amount == 2) {
+        difficulty = libAIAI_ge_HeroAIDifficulty_HeroAIMedium;
+    } else if (amount == 3) {
+        difficulty = libAIAI_ge_HeroAIDifficulty_HeroAIEasy;
+    } else if (amount == 4) {
+        difficulty = libAIAI_ge_HeroAIDifficulty_HeroAIVeryEasy;
+    } else {
+        difficulty = libAIAI_ge_HeroAIDifficulty_HeroAIElite;
+    }
+    libHRGE_Wait(1.25, c_timeGame);
+    for (i = 2; i <= 5; i += 1) {
+        libAIAI_gf_HeroAISetAIDifficultyLevel(i, difficulty);
+        UnitIssueOrder(libAIAI_gv_aIHeroes[i].lv_currentHeroUnit, Order(AbilityCommand("stop", 0)), c_orderQueueReplace);
+        AIEnableForPlayer(i, (libAIAI_gv_aIHeroes[i].lv_difficulty));
+        DialogControlHookupStandard(c_triggerControlTypeLabel, ("UIContainer/FullscreenUpperContainer/HeroLeaderPanel/HeroLeaderPanelContainer/TabControl/PlayerFrame" + IntToString(i - 1) + "/PlayerNameFrame/PlayerNameLabel"));
+        libNtve_gf_SetDialogItemText(DialogControlLastCreated(), StringToText("AI - ") + libAIAI_gf_HeroAIDifficultyDisplayText(i), PlayerGroupAll());
+    }
+
+    return true;
+}
+// ============================================================
+// No Fountain
+// ============================================================
+bool libHRGE_NoFountain (bool testConds, bool runActions) {
+    unitgroup unitGroup = UnitGroup(null, libHRGE_teamOrder, RegionEntireMap(), libCore_gv_filtersStructure, 0);
+    int i = UnitGroupCount(unitGroup, c_unitCountAll);
+    unit unitvar;
+    for (;; i -= 1) {
+        unitvar = UnitGroupUnitFromEnd(unitGroup, i);
+        if (unitvar == null) { break; }
+        if (UnitGetType(unitvar) == "TownMoonwellL3" || UnitGetType(unitvar) == "TownMoonwellL2" || UnitGetType(unitvar) == "TownMoonwell") {
+            UnitKill(unitvar);
+        }
+    }
+    return true;
+}
+// ============================================================
+// Bad Bargain
+// ============================================================
+bool libHRGE_BadBargainAffixAdded (bool testConds, bool runActions) {
+    libHRGE_BadBargainCurrentModifier = libHRGE_BadBargainModifier * libHRGE_EventAffixCount();
+    return true;
+}
+bool libHRGE_BadBargainUnitDied (bool testConds, bool runActions) {
+    unit deadUnit = EventUnit();
+    int deadPlayer = UnitGetOwner(deadUnit);
+    fixed deathDuration;
+    if (testConds) {
+        if (libGame_gv_gameOver) {
+            return false;
+        }
+        if (!(deadPlayer >= 1 && deadPlayer <= 5)) {
+            return false;
+        }
+        if (UnitTestState(deadUnit, c_unitStateHallucination)) {
+            return false;
+        }
+        if (libHRGE_AffixCooldownReady(libHRGE_instanceResurgenceoftheStorm)) {
+            return false;
+        }
+        if (UnitGetType(deadUnit) != "RexxarMisha") {
+            return false;
+        }
+    }
+    deathDuration = TimerGetRemaining(libGDHL_gv_mishaDeathTimer[deadPlayer]);
+    libNtve_gf_StopTimer(libGDHL_gv_mishaDeathTimer[deadPlayer]);
+    TimerStart(libGDHL_gv_mishaDeathTimer[deadPlayer], deathDuration * (1 + libHRGE_BadBargainCurrentModifier), false, c_timeGame);
+    UnitBehaviorSetDuration(libGame_gv_players[deadPlayer].lv_heroUnit, "RexxarSpiritBondCooldown", deathDuration * (1 + libHRGE_BadBargainCurrentModifier));
+    UnitModifyCooldown(libGame_gv_players[deadPlayer].lv_heroUnit, "Abil/RexxarMishaFocus", deathDuration * (1 + libHRGE_BadBargainCurrentModifier), c_cooldownOperationSet);
+    return true;
+}
+bool libHRGE_BadBargainHeroKilled (bool testConds, bool runActions) {
+    unit deadUnit = libGame_gf_HeroKilledUnit();
+    int deadPlayer = libGame_gf_HeroKilledPlayer();
+    int killingPlayer = libGame_gf_HeroKilledKillingPlayer();
+    fixed deathTime;
+    fixed deathDuration;
+    string unitType = UnitGetType(deadUnit);
+    if (testConds) {
+        if (libGame_gv_gameOver) {
+            return false;
+        }
+        if (!(deadPlayer >= 1 && deadPlayer <= 5)) {
+            return false;
+        }
+        if (deadUnit != libGame_gv_players[deadPlayer].lv_heroUnit && UnitGetType(libGame_gv_players[deadPlayer].lv_heroUnit) != "HeroLostVikingsController") {
+            return false;
+        }
+        if (UnitTestState(deadUnit, c_unitStateHallucination)) {
+            return false;
+        }
+        if (libGame_diabloUsedSouls[deadPlayer] && unitType == "HeroDiablo") {
+            return false;
+        }
+        if (libHRGE_AffixCooldownReady(libHRGE_instanceResurgenceoftheStorm)) {
+            return false;
+        }
+    }
+    if (unitType == "HeroMurky" && !((UnitIsAlive(libGame_gv_heroDeathMurkyRespawnEggs[deadPlayer]) == false) || (libGame_gv_heroDeathMurkyRespawnEggs[deadPlayer] == null))) {
+        deathTime = libCore_gv_bALMurkyWithEggDeathTime * (1 + libHRGE_BadBargainCurrentModifier);
+    } else {
+        deathTime = libCore_gf_HeroDeathTime(deadPlayer, UnitLevel(libGame_gv_players[deadPlayer].lv_heroUnit)) * (1 + libHRGE_BadBargainCurrentModifier);
+    }
+    if (unitType == "HeroLeoric") {
+        libGame_gf_HeroDeathStartRespawnTimer(deadPlayer, deathTime);
+        libNtve_gf_SendActorMessageToUnit(deadUnit, "SetShowStatusBar 1");
+        if ((TimerGetDuration(libGame_gv_players[deadPlayer].lv_respawnTimer) > 0.0)) {
+            UnitBehaviorSetDuration(deadUnit, "LeoricUndying", TimerGetRemaining(libGame_gv_players[deadPlayer].lv_respawnTimer));
+            UnitBehaviorSetDuration(deadUnit, "Dead", TimerGetRemaining(libGame_gv_players[deadPlayer].lv_respawnTimer));
+            libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer] = UnitBehaviorDurationTotal(deadUnit, "LeoricUndying");
+        }
+        else {
+            UnitBehaviorSetDuration(deadUnit, "LeoricUndying", 0.0);
+            UnitBehaviorSetDuration(deadUnit, "Dead", 0.0);
+            libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer] = UnitBehaviorDurationTotal(deadUnit, "LeoricUndying");
+        }
+        CatalogFieldValueSetFixed(c_gameCatalogEffect, "LeoricUndyingLifeRegenModifyUnit", "VitalArray[" + IntToString(0) + "].ChangeFraction", deadPlayer, (0.5 / (libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer] - 2.0)));
+    } else if (unitType == "HeroOlaf") {
+        TimerStart(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_olafDeathTimer, TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_olafDeathTimer) * (1 + libHRGE_BadBargainCurrentModifier), false, c_timeGame);
+    } else if (unitType == "HeroBaleog") {
+        TimerStart(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_baleogDeathTimer, TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_baleogDeathTimer) * (1 + libHRGE_BadBargainCurrentModifier), false, c_timeGame);
+    } else if (unitType == "HeroErik") {
+        TimerStart(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_erikDeathTimer, TimerGetRemaining(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_erikDeathTimer) * (1 + libHRGE_BadBargainCurrentModifier), false, c_timeGame);
+    } else {
+        libGame_gf_HeroDeathStartRespawnTimer(deadPlayer, deathTime);
+        libGame_gf_HeroDeathUpdateUIElementsForDeath(true, true, true, deadPlayer, killingPlayer);
+        libGame_gf_HeroDeathEnableDisableDeadSoundStateForPlayer(true, deadPlayer);
+        libGame_gf_HeroDeathPortHeroBackAndSetDeathState(deadPlayer, libGame_gv_players[deadPlayer].lv_spawnPoint);
+    }
+    return true;
+}
+
+// ============================================================
+// Chrono Boost
+// ============================================================
+bool libHRGE_ChronoBoostAffixAdded (bool testConds, bool runActions) {
+    libHRGE_ChronoBoostCurrentCDRModifier = libHRGE_ChronoBoostCDRModifier * libHRGE_EventAffixCount();
+    return true;
+}
+bool libHRGE_ChronoBoostBehaviorChange (bool testConds, bool runActions) {
+    unit eventUnit = EventUnit();
+    while ((UnitHasBehavior2(eventUnit, "AffixChronoBoostBehavior") == true)) {
+        while ((UnitHasBehaviorWithCategoryFlag(eventUnit, c_behaviorCategoryTimeStop) == true) || libHRGE_gamePaused) {
+            Wait(0.0625, c_timeGame);
+        }
+        libHRGE_ModifyAllCooldowns(eventUnit, -(libHRGE_ChronoBoostCurrentCDRModifier) / 16, true, true, false);
+        Wait(0.0625, c_timeGame);
+    }
+    return true;
+}
+
+// ============================================================
+// Experienced
+// ============================================================
+bool libHRGE_Experienced (bool testConds, bool runActions) {
+    int affixCount = libHRGE_EventAffixCount();
+    fixed modifier = 0.15 + 0.10 * (affixCount - 1);
+    fixed difference = modifier - libHRGE_ExperiencedCurrentModifier;
+
+    libGame_xpModifier[libGame_gv_teamOrderIndex_C] += difference;
+    libHRGE_ExperiencedCurrentModifier = modifier;
+
+    return true;
+}
+// ============================================================
+// Backdoor Protection
+// ============================================================
+bool libHRGE_AlteracsLegacy (bool testConds, bool runActions) {
+    int fortCount = UnitCount("TownTownHallL2", libHRGE_teamChaos, RegionEntireMap(), libCore_gv_filtersStructure, 0);
+    libHRGE_CopyFilter(libHRGE_filterEnemyStructures, libHRGE_filterAlteracsLegacy);
+    libHRGE_AddRequiredUnitTypeFilter(libHRGE_filterAlteracsLegacy, "TownCannonTowerL3");
+    libHRGE_AddRequiredUnitTypeFilter(libHRGE_filterAlteracsLegacy, "TownTownHallL3");
+
+    libHRGE_AddUnitBehaviorToAllFilter("AffixBackdoorProtection", fortCount, libHRGE_filterAlteracsLegacy);
+
+    return true;
+}
+bool libHRGE_AlteracsLegacyUnitDied (bool testConds, bool runActions) {
+    unit dyingStructure = EventUnit();
+    int townIndex = libGame_gf_TownGetTownForUnit(dyingStructure);
+    int victimTeam = libGame_gf_TeamNumberOfPlayer(UnitGetOwner(dyingStructure));
+
+    if (testConds) {
+        if (!UnitTypeTestAttribute(UnitGetType(dyingStructure), c_unitAttributeStructure)) {
+            return false;
+        }
+        if (UnitGetType(dyingStructure) != "TownTownHallL2") {
+            return false;
+        }
+        if (victimTeam != libHRGE_teamChaosIndex) {
+            return false;
+        }
+    }
+    libHRGE_RemoveUnitBehaviorFromAllFilter("AffixBackdoorProtection", 1, libHRGE_filterAlteracsLegacy);
+
+    return true;
+}
+// ============================================================
+// Raven Lord's Favor
+// ============================================================
+bool libHRGE_RavenLordsFavor (bool testConds, bool runActions) {
+    libMapM_gv_mMRavenTributeThreshold_Enemy = 2;
+    libMapM_gv_mMRavenCurseDuration_OrderModifier = 1.5;
+    return true;
+}
+// ============================================================
+// Queen Nightshade's Favor
+// ============================================================
+bool libHRGE_QueenNightshadesTerrorsAffixAdded (bool testConds, bool runActions) {
+    TriggerExecute(TriggerCreate("libGRDN_ApplyQueenNightshadesTerrors"), true, false);
+    return true;
+}
+// ============================================================
+// Blackheart's Hoard
+// ============================================================
+bool libHRGE_BlackheartsHoardAffixAdded (bool testConds, bool runActions) {
+    TriggerExecute(TriggerCreate("libBBAY_ApplyBlackheartsHoard"), true, false);
+    return true;
+}
+// ============================================================
+// Ultimate Punishment
+// ============================================================
+bool libHRGE_InfernalPunishment (bool testConds, bool runActions) {
+    libHRGE_CopyFilter(libHRGE_filterAllEnemies, libHRGE_filterInfernalPunishment);
+    libHRGE_AddRequiredUnitTypeFilter(libHRGE_filterInfernalPunishment, "MercPunisherLaner");
+    TriggerExecute(TriggerCreate("libMSHE_ApplyUltimatePunishment_Func"), true, false);
+    return true;
+}
+bool libHRGE_InfernalPunishmentUnitCreated (bool testConds, bool runActions) {
+    libHRGE_AddUnitBehaviorFilter(EventUnitCreatedUnit(), "AffixUltimatePunishment", 1, libHRGE_filterInfernalPunishment);
+    return true;
+}
+// ============================================================
+// Neithis's Wrath
+// ============================================================
+bool libHRGE_NeithisWrath (bool testConds, bool runActions) {
+    TriggerExecute(TriggerCreate("libMSOC_NeithisWrath_Func"), true, false);
+    return true;
+}
+// ============================================================
+// Raena's Knight
+// ============================================================
+bool libHRGE_RaenaKnight (bool testConds, bool runActions) {
+    libGame_DragonTowerDecayToNeutral = 45;
+    libGame_DragonTowerDecayToEnemy = 45;
+    libMapM_TeamChaosDragonDurationModifier = 1.5;
+    libGame_DragonTowerDecay = true;
+    return true;
+}
+// ============================================================
+// Kill Contract
+// ============================================================
+bool libHRGE_KillContractQuest (bool testConds, bool runActions) {
+    libHRGE_AddPlayerBehavior(libHRGE_player, "AffixKillContractQuestToken", 1, false);
+    return true;
+}
+bool libHRGE_KillContractQuestComplete (bool testConds, bool runActions) {
+    if (testConds) {
+        if (libHRGE_KillContractSuppressRewards) {
+            return false;
+        }
+        if (libHRGE_AffixQuestDone(libHRGE_instanceKillContract)) {
+            return false;
+        }
+    }
+    libHRGE_QueueBoon(libHRGE_rarityCommon, 1, false, true);
+    libHRGE_QueueBoon(libHRGE_rarityUncommon, 1, false, true);
+    libHRGE_SetAffixQuestDone(libHRGE_instanceKillContract, true);
+    
+    return true;
+}
+bool libHRGE_KillContractHeroTakedown (bool testConds, bool runActions) {
+    int maxStacks = 25;
+    int player = libGame_gf_HeroParticipatedInTakedownKillingPlayer();
+    unit playerUnit = libGame_gv_players[player].lv_heroUnit;
+    if (testConds) {
+        if (!libHRGE_PlayerHasBehavior(player, "AffixKillContractQuestToken")) {
+            return false;
+        }
+        if (!(libHRGE_PlayerBehaviorCount(player, "AffixKillContractQuestToken") < maxStacks)) {
+            return false;
+        }
+    }
+
+    libHRGE_UnitCreateEffectUnit(player, "AffixKillContractIncrementToken");
+    libHRGE_AddAffixQuestProgress(libHRGE_instanceKillContract, 1);
+    
+    return true;
+}
+bool libHRGE_KillContractUnitBehaviorCreate (bool testConds, bool runActions) {
+    unit heroUnit = EventUnit();
+    if (testConds) {
+        if (!UnitHasBehavior2(heroUnit, "AffixKillContractQuestToken")) {
+            return false;
+        }
+    }
+    libHRGE_KillContractSuppressRewards = true;
+    UnitSetTokenCount(heroUnit, "AffixKillContractQuestToken", libHRGE_GetAffixQuestProgress(libHRGE_instanceKillContract), heroUnit);
+    libHRGE_Wait(0.125, c_timeGame);
+    libHRGE_KillContractSuppressRewards = false;
+    return true;
+}
+
+// ============================================================
+// Destruction
+// ============================================================
+
+bool libHRGE_DestructionQuest (bool testConds, bool runActions) {
+    fixed questProgress = libHRGE_GetAffixQuestProgress(libHRGE_instanceDestruction);
+    libHRGE_AddPlayerBehavior(libHRGE_player, "AffixDestructionToken", 1, false);
+    
+    if (questProgress > 0) {
+        libHRGE_DestructionSuppressRewards = true;
+        libHRGE_ModifyPlayerTokenCount(libHRGE_player, FixedToInt(questProgress), "AffixDestructionToken");
+        libHRGE_Wait(0.125, c_timeGame);
+        libHRGE_DestructionSuppressRewards = false;
+    }
+    
+    return true;
+}
+bool libHRGE_DestructionUnitDied (bool testConds, bool runActions) {
+    int maxStacks = 24;
+    unit dyingStructure = EventUnit();
+    int victimTeam = libGame_gf_TeamNumberOfPlayer(UnitGetOwner(dyingStructure));
+    unit playerUnit = libGame_gv_players[libHRGE_player].lv_heroUnit;
+
+    if (testConds) {
+        if (!UnitTypeTestAttribute(UnitGetType(dyingStructure), c_unitAttributeStructure)) {
+            return false;
+        }
+        if (UnitGetType(dyingStructure) != "TownTownHallL2" && UnitGetType(dyingStructure) != "TownTownHallL3") {
+            return false;
+        }
+        if (victimTeam != libGame_gv_teamChaosIndex_C) {
+            return false;
+        }
+        if (!libHRGE_PlayerHasBehavior(libHRGE_player, "AffixDestructionToken")) {
+            return false;
+        }
+        if (!(libHRGE_PlayerBehaviorCount(libHRGE_player, "AffixDestructionToken") < maxStacks)) {
+            return false;
+        }
+    }
+    libHRGE_UnitCreateEffectUnit(libHRGE_player, "AffixDestructionIncrementToken");
+    libHRGE_AddAffixQuestProgress(libHRGE_instanceDestruction, 1);
+    
+    return true;
+}
+bool libHRGE_DestructionComplete (bool testConds, bool runActions) {
+    int player = EventPlayerEffectUsedUnitOwner(c_effectPlayerCaster);
+    if (testConds) {
+        if (libHRGE_DestructionSuppressRewards) {
+            return false;
+        }
+        if (libHRGE_AffixQuestDone(libHRGE_instanceDestruction)) {
+            return false;
+        }
+        if (player != libHRGE_player) {
+            return false;
+        }
+    }
+    libHRGE_QueueBoon(libHRGE_rarityRare, 1, false, true);
+    libHRGE_SetAffixQuestDone(libHRGE_instanceDestruction, true);
+    
+    return true;
+}
+bool libHRGE_Destruction6StacksComplete (bool testConds, bool runActions) {
+    int player = EventPlayerEffectUsedUnitOwner(c_effectPlayerCaster);
+    if (testConds) {
+        if (libHRGE_DestructionSuppressRewards) {
+            return false;
+        }
+        if (libHRGE_DestructionFinished[1]) {
+            return false;
+        }
+        if (player != libHRGE_player) {
+            return false;
+        }
+    }
+    libHRGE_QueueBoon(libHRGE_rarityCommon, 1, false, true);
+    libHRGE_DestructionFinished[1] = true;
+    
+    return true;
+}
+bool libHRGE_Destruction12StacksComplete (bool testConds, bool runActions) {
+    int player = EventPlayerEffectUsedUnitOwner(c_effectPlayerCaster);
+    if (testConds) {
+        if (libHRGE_DestructionSuppressRewards) {
+            return false;
+        }
+        if (libHRGE_DestructionFinished[2]) {
+            return false;
+        }
+        if (player != libHRGE_player) {
+            return false;
+        }
+    }
+    libHRGE_QueueBoon(libHRGE_rarityUncommon, 1, false, true);
+    libHRGE_DestructionFinished[2] = true;
+    
+    return true;
+}
+bool libHRGE_DestructionUnitBehaviorCreate (bool testConds, bool runActions) {
+    unit heroUnit = EventUnit();
+    if (testConds) {
+        if (!UnitHasBehavior2(heroUnit, "AffixDestructionToken")) {
+            return false;
+        }
+    }
+    libHRGE_DestructionSuppressRewards = true;
+    UnitSetTokenCount(heroUnit, "AffixDestructionToken", libHRGE_GetAffixQuestProgress(libHRGE_instanceDestruction), heroUnit);
+    libHRGE_Wait(0.125, c_timeGame);
+    libHRGE_DestructionSuppressRewards = false;
+
+    return true;
+}
+// ============================================================
+// Fortifications
+// ============================================================
+void libHRGE_FortificationsCreateTower(string unitType, point location, fixed rotation) {
+    unit tower;
+    if (libHRGE_FortificationsTotal >= libHRGE_FortificationsMax) {
+        return;
+    }
+    libHRGE_FortificationsTotal += 1;
+    if (libHRGE_FortificationsSpawned[libHRGE_FortificationsTotal] == false) {
+        libHRGE_FortificationsSpawned[libHRGE_FortificationsTotal] = true;
+        UnitCreate(1, unitType, c_unitCreateIgnorePlacement, libHRGE_teamChaos, location, rotation, null);
+        tower = UnitLastCreated();
+        UnitBehaviorAdd(tower, "AffixFortificationsTowerReveal", tower, 1);
+        ActorSend(libNtve_gf_MainActorofUnit(tower), "Signal PlayBuild");
+    }
+}
+bool libHRGE_FortificationsAffixAdded (bool testConds, bool runActions) {
+    int count = libHRGE_EventAffixCount();
+    libHRGE_FortificationsTotal = 0;
+
+    if (libCore_gv_mAPMapStringID == "CursedHollow") {
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(133, 155), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(144, 140), 225);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(134, 70), 225);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(196, 117), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(198, 106), 225);
+        if (count >= 2) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(143, 92), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(158, 139), 45);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(178, 76), 225);
+        }
+        if (count >= 3) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(144, 123), 90);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(159, 85), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(132, 79), 135);
+        }
+    } else if (libCore_gv_mAPMapStringID == "Shrines") {
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(132, 165), 180);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(132, 122), 225);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(132, 74), 225);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(199, 97), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(201, 86), 225);
+        if (count >= 2) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(171, 74), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(154, 75), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(151, 116), 225);
+        }
+        if (count >= 3) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(128, 37), 135);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(170, 116), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(136, 110), 180);
+        }
+    } else if (libCore_gv_mAPMapStringID == "Crypts") {
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(132, 115), 180);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(132, 83), 180);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(192, 120), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(195, 108), 225);
+        if (count >= 2) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(150, 84), 180);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(144, 121), 180);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(135, 151), 225);
+        }
+        if (count >= 3) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(166, 129), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(169, 84), 180);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(170, 63), 135);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(132, 45), 135);
+        }
+    } else if (libCore_gv_mAPMapStringID == "DragonShire") {
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(131, 157), 180);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(135, 124), 225);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(133, 76), 225);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(193, 96), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(194, 86), 225);
+        if (count >= 2) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(155, 113), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(165, 76), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(134, 43), 135);
+        }
+        if (count >= 3) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(148, 124), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(139, 111), 135);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(152, 70), 135);
+        }
+    } else if (libCore_gv_mAPMapStringID == "HauntedMines") {
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(146, 202), 225);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(147, 168), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(154, 186), 180);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(199, 186), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(205, 174), 225);
+        if (count >= 2) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(131, 194), 90);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(132, 175), 270);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(155, 61), 270);
+        }
+        if (count >= 3) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(157, 85), 270);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(154, 42), 305);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(182, 179), 135);
+        }
+    } else if (libCore_gv_mAPMapStringID == "TowersOfDoom") {
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(153, 108), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(142, 78), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(144, 58), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(177, 124), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(168, 93), 180);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(175, 64), 225);
+        if (count >= 2) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(135, 24), 135);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(134, 121), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(135, 156), 225);
+        }
+        if (count >= 3) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(130, 75), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(161, 65), 305);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(164, 117), 225);
+        }
+    } else if (libCore_gv_mAPMapStringID == "HauntedWoods") {
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(135, 145), 225);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(136, 74), 180);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(165, 83), 225);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(196, 117), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(204, 102), 225);
+        if (count >= 2) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(122, 127), 270);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(126, 89), 90);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(155, 136), 225);
+        }
+        if (count >= 3) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(145, 127), 135);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(140, 94), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(147, 91), 270);
+        }
+    } else if (libCore_gv_mAPMapStringID == "BlackheartsBay") {
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(139, 155), 180);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(146, 109), 225);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(147, 84), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(201, 110), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(200, 97), 225);
+        if (count >= 2) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(140, 187), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(130, 87), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(168, 81), 45);
+        }
+        if (count >= 3) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(180, 142), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(132, 124), 135);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(135, 47), 135);
+        }
+    } else if (libCore_gv_mAPMapStringID == "ControlPoints") {
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(136, 136), 225);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(139, 81), 180);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(164, 91), 225);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(194, 120), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(202, 106), 225);
+        if (count >= 2) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(134, 173), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(142, 119), 180);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(133, 40), 180);
+        }
+        if (count >= 3) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(151, 138), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(167, 130), 180);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(152, 86), 135);
+        }
+    } else if (libCore_gv_mAPMapStringID == "Hanamura") {
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(170, 134), 180);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(148, 131), 225);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(168, 104), 90);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(204, 133), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(205, 121), 225);
+        if (count >= 2) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(140, 142), 180);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(139, 113), 315);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(184, 119), 180);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(164, 67), 180);
+        }
+        if (count >= 3) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(161, 144), 270);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(187, 139), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(134, 185), 180);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(138, 68), 180);
+        }
+    } else if (libCore_gv_mAPMapStringID == "BattlefieldOfEternity") {
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(154, 123), 225);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(129, 109), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(148, 87), 45);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(196, 117), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(196, 99), 225);
+        if (count >= 2) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(136, 44), 135);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(129, 165), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(172, 56), 135);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(160, 161), 270);
+        }
+        if (count >= 3) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(137, 128), 225);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(134, 90), 180);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(159, 109), 180);
+        }
+    } else if (libCore_gv_mAPMapStringID == "BraxisHoldout") {
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(160, 130), 270);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(138, 110), 270);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(169, 94), 225);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(197, 119), 135);
+        libHRGE_FortificationsCreateTower("TownCannonTowerL3", Point(199, 105), 225);
+        if (count >= 2) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(127, 171), 270);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(142, 92), 90);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(136, 47), 90);
+        }
+        if (count >= 3) {
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(172, 61), 270);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(172, 162), 90);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(164, 109), 0);
+            libHRGE_FortificationsCreateTower("TownCannonTowerL2", Point(140, 126), 0);
+        }
+    }
+    return true;
+}
+
+// ============================================================
+// Sturdy Towers
+// ============================================================
+
+bool libHRGE_SturdyTowersAffixAdded(bool testConds, bool runActions) {
+    libGame_keepFallbackTowers[libGame_gv_teamChaosIndex_C] = true;
+
+    return true;
+}
+
+// ============================================================
+// Many Heroics
+// ============================================================
+
+void libHRGE_ApplyManyHeroics(int player, int level) {
+    string hero = libCore_gf_GetHeroFromIndex(libGame_gv_players[player].lv_heroIndex);
+    if (hero == "Chromie") {
+        level += 2;
+    }
+    if (level >= 10 && hero != "Varian"){
+        libHRGE_SelectAllTalentsOnTier(player, 4);
+    } else if (hero == "Varian" && level >= 4) {
+        libHRGE_SelectAllTalentsOnTier(player, 2);
+    }
+}
+bool libHRGE_ManyHeroics (bool testConds, bool runActions) {
+    int i;
+    int level;
+    for (i = 6; i <= 10; i += 1) {
+        level = UnitLevel(libHRGE_GetPlayerHeroUnit(i));
+        libHRGE_ApplyManyHeroics(i, level);
+    }
+    return true;
+}
+bool libHRGE_ManyHeroicsLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (libGame_gf_TeamNumberOfPlayer(player) != libHRGE_teamChaosIndex) {
+            return false;
+        }
+    }
+    libHRGE_ApplyManyHeroics(player, level);
+    return true;
+}
+// ============================================================
+// Chained Down
+// ============================================================
+bool libHRGE_ChainedDownAffixAdded (bool testConds, bool runActions) {
+    libHRGE_ChainedDownCurrentModifier = libHRGE_ChainedDownModifier * libHRGE_EventAffixCount();
+    return true;
+}
+bool libHRGE_ChainedDownBehaviorChangeCategory (bool testConds, bool runActions) {
+    unit unitVar = EventUnit();
+    string behavior = EventUnitBehavior();
+    fixed behaviorDuration;
+    fixed newDuration;
+    fixed percentIncrease;
+    if (testConds) {
+        if (!UnitHasBehavior2(unitVar, "AffixChainedDownBehavior")) {
+            return false;
+        }
+    }
+
+    behaviorDuration = UnitBehaviorDuration(unitVar, behavior);
+    percentIncrease = 0.25 * UnitBehaviorCount(unitVar, "AffixChainedDownBehavior");
+
+    if ((behaviorDuration > 0.0 && percentIncrease > 0.0)) {
+        newDuration = (behaviorDuration * (1.0 + percentIncrease));
+        UnitBehaviorSetDuration(unitVar, behavior, newDuration);
+    }
+    
+    return true;
+}
+// ============================================================
+// Relentless
+// ============================================================
+bool libHRGE_RelentlessAffixAdded (bool testConds, bool runActions) {
+    libHRGE_RelentlessCurrentModifier = libHRGE_RelentlessModifier * libHRGE_EventAffixCount();
+    return true;
+}
+bool libHRGE_RelentlessBehaviorChangeCategory (bool testConds, bool runActions) {
+    unit unitVar = EventUnit();
+    string behavior = EventUnitBehavior();
+    fixed behaviorDuration;
+    fixed newDuration;
+    fixed percentDecrease;
+    if (testConds) {
+        if (!UnitHasBehavior2(unitVar, "AffixRelentlessController")) {
+            return false;
+        }
+    }
+    behaviorDuration = UnitBehaviorDuration(unitVar, behavior);
+    percentDecrease = 0.15 * UnitBehaviorCount(unitVar, "AffixRelentlessController");
+
+    if ((behaviorDuration > 0.0 && percentDecrease > 0.0)) {
+        newDuration = (behaviorDuration * (1.0 - percentDecrease));
+        UnitBehaviorSetDuration(unitVar, behavior, newDuration);
+    }
+    
+    return true;
+}
+// ============================================================
+// Overleveled
+// ============================================================
+bool libHRGE_OverleveledAffixAdded (bool testConds, bool runActions) {
+    int stacks = libHRGE_EventAffixCountAdded();
+    int currentLevel;
+    int i;
+    for (i = 6; i <= 10; i += 1) {
+        UnitXPAddXP(libGame_gv_players[i].lv_heroUnit, null, StringToFixed(CatalogReferenceGet("Behavior,HeroXPCurve,VeterancyLevelArray[" + IntToString(UnitLevel(libGame_gv_players[i].lv_heroUnit)) +"].MinVeterancyXP", i)) + 1);
+    }
+
+    return true;
+}
+
+// ============================================================
+// Critical Mass
+// ============================================================
+bool libHRGE_CriticalMassHT (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroParticipatedInTakedownKillingPlayer();
+    unit killerUnit = libGame_gv_players[player].lv_heroUnit;
+    unit deadUnit = libGame_gf_HeroParticipatedInTakedownKilledHero();
+
+    if (testConds) {
+        if (!UnitIsAlive(killerUnit)) {
+            return false;
+        }
+        if (!libHRGE_PlayerIsHumanOrChoGallPair(player)) {
+            return false;
+        }
+        if (UnitTestState(deadUnit, c_unitStateHallucination)) {
+            return false;
+        }
+    }
+
+    libHRGE_ResetCooldowns(killerUnit);
+    
+    return true;
+}
+// ============================================================
+// ToxicField
+// ============================================================
+bool libHRGE_ToxicFieldAffixAdded (bool testConds, bool runActions) {
+    libHRGE_ToxicFieldCount = 5 * libHRGE_EventAffixCount();
+    return true;
+}
+bool libHRGE_ToxicFieldTimerElapsed (bool testConds, bool runActions) {
+    int i;
+    point randPoint;
+    if (testConds) {
+        if (!libHRGE_GateIsOpen()) {
+            return false;
+        }
+    }
+    for (i = 1; i <= libHRGE_ToxicFieldCount; i += 1) {
+        randPoint = RegionRandomPoint(RegionEntireMap());
+        if (PointPathingPassable(randPoint)) {
+            UnitCreateEffectPoint(libGame_gv_teams[libHRGE_teamChaosIndex].lv_core, "AffixToxicNestCreateUnit", randPoint);
+        }
+    }
+    return true;
+}
+
+// ============================================================
+// Resurgence of the Storm
+// ============================================================
+bool libHRGE_ResurgenceoftheStormAffixAdded (bool testConds, bool runActions) {
+    string hero = libCore_gf_GetHeroFromIndex(libGame_gv_players[libHRGE_player].lv_heroIndex);
+    if (hero == "LostVikings") {
+        libHRGE_ResurgenceoftheStormCurrentCooldown = libHRGE_ResurgenceoftheStormCooldownLostVikings - (libHRGE_ResurgenceoftheStormCDRPerStack * (libHRGE_EventAffixCount() - 1));
+    } else {
+        libHRGE_ResurgenceoftheStormCurrentCooldown = libHRGE_ResurgenceoftheStormCooldown - (libHRGE_ResurgenceoftheStormCDRPerStack * (libHRGE_EventAffixCount() - 1));
+    }
+    return true;
+}
+bool libHRGE_ResurgenceoftheStormUnitDied (bool testConds, bool runActions) {
+    unit deadUnit = EventUnit();
+    int deadPlayer = UnitGetOwner(deadUnit);
+    if (testConds) {
+        if (UnitGetType(deadUnit) != "RexxarMisha" || deadPlayer != libHRGE_player) {
+            return false;
+        }
+        if (!libHRGE_AffixCooldownReady(libHRGE_instanceResurgenceoftheStorm)) {
+            return false;
+        }
+    }
+
+    libNtve_gf_StopTimer(libGDHL_gv_mishaDeathTimer[deadPlayer]);
+    TimerStart(libGDHL_gv_mishaDeathTimer[deadPlayer], 5, false, c_timeGame);
+    UnitBehaviorSetDuration(libGame_gv_players[deadPlayer].lv_heroUnit, "RexxarSpiritBondCooldown", 5);
+    UnitModifyCooldown(libGame_gv_players[deadPlayer].lv_heroUnit, "Abil/RexxarMishaFocus", 5, c_cooldownOperationSet);
+    TimerStart(libHRGE_GetAffixPrimaryTimer(libHRGE_instanceResurgenceoftheStorm), libHRGE_ResurgenceoftheStormCurrentCooldown / 2, false, c_timeGame);
+    return true;
+}
+bool libHRGE_ResurgenceoftheStormHeroKilled (bool testConds, bool runActions) {
+    unit deadUnit = libGame_gf_HeroKilledUnit();
+    int deadPlayer = libGame_gf_HeroKilledPlayer();
+    unit heroUnit = libGame_gv_players[libHRGE_player].lv_heroUnit;
+    string unitType = UnitGetType(deadUnit);
+
+    if (testConds) {
+        if (deadPlayer != libHRGE_player) {
+            return false;
+        }
+        if (deadUnit != heroUnit && UnitGetType(heroUnit) != "HeroLostVikingsController" && (unitType == "HeroOlaf" || unitType == "HeroBaleog" || unitType == "HeroErik")) {
+            return false;
+        }
+        if (libGame_diabloUsedSouls[libHRGE_player] && unitType == "HeroDiablo") {
+            return false;
+        }
+        if (unitType == "HeroMurky" && !((UnitIsAlive(libGame_gv_heroDeathMurkyRespawnEggs[deadPlayer]) == false) || (libGame_gv_heroDeathMurkyRespawnEggs[deadPlayer] == null))) {
+            return false;
+        }
+        if (unitType == "HeroUther" && PlayerHasTalent(deadPlayer, "UtherMasteryRedemption") && libGame_UtherRedemptionIsReady(deadUnit)) {
+            return false;
+        }
+        if (!libHRGE_AffixCooldownReady(libHRGE_instanceResurgenceoftheStorm)) {
+            return false;
+        }
+    }
+
+    libGame_gv_players[libHRGE_player].lv_suppressReviveVOSound = true;
+    if (unitType == "HeroUther") {
+        libGame_gf_HeroDeathUpdateRespawnTimer(libHRGE_player, CatalogFieldValueGetAsFixed(c_gameCatalogBehavior, "UtherEternalVanguardRezDelay", "Duration", deadPlayer) + CatalogFieldValueGetAsFixed(c_gameCatalogBehavior, "SpiritOfRedemptionSpiritFormBuff", "Duration", deadPlayer) + libHRGE_ResurgenceoftheStormDeathTimer);
+    } else {
+        libGame_gf_HeroDeathUpdateRespawnTimer(libHRGE_player, libHRGE_ResurgenceoftheStormDeathTimer);
+    }
+    if (unitType == "HeroLeoric") {
+        UnitBehaviorSetDuration(deadUnit, "LeoricUndying", TimerGetRemaining(libGame_gv_players[deadPlayer].lv_respawnTimer));
+        UnitBehaviorSetDuration(deadUnit, "Dead", TimerGetRemaining(libGame_gv_players[deadPlayer].lv_respawnTimer));
+        libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer] = UnitBehaviorDurationTotal(deadUnit, "LeoricUndying");
+        CatalogFieldValueSetFixed(c_gameCatalogEffect, "LeoricUndyingLifeRegenModifyUnit", "VitalArray[0].ChangeFraction", deadPlayer, (0.5 / (libGDHL_gv_hero_Leoric_Undying_Dead_Duration[deadPlayer])));
+    } else if (unitType == "HeroOlaf") {
+        libNtve_gf_StopTimer(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_olafDeathTimer);
+        TimerStart(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_olafDeathTimer, 5, false, c_timeGame);
+    } else if (unitType == "HeroBaleog") {
+        libNtve_gf_StopTimer(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_baleogDeathTimer);
+        TimerStart(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_baleogDeathTimer, 5, false, c_timeGame);
+    } else if (unitType == "HeroErik") {
+        libNtve_gf_StopTimer(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_erikDeathTimer);
+        TimerStart(libGDHL_gv_lostVikingsPlayer[deadPlayer].lv_erikDeathTimer, 5, false, c_timeGame);
+    }
+    TimerStart(libHRGE_GetAffixPrimaryTimer(libHRGE_instanceResurgenceoftheStorm), libHRGE_ResurgenceoftheStormCurrentCooldown, false, c_timeGame);
+    return true;
+}
+
+// ============================================================
+// Bribery
+// ============================================================
+bool libHRGE_BriberyAffixAdded (bool testConds, bool runActions) {
+    libHRGE_BriberyCurrentCooldown = libHRGE_BriberyCooldown - (libHRGE_EventAffixCount() - 1) * libHRGE_BriberyCDRPerStack;
+    return true;
+}
+
+bool libHRGE_BriberyTimerElapsed (bool testConds, bool runActions) {
+    int i;
+    int unitCount;
+    int campType;
+    int targetCamp;
+    while (true) {
+        if (libHRGE_BriberyAllowBosses) {
+            for (i = 1; i <= libMapM_gv_jungleMaxCamps; i += 1) {
+                campType = libMapM_gv_jungleCreepCamps[i].lv_mapDataCampDefenderType;
+                if (!libHRGE_CampIsBoss(campType)) {
+                    continue;
+                }
+                unitCount = UnitGroupCount(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, c_unitCountAlive);
+                if (unitCount > 0 && !libNtve_gf_UnitIsInvulnerable(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1)) && !UnitHasBehavior2(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1), "JungleMercDefenderBirthInvulnerability")) {
+                    targetCamp = i;
+                }
+            }
+        }
+        if (targetCamp <= 0) {
+            for (i = 1; i <= libMapM_gv_jungleMaxCamps; i += 1) {
+                campType = libMapM_gv_jungleCreepCamps[i].lv_mapDataCampDefenderType;
+                if (libHRGE_CampIsBoss(campType) && !libHRGE_BriberyAllowBosses) {
+                    continue;
+                }
+                unitCount = UnitGroupCount(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, c_unitCountAlive);
+                if (unitCount > 0 && !libNtve_gf_UnitIsInvulnerable(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1)) && !UnitHasBehavior2(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1), "JungleMercDefenderBirthInvulnerability") && UnitGetType(UnitGroupUnit(libMapM_gv_jungleCreepCamps[i].lv_defenderUnitGroup, 1)) != "SkeletalPirate") {
+                    targetCamp = i;
+                }
+            }
+        }
+        if (targetCamp > 0) {
+            unitCount = UnitGroupCount(libMapM_gv_jungleCreepCamps[targetCamp].lv_defenderUnitGroup, c_unitCountAlive);
+
+            for (i = unitCount; i > 0; i -= 1) {
+                UnitCreateEffectUnit(libGame_gv_players[libHRGE_player].lv_heroUnit, "BribeSetAffix", UnitGroupUnitFromEnd(libMapM_gv_jungleCreepCamps[targetCamp].lv_defenderUnitGroup, i));
+                libHRGE_DisplayDebugMessage("Trying to bribe " + UnitGetType(UnitGroupUnitFromEnd(libMapM_gv_jungleCreepCamps[targetCamp].lv_defenderUnitGroup, i)));
+            }
+            libMapM_gv_jungleCreepCamps[targetCamp].customRespawnTime = libMapM_gv_jungleCreepCamps[targetCamp].lv_defenderRespawnTime / 2;
+            libHRGE_Wait(0.125, c_timeGame);
+            libGame_gv_capturePoints[libMapM_gv_jungleCreepCamps[targetCamp].lv_captureCapturePointIndex].lv_captureCounter = 999;
+            TimerStart(libHRGE_GetCurrentAffixTimer(), libHRGE_BriberyCurrentCooldown, false, c_timeGame);
+            return true;
+        }
+        libHRGE_Wait(1, c_timeGame);
+    }
+    return true;
+}
+
+// ============================================================
+// Deep Pockets
+// ============================================================
+bool libHRGE_BriberyDeepPockets (bool testConds, bool runActions) {
+    libHRGE_BriberyAllowBosses = true;
+    libHRGE_BriberyCooldownModifier = 1.5;
+    return true;
+}
+
+// ============================================================
+// Path of the Wizard
+// ============================================================
+void libHRGE_UpdatePathoftheWizard(int player) {
+    int level = UnitLevel(libGame_gv_players[player].lv_heroUnit);
+    int count = libHRGE_GetAffixCount(libHRGE_instancePathoftheWizard);
+    libHRGE_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheWizardBehavior", "Modification.VitalRegenArray[Energy]", player, 0.2 * count * (level + libHRGE_PathoftheFighterBonus));
+    libHRGE_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheWizardBehavior", "Modification.VitalMaxArray[Energy]", player, 10 * count * (level + libHRGE_PathoftheFighterBonus));
+}
+bool libHRGE_PathoftheWizardAffixAdded (bool testConds, bool runActions) {
+    int i;
+    for (i = 1; i <= libCore_gv_bALMaxPlayers; i += 1) {
+        libHRGE_UpdatePathoftheWizard(i);
+    }
+    return true;
+}
+
+bool libHRGE_PathoftheWizardLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    if (testConds) {
+        if (!UnitHasBehavior2(libGame_gv_players[player].lv_heroUnit, "AffixPathoftheWizardBehavior")) {
+            return false;
+        }
+    }
+    libHRGE_UpdatePathoftheWizard(player);
+    return true;
+}
+// ============================================================
+// Path of the Warrior
+// ============================================================
+void libHRGE_UpdatePathoftheWarrior(int player) {
+    int level = UnitLevel(libGame_gv_players[player].lv_heroUnit);
+    int count = libHRGE_GetAffixCount(libHRGE_instancePathoftheWarrior);
+    libHRGE_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheWarriorBehavior", "Modification.VitalMaxArray[Life]", player, 40 * count * (level + libHRGE_PathoftheFighterBonus));
+}
+bool libHRGE_PathoftheWarriorAffixAdded (bool testConds, bool runActions) {
+    int i;
+    for (i = 1; i <= libCore_gv_bALMaxPlayers; i += 1) {
+        libHRGE_UpdatePathoftheWarrior(i);
+    }
+    return true;
+}
+bool libHRGE_PathoftheWarriorLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    if (testConds) {
+        if (!UnitHasBehavior2(libGame_gv_players[player].lv_heroUnit, "AffixPathoftheWarriorBehavior")) {
+            return false;
+        }
+    }
+    libHRGE_UpdatePathoftheWarrior(player);
+    return true;
+}
+// ============================================================
+// Path of the Assassin
+// ============================================================
+void libHRGE_UpdatePathoftheAssassin(int player) {
+    int level = UnitLevel(libGame_gv_players[player].lv_heroUnit);
+    int count = libHRGE_GetAffixCount(libHRGE_instancePathoftheAssassin);
+    libHRGE_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixPathoftheAssassinBehavior", "Modification.DamageDealtScaled[Basic]", player, (libHRGE_PathoftheAssassinInitialValue[player] + libHRGE_PathoftheAssassinStackingValue[player] * (count - 1)) * (level + libHRGE_PathoftheFighterBonus));
+}
+bool libHRGE_PathoftheAssassinExecuteImmediate (bool testConds, bool runActions) {
+    int i;
+    string hero;
+    for (i = 1; i <= libCore_gv_bALMaxPlayers; i += 1) {
+        hero = libCore_gf_GetHeroFromIndex(libGame_gv_players[i].lv_heroIndex);
+
+        if (hero == "Tracer") {
+            libHRGE_PathoftheAssassinInitialValue[i] = 1;
+            libHRGE_PathoftheAssassinStackingValue[i] = 1;
+        } else if (hero == "DVa" || hero == "Tassadar" || hero == "Tychus" || hero == "Zarya" || hero == "Lucio" || hero == "Genji") {
+            libHRGE_PathoftheAssassinInitialValue[i] = 2;
+            libHRGE_PathoftheAssassinStackingValue[i] = 1;
+        } else {
+            libHRGE_PathoftheAssassinInitialValue[i] = 4;
+            libHRGE_PathoftheAssassinStackingValue[i] = 2;
+        }
+    }
+    libHRGE_PathoftheAssassinInitialValueTooltip = libHRGE_PathoftheAssassinInitialValue[libHRGE_player];
+    libHRGE_PathoftheAssassinStackingValueTooltip = libHRGE_PathoftheAssassinStackingValue[libHRGE_player];
+    return true;
+}
+bool libHRGE_PathoftheAssassinAffixAdded (bool testConds, bool runActions) {
+    int i;
+
+    for (i = 1; i <= libCore_gv_bALMaxPlayers; i += 1) {
+        libHRGE_UpdatePathoftheAssassin(i);
+    }
+    return true;
+}
+bool libHRGE_PathoftheAssassinLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    if (testConds) {
+        if (!UnitHasBehavior2(libGame_gv_players[player].lv_heroUnit, "AffixPathoftheAssassinBehavior")) {
+            return false;
+        }
+    }
+    libHRGE_UpdatePathoftheAssassin(player);
+    return true;
+}
+// ============================================================
+// Path of the Fighter
+// ============================================================
+bool libHRGE_PathoftheFighterAffixAdded (bool testConds, bool runActions) {
+    int i;
+    libHRGE_PathoftheFighterBonus += 4;
+    for (i = 1; i <= libCore_gv_bALMaxPlayers; i += 1) {
+        libHRGE_UpdatePathoftheAssassin(i);
+        libHRGE_UpdatePathoftheWarrior(i);
+        libHRGE_UpdatePathoftheWizard(i);
+    }
+    return true;
+}
+
+// ============================================================
+// Army of BUDDYs
+// ============================================================
+bool libHRGE_ArmyofBUDDYsOncePerGame (bool testConds, bool runActions) {
+    int i;
+    for (i = 1; i <= 5; i += 1) {
+        if (i != libHRGE_player) {
+            libHRGE_AddPlayerBehaviorWithExclusion(i, "AffixBuddyDroneSpawnBehavior", 1, true, "HeroDVaMech");
+            if (i == libGDHL_gv_chogallPairs[libHRGE_teamOrderIndex].lv_gallPlayer || i == libGDHL_gv_chogallPairs[libHRGE_teamOrderIndex].lv_choPlayer) {
+                libHRGE_BuddyCount[i] += 1;
+            }
+        }
+        libHRGE_SetLevelScalingAndValue("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", i, 0.04, StringToFixed(libHRGE_GetCatalogDefaultValue("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate")) * libHRGE_ArmyOfBUDDYsDamageHealingPenalty);
+        libHRGE_SetLevelScalingAndValue("Effect,AffixBuddyDroneMissileDamage,Amount", i, 0.04, StringToFixed(libHRGE_GetCatalogDefaultValue("Effect,AffixBuddyDroneMissileDamage,Amount")) * libHRGE_ArmyOfBUDDYsDamageHealingPenalty);
+    }
+    return true;
+}
+bool libHRGE_ArmyofBUDDYsAffixAdded (bool testConds, bool runActions) {
+    libHRGE_BuddyCount[libHRGE_player] += libHRGE_EventAffixCountAdded();
+    libHRGE_BuddyCountPlayer1 = libHRGE_BuddyCount[libHRGE_player];
+    return true;
+}
+bool libHRGE_ArmyofBUDDYsLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    if (testConds) {
+        if (player < 1 || player > 5) {
+            return false;
+        }
+    }
+
+    libHRGE_SetLevelScalingAndValue("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate", player, 0.04, StringToFixed(libHRGE_GetCatalogDefaultValue("Effect,AffixBuddyHealCreateHealer,RechargeVitalRate")) * libHRGE_ArmyOfBUDDYsDamageHealingPenalty);
+    libHRGE_SetLevelScalingAndValue("Effect,AffixBuddyDroneMissileDamage,Amount", player, 0.04, StringToFixed(libHRGE_GetCatalogDefaultValue("Effect,AffixBuddyDroneMissileDamage,Amount")) * libHRGE_ArmyOfBUDDYsDamageHealingPenalty);
+    return true;
+}
+
+// ============================================================
+// Ammunition
+// ============================================================
+bool libHRGE_Ammunition (bool testConds, bool runActions) {
+    int i;
+    unit unitVar;
+    unitgroup unitGroup;
+    libHRGE_CopyFilter(libHRGE_filterAlliedStructures, libHRGE_filterAmmunitionTowers);
+    libHRGE_CopyFilter(libHRGE_filterAlliedStructures, libHRGE_filterAmmunitionForts);
+    libHRGE_AddRequiredUnitTypeFilter(libHRGE_filterAmmunitionTowers, "TownCannonTowerL2");
+    libHRGE_AddRequiredUnitTypeFilter(libHRGE_filterAmmunitionTowers, "TownCannonTowerL3");
+    libHRGE_AddRequiredUnitTypeFilter(libHRGE_filterAmmunitionTowers, "TownCannonTowerL2Standalone");
+    libHRGE_AddRequiredUnitTypeFilter(libHRGE_filterAmmunitionTowers, "TownCannonTowerL3Standalone");
+    libHRGE_AddRequiredUnitTypeFilter(libHRGE_filterAmmunitionForts, "TownTownHallL2");
+    libHRGE_AddRequiredUnitTypeFilter(libHRGE_filterAmmunitionForts, "TownTownHallL3");
+
+    CatalogFieldValueModify(c_gameCatalogActor, "TownCannonTowerL2", "CustomUnitStatusFrame", libHRGE_teamOrder, "AffixUI/TowerUnitStatusFrameTemplateRealAmmo", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogActor, "TownCannonTowerL3", "CustomUnitStatusFrame", libHRGE_teamOrder, "AffixUI/TowerUnitStatusFrameTemplateRealAmmo", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogActor, "TownCannonTowerL2Standalone", "CustomUnitStatusFrame", libHRGE_teamOrder, "AffixUI/TowerUnitStatusFrameTemplateRealAmmo", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogActor, "TownCannonTowerL3Standalone", "CustomUnitStatusFrame", libHRGE_teamOrder, "AffixUI/TowerUnitStatusFrameTemplateRealAmmo", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogActor, "TownTownHallL2", "CustomUnitStatusFrame", libHRGE_teamOrder, "AffixUI/TowerUnitStatusFrameTemplate40RealAmmo", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogActor, "TownTownHallL3", "CustomUnitStatusFrame", libHRGE_teamOrder, "AffixUI/TowerUnitStatusFrameTemplate40RealAmmo", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogEffect, "StructureAmmoConsumeAmmoSet", "Chance", libHRGE_teamOrder, "1", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogEffect, "StructureAmmoReplenish", "VitalArray[Energy].Change", libHRGE_teamOrder, "2", c_upgradeOperationSet);
+
+    libHRGE_AddUnitBehaviorToAllFilter("StructureAmmoMonitor", 1, libHRGE_filterAmmunitionTowers);
+    libHRGE_AddUnitBehaviorToAllFilter("StructureAmmoMonitor", 1, libHRGE_filterAmmunitionForts);
+    libHRGE_AddUnitBehaviorToAllFilter("StructureAmmoReplenisher", 1, libHRGE_filterAmmunitionTowers);
+    libHRGE_AddUnitBehaviorToAllFilter("StructureAmmoReplenisher", 1, libHRGE_filterAmmunitionForts);
+    libHRGE_UnitSetPropertyFixedToAllFilter(c_unitPropEnergyMax, 20, libHRGE_filterAmmunitionTowers);
+    libHRGE_UnitSetPropertyFixedToAllFilter(c_unitPropEnergyMax, 40, libHRGE_filterAmmunitionForts);
+
+    return true;
+}
+bool libHRGE_AmmunitionUnitCreated (bool testConds, bool runActions) {
+    unit eventUnit = EventUnitCreatedUnit();
+    if (testConds) {
+        if (!UnitTypeTestAttribute(UnitGetType(eventUnit), c_unitAttributeStructure)) {
+            return false;
+        }
+    }
+    libHRGE_AddUnitBehaviorFilter(eventUnit, "StructureAmmoMonitor", 1, libHRGE_filterAmmunitionTowers);
+    libHRGE_AddUnitBehaviorFilter(eventUnit, "StructureAmmoMonitor", 1, libHRGE_filterAmmunitionForts);
+    libHRGE_AddUnitBehaviorFilter(eventUnit, "StructureAmmoReplenisher", 1, libHRGE_filterAmmunitionTowers);
+    libHRGE_AddUnitBehaviorFilter(eventUnit, "StructureAmmoReplenisher", 1, libHRGE_filterAmmunitionForts);
+    libHRGE_SetUnitPropertyFilter(eventUnit, c_unitPropEnergyMax, 20, libHRGE_filterAmmunitionTowers);
+    libHRGE_SetUnitPropertyFilter(eventUnit, c_unitPropEnergyMax, 40, libHRGE_filterAmmunitionForts);
+    return true;
+}
+// ============================================================
+// Grenadier
+// ============================================================
+
+bool libHRGE_GrenadierAffixAdded (bool testConds, bool runActions) {
+    int i;
+    int amount = MinI(libHRGE_EventAffixCount() + 5, 10);
+    unit playerUnit;
+    string unitType;
+    for (i = 6; i <= amount; i += 1) {
+        playerUnit = libHRGE_GetPlayerHeroUnit(i);
+        if (!UnitHasBehavior2(playerUnit, "AffixGrenadierController")) {
+            libHRGE_grenadierTotalHeroes += 1;
+            unitType = UnitGetType(playerUnit);
+            if (unitType == "HeroDVaPilot" || unitType == "HeroDVaMech") {
+                libHRGE_AddPlayerBehavior(i, "AffixGrenadierController", 1, false);
+            } else {
+                libHRGE_AddPlayerBehavior(i, "AffixGrenadierController", 1, true);
+            }
+        }
+    }
+    return true;
+}
+
+bool libHRGE_GrenadierEffectUsed (bool testConds, bool runActions) {
+    int random;
+    unit caster = EventPlayerEffectUsedUnit(c_effectUnitCaster);
+    unit target = EventPlayerEffectUsedUnit(c_effectUnitTarget);
+    if (testConds) {
+        if (UnitTestState(caster, c_unitStateHallucination)) {
+            return false;
+        }
+    }
+    random = RandomInt(1, 3);
+    if (random == 1) {
+        UnitCreateEffectUnit(caster, "GrenadeInitialSet", target);
+    } else if (random == 2) {
+        UnitCreateEffectUnit(caster, "AnaBioticGrenadeInitialSet", target);
+    } else if (random == 3) {
+        UnitCreateEffectUnit(caster, "AffixZaryaParticleGrenadeLaunchMissile", target);
+    }
+
+    return true;
+}
+// ============================================================
+// Passive Advantage
+// ============================================================
+bool libHRGE_PassiveAdvantage (bool testConds, bool runActions) {
+    libGame_xpModifierTrickle[libGame_gv_teamChaosIndex_C] += 0.25;
+    return true;
+}
+// ============================================================
+// Convenient Portals
+// ============================================================
+bool libHRGE_ConvenientPortals (bool testConds, bool runActions) {
+    point topPortal;
+    point bottomPortal;
+    CatalogFieldValueModify(c_gameCatalogBehavior, "MedivhPortalTimedLife", "Duration", libHRGE_teamOrder, "-1", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogEffect, "MedivhPortalDirectionSearch", "AreaArray[0].Radius", libHRGE_teamOrder, "500", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogEffect, "MedivhPortalCreationDirectionSearch", "AreaArray[0].Radius", libHRGE_teamOrder, "500", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogEffect, "MedivhPortalDirectionDummy", "Chance", libHRGE_teamOrder, "0", c_upgradeOperationSet);
+    CatalogFieldValueModify(c_gameCatalogActor, "MedivhPortalRealUnit", "CustomUnitStatusFrame", libHRGE_teamOrder, "", c_upgradeOperationSet);
+    while (!libHRGE_GateIsOpen()) {
+        libHRGE_Wait(1, c_timeGame);
+    }
+    if (libCore_gv_mAPMapStringID == "CursedHollow") {
+        topPortal = Point(122.0, 166.0);
+        bottomPortal = Point(125.0, 49.0);
+    } else if (libCore_gv_mAPMapStringID == "Shrines") {
+        topPortal = Point(124.3, 151.26);
+        bottomPortal = Point(124.05, 40.19);
+    } else if (libCore_gv_mAPMapStringID == "Crypts") {
+        topPortal = Point(124.08, 140);
+        bottomPortal = Point(124.14, 45.11);
+    } else if (libCore_gv_mAPMapStringID == "DragonShire") {
+        topPortal = Point(124.15, 146.24);
+        bottomPortal = Point(123.96, 53.97);
+    } else if (libCore_gv_mAPMapStringID == "HauntedMines") {
+        topPortal = Point(127.96, 227.73);
+        bottomPortal = Point(128.08, 140.25);
+    } else if (libCore_gv_mAPMapStringID == "TowersOfDoom") {
+        topPortal = Point(123.91, 150.03);
+        bottomPortal = Point(123.84, 19.45);
+    } else if (libCore_gv_mAPMapStringID == "HauntedWoods") {
+        topPortal = Point(120.92, 166.88);
+        bottomPortal = Point(127.97, 49.20);
+    } else if (libCore_gv_mAPMapStringID == "BlackheartsBay") {
+        topPortal = Point(126.85, 181.00);
+        bottomPortal = Point(126.91, 55.40);
+    } else if (libCore_gv_mAPMapStringID == "ControlPoints") {
+        topPortal = Point(123.99, 163.20);
+        bottomPortal = Point(123.98, 48.5);
+    } else if (libCore_gv_mAPMapStringID == "Hanamura") {
+        topPortal = Point(131.08, 178.40);
+        bottomPortal = Point(125.12, 78.28);
+    } else if (libCore_gv_mAPMapStringID == "BattlefieldOfEternity") {
+        topPortal = Point(119.23, 153.06);
+        bottomPortal = Point(128.45, 54.74);
+    } else if (libCore_gv_mAPMapStringID == "BraxisHoldout") {
+        topPortal = Point(119.12, 160.94);
+        bottomPortal = Point(128.59, 55.37);
+    }
+
+    UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libHRGE_teamOrder, topPortal, 0, null);
+    UnitCreate(1, "MedivhPortalCreation", c_unitCreateIgnorePlacement, libHRGE_teamOrder, bottomPortal, 0, null);
+
+    return true;
+}
+// ============================================================
+// Globe Huffer
+// ============================================================
+bool libHRGE_GlobeHufferAffixAdded (bool testConds, bool runActions) {
+    libHRGE_GlobeHufferCurrentCooldown = libHRGE_GlobeHufferCooldown - libHRGE_GlobeHufferCDRPerStack * (libHRGE_EventAffixCount() - 1);
+
+    return true;
+}
+
+bool libHRGE_GlobeHufferTimerElapsed (bool testConds, bool runActions) {
+    int unitCount;
+    int random;
+    unit unitVar;
+    unitgroup heroGroup;
+    timer cooldownTimer = libHRGE_GetCurrentAffixTimer();
+
+    while (!libHRGE_GateIsOpen()) {
+        libHRGE_Wait(1, c_timeGame);
+    }
+
+    while (true) {
+        random = RandomInt(1, 6);
+        if (random == 6) { random = 1; }
+        heroGroup = libGame_gv_players[random].lv_heroUnitGroup;
+        unitCount = UnitGroupCount(heroGroup, c_unitCountAll);
+        for (;; unitCount -= 1) {
+            if (unitCount <= 0) { break; }
+            unitVar = UnitGroupUnitFromEnd(heroGroup, unitCount);
+            if (UnitHasBehaviorWithCategoryFlag(unitVar, c_behaviorCategoryTimeStop) == true || UnitHasBehavior2(unitVar, "LongboatRaidHideVikings") ||
+                UnitHasBehavior2(unitVar, "HallOfStormsProtectionBuff")) {
+                continue;
+            } else if (UnitIsAlive(unitVar) && UnitGetType(unitVar) != "HeroLostVikingsController" && UnitGetType(unitVar) != "HeroDVaMech") {
+                UnitCreate(1, "RegenGlobe", 0, libHRGE_teamOrder, PointWithOffset(UnitGetPosition(unitVar), 2 * (RandomInt(0, 1) * 2) - 1, 2 * (RandomInt(0, 1) * 2) - 1), 0, null);
+                TimerStart(libHRGE_GetCurrentAffixTimer(), libHRGE_GlobeHufferCurrentCooldown, false, c_timeGame);
+                return true;
+            }
+        }
+        libHRGE_Wait(1, c_timeGame);
+    }
+    return true;
+}
+// ============================================================
+// No Minimap DLC
+// ============================================================
+bool libHRGE_NoMinimapDLC (bool testConds, bool runActions) {
+    UISetFrameVisible(libCore_gv_playerGroupFromPlayer[libHRGE_player], c_syncFrameTypeMinimapPanel, false);
+    return true;
+}
+// ============================================================
+// Camera Zoom
+// ============================================================
+bool libHRGE_CameraZoom (bool testConds, bool runActions) {
+    CameraSetValue(libHRGE_player, c_cameraValueFieldOfView, 32, 0.5, -1, 10);
+    return true;
+}
+
+// ============================================================
+// Divine Intervention
+// ============================================================
+bool libHRGE_DivineInterventionAffixAdded (bool testConds, bool runActions) {
+    libHRGE_DivineInterventionCurrentCooldown = libHRGE_DivineInterventionCooldown - (libHRGE_DivineInterventionCDRPerStack * (libHRGE_EventAffixCount() - 1));
+    return true;
+}
+bool libHRGE_DivineInterventionEffectUsed (bool testConds, bool runActions) {
+    unit target = EventPlayerEffectUsedUnit(c_effectUnitSource);
+    if (testConds) {
+        if (UnitTestState(target, c_unitStateHallucination)) {
+            return false;
+        }
+        if (!libHRGE_AffixCooldownReady(libHRGE_instanceDivineIntervention)) {
+            return false;
+        }
+    }
+    UnitCreateEffectUnit(target, "MonkDivinePalmInitialSet", target);
+    TimerStart(libHRGE_GetAffixPrimaryTimer(libHRGE_instanceDivineIntervention), libHRGE_DivineInterventionCurrentCooldown, false, c_timeGame);
+    return true;
+}
+
+// ============================================================
+// Nexus Range
+// ============================================================
+bool libHRGE_NexusRangeAffixAdded (bool testConds, bool runActions) {
+    libHRGE_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeRangeTank,Range", libHRGE_player, FixedToString(11.050000 + 1.1 + 0.5 * (libHRGE_EventAffixCount() - 1), 2));
+    libHRGE_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeRange,Range", libHRGE_player, FixedToString(11.050000 + 1.1 + 0.5 * (libHRGE_EventAffixCount() - 1), 2));
+    libHRGE_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeGraduatingRange1,Range", libHRGE_player, FixedToString(12.050000 + 1.1 + 0.5 * (libHRGE_EventAffixCount() - 1), 2));
+    libHRGE_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeGraduatingRange2,Range", libHRGE_player, FixedToString(13.050000 + 1.1 + 0.5 * (libHRGE_EventAffixCount() - 1), 2));
+    libHRGE_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeGraduatingRange3,Range", libHRGE_player, FixedToString(14.050000 + 1.1 + 0.5 * (libHRGE_EventAffixCount() - 1), 2));
+    return true;
+}
+
+// ============================================================
+// Talent Disadvantage
+// ============================================================
+
+void libHRGE_ApplyTalentDisadvantage(int player, int level) {
+    string hero = libCore_gf_GetHeroFromIndex(libGame_gv_players[player].lv_heroIndex);
+    int stacks = libHRGE_GetAffixCount(libHRGE_instanceTalentDisadvantage);
+    int levelChromie;
+    if (hero == "Chromie") {
+        levelChromie = 2;
+    }
+    if (hero == "Varian") {
+        if (stacks >= 1 && level < 7) {
+            libHRGE_SelectAllTalents(player, level, true);
+        }
+        if (stacks >= 2 && level < 10) {
+            libHRGE_SelectAllTalents(player, level, true);
+        }
+        if (stacks >= 3 && level < 13) {
+            libHRGE_SelectAllTalents(player, level, true);
+        }
+        if (stacks >= 4 && level < 16) {
+            libHRGE_SelectAllTalents(player, level, true);
+        }
+        if (stacks >= 5 && level < 20) {
+            libHRGE_SelectAllTalents(player, level, true);
+        }
+        if (stacks >= 6) {
+            libHRGE_SelectAllTalents(player, level, true);
+        }
+    } else {
+        if (stacks >= 1 && (level + levelChromie) < 4) {
+            libHRGE_SelectAllTalents(player, level, true);
+        }
+        if (stacks >= 2 && (level + levelChromie) < 7) {
+            libHRGE_SelectAllTalents(player, level, true);
+        }
+        if (stacks >= 3 && (level + levelChromie) < 13) {
+            libHRGE_SelectAllTalents(player, level, true);
+        }
+        if (stacks >= 4 && (level + levelChromie) < 16) {
+            libHRGE_SelectAllTalents(player, level, true);
+        }
+        if (stacks >= 5 && (level + levelChromie) < 20) {
+            libHRGE_SelectAllTalents(player, level, true);
+        }
+        if (stacks >= 6) {
+            libHRGE_SelectAllTalents(player, level, true);
+        }
+    }
+}
+bool libHRGE_TalentDisadvantageAffixAdded (bool testConds, bool runActions) {
+    int i;
+    for (i = 6; i <= libCore_gv_bALMaxPlayers; i += 1) {
+        libHRGE_ApplyTalentDisadvantage(i, UnitLevel(libGame_gv_players[i].lv_heroUnit));
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    return true;
+}
+bool libHRGE_TalentDisadvantageLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (!(player >= 6 && player <= 10)) {
+            return false;
+        }
+    }
+    libHRGE_ApplyTalentDisadvantage(player, level);
+    return true;
+}
+// ============================================================
+// League of Heroes
+// ============================================================
+bool libHRGE_LeagueofHeroes (bool testConds, bool runActions) {
+    libGame_xpModifierTrickle[libGame_gv_teamOrderIndex_C] += 0.10;
+    libGame_sharedXPDisabled[libGame_gv_teamOrderIndex_C] = true;
+    return true;
+}
+// ============================================================
+// Good Ol' Days
+// ============================================================
+bool libHRGE_GoodOlDays (bool testConds, bool runActions) {
+    libGame_xpGlobesDisabled[libGame_gv_teamOrderIndex_C] = true;
+    return true;
+}
+// ============================================================
+// All Talents
+// ============================================================
+
+bool libHRGE_AllTalentsAffixAdded (bool testConds, bool runActions) {
+    int level = UnitLevel(libGame_gv_players[libHRGE_player].lv_heroUnit);
+    libHRGE_SelectAllTalents(libHRGE_player, level, true);
+    return true;
+}
+bool libHRGE_AllTalentsLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+    }
+    libHRGE_SelectAllTalents(player, level, true);
+    return true;
+}
+// ============================================================
+// Overwhelming Power
+// ============================================================
+bool libHRGE_OverwhelmingPowerBehaviorChange (bool testConds, bool runActions) {
+    unit heroUnit = EventUnit();
+    while ((UnitHasBehavior2(heroUnit, "AffixOverwhelmingPowerBehavior") == true)) {
+        while ((UnitHasBehaviorWithCategoryFlag(heroUnit, c_behaviorCategoryTimeStop) == true) || libHRGE_gamePaused) {
+            libHRGE_Wait(0.0625, c_timeGame);
+        }
+        libHRGE_ModifyAllCooldowns(heroUnit, -(libHRGE_OverwhelmingPowerCDRModifier / 16), false, false, false);
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    return true;
+}
+// ============================================================
+// Injury
+// ============================================================
+bool libHRGE_Injury (bool testConds, bool runActions) {
+    unitgroup unitGroup = libGame_gv_players[libHRGE_player].lv_heroUnitGroup;
+    unit heroUnit;
+    int groupCount = UnitGroupCount(unitGroup, c_unitCountAll);
+    for (;; groupCount -= 1) {
+        if (groupCount <= 0) { break; }
+        heroUnit = UnitGroupUnitFromEnd(unitGroup, groupCount);
+        if (UnitGetType(heroUnit) == "HeroLostVikingsController") { continue; }
+        if (UnitGetType(heroUnit) == "HeroErik" || UnitGetType(heroUnit) == "HeroRexxar" || UnitGetType(heroUnit) == "HeroDVaMech") {
+            libHRGE_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixInjuryBehavior2", "Modification.VitalRegenArray[Life]", libHRGE_player, -UnitGetPropertyFixed(heroUnit, c_unitPropLifeRegen, false) * Pow(1.04, UnitLevel(heroUnit)));
+            UnitBehaviorRemove(heroUnit, "AffixInjuryBehavior", 1);
+            UnitBehaviorRemove(heroUnit, "AffixInjuryBehavior3", 1);
+            UnitBehaviorAdd(heroUnit, "AffixInjuryBehavior2", heroUnit, 1);
+        } else if (UnitGetType(heroUnit) == "HeroBaleog") {
+            libHRGE_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixInjuryBehavior3", "Modification.VitalRegenArray[Life]", libHRGE_player, -UnitGetPropertyFixed(heroUnit, c_unitPropLifeRegen, false) * Pow(1.04, UnitLevel(heroUnit)));
+            UnitBehaviorRemove(heroUnit, "AffixInjuryBehavior", 1);
+            UnitBehaviorRemove(heroUnit, "AffixInjuryBehavior2", 1);
+            UnitBehaviorAdd(heroUnit, "AffixInjuryBehavior3", heroUnit, 1);
+        } else {
+            UnitBehaviorRemove(heroUnit, "AffixInjuryBehavior2", 1);
+            UnitBehaviorRemove(heroUnit, "AffixInjuryBehavior3", 1);
+            libHRGE_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixInjuryBehavior", "Modification.VitalRegenArray[Life]", libHRGE_player, -UnitGetPropertyFixed(heroUnit, c_unitPropLifeRegen, false) * Pow(1.04, UnitLevel(heroUnit)));
+        }
+    }
+
+    return true;
+}
+bool libHRGE_InjuryLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    unitgroup unitGroup;
+    unit heroUnit;
+    int groupCount;
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+    }
+    if (level <= 0) {
+        return true;
+    }
+    unitGroup = libGame_gv_players[libHRGE_player].lv_heroUnitGroup;
+    groupCount = UnitGroupCount(unitGroup, c_unitCountAll);
+    for (;; groupCount -= 1) {
+        if (groupCount <= 0) { break; }
+        heroUnit = UnitGroupUnitFromEnd(unitGroup, groupCount);
+        if (UnitGetType(heroUnit) == "HeroLostVikingsController") { continue; }
+        if (UnitGetType(heroUnit) == "HeroErik" || UnitGetType(heroUnit) == "HeroRexxar" || UnitGetType(heroUnit) == "HeroDVaMech") {
+            libHRGE_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixInjuryBehavior2", "Modification.VitalRegenArray[Life]", libHRGE_player, -UnitGetPropertyFixed(heroUnit, c_unitPropLifeRegen, false) * Pow(1.04, level));
+            UnitBehaviorRemove(heroUnit, "AffixInjuryBehavior", 1);
+            UnitBehaviorRemove(heroUnit, "AffixInjuryBehavior3", 1);
+            UnitBehaviorAdd(heroUnit, "AffixInjuryBehavior2", heroUnit, 1);
+        } else if (UnitGetType(heroUnit) == "HeroBaleog") {
+            libHRGE_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixInjuryBehavior3", "Modification.VitalRegenArray[Life]", libHRGE_player, -UnitGetPropertyFixed(heroUnit, c_unitPropLifeRegen, false) * Pow(1.04, level));
+            UnitBehaviorRemove(heroUnit, "AffixInjuryBehavior", 1);
+            UnitBehaviorRemove(heroUnit, "AffixInjuryBehavior2", 1);
+            UnitBehaviorAdd(heroUnit, "AffixInjuryBehavior3", heroUnit, 1);
+        } else {
+            UnitBehaviorRemove(heroUnit, "AffixInjuryBehavior2", 1);
+            UnitBehaviorRemove(heroUnit, "AffixInjuryBehavior3", 1);
+            libHRGE_CatalogFieldValueSetFixed(c_gameCatalogBehavior, "AffixInjuryBehavior", "Modification.VitalRegenArray[Life]", libHRGE_player, -UnitGetPropertyFixed(heroUnit, c_unitPropLifeRegen, false) * Pow(1.04, level));
+        }
+    }
+
+    return true;
+}
+
+// ============================================================
+// Blindfolded
+// ============================================================
+bool libHRGE_BlindfoldedAffixAdded (bool testConds, bool runActions) {
+    libHRGE_CatalogReferenceModify("Unit,AffixBuddyDrone,Sight", libHRGE_player, FixedToString(StringToFixed(libHRGE_GetCatalogDefaultValue("Behavior,AffixBlindfoldedBehavior,Modification.SightBonus")) * libHRGE_EventAffixCountAdded(), 0), c_upgradeOperationAdd);
+    return true;
+}
+
+// ============================================================
+// Ring of Magic
+// ============================================================
+bool libHRGE_RingofMagicAffixAdded (bool testConds, bool runActions) {
+    int count = libHRGE_EventAffixCount();
+    libHRGE_RingofMagicCurrentModifier = libHRGE_RingofMagicModifier + (libHRGE_RingofMagicModifierPerStack * (count - 1));
+    return true;
+}
+bool libHRGE_RingofMagicBehaviorChange (bool testConds, bool runActions) {
+    unit eventUnit = EventUnit();
+    int player = UnitGetOwner(eventUnit);
+    string cooldownLink;
+    while ((UnitHasBehavior2(eventUnit, "AffixRingofMagicBehavior") == true)) {
+        while ((UnitHasBehaviorWithCategoryFlag(eventUnit, c_behaviorCategoryTimeStop) == true) || libHRGE_gamePaused) {
+            Wait(0.0625, c_timeGame);
+        }
+        libHRGE_ModifyAllCooldowns(eventUnit, -(libHRGE_RingofMagicCurrentModifier) / 16, true, true, false);
+        Wait(0.0625, c_timeGame);
+    }
+    return true;
+}
+
+// ============================================================
+// Last Moments
+// ============================================================
+bool libHRGE_LastMomentsAffixAdded (bool testConds, bool runActions) {
+    libHRGE_LastMomentsCurrentCooldown = libHRGE_LastMomentsCooldown - (libHRGE_LastMomentsCDRPerStack * (libHRGE_EventAffixCount() - 1));
+    return true;
+}
+
+bool libHRGE_LastMomentsEffectUsed (bool testConds, bool runActions) {
+    unit targetUnit = EventPlayerEffectUsedUnit(c_effectUnitSource);
+    if (testConds) {
+        if (UnitTestState(targetUnit, c_unitStateHallucination)) {
+            return false;
+        }
+        if (!libHRGE_AffixCooldownReady(libHRGE_instanceLastMoments)) {
+            return false;
+        }
+    }
+    UnitCreateEffectUnit(libGame_gv_teams[libHRGE_teamChaosIndex].lv_core, "MalthaelLastRitesInitialSet", targetUnit);
+    TimerStart(libHRGE_GetAffixPrimaryTimer(libHRGE_instanceLastMoments), libHRGE_LastMomentsCurrentCooldown, false, c_timeGame);
+    return true;
+}
+
+// ============================================================
+// Bad Mannerism
+// ============================================================
+bool libHRGE_BadMannerismHeroTakedown (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroParticipatedInTakedownKillingPlayer();
+    unit killerUnit = libGame_gv_players[player].lv_heroUnit;
+    unit deadUnit = libGame_gf_HeroParticipatedInTakedownKilledHero();
+    int team = libGame_gf_TeamNumberOfPlayer(player);
+    int i;
+    if (testConds) {
+        if (team != libHRGE_teamChaosIndex) {
+            return false;
+        }
+        if (UnitGetOwner(deadUnit) != libHRGE_player) {
+            return false;
+        }
+        if (UnitTestState(deadUnit, c_unitStateHallucination)) {
+            return false;
+        }
+    }
+    libHRGE_Wait(RandomFixed(0.25, 1.25), c_timeGame);
+    for (i = 1; i <= RandomInt(6, 12); i += 1) {
+        UnitIssueOrder(killerUnit, Order(AbilityCommand("Hearthstone", 0)), c_orderQueueReplace);
+        libHRGE_Wait(RandomFixed(0.0625, 0.1875), c_timeGame);
+        UnitIssueOrder(killerUnit, Order(AbilityCommand("stop", 0)), c_orderQueueReplace);
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    return true;
+}
+bool libHRGE_BadMannerismPeriodic (bool testConds, bool runActions) {
+    int random = RandomInt(6, 10);
+    unitgroup nearbyUnits;
+    unit bmUnit = libGame_gv_players[random].lv_heroUnit;
+    unit playerUnit;
+    int nearbyUnitsCount;
+    int i;
+    if (testConds) {
+        if (!UnitIsAlive(bmUnit)) {
+            return false;
+        }
+        if (UnitHasBehavior2(bmUnit, "Mounted")) {
+            return false;
+        }
+        if (libHRGE_gamePaused || libGame_gv_gameOver) {
+            return false;
+        }
+    }
+    
+    nearbyUnits = UnitGroup(null, libHRGE_player, RegionCircle(UnitGetPosition(bmUnit), 12), null, 0);
+    nearbyUnitsCount = UnitGroupCount(nearbyUnits, c_unitCountAll);
+    for (;; nearbyUnitsCount -= 1) {
+        if (nearbyUnitsCount <= 0) { break; }
+        playerUnit = UnitGroupUnitFromEnd(nearbyUnits, nearbyUnitsCount);
+        if (UnitTypeTestAttribute(UnitGetType(bmUnit), c_unitAttributeHeroic)) {
+            random = RandomInt(1, 100);
+            if (random <= 66) {
+                UnitIssueOrder(bmUnit, Order(AbilityCommand("LootSpray", 0)), c_orderQueueReplace);
+            } else if (random <= 100) {
+                UnitIssueOrder(bmUnit, Order(AbilityCommand("LootYellVoiceLine", 0)), c_orderQueueReplace);
+            }
+        }
+    }
+    return true;
+}
+bool libHRGE_BadMannerism (bool testConds, bool runActions) {
+    int i;
+    for (i = 6; i <= 10; i += 1) {
+        PlayerSetSpray(i, "RandomSpray");
+        libGame_gf_HeroSelectionRandomlyPickSpray(i);
+    }
+    
+    return true;
+}
+// ============================================================
+// Sabotage
+// ============================================================
+bool libHRGE_SabotageOncePerGame (bool testConds, bool runActions) {
+    unitgroup structures = UnitGroup(null, libHRGE_teamOrder, RegionEntireMap(), libCore_gv_filtersStructure, 0);
+    int structureCount = UnitGroupCount(structures, c_unitCountAll);
+    unit structure;
+    libHRGE_CopyFilter(libHRGE_filterAlliedStructures, libHRGE_filterSabotage);
+    libHRGE_AddExcludedUnitTypeFilter(libHRGE_filterSabotage, "TownMoonwellL3");
+    libHRGE_AddExcludedUnitTypeFilter(libHRGE_filterSabotage, "TownMoonwellL2");
+    libHRGE_AddExcludedUnitTypeFilter(libHRGE_filterSabotage, "ItemMULE");
+    if (libCore_gv_mAPMapStringID == "TowersOfDoom") {
+        libHRGE_AddExcludedUnitTypeFilter(libHRGE_filterSabotage, "KingsCore");
+    }
+    for (;; structureCount -= 1) {
+        if (structureCount <= 0) { break; }
+        structure = UnitGroupUnitFromEnd(structures, structureCount);
+
+        if (libHRGE_UnitMatchesFilter(structure, libHRGE_filterSabotage)) {
+            UnitSetPropertyFixed(structure, c_unitPropLife, UnitGetPropertyFixed(structure, c_unitPropLife, true) * 0.5);
+            UnitBehaviorAdd(structure, "SabotageDebuff", structure, 1);
+        }
+    }
+
+    return true;
+}
+bool libHRGE_SabotageUnitCreated (bool testConds, bool runActions) {
+    unit created = EventUnitCreatedUnit();
+    if (testConds) {
+        if (UnitGetOwner(created) != libHRGE_teamOrder) {
+            return false;
+        }
+        if (!libHRGE_UnitMatchesFilter(created, libHRGE_filterSabotage)) {
+            return false;
+        }
+    }
+    while (UnitHasBehavior2(created, "StructureOwnershipChangeRepairBehavior")) {
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    UnitSetPropertyFixed(created, c_unitPropLife, UnitGetPropertyFixed(created, c_unitPropLife, true) * 0.5);
+    UnitBehaviorAdd(created, "SabotageDebuff", created, 1);
+    return true;
+}
+bool libHRGE_SabotageUnitChangeOwner (bool testConds, bool runActions) {
+    unit changed = EventUnit();
+    while (UnitHasBehavior2(changed, "StructureOwnershipChangeRepairBehavior")) {
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    libHRGE_UpdateUnitBehaviorFilter(changed, "SabotageDebuff", 1, libHRGE_filterSabotage);
+    if (libHRGE_UnitMatchesFilter(changed, libHRGE_filterSabotage)) {
+        UnitSetPropertyFixed(changed, c_unitPropLife, UnitGetPropertyFixed(changed, c_unitPropLife, true) * 0.5);
+    } else {
+        UnitSetPropertyFixed(changed, c_unitPropLife, UnitGetPropertyFixed(changed, c_unitPropLife, true));
+    }
+    return true;
+}
+
+// ============================================================
+// Level Disadvantage
+// ============================================================
+bool libHRGE_LevelDisadvantageOncePerGame (bool testConds, bool runActions) {
+    int i;
+    int i2;
+    int heroLevel;
+    unit heroUnit;
+    for (i = 1; i <= 4; i += 1) {
+        for (i2 = 6; i2 <= 10; i2 += 1) {
+            heroUnit = libGame_gv_players[i2].lv_heroUnit;
+            heroLevel = UnitLevel(heroUnit);
+            if (heroLevel < 4) {
+                UnitXPAddXP(heroUnit, null, StringToFixed(CatalogReferenceGet("Behavior,HeroXPCurve,VeterancyLevelArray[" + IntToString(heroLevel) +"].MinVeterancyXP", i2)) + 1);
+            }
+        }
+    }
+    libGame_xpModifier[libGame_gv_teamChaosIndex_C] += 0.25;
+
+    return true;
+}
+// ============================================================
+// Cursed
+// ============================================================
+
+bool libHRGE_CursedHeroKilled (bool testConds, bool runActions) {
+    unit deadUnit = libGame_gf_HeroKilledUnit();
+    int deadPlayer = libGame_gf_HeroKilledPlayer();
+    int killingPlayer = libGame_gf_HeroKilledKillingPlayer();
+    int i;
+    if (testConds) {
+        if (libGame_gv_gameOver) {
+            return false;
+        }
+        if (deadPlayer != libHRGE_player) {
+            return false;
+        }
+        if (!(UnitTestState(deadUnit, c_unitStateHallucination) == false)) {
+            return false;
+        }
+        if (!UnitTypeTestAttribute(UnitGetType(deadUnit), c_unitAttributeHeroic)) {
+            return false;
+        }
+    }
+    libHRGE_cursedDeaths += 1;
+    if (libHRGE_cursedDeaths >= 3) {
+        libHRGE_cursedDeaths = 0;
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaChat, StringExternal("Message/CurseCursed"));
+        libHRGE_QueueCurse(1, false);
+    }
+    return true;
+}
+bool libHRGE_CursedLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+        if (level < 20) {
+            return false;
+        }
+    }
+    TimerStart(libHRGE_GetAffixPrimaryTimer(libHRGE_instanceCursed), 60, true, c_timeGame);
+    TriggerEnable(TriggerGetCurrent(), false);
+    
+    return true;
+}
+bool libHRGE_CursedTimerElapsed (bool testConds, bool runActions) {
+    int i;
+    int level = UnitLevel(libGame_gv_players[libHRGE_player].lv_heroUnit);
+    fixed modifier;
+    if (level < 30) {
+        modifier = -5;
+    } else {
+        modifier = -100;
+    }
+    for (i = 1; i <= 5; i += 1) {
+        libHRGE_CatalogReferenceModify("Behavior,CursedDebuff,ArmorModification.AllArmorBonus", i, FixedToString(modifier, 0), c_upgradeOperationAdd);
+    }
+    return true;
+}
+
+// ============================================================
+// Very Bad Bargain
+// ============================================================
+bool libHRGE_VeryBadBargainTimerElapsed (bool testConds, bool runActions) {
+    int count = libHRGE_GetAffixCount(libHRGE_instanceVeryBadBargain);
+    fixed modifier = libHRGE_VeryBadBargainModifier * count;
+    libHRGE_CatalogReferenceModify("Behavior,VeryBadBargainDebuff,Modification.HealDealtAdditiveMultiplier[Life]", libHRGE_player, FixedToString(modifier, 2), c_upgradeOperationAdd);
+    libHRGE_CatalogReferenceModify("Behavior,VeryBadBargainDebuff,Modification.HealDealtAdditiveMultiplier[Shields]", libHRGE_player, FixedToString(modifier, 2), c_upgradeOperationAdd);
+    libHRGE_CatalogReferenceModify("Behavior,VeryBadBargainDebuff,Modification.DamageDealtFraction[Ability]", libHRGE_player, FixedToString(modifier, 2), c_upgradeOperationAdd);
+    libHRGE_CatalogReferenceModify("Behavior,VeryBadBargainDebuff,Modification.DamageDealtFraction[Basic]", libHRGE_player, FixedToString(modifier, 2), c_upgradeOperationAdd);
+
+    return true;
+}
+// ============================================================
+// Purification Protocol
+// ============================================================
+void libHRGE_AffixPurificationProtocolCastBeam() {
+    unit casterUnit = libGame_gv_teams[libHRGE_teamChaosIndex].lv_core;
+    unitgroup heroGroup = libGame_gv_players[libHRGE_player].lv_heroUnitGroup;
+    int groupCount = UnitGroupCount(heroGroup, c_unitCountAll);
+    unit heroUnit;
+    unit beamUnit;
+    bool applied;
+    
+    while (!applied) {
+        for (;; groupCount -= 1) {
+            if (groupCount <= 0) { break; }
+            heroUnit = UnitGroupUnitFromEnd(heroGroup, groupCount);
+            if (UnitGetType(heroUnit) == "HeroLostVikingsController") { continue; }
+            
+            while (!UnitIsAlive(heroUnit) || UnitHasBehavior2(heroUnit, "HallOfStormsProtectionBuff")) {
+                libHRGE_Wait(0.0625, c_timeGame);
+            }
+    
+            libHRGE_PurificationProtocolTargetUnit = heroUnit;
+            UnitCreateEffectUnit(casterUnit, "ArtanisSpearofAdunPurifierBeamInitialSet", libHRGE_PurificationProtocolTargetUnit);
+            UnitBehaviorAdd(heroUnit, "PurificationProtocol", heroUnit, 1);
+            beamUnit = UnitGroupUnit(UnitGroup("ArtanisSpearofAdunPurifierBeamInvisibleTrackingUnit", UnitGetOwner(casterUnit), RegionEntireMap(), null, 0), 1);
+            libNtve_gf_SendActorMessageToUnit(beamUnit, "SetMinimapVisibility 1");
+            libNtve_gf_SendActorMessageToUnit(beamUnit, "SetMinimapVisibilityAlways 1");
+            libNtve_gf_SendActorMessageToUnit(beamUnit, "MinimapIcon Assets/Textures/affix_minimap_icon_red_circle.dds");
+            libNtve_gf_SendActorMessageToUnit(beamUnit, "MinimapIconScale 0.4");
+            applied = true;
+            break;
+        }
+        libHRGE_Wait(0.25, c_timeGame);
+    }
+}
+bool libHRGE_PurificationProtocolOncePerGame (bool testConds, bool runActions) {
+    TriggerEnable(libGDHL_gt_HeroArtanisSpearofAdunPurifierBeamSetTarget, true);
+    TriggerEnable(libGDHL_gt_HeroArtanisSpearofAdunPurifierBeamRedirectTarget2ElectricBoogaloo, true);
+    TriggerEnable(libGDHL_gt_HeroArtanisSpearofAdunPurifierBeamUnitCreated, true);
+    while (!libHRGE_GateIsOpen()) {
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    libHRGE_AffixPurificationProtocolCastBeam();
+    return true;
+}
+
+// ============================================================
+// MacGuffin
+// ============================================================
+bool libHRGE_MacGuffinAffixAdded (bool testConds, bool runActions) {
+    int i;
+    fixed original = StringToFixed(CatalogReferenceGet("Effect,CaptureMacGuffin,PeriodCount", 0));
+    fixed originalVehicle = StringToFixed(CatalogReferenceGet("Effect,UseVehiclePersistent,PeriodCount", 0));
+
+    libHRGE_MacGuffinCurrentModifier = libHRGE_MacGuffinModifier + (libHRGE_MacGuffinModifierPerStack * (libHRGE_EventAffixCount() - 1));
+
+    for (i = 1; i <= 5; i += 1) {
+        libHRGE_CatalogReferenceModify("Effect,CaptureMacGuffin,PeriodCount", i, FixedToString(original * (1 - libHRGE_MacGuffinCurrentModifier), 0), c_upgradeOperationSet);
+        libHRGE_CatalogReferenceModify("Effect,UseVehiclePersistent,PeriodCount", i, FixedToString(originalVehicle * (1 - libHRGE_MacGuffinCurrentModifier), 0), c_upgradeOperationSet);
+    }
+
+    return true;
+}
+
+// ============================================================
+// Skull Stockpile
+// ============================================================
+bool libHRGE_SkullStockpileAffixAdded (bool testConds, bool runActions) {
+    TriggerExecute(TriggerCreate("libMHtM_ApplySkullStockpile_Func"), true, false);
+    return true;
+}
+// ============================================================
+// Doomed
+// ============================================================
+bool libHRGE_DoomedAffixAdded (bool testConds, bool runActions) {
+    if (libCore_gv_mAPMapStringID == "TowersOfDoom") {
+        libHRGE_AddUnitPropertyFixed(libGame_gv_teams[libHRGE_teamOrderIndex].lv_core, c_unitPropLife, -10);
+        UnitBehaviorAdd(libGame_gv_teams[libHRGE_teamChaosIndex].lv_core, "DoomedRegen", libGame_gv_teams[libHRGE_teamChaosIndex].lv_core, 1);
+    }
+    return true;
+}
+// ============================================================
+// Loot Box
+// ============================================================
+bool libHRGE_LootBoxOneTime (bool testConds, bool runActions) {
+    libHRGE_QueueBoonWithChoiceCount(1, libHRGE_rarityCommon, 2, true, false);
+    return true;
+}
+// ============================================================
+// Experience Hoarder
+// ============================================================
+bool libHRGE_ExperienceHoarderAffixAdded (bool testConds, bool runActions) {
+    fixed xp = StringToFixed(libHRGE_GetAffixCustomValue(libHRGE_instanceExperienceHoarder));
+    int player;
+    playergroup playerGroup;
+    if (xp > 0) {
+        if (libGame_sharedXPDisabled[libGame_gv_teamOrderIndex_C]) {
+            libGame_gf_GrantXPToPlayer(xp, libHRGE_player, libGame_ge_XPSources_External);
+        } else {
+            playerGroup = PlayerGroupCopy(libGame_gf_AlliedPlayerGroupOfPlayer(libHRGE_player));
+            while (true) {
+                player = PlayerGroupNextPlayer(playerGroup, player);
+                if (player<0) { break; }
+                libGame_gf_GrantXPToPlayer(xp, player, libGame_ge_XPSources_External);
+            }
+        }
+    }
+
+    return true;
+}
+bool libHRGE_ExperienceHoarderWin (bool testConds, bool runActions) {
+    libHRGE_SetAffixCustomValue(libHRGE_instanceExperienceHoarder, FixedToString(UnitXPTotal(libGame_gv_players[libHRGE_player].lv_heroUnit) * libHRGE_ExperienceHoarderModifier, 2));
+    return true;
+}
+// ============================================================
+// Pacifism
+// ============================================================
+bool libHRGE_PacifismAffixAdded (bool testConds, bool runActions) {
+    if (libHRGE_GetAffixCustomValue(libHRGE_instancePacifism) == "RewardsReady") {
+        libHRGE_DisplayChatMessage(StringExternal("Message/Pacifism"));
+        libHRGE_QueueBoon(libHRGE_rarityUncommon, 1, false, true);
+        libHRGE_QueueBoon(libHRGE_rarityRare, 1, false, true);
+        libHRGE_QueueBoon(libHRGE_rarityEpic, 1, false, true);
+        libHRGE_SetAffixCustomValue(libHRGE_instancePacifism, "");
+    }
+    
+    return true;
+}
+bool libHRGE_PacifismWin (bool testConds, bool runActions) {
+    fixed takedowns = libGame_gv_scoreValues[libHRGE_player].lv_takedowns;
+    fixed kills = libGame_gv_scoreValues[libHRGE_player].lv_kills;
+    fixed assists = libGame_gv_scoreValues[libHRGE_player].lv_assists;
+    if (testConds) {
+        if (libHRGE_AffixQuestDone(libHRGE_instancePacifism)) {
+            return false;
+        }
+    }
+    if ((takedowns + kills + assists) <= 0) {
+        libUIUI_gf_KillLogAnnounceQuestCompletion(libHRGE_player, "AffixPacifismToken", 1.0);
+        libHRGE_SetAffixQuestDone(libHRGE_instancePacifism, true);
+        libHRGE_SetAffixCustomValue(libHRGE_instancePacifism, "RewardsReady");
+    }
+    
+    return true;
+}
+// ============================================================
+// Long Armed Giants
+// ============================================================
+bool libHRGE_LongArmedGiantsOncePerGame (bool testConds, bool runActions) {
+    libHRGE_AddGeneralBehavior("LongArmedGiants", libHRGE_affixUserFilterEnemySiegeGiants);
+    return true;
+}
+
+// ============================================================
+// Prepared
+// ============================================================
+bool libHRGE_PreparedOncePerGame (bool testConds, bool runActions) {
+    int i;
+    unitgroup heroGroup;
+    int groupCount;
+    unit heroUnit;
+    for (i = 6; i <= libCore_gv_bALMaxPlayers; i += 1) {
+        libHRGE_AddPlayerBehaviorSync(i, "PreparedShieldBehavior", 1, true, false);
+    }
+    return true;
+}
+// ============================================================
+// Slivan
+// ============================================================
+bool libHRGE_SlivanQuest (bool testConds, bool runActions) {
+    libHRGE_AddPlayerBehavior(libHRGE_player, "SlivanQuest", 1, false);
+    if (!libHRGE_SlivanSpawned[libHRGE_teamChaosIndex]) {
+        UnitCreate(1, "SlivanBoss", c_unitCreateIgnorePlacement, libHRGE_teamChaos, libGame_gv_players[libHRGE_enemy].lv_spawnPoint, 0, null);
+        libHRGE_SlivanSpawned[libHRGE_teamChaosIndex] = true;
+    }
+    
+    return true;
+}
+bool libHRGE_SlivanUnitDied (bool testConds, bool runActions) {
+    unit slivan = EventUnit();
+    int player = UnitGetOwner(slivan);
+
+    if (testConds) {
+        if (UnitGetType(slivan) != "SlivanBoss") {
+            return false;
+        }
+        if (player != libHRGE_teamChaos) {
+            return false;
+        }
+        if (libHRGE_AffixQuestDone(libHRGE_instanceSlivan)) {
+            return false;
+        }
+    }
+    libHRGE_UnitCreateEffectUnit(libHRGE_player, "SlivanQuestIncrementToken");
+    libHRGE_AddAffixQuestProgress(libHRGE_instanceSlivan, 1);
+    
+    return true;
+}
+bool libHRGE_SlivanQuestComplete (bool testConds, bool runActions) {
+    int player = EventPlayerEffectUsedUnitOwner(c_effectPlayerCaster);
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+        if (libHRGE_AffixQuestDone(libHRGE_instanceSlivan)) {
+            return false;
+        }
+        if (libHRGE_SlivanSuppressRewards) {
+            return false;
+        }
+    }
+    libHRGE_SetAffixQuestDone(libHRGE_instanceSlivan, true);
+    libHRGE_AddAffix(libHRGE_GetAffixIndex("SlivanReward"), 1);
+    
+    return true;
+}
+bool libHRGE_SlivanUnitBehaviorCreate (bool testConds, bool runActions) {
+    unit heroUnit = EventUnit();
+    if (testConds) {
+        if (!UnitHasBehavior2(heroUnit, "SlivanQuest")) {
+            return false;
+        }
+    }
+    libHRGE_SlivanSuppressRewards = true;
+    UnitSetTokenCount(heroUnit, "SlivanQuest", libHRGE_GetAffixQuestProgress(libHRGE_instanceSlivan), heroUnit);
+    libHRGE_Wait(0.125, c_timeGame);
+    libHRGE_SlivanSuppressRewards = false;
+
+    return true;
+}
+// ============================================================
+// Slivan Reward
+// ============================================================
+bool libHRGE_SlivanRewardAffixAdded (bool testConds, bool runActions) {
+    if (!libHRGE_SlivanSpawned[libHRGE_teamOrderIndex]) {
+        libHRGE_SlivanSpawned[libHRGE_teamOrderIndex] = true;
+        UnitCreate(1, "SlivanBoss", c_unitCreateIgnorePlacement, libHRGE_teamOrder, libGame_gv_players[libHRGE_player].lv_spawnPoint, 0, null);
+    }
+    return true;
+}
+// ============================================================
+// More Options
+// ============================================================
+bool libHRGE_MoreOptionsOncePerGame (bool testConds, bool runActions) {
+    int i;
+    libHRGE_currentAffixSelection += 1;
+    for (i = 1; i <= libHRGE_maxQueue; i += 1) {
+        if (libHRGE_queue[i].choiceCount > 1) {
+            libHRGE_queue[i].choiceCount += 1;
+        }
+    }
+
+    return true;
+}
+
+bool libHRGE_MoreOptionsOneTime (bool testConds, bool runActions) {
+    libHRGE_rerolls += 2;
+    libHRGE_rerollsCurse += 2;
+    return true;
+}
+// ============================================================
+// A New Beginning
+// ============================================================
+bool libHRGE_ANewBeginningExecuteOnce (bool testConds, bool runActions) {
+    libHRGE_QueueBoon(libHRGE_rarityStarter, 1, true, true);
+    return true;
+}
+// ============================================================
+// Rarity Boost
+// ============================================================
+bool libHRGE_RarityBoostExecuteOnce (bool testConds, bool runActions) {
+    fixed modifier = 4;
+    libHRGE_commonToRare *= modifier;
+    libHRGE_commonToEpic *= modifier;
+    libHRGE_commonToLegendary *= modifier;
+    libHRGE_uncommonToRare *= modifier;
+    libHRGE_uncommonToEpic *= modifier;
+    libHRGE_uncommonToLegendary *= modifier;
+    libHRGE_rareToEpic *= modifier;
+    libHRGE_rareToLegendary *= modifier;
+    libHRGE_epicToLegendary *= modifier;
+    return true;
+}
+// ============================================================
+// Reinforcements
+// ============================================================
+bool libHRGE_ReinforcementsAffixAdded (bool testConds, bool runActions) {
+    libGame_extraMinionsRanged[libGame_gv_teamChaosIndex_C] += 1;
+    libGame_extraMinionsMelee[libGame_gv_teamChaosIndex_C] += 1;
+    return true;
+}
+// ============================================================
+// Siege Reinforcements
+// ============================================================
+bool libHRGE_SiegeReinforcementsAffixAdded (bool testConds, bool runActions) {
+    libGame_alwaysSpawnCatapults[libGame_gv_teamChaosIndex_C] = true;
+    return true;
+}
+
+// ============================================================
+// Auto MULE
+// ============================================================
+bool libHRGE_AutoMULEAffixAdded (bool testConds, bool runActions) {
+    libHRGE_AutoMULECurrentCooldown = libHRGE_AutoMULECooldown - (libHRGE_AutoMULECDRPerStack * (libHRGE_EventAffixCount() - 1));
+
+    return true;
+}
+bool libHRGE_AutoMULETimerElapsed (bool testConds, bool runActions) {
+    unitgroup unitGroup;
+    unitgroup structures;
+    int i;
+    unit unitVar;
+
+    while (!libHRGE_GateIsOpen()) {
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+
+    while (true) {
+        unitGroup = UnitGroup(null, libHRGE_teamOrder, RegionEntireMap(), libCore_gv_filtersStructure, 0);
+        i = UnitGroupCount(unitGroup, c_unitCountAll);
+        structures = UnitGroupEmpty();
+        for (;; i -= 1) {
+            unitVar = UnitGroupUnitFromEnd(unitGroup, i);
+            if (unitVar == null) { break; }
+            if (UnitGetType(unitVar) == "TownCannonTowerL2" || UnitGetType(unitVar) == "TownCannonTowerL3" || UnitGetType(unitVar) == "TownCannonTowerL2Standalone" || UnitGetType(unitVar) == "TownCannonTowerL3Standalone" || UnitGetType(unitVar) == "TownTownHallL2" || UnitGetType(unitVar) == "TownTownHallL3" || ( UnitGetType(unitVar) == "KingsCore" && libCore_gv_mAPMapStringID != "TowersOfDoom") ) {
+                if (UnitGetPropertyFixed(unitVar, c_unitPropLife, true) < UnitGetPropertyFixed(unitVar, c_unitPropLifeMax, true)) {
+                    UnitGroupAdd(structures, unitVar);
+                }
+            }
+        }
+        if (UnitGroupCount(structures, c_unitCountAlive) > 0) {
+            PlayerCreateEffectPoint(libHRGE_teamOrder, "CalldownMULEDummySet", UnitGetPosition(UnitGroupRandomUnit(structures, c_unitCountAlive)));
+            TimerStart(libHRGE_GetCurrentAffixTimer(), libHRGE_AutoMULECurrentCooldown, false, c_timeGame);
+            return true;
+        }
+        libHRGE_Wait(1, c_timeGame);
+    }
+
+    return true;
+}
+// ============================================================
+// Not Your Globes
+// ============================================================
+bool libHRGE_NotYourGlobesAffixAdded (bool testConds, bool runActions) {
+    libGame_dropOppositeGlobe[libGame_gv_teamChaosIndex_C] = true;
+
+    return true;
+}
+
+// ============================================================
+// Armored Up
+// ============================================================
+
+bool libHRGE_ArmoredUpAffixAdded (bool testConds, bool runActions) {
+    int i;
+    int level = UnitLevel(libGame_gv_players[libHRGE_enemy].lv_heroUnit);
+    libHRGE_CatalogModifyForAllPlayers("Behavior,AffixArmoredUpBehavior,ArmorModification.AllArmorBonus", IntToString(15 + 1 * level));
+    return true;
+}
+
+bool libHRGE_ArmoredUpLevelUp (bool testConds, bool runActions) {
+    int level = libGame_gf_HeroLevelUpLevel();
+    int player = libGame_gf_HeroLevelUpPlayer();
+    if (testConds) {
+        if (player != libHRGE_enemy) {
+            return false;
+        }
+    }
+    libHRGE_CatalogModifyForAllPlayers("Behavior,AffixArmoredUpBehavior,ArmorModification.AllArmorBonus", IntToString(15 + 1 * level));
+    return true;
+}
+
+// ============================================================
+// Weak Point
+// ============================================================
+
+int libHRGE_AffixWeakPointGetHeroIndex(unit hero) {
+    if (UnitGetType(hero) == "HeroErik" || UnitGetType(hero) == "HeroChenEarth") {
+        return 3;
+    } else if (UnitGetType(hero) == "HeroBaleog" || UnitGetType(hero) == "RexxarMisha" || UnitGetType(hero) == "HeroChenFire" || UnitGetType(hero) == "HeroDVaMech") {
+        return 2;
+    } else {
+        return 1;
+    }
+}
+bool libHRGE_WeakPointOncePerGame (bool testConds, bool runActions) {
+    unitgroup unitGroup = libGame_gv_players[libHRGE_player].lv_heroUnitGroup;
+    unit heroUnit;
+    int groupCount = UnitGroupCount(unitGroup, c_unitCountAll);
+    for (;; groupCount -= 1) {
+        if (groupCount <= 0) { break; }
+        heroUnit = UnitGroupUnitFromEnd(unitGroup, groupCount);
+        if (UnitGetType(heroUnit) == "HeroLostVikingsController") { continue; }
+        libHRGE_AddUnitBehavior(heroUnit, "AffixWeakPointTokenCounter" + IntToString(libHRGE_AffixWeakPointGetHeroIndex(heroUnit)), heroUnit, 1, true);
+    }
+    return true;
+}
+
+bool libHRGE_WeakPointUnitDamaged (bool testConds, bool runActions) {
+    int i;
+    unit eventUnit = EventUnit();
+    unit damagingUnit = EventUnitDamageSourceUnit();
+    fixed damageValue = EventUnitDamageAmount();
+    string damageEffect = EventUnitDamageEffect();
+    int player = UnitGetOwner(eventUnit);
+    int heroIndex;
+    int durationIterator;
+    string tokenBehavior;
+    if (testConds) {
+        if (!UnitHasBehavior2(eventUnit, "AffixWeakPointController")) {
+            return false;
+        }
+        if (UnitTestState(eventUnit, c_unitStateHallucination)) {
+            return false;
+        }
+        if (damagingUnit == eventUnit || damageValue <= 0 || damageEffect == ("AffixWeakPointDamage" + IntToString(heroIndex))) {
+            return false;
+        }
+    }
+    heroIndex = libHRGE_AffixWeakPointGetHeroIndex(eventUnit);
+    tokenBehavior = "AffixWeakPointTokenCounter" + IntToString(heroIndex);
+    durationIterator = FixedToInt(libHRGE_CatalogReferenceGetAsFixed("Behavior,AffixWeakPointDoT" + IntToString(heroIndex) + ",Duration", player));
+    libGame_gf_ModifyTokenCount(FixedToInt(damageValue), tokenBehavior, eventUnit);
+    UnitCreateEffectUnit(eventUnit, "AffixWeakPointSet" + IntToString(heroIndex), eventUnit);
+    libHRGE_Wait(1.0, c_timeGame);
+    while ((UnitIsAlive(eventUnit) == true) && (durationIterator > 0) && UnitHasBehavior2(eventUnit, "AffixWeakPointDoT" + IntToString(heroIndex))) {
+        while (UnitHasBehaviorWithCategoryFlag(eventUnit, c_behaviorCategoryTimeStop) || libHRGE_gamePaused) {
+            libHRGE_Wait(0.0625, c_timeGame);
+        }
+
+        durationIterator -= 1;
+        libHRGE_Wait(1.0, c_timeGame);
+    }
+    libGame_gf_ModifyTokenCount(FixedToInt(-1 * damageValue), tokenBehavior, eventUnit);
+
+    return true;
+}
+
+// ============================================================
+// Invasion
+// ============================================================
+void libHRGE_AffixInvasionUpdate(int level) {
+    libHRGE_InvasionSpawnRate = libCore_gv_bALMinionWaveInterval / (1 + (0.25 + (0.75 * (MinI(level, 20) - 1) / 19)));
+    libCore_minionWaveInterval[libGame_gv_teamChaosIndex_C] = libHRGE_InvasionSpawnRate;
+    libHRGE_InvasionExp = -0.2 + (-0.3 * (MinI(level, 20) - 1) / 19);
+    libGame_xpModifierMinion[libGame_gv_teamOrderIndex_C] = libHRGE_InvasionExp;
+}
+
+bool libHRGE_InvasionAffixAdded (bool testConds, bool runActions) {
+    int level = UnitLevel(libHRGE_GetPlayerHeroUnit(libHRGE_enemy));
+    libHRGE_AffixInvasionUpdate(level);
+    return true;
+}
+bool libHRGE_InvasionLevelUp (bool testConds, bool runActions) {
+    int level = libGame_gf_HeroLevelUpLevel();
+    int player = libGame_gf_HeroLevelUpPlayer();
+    if (testConds) {
+        if (player != libHRGE_enemy) {
+            return false;
+        }
+    }
+    libHRGE_AffixInvasionUpdate(level);
+    if (level >= 20 && !libHRGE_invasionActive) {
+        libHRGE_invasionActive = true;
+        TimerStart(libHRGE_GetAffixPrimaryTimer(libHRGE_instanceInvasion), 60, true, c_timeGame);
+    }
+    return true;
+}
+bool libHRGE_InvasionTimerElapsed (bool testConds, bool runActions) {
+    fixed modifier;
+    libHRGE_invasionModifier += 1;
+    modifier = libHRGE_InvasionStatsModifier * libHRGE_invasionModifier;
+    libHRGE_CatalogModifyForAllPlayers("Behavior,AffixInvasionBehavior,Modification.HealDealtAdditiveMultiplier[Life]", FixedToString(modifier, 2));
+    libHRGE_CatalogModifyForAllPlayers("Behavior,AffixInvasionBehavior,Modification.HealDealtAdditiveMultiplier[Shields]", FixedToString(modifier, 2));
+    libHRGE_CatalogModifyForAllPlayers("Behavior,AffixInvasionBehavior,Modification.DamageDealtFraction[Ability]", FixedToString(modifier, 2));
+    libHRGE_CatalogModifyForAllPlayers("Behavior,AffixInvasionBehavior,Modification.DamageDealtFraction[Basic]", FixedToString(modifier, 2));
+    libHRGE_CatalogModifyForAllPlayers("Behavior,AffixInvasionBehavior,Modification.VitalMaxFractionArray[Life]", FixedToString(modifier, 2));
+    libHRGE_CatalogModifyForAllPlayers("Behavior,AffixInvasionBehavior,Modification.VitalMaxFractionArray[Energy]", FixedToString(modifier, 2));
+    libHRGE_CatalogModifyForAllPlayers("Behavior,AffixInvasionBehavior,Modification.VitalRegenMultiplier[Life]", FixedToString(modifier, 2));
+    libHRGE_CatalogModifyForAllPlayers("Behavior,AffixInvasionBehavior,Modification.VitalRegenMultiplier[Energy]", FixedToString(modifier, 2));
+
+    return true;
+}
+
+// ============================================================
+// Unyielding Defense
+// ============================================================
+
+void libHRGE_ScaleUnyieldingDefense(unit unitVar, string behavior, fixed health) {
+    int player = UnitGetOwner(unitVar);
+    libHRGE_CatalogReferenceModify("Behavior," + behavior + ",DamageResponse.ClampMaximum", player, FixedToString(health * libHRGE_UnyieldingDefenseModifier, 2), c_upgradeOperationSet);
+}
+void libHRGE_AddUnyieldingDefense(unit unitVar) {
+    string unitType = UnitGetType(unitVar);
+    if (UnitTypeTestFlag(unitType, c_unitFlagTownStructureWall)) {
+        UnitBehaviorAdd(unitVar, "AffixUnyieldingDefenseBehaviorWall", unitVar, 1);
+    } else if (UnitTypeTestFlag(unitType, c_unitFlagTownStructureGate)) {
+        UnitBehaviorAdd(unitVar, "AffixUnyieldingDefenseBehaviorGate", unitVar, 1);
+    } else if (UnitTypeTestFlag(unitType, c_unitFlagTownStructureCore)) {
+        UnitBehaviorAdd(unitVar, "AffixUnyieldingDefenseBehaviorCore", unitVar, 1);
+    } else if (unitType == "TownTownHallL2") {
+        UnitBehaviorAdd(unitVar, "AffixUnyieldingDefenseBehaviorFort", unitVar, 1);
+    } else if (unitType == "TownTownHallL3") {
+        UnitBehaviorAdd(unitVar, "AffixUnyieldingDefenseBehaviorKeep", unitVar, 1);
+    } else if (unitType == "TownCannonTowerL2") {
+        UnitBehaviorAdd(unitVar, "AffixUnyieldingDefenseBehaviorFortTower", unitVar, 1);
+    } else if (unitType == "TownCannonTowerL3") {
+        UnitBehaviorAdd(unitVar, "AffixUnyieldingDefenseBehaviorKeepTower", unitVar, 1);
+    }
+}
+bool libHRGE_UnyieldingDefenseUnitCreated (bool testConds, bool runActions) {
+    if (UnitGetOwner(EventUnitCreatedUnit()) == libHRGE_teamOrder) {
+        libHRGE_AddUnyieldingDefense(EventUnitCreatedUnit());
+    }
+    return true;
+}
+bool libHRGE_UnyieldingDefenseAffixAdded (bool testConds, bool runActions) {
+    unit unitVar;
+    unitgroup unitGroup = UnitGroup(null, libHRGE_teamOrder, RegionEntireMap(), libHRGE_filterAlliedStructures.unitFilter, 0);
+    int i = UnitGroupCount(unitGroup, c_unitCountAll);
+    for (;; i -= 1) {
+        if (i <= 0) { break; }
+        unitVar = UnitGroupUnitFromEnd(unitGroup, i);
+        if (unitVar == null) { continue; }
+        libHRGE_AddUnyieldingDefense(unitVar);
+    }
+    return true;
+}
+bool libHRGE_UnyieldingDefenseUnitDied (bool testConds, bool runActions) {
+    unit eventUnit = EventUnit();
+    int player = UnitGetOwner(eventUnit);
+    if (testConds) {        
+        if (player != libHRGE_teamOrder) {
+            return false;
+        }
+        if (UnitGetType(eventUnit) != "TownTownHallL2" && UnitGetType(eventUnit) != "TownTownHallL3") {
+            return false;
+        }
+    }
+    libHRGE_Wait(0.0625, c_timeGame); // Wait for fallback towers to die before applying protected
+    libHRGE_AddUnitBehaviorToAllFilter("AffixUnyieldingDefenseProtected", 1, libHRGE_filterAlliedStructures);
+    return true;
+}
+bool libHRGE_UnyieldingDefenseUnitBehaviorChange1 (bool testConds, bool runActions) {
+    unit eventUnit = EventUnit();
+    fixed lastMaxHealth;
+    while (UnitHasBehavior2(eventUnit, "AffixUnyieldingDefenseBehaviorCore")) {
+        while (libHRGE_gamePaused) {
+            Wait(0.0625, c_timeGame);
+        }
+        if (lastMaxHealth != UnitGetPropertyFixed(eventUnit, c_unitPropLifeMax, true)) {
+            lastMaxHealth = UnitGetPropertyFixed(eventUnit, c_unitPropLifeMax, true);
+            libHRGE_ScaleUnyieldingDefense(eventUnit, "AffixUnyieldingDefenseBehaviorCore", lastMaxHealth);
+        }
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    return true;
+}
+bool libHRGE_UnyieldingDefenseUnitBehaviorChange2 (bool testConds, bool runActions) {
+    unit eventUnit = EventUnit();
+    fixed lastMaxHealth;
+    while (UnitHasBehavior2(eventUnit, "AffixUnyieldingDefenseBehaviorKeep")) {
+        while (libHRGE_gamePaused) {
+            Wait(0.0625, c_timeGame);
+        }
+        if (lastMaxHealth != UnitGetPropertyFixed(eventUnit, c_unitPropLifeMax, true)) {
+            lastMaxHealth = UnitGetPropertyFixed(eventUnit, c_unitPropLifeMax, true);
+            libHRGE_ScaleUnyieldingDefense(eventUnit, "AffixUnyieldingDefenseBehaviorKeep", lastMaxHealth);
+        }
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    return true;
+}
+bool libHRGE_UnyieldingDefenseUnitBehaviorChange3 (bool testConds, bool runActions) {
+    unit eventUnit = EventUnit();
+    fixed lastMaxHealth;
+    while (UnitHasBehavior2(eventUnit, "AffixUnyieldingDefenseBehaviorFort")) {
+        while (libHRGE_gamePaused) {
+            Wait(0.0625, c_timeGame);
+        }
+        if (lastMaxHealth != UnitGetPropertyFixed(eventUnit, c_unitPropLifeMax, true)) {
+            lastMaxHealth = UnitGetPropertyFixed(eventUnit, c_unitPropLifeMax, true);
+            libHRGE_ScaleUnyieldingDefense(eventUnit, "AffixUnyieldingDefenseBehaviorFort", lastMaxHealth);
+        }
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    return true;
+}
+bool libHRGE_UnyieldingDefenseUnitBehaviorChange4 (bool testConds, bool runActions) {
+    unit eventUnit = EventUnit();
+    fixed lastMaxHealth;
+    while (UnitHasBehavior2(eventUnit, "AffixUnyieldingDefenseBehaviorKeepTower")) {
+        while (libHRGE_gamePaused) {
+            Wait(0.0625, c_timeGame);
+        }
+        if (lastMaxHealth != UnitGetPropertyFixed(eventUnit, c_unitPropLifeMax, true)) {
+            lastMaxHealth = UnitGetPropertyFixed(eventUnit, c_unitPropLifeMax, true);
+            libHRGE_ScaleUnyieldingDefense(eventUnit, "AffixUnyieldingDefenseBehaviorKeepTower", lastMaxHealth);
+        }
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    return true;
+}
+bool libHRGE_UnyieldingDefenseUnitBehaviorChange5 (bool testConds, bool runActions) {
+    unit eventUnit = EventUnit();
+    fixed lastMaxHealth;
+    while (UnitHasBehavior2(eventUnit, "AffixUnyieldingDefenseBehaviorFortTower")) {
+        while (libHRGE_gamePaused) {
+            Wait(0.0625, c_timeGame);
+        }
+        if (lastMaxHealth != UnitGetPropertyFixed(eventUnit, c_unitPropLifeMax, true)) {
+            lastMaxHealth = UnitGetPropertyFixed(eventUnit, c_unitPropLifeMax, true);
+            libHRGE_ScaleUnyieldingDefense(eventUnit, "AffixUnyieldingDefenseBehaviorFortTower", lastMaxHealth);
+        }
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    return true;
+}
+bool libHRGE_UnyieldingDefenseUnitBehaviorChange6 (bool testConds, bool runActions) {
+    unit eventUnit = EventUnit();
+    fixed lastMaxHealth;
+    while (UnitHasBehavior2(eventUnit, "AffixUnyieldingDefenseBehaviorGate")) {
+        while (libHRGE_gamePaused) {
+            Wait(0.0625, c_timeGame);
+        }
+        if (lastMaxHealth != UnitGetPropertyFixed(eventUnit, c_unitPropLifeMax, true)) {
+            lastMaxHealth = UnitGetPropertyFixed(eventUnit, c_unitPropLifeMax, true);
+            libHRGE_ScaleUnyieldingDefense(eventUnit, "AffixUnyieldingDefenseBehaviorGate", lastMaxHealth);
+        }
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    return true;
+}
+bool libHRGE_UnyieldingDefenseUnitBehaviorChange7 (bool testConds, bool runActions) {
+    unit eventUnit = EventUnit();
+    fixed lastMaxHealth;
+    while (UnitHasBehavior2(eventUnit, "AffixUnyieldingDefenseBehaviorWall")) {
+        while (libHRGE_gamePaused) {
+            Wait(0.0625, c_timeGame);
+        }
+        if (lastMaxHealth != UnitGetPropertyFixed(eventUnit, c_unitPropLifeMax, true)) {
+            lastMaxHealth = UnitGetPropertyFixed(eventUnit, c_unitPropLifeMax, true);
+            libHRGE_ScaleUnyieldingDefense(eventUnit, "AffixUnyieldingDefenseBehaviorWall", lastMaxHealth);
+        }
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    return true;
+}
+
+// ============================================================
+// Cleaver
+// ============================================================
+
+bool libHRGE_CleaverEffectUsed (bool testConds, bool runActions) {
+    unit caster = EventPlayerEffectUsedUnit(c_effectUnitCaster);
+    unit target = EventPlayerEffectUsedUnit(c_effectUnitTarget);
+    string effect = EventPlayerEffectUsed();
+
+    UnitDamage(caster, "AffixCleaverAoEDamage", target, libCore_gf_GetWeaponDamageForUnit(caster));
+    
+    return true;
+}
+
+// ============================================================
+// Friendly Reinforcements
+// ============================================================
+bool libHRGE_FriendlyReinforcementsAffixAdded (bool testConds, bool runActions) {
+    int stacks = libHRGE_EventAffixCountAdded();
+    
+    libGame_extraMinionsRandom[libHRGE_teamOrderIndex] += stacks;
+    return true;
+}
+
+// ============================================================
+// Private Medivac
+// ============================================================
+
+bool libHRGE_PrivateMedivacUnitDied (bool testConds, bool runActions) {
+    unit deadUnit = EventUnit();
+    int deadPlayer = UnitGetOwner(deadUnit);
+    point deadPos = UnitGetPosition(deadUnit);
+    point currentPos;
+    point medivacPos;
+    unit medivac;
+    bool[libCore_gv_bALMaxPlayers + 1] playerInMedivac;
+
+    if (testConds) {
+        if (deadPlayer != libHRGE_player) {
+            return false;
+        }
+        if (UnitGetType(deadUnit) == "HeroMurky" && !((UnitIsAlive(libGame_gv_heroDeathMurkyRespawnEggs[deadPlayer]) == false) || (libGame_gv_heroDeathMurkyRespawnEggs[deadPlayer] == null))) {
+            return false;
+        }
+        if (UnitGetType(deadUnit) == "HeroUther" && PlayerHasTalent(deadPlayer, "UtherMasteryRedemption") && libGame_UtherRedemptionIsReady(deadUnit)) {
+            return false;
+        }
+        if (!libHRGE_AffixCooldownReady(libHRGE_instancePrivateMedivac)) {
+            return false;
+        }
+    }
+    while (!UnitIsAlive(deadUnit)) {
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    TimerStart(libHRGE_GetAffixPrimaryTimer(libHRGE_instancePrivateMedivac), libHRGE_PrivateMedivacCooldown, false, c_timeGame);
+
+    currentPos = UnitGetPosition(deadUnit);
+    libCore_gf_CreateMinimapPingStorm(PlayerGroupAll(), "StormObjective", currentPos, ColorWithAlpha(0,0,0,0), 2.0);
+    SoundPlayAtPointForPlayer(SoundLink("PVE_MercMedivac_Alert", -1), c_maxPlayers, PlayerGroupAll(), currentPos, 0.0, 100.0, 0.0);
+    libNtve_gf_UnitCreateFacingPoint(1, "MedicMedivacDropship", c_unitCreateIgnorePlacement, libHRGE_teamOrder, currentPos, deadPos, null);
+    medivac = UnitLastCreated();
+    libNtve_gf_PlayAnimation(libNtve_gf_MainActorofUnit(medivac), c_animNameDefault, "Birth", c_animFlagNonLooping, 0.0);
+    libNtve_gf_SendActorMessageToUnit(medivac, "MinimapIcon Assets\\Textures\\storm_temp_btn-unit-terran-medivac.dds");
+    libNtve_gf_SendActorMessageToUnit(medivac, "MinimapIconScale 0.350000");
+    libNtve_gf_MakeUnitInvulnerable(medivac, true);
+    while (!UnitHasBehavior2(medivac, "MedicMedivacDropshipEnRoute") && UnitGroupCount(UnitCargoGroup(medivac), c_unitCountAll) <= 0) {
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+    if (UnitGroupCount(UnitCargoGroup(medivac), c_unitCountAll) > 0) {
+        UnitSelect(libGame_gv_players[deadPlayer].lv_heroUnit, deadPlayer, true);
+        libGame_gv_players[deadPlayer].lv_cameraForcedLock = true;
+        libGame_gv_players[deadPlayer].lv_cameraPlayerUnitGroupToFocusOn = libNtve_gf_ConvertUnitToUnitGroup(medivac);
+        libGame_gf_CameraUpdateCameraForPlayer(deadPlayer);
+        playerInMedivac[deadPlayer] = true;
+    }
+    libNtve_gf_MakeUnitUncommandable(medivac, true);
+    UnitBehaviorSetDuration(medivac, "MedicMedivacDropshipDepartureDelay", 0.0625);
+    libHRGE_Wait(0.5, c_timeGame);
+    UnitIssueOrder(medivac, OrderTargetingPoint(AbilityCommand("move", 0), deadPos), c_orderQueueAddToEnd);
+    libHRGE_Wait(0.5, c_timeGame);
+
+    while (UnitIsAlive(medivac) && (UnitBehaviorCount(medivac, "MedicMedivacDropshipEnRoute") == 1)) {
+        medivacPos = UnitGetPosition(medivac);
+        if ((DistanceBetweenPoints(medivacPos, deadPos) <= 5.0)) {
+            UnitBehaviorRemove(medivac, "MedicMedivacDropshipDepartureAscent", 1);
+        }
+        if ((DistanceBetweenPoints(medivacPos, deadPos) <= 1.0)) {
+            UnitBehaviorSetDurationRemaining(medivac, "MedicMedivacDropshipDropoffLocationTimedLife", 0.0);
+            UnitBehaviorRemove(medivac, "MedicMedivacDropshipEnRoute", 1);
+        }
+        libHRGE_Wait(0.0625, c_timeGame);
+    }
+
+    if (playerInMedivac[deadPlayer]) {
+        libGame_gv_players[deadPlayer].lv_cameraForcedLock = false;
+        libGame_gv_players[deadPlayer].lv_cameraPlayerUnitGroupToFocusOn = libGame_gv_players[deadPlayer].lv_heroUnitGroup;
+        UnitSelect(medivac, deadPlayer, false);
+        UnitSelect(libGame_gv_players[deadPlayer].lv_heroUnit, deadPlayer, true);
+        libNtve_gf_RestoreUnitSelection(deadPlayer);
+        libGame_gf_CameraUpdateCameraForPlayer(deadPlayer);
+    }
+
+    libHRGE_Wait(6, c_timeGame);
+    UnitRemove(medivac);
+
+    return true;
+}
+
+// ============================================================
+// Weaken
+// ============================================================
+bool libHRGE_WeakenAffixAdded (bool testConds, bool runActions) {
+    libHRGE_WeakenCurrentModifier = libHRGE_WeakenModifier * libHRGE_EventAffixCount();
+    return true;
+}
+bool libHRGE_WeakenUnitCreated (bool testConds, bool runActions) {
+    unit eventUnit = EventUnitCreatedUnit();
+    if (testConds) {
+        if (!libHRGE_UnitMatchesFilter(eventUnit, libHRGE_filterEnemyMinions)) {
+            return false;
+        }
+    }
+    libHRGE_Wait(0.0625, c_timeGame);
+    UnitSetPropertyFixed(eventUnit, c_unitPropLife, UnitGetPropertyFixed(eventUnit, c_unitPropLife, true) * (1 - libHRGE_WeakenCurrentModifier));
+    return true;
+}
+
+// ============================================================
+// Quick Mount
+// ============================================================
+bool libHRGE_QuickMountOncePerGame (bool testConds, bool runActions) {
+    int i;
+    for (i = 1; i <= 5; i += 1) {
+        libHRGE_CatalogReferenceSet("Abil,Mount,CastIntroTime[0]", i, FixedToString(libHRGE_CatalogReferenceGetAsFixed("Abil,Mount,CastIntroTime[0]", 0) * libHRGE_QuickMountModifier, 2));
+        libHRGE_CatalogReferenceSet("Abil,Mount,Cost[0].Cooldown.TimeUse", i, FixedToString(libHRGE_CatalogReferenceGetAsFixed("Abil,Mount,Cost[0].Cooldown.TimeUse", 0) * libHRGE_QuickMountModifier, 2));
+        libHRGE_CatalogReferenceSet("Effect,DismountModifyCooldown,Cost[0].CooldownTimeUse", i, FixedToString(libHRGE_CatalogReferenceGetAsFixed("Effect,DismountModifyCooldown,Cost[0].CooldownTimeUse", 0) * libHRGE_QuickMountModifier, 2));
+    }
+    TriggerAddEventGeneric(TriggerCreate("libHRGE_QuickMountCostsChanged"), libGame_mountCostsChangedEventName);
+    return true;
+}
+
+bool libHRGE_QuickMountCostsChanged (bool testConds, bool runActions) {
+    int player = libGame_EventMountCostsChangedPlayer();
+    bool onOff = libGame_EventMountCostsChangedOnOff();
+    if (onOff) {
+        libHRGE_CatalogReferenceSet("Abil,Mount,CastIntroTime[0]", player, FixedToString(libHRGE_CatalogReferenceGetAsFixed("Abil,Mount,CastIntroTime[0]", 0) * libHRGE_QuickMountModifier, 2));
+        libHRGE_CatalogReferenceSet("Abil,Mount,Cost[0].Cooldown.TimeUse", player, FixedToString(libHRGE_CatalogReferenceGetAsFixed("Abil,Mount,Cost[0].Cooldown.TimeUse", 0) * libHRGE_QuickMountModifier, 2));
+        libHRGE_CatalogReferenceSet("Effect,DismountModifyCooldown,Cost[0].CooldownTimeUse", player, FixedToString(libHRGE_CatalogReferenceGetAsFixed("Effect,DismountModifyCooldown,Cost[0].CooldownTimeUse", 0) * libHRGE_QuickMountModifier, 2));
+    }
+    return true;
+}
+
+// ============================================================
+// True Stealth
+// ============================================================
+bool libHRGE_TrueStealthHeroRespawn (bool testConds, bool runActions) {
+    unit respawnedUnit = libGame_gf_HeroRespawnUnit();
+    int player = UnitGetOwner(respawnedUnit);
+    if (testConds) {
+        if (player < 6 || player > 10) {
+            return false;
+        }
+    }
+    libNtve_gf_SendActorMessageToUnit(respawnedUnit, "SetMinimapVisibility 0");
+    libNtve_gf_SendActorMessageToUnit(respawnedUnit, "SetMinimapVisibilityAlways 0");
+    
+    return true;
+}
+bool libHRGE_TrueStealthUnitCreated (bool testConds, bool runActions) {
+    unit eventUnit = EventUnitCreatedUnit();
+    int player = UnitGetOwner(eventUnit);
+    if (testConds) {
+        if (player < 6 || player > 10) {
+            return false;
+        }
+        if (UnitGetType(eventUnit) != "RexxarMisha" && UnitGetType(eventUnit) != "HeroDVaMech") {
+            return false;
+        }
+    }
+    libNtve_gf_SendActorMessageToUnit(eventUnit, "SetMinimapVisibility 0");
+    libNtve_gf_SendActorMessageToUnit(eventUnit, "SetMinimapVisibilityAlways 0");
+    return true;
+}
+bool libHRGE_TrueStealthOncePerGame (bool testConds, bool runActions) {
+    int i;
+    for (i = 6; i <= 10; i += 1) {
+        libHRGE_SendActorMessageToPlayer(i, "SetMinimapVisibility 0");
+        libHRGE_SendActorMessageToPlayer(i, "SetMinimapVisibilityAlways 0");
+    }
+    
+    return true;
+}
+
+// ============================================================
+// Reckless
+// ============================================================
+bool libHRGE_RecklessHeroRespawn (bool testConds, bool runActions) {
+    unit respawnedUnit = libGame_gf_HeroRespawnUnit();
+    int player = UnitGetOwner(respawnedUnit);
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+    }
+    libNtve_gf_SendActorMessageToUnit(respawnedUnit, "SetShowStatusBar 0");
+    
+    return true;
+}
+bool libHRGE_RecklessUnitCreated (bool testConds, bool runActions) {
+    unit eventUnit = EventUnitCreatedUnit();
+    int player = UnitGetOwner(eventUnit);
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+        if (UnitGetType(eventUnit) != "RexxarMisha" && UnitGetType(eventUnit) != "HeroDVaMech") {
+            return false;
+        }
+    }
+    libNtve_gf_SendActorMessageToUnit(eventUnit, "SetShowStatusBar 0");
+    return true;
+}
+bool libHRGE_RecklessOncePerGame (bool testConds, bool runActions) {
+    libHRGE_SendActorMessageToPlayer(libHRGE_player, "SetShowStatusBar 0");
+    return true;
+}
+
+// ============================================================
+// Payload Boosters
+// ============================================================
+bool libHRGE_PayloadBoostersOncePerGame (bool testConds, bool runActions) {
+    return true;
+}

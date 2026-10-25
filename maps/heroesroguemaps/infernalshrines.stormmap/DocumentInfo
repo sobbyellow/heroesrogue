@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DocInfo>
+    <Icon>
+        <Value>Storm_UI_Gamemode_MapSelect_Shrines.png</Value>
+    </Icon>
+    <MatchMakerTag>
+        <Value>Hero</Value>
+    </MatchMakerTag>
+    <Dependencies>
+        <Value>bnet:Infernal Shrines (Mod)/0.0/1295,file:Mods\heroesmapmods/battlegroundmapmods/infernalshrines.stormmod</Value>
+    </Dependencies>
+    <ModifiableDependencies>
+        <Value>Mods/HeroesData.StormMod</Value>
+        <Value>Mods\heroesmapmods/battlegroundmapmods/heavenhell.stormmod</Value>
+        <Value>Mods\heroesmapmods/battlegroundmapmods/infernalshrinesdata.stormmod</Value>
+        <Value>Mods\heroesmapmods/battlegroundmapmods/infernalshrines.stormmod</Value>
+    </ModifiableDependencies>
+</DocInfo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<BankList>
+    <Bank Name="HRSave" Player="1"/>
+    <Bank Name="HRSettings" Player="1"/>
+    <Bank Name="HRAchievements" Player="1"/>
+    <Bank Name="PlayerSettings" Player="1"/>
+    <Bank Name="PlayerSettings" Player="2"/>
+    <Bank Name="PlayerSettings" Player="3"/>
+    <Bank Name="PlayerSettings" Player="4"/>
+    <Bank Name="PlayerSettings" Player="5"/>
+    <Bank Name="PlayerSettings" Player="6"/>
+    <Bank Name="PlayerSettings" Player="7"/>
+    <Bank Name="PlayerSettings" Player="8"/>
+    <Bank Name="PlayerSettings" Player="9"/>
+    <Bank Name="PlayerSettings" Player="10"/>
+</BankList>

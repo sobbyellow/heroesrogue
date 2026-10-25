@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DocInfo>
+    <Icon>
+        <Value>Storm_UI_Gamemode_MapSelect_GardenOfTerror.png</Value>
+    </Icon>
+    <MatchMakerTag>
+        <Value>Hero</Value>
+    </MatchMakerTag>
+    <Dependencies>
+        <Value>bnet:Garden of Terror (Mod)/0.0/1406,file:Mods\HeroesMapMods\BattlegroundMapMods\GardenOfTerror.StormMod</Value>
+    </Dependencies>
+    <ModifiableDependencies>
+        <Value>Mods/HeroesData.StormMod</Value>
+        <Value>Mods\HeroesMapMods\BattlegroundMapMods\GardenOfTerror.StormMod</Value>
+    </ModifiableDependencies>
+</DocInfo>

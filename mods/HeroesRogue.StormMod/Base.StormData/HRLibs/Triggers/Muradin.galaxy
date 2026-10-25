@@ -1,0 +1,114 @@
+include "HRLibs/HRTriggersLib"
+
+
+// ============================================================
+// Unstoppable Avatar
+// ============================================================
+bool libHRGE_MuradinUnstoppableAvatarRespawn (bool testConds, bool runActions) {
+    unit respawnedUnit = libGame_gf_HeroRespawnUnit();
+    if (testConds) {
+        if (UnitGetOwner(respawnedUnit) != libHRGE_player) {
+            return false;
+        }
+    }
+    libHRGE_AddPlayerBehavior(libHRGE_player, "MuradinAvatarInitialDelay", 1, true);
+    UnitCreateEffectUnit(respawnedUnit, "MuradinAvatarApplyBehaviorsSet", respawnedUnit);
+    
+    libHRGE_RemovePlayerBehavior(libHRGE_player, "Ultimate1Unlocked", 1, true);
+    return true;
+}
+bool libHRGE_MuradinUnstoppableAvatar (bool testConds, bool runActions) {
+    CatalogFieldValueSet(c_gameCatalogBehavior, "MuradinAvatarHealthBuff", "Modification.VitalMaxArray[" + IntToString(0) + "]", libHRGE_player, CatalogFieldValueGet(c_gameCatalogBehavior, "MuradinAvatar", "Modification.VitalMaxArray[" + IntToString(0) + "]", libHRGE_player));
+    
+    libHRGE_AddPlayerBehavior(libHRGE_player, "MuradinAvatarInitialDelay", 1, true);
+    UnitCreateEffectUnit(libGame_gv_players[libHRGE_player].lv_heroUnit, "MuradinAvatarApplyBehaviorsSet", libGame_gv_players[libHRGE_player].lv_heroUnit);
+
+    libHRGE_RemovePlayerBehavior(libHRGE_player, "Ultimate1Unlocked", 1, true);
+    return true;
+}
+bool libHRGE_MuradinUnstoppableAvatarLevelUp (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    int level = libGame_gf_HeroLevelUpLevel();
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+    }
+    CatalogFieldValueSet(c_gameCatalogBehavior, "MuradinAvatarHealthBuff", "Modification.VitalMaxArray[" + IntToString(0) + "]", libHRGE_player, CatalogFieldValueGet(c_gameCatalogBehavior, "MuradinAvatar", "Modification.VitalMaxArray[" + IntToString(0) + "]", libHRGE_player));
+    return true;
+}
+
+// ============================================================
+// Dual Hammer
+// ============================================================
+bool libHRGE_MuradinDualHammerAffixAdded (bool testConds, bool runActions) {
+    libHRGE_CatalogReferenceSet("Abil,MuradinStormBolt,Cost.Charge.CountMax", libHRGE_player, "2");
+    libHRGE_CatalogReferenceSet("Abil,MuradinStormBolt,Cost.Charge.CountStart", libHRGE_player, "2");
+    libHRGE_CatalogReferenceSet("Abil,MuradinStormBolt,Cost.Charge.CountUse", libHRGE_player, "1");
+    libHRGE_CatalogReferenceSet("Abil,MuradinStormBolt,Cost.Charge.TimeUse", libHRGE_player, "10");
+    libHRGE_CatalogReferenceSet("Abil,MuradinStormBolt,Cost.Cooldown.TimeUse", libHRGE_player, "0.5");
+    libHRGE_CatalogReferenceSet("Effect,MuradinHeroWeaponItsHammerTimeStormBoltModifyCooldown,Cost[0].CooldownTimeUse", libHRGE_player, "0");
+    libHRGE_CatalogReferenceSet("Effect,MuradinHeroWeaponItsHammerTimeStormBoltModifyCooldown,Cost[0].ChargeTimeUse", libHRGE_player, "-0.5");
+
+    if (PlayerHasTalent(libHRGE_player, "MuradinMasteryStormhammerSledgehammer")) {
+        libHRGE_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Charge.TimeUse", libHRGE_player, "1.5", c_upgradeOperationSubtract);
+    }
+
+    return true;
+}
+bool libHRGE_MuradinDualHammerTalentGained (bool testConds, bool runActions) {
+    string talent = libGame_gf_HeroGainTalentGainedTalent();
+    int player = libGame_gf_HeroGainTalentPlayer();
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+        if (talent != "MuradinMasteryStormhammerSledgehammer") {
+            return false;
+        }
+    }
+    libHRGE_CatalogReferenceModify("Abil,MuradinStormBolt,Cost.Charge.TimeUse", libHRGE_player, "1.5", c_upgradeOperationSubtract);
+
+    return true;
+}
+
+// ============================================================
+// Fast Punch
+// ============================================================
+bool libHRGE_MuradinFastPunchTalentGained (bool testConds, bool runActions) {
+    string talent = libGame_gf_HeroGainTalentGainedTalent();
+    int player = libGame_gf_HeroGainTalentPlayer();
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+        if (talent != "MuradinMasteryHaymakerGrandSlam") {
+            return false;
+        }
+    }
+
+    libHRGE_CatalogReferenceModify("Abil,MuradinHaymaker,Cost.Charge.HideCount", libHRGE_player, "0", c_upgradeOperationSet);
+
+    return true;
+}
+
+// ============================================================
+// Thundering Smash
+// ============================================================
+bool libHRGE_MuradinThunderingSmashTalentGained (bool testConds, bool runActions) {
+    string talent = libGame_gf_HeroGainTalentGainedTalent();
+    int player = libGame_gf_HeroGainTalentPlayer();
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+        if (talent != "MuradinExtraCharges") {
+            return false;
+        }
+    }
+
+    libHRGE_CatalogReferenceModify("Abil,MuradinDwarfToss,Cost.Charge.HideCount", libHRGE_player, "0", c_upgradeOperationSet);
+    libHRGE_CatalogReferenceModify("Abil,MuradinThunderclap,Cost.Charge.HideCount", libHRGE_player, "0", c_upgradeOperationSet);
+
+    return true;
+}

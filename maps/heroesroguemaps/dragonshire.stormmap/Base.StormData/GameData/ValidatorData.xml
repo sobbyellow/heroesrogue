@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CValidatorPlayerRequirement id="IsChaosPlayer">
+        <Find value="1"/>
+        <Value value="OnChaosTeam"/>
+    </CValidatorPlayerRequirement>
+    <CValidatorPlayerRequirement id="IsOrderPlayer">
+        <Find value="1"/>
+        <Value value="OnOrderTeam"/>
+    </CValidatorPlayerRequirement>
+</Catalog>

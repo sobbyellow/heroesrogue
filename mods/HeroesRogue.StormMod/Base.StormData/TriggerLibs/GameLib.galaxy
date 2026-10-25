@@ -1856,24 +1856,6 @@ void libGame_gf_DeathRecapClearDeathRecapForPlayer (int lp_deadPlayer) {
     }
 }
 
-// Used for death recap
-
-void libGame_AddAbilityEffectMapping (string abil, string effect) {
-    libGame_abilityEffectMapIndex += 1;
-    libGame_abilityEffectMap[libGame_abilityEffectMapIndex].ability = abil;
-    libGame_abilityEffectMap[libGame_abilityEffectMapIndex].effect = effect;
-}
-
-string libGame_GetAblilityEffectMapping (string effect) {
-    int i;
-    for (i = 1; i <= libGame_abilityEffectMapMax; i += 1) {
-        if (libGame_abilityEffectMap[i].effect == effect) {
-            return libGame_abilityEffectMap[i].ability;
-        }
-    }
-    return "";
-}
-
 void libGame_gf_DeathRecapPopulateDeathRecapDataForPlayer (unit lp_playerHero, int lp_deadPlayer) {
     // Variable Declarations
     unit lv_deadHeroUnit;
@@ -1904,7 +1886,6 @@ void libGame_gf_DeathRecapPopulateDeathRecapDataForPlayer (unit lp_playerHero, i
     string lv_specialDamageEffectAbilityLink;
     int lv_itSpecialDamageEffectEntry;
     bool lv_foundSpecialDamageEffect;
-    string effectMapping;
 
     // Automatic Variable Declarations
     int auto9091C3BB_ae;
@@ -1999,10 +1980,6 @@ void libGame_gf_DeathRecapPopulateDeathRecapDataForPlayer (unit lp_playerHero, i
         }
         if (((lv_effectingUnitType == null) || ((EffectHistoryGetAbil(lv_effectHistory, lv_itEffectHistoryEntry) == "") && (EffectHistoryGetWeapon(lv_effectHistory, lv_itEffectHistoryEntry) == "") && (EffectHistoryGetSourceBehavior(lv_effectHistory, lv_itEffectHistoryEntry) == "")))) {
             lv_effectHistoryEntryAbility = "DebugUnknownAbility";
-            effectMapping = libGame_GetAblilityEffectMapping(EffectHistoryGetEffect(lv_effectHistory, lv_itEffectHistoryEntry, c_effectHistoryEffectCurrent));
-            if (effectMapping != "") {
-                lv_effectHistoryEntryAbility = effectMapping;
-            }
             lv_debugString = (EffectHistoryGetEffect(lv_effectHistory, lv_itEffectHistoryEntry, c_effectHistoryEffectCurrent));
             if ((lv_sourceButton == null)) {
                 lv_sourceButton = (CatalogFieldValueGet(c_gameCatalogAbil, lv_effectHistoryEntryAbility, "CmdButtonArray[" + IntToString(0) + "].DefaultButtonFace", c_playerAny));
@@ -2012,12 +1989,6 @@ void libGame_gf_DeathRecapPopulateDeathRecapDataForPlayer (unit lp_playerHero, i
         else {
             lv_unitTypeAsString = (UnitGetType(libGame_gv_players[lv_effectingPlayer].lv_heroUnit));
             if ((lv_effectingUnitType != UnitGetType(libGame_gv_players[lv_effectingPlayer].lv_heroUnit)) && (((UnitTypeTestAttribute(lv_effectingUnitType, c_unitAttributeSummoned) == true) && (CatalogFieldValueGet(c_gameCatalogUnit, lv_effectingUnitType, "LeaderAlias", c_playerAny) != lv_unitTypeAsString)) || ((UnitTypeTestAttribute(lv_effectingUnitType, c_unitAttributeSummoned) == false) && (CatalogFieldValueGet(c_gameCatalogUnit, lv_effectingUnitType, "LeaderAlias", c_playerAny) == lv_unitTypeAsString)))) {
-                if (lv_effectHistoryEntryAbility == "") {
-                    effectMapping = libGame_GetAblilityEffectMapping(EffectHistoryGetEffect(lv_effectHistory, lv_itEffectHistoryEntry, c_effectHistoryEffectCurrent));
-                    if (effectMapping != "") {
-                        lv_effectHistoryEntryAbility = effectMapping;
-                    }
-                }
                 lv_effectHistoryEntryAbility = AbilityCommandGetAbility(TechTreeUnitProducedAbilCmd(lv_effectingUnitType, 0));
                 if ((lv_sourceButton == null)) {
                     lv_sourceButton = (CatalogFieldValueGet(c_gameCatalogAbil, lv_effectHistoryEntryAbility, "CmdButtonArray[" + IntToString(0) + "].DefaultButtonFace", c_playerAny));
@@ -2052,11 +2023,6 @@ void libGame_gf_DeathRecapPopulateDeathRecapDataForPlayer (unit lp_playerHero, i
 
                 }
             }
-        }
-        effectMapping = libGame_GetAblilityEffectMapping(EffectHistoryGetEffect(lv_effectHistory, lv_itEffectHistoryEntry, c_effectHistoryEffectCurrent));
-        if (effectMapping != "") {
-            lv_effectHistoryEntryAbility = effectMapping;
-            lv_sourceButton = (CatalogFieldValueGet(c_gameCatalogAbil, lv_effectHistoryEntryAbility, "CmdButtonArray[" + IntToString(0) + "].DefaultButtonFace", c_playerAny));
         }
         if ((lv_effectKill == true) && (lv_killingBlowFound == false)) {
             lv_killingBlowFound = true;
@@ -10741,20 +10707,21 @@ bool auto_libGame_gf_SpawnHero_TriggerFunc (bool testConds, bool runActions) {
     while (!((libGame_gv_players[lp_player].lv_heroSpawnReady == true))) {
         Wait(0.0625, c_timeGame);
     }
+    
     lv_skinIndex = lp_player;
     if ((libGame_gv_players[lv_skinIndex].lv_skinData.lv_skinID != null)) {
         PlayerSetSkin(lp_player, libGame_gv_players[lv_skinIndex].lv_skinData.lv_skinID);
     }
 
-    libNtve_gf_CreateUnitsAtPoint2(1, libGame_gv_players[lp_heroIndex].lv_heroData.lv_unitType, c_unitCreateIgnorePlacement, lp_player, lp_spawnLocation, null);
+    libNtve_gf_CreateUnitsAtPoint2(1, libGame_gv_players[lp_player].lv_heroData.lv_unitType, c_unitCreateIgnorePlacement, lp_player, lp_spawnLocation, null);
     libGame_gv_players[lp_player].lv_heroUnit = UnitLastCreated();
     PlayerSetHeroUnit(lp_player, libGame_gv_players[lp_player].lv_heroUnit);
     libAIAI_gv_aIHeroes[lp_player].lv_currentHeroUnit = libGame_gv_players[lp_player].lv_heroUnit;
     UnitGroupClear(libGame_gv_players[lp_player].lv_heroUnitGroup);
     UnitGroupAdd(libGame_gv_players[lp_player].lv_heroUnitGroup, UnitLastCreated());
     AIAddPlayerUnit(libGame_gv_players[lp_player].lv_heroUnit);
-    libGame_gv_players[lp_player].lv_heroIndex = lp_heroIndex;
-    libGame_gv_players[lp_player].lv_portraitIcon = libGame_gv_players[lp_heroIndex].lv_heroData.lv_portrait;
+    //libGame_gv_players[lp_player].lv_heroIndex = lp_heroIndex;
+    libGame_gv_players[lp_player].lv_portraitIcon = libGame_gv_players[lp_player].lv_heroData.lv_portrait;
     libGame_gv_players[lp_player].lv_vOSoundSuffix = "";
     libCore_gf_DataHeroVOReloadHeroVODataForHero(lp_player);
     libCore_gf_SendPlayersSkinActorMessagesToUnit(lp_player, libGame_gv_players[lp_player].lv_heroUnit);
@@ -10780,11 +10747,11 @@ bool auto_libGame_gf_SpawnHero_TriggerFunc (bool testConds, bool runActions) {
         libGame_gf_SendEventUIShownForPlayer(lp_player);
     }
 
-    PlayerSetHero(lp_player, libGame_gv_players[lp_heroIndex].lv_heroData.lv_heroCatalogLink);
+    PlayerSetHero(lp_player, libGame_gv_players[lp_player].lv_heroData.lv_heroCatalogLink);
     
     StatEventCreate("PlayerSpawned");
     StatEventAddDataInt(StatEventLastCreated(), "PlayerID", lp_player);
-    StatEventAddDataString(StatEventLastCreated(), "Hero", (libGame_gv_players[lp_heroIndex].lv_heroData.lv_unitType));
+    StatEventAddDataString(StatEventLastCreated(), "Hero", (libGame_gv_players[lp_player].lv_heroData.lv_unitType));
     StatEventSend(StatEventLastCreated());
     ActorScopeSend(ActorScopeFromUnit(libGame_gv_players[lp_player].lv_heroUnit), "StatusIncrement PreventDestroyOnDeath");
     if ((libGame_gv_heroDeath_RespawnMounted == true) && (libGame_gv_players[lp_player].lv_disableMount == false)) {
@@ -10805,7 +10772,7 @@ bool auto_libGame_gf_SpawnHero_TriggerFunc (bool testConds, bool runActions) {
     Wait(0.125, c_timeGame);
     libCore_gf_SetTalentsTierLevels(lp_player);
     libCore_gf_SetHeroicTalentTier(lp_player);
-    libGame_gf_TalentsSetupTalentChoicesFromHeroDataForPlayer(lp_heroIndex, lp_player);
+    libGame_gf_TalentsSetupTalentChoicesFromHeroDataForPlayer(libGame_gv_players[lp_player].lv_heroIndex, lp_player);
     if ((libCore_gv_tUTTalentsAutobuyOn == true)) {
         libGame_gf_SendEventHeroGainTalent("", lp_player);
     }
@@ -13793,6 +13760,12 @@ bool libGame_gt_CapturePointLogic_Func (bool testConds, bool runActions) {
     // Variable Initialization
     lv_capturingPlayers = PlayerGroupEmpty();
 
+    if (testConds) {
+        if (libGame_paused) {
+            return false;
+        }
+    }
+
     // Actions
     if (!runActions) {
         return true;
@@ -16438,13 +16411,10 @@ bool libGame_gt_RunAnimations_Func (bool testConds, bool runActions) {
 
     if ((libCore_gv_sYSGameMode == libCore_ge_GameModes_Tutorial1)) {
         ActorSend(libNtve_gf_MainActorofUnit(libGame_gv_teams[libGame_gv_teamOrderIndex_C].lv_core), "Signal CoreBuild");
-        Wait(7.0, c_timeGame);
     }
     else {
-        Wait(4.0, c_timeGame);
         ActorSend(libNtve_gf_MainActorofUnit(libGame_gv_teams[libGame_gv_teamChaosIndex_C].lv_core), "Signal CoreBuild");
         ActorSend(libNtve_gf_MainActorofUnit(libGame_gv_teams[libGame_gv_teamOrderIndex_C].lv_core), "Signal CoreBuild");
-        Wait(12.0, c_timeGame);
     }
     autoD06C5B74_ae = libGame_gv_townTownCount;
     lv_town = 1;
@@ -16458,7 +16428,6 @@ bool libGame_gt_RunAnimations_Func (bool testConds, bool runActions) {
 
         }
     }
-    Wait(2.0, c_timeGame);
     auto48A1495C_ae = libGame_gv_townTownCount;
     lv_town = 1;
     for ( ; ( (auto48A1495C_ai >= 0 && lv_town <= auto48A1495C_ae) || (auto48A1495C_ai < 0 && lv_town >= auto48A1495C_ae) ) ; lv_town += auto48A1495C_ai ) {

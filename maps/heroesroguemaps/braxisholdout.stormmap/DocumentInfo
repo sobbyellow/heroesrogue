@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DocInfo>
+    <Icon>
+        <Value>Storm_UI_Gamemode_MapSelect_BraxisHoldout.png</Value>
+    </Icon>
+    <MatchMakerTag>
+        <Value>Hero</Value>
+    </MatchMakerTag>
+    <Dependencies>
+        <Value>bnet:Braxis Holdout (Mod)/0.0/1068,file:Mods\heroesmapmods/battlegroundmapmods/braxisholdout.stormmod</Value>
+    </Dependencies>
+    <ModifiableDependencies>
+        <Value>Mods/HeroesData.StormMod</Value>
+        <Value>Mods\heroesmapmods/battlegroundmapmods/starcraft.stormmod</Value>
+        <Value>Mods\heroesmapmods/battlegroundmapmods/braxisholdoutdata.stormmod</Value>
+        <Value>Mods\heroesmapmods/battlegroundmapmods/braxisholdout.stormmod</Value>
+    </ModifiableDependencies>
+    <Preload>
+        <Value>GameLink:Unit;RangedMinion</Value>
+        <Value>GameLink:Unit;CatapultMinion</Value>
+        <Value>GameLink:Unit;WizardMinion</Value>
+    </Preload>
+</DocInfo>

@@ -1,0 +1,16 @@
+include "HRLibs/HRTriggersLib"
+
+
+bool libHRGE_KharazimMysticAllyEffectUsed (bool testConds, bool runActions) {
+    unit caster = EventPlayerEffectUsedUnit(c_effectUnitCaster);
+    point casterLocation = EventPlayerEffectUsedPoint(c_effectLocationCasterPoint);
+    int random = RandomInt(1, 3);
+    if (random == 1) {
+        UnitCreateEffectPoint(caster, "MonkAirAllyCreateUnit", casterLocation);
+    } else if (random == 2) {
+        UnitCreateEffectPoint(caster, "MonkEarthAllyCreateUnit", casterLocation);
+    } else {
+        UnitCreateEffectPoint(caster, "MonkSpiritAllyCreateUnit", casterLocation);
+    }
+    return true;
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CTerrain id="StormHeavenAndHell2Heaven">
+        <DoubleLambert value="0"/>
+    </CTerrain>
+    <CTerrain id="StormHeavenAndHell2Hell">
+        <DoubleLambert value="0"/>
+    </CTerrain>
+    <CTerrain id="StormHeavenAndHell2Transition">
+        <DoubleLambert value="0"/>
+    </CTerrain>
+    <CTerrain id="StormHeavenAndHellHeaven">
+        <FogColor value="255,58,167,164"/>
+        <DoubleLambert value="0"/>
+    </CTerrain>
+    <CTerrain id="StormHeavenAndHellHell">
+        <DoubleLambert value="0"/>
+    </CTerrain>
+    <CTerrain id="StormHeavenAndHellTransition">
+        <FogColor value="255,98,126,155"/>
+        <FogDensity value="0.010000"/>
+        <FogStartingHeight value="-3.000000"/>
+        <FixedSkyboxModel value=""/>
+        <FogFalloff value="0.100000"/>
+        <DoubleLambert value="0"/>
+    </CTerrain>
+    <CTerrain id="StormKingsCrestGardens">
+        <FOWColor value="255,12,7,24"/>
+        <FogColor value="255,41,146,154"/>
+        <DoubleLambert value="0"/>
+    </CTerrain>
+</Catalog>

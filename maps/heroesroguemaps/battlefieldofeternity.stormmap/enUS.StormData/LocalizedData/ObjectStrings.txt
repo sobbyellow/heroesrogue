@@ -1,0 +1,2 @@
+﻿Light/Name/CustomLight=CustomLight
+Light/Name/EditorTestLight=default

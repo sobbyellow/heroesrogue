@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CColorStyle id="DS19_Primary_Override">
+        <ColorEntry index="DefaultNeutral">
+            <Value index="Default" value="ColorAllianceUINeutral"/>
+            <Value index="Colorblind" value="ColorWhite"/>
+        </ColorEntry>
+        <ColorEntry index="Owner">
+            <Value index="Default" value="ColorAllianceUISelf"/>
+            <Value index="Colorblind" value="ColorAllianceUISelfColorblind"/>
+        </ColorEntry>
+        <ColorEntry index="Ally">
+            <Value index="Default" value="ColorAllianceUIAlly"/>
+            <Value index="Colorblind" value="ColorAllianceUIAllyColorblind"/>
+        </ColorEntry>
+        <ColorEntry index="Enemy">
+            <Value index="Default" value="DS19_ColorAllianceUIEnemy_Override"/>
+            <Value index="Colorblind" value="ColorAllianceUIEnemyColorblind"/>
+        </ColorEntry>
+        <ColorEntry index="TeamHostile">
+            <Value index="Default" value="ColorAllianceUITeamHostile"/>
+            <Value index="Colorblind" value="ColorAllianceUITeamHostileColorblind"/>
+        </ColorEntry>
+        <ColorEntry index="TeamOrder">
+            <Value index="Default" value="ColorAllianceUIAlly"/>
+            <Value index="Colorblind" value="ColorAllianceUIAllyColorblind"/>
+        </ColorEntry>
+        <ColorEntry index="TeamChaos">
+            <Value index="Default" value="DS19_ColorAllianceUIEnemy_Override"/>
+            <Value index="Colorblind" value="ColorAllianceUIEnemyColorblind"/>
+        </ColorEntry>
+    </CColorStyle>
+</Catalog>

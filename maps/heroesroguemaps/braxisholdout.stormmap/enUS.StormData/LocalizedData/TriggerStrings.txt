@@ -1,0 +1,22 @@
+﻿Category/Name/28807812=== DATA HOOKUPS ==
+Category/Name/6CFAC9CC=Regen Globe
+Category/Name/78D4F82D=== INITIALIZATION ==
+FunctionDef/Name/22C7C4A5=Hookup Town Data
+FunctionDef/Name/5AC99CE8=Hookup SCV Flare
+FunctionDef/Name/97A6A427=Hookup Region Data
+FunctionDef/Name/A8C9E77A=Hookup Jungle Creep Data
+FunctionDef/Name/E6F45378=Hookup Lane Data
+FunctionDef/Name/F9F8B2B1=Hookup Global Variables
+Trigger/Name/60DBF921=Initialize Map Mechanic
+Trigger/Name/773BCB35=Regen Globe Generator Gains Behavior
+Trigger/Name/9EBEFD2B=Initialize Visibility Revealers
+Trigger/Name/AE8AA225=Regen Globe Generator Creates Globe
+Trigger/Name/C8D85A33=Open Gates Timer Starts - Display Timers
+Trigger/Name/EBC0FF03=Map Mechanic Intro Callback
+Trigger/Name/FA4B29FB=Initialize Map
+Variable/Name/2B2B5409=structureCount
+Variable/Name/540929A2=waypointCount
+Variable/Name/7672DABE=Lane
+Variable/Name/7CC82A9F=jungleCamp
+Variable/Name/A905474C=Spawn Points
+Variable/Name/EE740FF0=Town

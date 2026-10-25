@@ -1,0 +1,30 @@
+﻿﻿DocInfo/Author=Blizzard Entertainment
+DocInfo/DescLong=Mapa z 2 alejami<n/>
+DocInfo/DescShort=5na5
+DocInfo/HowToPlaySummary00=Mapa z 2 alejami
+DocInfo/HowToPlaySummaryHeaderTitle=Pole Bitewne Wieczności
+DocInfo/Name=Pole Bitewne Wieczności
+LoadingScreen/BattlefieldOfEternity/Help1=Podczas pojedynku Nieśmiertelni nie zadają sobie nawzajem obrażeń. Aby zwyciężyć, atakujcie wrogiego Nieśmiertelnego, jednocześnie broniąc własnego.
+LoadingScreen/TextBody=<s val="Storm_BoldExtendedXLarge">Starcie Nieśmiertelnych</s><n/><s val="Storm_BoldExtendedMedium">Nieśmiertelni mieszkańcy Niebios i Piekieł walczą ze sobą przez całą wieczność!</s><n/><n/><s val="Storm_BoldExtendedXLarge">Pokonajcie wrogiego Nieśmiertelnego</s><n/><s val="Storm_BoldExtendedMedium">Pomóżcie swojemu Nieśmiertelnemu pokonać wrogiego Nieśmiertelnego!</s><n/><n/><s val="Storm_BoldExtendedXLarge">Zniszczcie forty wroga</s><n/><s val="Storm_BoldExtendedMedium">Szturmujcie u boku swojego Nieśmiertelnego, aby zetrzeć siły wroga w proch!</s>
+LoadingScreen/Title=<s val="Storm_BoldExtendedXXLarge">Pole Bitewne Wieczności</c>
+MapInfo/Player00/Name=Neutralny
+MapInfo/Player01/Name=Gracz 1
+MapInfo/Player02/Name=Gracz 2
+MapInfo/Player03/Name=Gracz 3
+MapInfo/Player04/Name=Gracz 4
+MapInfo/Player05/Name=Gracz 5
+MapInfo/Player06/Name=Gracz 6
+MapInfo/Player07/Name=Gracz 7
+MapInfo/Player08/Name=Gracz 8
+MapInfo/Player09/Name=Gracz 9
+MapInfo/Player10/Name=Gracz 10
+MapInfo/Player11/Name=Ład
+MapInfo/Player12/Name=Chaos
+MapInfo/Player13/Name=Wróg
+Param/Value/3D4242A8=Dół
+Param/Value/55B57A74=Góra
+UI/ResourceToolTip0=Złoto można wydać na zakup przedmiotów dla twojego bohatera.
+Variant001/Desc=Niebiescy kontra Pomarańczowi.
+Variant001/ModeDesc=Gracze mogą wybrać swoich bohaterów.
+Variant001/ModeName=Standard
+Variant001/Name=5na5

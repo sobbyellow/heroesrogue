@@ -95,64 +95,30 @@ void libMTOD_InitVariables () {
     libMTOD_gv_mMToDPanels.lv_necroNotificationLabel = c_invalidDialogControlId;
 }
 
-void libMTOD_Wait(fixed duration, int inTimeType) {
-    fixed elapsed = 0.0;
-    while (elapsed < duration) {
-        if (libMTOD_paused) {
-            Wait(0.0625, inTimeType);
-        } else {
-            Wait(0.0625, inTimeType);
-            elapsed += 0.0625;
-        }
-    }
-}
-
 bool libMTOD_PauseTrigger_Func(bool testConds, bool runActions) {
-
-    if (!runActions) {
-        return true;
+    int i;
+    if (TimerGetRemaining(libMTOD_gv_mMToDScoringAltarTimer) > 0.0) {
+        TimerPause(libMTOD_gv_mMToDScoringAltarTimer, libGame_paused);
     }
-    if (!libMTOD_paused) {
-        libMTOD_paused = true;
-        if (TimerGetRemaining(libMTOD_gv_mMToDScoringAltarTimer) > 0.0) {
-            TimerPause(libMTOD_gv_mMToDScoringAltarTimer, true);
-        }
-        if (TimerGetRemaining(libMTOD_gv_mMToDObjectivePreviewTimer) > 0.0) {
-            TimerPause(libMTOD_gv_mMToDObjectivePreviewTimer, true);
-        }
-        if (TimerGetRemaining(libMTOD_gv_mMToDPhaseTwoTimer) > 0.0) {
-            TimerPause(libMTOD_gv_mMToDPhaseTwoTimer, true);
-        }
-        if (TimerGetRemaining(libMTOD_gv_mMToDSixCapTimer) > 0.0 && !TimerIsPaused(libMTOD_gv_mMToDSixCapTimer)) {
-            TimerPause(libMTOD_gv_mMToDSixCapTimer, true);
-            libMTOD_gv_mMToDSixCapTimer_Paused = true;
-        }
-        if (TimerGetRemaining(libMTOD_gv_mMToDScalingTimer) > 0.0) {
-            TimerPause(libMTOD_gv_mMToDScalingTimer, true);
-        }
-        if (TimerGetRemaining(libMTOD_gv_mMToDBanterTimer) > 0.0) {
-            TimerPause(libMTOD_gv_mMToDBanterTimer, true);
-        }
-    } else {
-        libMTOD_paused = false;
-        if (TimerGetRemaining(libMTOD_gv_mMToDScoringAltarTimer) > 0.0) {
-            TimerPause(libMTOD_gv_mMToDScoringAltarTimer, false);
-        }
-        if (TimerGetRemaining(libMTOD_gv_mMToDObjectivePreviewTimer) > 0.0) {
-            TimerPause(libMTOD_gv_mMToDObjectivePreviewTimer, false);
-        }
-        if (TimerGetRemaining(libMTOD_gv_mMToDPhaseTwoTimer) > 0.0) {
-            TimerPause(libMTOD_gv_mMToDPhaseTwoTimer, false);
-        }
-        if (TimerGetRemaining(libMTOD_gv_mMToDSixCapTimer) > 0.0 && libMTOD_gv_mMToDSixCapTimer_Paused) {
-            TimerPause(libMTOD_gv_mMToDSixCapTimer, false);
-            libMTOD_gv_mMToDSixCapTimer_Paused = false;
-        }
-        if (TimerGetRemaining(libMTOD_gv_mMToDScalingTimer) > 0.0) {
-            TimerPause(libMTOD_gv_mMToDScalingTimer, false);
-        }
-        if (TimerGetRemaining(libMTOD_gv_mMToDBanterTimer) > 0.0) {
-            TimerPause(libMTOD_gv_mMToDBanterTimer, false);
+    if (TimerGetRemaining(libMTOD_gv_mMToDObjectivePreviewTimer) > 0.0) {
+        TimerPause(libMTOD_gv_mMToDObjectivePreviewTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMTOD_gv_mMToDPhaseTwoTimer) > 0.0) {
+        TimerPause(libMTOD_gv_mMToDPhaseTwoTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMTOD_gv_mMToDSixCapTimer) > 0.0 && (libMTOD_gv_mMToDSixCapTimer_Paused || !TimerIsPaused(libMTOD_gv_mMToDSixCapTimer))) {
+        TimerPause(libMTOD_gv_mMToDSixCapTimer, libGame_paused);
+        libMTOD_gv_mMToDSixCapTimer_Paused = libGame_paused;
+    }
+    if (TimerGetRemaining(libMTOD_gv_mMToDScalingTimer) > 0.0) {
+        TimerPause(libMTOD_gv_mMToDScalingTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMTOD_gv_mMToDBanterTimer) > 0.0) {
+        TimerPause(libMTOD_gv_mMToDBanterTimer, libGame_paused);
+    }
+    for (i = 0; i <= libCore_gv_bALMaxPlayers; i += 1) {
+        if (TimerGetRemaining(libMTOD_gv_mMToDSpiritHealerVOTimers[i]) > 0.0) {
+            TimerPause(libMTOD_gv_mMToDSpiritHealerVOTimers[i], libGame_paused);
         }
     }
 
@@ -311,7 +277,7 @@ bool auto_libMTOD_gf_MMTodAddScoringAltarData_TriggerFunc (bool testConds, bool 
     }
 
     libMTOD_gv_mMToDScoringAltars[lp_pointNumber].lv_unit = lp_altarUnit;
-    libMTOD_Wait(2.0, c_timeGame);
+    libGame_Wait(2.0, c_timeGame);
     libNtve_gf_SendActorMessageToUnit(lp_altarUnit, "Signal OneOrder");
     libNtve_gf_SendActorMessageToUnit(lp_altarUnit, "Signal TwoOrder");
     libNtve_gf_SendActorMessageToUnit(lp_altarUnit, "Signal ThreeOrder");
@@ -504,7 +470,7 @@ void libMTOD_gf_MMToDSixCapFireCannons () {
             else {
                 UnitCreateEffectUnit(libGame_gv_teams[libGame_gv_teamChaosIndex_C].lv_core, "MapEventNecromancerCannonLaunchMissile", libGame_gv_teams[libGame_gv_teamOrderIndex_C].lv_core);
             }
-            libMTOD_Wait(lv_firingTimer, c_timeGame);
+            libGame_Wait(lv_firingTimer, c_timeGame);
             lv_trackFiringTimes += 1;
         }
     }
@@ -625,7 +591,7 @@ void libMTOD_gf_MMToDRespawnTown (int lp_townNumber, unit lp_fortUnit, int lp_ol
 
     }
     libMTOD_gf_MMToDChangeTownMarkerOwnershipInRegion(RegionCircle(libMTOD_gv_mMToDTowns[lp_townNumber].lv_fortInfo.lv_buildingPosition, 26.0), libMTOD_gv_mMToDTowns[lp_townNumber].lv_owningTeam);
-    libMTOD_Wait(libMTOD_gv_mMToDTownFlipDelayTime_C, c_timeGame);
+    libGame_Wait(libMTOD_gv_mMToDTownFlipDelayTime_C, c_timeGame);
     if ((libGame_gv_gameOver == true)) {
         return ;
     }
@@ -938,9 +904,9 @@ void libMTOD_gf_MMToDBossCampFireCannons (int lp_firingTeam) {
     lv_revealers[libGame_gv_teamOrderIndex_C] = VisRevealerLastCreated();
     VisRevealerCreate(libCore_gv_cOMPUTER_TeamChaos, RegionCircle(UnitGetPosition(libMTOD_gv_mMToDHorsemanCannon), 2.0));
     lv_revealers[libGame_gv_teamChaosIndex_C] = VisRevealerLastCreated();
-    libMTOD_Wait(0.0625, c_timeGame);
+    libGame_Wait(0.0625, c_timeGame);
     libNtve_gf_SendActorMessageToUnit(libMTOD_gv_mMToDHorsemanCannon, "Signal StartFiring");
-    libMTOD_Wait(0.9375, c_timeGame);
+    libGame_Wait(0.9375, c_timeGame);
     if ((lp_firingTeam == libCore_gv_cOMPUTER_TeamOrder)) {
         lv_enemyTeam = libGame_gv_teamChaosIndex_C;
     }
@@ -956,11 +922,11 @@ void libMTOD_gf_MMToDBossCampFireCannons (int lp_firingTeam) {
 
         UnitCreateEffectUnit(libMTOD_gv_mMToDHorsemanCannon, "BossMercCampCannonLaunchMissile", libGame_gv_teams[lv_enemyTeam].lv_core);
         lv_shotsFired += 1;
-        libMTOD_Wait(0.5, c_timeGame);
+        libGame_Wait(0.5, c_timeGame);
     }
-    libMTOD_Wait(0.5, c_timeGame);
+    libGame_Wait(0.5, c_timeGame);
     libNtve_gf_SendActorMessageToUnit(libMTOD_gv_mMToDHorsemanCannon, "Signal EndFiring");
-    libMTOD_Wait(0.375, c_timeGame);
+    libGame_Wait(0.375, c_timeGame);
     VisRevealerDestroy(lv_revealers[libGame_gv_teamOrderIndex_C]);
     VisRevealerDestroy(lv_revealers[libGame_gv_teamChaosIndex_C]);
 }
@@ -1068,7 +1034,7 @@ void libMTOD_gf_MMToDActivateWaygates () {
         }
 
     }
-    libMTOD_Wait(3.5, c_timeGame);
+    libGame_Wait(3.5, c_timeGame);
     lv_itWaygate = 1;
     for ( ; ( (auto135094BF_ai >= 0 && lv_itWaygate <= auto135094BF_ae) || (auto135094BF_ai < 0 && lv_itWaygate >= auto135094BF_ae) ) ; lv_itWaygate += auto135094BF_ai ) {
         if ((libMTOD_gv_mMToDWaygates[lv_itWaygate].lv_waygateUnit != null)) {
@@ -1091,7 +1057,7 @@ void libMTOD_gf_MMToDActivateWaygates () {
     }
     TextTagCreate(StringExternal("Param/Value/lib_MTOD_07643371"), 20, UnitGetPosition(libMTOD_gv_mMToDWaygates[libGame_gv_teamOrderIndex_C].lv_waygateUnit), 1.0, true, false, libCore_gv_allHeroPlayersPlusObserver);
     TextTagShow(TextTagLastCreated(), libCore_gv_playerGroupFromPlayer[libCore_gv_oBSERVER_ObserverUIPlayer], false);
-    libMTOD_Wait(1.5, c_timeGame);
+    libGame_Wait(1.5, c_timeGame);
     DialogControlSendAnimationEvent(libMTOD_gv_mMToDPanels.lv_waygateNotificationPanel, PlayerGroupAll(), "Hide");
 }
 
@@ -1723,7 +1689,7 @@ bool auto_libMTOD_gf_MMToDUIDisplayCaptureNotification_TriggerFunc (bool testCon
     DialogControlSendAnimationEvent(libMTOD_gv_mMToDPanels.lv_enemyCaptureNotificationPanel, libGame_gf_PlayersOnTeamHeroes(lv_enemyTeam, true), lv_directionalAnimation);
     DialogControlSendAnimationEvent(libMTOD_gv_mMToDPanels.lv_allyCaptureNotificationPanel, libGame_gf_PlayersOnTeamHeroes(lp_teamThatCapturedTown, true), "Show");
     DialogControlSendAnimationEvent(libMTOD_gv_mMToDPanels.lv_enemyCaptureNotificationPanel, libGame_gf_PlayersOnTeamHeroes(lv_enemyTeam, true), "Show");
-    libMTOD_Wait(5.0, c_timeGame);
+    libGame_Wait(5.0, c_timeGame);
     DialogControlSendAnimationEvent(libMTOD_gv_mMToDPanels.lv_allyCaptureNotificationPanel, libGame_gf_PlayersOnTeamHeroes(lp_teamThatCapturedTown, true), "Hide");
     DialogControlSendAnimationEvent(libMTOD_gv_mMToDPanels.lv_enemyCaptureNotificationPanel, libGame_gf_PlayersOnTeamHeroes(lv_enemyTeam, true), "Hide");
     return true;
@@ -1751,7 +1717,7 @@ bool auto_libMTOD_gf_MMToDUIDisplayTowerUpgradeUI_TriggerFunc (bool testConds, b
 
     // Implementation
     DialogControlSendAnimationEvent(libMTOD_gv_mMToDPanels.lv_townUpgradeNotificationPanel, PlayerGroupAll(), "Show");
-    libMTOD_Wait(5.0, c_timeGame);
+    libGame_Wait(5.0, c_timeGame);
     DialogControlSendAnimationEvent(libMTOD_gv_mMToDPanels.lv_townUpgradeNotificationPanel, PlayerGroupAll(), "Hide");
     return true;
 }
@@ -1799,7 +1765,7 @@ bool auto_libMTOD_gf_MMToDUIDisplayRavenNecroNotifications_TriggerFunc (bool tes
     }
     libNtve_gf_SetDialogItemText(lv_notificationLabel, lp_text, lp_players);
     DialogControlSendAnimationEvent(lv_notificationPanel, lp_players, "Show");
-    libMTOD_Wait(5.0, c_timeGame);
+    libGame_Wait(5.0, c_timeGame);
     DialogControlSendAnimationEvent(lv_notificationPanel, lp_players, "Hide");
     return true;
 }
@@ -2021,7 +1987,7 @@ bool libMTOD_gt_MMToDArchwayAnims_Func (bool testConds, bool runActions) {
     }
 
     while (!((TimerGetRemaining(libGame_gv_openTheGatesTimer) >= 1))) {
-        libMTOD_Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     libNtve_gf_WaitForTimer(libGame_gv_openTheGatesTimer, 6.0, false);
     ActorRegionCreate(null, "TriggerRegion", RegionEntireMap());
@@ -2080,7 +2046,7 @@ bool libMTOD_gt_MMToDMinimapHealthMonitor_Func (bool testConds, bool runActions)
 
             lv_townHallLastHealth[lv_itTown] = UnitGetPropertyFixed(libGame_gf_TownTownHall(lv_itTown), c_unitPropLifePercent, c_unitPropCurrent);
         }
-        libMTOD_Wait(0.125, c_timeGame);
+        libGame_Wait(0.125, c_timeGame);
     }
     return true;
 }
@@ -2101,7 +2067,7 @@ bool libMTOD_gt_MMToDFastSpawnMinions_Func (bool testConds, bool runActions) {
         return true;
     }
 
-    libMTOD_Wait(0.1, c_timeGame);
+    libGame_Wait(0.1, c_timeGame);
     TimerStart(libGame_gv_minionSpawnStartTimer, 0.0, false, c_timeGame);
     return true;
 }
@@ -2188,7 +2154,7 @@ bool libMTOD_gt_MMToDScoringAltarTimerTrigger_Func (bool testConds, bool runActi
             }
         }
 
-        libMTOD_Wait(1.0, c_timeGame);
+        libGame_Wait(1.0, c_timeGame);
     }
     if ((libGame_gv_gameOver == true)) {
         return true;
@@ -2388,19 +2354,19 @@ bool libMTOD_gt_MMToDStartPhaseTwoTimer_Func (bool testConds, bool runActions) {
     libNtve_gf_WaitForTimer(libMTOD_gv_mMToDPhaseTwoTimer, libMTOD_gv_mMToDPhaseTwoWarningTime_C, false);
     if ((libMTOD_gv_mMToDScoringAltarsActive == 0)) {
         if ((TimerIsPaused(libMTOD_gv_mMToDScoringAltarTimer) == false) && (TimerGetRemaining(libMTOD_gv_mMToDScoringAltarTimer) <= libMTOD_gv_mMToDPhaseTwoWarningTime_C)) {
-            libMTOD_Wait((TimerGetRemaining(libMTOD_gv_mMToDScoringAltarTimer) + 1.0), c_timeGame);
+            libGame_Wait((TimerGetRemaining(libMTOD_gv_mMToDScoringAltarTimer) + 1.0), c_timeGame);
         }
     }
 
     if ((libMTOD_gv_mMToDScoringAltarsActive > 0)) {
         while ((libMTOD_gv_mMToDScoringAltarsActive > 0)) {
-            libMTOD_Wait(0.0625, c_timeGame);
+            libGame_Wait(0.0625, c_timeGame);
         }
-        libMTOD_Wait(15.0, c_timeGame);
+        libGame_Wait(15.0, c_timeGame);
     }
 
     if ((libMTOD_gv_mMToDPhaseTwoCheatUsed == false)) {
-        libMTOD_Wait(libMTOD_gv_mMToDPhaseTwoWarningTime_C, c_timeGame);
+        libGame_Wait(libMTOD_gv_mMToDPhaseTwoWarningTime_C, c_timeGame);
     }
 
     if ((libGame_gv_gameOver == true)) {
@@ -3147,7 +3113,7 @@ bool libMTOD_gt_MMToDProtectionTowerScan_Func (bool testConds, bool runActions) 
             }
 
         }
-        libMTOD_Wait(0.5, c_timeGame);
+        libGame_Wait(0.5, c_timeGame);
     }
     return true;
 }
@@ -3243,7 +3209,7 @@ bool libMTOD_gt_MMToDEnteredWaygate_Func (bool testConds, bool runActions) {
     }
 
     SoundPlayOnUnitForPlayer(SoundLink("Event_Mines_EnterMinesEnd", -1), c_maxPlayers, PlayerGroupAll(), lv_hero, 0.0, 100.0, 0.0);
-    libMTOD_Wait(0.125, c_timeGame);
+    libGame_Wait(0.125, c_timeGame);
     libNtve_gf_MakeUnitUncommandable(lv_hero, false);
     UnitSetState(lv_hero, c_unitStateTargetable, true);
     UnitBehaviorRemove(lv_hero, "WaygateUnstoppable", 1);
@@ -3393,7 +3359,7 @@ bool libMTOD_gt_MMToDSpiritHealerClicked_Func (bool testConds, bool runActions) 
     libMTOD_gv_mMToDSpiritHealerTextTags[EventPlayer()] = TextTagLastCreated();
     if ((TimerGetRemaining(libMTOD_gv_mMToDSpiritHealerVOTimers[EventPlayer()]) == 0.0)) {
         TimerStart(libMTOD_gv_mMToDSpiritHealerVOTimers[EventPlayer()], libMTOD_gv_mMToDSpiritHealerVOCooldown, false, c_timeGame);
-        libMTOD_Wait(0.5, c_timeGame);
+        libGame_Wait(0.5, c_timeGame);
         libSond_gf_HeroVOPlayHeroLine(libCore_ge_HeroVOEvents_Healed, EventPlayer(), libCore_gv_playerGroupFromPlayer[EventPlayer()]);
     }
 
@@ -3439,7 +3405,7 @@ bool libMTOD_gt_MMToDCannonMissileCreated_Func (bool testConds, bool runActions)
         return true;
     }
 
-    libMTOD_Wait(0.0625, c_timeGame);
+    libGame_Wait(0.0625, c_timeGame);
     lv_missile = EventUnitCreatedUnit();
     lv_leftTeamPlayerGroup = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, true);
     PlayerGroupAdd(lv_leftTeamPlayerGroup, libCore_gv_oBSERVER_ObserverUIPlayer);
@@ -3469,7 +3435,7 @@ bool libMTOD_gt_MMToDCannonMissileCreated_Func (bool testConds, bool runActions)
     }
     PingSetUnit(lv_pingBallOrder, lv_missile);
     PingSetUnit(lv_pingBallChaos, lv_missile);
-    libMTOD_Wait(0.125, c_timeGame);
+    libGame_Wait(0.125, c_timeGame);
     while (true) {
         if ((UnitIsAlive(lv_missile) == false)) {
             PingDestroy(lv_pingBallOrder);
@@ -3481,7 +3447,7 @@ bool libMTOD_gt_MMToDCannonMissileCreated_Func (bool testConds, bool runActions)
         }
 
         lv_missilePosition = UnitGetPosition(lv_missile);
-        libMTOD_Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     return true;
 }
@@ -3590,7 +3556,7 @@ bool libMTOD_gt_MMToDTownHealthTracker_Func (bool testConds, bool runActions) {
             }
 
         }
-        libMTOD_Wait(0.125, c_timeGame);
+        libGame_Wait(0.125, c_timeGame);
     }
     return true;
 }
@@ -3996,7 +3962,7 @@ bool libMTOD_gt_MMToDDebugEventStart_Func (bool testConds, bool runActions) {
     TriggerDebugOutput(1, StringExternal("Param/Value/lib_MTOD_D46E7F48"), true);
     libMTOD_gv_mMToDFirstEventSpawned = true;
     TimerStart(libMTOD_gv_mMToDObjectivePreviewTimer, 1.0, false, c_timeGame);
-    libMTOD_Wait(2.0, c_timeGame);
+    libGame_Wait(2.0, c_timeGame);
     TimerStart(libMTOD_gv_mMToDScoringAltarTimer, 1.0, false, c_timeGame);
     return true;
 }

@@ -21,33 +21,26 @@ void libVLSK_InitLibraries () {
 }
 
 bool libVLSK_PauseTrigger_Func(bool testConds, bool runActions) {
-
-    if (!runActions) {
-        return true;
+    if (TimerGetRemaining(libVLSK_gv_mMVolskayaObjectivePreviewTimer) > 0.0) {
+        TimerPause(libVLSK_gv_mMVolskayaObjectivePreviewTimer, libGame_paused);
     }
-
-    if (!libVLSK_paused) {
-        libVLSK_paused = true;
-        if (TimerGetRemaining(libVLSK_gv_mMVolskayaObjectivePreviewTimer) > 0.0) {
-            TimerPause(libVLSK_gv_mMVolskayaObjectivePreviewTimer, true);
-        }
-        if (TimerGetRemaining(libVLSK_gv_capturePointCooldownTimer) > 0.0) {
-            TimerPause(libVLSK_gv_capturePointCooldownTimer, true);
-        }
-        if (TimerGetRemaining(libVLSK_gv_capturePointWarningTimer) > 0.0) {
-            TimerPause(libVLSK_gv_capturePointWarningTimer, true);
-        }
-    } else {
-        libVLSK_paused = false;
-        if (TimerGetRemaining(libVLSK_gv_mMVolskayaObjectivePreviewTimer) > 0.0) {
-            TimerPause(libVLSK_gv_mMVolskayaObjectivePreviewTimer, false);
-        }
-        if (TimerGetRemaining(libVLSK_gv_capturePointCooldownTimer) > 0.0) {
-            TimerPause(libVLSK_gv_capturePointCooldownTimer, false);
-        }
-        if (TimerGetRemaining(libVLSK_gv_capturePointWarningTimer) > 0.0) {
-            TimerPause(libVLSK_gv_capturePointWarningTimer, false);
-        }
+    if (TimerGetRemaining(libVLSK_gv_capturePointCooldownTimer) > 0.0) {
+        TimerPause(libVLSK_gv_capturePointCooldownTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libVLSK_gv_capturePointWarningTimer) > 0.0) {
+        TimerPause(libVLSK_gv_capturePointWarningTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libVLSK_gv_pilotNeededTimer) > 0.0) {
+        TimerPause(libVLSK_gv_pilotNeededTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libVLSK_gv_gunnerNeededTimer) > 0.0) {
+        TimerPause(libVLSK_gv_gunnerNeededTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libVLSK_pingDurationTimerPilot) > 0.0) {
+        TimerPause(libVLSK_pingDurationTimerPilot, libGame_paused);
+    }
+    if (TimerGetRemaining(libVLSK_pingDurationTimerGunner) > 0.0) {
+        TimerPause(libVLSK_pingDurationTimerGunner, libGame_paused);
     }
 
     return true;
@@ -202,8 +195,8 @@ void libVLSK_gf_MonitorCapturePointProgressUntilComplete (int lp_capturePointInd
 
     // Implementation
     while ((libVLSK_gv_capturePoints[lp_capturePointIndex].lv_isActive == true) && (libGame_gv_gameOver == false)) {
-        if (libVLSK_paused) {
-            Wait(libVLSK_gv_capturePointCheckPeriod_C, c_timeGame);
+        if (libGame_paused) {
+            libGame_Wait(libVLSK_gv_capturePointCheckPeriod_C, c_timeGame);
             continue;
         }
         lv_heroesOnPoint[libGame_gv_teamOrderIndex_C] = UnitGroupAlliance(libCore_gv_cOMPUTER_TeamOrder, c_unitAllianceAlly, libVLSK_gv_capturePoints[lp_capturePointIndex].lv_region, libVLSK_gv_capturePointContestFilter_C, 0);
@@ -322,7 +315,7 @@ void libVLSK_gf_MonitorCapturePointProgressUntilComplete (int lp_capturePointInd
             libVLSK_gf_PauseUnpauseControllingSoundsForTeam(true, libGame_gv_teamChaosIndex_C);
         }
         libVLSK_gf_UpdateUIVictoryPercentLabels();
-        Wait(libVLSK_gv_capturePointCheckPeriod_C, c_timeGame);
+        libGame_Wait(libVLSK_gv_capturePointCheckPeriod_C, c_timeGame);
     }
 }
 
@@ -1095,8 +1088,8 @@ bool auto_libVLSK_gf_ShowCapturePointWarningSlideoutWithPing_TriggerFunc (bool t
             PingDestroy(lv_ping);
         }
 
-        Wait(1.0, c_timeGame);
-        if (!libVLSK_paused) {
+        libGame_Wait(1.0, c_timeGame);
+        if (!libGame_paused) {
             lv_secondsLeft += auto4E41B909_ai;
         }
     }
@@ -1134,7 +1127,7 @@ bool auto_libVLSK_gf_ShowCapturePointCompletedSlideout_TriggerFunc (bool testCon
     libNtve_gf_SetDialogItemText(libVLSK_gv_volskayaUI.lv_slideout_InfoLabel, StringExternal("Param/Value/lib_VLSK_4D8B96E5"), GameAttributePlayersForTeam(lv_losingTeam));
     DialogControlSetVisible(libVLSK_gv_volskayaUI.lv_slideout_TimerLabel, PlayerGroupAll(), false);
     DialogControlSendAnimationEvent(libVLSK_gv_volskayaUI.lv_slideout_ToastNotification, PlayerGroupAll(), "Show");
-    Wait(2.0, c_timeGame);
+    libGame_Wait(2.0, c_timeGame);
     DialogControlSendAnimationEvent(libVLSK_gv_volskayaUI.lv_slideout_ToastNotification, PlayerGroupAll(), "Hide");
     return true;
 }
@@ -1232,13 +1225,13 @@ bool auto_libVLSK_gf_ShowRobotSlideoutStatusFrameforUnit_TriggerFunc (bool testC
     while ((UnitIsAlive(lp_robotUnit) == true)) {
         lv_timedLifeRemaining = (FixedToInt(UnitBehaviorDuration(lp_robotUnit, "VehicleDragonTimedLife")) + 1);
         libNtve_gf_SetDialogItemText(libVLSK_gv_volskayaUI.lv_robot_TimeLabel, TextTimeFormat(StringToText("<mintotal/>:<sec2/>"), FixedToInt(lv_timedLifeRemaining)), PlayerGroupAll());
-        Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     DialogControlSendAnimationEvent(libVLSK_gv_volskayaUI.lv_robot_DeathIcon1, PlayerGroupAll(), "PlayDeathJitter");
     DialogControlSendAnimationEvent(libVLSK_gv_volskayaUI.lv_robot_DeathIcon2, PlayerGroupAll(), "PlayDeathJitter");
     DialogControlSendAnimationEvent(libVLSK_gv_volskayaUI.lv_robot_DeathIcon3, PlayerGroupAll(), "PlayDeathJitter");
     DialogControlSendAnimationEvent(libVLSK_gv_volskayaUI.lv_robot_RobotIcon, PlayerGroupAll(), "PlayDeathJitter");
-    Wait(1.0, c_timeGame);
+    libGame_Wait(1.0, c_timeGame);
     DialogControlSendAnimationEvent(libVLSK_gv_volskayaUI.lv_robot_Container, PlayerGroupAll(), "PlaySlideOut");
     return true;
 }
@@ -1280,7 +1273,7 @@ void libVLSK_gf_PlayVOControlPointWarning () {
 bool auto_libVLSK_gf_PlayVOControlPointWarning_TriggerFunc (bool testConds, bool runActions) {
     // Automatic Variable Declarations
     // Implementation
-    Wait(0.5, c_timeGame);
+    libGame_Wait(0.5, c_timeGame);
     if ((libGame_gv_gameOver == true)) {
         return true;
     }
@@ -1350,7 +1343,7 @@ bool auto_libVLSK_gf_PlayVOControlPointCompleted_TriggerFunc (bool testConds, bo
     lv_observerGroup = PlayerGroupSingle(libCore_gv_oBSERVER_ObserverUIPlayer);
 
     // Implementation
-    Wait(0.8, c_timeGame);
+    libGame_Wait(0.8, c_timeGame);
     if ((libGame_gv_gameOver == true)) {
         return true;
     }
@@ -1438,7 +1431,7 @@ void libVLSK_gf_PlayVORobotDestroyed () {
 bool auto_libVLSK_gf_PlayVORobotDestroyed_TriggerFunc (bool testConds, bool runActions) {
     // Automatic Variable Declarations
     // Implementation
-    Wait(0.5, c_timeGame);
+    libGame_Wait(0.5, c_timeGame);
     if ((libGame_gv_gameOver == true)) {
         return true;
     }
@@ -1462,7 +1455,7 @@ void libVLSK_gf_PlayVORobotTimedOut () {
 bool auto_libVLSK_gf_PlayVORobotTimedOut_TriggerFunc (bool testConds, bool runActions) {
     // Automatic Variable Declarations
     // Implementation
-    Wait(0.5, c_timeGame);
+    libGame_Wait(0.5, c_timeGame);
     if ((libGame_gv_gameOver == true)) {
         return true;
     }
@@ -1788,14 +1781,13 @@ bool libVLSK_gt_PilotNeededTimerExpires_Func (bool testConds, bool runActions) {
     unit lv_robotUnit;
     int lv_robotTeam;
     int lv_ping;
-    timer lv_pingDurationTimer;
 
     // Automatic Variable Declarations
     // Variable Initialization
     lv_robotUnit = UnitGroupUnit(UnitGroup("VolskayaVehicle", c_playerAny, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0), 1);
     lv_robotTeam = libGame_gf_TeamNumberOfPlayer(UnitGetOwner(lv_robotUnit));
     lv_ping = c_invalidPingId;
-    lv_pingDurationTimer = TimerCreate();
+    libVLSK_pingDurationTimerPilot = TimerCreate();
 
     // Actions
     if (!runActions) {
@@ -1807,9 +1799,9 @@ bool libVLSK_gt_PilotNeededTimerExpires_Func (bool testConds, bool runActions) {
     PingCreateFromData(libGame_gf_PlayersOnTeamHeroes(lv_robotTeam, false), "StormAlert", UnitGetPosition(lv_robotUnit));
     lv_ping = PingLastCreated();
     PingSetUnit(lv_ping, lv_robotUnit);
-    TimerStart(lv_pingDurationTimer, 5.0, false, c_timeGame);
-    while ((UnitIsAlive(lv_robotUnit) == true) && (TimerGetRemaining(lv_pingDurationTimer) > 0.0)) {
-        Wait(0.0625, c_timeGame);
+    TimerStart(libVLSK_pingDurationTimerPilot, 5.0, false, c_timeGame);
+    while ((UnitIsAlive(lv_robotUnit) == true) && (TimerGetRemaining(libVLSK_pingDurationTimerPilot) > 0.0)) {
+        libGame_Wait(0.0625, c_timeGame);
     }
     PingDestroy(lv_ping);
     return true;
@@ -1830,14 +1822,13 @@ bool libVLSK_gt_GunnerNeededTimerExpires_Func (bool testConds, bool runActions) 
     unit lv_robotUnit;
     int lv_robotTeam;
     int lv_ping;
-    timer lv_pingDurationTimer;
 
     // Automatic Variable Declarations
     // Variable Initialization
     lv_robotUnit = UnitGroupUnit(UnitGroup("VolskayaVehicle", c_playerAny, RegionEntireMap(), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0), 1);
     lv_robotTeam = libGame_gf_TeamNumberOfPlayer(UnitGetOwner(lv_robotUnit));
     lv_ping = c_invalidPingId;
-    lv_pingDurationTimer = TimerCreate();
+    libVLSK_pingDurationTimerGunner = TimerCreate();
 
     // Actions
     if (!runActions) {
@@ -1849,9 +1840,9 @@ bool libVLSK_gt_GunnerNeededTimerExpires_Func (bool testConds, bool runActions) 
     PingCreateFromData(libGame_gf_PlayersOnTeamHeroes(lv_robotTeam, false), "StormAlert", UnitGetPosition(lv_robotUnit));
     lv_ping = PingLastCreated();
     PingSetUnit(lv_ping, lv_robotUnit);
-    TimerStart(lv_pingDurationTimer, 5.0, false, c_timeGame);
-    while ((UnitIsAlive(lv_robotUnit) == true) && (TimerGetRemaining(lv_pingDurationTimer) > 0.0)) {
-        Wait(0.0625, c_timeGame);
+    TimerStart(libVLSK_pingDurationTimerGunner, 5.0, false, c_timeGame);
+    while ((UnitIsAlive(lv_robotUnit) == true) && (TimerGetRemaining(libVLSK_pingDurationTimerGunner) > 0.0)) {
+        libGame_Wait(0.0625, c_timeGame);
     }
     PingDestroy(lv_ping);
     return true;
@@ -2210,7 +2201,7 @@ bool libVLSK_gt_ShowOvertime_Func (bool testConds, bool runActions) {
     lv_i = 100;
     for ( ; ( (autoCB5C6AAB_ai >= 0 && lv_i <= autoCB5C6AAB_ae) || (autoCB5C6AAB_ai < 0 && lv_i >= autoCB5C6AAB_ae) ) ; lv_i += autoCB5C6AAB_ai ) {
         libNtve_gf_SetDialogItemCurrentValue(libVLSK_gv_volskayaUI.lv_overtimeBar_ProgressBar, (lv_i / 100.0), PlayerGroupAll());
-        Wait(0.125, c_timeGame);
+        libGame_Wait(0.125, c_timeGame);
     }
     libVLSK_gf_EnableDisableOvertimeBar(false);
     return true;
@@ -2353,7 +2344,7 @@ bool libVLSK_gt_PlayDeathJitter_Func (bool testConds, bool runActions) {
     }
 
     DialogControlSetVisible(libVLSK_gv_volskayaUI.lv_robot_Container, PlayerGroupAll(), true);
-    Wait(2.0, c_timeGame);
+    libGame_Wait(2.0, c_timeGame);
     DialogControlSendAnimationEvent(libVLSK_gv_volskayaUI.lv_robot_DeathIcon1, PlayerGroupAll(), "PlayDeathJitter");
     DialogControlSendAnimationEvent(libVLSK_gv_volskayaUI.lv_robot_DeathIcon2, PlayerGroupAll(), "PlayDeathJitter");
     DialogControlSendAnimationEvent(libVLSK_gv_volskayaUI.lv_robot_DeathIcon3, PlayerGroupAll(), "PlayDeathJitter");

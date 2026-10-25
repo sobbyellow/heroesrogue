@@ -1,0 +1,16 @@
+﻿Actor/Name/PayloadDoodad=Payload Doodad
+Cliff/Name/StormHMCliff0=Storm HM Cliff 0
+Cliff/Name/StormHMCliff1=Storm HM Cliff 1
+CliffMesh/Name/Storm_Cliff_Empty0=Storm_Cliff_Empty0
+CliffMesh/Name/Storm_Cliff_Empty1=Storm_Cliff_Empty1
+Footprint/Name/OWHanaLargeGateSW=
+Light/Name/EditorTestLight=default
+Light/Name/EditorTestLight2=default
+Light/Name/EditorTestLight3=default
+Light/Name/EditorTestLight4=default
+Light/Name/EditorTestLight5=default
+Light/Name/EditorTestLight6=default
+Light/Name/EditorTestLight7=default
+Light/Name/EditorTestLight8=default
+Light/Name/Storm_OWHana=Storm_OWHana
+Model/Name/PayloadDoodad=Payload Doodad

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CTerrainTex id="StormDS191">
+        <Texture value="Assets\Textures\storm_ds19_1.dds"/>
+        <Normalmap value="Assets\Textures\storm_ds19_1normal.dds"/>
+        <HeightMapScale value="1.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormDS192">
+        <Texture value="Assets\Textures\storm_ds19_2.dds"/>
+        <Normalmap value="Assets\Textures\storm_ds19_2normal.dds"/>
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormDS193">
+        <Texture value="Assets\Textures\storm_ds19_3.dds"/>
+        <Normalmap value="Assets\Textures\storm_ds19_3normal.dds"/>
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormDS194">
+        <Texture value="Assets\Textures\storm_ds19_4.dds"/>
+        <Normalmap value="Assets\Textures\storm_ds19_4normal.dds"/>
+        <HeightMapScale value="1.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormDS195">
+        <Texture value="Assets\Textures\storm_ds19_5.dds"/>
+        <Normalmap value="Assets\Textures\storm_ds19_5normal.dds"/>
+        <HeightMapScale value="1.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormDS196">
+        <Texture value="Assets\Textures\storm_ds19_6.dds"/>
+        <Normalmap value="Assets\Textures\storm_ds19_6normal.dds"/>
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormDS197">
+        <Texture value="Assets\Textures\storm_ds19_7.dds"/>
+        <Normalmap value="Assets\Textures\storm_ds19_7normal.dds"/>
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormDS198">
+        <Texture value="Assets\Textures\storm_ds19_8.dds"/>
+        <Normalmap value="Assets\Textures\storm_ds19_8normal.dds"/>
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+</Catalog>

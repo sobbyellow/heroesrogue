@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CLight id="StormRavenCourtCurseFinal">
+        <ToDInfoArray index="0">
+            <Id value="StormRavenCourtCurseFinal"/>
+            <AmbientColor value="0.396078,0.349020,0.666667"/>
+            <OperatorHDR value="4"/>
+            <Colorize value="1"/>
+            <Param index="HDRExposure" value="1.650000"/>
+            <Param index="HDRBloomThreshold" value="0.900000"/>
+            <Param index="HDRWhitePoint" value="1.850000"/>
+            <Param index="TerrainSpecularExp" value="73.000000"/>
+            <Param index="CreepSpecularExp" value="30.000000"/>
+            <Param index="CreepHDRSpecMultiplier" value="3.000000"/>
+            <Param index="ColorizationInputHigh" value="0.975000"/>
+            <Param index="ColorizationHue" value="-0.000000"/>
+            <Param index="ColorizationBlend" value="0.000000"/>
+            <DirectionalLight index="Key" Color="0.521569,0.364706,0.686275" Direction="0.554487,0.418443,-0.719340"/>
+        </ToDInfoArray>
+    </CLight>
+    <CLight id="StormRavenCourtCurseTransition">
+        <ToDInfoArray index="0">
+            <Id value="StormRavenCourtCurseTransition"/>
+            <AmbientColor value="0.392157,0.349020,1.000000"/>
+            <OperatorHDR value="4"/>
+            <Colorize value="1"/>
+            <Param index="HDRExposure" value="1.650000"/>
+            <Param index="HDRBloomThreshold" value="0.900000"/>
+            <Param index="HDRWhitePoint" value="1.850000"/>
+            <Param index="TerrainSpecularExp" value="73.000000"/>
+            <Param index="CreepSpecularExp" value="30.000000"/>
+            <Param index="CreepHDRSpecMultiplier" value="3.000000"/>
+            <Param index="ColorizationInputHigh" value="0.975000"/>
+            <Param index="ColorizationHue" value="-0.000000"/>
+            <Param index="ColorizationBlend" value="0.000000"/>
+            <DirectionalLight index="Key" Color="0.521569,0.392157,0.686275" Direction="0.554487,0.418443,-0.719340"/>
+            <DirectionalLight index="Back" Direction="0.626524,-0.208781,-0.750919"/>
+        </ToDInfoArray>
+    </CLight>
+    <CLight id="StormRavenCourtFinal">
+        <ToDInfoArray index="0">
+            <Id value="StormRavenCourtFinal"/>
+            <AmbientColor value="0.501961,0.352941,0.666667"/>
+            <OperatorHDR value="4"/>
+            <Colorize value="1"/>
+            <Param index="HDRExposure" value="1.600000"/>
+            <Param index="HDRBloomThreshold" value="0.900000"/>
+            <Param index="HDRWhitePoint" value="1.850000"/>
+            <Param index="TerrainSpecularExp" value="73.000000"/>
+            <Param index="CreepSpecularExp" value="60.000000"/>
+            <Param index="CreepHDRSpecMultiplier" value="1.500000"/>
+            <Param index="ColorizationInputHigh" value="0.975000"/>
+            <Param index="ColorizationLightness" value="-0.000000"/>
+            <Param index="ColorizationBlend" value="0.000000"/>
+            <DirectionalLight index="Key">
+                <Color value="1.000000,1.000000,0.721569"/>
+                <ColorMultiplier value="0.800000"/>
+                <SpecularColor value="0.956863,0.956863,1.000000"/>
+                <Direction value="0.554487,0.418443,-0.719340"/>
+            </DirectionalLight>
+            <DirectionalLight index="Fill" Color="0.423529,0.525490,0.266667" ColorMultiplier="0.257000"/>
+            <DirectionalLight index="Back" Color="1.000000,1.000000,0.721569" ColorMultiplier="0.200000" Direction="0.634811,-0.211543,-0.743145"/>
+        </ToDInfoArray>
+    </CLight>
+</Catalog>

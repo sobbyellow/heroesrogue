@@ -1,0 +1,15 @@
+include "HRLibs/HRTriggersLib"
+
+
+
+bool libHRGE_MalfurionDreamstateScaling (bool testConds, bool runActions) {
+    int player = libGame_gf_HeroLevelUpPlayer();
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+    }
+    libHRGE_SetDefaultLevelScaling("Effect,TranquilityDamage,Amount", player);
+
+    return true;
+}

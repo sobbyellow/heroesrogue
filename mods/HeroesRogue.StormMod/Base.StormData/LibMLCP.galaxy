@@ -22,46 +22,15 @@ void libMLCP_InitLibraries () {
     libSprt_InitVariables();
 }
 
-
-void libMLCP_Wait(fixed duration, int inTimeType) {
-    fixed elapsed = 0.0;
-    while (elapsed < duration) {
-        if (libMLCP_paused) {
-            Wait(0.0625, inTimeType);
-        } else {
-            Wait(0.0625, inTimeType);
-            elapsed += 0.0625;
-        }
-    }
-}
-
 bool libMLCP_PauseTrigger_Func(bool testConds, bool runActions) {
-
-    if (!runActions) {
-        return true;
+    if (TimerGetRemaining(libMLCP_gv_mMSkyTempleBlessingWarningTimer) > 0.0) {
+        TimerPause(libMLCP_gv_mMSkyTempleBlessingWarningTimer, libGame_paused);
     }
-    if (!libMLCP_paused) {
-        libMLCP_paused = true;
-        if (TimerGetRemaining(libMLCP_gv_mMSkyTempleBlessingWarningTimer) > 0.0) {
-            TimerPause(libMLCP_gv_mMSkyTempleBlessingWarningTimer, true);
-        }
-        if (TimerGetRemaining(libMLCP_gv_mMSkyTempleBlessWarningLongWaitTimer) > 0.0) {
-            TimerPause(libMLCP_gv_mMSkyTempleBlessWarningLongWaitTimer, true);
-        }
-        if (TimerGetRemaining(libMLCP_gv_mMSkyTempleObjectivePreviewTimer) > 0.0) {
-            TimerPause(libMLCP_gv_mMSkyTempleObjectivePreviewTimer, true);
-        }
-    } else {
-        libMLCP_paused = false;
-        if (TimerGetRemaining(libMLCP_gv_mMSkyTempleBlessingWarningTimer) > 0.0) {
-            TimerPause(libMLCP_gv_mMSkyTempleBlessingWarningTimer, false);
-        }
-        if (TimerGetRemaining(libMLCP_gv_mMSkyTempleBlessWarningLongWaitTimer) > 0.0) {
-            TimerPause(libMLCP_gv_mMSkyTempleBlessWarningLongWaitTimer, false);
-        }
-        if (TimerGetRemaining(libMLCP_gv_mMSkyTempleObjectivePreviewTimer) > 0.0) {
-            TimerPause(libMLCP_gv_mMSkyTempleObjectivePreviewTimer, false);
-        }
+    if (TimerGetRemaining(libMLCP_gv_mMSkyTempleBlessWarningLongWaitTimer) > 0.0) {
+        TimerPause(libMLCP_gv_mMSkyTempleBlessWarningLongWaitTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMLCP_gv_mMSkyTempleObjectivePreviewTimer) > 0.0) {
+        TimerPause(libMLCP_gv_mMSkyTempleObjectivePreviewTimer, libGame_paused);
     }
 
     return true;
@@ -668,7 +637,7 @@ bool auto_libMLCP_gf_MMSkyTempleBlessTempleDone_TriggerFunc (bool testConds, boo
     libMLCP_gf_MMSkyTempleClearTargetRevealers(lp_templeIndex, 6.0);
     libNtve_gf_PlayAnimation(libNtve_gf_MainActorofUnit(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_beacon), c_animNameDefault, "Spell", c_animFlagNonLooping, c_animTimeDefault);
     libGame_gv_capturePoints[libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_beaconIndex].lv_enabled = false;
-    libMLCP_Wait(1.0, c_timeGame);
+    libGame_Wait(1.0, c_timeGame);
     ActorSend(libNtve_gf_MainActorofUnit(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_beacon), "Signal Hide");
     autoCA0226CA_g = libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_defendersActivated;
     autoCA0226CA_u = UnitGroupCount(autoCA0226CA_g, c_unitCountAll);
@@ -677,12 +646,12 @@ bool auto_libMLCP_gf_MMSkyTempleBlessTempleDone_TriggerFunc (bool testConds, boo
         if (lv_itDefender == null) { break; }
         libMLCP_gf_MMSkyTempleDeactivateTempleDefender(lv_itDefender);
     }
-    libMLCP_Wait(3.5, c_timeGame);
+    libGame_Wait(3.5, c_timeGame);
     if ((UnitHasBehavior2(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple, "LuxoriaTempleStage1") == true)) {
         UnitBehaviorRemovePlayer(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple, "LuxoriaTempleStage1", libCore_gv_cOMPUTER_Neutral, 1);
     }
 
-    libMLCP_Wait(1.0, c_timeGame);
+    libGame_Wait(1.0, c_timeGame);
     libGame_gv_capturePoints[libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_beaconIndex].lv_enabled = true;
     libGame_gf_CapturePointDisable(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_beaconIndex);
     libCore_gf_SendActorMessageToDoodadsInRegion("Signal DeactivateCapturePoint", RegionCircle(UnitGetPosition(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple), 12.0), null);
@@ -777,7 +746,7 @@ void libMLCP_gf_MMSkyTemplePrepareTempleDefenders (int lp_templeIndex) {
     UnitSetState(UnitLastCreated(), c_unitStateStatusBar, false);
     libNtve_gf_PlayAnimation(libNtve_gf_MainActorofUnit(UnitLastCreated()), c_animNameDefault, "Stand", 0, 0.0);
     libNtve_gf_SendActorMessageToUnit(UnitLastCreated(), "AnimSetPausedAll");
-    libMLCP_Wait(0.0625, c_timeGame);
+    libGame_Wait(0.0625, c_timeGame);
     ActorSend(libNtve_gf_ActorLastCreated(), "AnimSetPausedAll");
     auto2F3AA251_val = lp_templeIndex;
     if (auto2F3AA251_val == 1) {
@@ -895,7 +864,7 @@ bool auto_libMLCP_gf_MMSkyTemplePrepareTempleDefenderStatue_TriggerFunc (bool te
     ActorSend(libNtve_gf_ActorLastCreated(), "AnimBracketStart Statue Stand,Work,Start Stand,Work Stand,Work,End 0 0.000000");
     ActorSend(libNtve_gf_ActorLastCreated(), "SetPlayerId");
     ActorSend(libNtve_gf_ActorLastCreated(), "SetVisibility");
-    libMLCP_Wait(0.0625, c_timeGame);
+    libGame_Wait(0.0625, c_timeGame);
     ActorSend(libNtve_gf_ActorLastCreated(), "SetVisibility 1");
     return true;
 }
@@ -1003,15 +972,15 @@ bool auto_libMLCP_gf_MMSkyTempleActivateTempleDefender_TriggerFunc (bool testCon
     auto68FB8DFF_val = UnitGetType(lp_defender);
     if (auto68FB8DFF_val == "TempleGuardianBoss") {
         libGame_gf_UpdateScalingForUnit(lp_defender, libGame_gv_scalingTicks, 0);
-        libMLCP_Wait(3.0, c_timeGame);
+        libGame_Wait(3.0, c_timeGame);
         UnitRemove(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_defenderBossPathingBlocker);
         libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_defenderBossPathingBlocker = null;
-        libMLCP_Wait(2.2, c_timeGame);
+        libGame_Wait(2.2, c_timeGame);
         UnitSetState(lp_defender, c_unitStateStatusBar, true);
     }
     else if (auto68FB8DFF_val == "TempleDefenderRanged") {
         libGame_gf_UpdateScalingForUnit(lp_defender, libGame_gv_scalingTicks, 0);
-        libMLCP_Wait(4.5, c_timeGame);
+        libGame_Wait(4.5, c_timeGame);
         UnitBehaviorAdd(lp_defender, "TempleRangedDefenderBirthDelay", lp_defender, 1);
     }
     else {
@@ -1500,7 +1469,7 @@ bool auto_libMLCP_gf_MMSkyTempleBlessingProgress_TriggerFunc (bool testConds, bo
                     libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_targetRevealerCount += 1;
                     VisRevealerCreate(UnitGetOwner(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple), RegionCircle(UnitGetPosition(lv_target), 5.0));
                     libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_targetRevealers[libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_targetRevealerCount] = VisRevealerLastCreated();
-                    libMLCP_Wait(0.5, c_timeGame);
+                    libGame_Wait(0.5, c_timeGame);
                     UnitIssueOrder(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple, OrderTargetingUnit(AbilityCommand("attack", 0), lv_target), c_orderQueueReplace);
                     libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_targetUnit = lv_target;
                 }
@@ -1522,7 +1491,7 @@ bool auto_libMLCP_gf_MMSkyTempleBlessingProgress_TriggerFunc (bool testConds, bo
 
             libMLCP_gf_MMSkyTempleStopShooting(lp_templeIndex);
         }
-        libMLCP_Wait(lv_timeInterval_C, c_timeGame);
+        libGame_Wait(lv_timeInterval_C, c_timeGame);
     }
     return true;
 }
@@ -1571,7 +1540,7 @@ bool auto_libMLCP_gf_MMSkyTempleClearTargetRevealers_TriggerFunc (bool testConds
         lv_revealers[lv_itRevealer] = libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_targetRevealers[lv_itRevealer];
     }
     libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_targetRevealerCount = 0;
-    libMLCP_Wait(lp_delay, c_timeGame);
+    libGame_Wait(lp_delay, c_timeGame);
     autoA1E15699_ae = lv_count;
     lv_itRevealer = 1;
     for ( ; ( (autoA1E15699_ai >= 0 && lv_itRevealer <= autoA1E15699_ae) || (autoA1E15699_ai < 0 && lv_itRevealer >= autoA1E15699_ae) ) ; lv_itRevealer += autoA1E15699_ai ) {
@@ -1818,7 +1787,7 @@ bool auto_libMLCP_gf_MMSkyTempleShootingPingBackup_TriggerFunc (bool testConds, 
             lv_pingArrow[lv_itTeam][lv_pingArrorCount] = PingLastCreated();
         }
         lv_pingDistance += 10.0;
-        libMLCP_Wait(0.25, c_timeGame);
+        libGame_Wait(0.25, c_timeGame);
     }
     if ((UnitIsAlive(lp_target) == true)) {
         lv_itTeam = 1;
@@ -1849,7 +1818,7 @@ bool auto_libMLCP_gf_MMSkyTempleShootingPingBackup_TriggerFunc (bool testConds, 
             return true;
         }
 
-        libMLCP_Wait(0.25, c_timeGame);
+        libGame_Wait(0.25, c_timeGame);
     }
     return true;
 }
@@ -1902,7 +1871,7 @@ bool auto_libMLCP_gf_MMSkyTempleBlessTempleFinalBlast_TriggerFunc (bool testCond
     UnitBehaviorRemove(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple, "LuxoriaTempleStage1", 1);
     UnitBehaviorRemove(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple, "LuxoriaTempleStage2", 1);
     UnitBehaviorAddPlayer(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple, "LuxoriaTempleFinalBlastChannelBehavior", UnitGetOwner(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple), 1);
-    libMLCP_Wait(0.0625, c_timeGame);
+    libGame_Wait(0.0625, c_timeGame);
     lv_target = null;
     auto714C43EE_n = FixedToInt((4.0 / 0.125));
     for (auto714C43EE_i = 1; auto714C43EE_i <= auto714C43EE_n; auto714C43EE_i += 1) {
@@ -1921,7 +1890,7 @@ bool auto_libMLCP_gf_MMSkyTempleBlessTempleFinalBlast_TriggerFunc (bool testCond
 
         }
 
-        libMLCP_Wait(0.125, c_timeGame);
+        libGame_Wait(0.125, c_timeGame);
     }
     UnitBehaviorRemovePlayer(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple, "LuxoriaTempleFinalBlastChannelBehavior", UnitGetOwner(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple), 1);
     UnitBehaviorAddPlayer(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple, "LuxoriaTempleFinalBlastActiveBehavior", UnitGetOwner(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple), 1);
@@ -1930,18 +1899,18 @@ bool auto_libMLCP_gf_MMSkyTempleBlessTempleFinalBlast_TriggerFunc (bool testCond
         VisRevealArea(UnitGetOwner(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple), RegionCircle(UnitGetPosition(lv_target), 5.0), 5.0, false);
         UnitIssueOrder(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple, OrderTargetingUnit(AbilityCommand("LuxoriaTempleTurretHold", 0), lv_target), c_orderQueueReplace);
         libMLCP_gf_MMSkyTempleShootingPing(lp_templeIndex, lv_target);
-        libMLCP_Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
         if ((UnitIsAlive(lv_target) == false)) {
             lv_target = libMLCP_gf_MMSkyTempleNextTarget(lp_templeIndex);
             VisRevealArea(UnitGetOwner(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple), RegionCircle(UnitGetPosition(lv_target), 5.0), 5.0, false);
         }
 
         UnitIssueOrder(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple, OrderTargetingUnit(AbilityCommand("LuxoriaTempleFinalBlast", 0), lv_target), c_orderQueueAddToEnd);
-        libMLCP_Wait(RandomFixed(0.125, 0.25), c_timeGame);
+        libGame_Wait(RandomFixed(0.125, 0.25), c_timeGame);
         libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_finalShots -= 1;
         libMLCP_gf_MMSkyTempleUISetTempleStage(lp_templeIndex, 2, libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_finalShots);
     }
-    libMLCP_Wait(1.0, c_timeGame);
+    libGame_Wait(1.0, c_timeGame);
     UnitSetPropertyFixed(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple, c_unitPropEnergyPercent, 100.0);
     libMLCP_gf_TempleMasterSendAwardData();
     UnitBehaviorRemovePlayer(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple, "LuxoriaTempleFinalBlastActiveBehavior", UnitGetOwner(libMLCP_gv_mMSkyTemples[lp_templeIndex].lv_temple), 1);
@@ -2394,7 +2363,7 @@ void libMLCP_gf_MMSkyTempleSetLevel () {
         auto43AB1A21_var = UnitGroupUnitFromEnd(auto43AB1A21_g, auto43AB1A21_u);
         if (auto43AB1A21_var == null) { break; }
         UnitSetPropertyFixed(auto43AB1A21_var, c_unitPropXP, 0.0);
-        libMLCP_Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
         libGame_gf_UpdateScalingForUnit(auto43AB1A21_var, libGame_gv_scalingTicks, 0);
     }
 }
@@ -2631,7 +2600,7 @@ bool libMLCP_gt_MMSkyTempleGatesOpened_Func (bool testConds, bool runActions) {
     }
 
     TimerStart(libMLCP_gv_mMSkyTempleObjectivePreviewTimer, libMLCP_gv_mMSkyTempleObjectivePreviewDelay_C, false, c_timeGame);
-    libMLCP_Wait((libMLCP_gv_mMSkyTempleFirstTempleStartTime_C - libMLCP_gv_mMSkyTempleTempleBlessWarningTime), c_timeGame);
+    libGame_Wait((libMLCP_gv_mMSkyTempleFirstTempleStartTime_C - libMLCP_gv_mMSkyTempleTempleBlessWarningTime), c_timeGame);
     if ((TriggerIsEnabled(TriggerGetCurrent()) == false)) {
         return true;
     }
@@ -2712,11 +2681,11 @@ bool libMLCP_gt_MMSkyTempleBlessWarningTimerExpires_Func (bool testConds, bool r
             break;
         }
 
-        libMLCP_Wait(1.0, c_timeGame);
+        libGame_Wait(1.0, c_timeGame);
     }
     TimerStart(libMLCP_gv_mMSkyTempleObjectivePreviewTimer, libMLCP_gv_mMSkyTempleObjectivePreviewDelay_C, false, c_timeGame);
     libMLCP_gf_MMSkyTempleTransmissionTempleDeactivatedQ(PlayerGroupAll());
-    libMLCP_Wait((libMLCP_gv_mMSkyTempleTempleCooldown_C - libMLCP_gv_mMSkyTempleTempleBlessWarningTime), c_timeGame);
+    libGame_Wait((libMLCP_gv_mMSkyTempleTempleCooldown_C - libMLCP_gv_mMSkyTempleTempleBlessWarningTime), c_timeGame);
     libMLCP_gf_MMSkyTemplePrepareTemples();
     return true;
 }
@@ -3037,7 +3006,7 @@ bool libMLCP_gt_MMSkyTempleBeaconColor_Func (bool testConds, bool runActions) {
             }
 
         }
-        libMLCP_Wait(0.25, c_timeGame);
+        libGame_Wait(0.25, c_timeGame);
     }
     return true;
 }
@@ -3219,7 +3188,7 @@ bool libMLCP_gt_MMSkyTempleUIHandler_Func (bool testConds, bool runActions) {
             }
             lv_lastState = lv_state;
         }
-        libMLCP_Wait(0.5, c_timeGame);
+        libGame_Wait(0.5, c_timeGame);
     }
     return true;
 }
@@ -3293,7 +3262,7 @@ bool libMLCP_gt_MMSkyTempleUIHandlerCaptureProgress_Func (bool testConds, bool r
             }
 
         }
-        libMLCP_Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     return true;
 }
@@ -3341,7 +3310,7 @@ bool libMLCP_gt_MMSkyTempleHarrisonJonesEnding_Func (bool testConds, bool runAct
     }
 
     libNtve_gf_CreateActorAtPoint("LuxBazaarAdventurerVictory", UnitGetPosition(EventUnit()));
-    libMLCP_Wait(0.0625, c_timeGame);
+    libGame_Wait(0.0625, c_timeGame);
     libNtve_gf_SendActorMessageToGameRegion(RegionCircle(UnitGetPosition(EventUnit()), 10.0), "Signal AdventureTime");
     return true;
 }
@@ -3447,7 +3416,7 @@ bool libMLCP_gt_MMSkyTempleDebugNext_Func (bool testConds, bool runActions) {
     for ( ; ( (autoAA2EED4D_ai >= 0 && lv_itTemple <= autoAA2EED4D_ae) || (autoAA2EED4D_ai < 0 && lv_itTemple >= autoAA2EED4D_ae) ) ; lv_itTemple += autoAA2EED4D_ai ) {
         libMLCP_gf_MMSkyTempleBlessTempleDone(lv_itTemple);
     }
-    libMLCP_Wait(5.0, c_timeGame);
+    libGame_Wait(5.0, c_timeGame);
     libMLCP_gf_MMSkyTemplePrepareTemples();
     TimerStart(libMLCP_gv_mMSkyTempleBlessingWarningTimer, 1.0, false, c_timeGame);
     return true;
@@ -3523,7 +3492,7 @@ bool libMLCP_gt_MMSkyTempleSpawnTestTemple_Func (bool testConds, bool runActions
     libSprt_gf_DEBUGSpawnCreepCamps();
     libSprt_gf_DEBUGToggleSelection();
     lv_spawnPoint = CameraGetTarget(1);
-    libMLCP_Wait(0.0625, c_timeGame);
+    libGame_Wait(0.0625, c_timeGame);
     libNtve_gf_CreateUnitsWithDefaultFacing(1, "LuxoriaTemple", c_unitCreateIgnorePlacement, 1, lv_spawnPoint, null);
     if ((StringSub(EventChatMessage(false), 7, 7) == "1")) {
         UnitBehaviorAdd(UnitLastCreated(), "LuxoriaTempleStage1", UnitLastCreated(), 1);

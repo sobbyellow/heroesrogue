@@ -1,0 +1,20 @@
+﻿Category/Name/28807812=== DATA HOOKUPS ==
+Category/Name/3B72385F=Elevator
+Category/Name/78D4F82D=== INITIALIZATION ==
+FunctionDef/Name/206B1F56=Hookup Lane Data
+FunctionDef/Name/30680A7C=Hookup Jungle Creep Data
+FunctionDef/Name/7C1C9522=Hookup Global Variables
+FunctionDef/Name/9A8A5121=Hookup Region Data
+FunctionDef/Name/D750A162=Hookup Town Data
+FunctionDef/Name/DD32B4CD=Hookup Payload Data
+Trigger/Name/9EBEFD2B=Initialize Visibility Revealers
+Trigger/Name/DE600CEA=Hookup Elevator Variables
+Trigger/Name/FA4B29FB=Initialize Map
+Variable/Name/0B5B9FD8=team
+Variable/Name/11660203=town
+Variable/Name/2C53B720=lane
+Variable/Name/69BF4191=jungleCamp
+Variable/Name/7D692A46=waypointCount
+Variable/Name/BBAB1C05=structureCount
+Variable/Name/CA0725FE=townIndexes
+Variable/Name/D379A2B0=laneTownIndex

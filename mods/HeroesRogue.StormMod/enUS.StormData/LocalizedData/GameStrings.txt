@@ -20,11 +20,12 @@ Param/Expression/AffixCurseSkips=<n/><n/><c val="FFDE36">Skips the next Curse.</
 Param/Expression/AffixCurseSkipsMultiple=<n/><n/><c val="FFDE36">Skips the next ~A~ Curses.</c>
 Param/Expression/AffixCurseSkipsEachStack=<n/><n/><c val="FFDE36">Each stack skips the next Curse.</c>
 Param/Expression/AffixCurseSkipsMultipleEachStack=<n/><n/><c val="FFDE36">Each stack skips the next ~A~ Curses.</c>
-Param/Expression/Mythic=<n/><n/><c val="A84987">Round 1</c>: ~A~<n/><c val="A84987">Round 5</c>: ~B~<n/><c val="A84987">Round 9</c>: ~C~<n/><c val="A84987">Round 13</c>: ~D~<n/><c val="A84987">Round 17</c> and beyond: ~E~
+Param/Expression/Mythic=<n/><n/><c val="A84987">Round 1</c>: ~A~<n/><c val="A84987">Round 3</c>: ~B~<n/><c val="A84987">Round 5</c>: ~C~<n/><c val="A84987">Round 7</c>: ~D~<n/><c val="A84987">Round 9</c>: ~E~<n/><c val="A84987">Round 11</c> and beyond: ~F~
 Param/Expression/AffixGameoverStats1=<c val="#TooltipNumbers">~M~</c><n/>Total boons: <c val="#TooltipNumbers">~A~</c><n/>    - <c val="ffffff">Commons:</c> <c val="#TooltipNumbers">~C~</c><n/>    - <c val="00ff55">Uncommons:</c> <c val="#TooltipNumbers">~D~</c><n/>    - <c val="0070dd">Rares:</c> <c val="#TooltipNumbers">~E~</c><n/>    - <c val="a335ee">Epics:</c> <c val="#TooltipNumbers">~F~</c><n/>    - <c val="ff8000">Legendaries:</c> <c val="#TooltipNumbers">~G~</c><n/>    - <c val="e6cc80">Starters:</c> <c val="#TooltipNumbers">~H~</c><n/>    - <c val="01ffff">Milestones:</c> <c val="#TooltipNumbers">~I~</c><n/>Total curses: <c val="#TooltipNumbers">~B~</c><n/>    - <c val="c52020">Curses:</c> <c val="#TooltipNumbers">~J~</c><n/>    - <c val="9B2400">Challenges:</c> <c val="#TooltipNumbers">~K~</c><n/>    - <c val="A84987">Mythics:</c> <c val="#TooltipNumbers">~L~</c>
 Param/Expression/AffixGameoverStats2=Boon rerolls used: <c val="#TooltipNumbers">~A~</c><n/>Curse rerolls used: <c val="#TooltipNumbers">~B~</c><n/>Bans used: <c val="#TooltipNumbers">~C~</c><n/>Minions killed: <c val="#TooltipNumbers">~F~</c><n/>Mercenaries captured: <c val="#TooltipNumbers">~G~</c><n/>Regeneration globes: <c val="#TooltipNumbers">~H~</c><n/>Objectives won: <c val="#TooltipNumbers">~I~</c><n/>Objectives lost: <c val="#TooltipNumbers">~J~</c><n/>Curses skipped: <c val="#TooltipNumbers">~D~</c><n/>Curses swapped to boons: <c val="#TooltipNumbers">~E~</c><n/>Most common ally: <c val="#TooltipNumbers">~K~ (~M~)</c><n/>Most common enemy: <c val="#TooltipNumbers">~L~ (~N~)</c>
 Param/Expression/AffixGameoverStats3=Game time: <c val="#TooltipNumbers">~L~</c><n/>Siege damage dealt: <c val="#TooltipNumbers">~M~</c><n/>Hero damage dealt: <c val="#TooltipNumbers">~N~</c><n/>Spell damage: <c val="#TooltipNumbers">~B~</c><n/>Physical damage: <c val="#TooltipNumbers">~C~</c><n/>Total damage dealt: <c val="#TooltipNumbers">~A~</c><n/>Healing: <c val="#TooltipNumbers">~D~</c><n/>Damage taken: <c val="#TooltipNumbers">~E~</c><n/>Experience: <c val="#TooltipNumbers">~F~</c><n/>Takedowns: <c val="#TooltipNumbers">~G~</c><n/>Kills: <c val="#TooltipNumbers">~H~</c><n/>Assists: <c val="#TooltipNumbers">~I~</c><n/>Deaths: <c val="#TooltipNumbers">~J~</c><n/>KDA Ratio: <c val="#TooltipNumbers">~K~</c>
 Param/Expression/AchievementEarned=Earned the achievement: <c val="FFDE36">~A~~B~</c>
+Param/Expression/InfoRun=Round ~A~ (~B~)
 
 Achievement/Tooltip/HighestDifficultyNormal=<n/><n/>Highest difficulty: <c val="ffffff">Normal</c>
 Achievement/Tooltip/HighestDifficultyHeroic=<n/><n/>Highest difficulty: <c val="ff8000">Heroic</c>
@@ -32,199 +33,199 @@ Achievement/Tooltip/HighestDifficultyMythic=<n/><n/>Highest difficulty: <c val="
 Achievement/Tooltip/RoundNumber=<n/>Highest round: <c val="#TooltipNumbers">~A~</c>
 Achievement/Tooltip/TimeNumber=<n/>Fastest time: <c val="#TooltipNumbers">~A~</c>
 Achievement/Name/Abathur=Abathur
-Achievement/Tooltip/Abathur=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Abathur</c>.
+Achievement/Tooltip/Abathur=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Abathur</c>.
 Achievement/Name/Alarak=Alarak
-Achievement/Tooltip/Alarak=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Alarak</c>.
+Achievement/Tooltip/Alarak=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Alarak</c>.
 Achievement/Name/Alexstrasza=Alexstrasza
-Achievement/Tooltip/Alexstrasza=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Alexstrasza</c>.
+Achievement/Tooltip/Alexstrasza=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Alexstrasza</c>.
 Achievement/Name/Ana=Ana
-Achievement/Tooltip/Ana=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Ana</c>.
+Achievement/Tooltip/Ana=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Ana</c>.
 Achievement/Name/Anduin=Anduin
-Achievement/Tooltip/Anduin=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Anduin</c>.
+Achievement/Tooltip/Anduin=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Anduin</c>.
 Achievement/Name/Anubarak=Anub'arak
-Achievement/Tooltip/Anubarak=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Anub'arak</c>.
+Achievement/Tooltip/Anubarak=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Anub'arak</c>.
 Achievement/Name/Artanis=Artanis
-Achievement/Tooltip/Artanis=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Artanis</c>.
+Achievement/Tooltip/Artanis=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Artanis</c>.
 Achievement/Name/Arthas=Arthas
-Achievement/Tooltip/Arthas=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Arthas</c>.
+Achievement/Tooltip/Arthas=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Arthas</c>.
 Achievement/Name/Auriel=Auriel
-Achievement/Tooltip/Auriel=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Auriel</c>.
+Achievement/Tooltip/Auriel=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Auriel</c>.
 Achievement/Name/Azmodan=Azmodan
-Achievement/Tooltip/Azmodan=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Azmodan</c>.
+Achievement/Tooltip/Azmodan=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Azmodan</c>.
 Achievement/Name/Blaze=Blaze
-Achievement/Tooltip/Blaze=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Blaze</c>.
+Achievement/Tooltip/Blaze=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Blaze</c>.
 Achievement/Name/Brightwing=Brightwing
-Achievement/Tooltip/Brightwing=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Brightwing</c>.
+Achievement/Tooltip/Brightwing=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Brightwing</c>.
 Achievement/Name/Cassia=Cassia
-Achievement/Tooltip/Cassia=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Cassia</c>.
+Achievement/Tooltip/Cassia=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Cassia</c>.
 Achievement/Name/Chen=Chen
-Achievement/Tooltip/Chen=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Chen</c>.
+Achievement/Tooltip/Chen=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Chen</c>.
 Achievement/Name/Chogall=Cho
-Achievement/Tooltip/Chogall=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Cho</c>.
+Achievement/Tooltip/Chogall=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Cho</c>.
 Achievement/Name/Chromie=Chromie
-Achievement/Tooltip/Chromie=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Chromie</c>.
+Achievement/Tooltip/Chromie=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Chromie</c>.
 Achievement/Name/DVa=D.Va
-Achievement/Tooltip/DVa=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">D.Va</c>.
+Achievement/Tooltip/DVa=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">D.Va</c>.
 Achievement/Name/Deathwing=Deathwing
-Achievement/Tooltip/Deathwing=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Deathwing</c>.
+Achievement/Tooltip/Deathwing=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Deathwing</c>.
 Achievement/Name/Deckard=Deckard
-Achievement/Tooltip/Deckard=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Deckard</c>.
+Achievement/Tooltip/Deckard=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Deckard</c>.
 Achievement/Name/Dehaka=Dehaka
-Achievement/Tooltip/Dehaka=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Dehaka</c>.
+Achievement/Tooltip/Dehaka=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Dehaka</c>.
 Achievement/Name/Diablo=Diablo
-Achievement/Tooltip/Diablo=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Diablo</c>.
+Achievement/Tooltip/Diablo=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Diablo</c>.
 Achievement/Name/ETC=E.T.C.
-Achievement/Tooltip/ETC=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">E.T.C.</c>.
+Achievement/Tooltip/ETC=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">E.T.C.</c>.
 Achievement/Name/Falstad=Falstad
-Achievement/Tooltip/Falstad=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Falstad</c>.
+Achievement/Tooltip/Falstad=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Falstad</c>.
 Achievement/Name/Fenix=Fenix
-Achievement/Tooltip/Fenix=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Fenix</c>.
+Achievement/Tooltip/Fenix=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Fenix</c>.
 Achievement/Name/Gall=Gall
-Achievement/Tooltip/Gall=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Gall</c>.
+Achievement/Tooltip/Gall=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Gall</c>.
 Achievement/Name/Garrosh=Garrosh
-Achievement/Tooltip/Garrosh=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Garrosh</c>.
+Achievement/Tooltip/Garrosh=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Garrosh</c>.
 Achievement/Name/Gazlowe=Gazlowe
-Achievement/Tooltip/Gazlowe=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Gazlowe</c>.
+Achievement/Tooltip/Gazlowe=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Gazlowe</c>.
 Achievement/Name/Genji=Genji
-Achievement/Tooltip/Genji=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Genji</c>.
+Achievement/Tooltip/Genji=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Genji</c>.
 Achievement/Name/Greymane=Greymane
-Achievement/Tooltip/Greymane=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Greymane</c>.
+Achievement/Tooltip/Greymane=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Greymane</c>.
 Achievement/Name/Guldan=Gul'dan
-Achievement/Tooltip/Guldan=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Gul'dan</c>.
+Achievement/Tooltip/Guldan=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Gul'dan</c>.
 Achievement/Name/Hanzo=Hanzo
-Achievement/Tooltip/Hanzo=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Hanzo</c>.
+Achievement/Tooltip/Hanzo=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Hanzo</c>.
 Achievement/Name/Hogger=Hogger
-Achievement/Tooltip/Hogger=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Hogger</c>.
+Achievement/Tooltip/Hogger=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Hogger</c>.
 Achievement/Name/Illidan=Illidan
-Achievement/Tooltip/Illidan=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Illidan</c>.
+Achievement/Tooltip/Illidan=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Illidan</c>.
 Achievement/Name/Imperius=Imperius
-Achievement/Tooltip/Imperius=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Imperius</c>.
+Achievement/Tooltip/Imperius=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Imperius</c>.
 Achievement/Name/Jaina=Jaina
-Achievement/Tooltip/Jaina=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Jaina</c>.
+Achievement/Tooltip/Jaina=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Jaina</c>.
 Achievement/Name/Johanna=Johanna
-Achievement/Tooltip/Johanna=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Johanna</c>.
+Achievement/Tooltip/Johanna=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Johanna</c>.
 Achievement/Name/Junkrat=Junkrat
-Achievement/Tooltip/Junkrat=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Junkrat</c>.
+Achievement/Tooltip/Junkrat=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Junkrat</c>.
 Achievement/Name/Kaelthas=Kael'thas
-Achievement/Tooltip/Kaelthas=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Kael'thas</c>.
+Achievement/Tooltip/Kaelthas=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Kael'thas</c>.
 Achievement/Name/KelThuzad=Kel'Thuzad
-Achievement/Tooltip/KelThuzad=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Kel'Thuzad</c>.
+Achievement/Tooltip/KelThuzad=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Kel'Thuzad</c>.
 Achievement/Name/Kerrigan=Kerrigan
-Achievement/Tooltip/Kerrigan=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Kerrigan</c>.
+Achievement/Tooltip/Kerrigan=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Kerrigan</c>.
 Achievement/Name/Kharazim=Kharazim
-Achievement/Tooltip/Kharazim=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Kharazim</c>.
+Achievement/Tooltip/Kharazim=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Kharazim</c>.
 Achievement/Name/Leoric=Leoric
-Achievement/Tooltip/Leoric=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Leoric</c>.
+Achievement/Tooltip/Leoric=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Leoric</c>.
 Achievement/Name/LiLi=Li Li
-Achievement/Tooltip/LiLi=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Li Li</c>.
+Achievement/Tooltip/LiLi=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Li Li</c>.
 Achievement/Name/LiMing=Li-Ming
-Achievement/Tooltip/LiMing=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Li-Ming</c>.
+Achievement/Tooltip/LiMing=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Li-Ming</c>.
 Achievement/Name/LostVikings=The Lost Vikings
-Achievement/Tooltip/LostVikings=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">The Lost Vikings</c>.
+Achievement/Tooltip/LostVikings=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">The Lost Vikings</c>.
 Achievement/Name/LtMorales=Lt. Morales
-Achievement/Tooltip/LtMorales=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Lt. Morales</c>.
+Achievement/Tooltip/LtMorales=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Lt. Morales</c>.
 Achievement/Name/Lucio=Lúcio
-Achievement/Tooltip/Lucio=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Lúcio</c>.
+Achievement/Tooltip/Lucio=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Lúcio</c>.
 Achievement/Name/Lunara=Lunara
-Achievement/Tooltip/Lunara=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Lunara</c>.
+Achievement/Tooltip/Lunara=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Lunara</c>.
 Achievement/Name/Maiev=Maiev
-Achievement/Tooltip/Maiev=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Maiev</c>.
+Achievement/Tooltip/Maiev=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Maiev</c>.
 Achievement/Name/MalGanis=Mal'Ganis
-Achievement/Tooltip/MalGanis=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Mal'Ganis</c>.
+Achievement/Tooltip/MalGanis=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Mal'Ganis</c>.
 Achievement/Name/Malfurion=Malfurion
-Achievement/Tooltip/Malfurion=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Malfurion</c>.
+Achievement/Tooltip/Malfurion=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Malfurion</c>.
 Achievement/Name/Malthael=Malthael
-Achievement/Tooltip/Malthael=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Malthael</c>.
+Achievement/Tooltip/Malthael=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Malthael</c>.
 Achievement/Name/Medivh=Medivh
-Achievement/Tooltip/Medivh=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Medivh</c>.
+Achievement/Tooltip/Medivh=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Medivh</c>.
 Achievement/Name/Mei=Mei
-Achievement/Tooltip/Mei=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Mei</c>.
+Achievement/Tooltip/Mei=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Mei</c>.
 Achievement/Name/Mephisto=Mephisto
-Achievement/Tooltip/Mephisto=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Mephisto</c>.
+Achievement/Tooltip/Mephisto=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Mephisto</c>.
 Achievement/Name/Muradin=Muradin
-Achievement/Tooltip/Muradin=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Muradin</c>.
+Achievement/Tooltip/Muradin=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Muradin</c>.
 Achievement/Name/Murky=Murky
-Achievement/Tooltip/Murky=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Murky</c>.
+Achievement/Tooltip/Murky=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Murky</c>.
 Achievement/Name/Nazeebo=Nazeebo
-Achievement/Tooltip/Nazeebo=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Nazeebo</c>.
+Achievement/Tooltip/Nazeebo=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Nazeebo</c>.
 Achievement/Name/Nova=Nova
-Achievement/Tooltip/Nova=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Nova</c>.
+Achievement/Tooltip/Nova=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Nova</c>.
 Achievement/Name/Orphea=Orphea
-Achievement/Tooltip/Orphea=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Orphea</c>.
+Achievement/Tooltip/Orphea=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Orphea</c>.
 Achievement/Name/Probius=Probius
-Achievement/Tooltip/Probius=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Probius</c>.
+Achievement/Tooltip/Probius=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Probius</c>.
 Achievement/Name/Qhira=Qhira
-Achievement/Tooltip/Qhira=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Qhira</c>.
+Achievement/Tooltip/Qhira=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Qhira</c>.
 Achievement/Name/Ragnaros=Ragnaros
-Achievement/Tooltip/Ragnaros=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Ragnaros</c>.
+Achievement/Tooltip/Ragnaros=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Ragnaros</c>.
 Achievement/Name/Raynor=Raynor
-Achievement/Tooltip/Raynor=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Raynor</c>.
+Achievement/Tooltip/Raynor=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Raynor</c>.
 Achievement/Name/Rehgar=Rehgar
-Achievement/Tooltip/Rehgar=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Rehgar</c>.
+Achievement/Tooltip/Rehgar=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Rehgar</c>.
 Achievement/Name/Rexxar=Rexxar
-Achievement/Tooltip/Rexxar=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Rexxar</c>.
+Achievement/Tooltip/Rexxar=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Rexxar</c>.
 Achievement/Name/Samuro=Samuro
-Achievement/Tooltip/Samuro=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Samuro</c>.
+Achievement/Tooltip/Samuro=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Samuro</c>.
 Achievement/Name/SgtHammer=Sgt. Hammer
-Achievement/Tooltip/SgtHammer=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Sgt. Hammer</c>.
+Achievement/Tooltip/SgtHammer=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Sgt. Hammer</c>.
 Achievement/Name/Sonya=Sonya
-Achievement/Tooltip/Sonya=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Sonya</c>.
+Achievement/Tooltip/Sonya=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Sonya</c>.
 Achievement/Name/Stitches=Stitches
-Achievement/Tooltip/Stitches=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Stitches</c>.
+Achievement/Tooltip/Stitches=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Stitches</c>.
 Achievement/Name/Stukov=Stukov
-Achievement/Tooltip/Stukov=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Stukov</c>.
+Achievement/Tooltip/Stukov=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Stukov</c>.
 Achievement/Name/Sylvanas=Sylvanas
-Achievement/Tooltip/Sylvanas=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Sylvanas</c>.
+Achievement/Tooltip/Sylvanas=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Sylvanas</c>.
 Achievement/Name/Tassadar=Tassadar
-Achievement/Tooltip/Tassadar=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Tassadar</c>.
+Achievement/Tooltip/Tassadar=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Tassadar</c>.
 Achievement/Name/TheButcher=The Butcher
-Achievement/Tooltip/TheButcher=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">The Butcher</c>.
+Achievement/Tooltip/TheButcher=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">The Butcher</c>.
 Achievement/Name/Thrall=Thrall
-Achievement/Tooltip/Thrall=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Thrall</c>.
+Achievement/Tooltip/Thrall=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Thrall</c>.
 Achievement/Name/Tracer=Tracer
-Achievement/Tooltip/Tracer=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Tracer</c>.
+Achievement/Tooltip/Tracer=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Tracer</c>.
 Achievement/Name/Tychus=Tychus
-Achievement/Tooltip/Tychus=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Tychus</c>.
+Achievement/Tooltip/Tychus=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Tychus</c>.
 Achievement/Name/Tyrael=Tyrael
-Achievement/Tooltip/Tyrael=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Tyrael</c>.
+Achievement/Tooltip/Tyrael=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Tyrael</c>.
 Achievement/Name/Tyrande=Tyrande
-Achievement/Tooltip/Tyrande=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Tyrande</c>.
+Achievement/Tooltip/Tyrande=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Tyrande</c>.
 Achievement/Name/Uther=Uther
-Achievement/Tooltip/Uther=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Uther</c>.
+Achievement/Tooltip/Uther=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Uther</c>.
 Achievement/Name/Valeera=Valeera
-Achievement/Tooltip/Valeera=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Valeera</c>.
+Achievement/Tooltip/Valeera=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Valeera</c>.
 Achievement/Name/Valla=Valla
-Achievement/Tooltip/Valla=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Valla</c>.
+Achievement/Tooltip/Valla=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Valla</c>.
 Achievement/Name/Varian=Varian
-Achievement/Tooltip/Varian=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Varian</c>.
+Achievement/Tooltip/Varian=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Varian</c>.
 Achievement/Name/Whitemane=Whitemane
-Achievement/Tooltip/Whitemane=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Whitemane</c>.
+Achievement/Tooltip/Whitemane=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Whitemane</c>.
 Achievement/Name/Xul=Xul
-Achievement/Tooltip/Xul=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Xul</c>.
+Achievement/Tooltip/Xul=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Xul</c>.
 Achievement/Name/Yrel=Yrel
-Achievement/Tooltip/Yrel=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Yrel</c>.
+Achievement/Tooltip/Yrel=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Yrel</c>.
 Achievement/Name/Zagara=Zagara
-Achievement/Tooltip/Zagara=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Zagara</c>.
+Achievement/Tooltip/Zagara=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Zagara</c>.
 Achievement/Name/Zarya=Zarya
-Achievement/Tooltip/Zarya=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Zarya</c>.
+Achievement/Tooltip/Zarya=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Zarya</c>.
 Achievement/Name/Zeratul=Zeratul
-Achievement/Tooltip/Zeratul=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Zeratul</c>.
+Achievement/Tooltip/Zeratul=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Zeratul</c>.
 Achievement/Name/Zuljin=Zul'jin
-Achievement/Tooltip/Zuljin=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Zul'jin</c>.
+Achievement/Tooltip/Zuljin=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Zul'jin</c>.
 Achievement/Name/Xalatath=Xal'atath
-Achievement/Tooltip/Xalatath=Win Round <c val="#TooltipNumbers">14</c> on <c val="#TooltipNumbers">Xal'atath</c>.
+Achievement/Tooltip/Xalatath=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> on <c val="#TooltipNumbers">Xal'atath</c>.
 Achievement/Name/Deathless=Deathless
-Achievement/Tooltip/Deathless=Win Round <c val="#TooltipNumbers">14</c> without dying at any point during the run.
+Achievement/Tooltip/Deathless=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> without dying at any point during the run.
 Achievement/Name/Objective=Focus Obj!
-Achievement/Tooltip/Objective=Win Round <c val="#TooltipNumbers">14</c> without losing a map objective at any point during the run.
+Achievement/Tooltip/Objective=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> without losing a map objective at any point during the run.
 Achievement/Name/NoRerolls=Luck Reliant
-Achievement/Tooltip/NoRerolls=Win Round <c val="#TooltipNumbers">14</c> without using any boon or curse rerolls at any point during the run.
+Achievement/Tooltip/NoRerolls=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> without using any boon or curse rerolls at any point during the run.
 Achievement/Name/NoBans=Unbannable
-Achievement/Tooltip/NoBans=Win Round <c val="#TooltipNumbers">14</c> without using any bans at any point during the run.
+Achievement/Tooltip/NoBans=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> without using any bans at any point during the run.
 Achievement/Name/Speedrun1=World Record
-Achievement/Tooltip/Speedrun1=Win Round <c val="#TooltipNumbers">14</c> in under <c val="#TooltipNumbers">1</c> hour.
+Achievement/Tooltip/Speedrun1=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> in under <c val="#TooltipNumbers">1</c> hour.
 Achievement/Name/Speedrun2=Speedrun
-Achievement/Tooltip/Speedrun2=Win Round <c val="#TooltipNumbers">14</c> in under <c val="#TooltipNumbers">2</c> hours.
+Achievement/Tooltip/Speedrun2=Win Round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c> in under <c val="#TooltipNumbers">2</c> hours.
 Achievement/Name/Round20=Adept
 Achievement/Tooltip/Round20=Win Round <c val="#TooltipNumbers">20</c>.
 Achievement/Name/Round30=Veteran
@@ -241,23 +242,23 @@ LoadingScreen/Help05=Heroes with a golden border have unique Boons which only ap
 LoadingScreen/Help06=You can reroll Boons or Curses you don't like.
 LoadingScreen/Help07=You gain a powerful Legendary Boon every 4 games.
 LoadingScreen/Help08=You can ban Boons or Curses, preventing them from rolling again for the rest of the run.
-LoadingScreen/Help09=You gain a Milestone Boon with unique effects on Round 7. 
+LoadingScreen/Help09=You gain a Milestone Boon with unique effects on Round 5. 
 LoadingScreen/Help10=Boons and curses up to level 10 are obtained next game when skipped.
 LoadingScreen/Help11=Challenge curses are difficult to deal with but offer great rewards.
 LoadingScreen/Help12=Enemy stats scale over time on Heroic difficulty or higher.
-LoadingScreen/Help12=You win by getting to Round 14 and destroying the enemy Core! You can stop or continue into an endless run afterwards.
-LoadingScreen/Help13=Curses will no longer swap to boons after Round 14 when completing objectives on Mythic difficulty.
+LoadingScreen/Help13=You win by getting to Round 10 and destroying the enemy Core! You can stop or continue into an endless run afterwards.
+LoadingScreen/Help14=Curses will no longer swap to boons after Round 10 when completing objectives on Mythic difficulty.
 
-UI/MapLoadingScreen/LibAffx/Description1=Gain powerful, permanent Boons throughout your run to increase your and your team's strength!
-UI/MapLoadingScreen/LibAffx/Description2=The game becomes more difficult over time as you obtain dangerous Curses.
-UI/MapLoadingScreen/LibAffx/Description3=Victory is not the end. Continue on to a new map, keeping your Boons and Curses, and try to get to Round 14 and win!
-UI/MapLoadingScreen/LibAffx/Title1=Boons
-UI/MapLoadingScreen/LibAffx/Title2=Curses
-UI/MapLoadingScreen/LibAffx/Title3=Persistence
+UI/MapLoadingScreen/LibHRGE/Description1=Gain powerful, permanent Boons throughout your run to increase your and your team's strength!
+UI/MapLoadingScreen/LibHRGE/Description2=The game becomes more difficult over time as you obtain dangerous Curses.
+UI/MapLoadingScreen/LibHRGE/Description3=Victory is not the end. Continue on to a new map, keeping your Boons and Curses, and try to get to Round 10 and win!
+UI/MapLoadingScreen/LibHRGE/Title1=Boons
+UI/MapLoadingScreen/LibHRGE/Title2=Curses
+UI/MapLoadingScreen/LibHRGE/Title3=Persistence
 
 Text/ExcludeChoGallForAIEffect=<n/><n/><c val="FFDE32">AI teammate effect does not apply to Cho'Gall.</c>
 Text/ExcludeChoGall=<n/><n/><c val="FFDE32">Does not apply to Cho'Gall.</c>
-Text/Information=Welcome to Heroes Rogue! This is a singleplayer rogue-like mod for Heroes of the Storm. Throughout the game, you will have to choose <c val="#TooltipNumbers">Boons</c> providing various permanent buffs and <c val="c52020">Curses</c> which make the game more difficult. Your boons and curses are automatically saved after destroying the enemy Core, carrying them over into the next game. The game can be quit and played at another time, and will resume where you left off. You win by getting to round <c val="#TooltipNumbers">14</c>! If your Core gets destroyed, the run ends and all boons and curses are reset.<n/><n/>The following Heroes have special interactions with boons and curses:<n/>• <c val="#TooltipNumbers">Lost Vikings, Rexxar, Samuro, and Nova:</c> Boons and curses apply to all controlled units/clones.<n/>• <c val="#TooltipNumbers">Abathur:</c> Boons and curses apply to Symbiote (NOT the host) and Ultimate Evolution.<n/>• <c val="#TooltipNumbers">Cho'Gall:</c> Cho and Gall share all boons and curses.<n/><n/><c val="FFDE36">Golden Heroes:</c> These Heroes have access to unique boons and curses, in addition to the generic ones that all Heroes have access to.<n/><n/><c val="#TooltipNumbers">Boons:</c> Obtained when reaching level <c val="#TooltipNumbers">1</c>, <c val="#TooltipNumbers">4</c>, <c val="#TooltipNumbers">7</c>, and <c val="#TooltipNumbers">10</c>. If you win early and skip any boons, those skipped boons will be offered in the next game, up to the level <c val="#TooltipNumbers">10</c> boons. Completing a map objective (for example getting three tributes on Cursed Hollow) also replaces a future curse with a boon, once per game. Boons can be <c val="ffffff">Common</c>, <c val="00ff55">Uncommon</c>, <c val="0070dd">Rare</c>, <c val="a335ee">Epic</c>, or <c val="ff8000">Legendary</c>, increasing in rarity and power. You are guaranteed at least a <c val="0070dd">Rare Boon</c> at the start of every game, and a <c val="ff8000">Legendary Boon</c> every <c val="#TooltipNumbers">4</c> games.<n/><n/><c val="01ffff">Milestone Boons:</c> These are boons with unique effects that are obtained when reaching round <c val="#TooltipNumbers">7</c> on any difficulty as a milestone reward.<n/><n/><c val="e6cc80">Starter Boons:</c> These are potent boons that can only be obtained at the start of the game. Some boons only show up with specific starter boons.<n/><n/><c val="c52020">Curses:</c> Obtained every time the enemy Team reaches a talent tier, as well as level <c val="#TooltipNumbers">24</c>, <c val="#TooltipNumbers">27</c>, and <c val="#TooltipNumbers">30</c>. If you win early and skip any curses, those skipped curses will be offered in the next game, up to the level <c val="#TooltipNumbers">10</c> curses.<n/><n/><c val="A84987">Mythic Curses:</c> These are powerful and unique curses that show up at the start of the game and every <c val="#TooltipNumbers">4</c> games afterwards on <c val="#TooltipNumbers">Mythic</c> difficulty.<n/><n/><c val="9B2400">Challenge Curses:</c> These are curses that can be difficult to deal with but offer great rewards.<n/><n/><c val="FFDE36">Rerolls:</c> Obtain <c val="#TooltipNumbers">3</c> rerolls at the start of a run and <c val="#TooltipNumbers">1</c> additional reroll at the start of every subsequent game which can be used to reroll the selection of boons and curses. Boon rerolls and curse rerolls are separate.<n/><n/><c val="FC4747">Bans:</c> Obtain <c val="#TooltipNumbers">3</c> bans at the start of a run and <c val="#TooltipNumbers">1</c> additional ban at the start of every subsequent game which can be used to ban boons and curses, preventing them from showing up for the rest of the run. Infinite boons/curses, starter boons, mythic curses, and milestone boons cannot be banned.
+Text/Information=Welcome to Heroes Rogue! This is a singleplayer rogue-like mod for Heroes of the Storm. Throughout the game, you will have to choose <c val="#TooltipNumbers">Boons</c> providing various permanent buffs and <c val="c52020">Curses</c> which make the game more difficult. Your boons and curses are automatically saved after destroying the enemy Core, carrying them over into the next game. The game can be quit and played at another time, and will resume where you left off. You win by getting to round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_winningRound$" /></c>! If your Core gets destroyed, the run ends and all boons and curses are reset.<n/><n/>The following Heroes have special interactions with boons and curses:<n/>• <c val="#TooltipNumbers">Lost Vikings, Rexxar, Samuro, and Nova:</c> Boons and curses apply to all controlled units/clones.<n/>• <c val="#TooltipNumbers">Abathur:</c> Boons and curses apply to Symbiote (NOT the host) and Ultimate Evolution.<n/>• <c val="#TooltipNumbers">Cho'Gall:</c> Cho and Gall share all boons and curses.<n/><n/><c val="FFDE36">Golden Heroes:</c> These Heroes have access to unique boons and curses, in addition to the generic ones that all Heroes have access to.<n/><n/><c val="#TooltipNumbers">Boons:</c> Obtained when reaching level <c val="#TooltipNumbers">1</c>, <c val="#TooltipNumbers">4</c>, <c val="#TooltipNumbers">7</c>, and <c val="#TooltipNumbers">10</c>. If you win early and skip any boons, those skipped boons will be offered in the next game, up to the level <c val="#TooltipNumbers">10</c> boons. Completing a map objective (for example getting three tributes on Cursed Hollow) also replaces a future curse with a boon, once per game. Boons can be <c val="ffffff">Common</c>, <c val="00ff55">Uncommon</c>, <c val="0070dd">Rare</c>, <c val="a335ee">Epic</c>, or <c val="ff8000">Legendary</c>, increasing in rarity and power. You are guaranteed at least a <c val="0070dd">Rare Boon</c> at the start of every game, and a <c val="ff8000">Legendary Boon</c> every <c val="#TooltipNumbers">4</c> games.<n/><n/><c val="01ffff">Milestone Boons:</c> These are boons with unique effects that are obtained when reaching round <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_milestoneRound$" /></c> on any difficulty as a milestone reward.<n/><n/><c val="e6cc80">Starter Boons:</c> These are potent boons that can only be obtained at the start of the game. Some boons only show up with specific starter boons.<n/><n/><c val="c52020">Curses:</c> Obtained every time the enemy Team reaches a talent tier, as well as level <c val="#TooltipNumbers">24</c>, <c val="#TooltipNumbers">27</c>, and <c val="#TooltipNumbers">30</c>. If you win early and skip any curses, those skipped curses will be offered in the next game, up to the level <c val="#TooltipNumbers">10</c> curses.<n/><n/><c val="A84987">Mythic Curses:</c> These are powerful and unique curses that show up at the start of the game and every <c val="#TooltipNumbers">2</c> games afterwards on <c val="#TooltipNumbers">Mythic</c> difficulty.<n/><n/><c val="9B2400">Challenge Curses:</c> These are curses that can be difficult to deal with but offer great rewards.<n/><n/><c val="FFDE36">Rerolls:</c> Obtain <c val="#TooltipNumbers">3</c> rerolls at the start of a run and <c val="#TooltipNumbers">1</c> additional reroll at the start of every subsequent game which can be used to reroll the selection of boons and curses. Boon rerolls and curse rerolls are separate.<n/><n/><c val="FC4747">Bans:</c> Obtain <c val="#TooltipNumbers">3</c> bans at the start of a run and <c val="#TooltipNumbers">1</c> additional ban at the start of every subsequent game which can be used to ban boons and curses, preventing them from showing up for the rest of the run. Infinite boons/curses, starter boons, mythic curses, and milestone boons cannot be banned.
 
 Label/Name/RarityCommon=<c val="ffffff">Common
 Label/Name/RarityUncommon=<c val="00ff55">Uncommon
@@ -296,6 +297,9 @@ Label/Name/GameOver=<c val="c52020">Game over!</c>
 Label/Name/Achievements=Achievements
 Label/Name/ResetAchievements=Reset all Achievements?<n/><n/><c val="c52020">This cannot be undone!</c>
 Label/Name/GameoverExit=Are you sure you wish to exit?<n/><n/><c val="c52020">All progress will be lost.</c>
+Label/Name/Normal=Normal
+Label/Name/Heroic=Heroic
+Label/Name/Mythic=Mythic
 
 Message/AchievementsReset=<c val="FFDE36">All achievements have been reset!</c>
 Message/CurseToBoon=<c val="FFDE36">The next Curse you obtain will become a Boon!</c>
@@ -308,12 +312,13 @@ Message/BoonNextGame1=<c val="FFDE36">Obtained a Boon for missing a level 10 Boo
 Message/BoonNextGame2=<c val="FFDE36">Obtained 2 Boons for missing the level 7 and level 10 Boons last game.</c>
 Message/BoonNextGame3=<c val="FFDE36">Obtained 3 Boons for missing the level 4, level 7, and level 10 Boons last game.</c>
 Message/CurseCursed=<c val="FC4747">Obtained a Curse from dying 3 times.</c>
-Message/MilestoneReached=<c val="FFDE36">Obtained a Milestone Boon for reaching Round 7!</c>
+Message/MilestoneReached=<c val="FFDE36">Obtained a Milestone Boon for reaching Round <d ref="$GalaxyVar:libHRGE_milestoneRound$" />!</c>
 Message/Pacifism=<c val="FFDE36">Obtained Boons from Pacifism!</c>
 Message/GoldenBorder=Golden Heroes have unique starter Boons.
 Message/Ban=Banned 
 Message/Pick=Picked 
 Message/ResetCommand=Resetting the game...
+Message/TestCommand/Commands=## Commands ##<n/>boon [amount] [rarity]<n/>curse [amount]<n/>add <affix> [amount]<n/>addall [amount] [optional arguments]<n/>nextmap [map number]<n/>rerolls [rerolls amount]<n/>bans [bans amount]<n/>cooldown <affix><n/>teleport <x> <y>
 Message/TestCommand/AddAll=Adds every boon and curse.</n>addall [amount] [optional arguments]</n>Optional arguments: ignore (ignores requirements), hero (only adds hero-specific)</n>boons (boons only), curses (curses only)
 Message/TestCommand/NextMap=Moves you to the specified round number. Defaults to the next map.<n/>nextmap [map number]
 Message/TestCommand/NextMapLoading=Loading next map...
@@ -321,13 +326,14 @@ Message/TestCommand/Rerolls=Adds the specified amount of rerolls. Default to 999
 Message/TestCommand/AddingRerolls=Adding ~A~ rerolls.
 Message/TestCommand/Bans=Adds the specified amount of bans. Default to 999.<n/>bans [bans amount]
 Message/TestCommand/AddingBans=Adding ~A~ bans.
-Message/TestCommand/Cooldown=Sets the cooldown of a boon/curse. Defaults to 0.<n/>cooldown <affix> [cooldown value]
-Message/TestCommand/CooldownSet=Cooldown of ~A~ set to ~B~.
+Message/TestCommand/Cooldown=Resets the cooldown of a boon/curse. <n/>cooldown <affix>
+Message/TestCommand/CooldownSet=Reset the cooldown of ~A~.
+Message/TestCommand/CooldownNotFound=Could not find periodic trigger for affix ~A~.
+Message/TestCommand/CooldownNotInit=Periodic trigger ~A~ not initialized yet.
 Message/TestCommand/Boon=Queues up a boon. Defaults to 1 with common rarity.<n/>boon [amount] [rarity]
 Message/TestCommand/Curse=Queues up a curse.<n/>curse [amount]
 Message/TestCommand/Add=Adds a boon/curse with the id. Amount defaults to 1.<n/>add | afx <affix> [ammount]
 Message/TestCommand/Remove=removes a boon/curse with the id.<n/>remove | rm <affix>
-Message/TestCommand/Commands=## Commands ##<n/>boon [amount] [rarity]<n/>curse [amount]<n/>add <affix> [amount]<n/>addall [amount] [optional arguments]<n/>nextmap [map number]<n/>rerolls [rerolls amount]<n/>bans [bans amount]<n/>cooldown <affix> [cooldown value]<n/>teleport <x> <y>
 Message/TestCommand/CouldNotFind=Could not find affix ~A~.
 Message/TestCommand/Added=Added ~A~x ~B~.
 Message/TestCommand/Removed=Removed ~A~.
@@ -336,7 +342,7 @@ Message/TestCommand/ForcedPause=Forced pause.
 Message/TestCommand/ForcedUnpause=Forced unpause.
 Message/TestCommand/Camera=Modifies the player's camera.<n/>camera <camera type> <value>
 Message/TestCommand/RavenCurse=Wins Raven's Curse for a team.<n/>ravencurse <team>
-Message/TestCommand/PrintHeroIndex=Player ~A~: ~B~ (~C~)
+Message/TestCommand/PrintHeroIndex=Player ~A~: ~B~
 Message/TestCommand/Teleport=Teleports the player to a point.<n/>teleport <x> <y>
 Message/TestCommand/Teleported=Teleported player to ~A~.
 Message/TestCommand/Viking=Adding ~A~ to unit ~B~.
@@ -364,8 +370,8 @@ Button/Name/Normal=Normal
 Button/Name/Heroic=Heroic
 Button/Name/Mythic=Mythic
 Button/Tooltip/Normal=No changes.
-Button/Tooltip/Heroic=Enemy Heroes:<n/><c val="#TooltipRed">+4%</c> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration per round.<n/><c val="#TooltipRed">+1%</c> Experience Gain per round.<n/><n/><S val="TooltipSubscript">Damage, Health, and Regen stats scale multiplicatively.</S>
-Button/Tooltip/Mythic=All enemies:<n/><c val="#TooltipRed">+4%</c> <c val="747A84">(+1% per round)</c> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration, multiplied by the number of rounds.<n/><c val="#TooltipRed">+2%</c> Experience Gain per round.<n/><n/>After <c val="#TooltipNumbers">Round 14</c>, curses will no longer swap to boons.<n/><n/>Obtain a powerful <c val="A84987">Mythic Curse</c> at the start of the game and every <c val="#TooltipNumbers">4</c> games afterwards:
+Button/Tooltip/Heroic=Enemy Heroes:<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_heroicModifier$*100" precision="2" />%</c> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration per round.<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_heroicModifierXP$*100" precision="0" />%</c> Experience Gain per round.<n/><n/><S val="TooltipSubscript">Damage, Health, and Regen stats scale multiplicatively.</S>
+Button/Tooltip/Mythic=ALL enemies:<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_mythicModifier$*100" precision="2" />%</c> <c val="747A84">(+<d ref="$GalaxyVar:libHRGE_mythicModifierPerRound$*100" precision="2" />% per round)</c> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration, multiplied by the number of rounds.<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_mythicModifierXP$*100" precision="0" />%</c> Experience Gain per round.<n/><n/>After <c val="#TooltipNumbers">Round <d ref="$GalaxyVar:libHRGE_winningRound$" /></c>, curses will no longer swap to boons.<n/><n/>Obtain a powerful <c val="A84987">Mythic Curse</c> at the start of the game and every <c val="#TooltipNumbers">2</c> games afterwards:
 Button/Name/DoNothing=Do Nothing
 Button/SimpleDisplayText/DoNothing=Does nothing.
 Button/Tooltip/DoNothing=Does nothing.
@@ -382,14 +388,18 @@ Affix/Name/DifficultyNormal=Normal
 Affix/Tooltip/DifficultyNormal=No changes.
 Affix/Tooltip/Append/DifficultyNormal=
 Affix/Name/DifficultyHeroic=Heroic
-Affix/Tooltip/DifficultyHeroic=Enemy Heroes:<n/><c val="#TooltipRed">+4%</c> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration per round.<n/><c val="#TooltipRed">+1%</c> Experience Gain per round.<n/><n/><S val="TooltipSubscript">Damage, Health, and Regen stats scale multiplicatively.</S>
-Affix/Tooltip/Append/DifficultyHeroic=<n/><n/>Current Total:<n/><c val="#TooltipRed">+<d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c> Stats<n/><c val="#TooltipRed">+<d ref="($GalaxyVar:libAffx_heroicDifficultyXPModifier$)*100" precision="0"/>%</c> Experience Gain
+Affix/Tooltip/DifficultyHeroic=Enemy Heroes:<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_heroicModifier$*100" precision="2" />%</c> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration per round.<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_heroicModifierXP$*100" precision="0" />%</c> Experience Gain per round.<n/><n/><S val="TooltipSubscript">Damage, Health, and Regen stats scale multiplicatively.</S>
+Affix/Tooltip/Append/DifficultyHeroic=<n/><n/>Current Total:<n/><c val="#TooltipRed">+<d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="2"/>%</c> Stats<n/><c val="#TooltipRed">+<d ref="($GalaxyVar:libHRGE_heroicDifficultyXPModifier$)*100" precision="0"/>%</c> Experience Gain
 Affix/Name/DifficultyMythic=Mythic
-Affix/Tooltip/DifficultyMythic=All enemies:<n/><c val="#TooltipRed">+4%</c> <c val="747A84">(+1% per round)</c> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration, multiplied by the number of rounds.<n/><c val="#TooltipRed">+2%</c> Experience Gain per round.<n/><n/>After <c val="#TooltipNumbers">Round 14</c>, curses will no longer swap to boons.<n/><n/>Obtain a powerful <c val="A84987">Mythic Curse</c> at the start of the game and every <c val="#TooltipNumbers">4</c> games afterwards.
-Affix/Tooltip/Append/DifficultyMythic=<n/><n/>Current Total:<n/><c val="#TooltipRed">+<d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="0"/>%</c> Stats<n/><c val="#TooltipRed">+<d ref="($GalaxyVar:libAffx_mythicDifficultyXPModifier$)*100" precision="0"/>%</c> Experience Gain
+Affix/Tooltip/DifficultyMythic=ALL enemies:<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_mythicModifier$*100" precision="2" />%</c> <c val="747A84">(+<d ref="$GalaxyVar:libHRGE_mythicModifierPerRound$*100" precision="2" />% per round)</c> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration, multiplied by the number of rounds.<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_mythicModifierXP$*100" precision="0" />%</c> Experience Gain per round.<n/><n/>After <c val="#TooltipNumbers">Round <d ref="$GalaxyVar:libHRGE_winningRound$" /></c>, curses will no longer swap to boons.<n/><n/>Obtain a powerful <c val="A84987">Mythic Curse</c> at the start of the game and every <c val="#TooltipNumbers">2</c> games afterwards.
+Affix/Tooltip/Append/DifficultyMythic=<n/><n/>Current Total:<n/><c val="#TooltipRed">+<d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="2"/>%</c> Stats<n/><c val="#TooltipRed">+<d ref="($GalaxyVar:libHRGE_mythicDifficultyXPModifier$)*100" precision="0"/>%</c> Experience Gain
 Affix/Name/AffixNone=???
 Affix/Tooltip/AffixNone=???
 
+Affix/Name/Placeholder=Placeholder
+Affix/Tooltip/Placeholder=Does nothing.
+Affix/Tooltip/Append/Placeholder=
+Affix/ShortTooltip/Sabotage=Does nothing.
 Affix/Name/NazeeboArachnophile=Arachnophile
 Affix/Tooltip/NazeeboArachnophile=Gain <c val="#TooltipNumbers">Widowmakers</c>, <c val="#TooltipNumbers">Hexed Crawlers</c>, <c val="#TooltipNumbers">Spirit of Arachyr</c>, and <c val="#TooltipNumbers">Spider Colony</c>.<n/><n/><c val="#AbilityPassive">Passive:</c> Summon <c val="#TooltipNumbers">3</c> Corpse Spiders every <c val="#TooltipNumbers">5</c> seconds.
 Affix/Tooltip/Append/NazeeboArachnophile=
@@ -434,10 +444,10 @@ Affix/Tooltip/NazeeboManyZombies=<c val="#TooltipGreen">-4s</c> Zombie Wall Cool
 Affix/Tooltip/Append/NazeeboManyZombies=
 Affix/Name/NazeeboHardyBones=Hardy Bones
 Affix/Tooltip/NazeeboHardyBones=Increases maximum Health of Zombies by <c val="#TooltipNumbers">30%</c> <c val="747A84">(+30% per stack)</c>.
-Affix/Tooltip/Append/NazeeboHardyBones=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_NazeeboHardyBonesModifier$*100" player="1" precision="0" />%</c>
+Affix/Tooltip/Append/NazeeboHardyBones=<n/><n/>Total bonus: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_NazeeboHardyBonesModifier$*100" player="1" precision="0" />%</c>
 Affix/Name/NazeeboHungryZombies=Hungry Zombies
 Affix/Tooltip/NazeeboHungryZombies=Zombies and Zombie Wall:<n/><c val="#TooltipGreen">+15%</c> <c val="747A84">(+15% per stack)</c> Damage<n/><c val="#TooltipGreen">+25%</c> <c val="747A84">(+25% per stack)</c> Maximum Health
-Affix/Tooltip/Append/NazeeboHungryZombies=<n/><n/>Current Total:<n/><c val="#TooltipGreen">+<d ref="Effect,WitchDoctorZombieWallWeaponDamage,MultiplicativeModifierArray[NazeeboHungryZombies].Modifier*100" player="1" precision="0"/>%</c> Damage<n/><c val="#TooltipGreen">+<d ref="$GalaxyVar:libAffx_NazeeboHardyBonesModifier$*100" player="1" precision="0" />%</c> Maximum Health
+Affix/Tooltip/Append/NazeeboHungryZombies=<n/><n/>Current Total:<n/><c val="#TooltipGreen">+<d ref="Effect,WitchDoctorZombieWallWeaponDamage,MultiplicativeModifierArray[NazeeboHungryZombies].Modifier*100" player="1" precision="0"/>%</c> Damage<n/><c val="#TooltipGreen">+<d ref="$GalaxyVar:libHRGE_NazeeboHardyBonesModifier$*100" player="1" precision="0" />%</c> Maximum Health
 Affix/Name/NazeeboUndeadArmy=Undead Army
 Affix/Tooltip/NazeeboUndeadArmy=<c val="#TooltipGreen">+4</c> Uprooted Zombies from Dead Rush.
 Affix/Tooltip/Append/NazeeboUndeadArmy=
@@ -466,12 +476,12 @@ Affix/Name/NanoBoost=Nano Boost
 Affix/Tooltip/NanoBoost=<c val="#TooltipGreen">+15%</c> <c val="747A84">(+15% per stack)</c> Spell Power<n/><c val="#TooltipGreen">+75%</c> <c val="747A84">(+75% per stack)</c> Basic Ability Cooldown Recharge Rate<n/><c val="#TooltipGreen">+2</c> <c val="747A84">(+2 per stack)</c> Mana Regeneration
 Affix/Tooltip/NanoBoost/NoMana=<c val="#TooltipGreen">+15%</c> <c val="747A84">(+15% per stack)</c> Spell Power<n/><c val="#TooltipGreen">+75%</c> <c val="747A84">(+75% per stack)</c> Basic Ability Cooldown Recharge Rate
 Affix/Tooltip/NanoBoost/Probius=<c val="#TooltipGreen">+15%</c> <c val="747A84">(+15% per stack)</c> Spell Power<n/><c val="#TooltipGreen">+75%</c> <c val="747A84">(+75% per stack)</c> Basic Ability Cooldown Recharge Rate
-Affix/Tooltip/Append/NanoBoost=<n/><n/>Current Total:<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixNanoBoost,Modification.DamageDealtFraction[Ability]*100" precision="1"/>%</c> Spell Power<n/><c val="#TooltipGreen">+<d ref="$GalaxyVar:libAffx_NanoBoostCurrentCDRModifier$*100"precision="1"/>%</c> Basic Ability Cooldown Recharge Rate<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixNanoBoostMana,Modification.VitalRegenArray[Energy]" precision="1"/></c> Mana Regeneration
+Affix/Tooltip/Append/NanoBoost=<n/><n/>Current Total:<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixNanoBoost,Modification.DamageDealtFraction[Ability]*100" precision="1"/>%</c> Spell Power<n/><c val="#TooltipGreen">+<d ref="$GalaxyVar:libHRGE_NanoBoostCurrentCDRModifier$*100"precision="1"/>%</c> Basic Ability Cooldown Recharge Rate<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixNanoBoostMana,Modification.VitalRegenArray[Energy]" precision="1"/></c> Mana Regeneration
 Affix/Name/BlessingoftheDragons=Blessing of the Dragons
 Affix/Tooltip/BlessingoftheDragons=AI Teammates:<n/><c val="#TooltipGreen">+500</c> <c val="747A84">(+500 per stack)</c> Maximum Health<n/><c val="#TooltipGreen">+20%</c> <c val="747A84">(+20% per stack)</c> Movement Speed<n/><c val="#TooltipGreen">+35%</c> <c val="747A84">(+35% per stack)</c> Basic Ability Cooldown Recharge Rate
 Affix/Tooltip/BlessingoftheDragons/Cho=AI Teammates:<n/><c val="#TooltipGreen">+500</c> <c val="747A84">(+500 per stack)</c> Maximum Health<n/><c val="#TooltipGreen">+20%</c> <c val="747A84">(+20% per stack)</c> Movement Speed<n/><c val="#TooltipGreen">+35%</c> <c val="747A84">(+35% per stack)</c> Basic Ability Cooldown Recharge Rate<n/><n/>Also affects Cho.
 Affix/Tooltip/BlessingoftheDragons/Gall=AI Teammates:<n/><c val="#TooltipGreen">+500</c> <c val="747A84">(+500 per stack)</c> Maximum Health<n/><c val="#TooltipGreen">+20%</c> <c val="747A84">(+20% per stack)</c> Movement Speed<n/><c val="#TooltipGreen">+35%</c> <c val="747A84">(+35% per stack)</c> Basic Ability Cooldown Recharge Rate<n/><n/>Also affects Gall.
-Affix/Tooltip/Append/BlessingoftheDragons=<n/><n/>Current Total:<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixBlessingoftheDragons,Modification.VitalMaxArray[Life]" precision="1"/></c> Maximum Health<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixBlessingoftheDragons,Modification.UnifiedMoveSpeedFactor*100" precision="1"/>%</c> Movement Speed<n/><c val="#TooltipGreen">+<d ref="$GalaxyVar:libAffx_BlessingoftheDragonsCurrentCDRModifier$*100"precision="1"/>%</c> Basic Ability Cooldown Recharge Rate
+Affix/Tooltip/Append/BlessingoftheDragons=<n/><n/>Current Total:<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixBlessingoftheDragons,Modification.VitalMaxArray[Life]" precision="1"/></c> Maximum Health<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixBlessingoftheDragons,Modification.UnifiedMoveSpeedFactor*100" precision="1"/>%</c> Movement Speed<n/><c val="#TooltipGreen">+<d ref="$GalaxyVar:libHRGE_BlessingoftheDragonsCurrentCDRModifier$*100"precision="1"/>%</c> Basic Ability Cooldown Recharge Rate
 Affix/Name/NexusRange=Nexus Range
 Affix/Tooltip/NexusRange=<c val="#TooltipGreen">+1.1</c> <c val="747A84">(+0.5 per stack)</c> Attack Range
 Affix/Tooltip/NexusRange/Greymane=<c val="#TooltipGreen">+1.1</c> <c val="747A84">(+0.5 per stack)</c> <c val="f9e79f">Human</c> Attack Range
@@ -495,10 +505,10 @@ Affix/Name/ArmyofBUDDYs=Army of BUDDYs
 Affix/Tooltip/ArmyofBUDDYs=<c val="#TooltipGreen">+1</c> <c val="747A84">(+1 per stack)</c> BUDDY<n/><c val="#TooltipGreen">+1</c> BUDDY for AI Teammates.<n/><c val="#TooltipRed">-15%</c> Base Damage and Healing for all BUDDYs.
 Affix/Tooltip/ArmyofBUDDYs/Cho=<c val="#TooltipGreen">+2</c> <c val="747A84">(+2 per stack)</c> BUDDYs<n/><c val="#TooltipGreen">+1</c> BUDDY for AI Teammates excluding Gall.<n/<c val="#TooltipRed">-15%</c> Base Damage and Healing for all BUDDYs.
 Affix/Tooltip/ArmyofBUDDYs/Gall=<c val="#TooltipGreen">+2</c> <c val="747A84">(+2 per stack)</c> BUDDYs<n/><c val="#TooltipGreen">+1</c> BUDDY for AI Teammates excluding Cho.<n/><c val="#TooltipRed">-15%</c> Base Damage and Healing for all BUDDYs.
-Affix/Tooltip/Append/ArmyofBUDDYs=<n/><n/>Current Total: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_BuddyCountPlayer1$" precision="0"/></c> BUDDYs
+Affix/Tooltip/Append/ArmyofBUDDYs=<n/><n/>Current Total: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_BuddyCountPlayer1$" precision="0"/></c> BUDDYs
 Affix/Name/NazeeboManyRituals=Many Rituals
 Affix/Tooltip/NazeeboManyRituals=<c val="#TooltipGreen">+40</c> <c val="747A84">(+20 per stack)</c> Voodoo Ritual Stacks
-Affix/Tooltip/Append/NazeeboManyRituals=<n/><n/>Current Total: <c val="#TooltipGreen">+<d ref="$GalaxyVar:libAffx_NazeeboManyRitualsTotal$" precision="0"/></c> Voodoo Ritual Stacks
+Affix/Tooltip/Append/NazeeboManyRituals=<n/><n/>Current Total: <c val="#TooltipGreen">+<d ref="$GalaxyVar:libHRGE_NazeeboManyRitualsTotal$" precision="0"/></c> Voodoo Ritual Stacks
 Affix/Name/NazeeboNimbleLegs=Nimble Legs
 Affix/Tooltip/NazeeboNimbleLegs=<c val="#TooltipGreen">+25%</c> Corpse Spiders Movement Speed
 Affix/Tooltip/Append/NazeeboNimbleLegs=
@@ -527,8 +537,8 @@ Affix/Name/QuickMount=Quick Mount
 Affix/Tooltip/QuickMount=Allied Heroes:<n/><c val="#TooltipGreen">+20%</c> Mount Speed<n/><c val="#TooltipGreen">-50%</c> Mount Cast Time and Cooldown
 Affix/Tooltip/Append/QuickMount=
 Affix/Name/Experienced=Experienced
-Affix/Tooltip/Experienced=<c val="#TooltipGreen">+15%</c> <c val="747A84">(+15% per stack)</c> Experience Gain for all allied Heroes.
-Affix/Tooltip/Append/Experienced=<n/><n/>Current Total: <c val="#TooltipGreen">+<d ref="$GalaxyVar:libAffx_ExperiencedCurrentModifier$*100" precision="0" />%</c>
+Affix/Tooltip/Experienced=<c val="#TooltipGreen">+15%</c> <c val="747A84">(+10% per stack)</c> Experience Gain for all allied Heroes.
+Affix/Tooltip/Append/Experienced=<n/><n/>Current Total: <c val="#TooltipGreen">+<d ref="$GalaxyVar:libHRGE_ExperiencedCurrentModifier$*100" precision="0" />%</c>
 Affix/Name/KillContract=Kill Contract
 Affix/Tooltip/KillContract=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Hero Takedowns grant <c val="#TooltipNumbers">1</c> stack. Progress is lost between rounds.<n/><n/><c val="#TooltipQuest">Reward (25 Stacks):</c><n/><c val="#TooltipGreen">+1</c> <c val="ffffff">Common Boon</c><n/><c val="#TooltipGreen">+1</c> <c val="00ff55">Uncommon Boon</c>
 Affix/Tooltip/Append/KillContract=
@@ -571,10 +581,10 @@ Affix/Tooltip/ResurgenceoftheStorm=Upon dying, revive back at your Altar after <
 Affix/Tooltip/ResurgenceoftheStorm/Rexxar=Upon dying, revive back at your Altar after <c val="#TooltipNumbers">5</c> seconds. This effect has a <c val="#TooltipNumbers">300</c> <c val="747A84">(-60s per stack)</c> second cooldown.<n/><n/>Cooldown is halved for Misha.
 Affix/Tooltip/ResurgenceoftheStorm/LostVikings=Upon dying, revive back at your Altar after <c val="#TooltipNumbers">5</c> seconds. This effect has a <c val="#TooltipNumbers">180</c> <c val="747A84">(-60s per stack)</c> second cooldown.
 Affix/Tooltip/ResurgenceoftheStorm/Murky=Upon dying, revive back at your Altar after <c val="#TooltipNumbers">5</c> seconds. This effect has a <c val="#TooltipNumbers">300</c> <c val="747A84">(-60s per stack)</c> second cooldown.<n/><n/>Does not trigger while an Egg is alive.
-Affix/Tooltip/Append/ResurgenceoftheStorm=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_ResurgenceoftheStormCurrentCooldown$" precision="2"/></c> seconds
+Affix/Tooltip/Append/ResurgenceoftheStorm=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_ResurgenceoftheStormCurrentCooldown$" precision="2"/></c> seconds
 Affix/Name/Bribery=Bribery
 Affix/Tooltip/Bribery=Automatically bribe a neutral Mercenary camp to your side every <c val="#TooltipNumbers">300</c> <c val="747A84">(-60s per stack)</c> seconds. Camps taken this way respawn <c val="#TooltipNumbers">50%</c> faster. Does not work on Bosses.
-Affix/Tooltip/Append/Bribery=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_BriberyCurrentCooldown$" precision="2"/></c> seconds
+Affix/Tooltip/Append/Bribery=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_BriberyCurrentCooldown$" precision="2"/></c> seconds
 Affix/Name/BriberyDeepPockets=Deep Pockets
 Affix/Tooltip/BriberyDeepPockets=<c val="#TooltipNumbers">Bribery</c> will work on Bosses, Sentinels, and Support camps, prioritizing them over regular Camps.<n/><n/><c val="#TooltipGreen">+50%</c> Bribery Cooldown Recharge Rate
 Affix/Tooltip/Append/BriberyDeepPockets=
@@ -586,7 +596,7 @@ Affix/Name/PathoftheWarrior=Path of the Warrior
 Affix/Tooltip/PathoftheWarrior=<c val="#TooltipGreen">+40</c> <c val="747A84">(+40 per stack)</c> Maximum Health per level.
 Affix/Tooltip/Append/PathoftheWarrior=<n/><n/>Current Total: <c val="#TooltipGreen">+<d ref="Behavior,AffixPathoftheWarriorBehavior,Modification.VitalMaxArray[Life]" precision="0"/></c> Maximum Health
 Affix/Name/PathoftheAssassin=Path of the Assassin
-Affix/Tooltip/PathoftheAssassin=<c val="#TooltipGreen">+<d ref="$GalaxyVar:libAffx_PathoftheAssassinInitialValueTooltip$"precision="0"/></c> <c val="747A84">(+<d ref="$GalaxyVar:libAffx_PathoftheAssassinStackingValueTooltip$"precision="1"/> per stack)</c> Attack Damage per level.
+Affix/Tooltip/PathoftheAssassin=<c val="#TooltipGreen">+<d ref="$GalaxyVar:libHRGE_PathoftheAssassinInitialValueTooltip$"precision="0"/></c> <c val="747A84">(+<d ref="$GalaxyVar:libHRGE_PathoftheAssassinStackingValueTooltip$"precision="1"/> per stack)</c> Attack Damage per level.
 Affix/Tooltip/Append/PathoftheAssassin=<n/><n/>Current Total: <c val="#TooltipGreen">+<d ref="Behavior,AffixPathoftheAssassinBehavior,Modification.DamageDealtScaled[Basic]" precision="2"/></c> Attack Damage
 Affix/Name/LostVikingsButtonMasher=Button Masher
 Affix/Tooltip/LostVikingsButtonMasher=Gain <c val="#TooltipNumbers">Viking Bribery</c>, <c val="#TooltipNumbers">Spin To Win!</c>, <c val="#TooltipNumbers">Norse Force</c>, and <c val="#TooltipNumbers">Jump!</c>.<n/><n/><c val="#TooltipGreen">-5s</c> Spin To Win! Cooldown<n/><c val="#TooltipGreen">-7.5s</c> Norse Force Cooldown<n/><c val="#TooltipGreen">-15s</c> Jump! Cooldown<n/><c val="#TooltipGreen">-15s</c> Go Go Go! Cooldown
@@ -638,7 +648,7 @@ Affix/Tooltip/ConvenientPortals=Creates a permanent Portal between the top lane 
 Affix/Tooltip/Append/ConvenientPortals=
 Affix/Name/GlobeHuffer=Globe Huffer
 Affix/Tooltip/GlobeHuffer=Spawns a Regeneration Globe near a random allied Hero every <c val="#TooltipNumbers">12</c> <c val="747A84">(-4s per stack)</c> seconds, with you twice as likely to be chosen.<n/><n/><c val="#AbilityPassive">Passive: </c>Blue Regeneration Globes take <c val="#TooltipNumbers">100%</c> longer to turn Neutral.
-Affix/Tooltip/Append/GlobeHuffer=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_GlobeHufferCurrentCooldown$" precision="2"/></c> seconds
+Affix/Tooltip/Append/GlobeHuffer=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_GlobeHufferCurrentCooldown$" precision="2"/></c> seconds
 Affix/Name/IllidanUnendingHatred=True Unending Hatred
 Affix/Tooltip/IllidanUnendingHatred=Gain <c val="#TooltipNumbers">Nexus Blades</c> and <c val="#TooltipNumbers">Unending Hatred</c>.<n/><n/><c val="#TooltipGreen">+25%</c> Unending Hatred stacks from any source.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
 Affix/Tooltip/Append/IllidanUnendingHatred=
@@ -802,7 +812,7 @@ Affix/Name/Superiority=Superiority
 Affix/Tooltip/Superiority=<c val="#TooltipGreen">+30</c> <c val="747A84">(+15 per stack)</c> Armor against non-Heroes for all allied Heroes.
 Affix/Tooltip/Append/Superiority=<n/><n/>Current Total: <c val="#TooltipGreen">+<d ref="Behavior,AffixSuperiorityBehavior,ArmorModification.ArmorSet[Minion].ArmorMitigationTable[Basic]" precision="0"/></c> Armor
 Affix/Name/MercenaryLord=Mercenary Lord
-Affix/Tooltip/MercenaryLord=Allied Mercenaries:<n/><c val="#TooltipGreen">+25%</c> <c val="747A84">(+25% per stack)</c> Maximum Health<n/><c val="#TooltipGreen">+50%</c> <c val="747A84">(+50% per stack)</c> Damage
+Affix/Tooltip/MercenaryLord=Allied Mercenaries:<n/><c val="#TooltipGreen">+50%</c> <c val="747A84">(+50% per stack)</c> Damage<n/><c val="#TooltipGreen">+25%</c> <c val="747A84">(+25% per stack)</c> Maximum Health
 Affix/Tooltip/Append/MercenaryLord=<n/><n/>Current Total:<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixMercenaryLordBuff,Modification.DamageDealtFraction[Basic]*100" precision="0"/>%</c> Damage<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixMercenaryLordBuff,Modification.VitalMaxFractionArray[Life]*100" precision="0"/>%</c> Maximum Health
 Affix/Name/Demolitionist=Demolitionist
 Affix/Tooltip/Demolitionist=<c val="#TooltipGreen">+25%</c> <c val="747A84">(+25% per stack)</c> Damage against Structures for all allied Heroes.
@@ -842,7 +852,7 @@ Affix/Tooltip/RingofRegeneration=Allied Heroes:<n/><c val="#TooltipGreen">+12</c
 Affix/Tooltip/Append/RingofRegeneration=<n/><n/>Current Total:<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixRingofRegenerationBehavior,Modification.VitalRegenArray[Life]" precision="0"/></c> Health Regeneration<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixRingofRegenerationBehavior,Modification.VitalMaxArray[Life]" precision="0"/></c> Maximum Health
 Affix/Name/RingofMagic=Ring of Magic
 Affix/Tooltip/RingofMagic=<c val="#TooltipGreen">+15%</c> <c val="747A84">(+7.5% per stack)</c> Ability Recharge Rate for allied Heroes.
-Affix/Tooltip/Append/RingofMagic=<n/><n/>Current Total: <c val="#TooltipGreen">+<d ref="$GalaxyVar:libAffx_RingofMagicCurrentModifier$*100" precision="0"/>%</c> Ability Recharge Rate
+Affix/Tooltip/Append/RingofMagic=<n/><n/>Current Total: <c val="#TooltipGreen">+<d ref="$GalaxyVar:libHRGE_RingofMagicCurrentModifier$*100" precision="0"/>%</c> Ability Recharge Rate
 Affix/Name/ThrallLightningRod=Lightning Rod
 Affix/Tooltip/ThrallLightningRod=Gain <c val="#TooltipNumbers">Nexus Blades</c>, <c val="#TooltipNumbers">Elemental Assault</c>, and <c val="#TooltipNumbers">Elemental Momentum</c>.<n/><n/>Thrall's Basic Attack becomes ranged and ranged-only Boons become available.<n/><n/><c val="#TooltipGreen">+50%</c> Feral Spirit Range<n/><c val="#TooltipGreen">+50%</c> Chain Lightning Cast Range<n/><n/><S val="TooltipSubscript">Ranged Thrall has 6 Attack Range.</S>
 Affix/Tooltip/Append/ThrallLightningRod=
@@ -938,9 +948,9 @@ Affix/Tooltip/Append/NazeeboRitualofBoons=
 Button/Name/WitchDoctorRitualofBoonsQuestToken=Ritual of Boons
 Button/Tooltip/WitchDoctorRitualofBoonsQuestToken=<c val="#TooltipQuest">Voodoo Ritual Stacks: <c val="#TooltipNumbers"><d ref="$BehaviorStackCount:WitchDoctorRitualofBoonsQuestToken$"/> / <d ref="Behavior,WitchDoctorRitualofBoonsQuestToken,Max"/></c>
 Affix/Name/SharedPower=Shared Power
-Affix/Tooltip/SharedPower=AI Teammates:<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="0" />%</c> Damage<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixDifficultyBehavior,Modification.VitalMaxFractionArray[Life]*100" precision="0" />%</c> Maximum Health<n/><n/>These stats equal the difficulty's stats scaling.
-Affix/Tooltip/SharedPower/Cho=AI Teammates:<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="0" />%</c> Damage<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixDifficultyBehavior,Modification.VitalMaxFractionArray[Life]*100" precision="0" />%</c> Maximum Health<n/><n/>These stats equal the difficulty's stats scaling.<n/><n/>Does not affect Gall.
-Affix/Tooltip/SharedPower/Gall=AI Teammates:<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="0" />%</c> Damage<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixDifficultyBehavior,Modification.VitalMaxFractionArray[Life]*100" precision="0" />%</c> Maximum Health<n/><n/>These stats equal the difficulty's stats scaling.<n/><n/>Does not affect Cho.
+Affix/Tooltip/SharedPower=AI Teammates:<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="2" />%</c> Damage<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixDifficultyBehavior,Modification.VitalMaxFractionArray[Life]*100" precision="2" />%</c> Maximum Health<n/><n/>These stats are equal to <c val="#TooltipNumbers">100%</c> of the difficulty's stats scaling.
+Affix/Tooltip/SharedPower/Cho=AI Teammates:<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="2" />%</c> Damage<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixDifficultyBehavior,Modification.VitalMaxFractionArray[Life]*100" precision="2" />%</c> Maximum Health<n/><n/>These stats are equal to <c val="#TooltipNumbers">100%</c> of the difficulty's stats scaling.<n/><n/>Does not affect Gall.
+Affix/Tooltip/SharedPower/Gall=AI Teammates:<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="2" />%</c> Damage<n/><c val="#TooltipGreen">+<d ref="Behavior,AffixDifficultyBehavior,Modification.VitalMaxFractionArray[Life]*100" precision="2" />%</c> Maximum Health<n/><n/>These stats are equal to <c val="#TooltipNumbers">100%</c> of the difficulty's stats scaling.<n/><n/>Does not affect Cho.
 Affix/Tooltip/Append/SharedPower=
 Affix/Name/GiantKiller=Giant Killer
 Affix/Tooltip/GiantKiller=<c val="#TooltipGreen">+2%</c> <c val="747A84">(+1% per stack)</c> Maximum Health Damage from Basic Attacks against Heroes.
@@ -954,7 +964,7 @@ Affix/Tooltip/AncientBlessings=Basic Attacks deal an additional <c val="#Tooltip
 Affix/Tooltip/Append/AncientBlessings=
 Affix/Name/MacGuffin=MacGuffin
 Affix/Tooltip/MacGuffin=<c val="#TooltipGreen">-50%</c> <c val="747A84">(-25% per stack)</c> Objective Channel Time for all allied Heroes.
-Affix/Tooltip/Append/MacGuffin=<n/><n/>Current Total: <c val="#TooltipGreen">-<d ref="$GalaxyVar:libAffx_MacGuffinCurrentModifier$*100" precision="1"/>%</c> Objective Channel Time
+Affix/Tooltip/Append/MacGuffin=<n/><n/>Current Total: <c val="#TooltipGreen">-<d ref="$GalaxyVar:libHRGE_MacGuffinCurrentModifier$*100" precision="1"/>%</c> Objective Channel Time
 Affix/Name/DVaCrashStress=Crash Stress
 Affix/Tooltip/DVaCrashStress=When D.Va's Mech is destroyed, you are Slowed by <c val="#TooltipNumbers">40%</c>, have <c val="#TooltipNumbers">15</c> reduced Armor, and greatly reduced vision for <c val="#TooltipNumbers">5</c> seconds.
 Affix/Tooltip/Append/DVaCrashStress=
@@ -1028,7 +1038,7 @@ Affix/Name/GlobeCollector=Globe Collector
 Affix/Tooltip/GlobeCollector=Regeneration Globe effects for all allied Heroes:<n/><c val="#TooltipGreen">+5</c> <c val="747A84">(+5 per stack)</c> Collection Range<n/><c val="#TooltipGreen">+2.5s</c> <c val="747A84">(+2.5s per stack)</c> Duration
 Affix/Tooltip/Append/GlobeCollector=<n/><n/>Current Total:<n/><c val="#TooltipGreen">+<d ref="Effect,RegenGlobeSearch2,AreaArray[0].Radius-1.25" precision="0"/></c> Collection Range<n/><c val="#TooltipGreen">+<d ref="Behavior,HeroGenericRegenGlobeBarbarianPercentBuff,Duration-5" player="1" precision="1"/>s</c> Duration
 Affix/Name/LootBox=Loot Box
-Affix/Tooltip/LootBox=<c val="#TooltipGreen">+2</c> <c val="ffffff">Common Boons</c> with a chance for higher rarity Boons.
+Affix/Tooltip/LootBox=<c val="#TooltipGreen">+2</c> random <c val="ffffff">Common Boons</c> with a chance for higher rarity Boons.<n/><n/><S val="TooltipSubscript">These boons cannot be rerolled.</S>
 Affix/Tooltip/Append/LootBox=
 Affix/Name/Nimble=Nimble
 Affix/Tooltip/Nimble=<c val="#TooltipGreen">+10%</c> <c val="747A84">(+10% per stack)</c> Dodge Chance against non-Structures.<n/><c val="#TooltipGreen">+30%</c> <c val="747A84">(+30% per stack)</c> Dodge Chance against Structures.<n/><n/><S val="TooltipSubscript">Take no damage when dodging an attack or spell.</S>
@@ -1043,6 +1053,7 @@ Affix/Tooltip/Append/ExperienceHoarder=
 Affix/Name/Pacifism=Pacifism
 Affix/Tooltip/Pacifism=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Win a game without any personal Hero Takedowns and Assists.<n/><n/><c val="#TooltipQuest">Reward:</c><n/><c val="#TooltipGreen">+1</c> <c val="00ff55">Uncommon Boon</c><n/><c val="#TooltipGreen">+1</c> <c val="0070dd">Rare Boon</c><n/><c val="#TooltipGreen">+1</c> <c val="a335ee">Epic Boon</c>
 Affix/Tooltip/Append/Pacifism=
+Button/Name/AffixPacifismToken=Pacifism
 Affix/Name/ProbiusCannonRush=Cannon Rush
 Affix/Tooltip/ProbiusCannonRush=<c val="#TooltipGreen">+2</c> Photon Cannon Charges<n/><n/>Photon Cannon replenishes all charges at the same time.<n/><n/>Photon Cannon's duration is paused while within a Pylon's Power Field.
 Affix/Tooltip/Append/ProbiusCannonRush=
@@ -1057,11 +1068,11 @@ Affix/Name/ProbiusWarpTechnology=Warp Technology
 Affix/Tooltip/ProbiusWarpTechnology=Gain the ability to warp in Zealots for <c val="#TooltipNumbers">5</c> Minerals, Stalkers for <c val="#TooltipNumbers">10</c> Minerals, and Immortals for <c val="#TooltipNumbers">30</c> Minerals near Pylons.<n/><n/>Start the game with <c val="#TooltipNumbers">50</c> Minerals.
 Affix/Tooltip/Append/ProbiusWarpTechnology=
 Button/Name/ProbiusWarpInZealots=Warp in Zealot
-Button/Tooltip/ProbiusWarpInZealots=<c val="#TooltipNumbers">Minerals: <d ref="$GalaxyVar:libAffx_ProbiusZealotCost$"/></c><n/><n/>Warp in <c val="#TooltipNumbers">1</c> Zealot near a Pylon.<n/><n/>Zealots deal <c val="#TooltipNumbers"><d ref="Effect,PsiBlades,Amount" precision="0" /></c> damage per attack. Deals <c val="#TooltipNumbers">100%</c> bonus damage to Mercenaries, Minions, and Structures.
+Button/Tooltip/ProbiusWarpInZealots=<c val="#TooltipNumbers">Minerals: <d ref="$GalaxyVar:libHRGE_ProbiusZealotCost$"/></c><n/><n/>Warp in <c val="#TooltipNumbers">1</c> Zealot near a Pylon.<n/><n/>Zealots deal <c val="#TooltipNumbers"><d ref="Effect,PsiBlades,Amount" precision="0" /></c> damage per attack. Deals <c val="#TooltipNumbers">100%</c> bonus damage to Mercenaries, Minions, and Structures.
 Button/Name/ProbiusWarpInStalkers=Warp in Stalker
-Button/Tooltip/ProbiusWarpInStalkers=<c val="#TooltipNumbers">Minerals: <d ref="$GalaxyVar:libAffx_ProbiusStalkerCost$"/></c><n/><n/>Warp in <c val="#TooltipNumbers">1</c> Stalker near a Pylon.<n/><n/>Stalkers deal <c val="#TooltipNumbers"><d ref="Effect,ParticleDisruptorsU,Amount" precision="0" /></c> damage per attack. Deals <c val="#TooltipNumbers">100%</c> bonus damage to Mercenaries, Minions, and Structures.
+Button/Tooltip/ProbiusWarpInStalkers=<c val="#TooltipNumbers">Minerals: <d ref="$GalaxyVar:libHRGE_ProbiusStalkerCost$"/></c><n/><n/>Warp in <c val="#TooltipNumbers">1</c> Stalker near a Pylon.<n/><n/>Stalkers deal <c val="#TooltipNumbers"><d ref="Effect,ParticleDisruptorsU,Amount" precision="0" /></c> damage per attack. Deals <c val="#TooltipNumbers">100%</c> bonus damage to Mercenaries, Minions, and Structures.
 Button/Name/ProbiusWarpInImmortals=Warp in Immortal
-Button/Tooltip/ProbiusWarpInImmortals=<c val="#TooltipNumbers">Minerals: <d ref="$GalaxyVar:libAffx_ProbiusImmortalCost$"/></c><n/><n/>Warp in <c val="#TooltipNumbers">1</c> Immortal near a Pylon.<n/><n/>Immortals deal <c val="#TooltipNumbers"><d ref="Effect,PhaseDisruptors,Amount" precision="0" /></c> damage per attack. Deals <c val="#TooltipNumbers">100%</c> bonus damage to Mercenaries and Minions, and <c val="#TooltipNumbers">200%</c> bonus damage to Structures.
+Button/Tooltip/ProbiusWarpInImmortals=<c val="#TooltipNumbers">Minerals: <d ref="$GalaxyVar:libHRGE_ProbiusImmortalCost$"/></c><n/><n/>Warp in <c val="#TooltipNumbers">1</c> Immortal near a Pylon.<n/><n/>Immortals deal <c val="#TooltipNumbers"><d ref="Effect,PhaseDisruptors,Amount" precision="0" /></c> damage per attack. Deals <c val="#TooltipNumbers">100%</c> bonus damage to Mercenaries and Minions, and <c val="#TooltipNumbers">200%</c> bonus damage to Structures.
 Abil/ProbiusWarpInImmortals=<d ref="Abil,ProbiusWarpInImmortals,Cost.Charge.TimeUse" player="0"/> seconds
 Button/Name/ProbiusWarpTechnologyCounterToken=Minerals
 Button/Tooltip/ProbiusWarpTechnologyCounterToken=Minerals: <c val="#TooltipNumbers"><d ref="$BehaviorTokenCount:ProbiusWarpTechnologyCounterToken$" precision="0"/></c>
@@ -1118,7 +1129,7 @@ Affix/Tooltip/ProbiusPlasmaShields=Gain <c val="#TooltipNumbers">Shield Capacito
 Affix/Tooltip/Append/ProbiusPlasmaShields=
 Affix/Name/ProbiusPylonExpansion=Pylon Expansion
 Affix/Tooltip/ProbiusPylonExpansion=<c val="#TooltipGreen">+1</c> <c val="747A84">(+1 per stack)</c> Maximum Pylons
-Affix/Tooltip/Append/ProbiusPylonExpansion=<n/><n/>Current Total: <c val="#TooltipGreen">+<d ref="$GalaxyVar:libAffx_PylonExpansionAmount$"/></c> Maximum Pylons
+Affix/Tooltip/Append/ProbiusPylonExpansion=<n/><n/>Current Total: <c val="#TooltipGreen">+<d ref="$GalaxyVar:libHRGE_PylonExpansionAmount$"/></c> Maximum Pylons
 Affix/Name/ProbiusKhalaiIngenuity=Khalai Ingenuity
 Affix/Tooltip/ProbiusKhalaiIngenuity=Warp in Pylon and Photon Cannon gain unlimited cast range and warp in instantly.
 Affix/Tooltip/Append/ProbiusKhalaiIngenuity=
@@ -1127,7 +1138,7 @@ Affix/Tooltip/ProbiusZAP=Basic Attacks deal <c val="#TooltipNumbers">1000%</c> i
 Affix/Tooltip/Append/ProbiusZAP=
 Affix/Name/ProbiusTurbo=Turbo
 Affix/Tooltip/ProbiusTurbo=Gain <c val="#TooltipNumbers">Turbo Charged</c>.<n/><n/>Worker Rush:<n/><c val="#TooltipGreen">+10%</c> <c val="747A84">(+10% per stack)</c> Movement Speed<n/><c val="#TooltipGreen">+1s</c> <c val="747A84">(+1s per stack)</c> Duration
-Affix/Tooltip/Append/ProbiusTurbo=<n/><n/>Current Total:<n/><c val="#TooltipGreen">+<d ref="(Behavior,ProbiusWorkerRushMoveSpeed,Modification.UnifiedMoveSpeedFactor-0.6)*100" player="1" precision="0"/>%</c> Movement Speed<n/><c val="#TooltipGreen">+<d ref="$GalaxyVar:libAffx_ProbiusTurboDurationIncrease$" />s</c> Duration
+Affix/Tooltip/Append/ProbiusTurbo=<n/><n/>Current Total:<n/><c val="#TooltipGreen">+<d ref="(Behavior,ProbiusWorkerRushMoveSpeed,Modification.UnifiedMoveSpeedFactor-0.6)*100" player="1" precision="0"/>%</c> Movement Speed<n/><c val="#TooltipGreen">+<d ref="$GalaxyVar:libHRGE_ProbiusTurboDurationIncrease$" />s</c> Duration
 Affix/Name/ProbiusDelay=Delay
 Affix/Tooltip/ProbiusDelay=<c val="#TooltipRed">+0.75s</c> Warp Rift Arming Time
 Affix/Tooltip/Append/ProbiusDelay=
@@ -1163,7 +1174,7 @@ Affix/Tooltip/Strength=<c val="#TooltipGreen">+25%</c> <c val="747A84">(+25% per
 Affix/Tooltip/Append/Strength=<n/><n/>Current Total: <c val="#TooltipGreen">+<d ref="Behavior,AffixStrength,Modification.DamageDealtFraction[Basic]*100" player="1" precision="0" />%</c> Damage
 Affix/Name/AutoMULE=Auto MULE
 Affix/Tooltip/AutoMULE=Automatically drop down a MULE near a random damaged allied Structure that repairs <c val="#TooltipNumbers">10%</c> of the Structure's maximum Health per second.<n/><n/>This effect has a cooldown of <c val="#TooltipNumbers">60</c> <c val="747A84">(-20s per stack)</c> seconds.
-Affix/Tooltip/Append/AutoMULE=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_AutoMULECurrentCooldown$"/></c> seconds
+Affix/Tooltip/Append/AutoMULE=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_AutoMULECurrentCooldown$"/></c> seconds
 Affix/Name/SecondWind=Second Wind
 Affix/Tooltip/SecondWind=On fatal damage, become Protected for <c val="#TooltipNumbers">4</c> seconds.<n/><n/>This effect has a cooldown of <c val="#TooltipNumbers">300</c> seconds.
 Affix/Tooltip/Append/SecondWind=
@@ -1464,7 +1475,7 @@ Affix/Tooltip/ZaryaCapacitor=<c val="#TooltipGreen">+10</c> <c val="747A84">(+10
 Affix/Tooltip/Append/ZaryaCapacitor=<n/><n/>Current Total: <c val="#TooltipGreen">+<d ref="Behavior,ZaryaCapacitorCarry,Modification.VitalMaxArray[Energy]" /></c> Maximum Energy
 Affix/Name/Weaken=Weaken
 Affix/Tooltip/Weaken=<c val="#TooltipGreen">-10%</c> <c val="747A84">(-10% per stack)</c> Starting Health for enemy Minions.
-Affix/Tooltip/Append/Weaken=<n/><n/>Current Total: <c val="#TooltipGreen">-<d ref="$GalaxyVar:libAffx_WeakenCurrentModifier$*100" precision="0" />%</c> Starting Health
+Affix/Tooltip/Append/Weaken=<n/><n/>Current Total: <c val="#TooltipGreen">-<d ref="$GalaxyVar:libHRGE_WeakenCurrentModifier$*100" precision="0" />%</c> Starting Health
 
 Affix/Name/MoreOptions=More Options
 Affix/Tooltip/MoreOptions=<c val="#TooltipGreen">+1</c> Option when selecting Boons or Curses.<n/><c val="#TooltipGreen">+2</c> Boon and Curse Rerolls.
@@ -1493,7 +1504,7 @@ Affix/Tooltip/LevelDisadvantage=Enemy Heroes:<n/><c val="#TooltipRed">+3</c> Sta
 Affix/Tooltip/Append/LevelDisadvantage=
 Affix/ShortTooltip/LevelDisadvantage=Enemy Heroes start at a higher level and gain increased experience.
 Affix/Name/Cursed=Cursed
-Affix/Tooltip/Cursed=Winning an objective no longer swaps a Curse to a Boon.<n/><n/>Obtain a <c val="c52020">Curse</c> every <c val="#TooltipNumbers">3</c> deaths. Counter is reset between rounds.<n/><n/>Allied Heroes:<n/><c val="#TooltipRed">-5</c> Armor every minute after reaching level <c val="#TooltipNumbers">20</c>.<n/><c val="#TooltipRed">-100</c> Armor every minute after reaching level <c val="#TooltipNumbers">30</c>.
+Affix/Tooltip/Cursed=Obtain a <c val="c52020">Curse</c> every <c val="#TooltipNumbers">3</c> deaths. Counter is reset between rounds.<n/><n/>Allied Heroes:<n/><c val="#TooltipRed">-5</c> Armor every minute after reaching level <c val="#TooltipNumbers">20</c>.<n/><c val="#TooltipRed">-100</c> Armor every minute after reaching level <c val="#TooltipNumbers">30</c>.
 Affix/Tooltip/Append/Cursed=
 Affix/ShortTooltip/Cursed=Curses no longer swap to Boons, obtain Curses when you die, and all allied Heroes lose Armor over time.
 Affix/Name/Eternal=Eternal
@@ -1516,7 +1527,7 @@ Button/Name/AffixWeakPoint=Weak Point
 Button/SimpleDisplayText/AffixWeakPoint=Any direct damage taken is dealt to you again over time.
 Affix/Name/Invasion=Invasion
 Affix/Tooltip/Invasion=Enemy Minions:<n/><c val="#TooltipRed">+25%</c> Spawn Rate<n/><c val="#TooltipRed">-20%</c> Experience<n/><n/>These effects increase every enemy level, up to level <c val="#TooltipNumbers">20</c>.<n/><n/><c val="#TooltipRed">+25%</c> Enemy Minion Maximum Health and Damage every minute after enemies reach level <c val="#TooltipNumbers">30</c>.<n/><n/><S val="TooltipSubscript">Enemy Minion Spawn Rate caps at 100%.</S><n/><S val="TooltipSubscript">Enemy Minion Experience caps at -50%.</S>
-Affix/Tooltip/Append/Invasion=<n/><n/>Current Total:<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libAffx_InvasionSpawnRateDisplay$*100" precision="1"/>%</c> Spawn Rate<n/><c val="#TooltipRed">-<d ref="$GalaxyVar:libAffx_InvasionExpDisplay$*100" precision="1"/>%</c> Minion Experience<n/><c val="#TooltipRed">+<d ref="Behavior,AffixInvasionBehavior,Modification.DamageDealtFraction[Ability]*100" precision="1" player="12" />%</c> Maximum Health and Damage
+Affix/Tooltip/Append/Invasion=<n/><n/>Current Total:<n/><c val="#TooltipRed">+<d ref="(($GalaxyVar:libCore_gv_bALMinionWaveInterval$/$GalaxyVar:libHRGE_InvasionSpawnRate$)-1)*100" precision="1"/>%</c> Spawn Rate<n/><c val="#TooltipRed"><d ref="$GalaxyVar:libHRGE_InvasionExp$*100" precision="1"/>%</c> Minion Experience<n/><c val="#TooltipRed">+<d ref="Behavior,AffixInvasionBehavior,Modification.DamageDealtFraction[Ability]*100" precision="1" player="12" />%</c> Maximum Health and Damage
 Affix/ShortTooltip/Invasion=Enemy Minions become stronger, spawn more frequently, and provide less experience over time.
 
 Affix/Name/Possession=Possession
@@ -1530,7 +1541,7 @@ Affix/Tooltip/NoFountain=All your Healing Fountains are destroyed.
 Affix/Tooltip/Append/NoFountain=
 Affix/Name/BadBargain=Bad Bargain
 Affix/Tooltip/BadBargain=<c val="#TooltipRed">50%</c> <c val="747A84">(+50% per stack)</c> Respawn Timer for all allied Heroes.
-Affix/Tooltip/Append/BadBargain=<n/><n/>Current Total: <c val="#TooltipRed">+<d ref="$GalaxyVar:libAffx_BadBargainCurrentModifier$*100" precision="1"/>%</c> Respawn Timer
+Affix/Tooltip/Append/BadBargain=<n/><n/>Current Total: <c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_BadBargainCurrentModifier$*100" precision="1"/>%</c> Respawn Timer
 Affix/Name/FaultyCatapults=Faulty Catapults
 Affix/Tooltip/FaultyCatapults=Allied Catapults:<n/><c val="#TooltipRed">-50%</c> Attack Speed<n/><c val="#TooltipRed">-3</c> Attack Range
 Affix/Tooltip/Append/FaultyCatapults=
@@ -1542,7 +1553,7 @@ Affix/Tooltip/Resilience=<c val="#TooltipRed">+15%</c> <c val="747A84">(+15% per
 Affix/Tooltip/Append/Resilience=<n/><n/>Current Total: <c val="#TooltipRed">+<d ref="Behavior,AffixResilienceBehavior,Modification.VitalMaxFractionArray[Life]*100" precision="0"/>%</c> Maximum Health
 Affix/Name/ChronoBoost=Chrono Boost
 Affix/Tooltip/ChronoBoost=All enemies:<n/><c val="#TooltipRed">+10%</c> <c val="747A84">(+10% per stack)</c> Movement Speed<n/><c val="#TooltipRed">+20%</c> <c val="747A84">(+20% per stack)</c> Ability Recharge Rate
-Affix/Tooltip/Append/ChronoBoost=<n/><n/>Current Total:<n/><c val="#TooltipRed">+<d ref="Behavior,AffixChronoBoostBehavior,Modification.UnifiedMoveSpeedFactor*100" precision="0"/>%</c> Movement Speed<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libAffx_ChronoBoostCurrentCDRModifier$*100" precision="1"/>%</c> Ability Recharge Rate
+Affix/Tooltip/Append/ChronoBoost=<n/><n/>Current Total:<n/><c val="#TooltipRed">+<d ref="Behavior,AffixChronoBoostBehavior,Modification.UnifiedMoveSpeedFactor*100" precision="0"/>%</c> Movement Speed<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_ChronoBoostCurrentCDRModifier$*100" precision="1"/>%</c> Ability Recharge Rate
 Affix/Name/AlteracsLegacy=Alterac's Legacy
 Affix/Tooltip/AlteracsLegacy=Enemy Keeps and Keep Towers:<n/><c val="#TooltipRed">+20</c> Armor for each intact enemy Fort.
 Affix/Tooltip/Append/AlteracsLegacy=
@@ -1569,7 +1580,7 @@ Affix/Tooltip/RaenaKnight=Enemy Dragon Knight:<n/><c val="#TooltipRed">+50%</c> 
 Affix/Tooltip/Append/RaenaKnight=
 Affix/Name/Fortifications=Fortifications
 Affix/Tooltip/Fortifications=Several enemy Towers appear around the map. These Towers reveal everything in range.<n/><n/>Additional stacks increases the amount of Towers on the map.
-Affix/Tooltip/Append/Fortifications=<n/><n/>Current Total: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_FortificationsTotal$" precision="0"/></c> Towers
+Affix/Tooltip/Append/Fortifications=<n/><n/>Current Total: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_FortificationsTotal$" precision="0"/></c> Towers
 Affix/Name/SturdyTowers=Sturdy Towers
 Affix/Tooltip/SturdyTowers=Enemy fallback towers stay intact when enemy Forts are destroyed.<n/><n/><S val="TooltipSubscript">Minions and Mercenaries ignore these towers.</S>
 Affix/Tooltip/Append/SturdyTowers=
@@ -1578,7 +1589,7 @@ Affix/Tooltip/ManyHeroics=Enemy Heroes gain access to all of their Heroic Abilit
 Affix/Tooltip/Append/ManyHeroics=
 Affix/Name/ChainedDown=Chained Down
 Affix/Tooltip/ChainedDown=<c val="#TooltipRed">+25%</c> <c val="747A84">(+25% per stack)</c> Stun, Slow, Root, and Silence Duration against allied Heroes.
-Affix/Tooltip/Append/ChainedDown=<n/><n/>Current Total: <c val="#TooltipRed">+<d ref="$GalaxyVar:libAffx_ChainedDownCurrentModifier$*100" precision="1"/>%</c> Crowd Control Duration
+Affix/Tooltip/Append/ChainedDown=<n/><n/>Current Total: <c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_ChainedDownCurrentModifier$*100" precision="1"/>%</c> Crowd Control Duration
 Affix/Name/Overleveled=Overleveled
 Affix/Tooltip/Overleveled=<c val="#TooltipRed">+1</c> Enemy Level
 Affix/Tooltip/Append/Overleveled=
@@ -1589,10 +1600,10 @@ Affix/Name/LifeSteal=Life Steal
 Affix/Tooltip/LifeSteal=<c val="#TooltipRed">+15%</c> <c val="747A84">(+15% per stack)</c> Lifesteal for enemy Heroes.
 Affix/Tooltip/Append/LifeSteal=<n/><n/>Current Total: <c val="#TooltipRed">+<d ref="Behavior,AffixLifeStealBehavior,Modification.VitalDamageLeechArray[Life].KindArray[Basic]*100" precision="0"/>%</c> Lifesteal
 Affix/Name/ToxicField=Toxic Field
-Affix/Tooltip/ToxicField=Spawns <c val="#TooltipNumbers">2</c> <c val="747A84">(+2 per stack)</c> Toxic Nests per second at random locations on the map. Toxic Nests last for <c val="#TooltipNumbers">90</c> seconds.<n/><n/><S val="TooltipSubscript">Damage scales with the enemy's Core.</S>
-Affix/Tooltip/Append/ToxicField=<n/><n/>Current Total: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_ToxicFieldCount$" precision="0"/></c> Toxic Nests per second.
+Affix/Tooltip/ToxicField=Spawns <c val="#TooltipNumbers">5</c> enemy Toxic Nests per second at random locations on the map. Toxic Nests last for <c val="#TooltipNumbers">45</c> seconds.<n/><n/><S val="TooltipSubscript">Damage scales with the enemy's Core.</S>
+Affix/Tooltip/Append/ToxicField=<n/><n/>Current Total: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_ToxicFieldCount$" precision="0"/></c> Toxic Nests per second.
 Affix/Name/OverchargedShields=Overcharged Shields
-Affix/Tooltip/OverchargedShields=Enemy Core:<n/><c val="#TooltipRed">+50%</c> <c val="747A84">(+50% per stack)</c> Maximum Shields<n/><c val="#TooltipRed">+15%</c> <c val="747A84">(+15% per stack)</c> Shield Recharge Rate
+Affix/Tooltip/OverchargedShields=Enemy Core:<n/><c val="#TooltipRed">+75%</c> Maximum Shields<n/><c val="#TooltipRed">+25%</c> Shield Recharge Rate
 Affix/Tooltip/Append/OverchargedShields=<n/><n/>Current Total:<n/><c val="#TooltipRed">+<d ref="Behavior,AffixOverchargedShieldsBehavior,Modification.VitalMaxFractionArray[Shields]*100" player="12" precision="1"/>%</c> Maximum Shields<n/><c val="#TooltipRed">+<d ref="Behavior,AffixOverchargedShieldsBehavior,Modification.VitalRegenMultiplier[Shields]*100" player="12" precision="1"/>%</c> Shield Recharge Rate
 Affix/Name/AllRounder=All-Rounder
 Affix/Tooltip/AllRounder=<c val="#TooltipRed">+10%</c> <c val="747A84">(+10% per stack)</c> Damage, Attack Speed, and Maximum Health for enemy Heroes.
@@ -1605,7 +1616,7 @@ Affix/Tooltip/Ammunition=Allied Towers, Forts, and Keeps have limited Ammunition
 Affix/Tooltip/Append/Ammunition=
 Affix/Name/Grenadier=Grenadier
 Affix/Tooltip/Grenadier=Grants the ability to throw a Frag Grenade, Particle Grenade, or a Biotic Grenade to <c val="#TooltipNumbers">1</c> <c val="747A84">(+1 per stack)</c> random enemy Hero.<n/><n/>This effect has a <c val="#TooltipNumbers">10</c> second cooldown.
-Affix/Tooltip/Append/Grenadier=<n/><n/>Current Total: <c val="#TooltipNumbers"><d ref="$GalaxyVar:grenadierTotal$" precision="0"/></c> Heroes
+Affix/Tooltip/Append/Grenadier=<n/><n/>Current Total: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_grenadierTotalHeroes$" precision="0"/></c> Heroes
 Affix/Name/SlowStart=Slow Start
 Affix/Tooltip/SlowStart=AI Teammates are Time Stopped for <c val="#TooltipNumbers">40</c> <c val="747A84">(+60s per stack)</c> seconds.
 Affix/Tooltip/SlowStart/Cho=AI Teammates are Time Stopped for <c val="#TooltipNumbers">40</c> <c val="747A84">(+60s per stack)</c> seconds.<n/><n/>Does not affect Gall.
@@ -1634,8 +1645,8 @@ Affix/Name/LavaWave=Lava Waves
 Affix/Tooltip/LavaWave=Every <c val="#TooltipNumbers">120</c> seconds, the enemy Team releases a Lava Wave in a random lane, dealing <d ref="Effect,RagnarosLavaWaveDamage,Amount * (1 / Effect,RagnarosLavaWaveTrail,Marker.Duration )" player="12"/></c> damage per second to non-Structure enemies in its path and instantly killing enemy Minions. Damage increased by <c val="#TooltipNumbers"><d ref="Effect,RagnarosLavaWaveDamage,AttributeFactor[Heroic] * 100"/>%</c> versus Heroes.
 Affix/Tooltip/Append/LavaWave=
 Affix/Name/DivineIntervention=Divine Intervention
-Affix/Tooltip/DivineIntervention=Divine Palm is cast on enemy Heroes when their Health drops below <c val="#TooltipNumbers">25%</c>.<n/><n/>This effect has a <c val="#TooltipNumbers">300</c> <c val="747A84">(-60s per stack)</c> second cooldown.
-Affix/Tooltip/Append/DivineIntervention=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_DivineInterventionCurrentCooldown$" precision="0"/></c> seconds
+Affix/Tooltip/DivineIntervention=Divine Palm is cast on enemy Heroes when their Health drops below <c val="#TooltipNumbers">25%</c>.<n/><n/>This effect has a <c val="#TooltipNumbers">300</c> <c val="747A84">(-150s per stack)</c> second cooldown.
+Affix/Tooltip/Append/DivineIntervention=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_DivineInterventionCurrentCooldown$" precision="0"/></c> seconds
 Affix/Name/MassCloak=Mass Cloak
 Affix/Tooltip/MassCloak=Enemy Heroes gain Stealth when out of combat for <c val="#TooltipNumbers">3</c> seconds.
 Affix/Tooltip/Append/MassCloak=
@@ -1667,14 +1678,14 @@ Affix/Name/LostVikingsTrulyLost=Truly Lost
 Affix/Tooltip/LostVikingsTrulyLost=You no longer have shared vision with your team.
 Affix/Tooltip/Append/LostVikingsTrulyLost=
 Affix/Name/Blindfolded=Blindfolded
-Affix/Tooltip/Blindfolded=<c val="#TooltipRed">-2</c> <c val="747A84">(-2 per stack)</c> Vision Range
+Affix/Tooltip/Blindfolded=<c val="#TooltipRed">-3</c> <c val="747A84">(-3 per stack)</c> Vision Range
 Affix/Tooltip/Append/Blindfolded=<n/><n/>Current Total: <c val="#TooltipRed">-<d ref="-Behavior,AffixBlindfoldedBehavior,Modification.SightBonus" precision="2"/></c> Vision Range
 Affix/Name/Injury=Injury
 Affix/Tooltip/Injury=<c val="#TooltipRed">-10%</c> Healing Received<n/><n/>You no longer naturally regenerate Health.
 Affix/Tooltip/Append/Injury=
 Affix/Name/Relentless=Relentless
 Affix/Tooltip/Relentless=<c val="#TooltipRed">-15%</c> <c val="747A84">(-15% per stack)</c> Stun, Slow, Root, and Silence Duration against enemy Heroes.
-Affix/Tooltip/Append/Relentless=<n/><n/>Current Total: <c val="#TooltipRed">-<d ref="$GalaxyVar:libAffx_RelentlessCurrentModifier$*100" precision="1"/>%</c> Crowd Control Duration
+Affix/Tooltip/Append/Relentless=<n/><n/>Current Total: <c val="#TooltipRed">-<d ref="$GalaxyVar:libHRGE_RelentlessCurrentModifier$*100" precision="1"/>%</c> Crowd Control Duration
 Affix/Name/Dodge=Dodge
 Affix/Tooltip/Dodge=<c val="#TooltipRed">+5%</c> <c val="747A84">(+5% per stack)</c> Dodge Chance for enemy Heroes.<n/><n/><S val="TooltipSubscript">Enemies take no damage when dodging an attack or spell.</S>
 Affix/Tooltip/Append/Dodge=<n/><n/>Current Total: <c val="#TooltipRed">+<d ref="Behavior,AffixDodgeController,DamageResponse.Chance*100" player="6" precision="0"/>%</c> Dodge Chance
@@ -1682,8 +1693,8 @@ Affix/Name/ExpensiveAttacks=Expensive Attacks
 Affix/Tooltip/ExpensiveAttacks=<c val="#TooltipRed">+4</c> Mana Cost for Basic Attacks.
 Affix/Tooltip/Append/ExpensiveAttacks=
 Affix/Name/LastMoments=Last Moments
-Affix/Tooltip/LastMoments=Last Rites is cast on you when you take damage while below <c val="#TooltipNumbers">35%</c> Health.<n/><n/>This effect has a <c val="#TooltipNumbers">300</c> <c val="747A84">(-60s per stack)</c> second cooldown.<n/><n/><S val="TooltipSubscript">Damage scales with the enemy's Core.</S>
-Affix/Tooltip/Append/LastMoments=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libAffx_LastMomentsCurrentCooldown$" precision="0"/></c> seconds
+Affix/Tooltip/LastMoments=Last Rites is cast on you when you take damage while below <c val="#TooltipNumbers">35%</c> Health.<n/><n/>This effect has a <c val="#TooltipNumbers">300</c> <c val="747A84">(-150s per stack)</c> second cooldown.<n/><n/><S val="TooltipSubscript">Damage scales with the enemy's Core.</S>
+Affix/Tooltip/Append/LastMoments=<n/><n/>Cooldown: <c val="#TooltipNumbers"><d ref="$GalaxyVar:libHRGE_LastMomentsCurrentCooldown$" precision="0"/></c> seconds
 Affix/Name/ThrallSlowfury=Slowfury
 Affix/Tooltip/ThrallSlowfury=<c val="#TooltipRed">-50%</c> Windfury Attack Speed
 Affix/Tooltip/Append/ThrallSlowfury=
@@ -1775,3 +1786,6 @@ Affix/Tooltip/Append/TrueStealth=
 Affix/Name/Reckless=Reckless
 Affix/Tooltip/Reckless=Hides the status bar above your Hero.
 Affix/Tooltip/Append/Reckless=
+Affix/Name/PayloadBoosters=Payload Boosters
+Affix/Tooltip/PayloadBoosters=<c val="#TooltipRed">+100%</c> Payload Movement Speed for the enemy Team.
+Affix/Tooltip/Append/PayloadBoosters=

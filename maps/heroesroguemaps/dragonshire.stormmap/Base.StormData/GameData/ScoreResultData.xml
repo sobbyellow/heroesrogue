@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CScoreResultRoot id="DragonShireRoot">
+        <HeaderTable value="DragonShireHeroes"/>
+    </CScoreResultRoot>
+    <CScoreResultScore id="DragonShireHeroes">
+        <ValueTable value="DragonNumberOfDragonCaptures"/>
+        <ValueTable value="DragonShrinesCaptured"/>
+    </CScoreResultScore>
+</Catalog>

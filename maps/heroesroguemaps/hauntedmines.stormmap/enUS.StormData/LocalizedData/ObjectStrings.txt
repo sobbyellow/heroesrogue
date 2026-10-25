@@ -1,0 +1,4 @@
+﻿Light/Name/CustomLight=CustomLight
+Light/Name/EditorTestLight=Default
+Sound/EditorPrefix/LoadingMusic_OLDHauntedMines=MX_
+Sound/Name/LoadingMusic_OLDHauntedMines=LoadingMusic_OLDHauntedMines

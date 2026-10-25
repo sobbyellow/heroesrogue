@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+  
+
+  <CEffectSet id="WizardTeleportSet">
+    <EffectArray value="WizardArcaneLoopMissiles" />
+    <EffectArray value="WizardArcaneLoopOrb" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="WizardMoveSpeedApplyBehavior">
+    <Chance value="0" />
+    <WhichUnit Value="Caster" />
+    <Behavior value="WizardMoveSpeedBuff" />
+  </CEffectApplyBehavior>
+
+  <CEffectSet id="WizardTeleportCalamitySet">
+    <EffectArray value="WizardTeleportCalamityPvESearch" />
+  </CEffectSet>
+  <CEffectSet id="WizardMagicMissilesInitialSet">
+    <EffectArray value="WizardArcaneLoopOrb" />
+    <EffectArray value="WizardArcaneLoopTeleport" />
+  </CEffectSet>
+  <CEffectSet id="WizardArcaneOrbInitialSet">
+    <EffectArray value="WizardArcaneLoopMissiles" />
+    <EffectArray value="WizardArcaneLoopTeleport" />
+  </CEffectSet>
+  <CEffectSet id="WizardArcaneOrbExtraInitialSet">
+    <Chance value="0" />
+    <EffectArray value="WizardArcaneOrbLaunchMissile" />
+  </CEffectSet>
+
+  <CEffectSet id="WizardWaveOfForceSearchImpactSet">
+    <EffectArray value="WizardWaveOfForceWaveofDoomSet" />
+  </CEffectSet>
+
+  <CEffectSet id="WizardAetherWalkerSet">
+    <EffectArray value="WizardAetherWalkerInitialModifyPlayerTeleporter" />
+  </CEffectSet>
+  <CEffectSet id="WizardAetherWalkerExpirationSet">
+    <EffectArray value="WizardAetherWalkerExpirationModifyPlayer" />
+    <EffectArray value="WizardAetherWalkerExpirationModifyPlayerTeleporter" />
+  </CEffectSet>
+
+  <CEffectCreatePersistent id="WizardArcaneOrbCreatePersistent">
+    <PeriodCount value="2"/>
+    <PeriodicEffectArray value="WizardArcaneOrbExtraInitialSet"/>
+    <PeriodicPeriodArray value="0"/>
+    <PeriodicPeriodArray value="0"/>
+    <PeriodicOffsetArray value="5,-14,0"/>
+    <PeriodicOffsetArray value="-5,-14,0"/>
+  </CEffectCreatePersistent>
+
+  <CEffectEnumArea id="WizardTeleportCalamityPvESearch">
+    <Chance value="0" />
+    <ImpactLocation Value="CasterUnit" />
+    <SearchFilters value="-;Heroic,Player,Ally,Neutral,ImmuneToAOE,Missile,Item,Stasis,Dead,Hidden" />
+    <SearchFlags index="DoActorSearch" value="1" />
+    <AreaArray Effect="WizardTeleportCalamityPvEImpactSet">
+      <Radius value="2.5" />
+    </AreaArray>
+    <RevealerParams Duration="0.5" ShapeExpansion="1">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+  </CEffectEnumArea>
+  <CEffectSet id="WizardTeleportCalamityPvEImpactSet">
+    <EffectArray value="WizardTeleportCalamityPvEDamage" />
+    <EffectArray value="ApplyAbilityImpactReveal" />
+  </CEffectSet>
+  <CEffectDamage id="WizardTeleportCalamityPvEDamage" parent="StormSpell">
+    <Amount value="150" />
+    <MultiplicativeModifierArray index="0" Accumulator="WizardTalrashasElementsCasterAccumulator" />
+    <SourceButtonFace value="WizardTeleportCalamityTalent" />
+  </CEffectDamage>
+
+  <CEffectModifyTokenCount id="LiMingCriticalPowerAddToken" parent="BaseEffectModifyTokenCount">
+    <TokenId value="LiMingCriticalPowerTokenCounter" />
+    <EffectCategory index="Quest" value="1" />
+  </CEffectModifyTokenCount>
+
+  <CEffectSet id="WizardWaveOfForceWaveofDoomSet">
+    <Chance value="0" />
+    <ValidatorArray value="TargetIsHero" />
+    <EffectArray value="WizardWaveOfForceWaveofDoomApplyBehavior" />
+  </CEffectSet>
+  <CEffectApplyBehavior id="WizardWaveOfForceWaveofDoomApplyBehavior">
+    <Behavior value="LiMingWaveofDoomSpellArmor" />
+  </CEffectApplyBehavior>
+
+
+  <CEffectCreateHealer id="WizardDominanceManaHealerAffix" parent="StormManaRestore">
+    <RechargeVitalFraction value="0.3" />
+  </CEffectCreateHealer>
+
+  <CEffectModifyUnit id="WizardArcaneLoopMissiles">
+    <Cost Abil="WizardMagicMissiles,Execute" CooldownOperation="Add" CooldownTimeUse="-0.75" />
+    <Chance value="0" />
+    <ImpactUnit Value="Caster" />
+  </CEffectModifyUnit>
+  <CEffectModifyUnit id="WizardArcaneLoopOrb">
+    <Cost Abil="WizardArcaneOrb,Execute" CooldownOperation="Add" CooldownTimeUse="-0.75" />
+    <Chance value="0" />
+    <ImpactUnit Value="Caster" />
+  </CEffectModifyUnit>
+  <CEffectModifyUnit id="WizardArcaneLoopTeleport">
+    <Cost Abil="WizardTeleport,Execute" CooldownOperation="Add" CooldownTimeUse="-0.75" />
+    <Chance value="0" />
+    <ImpactUnit Value="Caster" />
+  </CEffectModifyUnit>
+
+  <CEffectModifyPlayer id="WizardAetherWalkerInitialModifyPlayerTeleporter">
+    <Chance value="0" />
+    <EffectArray Operation="Subtract" Reference="Abil,WizardTeleport,Cost[0].Charge.TimeUse" Value="2.000000" />
+  </CEffectModifyPlayer>
+  <CEffectModifyPlayer id="WizardAetherWalkerExpirationModifyPlayerTeleporter">
+    <Chance value="0" />
+    <EffectArray Reference="Abil,WizardTeleport,Cost[0].Charge.TimeUse" Value="2.000000" />
+  </CEffectModifyPlayer>
+
+  <CEffectCreatePersistent id="WizardMagicMissilesCreatePersistents">
+    <WhichLocation Value="CasterPoint" />
+    <PeriodCount value="3" />
+    <PeriodicEffectArray value="WizardMagicMissilesLeftOffsetCP2" />
+    <PeriodicEffectArray value="WizardMagicMissilesCenterOffsetCP2" />
+    <PeriodicEffectArray value="WizardMagicMissilesRightOffsetCP2" />
+    <PeriodicEffectArray value="WizardMagicMissilesMirrorballLeftOffsetCP2" />
+    <PeriodicEffectArray value="WizardMagicMissilesMirrorballRightOffsetCP2" />
+    <PeriodicEffectArray value="WizardMagicMissilesLeftOffsetCP2" />
+    <PeriodicEffectArray value="WizardMagicMissilesCenterOffsetCP2" />
+    <PeriodicEffectArray value="WizardMagicMissilesRightOffsetCP2" />
+    <PeriodicEffectArray value="WizardMagicMissilesMirrorballLeftOffsetCP2" />
+    <PeriodicEffectArray value="WizardMagicMissilesMirrorballRightOffsetCP2" />
+    <PeriodicEffectArray value="WizardMagicMissilesLeftOffsetCP2" />
+    <PeriodicEffectArray value="WizardMagicMissilesCenterOffsetCP2" />
+    <PeriodicEffectArray value="WizardMagicMissilesRightOffsetCP2" />
+    <PeriodicEffectArray value="WizardMagicMissilesMirrorballLeftOffsetCP2" />
+    <PeriodicEffectArray value="WizardMagicMissilesMirrorballRightOffsetCP2" />
+    <PeriodicOffsetArray X="3" />
+    <PeriodicOffsetArray />
+    <PeriodicOffsetArray X="-3" />
+    <PeriodicOffsetArray X="6" />
+    <PeriodicOffsetArray X="-6" />
+    <PeriodicOffsetArray X="3" />
+    <PeriodicOffsetArray />
+    <PeriodicOffsetArray X="-3" />
+    <PeriodicOffsetArray X="6" />
+    <PeriodicOffsetArray X="-6" />
+    <PeriodicOffsetArray X="3" />
+    <PeriodicOffsetArray />
+    <PeriodicOffsetArray X="-3" />
+    <PeriodicOffsetArray X="6" />
+    <PeriodicOffsetArray X="-6" />
+    <PeriodicOffsetArray X="3" />
+    <PeriodicOffsetArray />
+    <PeriodicOffsetArray X="-3" />
+    <PeriodicOffsetArray X="6" />
+    <PeriodicOffsetArray X="-6" />
+    <PeriodicPeriodArray value="0"/>
+    <PeriodicPeriodArray value="0"/>
+    <PeriodicPeriodArray value="0"/>
+    <PeriodicPeriodArray value="0"/>
+    <PeriodicPeriodArray value="0"/>
+    <PeriodicPeriodArray value="0.125"/>
+    <PeriodicPeriodArray value="0.0625"/>
+    <PeriodicPeriodArray value="0.0625"/>
+    <PeriodicPeriodArray value="0.0625"/>
+    <PeriodicPeriodArray value="0.0625"/>
+    <PeriodicPeriodArray value="0.0625"/>
+    <PeriodicPeriodArray value="0.0625"/>
+    <PeriodicPeriodArray value="0.0625"/>
+    <PeriodicPeriodArray value="0.0625"/>
+    <PeriodicPeriodArray value="0.0625"/>
+    <PeriodicPeriodArray value="0.0625"/>
+    <PeriodicPeriodArray value="0.0625"/>
+    <PeriodicPeriodArray value="0.0625"/>
+    <PeriodicPeriodArray value="0.0625"/>
+    <PeriodicPeriodArray value="0.0625"/>
+    <Marker Duration="5">
+      <MatchFlags index="Id" value="1" />
+    </Marker>
+    <FinalEffect value="WizardMagicMissilesTalrashasElementsSwitch" />
+  </CEffectCreatePersistent>
+
+
+  <CEffectCreatePersistent id="WizardMagicMissilesLeftOffsetCP2">
+    <OffsetVectorStartLocation Effect="WizardMagicMissilesLeftOffsetCP2" Value="TargetPoint" />
+    <OffsetVectorEndLocation Effect="WizardMagicMissilesInitialSet" />
+    <InitialEffect value="WizardMagicMissilesLeftLM2" />
+    <InitialOffset Y="-12" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="WizardMagicMissilesCenterOffsetCP2">
+    <OffsetVectorStartLocation Effect="WizardMagicMissilesCenterOffsetCP2" Value="TargetPoint" />
+    <OffsetVectorEndLocation Effect="WizardMagicMissilesInitialSet" />
+    <InitialEffect value="WizardMagicMissilesCenterLM2" />
+    <InitialOffset Y="-12" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="WizardMagicMissilesRightOffsetCP2">
+    <OffsetVectorStartLocation Effect="WizardMagicMissilesRightOffsetCP2" Value="TargetPoint" />
+    <OffsetVectorEndLocation Effect="WizardMagicMissilesInitialSet" />
+    <InitialEffect value="WizardMagicMissilesRightLM2" />
+    <InitialOffset Y="-12" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="WizardMagicMissilesMirrorballLeftOffsetCP2">
+    <OffsetVectorStartLocation Effect="WizardMagicMissilesMirrorballLeftOffsetCP2" Value="TargetPoint" />
+    <OffsetVectorEndLocation Effect="WizardMagicMissilesInitialSet" />
+    <InitialEffect value="WizardMagicMissilesMirrorballLeftLM2" />
+    <InitialOffset Y="-12" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="WizardMagicMissilesMirrorballRightOffsetCP2">
+    <OffsetVectorStartLocation Effect="WizardMagicMissilesMirrorballRightOffsetCP2" Value="TargetPoint" />
+    <OffsetVectorEndLocation Effect="WizardMagicMissilesInitialSet" />
+    <InitialEffect value="WizardMagicMissilesMirrorballRightLM2" />
+    <InitialOffset Y="-12" />
+  </CEffectCreatePersistent>
+  <CEffectLaunchMissile id="WizardMagicMissilesLeftLM2">
+    <LaunchLocation Effect="WizardMagicMissilesLeftOffsetCP2" Value="TargetPoint" />
+    <ImpactLocation Value="TargetPoint" />
+    <LaunchOffset Y="-1" />
+    <LaunchEffect value="WizardMagicMissilesLeftSearchSet2" />
+    <ImpactEffect value="WizardMagicMissilesLeftSearchDP2" />
+    <AmmoUnit value="WizardMagicMissilesMissileLeft" />
+  </CEffectLaunchMissile>
+  <CEffectLaunchMissile id="WizardMagicMissilesCenterLM2">
+    <LaunchLocation Effect="WizardMagicMissilesCenterOffsetCP2" Value="TargetPoint" />
+    <ImpactLocation Value="TargetPoint" />
+    <LaunchOffset Y="-1" />
+    <LaunchEffect value="WizardMagicMissilesCenterSearchSet2" />
+    <ImpactEffect value="WizardMagicMissilesCenterSearchDP2" />
+    <AmmoUnit value="WizardMagicMissilesMissile" />
+  </CEffectLaunchMissile>
+  <CEffectLaunchMissile id="WizardMagicMissilesRightLM2">
+    <LaunchLocation Effect="WizardMagicMissilesRightOffsetCP2" Value="TargetPoint" />
+    <ImpactLocation Value="TargetPoint" />
+    <LaunchOffset Y="-1" />
+    <LaunchEffect value="WizardMagicMissilesRightSearchSet2" />
+    <ImpactEffect value="WizardMagicMissilesRightSearchDP2" />
+    <AmmoUnit value="WizardMagicMissilesMissileRight" />
+  </CEffectLaunchMissile>
+  <CEffectLaunchMissile id="WizardMagicMissilesMirrorballLeftLM2">
+    <LaunchLocation Effect="WizardMagicMissilesMirrorballLeftOffsetCP2" Value="TargetPoint" />
+    <ImpactLocation Value="TargetPoint" />
+    <LaunchOffset Y="-1" />
+    <LaunchEffect value="WizardMagicMissilesMirrorballLeftSearchSet2" />
+    <ImpactEffect value="WizardMagicMissilesMirrorballLeftSearchDP2" />
+    <AmmoUnit value="WizardMagicMissilesMissileLeftTA" />
+  </CEffectLaunchMissile>
+  <CEffectLaunchMissile id="WizardMagicMissilesMirrorballRightLM2">
+    <LaunchLocation Effect="WizardMagicMissilesMirrorballRightOffsetCP2" Value="TargetPoint" />
+    <ImpactLocation Value="TargetPoint" />
+    <LaunchOffset Y="-1" />
+    <LaunchEffect value="WizardMagicMissilesMirrorballRightSearchSet2" />
+    <ImpactEffect value="WizardMagicMissilesMirrorballRightSearchDP2" />
+    <AmmoUnit value="WizardMagicMissilesMissileRightTA" />
+  </CEffectLaunchMissile>
+  <CEffectDestroyPersistent id="WizardMagicMissilesLeftSearchDP2">
+    <WhichLocation Value="SourceUnit" />
+    <Effect value="WizardMagicMissilesLeftSearchCP2" />
+    <Count value="1" />
+  </CEffectDestroyPersistent>
+  <CEffectDestroyPersistent id="WizardMagicMissilesCenterSearchDP2">
+    <WhichLocation Value="SourceUnit" />
+    <Effect value="WizardMagicMissilesCenterSearchCP2" />
+    <Count value="1" />
+  </CEffectDestroyPersistent>
+  <CEffectDestroyPersistent id="WizardMagicMissilesRightSearchDP2">
+    <WhichLocation Value="SourceUnit" />
+    <Effect value="WizardMagicMissilesRightSearchCP2" />
+    <Count value="1" />
+  </CEffectDestroyPersistent>
+  <CEffectDestroyPersistent id="WizardMagicMissilesMirrorballLeftSearchDP2">
+    <WhichLocation Value="SourceUnit" />
+    <Effect value="WizardMagicMissilesMirrorballLeftSearchCP2" />
+    <Count value="1" />
+  </CEffectDestroyPersistent>
+  <CEffectDestroyPersistent id="WizardMagicMissilesMirrorballRightSearchDP2">
+    <WhichLocation Value="SourceUnit" />
+    <Effect value="WizardMagicMissilesMirrorballRightSearchCP2" />
+    <Count value="1" />
+  </CEffectDestroyPersistent>
+  <CEffectSet id="WizardMagicMissilesRightSearchSet2">
+    <EffectArray value="WizardTeleportMagicMissilesBonusDamageBuffAetherWalkerApplyBehavior" />
+    <EffectArray value="WizardTalrashaElementsForwardStacksSet" />
+    <EffectArray value="WizardMagicMissilesRightSearchCP2" />
+  </CEffectSet>
+  <CEffectSet id="WizardMagicMissilesCenterSearchSet2">
+    <EffectArray value="WizardTeleportMagicMissilesBonusDamageBuffAetherWalkerApplyBehavior" />
+    <EffectArray value="WizardTalrashaElementsForwardStacksSet" />
+    <EffectArray value="WizardMagicMissilesCenterSearchCP2" />
+  </CEffectSet>
+  <CEffectSet id="WizardMagicMissilesLeftSearchSet2">
+    <EffectArray value="WizardTeleportMagicMissilesBonusDamageBuffAetherWalkerApplyBehavior" />
+    <EffectArray value="WizardTalrashaElementsForwardStacksSet" />
+    <EffectArray value="WizardMagicMissilesLeftSearchCP2" />
+  </CEffectSet>
+  <CEffectSet id="WizardMagicMissilesMirrorballLeftSearchSet2">
+    <EffectArray value="WizardTeleportMagicMissilesBonusDamageBuffAetherWalkerApplyBehavior" />
+    <EffectArray value="WizardTalrashaElementsForwardStacksSet" />
+    <EffectArray value="WizardMagicMissilesMirrorballLeftSearchCP2" />
+  </CEffectSet>
+  <CEffectSet id="WizardMagicMissilesMirrorballRightSearchSet2">
+    <EffectArray value="WizardTeleportMagicMissilesBonusDamageBuffAetherWalkerApplyBehavior" />
+    <EffectArray value="WizardTalrashaElementsForwardStacksSet" />
+    <EffectArray value="WizardMagicMissilesMirrorballRightSearchCP2" />
+  </CEffectSet>
+  <CEffectCreatePersistent id="WizardMagicMissilesRightSearchCP2">
+    <WhichLocation Value="SourceUnit" />
+    <Flags index="PersistUntilDestroyed" value="1" />
+    <PeriodicValidator value="SourceNotDead" />
+    <PeriodicEffectArray value="WizardMagicMissilesRightSearch2" />
+    <PeriodicPeriodArray value="0.0625" />
+    <InitialDelay value="0.1875" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="WizardMagicMissilesCenterSearchCP2">
+    <WhichLocation Value="SourceUnit" />
+    <Flags index="PersistUntilDestroyed" value="1" />
+    <PeriodicValidator value="SourceNotDead" />
+    <PeriodicEffectArray value="WizardMagicMissilesCenterSearch2" />
+    <PeriodicPeriodArray value="0.0625" />
+    <InitialDelay value="0.1875" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="WizardMagicMissilesLeftSearchCP2">
+    <WhichLocation Value="SourceUnit" />
+    <Flags index="PersistUntilDestroyed" value="1" />
+    <PeriodicValidator value="SourceNotDead" />
+    <PeriodicEffectArray value="WizardMagicMissilesLeftSearch2" />
+    <PeriodicPeriodArray value="0.0625" />
+    <InitialDelay value="0.1875" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="WizardMagicMissilesMirrorballLeftSearchCP2">
+    <WhichLocation Value="SourceUnit" />
+    <Flags index="PersistUntilDestroyed" value="1" />
+    <PeriodicValidator value="SourceNotDead" />
+    <PeriodicEffectArray value="WizardMagicMissilesMirrorballLeftSearch2" />
+    <PeriodicPeriodArray value="0.0625" />
+    <InitialDelay value="0.1875" />
+  </CEffectCreatePersistent>
+  <CEffectCreatePersistent id="WizardMagicMissilesMirrorballRightSearchCP2">
+    <WhichLocation Value="SourceUnit" />
+    <Flags index="PersistUntilDestroyed" value="1" />
+    <PeriodicValidator value="SourceNotDead" />
+    <PeriodicEffectArray value="WizardMagicMissilesMirrorballRightSearch2" />
+    <PeriodicPeriodArray value="0.0625" />
+    <InitialDelay value="0.1875" />
+  </CEffectCreatePersistent>
+  <CEffectEnumArea id="WizardMagicMissilesLeftSearch2">
+    <LaunchLocation Effect="WizardMagicMissilesLeftOffsetCP2" Value="TargetPoint" />
+    <ImpactLocation Value="SourceUnit" />
+    <SearchFilters value="-;Player,Ally,Neutral,ImmuneToSkillshots,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <SearchFlags index="DoActorSearch" value="1" />
+    <AreaArray MaxCount="1" Effect="WizardMagicMissilesImpactSet2">
+      <RectangleWidth value="0.5" />
+      <RectangleHeight value="1.6" />
+    </AreaArray>
+    <RevealerParams Duration="0.5" ShapeExpansion="1">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+  </CEffectEnumArea>
+  <CEffectEnumArea id="WizardMagicMissilesCenterSearch2">
+    <LaunchLocation Effect="WizardMagicMissilesCenterOffsetCP2" Value="OriginPoint" />
+    <ImpactLocation Value="SourceUnit" />
+    <SearchFilters value="-;Player,Ally,Neutral,ImmuneToSkillshots,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <SearchFlags index="DoActorSearch" value="1" />
+    <AreaArray MaxCount="1" Effect="WizardMagicMissilesImpactSet2">
+      <RectangleWidth value="0.5" />
+      <RectangleHeight value="1.6" />
+    </AreaArray>
+    <RevealerParams Duration="0.5" ShapeExpansion="1">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+  </CEffectEnumArea>
+  <CEffectEnumArea id="WizardMagicMissilesRightSearch2">
+    <LaunchLocation Effect="WizardMagicMissilesRightOffsetCP2" Value="TargetPoint" />
+    <ImpactLocation Value="SourceUnit" />
+    <SearchFilters value="-;Player,Ally,Neutral,ImmuneToSkillshots,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <SearchFlags index="DoActorSearch" value="1" />
+    <AreaArray MaxCount="1" Effect="WizardMagicMissilesImpactSet2">
+      <RectangleWidth value="0.5" />
+      <RectangleHeight value="1.6" />
+    </AreaArray>
+    <RevealerParams Duration="0.5" ShapeExpansion="1">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+  </CEffectEnumArea>
+  <CEffectEnumArea id="WizardMagicMissilesMirrorballLeftSearch2">
+    <LaunchLocation Effect="WizardMagicMissilesMirrorballLeftOffsetCP2" Value="TargetPoint" />
+    <ImpactLocation Value="SourceUnit" />
+    <SearchFilters value="-;Player,Ally,Neutral,ImmuneToSkillshots,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <SearchFlags index="DoActorSearch" value="1" />
+    <AreaArray MaxCount="1" Effect="WizardMagicMissilesImpactSet2">
+      <RectangleWidth value="0.5" />
+      <RectangleHeight value="1.6" />
+    </AreaArray>
+    <RevealerParams Duration="0.5" ShapeExpansion="1">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+  </CEffectEnumArea>
+  <CEffectEnumArea id="WizardMagicMissilesMirrorballRightSearch2">
+    <LaunchLocation Effect="WizardMagicMissilesMirrorballRightOffsetCP2" Value="TargetPoint" />
+    <ImpactLocation Value="SourceUnit" />
+    <SearchFilters value="-;Player,Ally,Neutral,ImmuneToSkillshots,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <SearchFlags index="DoActorSearch" value="1" />
+    <AreaArray MaxCount="1" Effect="WizardMagicMissilesImpactSet2">
+      <RectangleWidth value="0.5" />
+      <RectangleHeight value="1.6" />
+    </AreaArray>
+    <RevealerParams Duration="0.5" ShapeExpansion="1">
+      <RevealFlags index="Unfog" value="1" />
+    </RevealerParams>
+  </CEffectEnumArea>
+  <CEffectSet id="WizardMagicMissilesImpactSet2">
+    <EffectArray value="WizardForceArmorBlockApplyBehavior" />
+    <EffectArray value="WizardMagicMissilesDamageImpactSet2" />
+    <EffectArray value="WizardMagicMissilesDamageImpactSet2Structure" />
+    <EffectArray value="WizardMagicMissilesChargedBlastDebuffAB" />
+    <EffectArray value="WizardMagicMissilesSuicide" />
+  </CEffectSet>
+  <CEffectSet id="WizardMagicMissilesDamageImpactSet2">
+    <ValidatorArray value="NotStructureTarget" />
+    <EffectArray value="WizardMagicMissilesDamage2" />
+    <EffectArray value="ApplyAbilityImpactReveal" />
+  </CEffectSet>
+  <CEffectSet id="WizardMagicMissilesDamageImpactSet2Structure">
+    <ValidatorArray value="IsStructureTarget" />
+    <EffectArray value="WizardMagicMissilesDamage2Structure" />
+    <EffectArray value="ApplyAbilityImpactReveal" />
+  </CEffectSet>
+  <CEffectDamage id="WizardMagicMissilesDamage">
+    <MultiplicativeModifierArray index="LiMingPowerfulMissiles" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="WizardMagicMissilesDamage2" parent="StormSpell">
+    <Amount value="73.5" />
+    <MultiplicativeModifierArray index="LiMingPowerfulMissiles" Modifier="0" />
+    <MultiplicativeModifierArray index="0" Accumulator="WizardTalrashasElementsSourceMissileAccumulator" />
+    <MultiplicativeModifierArray index="AetherWalker" Validator="WizardSourceHasTeleportMagicMissilesBonusDamageBuffAndAetherWalkerTalent" Modifier="0.1" />
+  </CEffectDamage>
+  <CEffectDamage id="WizardMagicMissilesDamage2Structure" parent="StormSpell">
+    <Amount value="36.75" />
+    <MultiplicativeModifierArray index="LiMingPowerfulMissiles" Modifier="0" />
+    <MultiplicativeModifierArray index="0" Accumulator="WizardTalrashasElementsSourceMissileAccumulator" />
+    <MultiplicativeModifierArray index="AetherWalker" Validator="WizardSourceHasTeleportMagicMissilesBonusDamageBuffAndAetherWalkerTalent" Modifier="0.1" />
+  </CEffectDamage>
+  <CEffectDamage id="WizardArcaneOrbDamage">
+    <MultiplicativeModifierArray index="LiMingHurtfulOrbs" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="WizardArcaneOrbZeisVengeanceDamage">
+    <MultiplicativeModifierArray index="LiMingHurtfulOrbs" Modifier="0" />
+  </CEffectDamage>
+  <CEffectDamage id="WizardTeleportCalamityDamage">
+    <MultiplicativeModifierArray index="LiMingCalamitous" Modifier="0" />
+  </CEffectDamage>
+
+  <CBehaviorBuff id="LiMingGlassBehavior" parent="CarryBehaviorParent">
+    <Modification>
+      <VitalMaxFractionArray index="Life" value="-0.25" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="LiMingSelfishPowerBehavior" parent="CarryBehaviorParent">
+    <Modification>
+      <HealDealtAdditiveMultiplier index="Life" value="0.10" />
+      <HealDealtAdditiveMultiplier index="Shields" value="0.10" />
+      <DamageDealtFraction index="Ability" value="0.10" />
+    </Modification>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="WizardAetherWalker">
+    <Alignment value="Positive" />
+    <BehaviorFlags index="Permanent" value="1" />
+    <RemoveValidatorArray value="NotInCombat3" />
+    <RemoveValidatorArray value="CasterNotDead" />
+    <RemoveValidatorArray value="WizardHasAetherWalker" />
+    <FinalEffect value="WizardAetherWalkerExpirationSet" />
+  </CBehaviorBuff>
+  <CBehaviorBuff id="WizardMoveSpeedBuff">
+    <Duration value="3" />
+    <DamageResponse>
+      <UnifiedMoveSpeedFactor value="0.25" />
+    </DamageResponse>
+  </CBehaviorBuff>
+
+  <CBehaviorBuff id="LiMingStormArmor" parent="CarryBehaviorParent">
+    <Period value="1" />
+    <PeriodicEffect value="LiMingStormArmorSearch" />
+    <DisableValidatorArray value="CasterNotStasis" />
+    <DisableValidatorArray value="CasterNotDead" />
+  </CBehaviorBuff>
+
+  <CEffectEnumArea id="LiMingStormArmorSearch">
+    <SearchFilters value="Visible;Player,Ally,Benign,Neutral,Missile,Item,Stasis,Dead,Hidden,Invulnerable" />
+    <AreaArray MaxCount="1" Effect="LiMingStormArmorImpactSet">
+      <Radius value="9" />
+    </AreaArray>
+    <TargetSorts RequestCount="1" RequestPercentage="1">
+      <SortArray value="TSHeroic" />
+      <SortArray value="TSRandom" />
+    </TargetSorts>
+    <SearchFlags index="CenterAtLaunch" value="1" />
+    <SearchFlags index="OffsetAreaByAngle" value="0" />
+    <ValidatorArray value="CasterNotStasis" />
+  </CEffectEnumArea>
+  
+  <CEffectSet id="LiMingStormArmorImpactSet">
+    <EffectArray value="ApplyAbilityImpactReveal" />
+    <EffectArray value="LiMingStormArmorDamage" />
+    <EffectArray value="LiMingStormArmorPersistentRevealer" />
+  </CEffectSet>
+
+  <CEffectDamage id="LiMingStormArmorDamage" parent="StormSpell">
+    <Amount value="147" />
+  </CEffectDamage>
+  <CEffectCreatePersistent id="LiMingStormArmorPersistentRevealer">
+    <WhichLocation Value="TargetUnit" />
+    <ExpireDelay value="0.5" />
+    <RevealRadius value="0.75" />
+    <RevealFlags index="Unfog" value="1" />
+  </CEffectCreatePersistent>
+
+  <CBehaviorBuff id="LiMingCriticalPowerBehavior" parent="CarryBehaviorParent">
+    <Modification>
+      <HealDealtAdditiveMultiplier index="Life" value="0">
+        <AccumulatorArray value="LiMingCriticalPowerAccumulator" />
+      </HealDealtAdditiveMultiplier>
+      <HealDealtAdditiveMultiplier index="Shields" value="0">
+        <AccumulatorArray value="LiMingCriticalPowerAccumulator" />
+      </HealDealtAdditiveMultiplier>
+      <DamageDealtFraction index="Ability" value="0">
+        <AccumulatorArray value="LiMingCriticalPowerAccumulator" />
+      </DamageDealtFraction>
+    </Modification>
+  </CBehaviorBuff>
+  <CBehaviorTokenCounter id="LiMingCriticalPowerTokenCounter" parent="StormQuestToken">
+    <Face value="LiMingCriticalPowerTokenCounter" />
+    <Max value="15000" />
+  </CBehaviorTokenCounter>
+
+  <CBehaviorBuff id="LiMingWaveofDoomSpellArmor" parent="StormArmor">
+    <Duration value="0.5" />
+    <ArmorModification>
+      <ArmorSet index="Hero">
+        <ArmorMitigationTable index="Ability" value="-50" />
+      </ArmorSet>
+      <ArmorSet index="Merc">
+        <ArmorMitigationTable index="Ability" value="-50" />
+      </ArmorSet>
+      <ArmorSet index="Monster">
+        <ArmorMitigationTable index="Ability" value="-50" />
+      </ArmorSet>
+      <ArmorSet index="Summon">
+        <ArmorMitigationTable index="Ability" value="-50" />
+      </ArmorSet>
+      <ArmorSet index="Structure">
+        <ArmorMitigationTable index="Ability" value="-50" />
+      </ArmorSet>
+      <ArmorSet index="Minion">
+        <ArmorMitigationTable index="Ability" value="-50" />
+      </ArmorSet>
+    </ArmorModification>
+  </CBehaviorBuff>
+
+  <CAccumulatorToken id="LiMingCriticalPowerAccumulator" parent="BaseAccumulator">
+    <ApplicationRule value="Add" />
+    <TokenId value="LiMingCriticalPowerTokenCounter" />
+    <Scale value="0.015" />
+    <MaxAccumulation value="100" />
+  </CAccumulatorToken>
+
+  <CButton id="LiMingCriticalPowerTokenCounter" parent="StormButtonParent">
+    <Icon value="Assets\Textures\storm_ui_icon_wizard_criticalmass.dds" />
+  </CButton>
+
+  <CTalent id="WizardFirefliesMirrorball">
+    <Face value="WizardFireflies" />
+    <AbilityModificationArray>
+      <Modifications>
+        <Type value="StringReplacement" />
+        <Catalog value="Unit" />
+        <Entry value="WizardMagicMissilesMissileLeftTA" />
+        <Field value="Mover" />
+        <StringReplacement value="WizardMagicMissilesMissileMoverTA" />
+      </Modifications>
+      <Modifications>
+        <Type value="StringReplacement" />
+        <Catalog value="Unit" />
+        <Entry value="WizardMagicMissilesMissileRightTA" />
+        <Field value="Mover" />
+        <StringReplacement value="WizardMagicMissilesMissileMoverTA" />
+      </Modifications>
+    </AbilityModificationArray>
+    <Abil value="WizardMagicMissiles" />
+  </CTalent>
+
+  <CActorSound id="WizardTeleportCalamityImpactSound2" parent="SoundOneShot">
+    <On Terms="Effect.WizardTeleportCalamityPvESearch.Start; At Caster" Send="Create" />
+    <Host Subject="_Unit" />
+    <Sound value="Wizard_TeleportCalamity_Impact" />
+  </CActorSound>
+
+  <CActorAction id="WizardAoEShieldImpactActor2" parent="StormAoEShieldImpactBase">
+    <On Terms="Effect.WizardTeleportCalamityPvEDamage.Start" Send="Create" />
+    <On Terms="Effect.WizardTeleportCalamityPvEDamage.Start" Send="ActionDamage" />
+    <On Terms="Effect.WizardTeleportCalamityPvEDamage.Stop" Send="Destroy" />
+  </CActorAction>
+
+  <CActorSite id="LiMingStormArmorImpactSiteActive" parent="SiteCenter">
+    <On Terms="Effect.LiMingStormArmorDamage.Start; At Target" Send="Create" />
+    <On Terms="ActorCreation" Send="RefSetFromRequest ::scope.Chain1Launch LiMingStormArmorLaunchSiteActive Implicit Find" />
+    <On Terms="ActorCreation" Send="Create LiMingStormArmorImpactSound" />
+    <On Terms="ActorCreation" Send="Create LiMingStormArmorStrike" />
+  </CActorSite>
+  <CActorSound id="LiMingStormArmorImpactSound" parent="HeroAttackImpactSoundOneShot">
+    <Sound value="Falstad_Thunderstorm_Impact" />
+  </CActorSound>
+  <CActorSite id="LiMingStormArmorLaunchSiteActive" parent="SiteWeapon">
+    <On Terms="Effect.LiMingStormArmorSearch.Start" Send="Create" />
+    <Host Subject="_Unit" Scope="Caster" Actor="Find" />
+  </CActorSite>
+  <CActorBeamSimple id="LiMingStormArmorStrike">
+    <Flags index="SuppressSaveLoad" value="1" />
+    <On Terms="ActorCreation" Send="AnimBracketStart BSD Birth Stand Death ContentPlayOnce" />
+    <On Terms="AnimBracketState.*.AfterClosing; AnimName BSD" Send="Destroy" />
+    <HostLaunch Subject="::Creator" />
+    <HostImpact Subject="::scope.Chain1Launch" />
+  </CActorBeamSimple>
+  <CModel id="LiMingStormArmorStrike" parent="PersistentSpellFX">
+    <Model value="Assets\Effects\Storm_FX_Falstad_Base_LightningRod_Strike\Storm_FX_Falstad_Base_LightningRod_Strike.m3" />
+    <ScaleMax X="2.000000" Y="2.000000" Z="2.000000" />
+    <ScaleMin X="2.000000" Y="2.000000" Z="2.000000" />
+  </CModel>
+
+  <CActorAction id="WizardMagicMissilesAttackCenter2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesImpactSet2" effectLaunch="WizardMagicMissilesCenterLM2">
+    <LaunchSiteOps Ops="SOpAttachHarness SOpMoveUpBy1 SOpAttachWeapon" />
+    <Missile value="WizardMagicMissilesMissile" />
+    <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy1" />
+    <ShieldFlashType value="None" />
+    <ImpactSound value="WizardMagicMissilesImpactSound" />
+    <LaunchAssets Sound="WizardMagicMissileProjectileSound" />
+  </CActorAction>
+  <CActorAction id="WizardMagicMissilesAttackLeft2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesImpactSet2" effectLaunch="WizardMagicMissilesLeftLM2">
+    <LaunchSiteOps Ops="SOpAttachCenter SOpMoveUpBy1 SOpMoveLeftBy3" />
+    <Missile value="WizardMagicMissilesMissileLeft" />
+    <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy1" />
+    <ShieldFlashType value="None" />
+    <LaunchAssets Sound="WizardMagicMissileProjectileSound" />
+    <ImpactSound value="WizardMagicMissilesImpactSound" />
+  </CActorAction>
+  <CActorAction id="WizardMagicMissilesAttackRight2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesImpactSet2" effectLaunch="WizardMagicMissilesRightLM2">
+    <LaunchSiteOps Ops="SOpAttachCenter SOpMoveUpBy1 SOpMoveRightBy3" />
+    <Missile value="WizardMagicMissilesMissileRight" />
+    <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy1" />
+    <ShieldFlashType value="None" />
+    <LaunchAssets Sound="WizardMagicMissileProjectileSound" />
+    <ImpactSound value="WizardMagicMissilesImpactSound" />
+  </CActorAction>
+  <CActorAction id="WizardMagicMissilesAttackLeftMirrorBall2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesImpactSet2" effectLaunch="WizardMagicMissilesMirrorballLeftLM2">
+    <LaunchSiteOps Ops="SOpAttachCenter SOpMoveUpBy1 SOpMoveLeftBy3 SOpMoveLeftBy3" />
+    <Missile value="WizardMagicMissilesMissileLeftTA" />
+    <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy1" />
+    <ShieldFlashType value="None" />
+    <ImpactSound value="WizardMagicMissilesImpactSound" />
+  </CActorAction>
+  <CActorAction id="WizardMagicMissilesAttackRightMirrorBall2" parent="GenericAttackPointStorm" effectImpact="WizardMagicMissilesImpactSet2" effectLaunch="WizardMagicMissilesMirrorballRightLM2">
+    <LaunchSiteOps Ops="SOpAttachCenter SOpMoveUpBy1 SOpMoveRightBy3 SOpMoveRightBy3" />
+    <Missile value="WizardMagicMissilesMissileRightTA" />
+    <ImpactPointSiteOps Ops="SOpTargetPointStationary SOpShadow SOpMoveUpBy1" />
+    <ShieldFlashType value="None" />
+    <ImpactSound value="WizardMagicMissilesImpactSound" />
+  </CActorAction>
+  <CActorSound id="WizardMagicMissilesImpactSound2" parent="SoundOneShot">
+    <On Terms="Effect.WizardMagicMissilesDamage2.Start" Send="Create" />
+    <Host Subject="_Unit" />
+    <Sound value="Wizard_MagicMissiles_Impact" />
+  </CActorSound>
+  <CActorSound id="WizardMagicMissilesImpactSound2Structure" parent="SoundOneShot">
+    <On Terms="Effect.WizardMagicMissilesDamage2Structure.Start" Send="Create" />
+    <Host Subject="_Unit" />
+    <Sound value="Wizard_MagicMissiles_Impact" />
+  </CActorSound>
+
+
+
+</Catalog>

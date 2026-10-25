@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+  <CTerrainTex id="Storm_Braxis_1">
+    <HeightMapScale value="0.500000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_Braxis_2">
+    <HeightMapScale value="1.500000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_Braxis_3">
+    <HeightMapScale value="1.500000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_Braxis_4">
+    <HeightMapScale value="1.500000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_Braxis_5">
+    <HeightMapScale value="1.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_Braxis_6">
+    <HeightMapScale value="1.500000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_Braxis_7">
+    <HeightMapScale value="1.000000" />
+  </CTerrainTex>
+  <CTerrainTex id="Storm_Braxis_8">
+    <HeightMapScale value="1.000000" />
+  </CTerrainTex>
+</Catalog>

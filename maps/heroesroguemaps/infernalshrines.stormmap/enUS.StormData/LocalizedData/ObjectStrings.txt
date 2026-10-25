@@ -1,0 +1,5 @@
+﻿Light/Name/CustomLight=CustomLight
+Light/Name/EditorTestLight=Default
+Light/Name/StormShrines=Storm Shrines
+VoiceOver/EditorPrefix/Angel=Announcer
+VoiceOver/EditorPrefix/Demon=Announcer

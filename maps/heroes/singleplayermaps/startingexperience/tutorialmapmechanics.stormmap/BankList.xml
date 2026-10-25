@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <BankList>
+    <Bank Name="HRSave" Player="1"/>
+    <Bank Name="HRSettings" Player="1"/>
+    <Bank Name="HRAchievements" Player="1"/>
     <Bank Name="PlayerSettings" Player="1"/>
     <Bank Name="PlayerSettings" Player="2"/>
     <Bank Name="PlayerSettings" Player="3"/>

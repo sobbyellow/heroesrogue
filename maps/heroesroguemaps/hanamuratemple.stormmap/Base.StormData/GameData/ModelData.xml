@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CModel id="PayloadDoodad" parent="Doodad">
+        <Model value="Assets\Effects\Storm_FX_OWHana_Payload_Path\Storm_FX_OWHana_Payload_Path.m3"/>
+    </CModel>
+    <CModel id="HanaPath1" parent="Doodad">
+        <Model value="Assets\Effects\Storm_FX_OWHana_Payload_Path\Storm_FX_OWHana_Payload_Path_01.m3"/>
+    </CModel>
+    <CModel id="HanaPath2" parent="Doodad">
+        <Model value="Assets\Effects\Storm_FX_OWHana_Payload_Path\Storm_FX_OWHana_Payload_Path_02.m3"/>
+    </CModel>
+    <CModel id="HanaPath3" parent="Doodad">
+        <Model value="Assets\Effects\Storm_FX_OWHana_Payload_Path\Storm_FX_OWHana_Payload_Path_03.m3"/>
+    </CModel>
+</Catalog>

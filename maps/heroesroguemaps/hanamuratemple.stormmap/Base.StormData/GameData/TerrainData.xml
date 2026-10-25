@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CTerrain id="StormKingsCrestGardens">
+        <DoubleLambert value="0"/>
+    </CTerrain>
+    <CTerrain id="StormOverwatchHanamura1">
+        <BlendTextures index="1" value="StormHanamura8"/>
+        <BlendTextures index="2" value="StormHanamura2"/>
+        <BlendTextures index="3" value="StormHanamura3"/>
+        <BlendTextures index="4" value="StormHanamura4"/>
+        <BlendTextures index="5" value="StormHanamura7"/>
+        <BlendTextures index="6" value="StormHanamura9"/>
+        <BlendTextures index="7" value="StormHanamura12"/>
+        <HeightMapEnabled value="1"/>
+        <CliffSets index="0" value="StormHMCliff0"/>
+        <CliffSets index="1" value="StormHMCliff1"/>
+        <CliffSets value="StormHMCliff0"/>
+        <CliffSets value="StormHMCliff1"/>
+        <Ambience value="Amb_2D_Hanamura_EXT"/>
+        <FOWPlaneEnabled value="0"/>
+        <FogEnabled value="1"/>
+        <FogColor value="255,125,134,174"/>
+        <FogDensity value="0.275000"/>
+        <FogFalloff value="0.300000"/>
+        <FogStartingHeight value="1.000000"/>
+        <FixedSkyboxModel value=""/>
+    </CTerrain>
+    <CTerrain id="StormOverwatchHanamura2">
+        <Lighting value="StormKingsCrestALL"/>
+        <BlendTextures index="0" value="StormHanamura8"/>
+        <BlendTextures index="1" value="StormHanamura7"/>
+        <BlendTextures index="2" value="StormHanamura9"/>
+        <BlendTextures index="3" value="StormHanamura11"/>
+        <BlendTextures index="4" value="StormHanamura10"/>
+        <BlendTextures index="5" value="StormHanamura12"/>
+        <BlendTextures index="6" value="StormHanamura14"/>
+        <BlendTextures index="7" value="StormHanamura6"/>
+        <CliffSets index="0" value="StormHMCliff0"/>
+        <CliffSets index="1" value="StormHMCliff1"/>
+        <CliffSets value="StormHMCliff0"/>
+        <CliffSets value="StormHMCliff1"/>
+        <HeightMapEnabled value="1"/>
+    </CTerrain>
+    <CTerrain id="StormOverwatchHanamura3">
+        <BlendTextures index="0" value="StormHanamura5"/>
+        <BlendTextures index="1" value="StormHanamura6"/>
+        <BlendTextures index="2" value="StormHanamura2"/>
+        <BlendTextures index="3" value="StormHanamura3"/>
+        <BlendTextures index="4" value="StormHanamura4"/>
+        <BlendTextures index="5" value="StormHanamura7"/>
+        <BlendTextures index="6" value="StormHanamura8"/>
+        <BlendTextures index="7" value="StormHanamura12"/>
+        <CliffSets value="StormHMCliff0"/>
+        <CliffSets value="StormHMCliff1"/>
+        <CliffSets value="StormHMCliff0"/>
+        <CliffSets value="StormHMCliff1"/>
+        <HeightMapEnabled value="1"/>
+    </CTerrain>
+</Catalog>

@@ -23,51 +23,23 @@ void libMSOC_InitLibraries () {
 }
 
 bool libMSOC_PauseTrigger_Func(bool testConds, bool runActions) {
-
-    if (!runActions) {
-        return true;
+    if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenSandGolemInitialTimer) > 0.0) {
+        TimerPause(libMSOC_gv_mMTombSpiderQueenSandGolemInitialTimer, libGame_paused);
     }
-
-    if (!libMSOC_paused) {
-        libMSOC_paused = true;
-        if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenSandGolemInitialTimer) > 0.0) {
-            TimerPause(libMSOC_gv_mMTombSpiderQueenSandGolemInitialTimer, true);
-        }
-        if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenSandGolemDeathTimer) > 0.0) {
-            TimerPause(libMSOC_gv_mMTombSpiderQueenSandGolemDeathTimer, true);
-        }
-        if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenWaitTimer) > 0.0) {
-            TimerPause(libMSOC_gv_mMTombSpiderQueenWaitTimer, true);
-        }
-        if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenAnimationHandlerTimer) > 0.0) {
-            TimerPause(libMSOC_gv_mMTombSpiderQueenAnimationHandlerTimer, true);
-        }
-        if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenSoulEaterSummonTimer) > 0.0) {
-            TimerPause(libMSOC_gv_mMTombSpiderQueenSoulEaterSummonTimer, true);
-        }
-        if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenScalingTimer) > 0.0) {
-            TimerPause(libMSOC_gv_mMTombSpiderQueenScalingTimer, true);
-        }
-    } else {
-        libMSOC_paused = false;
-        if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenSandGolemInitialTimer) > 0.0) {
-            TimerPause(libMSOC_gv_mMTombSpiderQueenSandGolemInitialTimer, false);
-        }
-        if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenSandGolemDeathTimer) > 0.0) {
-            TimerPause(libMSOC_gv_mMTombSpiderQueenSandGolemDeathTimer, false);
-        }
-        if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenWaitTimer) > 0.0) {
-            TimerPause(libMSOC_gv_mMTombSpiderQueenWaitTimer, false);
-        }
-        if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenAnimationHandlerTimer) > 0.0) {
-            TimerPause(libMSOC_gv_mMTombSpiderQueenAnimationHandlerTimer, false);
-        }
-        if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenSoulEaterSummonTimer) > 0.0) {
-            TimerPause(libMSOC_gv_mMTombSpiderQueenSoulEaterSummonTimer, false);
-        }
-        if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenScalingTimer) > 0.0) {
-            TimerPause(libMSOC_gv_mMTombSpiderQueenScalingTimer, false);
-        }
+    if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenSandGolemDeathTimer) > 0.0) {
+        TimerPause(libMSOC_gv_mMTombSpiderQueenSandGolemDeathTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenWaitTimer) > 0.0) {
+        TimerPause(libMSOC_gv_mMTombSpiderQueenWaitTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenAnimationHandlerTimer) > 0.0) {
+        TimerPause(libMSOC_gv_mMTombSpiderQueenAnimationHandlerTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenSoulEaterSummonTimer) > 0.0) {
+        TimerPause(libMSOC_gv_mMTombSpiderQueenSoulEaterSummonTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenScalingTimer) > 0.0) {
+        TimerPause(libMSOC_gv_mMTombSpiderQueenScalingTimer, libGame_paused);
     }
 
     return true;
@@ -287,7 +259,7 @@ bool auto_libMSOC_gf_MMTombSpiderQueenUpdateSoulPing_TriggerFunc (bool testConds
                         break;
                     }
 
-                    Wait(1.0, c_timeGame);
+                    libGame_Wait(1.0, c_timeGame);
                 }
                 lv_itSoulCage = 1;
                 for ( ; ( (auto1499F44D_ai >= 0 && lv_itSoulCage <= auto1499F44D_ae) || (auto1499F44D_ai < 0 && lv_itSoulCage >= auto1499F44D_ae) ) ; lv_itSoulCage += auto1499F44D_ai ) {
@@ -301,7 +273,7 @@ bool auto_libMSOC_gf_MMTombSpiderQueenUpdateSoulPing_TriggerFunc (bool testConds
 
         }
 
-        Wait(1.0, c_timeGame);
+        libGame_Wait(1.0, c_timeGame);
     }
     return true;
 }
@@ -648,7 +620,7 @@ bool auto_libMSOC_gf_MMTombSpiderQueenSpawnSoulEaters_TriggerFunc (bool testCond
             for ( ; lv_itSoulEater <= auto82634F02_ae ; lv_itSoulEater += 1 ) {
                 libMSOC_gf_MMTombSpiderQueenUIUpdateHealthPanels(lv_itSoulEater, (TimerGetElapsed(libMSOC_gv_mMTombSpiderQueenSoulEaterSummonTimer) / libMSOC_gv_mMTombSpiderQueenSoulEaterSummonTime));
             }
-            Wait(0.0125, c_timeGame);
+            libGame_Wait(0.0125, c_timeGame);
         }
     }
     libMSOC_gf_MMTombSpiderQueenAnimationHandlerMain(libMSOC_ge_MMTombSpiderQueenAnimStates_EventStart);
@@ -695,7 +667,7 @@ void libMSOC_gf_MMTombSpiderQueenSoulEaterLifeMonitor () {
                 lv_livingSoulEaters -= 1;
             }
         }
-        Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     TriggerExecute(libMSOC_gt_MMTombSpiderQueenSoulEatersareDead, true, false);
 }
@@ -1100,7 +1072,7 @@ bool auto_libMSOC_gf_MMTombSpiderQueenSoulEaterSummoningUI_TriggerFunc (bool tes
             UnitSetPropertyFixed(lv_tempUnit, c_unitPropLifePercent, lv_current);
         }
 
-        Wait(0.125, c_timeGame);
+        libGame_Wait(0.125, c_timeGame);
         if ((TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenSoulEaterSummonTimer) == 0.0)) {
             break;
         }
@@ -1110,7 +1082,7 @@ bool auto_libMSOC_gf_MMTombSpiderQueenSoulEaterSummoningUI_TriggerFunc (bool tes
         lv_itSoulEater = 1;
         for ( ; ( (autoD67EF3B7_ai >= 0 && lv_itSoulEater <= autoD67EF3B7_ae) || (autoD67EF3B7_ai < 0 && lv_itSoulEater >= autoD67EF3B7_ae) ) ; lv_itSoulEater += autoD67EF3B7_ai ) {
             if ((UnitIsAlive(libMSOC_gv_mMTombSpiderQueenSoulEaters[lv_itSoulEater]) == false)) {
-                Wait(0.25, c_timeGame);
+                libGame_Wait(0.25, c_timeGame);
                 continue;
             }
 
@@ -1155,7 +1127,7 @@ bool auto_libMSOC_gf_MMTombSpiderQueenSoulEaterUI_TriggerFunc (bool testConds, b
         lv_itSoulEater = 1;
         for ( ; ( (auto2F54662F_ai >= 0 && lv_itSoulEater <= auto2F54662F_ae) || (auto2F54662F_ai < 0 && lv_itSoulEater >= auto2F54662F_ae) ) ; lv_itSoulEater += auto2F54662F_ai ) {
             if ((UnitIsAlive(libMSOC_gv_mMTombSpiderQueenSoulEaters[lv_itSoulEater]) == false)) {
-                Wait(0.5, c_timeGame);
+                libGame_Wait(0.5, c_timeGame);
                 continue;
             }
 
@@ -1188,7 +1160,7 @@ bool auto_libMSOC_gf_MMTombSpiderQueenSoulEaterUI_TriggerFunc (bool testConds, b
 
         }
         UnitSetPropertyFixed(lv_tempUnit, c_unitPropLife, lv_current);
-        Wait(0.5, c_timeGame);
+        libGame_Wait(0.5, c_timeGame);
         if ((lv_current == 0.0)) {
             break;
         }
@@ -1531,14 +1503,14 @@ bool libMSOC_gt_MMTombSpiderQueenGateOpen_Func (bool testConds, bool runActions)
             break;
         }
 
-        Wait(1.0, c_timeGame);
+        libGame_Wait(1.0, c_timeGame);
     }
     if ((libMSOC_gv_mMTombSpiderQueenDisableEvent == true)) {
         return true;
     }
 
     libMSOC_gf_MMTombSpiderQueenAnimationHandlerMain(libMSOC_ge_MMTombSpiderQueenAnimStates_Active);
-    Wait(4.0, c_timeGame);
+    libGame_Wait(4.0, c_timeGame);
     TriggerExecute(libMSOC_gt_MMTombSpiderQueenUIHandler, true, false);
     lv_itSoulCage = 1;
     for ( ; ( (auto1216C5EB_ai >= 0 && lv_itSoulCage <= auto1216C5EB_ae) || (auto1216C5EB_ai < 0 && lv_itSoulCage >= auto1216C5EB_ae) ) ; lv_itSoulCage += auto1216C5EB_ai ) {
@@ -1644,7 +1616,7 @@ bool libMSOC_gt_MMTombSpiderQueenSandGolemLanerSpawns_Func (bool testConds, bool
 
     TimerStart(libMSOC_gv_mMTombSpiderQueenSandGolemDeathTimer, libMSOC_gv_mMTombSpiderQueenSandGolemDeathTimerDuration_C, false, c_timeGame);
     libMSOC_gv_mMTombSpiderQueenSandGolemDeathLocation = UnitGetPosition(EventUnit());
-    Wait(6.0, c_timeGame);
+    libGame_Wait(6.0, c_timeGame);
     libCore_gf_SendActorMessageToDoodadsInRegion("Signal Close", RegionCircle(Point(124.0, 156.0), 20.0), "Storm_Doodad_LuxCrypt_ThroneRoom");
     return true;
 }
@@ -2132,7 +2104,7 @@ bool libMSOC_gt_MMTombSpiderQueenStartLightTransition_Func (bool testConds, bool
     }
 
     libGame_gf_SpecialLightingEventStart("StormSoulEaterSpawnTransition", PlayerGroupAll(), 1.0);
-    Wait(1.0, c_timeGame);
+    libGame_Wait(1.0, c_timeGame);
     libGame_gf_SpecialLightingEventStart("StormSoulEaterSpawnFinal", PlayerGroupAll(), 2.0);
     return true;
 }
@@ -2445,7 +2417,7 @@ bool libMSOC_gt_MMTombSpiderQueenSoulEatersareDead_Func (bool testConds, bool ru
         TextExpressionSetToken("Param/Expression/lib_MSOC_F74E1D56", "A", TextTimeFormat(StringToText("<min2/>:<sec2/>"), FixedToInt(TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenWaitTimer))));
         TextTagSetText(lv_waitTimerTop, TextExpressionAssemble("Param/Expression/lib_MSOC_F74E1D56"));
         libNtve_gf_SetDialogItemText(libMSOC_gv_mMTombSpiderQueenPanel.lv_theCryptsSoulEaterCooldownLabel, TextTimeFormat(StringToText("<mintotal/>:<sec2/>"), FixedToInt(TimerGetRemaining(libMSOC_gv_mMTombSpiderQueenWaitTimer))), PlayerGroupAll());
-        Wait(0.25, c_timeGame);
+        libGame_Wait(0.25, c_timeGame);
     }
     libMSOC_gf_MMTombSpiderQueenTransmissionSoulCageActivatedQ(0);
     libMSOC_gf_MMTombSpiderQueenUpdateSouls(1);
@@ -2475,7 +2447,7 @@ bool libMSOC_gt_MMTombSpiderQueenAuraStartLightTransition_Func (bool testConds, 
     }
 
     libGame_gf_SpecialLightingEventStart("StormRavenCourtCurseTransition", PlayerGroupAll(), 1.0);
-    Wait(1.0, c_timeGame);
+    libGame_Wait(1.0, c_timeGame);
     libGame_gf_SpecialLightingEventStart("StormRavenCourtCurseFinal", PlayerGroupAll(), 2.0);
     return true;
 }
@@ -2649,7 +2621,7 @@ bool libMSOC_gt_MMTombSpiderQueenUIHandler_Func (bool testConds, bool runActions
             }
             lv_lastState = lv_state;
         }
-        Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     return true;
 }
@@ -2702,7 +2674,7 @@ bool libMSOC_gt_HarrisonJonesVictory_Func (bool testConds, bool runActions) {
     }
 
     libNtve_gf_CreateActorAtPoint("HarrisonJonesVictory", UnitGetPosition(EventUnit()));
-    Wait(0.0625, c_timeGame);
+    libGame_Wait(0.0625, c_timeGame);
     libNtve_gf_SendActorMessageToGameRegion(RegionCircle(UnitGetPosition(EventUnit()), 10.0), "Signal AdventureTime");
     return true;
 }
@@ -2974,7 +2946,7 @@ bool libMSOC_gt_MMTombSpiderQueenDebugShowSoulsCollected_Func (bool testConds, b
     DialogControlHookupUnitStatus(c_triggerControlTypeImage, "HeroUnitStatusParentFrame/CarriedMechanicScoreValueFrame/ScoreValueFrame0/Image", libGame_gv_players[1].lv_heroUnit);
     while (true) {
         libNtve_gf_SetDialogItemImage(DialogControlLastCreated(), "Assets\\Textures\\ui_ingame_bas_icons_skulls.dds", PlayerGroupAll());
-        Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     return true;
 }

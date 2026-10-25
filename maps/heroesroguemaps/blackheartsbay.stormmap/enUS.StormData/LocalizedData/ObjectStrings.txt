@@ -1,0 +1,4 @@
+﻿Light/Name/CustomLight=CustomLight
+Light/Name/EditorTestLight=Default
+Sound/Name/LoadingMusic_OLDBlackhearts=LoadingMusic_OLDBlackhearts
+Validator/Name/CasterHasCannonballBehavior=Caster Has Cannonball Behavior

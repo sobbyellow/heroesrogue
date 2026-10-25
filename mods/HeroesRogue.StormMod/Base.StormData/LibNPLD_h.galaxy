@@ -1,0 +1,91 @@
+include "TriggerLibs/HeroesLib"
+
+//--------------------------------------------------------------------------------------------------
+// Library: Neutral Payload (Unified)
+//--------------------------------------------------------------------------------------------------
+// Constants
+const int libNPLD_gv_pathCountPerTeam_C = 3;
+const int libNPLD_gv_pathMaxPossibleWaypoints_C = 17;
+const string libNPLD_gv_eventID_PayloadReachedDestination_C = "Payload Reached Destination";
+const string libNPLD_gv_eventParam_UnitStopsOccupyingVehicle_Vehicle_C = "Team";
+
+// Structures
+struct libNPLD_gs_NeutralPayload {
+    unit lv_unit;
+    bool lv_payload_ActorFlipped180;
+    int lv_teamWithProgress;
+    int[libCore_gv_bALMaxTeams + 1] lv_pathIndex_Team;
+    int[libCore_gv_bALMaxTeams + 1] lv_pathWaypoints_LastWaypointReached;
+    point[libCore_gv_bALMaxTeams + 1][libNPLD_gv_pathCountPerTeam_C + 1][libNPLD_gv_pathMaxPossibleWaypoints_C + 1] lv_pathWaypoints;
+    point lv_pathWaypoints_StartLocation;
+    int[libCore_gv_bALMaxTeams + 1][libNPLD_gv_pathCountPerTeam_C + 1] lv_pathWaypoints_DestinationIndex;
+    int lv_pathDisplay_Order;
+    int lv_pathDisplay_Chaos;
+    fixed[libCore_gv_bALMaxTeams + 1][libNPLD_gv_pathCountPerTeam_C + 1] lv_totaldistance_Path;
+    bool lv_destinationReached;
+    bool lv_movingToStart;
+    bool lv_isContested;
+    int lv_destination_Team;
+    int[libCore_gv_bALMaxTeams + 1] lv_warningPathDisplay;
+    unit lv_warningUnit;
+    bool lv_completedReward;
+};
+
+struct libNPLD_gs_Hanamura {
+    int lv_payloadPanel;
+    int lv_warningTimerFrame;
+    int lv_warningTimerLabel;
+    int[libCore_gv_bALMaxTeams + 1] lv_attackingStructureFrame;
+    int[libCore_gv_bALMaxTeams + 1] lv_attackingStructureLabel;
+    int lv_payloadPanel_ActivePayloadStatus;
+    int[libCore_gv_bALMaxTeams + 1] lv_background_New;
+    int[libCore_gv_bALMaxTeams + 1] lv_progressFrame_New;
+    int[libCore_gv_bALMaxTeams + 1] lv_progressBar_New;
+    int lv_unitStatusBar_New;
+};
+
+// Variable Declarations
+libNPLD_gs_NeutralPayload libNPLD_gv_neutralPayload;
+actor[libCore_gv_bALMaxTeams + 1][3] libNPLD_gv_activePathonMap;
+fixed libNPLD_gv_preanimationRange;
+fixed[libNPLD_gv_pathCountPerTeam_C + 1][4] libNPLD_gv_pathAnimationRate;
+libNPLD_gs_Hanamura libNPLD_gv_hanamura;
+
+// Function Declarations
+void libNPLD_gf_PayloadReachedDestination (trigger t);
+void libNPLD_gf_SendInstantEventPayloadReachedDestination (int lp_playerThatEnteredVehicle);
+int libNPLD_gf_UnitStopsOccupyingVehicleVehicle ();
+void libNPLD_gf_CreateNeutralPayload ();
+void libNPLD_gf_Payload_MoveToTeamDestination (int lp_team);
+void libNPLD_gf_Payload_ReachesDestination (int lp_team);
+void libNPLD_gf_FlipPayload ();
+void libNPLD_gf_CalculatePayloadPathDistances ();
+fixed libNPLD_gf_CalculatePayloadTravelDistancetoDestination (int lp_team, int lp_pathIndex);
+fixed libNPLD_gf_PayloadCurrentDistance ();
+void libNPLD_gf_SetNewPayloadPathForTeam (int lp_team);
+void libNPLD_gf_InitializePathAnimationRates ();
+bool libNPLD_gf_PayloadNearElevator ();
+void libNPLD_gf_ShowActivePayloadPathonMinimap ();
+void libNPLD_gf_PayloadPathsCreateandStartBaseAnimations ();
+void libNPLD_gf_PayloadPathsSetProgressTeamandAnimations ();
+void libNPLD_gf_PayloadPathsDestroyActivePaths ();
+void libNPLD_gf_PayloadPathsUpdateAnimationSpeed ();
+void libNPLD_gf_PayloadPathsCrossingCenterNudgeAnimations (int lp_teamID);
+void libNPLD_gf_ShowPayloadPath_Warning ();
+void libNPLD_gf_DestroyPayloadWarningPath ();
+void libNPLD_gf_MapMechanicUIInit (int lp_parentPanel);
+
+// Trigger Declarations
+trigger libNPLD_gt_InitPayloadPaths;
+trigger libNPLD_gt_Payload_OrderMonitor_Enabled;
+trigger libNPLD_gt_Payload_ChaosMonitor_Enabled;
+trigger libNPLD_gt_Payload_ContestedMonitor_Enabled;
+trigger libNPLD_gt_Payload_ContestedMonitor_Disabled;
+trigger libNPLD_gt_Payload_UnattendedMonitor_Enabled;
+trigger libNPLD_gt_PlayerCreatesTurretFromMapMechanicAbility;
+trigger libNPLD_gt_Payload_GainsTurret;
+trigger libNPLD_gt_InitializeUI;
+
+// Library Initialization
+void libNPLD_InitVariables ();
+

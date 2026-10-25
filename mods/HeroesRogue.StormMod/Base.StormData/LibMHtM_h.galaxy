@@ -181,9 +181,10 @@ trigger libMHtM_gt_MMHMEOMIncrementSkullCount;
 
 bool libMHTM_PauseTrigger_Func(bool testConds, bool runActions);
 
-bool libMHTM_paused = false;
 bool libMHtM_gv_mMUnderworldMineTimer_Paused = false;
-timer libMHTM_lv_summonTimer;
+
+timer libMHTM_summonTimer;
+
 int libMHtM_startingSkullsOrder = 0;
 int libMHtM_startingSkullsChaos = 0;
 

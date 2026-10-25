@@ -20,46 +20,15 @@ void libBBAY_InitLibraries () {
     libSond_InitVariables();
 }
 
-
-void libBBAY_Wait(fixed duration, int inTimeType) {
-    fixed elapsed = 0.0;
-    while (elapsed < duration) {
-        if (libBBAY_paused) {
-            Wait(0.0625, inTimeType);
-        } else {
-            Wait(0.0625, inTimeType);
-            elapsed += 0.0625;
-        }
-    }
-}
-
 bool libBBAY_PauseTrigger_Func(bool testConds, bool runActions) {
-
-    if (!runActions) {
-        return true;
+    if (TimerGetRemaining(libBBAY_gv_mMBBCannonballsTreasureChestTimer) > 0.0) {
+        TimerPause(libBBAY_gv_mMBBCannonballsTreasureChestTimer, libGame_paused);
     }
-    if (!libBBAY_paused) {
-        libBBAY_paused = true;
-        if (TimerGetRemaining(libBBAY_gv_mMBBCannonballsTreasureChestTimer) > 0.0) {
-            TimerPause(libBBAY_gv_mMBBCannonballsTreasureChestTimer, true);
-        }
-        if (TimerGetRemaining(libBBAY_gv_mMBBCannonballsTreasureChestPingTimer) > 0.0) {
-            TimerPause(libBBAY_gv_mMBBCannonballsTreasureChestPingTimer, true);
-        }
-        if (TimerGetRemaining(libBBAY_gv_mMBBMapMechanicsBlackheartsBayChestsSpawnedFrameTimer) > 0.0) {
-            TimerPause(libBBAY_gv_mMBBMapMechanicsBlackheartsBayChestsSpawnedFrameTimer, true);
-        }
-    } else {
-        libBBAY_paused = false;
-        if (TimerGetRemaining(libBBAY_gv_mMBBCannonballsTreasureChestTimer) > 0.0) {
-            TimerPause(libBBAY_gv_mMBBCannonballsTreasureChestTimer, false);
-        }
-        if (TimerGetRemaining(libBBAY_gv_mMBBCannonballsTreasureChestPingTimer) > 0.0) {
-            TimerPause(libBBAY_gv_mMBBCannonballsTreasureChestPingTimer, false);
-        }
-        if (TimerGetRemaining(libBBAY_gv_mMBBMapMechanicsBlackheartsBayChestsSpawnedFrameTimer) > 0.0) {
-            TimerPause(libBBAY_gv_mMBBMapMechanicsBlackheartsBayChestsSpawnedFrameTimer, false);
-        }
+    if (TimerGetRemaining(libBBAY_gv_mMBBCannonballsTreasureChestPingTimer) > 0.0) {
+        TimerPause(libBBAY_gv_mMBBCannonballsTreasureChestPingTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libBBAY_gv_mMBBMapMechanicsBlackheartsBayChestsSpawnedFrameTimer) > 0.0) {
+        TimerPause(libBBAY_gv_mMBBMapMechanicsBlackheartsBayChestsSpawnedFrameTimer, libGame_paused);
     }
 
     return true;
@@ -291,7 +260,7 @@ void libBBAY_gf_MMBBCannonballsGhostShipWakeUp (int lp_team, bool lp_new) {
     TriggerExecute(libBBAY_gt_MMBBCannonballsShootingStart, true, false);
     libBBAY_gf_MMBBCannonballsBattleshipBehavior();
     TimerPause(libBBAY_gv_mMBBCannonballsTreasureChestTimer, true);
-    libBBAY_Wait(5.0, c_timeGame);
+    libGame_Wait(5.0, c_timeGame);
     libBBAY_gv_mMBBCannonballsBallsSubmitted[lv_shipTeam] = (libBBAY_gv_mMBBCannonballsBallsSubmitted[lv_shipTeam] - libBBAY_gf_MMBBCannonballsPirateShipCost(lv_shipTeam));
     libBBAY_gv_mMBBCannonballsGhostShipLastTeam = lv_shipTeam;
 }
@@ -303,7 +272,7 @@ void libBBAY_gf_MMBBCannonballsDisableBeacon () {
     UnitBehaviorRemove(libBBAY_gv_mMBBCannonballsGhostShipBeacon, "MacguffinActivated", 1);
     UnitBehaviorRemove(libBBAY_gv_mMBBCannonballsGhostShipCaptain, "MacguffinActivated", 1);
     libNtve_gf_SendActorMessageToGameRegion(libBBAY_gv_mMBBCannonballsGhostShipPlayerDetectorRegion, "Signal ReturnToShip");
-    libBBAY_Wait(3.25, c_timeGame);
+    libGame_Wait(3.25, c_timeGame);
     libNtve_gf_SendActorMessageToUnit(libBBAY_gv_mMBBCannonballsGhostShip, "AnimBracketStart Cover Stand,Cover,Start Stand,Cover Stand,Cover,End 0 1.000000 AsTimeScale");
     libNtve_gf_ShowHideUnit(libBBAY_gv_mMBBCannonballsGhostShipBeacon, false);
     libNtve_gf_ShowHideUnit(libBBAY_gv_mMBBCannonballsGhostShipCaptain, false);
@@ -368,7 +337,7 @@ bool auto_libBBAY_gf_MMBBCannonballsBattleshipBehavior_TriggerFunc (bool testCon
         libBBAY_gv_mMBB_CannonTargetPoint[lv_itCannonTarget] = null;
     }
     libBBAY_gv_mMBB_CannonsFired = 0;
-    libBBAY_Wait(3.0, c_timeGame);
+    libGame_Wait(3.0, c_timeGame);
     while (true) {
         if (((libGame_gv_gameOver == true) || (UnitIsAlive(libBBAY_gv_mMBBCannonballsGhostShip) == false) || (libBBAY_gv_mMBBCannonballsGhostShipTotalAmmo <= 0))) {
             return true;
@@ -418,7 +387,7 @@ bool auto_libBBAY_gf_MMBBCannonballsBattleshipBehavior_TriggerFunc (bool testCon
                                 break;
                             }
 
-                            libBBAY_Wait(0.125, c_timeGame);
+                            libGame_Wait(0.125, c_timeGame);
                         }
                     }
 
@@ -437,11 +406,11 @@ bool auto_libBBAY_gf_MMBBCannonballsBattleshipBehavior_TriggerFunc (bool testCon
                     lv_needNewTarget = true;
                 }
 
-                libBBAY_Wait(0.75, c_timeGame);
+                libGame_Wait(0.75, c_timeGame);
             }
         }
         while (!((libBBAY_gv_mMBBCannonballsGhostShipShooting == false))) {
-            libBBAY_Wait(0.125, c_timeGame);
+            libGame_Wait(0.125, c_timeGame);
         }
         if ((libBBAY_gv_mMBBCannonballsGhostShipTotalAmmo >= 3)) {
             lv_shotsLeftInBarrage = 3;
@@ -453,20 +422,20 @@ bool auto_libBBAY_gf_MMBBCannonballsBattleshipBehavior_TriggerFunc (bool testCon
             lv_nextTeam = lv_shipTeam;
             for (autoCE524D93_i = 1; autoCE524D93_i <= autoCE524D93_n; autoCE524D93_i += 1) {
                 if ((libBBAY_gf_MMBBCannonballsTeamCannonballsCount(lv_nextTeam) >= libBBAY_gf_MMBBCannonballsPirateShipCost(lv_nextTeam))) {
-                    libBBAY_Wait(5.0, c_timeGame);
+                    libGame_Wait(5.0, c_timeGame);
                     libBBAY_gf_MMBBCannonballsGhostShipWakeUp(lv_nextTeam, true);
                     return true;
                 }
 
                 lv_nextTeam = lv_enemyTeam;
             }
-            libBBAY_Wait(2.0, c_timeGame);
+            libGame_Wait(2.0, c_timeGame);
             libBBAY_gf_MMBBCannonballsTransmissionLeavingQ(PlayerGroupAll());
-            libBBAY_Wait(2.0, c_timeGame);
+            libGame_Wait(2.0, c_timeGame);
             TriggerEnable(libBBAY_gt_MMBBCannonballsBattleshipShootingMissileCreated, false);
             libNtve_gf_SendActorMessageToUnit(libBBAY_gv_mMBBCannonballsGhostShip, "AnimClear Attack");
             libNtve_gf_SendActorMessageToUnit(libBBAY_gv_mMBBCannonballsGhostShip, "AnimBracketStop Cover 0 1.000000 AsTimeScale");
-            libBBAY_Wait(4.0, c_timeGame);
+            libGame_Wait(4.0, c_timeGame);
             UnitSetOwner(libBBAY_gv_mMBBCannonballsGhostShip, libCore_gv_cOMPUTER_Neutral, true);
             UnitIssueOrder(libBBAY_gv_mMBBCannonballsGhostShip, OrderTargetingPoint(AbilityCommand("move", 4), PointWithOffsetPolar(UnitGetPosition(libBBAY_gv_mMBBCannonballsGhostShip), 5.0, lv_preferedFacing)), c_orderQueueReplace);
             UnitSetOwner(libBBAY_gv_mMBBCannonballsGhostShipBeacon, libCore_gv_cOMPUTER_Neutral, true);
@@ -485,7 +454,7 @@ bool auto_libBBAY_gf_MMBBCannonballsBattleshipBehavior_TriggerFunc (bool testCon
             return true;
         }
 
-        libBBAY_Wait(6.0, c_timeGame);
+        libGame_Wait(6.0, c_timeGame);
     }
     return true;
 }
@@ -649,7 +618,7 @@ bool auto_libBBAY_gf_MMBBCannonballsBattleshipShooting_TriggerFunc (bool testCon
     }
 
     while (!((libBBAY_gv_mMBBCannonballsGhostShipShooting == false))) {
-        libBBAY_Wait(0.125, c_timeGame);
+        libGame_Wait(0.125, c_timeGame);
     }
     libBBAY_gv_mMBBCannonballsGhostShipShooting = true;
     if ((PointGetY(UnitGetPosition(libBBAY_gv_mMBBCannonballsGhostShip)) <= PointGetY(UnitGetPosition(lp_target)))) {
@@ -658,11 +627,11 @@ bool auto_libBBAY_gf_MMBBCannonballsBattleshipShooting_TriggerFunc (bool testCon
     else {
         UnitIssueOrder(libBBAY_gv_mMBBCannonballsGhostShip, OrderTargetingUnit(AbilityCommand("GhostShipBombardChargedStarboard", 0), lp_target), c_orderQueueReplace);
     }
-    libBBAY_Wait(0.75, c_timeGame);
+    libGame_Wait(0.75, c_timeGame);
     libBBAY_gv_mMBBCannonballsGhostShipShooting = false;
-    libBBAY_Wait(1.25, c_timeGame);
+    libGame_Wait(1.25, c_timeGame);
     SoundPlayForPlayer(SoundLink("Event_GhostShip_Cannon_Fire_Distant", -1), c_maxPlayers, PlayerGroupAll(), 100.0, 0.0);
-    libBBAY_Wait(2.0, c_timeGame);
+    libGame_Wait(2.0, c_timeGame);
     libBBAY_gv_mMBBCannonballsGhostShipMissileTargetPing = c_invalidPingId;
     return true;
 }
@@ -799,7 +768,7 @@ void libBBAY_gf_MMBBMapMechanicsBlackheartsBayShowChestsSpawnedFrame () {
     }
 
     while (!((TimerGetRemaining(libBBAY_gv_mMBBMapMechanicsBlackheartsBayChestsSpawnedFrameTimer) <= 0.0))) {
-        libBBAY_Wait(1.0, c_timeGame);
+        libGame_Wait(1.0, c_timeGame);
     }
     DialogControlSetVisible(libUIUI_gv_mapMechanicsPanel.lv_blackheartsBayChestSpawnFrame, PlayerGroupAll(), false);
 }
@@ -1364,7 +1333,7 @@ bool libBBAY_gt_MMBBCannonballsHeroDies_Func (bool testConds, bool runActions) {
     }
 
     lv_spawnLocation = libGame_gf_HeroKilledLocation();
-    libBBAY_Wait(0.25, c_timeGame);
+    libGame_Wait(0.25, c_timeGame);
     autoF1EB5C79_n = (lv_count / 2);
     for (autoF1EB5C79_i = 1; autoF1EB5C79_i <= autoF1EB5C79_n; autoF1EB5C79_i += 1) {
         PlayerCreateEffectPoint(libCore_gv_cOMPUTER_Neutral, "DropCannonballsPersistent", lv_spawnLocation);
@@ -1462,23 +1431,23 @@ bool libBBAY_gt_MMBBCannonballsEventStart_Func (bool testConds, bool runActions)
     }
 
     libBBAY_gf_MMBBMapMechanicsBlackheartsBayShowHidePanel(true);
-    libBBAY_Wait((libBBAY_gv_mMBBCannonballsGhostShipSpawnTimer - 4.0), c_timeGame);
+    libGame_Wait((libBBAY_gv_mMBBCannonballsGhostShipSpawnTimer - 4.0), c_timeGame);
     if ((libMapM_gv_mMMapMechanicDisabled == true)) {
         return true;
     }
 
     SoundPlayForPlayer(SoundLink("Doodad_GhostShip_Horn", -1), c_maxPlayers, PlayerGroupAll(), 100.0, 0.0);
-    libBBAY_Wait(4.0, c_timeGame);
+    libGame_Wait(4.0, c_timeGame);
     TriggerEnable(TriggerGetCurrent(), false);
     libBBAY_gf_MMBBCannonballsTransmissionSpawningQ(PlayerGroupAll());
     libNtve_gf_CreateUnitsAtPoint2(1, "JungleBattleship", c_unitCreateIgnorePlacement, libCore_gv_cOMPUTER_Neutral, libBBAY_gv_mMBBCannonballsGhostShipLoc, null);
     libBBAY_gv_mMBBCannonballsGhostShip = UnitLastCreated();
     UnitSetState(libBBAY_gv_mMBBCannonballsGhostShip, c_unitStateHighlightable, false);
-    libBBAY_Wait(4.0, c_timeGame);
+    libGame_Wait(4.0, c_timeGame);
     UnitCreate(1, "DocksPirateCaptain", c_unitCreateIgnorePlacement, libCore_gv_cOMPUTER_Neutral, PointWithOffset(libBBAY_gv_mMBBCannonballsGhostShipBeaconLoc, -0.85, 1.0), PointGetFacing(libBBAY_gv_mMBBCannonballsGhostShipBeaconLoc), null);
     libBBAY_gv_mMBBCannonballsGhostShipCaptain = UnitLastCreated();
     libBBAY_gf_MMBBEnableDisableBlackheartInteractGoals(true, UnitLastCreated());
-    libBBAY_Wait(1.0, c_timeGame);
+    libGame_Wait(1.0, c_timeGame);
     UnitCreate(1, "GhostShipBeacon", c_unitCreateIgnorePlacement, libCore_gv_cOMPUTER_Neutral, PointWithOffset(libBBAY_gv_mMBBCannonballsGhostShipBeaconLoc, 0.75, -0.25), PointGetFacing(libBBAY_gv_mMBBCannonballsGhostShipBeaconLoc), null);
     libBBAY_gv_mMBBCannonballsGhostShipBeacon = UnitLastCreated();
     UnitBehaviorAdd(libBBAY_gv_mMBBCannonballsGhostShipCaptain, "MacguffinActivated", libBBAY_gv_mMBBCannonballsGhostShipCaptain, 1);
@@ -1487,7 +1456,7 @@ bool libBBAY_gt_MMBBCannonballsEventStart_Func (bool testConds, bool runActions)
     ActorCreate(ActorScopeFromUnit(libBBAY_gv_mMBBCannonballsGhostShip), "UI_Game_Ping_GhostShip_Ready", null, null, null);
     libBBAY_gv_mMBBCannonballsGhostShipPlayerDetectorRegion = RegionCircle(UnitGetPosition(libBBAY_gv_mMBBCannonballsGhostShipBeacon), 10.0);
     TriggerExecute(libBBAY_gt_MMBBCannonballsObjectiveUIHandler, true, false);
-    libBBAY_Wait(2.0, c_timeGame);
+    libGame_Wait(2.0, c_timeGame);
     libUIUI_gf_AttachHelpButtonToUnit(libBBAY_gv_mMBBCannonballsGhostShipBeacon, libMapM_gt_MMHelpbuttonClicked, StringExternal("Param/Value/lib_BBAY_77B41D1D"), 70, 275);
     auto4072345A_g = libCore_gv_playerGroupFromPlayer[libCore_gv_oBSERVER_ObserverUIPlayer];
     lv_itPlayer = -1;
@@ -1651,7 +1620,7 @@ bool libBBAY_gt_MMBBCannonballsBallsHandedIn_Func (bool testConds, bool runActio
         libGame_gf_SendEventMapObjectiveCapturedByUnit(lv_handInHeroUnit);
     }
 
-    libBBAY_Wait(0.0625, c_timeGame);
+    libGame_Wait(0.0625, c_timeGame);
     libBBAY_gf_MMBBUpdateHeldDoubloonDisplay();
     return true;
 }
@@ -1721,7 +1690,7 @@ bool libBBAY_gt_MMBBCannonballsOpenChestUponRespawn_Func (bool testConds, bool r
         return true;
     }
 
-    libBBAY_Wait(3.0, c_timeGame);
+    libGame_Wait(3.0, c_timeGame);
     libNtve_gf_SendActorMessageToGameRegion(libBBAY_gv_mMBBCannonballsGhostShipPlayerDetectorRegion, "Signal OpenChest");
     return true;
 }
@@ -1777,7 +1746,7 @@ bool libBBAY_gt_MMBBCannonballsBattleshipShootingMissileCreated_Func (bool testC
     lv_pingBall = PingLastCreated();
     PingSetScale(PingLastCreated(), 0.08);
     PingSetUnit(PingLastCreated(), lv_missile);
-    libBBAY_Wait(0.125, c_timeGame);
+    libGame_Wait(0.125, c_timeGame);
     SoundPlayOnUnitForPlayer(SoundLink("Event_GhostShip_CannonBall_Loop", -1), c_maxPlayers, PlayerGroupAll(), lv_missile, 0.0, 100.0, 0.0);
     lv_ballLoopingSound = SoundLastPlayed();
     while (true) {
@@ -1810,7 +1779,7 @@ bool libBBAY_gt_MMBBCannonballsBattleshipShootingMissileCreated_Func (bool testC
         }
 
         lv_missilePosition = UnitGetPosition(lv_missile);
-        libBBAY_Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     return true;
 }
@@ -1877,7 +1846,7 @@ bool libBBAY_gt_MMBBKeepOrFortGetsTakenOver_Func (bool testConds, bool runAction
     }
 
     while (!(((UnitIsAlive(lv_fortBuilding) == false) || (UnitHasBehavior2(lv_fortBuilding, "RagnarosMoltenCoreStructureStasis") == true)))) {
-        libBBAY_Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     if ((UnitIsAlive(lv_fortBuilding) == false)) {
         return true;
@@ -1887,7 +1856,7 @@ bool libBBAY_gt_MMBBKeepOrFortGetsTakenOver_Func (bool testConds, bool runAction
     libCore_gf_StoreUnitForUnit(lv_fortBuilding, 99, lv_bigRag);
     libCore_gf_StoreUnitForUnit(lv_bigRag, 99, lv_fortBuilding);
     while (!((UnitHasBehavior2(lv_fortBuilding, "RagnarosMoltenCoreStructureStasis") == false))) {
-        libBBAY_Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     libCore_gf_StoreUnitForUnit(lv_fortBuilding, 99, lv_noUnit);
     libCore_gf_StoreUnitForUnit(lv_bigRag, 99, lv_noUnit);
@@ -2211,7 +2180,7 @@ bool libBBAY_gt_MMBBCannonballsObjectiveUIHandler_Func (bool testConds, bool run
             lv_lastState = lv_state;
         }
         libBBAY_gf_MMBBCannonballsObjectiveUIUpdateText();
-        libBBAY_Wait(0.5, c_timeGame);
+        libGame_Wait(0.5, c_timeGame);
     }
     return true;
 }
@@ -2264,7 +2233,7 @@ bool libBBAY_gt_MMBBCannonballsDoubloonDropped_Func (bool testConds, bool runAct
             }
 
         }
-        libBBAY_Wait(0.0625, c_timeGame);
+        libGame_Wait(0.0625, c_timeGame);
     }
     return true;
 }

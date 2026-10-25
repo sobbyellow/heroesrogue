@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CUnit id="XelNagaWatchTower">
+        <Sight value="13"/>
+    </CUnit>
+    <CUnit id="HeroChenFire">
+        <BehaviorArray Link="DisableMacGuffinAbility"/>
+    </CUnit>
+    <CUnit id="HeroChenEarth">
+        <BehaviorArray Link="DisableMacGuffinAbility"/>
+    </CUnit>
+    <CUnit id="HeroChenStorm">
+        <BehaviorArray Link="DisableMacGuffinAbility"/>
+    </CUnit>
+</Catalog>

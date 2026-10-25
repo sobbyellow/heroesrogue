@@ -141,11 +141,8 @@ trigger libBBAY_gt_MMBBCannonballsGameOver;
 trigger libBBAY_gt_MMBB_DebugCannonballsEventStart;
 trigger libBBAY_gt_MMBB_DebugTriggerBombard;
 
-void libBBAY_Wait(fixed duration, int inTimeType);
 bool libBBAY_PauseTrigger_Func(bool testConds, bool runActions);
 bool libBBAY_ApplyBlackheartsHoard (bool testConds, bool runActions);
-
-bool libBBAY_paused;
 
 bool libBBAY_preventCoinDrop_teamChaos = false;
 bool libBBAY_preventCoinDrop_teamOrder = false;

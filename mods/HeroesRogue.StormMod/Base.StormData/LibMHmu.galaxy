@@ -1,0 +1,2162 @@
+include "TriggerLibs/NativeLib"
+include "TriggerLibs/HeroesLib"
+include "TriggerLibs/GameLib"
+include "TriggerLibs/MapMechanicsLib"
+include "TriggerLibs/AILib"
+include "TriggerLibs/UILib"
+include "TriggerLibs/SoundLib"
+include "LibOVER"
+include "LibNPLD_h"
+
+include "LibMHmu_h"
+
+//--------------------------------------------------------------------------------------------------
+// Library: Hanamura
+//--------------------------------------------------------------------------------------------------
+// External Library Initialization
+void libMHmu_InitLibraries () {
+    libNtve_InitVariables();
+    libCore_InitVariables();
+    libGame_InitVariables();
+    libMapM_InitVariables();
+    libAIAI_InitVariables();
+    libUIUI_InitVariables();
+    libSond_InitVariables();
+    libOVER_InitVariables();
+    libNPLD_InitVariables();
+}
+
+bool libMHMU_PauseTrigger_Func(bool testConds, bool runActions) {
+    int i;
+    if (TimerGetRemaining(libMHmu_gv_hanamura.lv_mapMechanic_ObjectivePreviewTimer) > 0.0) {
+        TimerPause(libMHmu_gv_hanamura.lv_mapMechanic_ObjectivePreviewTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMHmu_gv_hanamura.lv_mapMechanic_ObjectivePreviewDelay) > 0.0) {
+        TimerPause(libMHmu_gv_hanamura.lv_mapMechanic_ObjectivePreviewDelay, libGame_paused);
+    }
+    if (TimerGetRemaining(libMHmu_gv_hanamuraMM10secondcountdownTimer) > 0.0) {
+        TimerPause(libMHmu_gv_hanamuraMM10secondcountdownTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMHmu_gv_elevator_Forced_Lower_Timer) > 0.0) {
+        TimerPause(libMHmu_gv_elevator_Forced_Lower_Timer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMHmu_gv_elevator.lv_elevatorInitialRaiseTimer) > 0.0) {
+        TimerPause(libMHmu_gv_elevator.lv_elevatorInitialRaiseTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMHmu_gv_elevator.lv_elevatorRaiseTimer) > 0.0) {
+        TimerPause(libMHmu_gv_elevator.lv_elevatorRaiseTimer, libGame_paused);
+    }
+    if (TimerGetRemaining(libMHmu_gv_elevator.lv_elevatorLowerTimer) > 0.0) {
+        TimerPause(libMHmu_gv_elevator.lv_elevatorLowerTimer, libGame_paused);
+    }
+    for (i = 0; i <= libCore_gv_bALMaxPlayers; i += 1) {
+        if (TimerGetRemaining(libMHmu_gv_eOMPusherTimer[i]) > 0.0) {
+            TimerPause(libMHmu_gv_eOMPusherTimer[i], libGame_paused);
+        }
+    }
+
+    return true;
+}
+
+// Variable Initialization
+bool libMHmu_InitVariables_completed = false;
+
+void libMHmu_InitVariables () {
+    int init_i;
+
+    if (libMHmu_InitVariables_completed) {
+        return;
+    }
+
+    libMHmu_InitVariables_completed = true;
+
+    libMHmu_gv_mapMechanic_WarningTimer_Duration = 30;
+    libMHmu_gv_hanamura.lv_mapMechanic_ObjectivePreviewTimer = TimerCreate();
+    libMHmu_gv_hanamura.lv_mapMechanic_ObjectivePreviewDelay = TimerCreate();
+    libMHmu_gv_hanamuraMM10secondcountdownTimer = TimerCreate();
+    libMHmu_gv_hanamuraUseVisionCamps = true;
+    libMHmu_gv_elevator_Forced_Lower_Timer = TimerCreate();
+    libMHmu_gv_elevator.lv_elevatorInitialRaiseTimer = TimerCreate();
+    libMHmu_gv_elevator.lv_elevatorRaiseTimer = TimerCreate();
+    libMHmu_gv_elevator.lv_elevatorLowerTimer = TimerCreate();
+    libMHmu_gv_elevator.lv_elevatorWasLowered = true;
+    libMHmu_gv_elevator.lv_elevatorLowerTime = 5.5;
+    for (init_i = 0; init_i <= libCore_gv_bALMaxPlayers; init_i += 1) {
+        libMHmu_gv_eOMPusherTimer[init_i] = TimerCreate();
+    }
+}
+
+// Functions
+void libMHmu_gf_InitSwordsmanMercCampBruiserCamp1 () {
+    // Variable Declarations
+    int lv_campType;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_campType = (libMapM_ge_JungleCampMercTypes_BruiserCamp1);
+
+    // Implementation
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_campTypeMinimapTitleLabel = StringExternal("Param/Value/lib_MHmu_266EF322");
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_campTypeMinimapLabel = StringExternal("Param/Value/lib_MHmu_C76BE77C");
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_campIsElite = true;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_aIGoalLink = "MercenaryCampSentinel";
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_customTextTagInfoText = StringExternal("Param/Value/lib_MHmu_8EDE85AD");
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_customTextTagTitle = StringExternal("Param/Value/lib_MHmu_A37682C3");
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_campIsSoloable = true;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_initialSpawnDelay = 30.0;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_respawnTime = 150.0;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_numberOfCreeps = 1;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_creepUnitTypes[1] = "MercDefenderSentinel";
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_defendersCoweronDeath = true;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_defenderCoweringUnit[1] = true;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_xPAwardForCapture = libMHmu_gv_swordsmanCampXPValue;
+    libMapM_gv_dataJungleCampMercData[lv_campType].lv_numberOfMinionsSpawned = 1;
+    libMapM_gv_dataJungleCampMercData[lv_campType].lv_spawnedMinionUnitTypes[1] = "MercLanerSentinel";
+    libMapM_gf_DataInitializeScalingDataForDefender(libMapM_ge_JungleCampDefenderTypes_BruiserCamp1, ("MercenaryDefenderSwordsmanScaling"));
+    libMapM_gf_DataInitializeScalingDataForMerc(libMapM_ge_JungleCampMercTypes_BruiserCamp1, "MercenaryLanerSwordsmanScaling");
+    libUIUI_gf_PingCreateNewPingTarget("MercDefenderSentinel", false, StringExternal("Param/Value/lib_MHmu_0A42BC84"), StringExternal("Param/Value/lib_MHmu_F6154CDF"), StringExternal("Param/Value/lib_MHmu_BBDCD033"), SoundLink("UI_Game_Ping_Attack", -1), SoundLink("UI_Game_Ping_Attack", -1));
+    libUIUI_gf_PingSetHumanAISourceHeroVOForPingTarget(libUIUI_gf_PingLastCreatedPingTarget(), libCore_ge_HeroVOEvents_PingAttackMercCamp, libCore_ge_HeroVOEvents_AIMercCapture);
+    libUIUI_gf_PingCreateNewPingTarget("MercLanerSentinel", false, StringExternal("Param/Value/lib_MHmu_E6866234"), StringExternal("Param/Value/lib_MHmu_0A114711"), StringExternal("Param/Value/lib_MHmu_6CC3159A"), SoundLink("UI_Game_Ping_Attack", -1), SoundLink("UI_Game_Ping_Attack", -1));
+    libUIUI_gf_PingSetAllyEnemyTargetHeroVOForPingTarget(libUIUI_gf_PingLastCreatedPingTarget(), libCore_ge_HeroVOEvents_PingAttackHere, libCore_ge_HeroVOEvents_PingAttackHere);
+}
+
+void libMHmu_gf_InitVisionMercCampBruiserCamp3 () {
+    // Variable Declarations
+    int lv_campType;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_campType = (libMapM_ge_JungleCampMercTypes_BruiserCamp3);
+
+    // Implementation
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_campTypeMinimapLabel = StringExternal("Param/Value/lib_MHmu_ADACEBB9");
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_aIGoalLink = "MercenaryCampVision";
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_campTypeMinimapTitleLabel = StringExternal("Param/Value/lib_MHmu_C6DE081A");
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_customTextTagTitle = StringExternal("Param/Value/lib_MHmu_87CF46DA");
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_customTextTagInfoText = StringExternal("Param/Value/lib_MHmu_DC6304E1");
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_campIsSoloable = true;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_initialSpawnDelay = libMapM_gv_reconCampInitialSpawnDelay_C;
+    libMHmu_gv_henchmenBirthStunDelay = CatalogFieldValueGetAsFixed(c_gameCatalogBehavior, "MercenaryHenchmen_BirthStun", "Duration", c_playerAny);
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_respawnTime = -1.0;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_numberOfCreeps = 3;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_defendersCoweronDeath = true;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_defenderCoweringUnit[1] = true;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_defenderCoweringUnit[2] = true;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_defenderCoweringUnit[3] = true;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_xPAwardForCapture = libMHmu_gv_visionCampXPValue;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_creepUnitTypes[1] = "MercDefenderHenchman1";
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_creepUnitTypes[2] = "MercDefenderHenchman2";
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_creepUnitTypes[3] = "MercDefenderHenchman3";
+    libMapM_gv_dataJungleCampMercData[lv_campType].lv_numberOfMinionsSpawned = 0;
+    libMapM_gf_DataInitializeScalingDataForDefender(libMapM_ge_JungleCampDefenderTypes_BruiserCamp3, "MercHenchmanDefender");
+    libMapM_gf_DataInitializeScalingDataForMerc(libMapM_ge_JungleCampMercTypes_BruiserCamp3, "MercHenchmanLaner");
+    libUIUI_gf_PingCreateNewPingTarget("MercDefenderHenchman1", false, StringExternal("Param/Value/lib_MHmu_61A51BCC"), StringExternal("Param/Value/lib_MHmu_E69F3AB6"), StringExternal("Param/Value/lib_MHmu_74EE44C1"), SoundLink("UI_Game_Ping_Attack", -1), SoundLink("UI_Game_Ping_Attack", -1));
+    libUIUI_gf_PingSetHumanAISourceHeroVOForPingTarget(libUIUI_gf_PingLastCreatedPingTarget(), libCore_ge_HeroVOEvents_PingAttackMercCamp, libCore_ge_HeroVOEvents_AIMercCapture);
+    libUIUI_gf_PingCreateNewPingTarget("MercDefenderHenchman2", false, StringExternal("Param/Value/lib_MHmu_F6EDE711"), StringExternal("Param/Value/lib_MHmu_897F193F"), StringExternal("Param/Value/lib_MHmu_2A477589"), SoundLink("UI_Game_Ping_Attack", -1), SoundLink("UI_Game_Ping_Attack", -1));
+    libUIUI_gf_PingSetHumanAISourceHeroVOForPingTarget(libUIUI_gf_PingLastCreatedPingTarget(), libCore_ge_HeroVOEvents_PingAttackMercCamp, libCore_ge_HeroVOEvents_AIMercCapture);
+    libUIUI_gf_PingCreateNewPingTarget("MercDefenderHenchman3", false, StringExternal("Param/Value/lib_MHmu_93712FFE"), StringExternal("Param/Value/lib_MHmu_E07E2CC6"), StringExternal("Param/Value/lib_MHmu_8FDD0F62"), SoundLink("UI_Game_Ping_Attack", -1), SoundLink("UI_Game_Ping_Attack", -1));
+    libUIUI_gf_PingSetHumanAISourceHeroVOForPingTarget(libUIUI_gf_PingLastCreatedPingTarget(), libCore_ge_HeroVOEvents_PingAttackMercCamp, libCore_ge_HeroVOEvents_AIMercCapture);
+}
+
+void libMHmu_gf_InitKnightsMercCampBruiserCamp3 () {
+    // Variable Declarations
+    int lv_campType;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_campType = (libMapM_ge_JungleCampMercTypes_BruiserCamp3);
+
+    // Implementation
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_campTypeMinimapLabel = StringExternal("Param/Value/lib_MHmu_1A837C9C");
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_aIGoalLink = "MercenaryCampKnights";
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_campTypeMinimapTitleLabel = StringExternal("Param/Value/lib_MHmu_F68E7F4E");
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_customTextTagTitle = StringExternal("Param/Value/lib_MHmu_E7D49F9A");
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_customTextTagInfoText = StringExternal("Param/Value/lib_MHmu_F3301DFD");
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_campIsSoloable = false;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_initialSpawnDelay = 60.0;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_respawnTime = 120.0;
+    libOVER_gv_data_XP_IndividualCampCapture = 0.0;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_numberOfCreeps = 4;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_xPAwardForCapture = 0.0;
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_creepUnitTypes[1] = "MercDefenderRangedMage";
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_creepUnitTypes[2] = "MercDefenderMeleeKnight";
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_creepUnitTypes[3] = "MercDefenderMeleeKnight";
+    libMapM_gv_dataJungleCampDefenderData[lv_campType].lv_creepUnitTypes[4] = "MercDefenderMeleeKnight";
+    libMapM_gv_dataJungleCampMercData[lv_campType].lv_numberOfMinionsSpawned = 4;
+    libMapM_gv_dataJungleCampMercData[lv_campType].lv_spawnedMinionUnitTypes[1] = "MercLanerRangedMage";
+    libMapM_gv_dataJungleCampMercData[lv_campType].lv_spawnedMinionUnitTypes[2] = "MercLanerMeleeKnight";
+    libMapM_gv_dataJungleCampMercData[lv_campType].lv_spawnedMinionUnitTypes[3] = "MercLanerMeleeKnight";
+    libMapM_gv_dataJungleCampMercData[lv_campType].lv_spawnedMinionUnitTypes[4] = "MercLanerMeleeKnight";
+    libMapM_gf_DataInitializeScalingDataForDefender(libMapM_ge_JungleCampDefenderTypes_BruiserCamp3, "KnightMageScaling2");
+    libMapM_gf_DataInitializeScalingDataForMerc(libMapM_ge_JungleCampMercTypes_BruiserCamp3, "KnightMageScaling");
+    libUIUI_gf_PingCreateNewPingTarget("MercDefenderHenchman1", false, StringExternal("Param/Value/lib_MHmu_D42582E7"), StringExternal("Param/Value/lib_MHmu_D47244CA"), StringExternal("Param/Value/lib_MHmu_C2332EF7"), SoundLink("UI_Game_Ping_Attack", -1), SoundLink("UI_Game_Ping_Attack", -1));
+    libUIUI_gf_PingSetHumanAISourceHeroVOForPingTarget(libUIUI_gf_PingLastCreatedPingTarget(), libCore_ge_HeroVOEvents_PingAttackMercCamp, libCore_ge_HeroVOEvents_AIMercCapture);
+    libUIUI_gf_PingCreateNewPingTarget("MercDefenderHenchman2", false, StringExternal("Param/Value/lib_MHmu_E7918933"), StringExternal("Param/Value/lib_MHmu_F4F04B02"), StringExternal("Param/Value/lib_MHmu_6F4F5ECE"), SoundLink("UI_Game_Ping_Attack", -1), SoundLink("UI_Game_Ping_Attack", -1));
+    libUIUI_gf_PingSetHumanAISourceHeroVOForPingTarget(libUIUI_gf_PingLastCreatedPingTarget(), libCore_ge_HeroVOEvents_PingAttackMercCamp, libCore_ge_HeroVOEvents_AIMercCapture);
+    libUIUI_gf_PingCreateNewPingTarget("MercDefenderHenchman3", false, StringExternal("Param/Value/lib_MHmu_C2E1DC99"), StringExternal("Param/Value/lib_MHmu_3382C9DE"), StringExternal("Param/Value/lib_MHmu_4F050A13"), SoundLink("UI_Game_Ping_Attack", -1), SoundLink("UI_Game_Ping_Attack", -1));
+    libUIUI_gf_PingSetHumanAISourceHeroVOForPingTarget(libUIUI_gf_PingLastCreatedPingTarget(), libCore_ge_HeroVOEvents_PingAttackMercCamp, libCore_ge_HeroVOEvents_AIMercCapture);
+    TriggerEnable(libMHmu_gt_HenchmenCreateVisionUnits, false);
+    TriggerEnable(libMHmu_gt_ReconCampTaken, false);
+}
+
+void libMHmu_gf_AllDefendersAreStandingonTheirSpawnPoints (int lp_camp) {
+    // Variable Declarations
+    const fixed lv_allowableDistanceFromPoint_C = 0.4;
+    unit lv_defender;
+    int lv_defenderNumber;
+    bool lv_reset;
+
+    // Automatic Variable Declarations
+    unitgroup auto5733E2B1_g;
+    int auto5733E2B1_u;
+
+    // Variable Initialization
+
+    // Implementation
+    while ((lv_reset == false)) {
+        lv_reset = true;
+        auto5733E2B1_g = libMapM_gv_jungleCreepCamps[lp_camp].lv_defenderUnitGroup;
+        auto5733E2B1_u = UnitGroupCount(auto5733E2B1_g, c_unitCountAll);
+        for (;; auto5733E2B1_u -= 1) {
+            lv_defender = UnitGroupUnitFromEnd(auto5733E2B1_g, auto5733E2B1_u);
+            if (lv_defender == null) { break; }
+            lv_defenderNumber = FixedToInt(UnitGetCustomValue(lv_defender, libCore_gf_CustomValueIndex(libCore_ge_CustomValueIndexes_JungleDefenderCreepUnitIndex)));
+            if ((DistanceBetweenPoints(UnitGetPosition(lv_defender), libMapM_gv_jungleCreepCamps[lp_camp].lv_mapDataDefenderSpawnPoints[lv_defenderNumber]) > lv_allowableDistanceFromPoint_C)) {
+                UnitIssueOrder(lv_defender, OrderTargetingPoint(AbilityCommand("move", 0), libMapM_gv_jungleCreepCamps[lp_camp].lv_mapDataDefenderSpawnPoints[lv_defenderNumber]), c_orderQueueReplace);
+                lv_reset = false;
+            }
+            else {
+                libMHmu_gf_OrderDefendertoLookatCenter(lp_camp, lv_defender);
+            }
+        }
+        libGame_Wait(0.125, c_timeGame);
+    }
+}
+
+trigger auto_libMHmu_gf_OrderDefendertoLookatCenter_Trigger = null;
+int auto_libMHmu_gf_OrderDefendertoLookatCenter_lp_campID;
+unit auto_libMHmu_gf_OrderDefendertoLookatCenter_lp_defender;
+
+void libMHmu_gf_OrderDefendertoLookatCenter (int lp_campID, unit lp_defender) {
+    auto_libMHmu_gf_OrderDefendertoLookatCenter_lp_campID = lp_campID;
+    auto_libMHmu_gf_OrderDefendertoLookatCenter_lp_defender = lp_defender;
+
+    if (auto_libMHmu_gf_OrderDefendertoLookatCenter_Trigger == null) {
+        auto_libMHmu_gf_OrderDefendertoLookatCenter_Trigger = TriggerCreate("auto_libMHmu_gf_OrderDefendertoLookatCenter_TriggerFunc");
+    }
+
+    TriggerExecute(auto_libMHmu_gf_OrderDefendertoLookatCenter_Trigger, false, false);
+}
+
+bool auto_libMHmu_gf_OrderDefendertoLookatCenter_TriggerFunc (bool testConds, bool runActions) {
+    int lp_campID = auto_libMHmu_gf_OrderDefendertoLookatCenter_lp_campID;
+    unit lp_defender = auto_libMHmu_gf_OrderDefendertoLookatCenter_lp_defender;
+
+    // Automatic Variable Declarations
+    // Implementation
+    libGame_Wait(0.25, c_timeGame);
+    UnitIssueOrder(lp_defender, OrderTargetingPoint(AbilityCommand("move", 4), libMapM_gv_jungleCreepCamps[lp_campID].lv_mapDataCampCaptainSpawnPoint), c_orderQueueReplace);
+    return true;
+}
+
+trigger auto_libMHmu_gf_HenchmenCustomRespawnCreepsForCamp_Trigger = null;
+int auto_libMHmu_gf_HenchmenCustomRespawnCreepsForCamp_lp_camp;
+int auto_libMHmu_gf_HenchmenCustomRespawnCreepsForCamp_lp_newOwningPlayer;
+
+void libMHmu_gf_HenchmenCustomRespawnCreepsForCamp (int lp_camp, int lp_newOwningPlayer) {
+    auto_libMHmu_gf_HenchmenCustomRespawnCreepsForCamp_lp_camp = lp_camp;
+    auto_libMHmu_gf_HenchmenCustomRespawnCreepsForCamp_lp_newOwningPlayer = lp_newOwningPlayer;
+
+    if (auto_libMHmu_gf_HenchmenCustomRespawnCreepsForCamp_Trigger == null) {
+        auto_libMHmu_gf_HenchmenCustomRespawnCreepsForCamp_Trigger = TriggerCreate("auto_libMHmu_gf_HenchmenCustomRespawnCreepsForCamp_TriggerFunc");
+    }
+
+    TriggerExecute(auto_libMHmu_gf_HenchmenCustomRespawnCreepsForCamp_Trigger, false, false);
+}
+
+bool auto_libMHmu_gf_HenchmenCustomRespawnCreepsForCamp_TriggerFunc (bool testConds, bool runActions) {
+    int lp_camp = auto_libMHmu_gf_HenchmenCustomRespawnCreepsForCamp_lp_camp;
+    int lp_newOwningPlayer = auto_libMHmu_gf_HenchmenCustomRespawnCreepsForCamp_lp_newOwningPlayer;
+
+    // Variable Declarations
+    int lv_i;
+    fixed lv_StaggeredBirth;
+    unit lv_u;
+    region lv_aggroRegion;
+    string lv_icon;
+    int lv_heightOffset;
+    text lv_helperTextStart;
+    unitgroup lv_defenderGroup;
+    unit lv_newUnit;
+    int lv_localIndexTracker;
+
+    // Automatic Variable Declarations
+    unitgroup auto98AEBFBF_g;
+    int auto98AEBFBF_u;
+    unitgroup auto2C68DBBA_g;
+    int auto2C68DBBA_u;
+    unit auto2C68DBBA_var;
+
+    // Variable Initialization
+    lv_heightOffset = 4;
+    lv_defenderGroup = UnitGroupEmpty();
+
+    // Implementation
+    libNtve_gf_SendActorMessageToUnit(libMapM_gv_jungleCreepCamps[lp_camp].lv_campIconUnit, "SetMinimapVisibility 1");
+    UnitGroupClear(libMapM_gv_jungleCreepCamps[lp_camp].lv_defenderUnitGroup);
+    lv_localIndexTracker = 0;
+    auto98AEBFBF_g = libMapM_gv_jungleCreepCamps[lp_camp].lv_defenderCoweringDeadUnitGroup;
+    auto98AEBFBF_u = UnitGroupCount(auto98AEBFBF_g, c_unitCountAll);
+    for (;; auto98AEBFBF_u -= 1) {
+        lv_u = UnitGroupUnitFromEnd(auto98AEBFBF_g, auto98AEBFBF_u);
+        if (lv_u == null) { break; }
+        lv_localIndexTracker += 1;
+        libNtve_gf_SendActorMessageToGameRegion(RegionCircle(UnitGetPosition(lv_u), 1.0), "Signal CreepCleanup");
+        UnitCreate(1, libMapM_gv_jungleCreepCamps[lp_camp].lv_defenderUnitTypes[lv_localIndexTracker], c_unitCreateIgnorePlacement, lp_newOwningPlayer, UnitGetPosition(lv_u), UnitGetFacing(lv_u), null);
+        lv_newUnit = UnitLastCreated();
+        UnitSetCustomValue(lv_newUnit, libCore_gf_CustomValueIndex(libCore_ge_CustomValueIndexes_JungleDefenderCreepUnitIndex), UnitGetCustomValue(lv_u, libCore_gf_CustomValueIndex(libCore_ge_CustomValueIndexes_JungleDefenderCreepUnitIndex)));
+        UnitRemove(lv_u);
+        UnitGroupAdd(lv_defenderGroup, lv_newUnit);
+        UnitGroupAdd(libMapM_gv_jungleCreepCamps[lp_camp].lv_defenderUnitGroup, lv_newUnit);
+        UnitSetCustomValue(lv_newUnit, libCore_gf_CustomValueIndex(libCore_ge_CustomValueIndexes_JungleDefenderCreepCampIndex), IntToFixed(lp_camp));
+        UnitBehaviorAdd(lv_newUnit, "MercenaryHenchmen_BirthStun", lv_newUnit, 1);
+        UnitBehaviorAdd(lv_newUnit, "HenchmentBirthInvulnerability", lv_newUnit, 1);
+        UnitBehaviorAdd(lv_newUnit, "JungleCreepPassive", lv_newUnit, 1);
+        UnitIssueOrder(lv_newUnit, OrderTargetingPoint(AbilityCommand("move", 0), libMapM_gv_jungleCreepCamps[lp_camp].lv_mapDataDefenderSpawnPoints[FixedToInt(UnitGetCustomValue(lv_newUnit, libCore_gf_CustomValueIndex(libCore_ge_CustomValueIndexes_JungleDefenderCreepUnitIndex)))]), c_orderQueueReplace);
+        libGame_gf_SendEventJungleCampDefenderCreated(lv_newUnit);
+        if ((libMapM_gv_jungleCreepCamps[lp_camp].lv_defenderCoweringUnit[lv_localIndexTracker] == true)) {
+            UnitGroupAdd(libMapM_gv_jungleCreepCamps[lp_camp].lv_defenderCoweringLivingUnitGroup, lv_newUnit);
+        }
+
+    }
+    libMapM_gv_jungleCreepCamps[lp_camp].lv_defenderDefendersBribedCount = 0;
+    libMapM_gv_jungleCreepCamps[lp_camp].lv_stateCurrentDefenderScalingTicks = 0;
+    libMapM_gv_jungleCreepCamps[lp_camp].lv_stateCurrentMercScalingTicks = 0;
+    libNtve_gf_SendActorMessageToUnit(UnitLastCreated(), (("MinimapIconScale " + FixedToString(libMapM_gv_jungleCreepCamps[lp_camp].lv_mapDataMinimapIconScale, c_fixedPrecisionAny))));
+    libMapM_gf_CreateSnapshotOfUnitForBothTeams(libMapM_gv_jungleCreepCamps[lp_camp].lv_campIconUnit);
+    libMapM_gf_JungleSwitchToTextTagForCamp(lp_camp);
+    libMapM_gf_JungleUpdateMinimapTooltipForCamp(lp_camp);
+    libGame_gf_SendEventJungleCampSpawned(lp_camp);
+    libGame_Wait(libMHmu_gv_henchmenBirthStunDelay, c_timeGame);
+    libMHmu_gf_AllDefendersAreStandingonTheirSpawnPoints(lp_camp);
+    auto2C68DBBA_g = libMapM_gv_jungleCreepCamps[lp_camp].lv_defenderUnitGroup;
+    auto2C68DBBA_u = UnitGroupCount(auto2C68DBBA_g, c_unitCountAll);
+    for (;; auto2C68DBBA_u -= 1) {
+        auto2C68DBBA_var = UnitGroupUnitFromEnd(auto2C68DBBA_g, auto2C68DBBA_u);
+        if (auto2C68DBBA_var == null) { break; }
+        UnitBehaviorRemove(auto2C68DBBA_var, "HenchmentBirthInvulnerability", 1);
+    }
+    libAIAI_gf_StartDefenderAI(false, lv_defenderGroup, libMapM_gv_jungleCreepCamps[lp_camp].lv_mapDataDefenderLeashRegion, lv_aggroRegion, true);
+    libMapM_gv_jungleCreepCamps[lp_camp].lv_aIDefenderAIIndex = libAIAI_gf_LastCreatedDefenderAI();
+    libGame_gf_JungleUpdateScalingForCamp(lp_camp, libGame_gv_scalingTicks);
+    libGame_gf_SendEventJungleCampSpawning(lp_camp);
+    UnitSetOwner(libMapM_gv_jungleCreepCamps[lp_camp].lv_campIconUnit, lp_newOwningPlayer, true);
+    libMapM_gf_JungleTransitionCampIntoState(lp_camp, libMapM_ge_JungleCampStates_Idle);
+    lv_icon = libMapM_gf_JungleGetCurrentIconForJungleCamp(lp_camp, true);
+    libNtve_gf_SendActorMessageToUnit(libMapM_gv_jungleCreepCamps[lp_camp].lv_campIconUnit, "MinimapIcon " + lv_icon);
+    if ((lp_camp == 5)) {
+        AIAddMercenaryCamp(UnitGetPosition(libMapM_gv_jungleCreepCamps[lp_camp].lv_captureCircleOfPowerUnit), lv_defenderGroup, "MercenaryCampVisionTop");
+    }
+    else {
+        AIAddMercenaryCamp(UnitGetPosition(libMapM_gv_jungleCreepCamps[lp_camp].lv_captureCircleOfPowerUnit), lv_defenderGroup, "MercenaryCampVisionBottom");
+    }
+    return true;
+}
+
+trigger auto_libMHmu_gf_HenchmenRuntopointandlookatmiddle_Trigger = null;
+unit auto_libMHmu_gf_HenchmenRuntopointandlookatmiddle_lp_henchman;
+int auto_libMHmu_gf_HenchmenRuntopointandlookatmiddle_lp_campID;
+
+void libMHmu_gf_HenchmenRuntopointandlookatmiddle (unit lp_henchman, int lp_campID) {
+    auto_libMHmu_gf_HenchmenRuntopointandlookatmiddle_lp_henchman = lp_henchman;
+    auto_libMHmu_gf_HenchmenRuntopointandlookatmiddle_lp_campID = lp_campID;
+
+    if (auto_libMHmu_gf_HenchmenRuntopointandlookatmiddle_Trigger == null) {
+        auto_libMHmu_gf_HenchmenRuntopointandlookatmiddle_Trigger = TriggerCreate("auto_libMHmu_gf_HenchmenRuntopointandlookatmiddle_TriggerFunc");
+    }
+
+    TriggerExecute(auto_libMHmu_gf_HenchmenRuntopointandlookatmiddle_Trigger, false, false);
+}
+
+bool auto_libMHmu_gf_HenchmenRuntopointandlookatmiddle_TriggerFunc (bool testConds, bool runActions) {
+    unit lp_henchman = auto_libMHmu_gf_HenchmenRuntopointandlookatmiddle_lp_henchman;
+    int lp_campID = auto_libMHmu_gf_HenchmenRuntopointandlookatmiddle_lp_campID;
+
+    // Variable Declarations
+    int lv_indexValue;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    return true;
+}
+
+fixed libMHmu_gf_ReturnTownHealth (int lp_town, int lp_owner) {
+    // Variable Declarations
+    unitgroup lv_group;
+    unit lv_itStructure;
+    fixed lv_hPTotal;
+
+    // Automatic Variable Declarations
+    unitgroup auto91D39D22_g;
+    int auto91D39D22_u;
+
+    // Variable Initialization
+    lv_group = UnitGroupEmpty();
+
+    // Implementation
+    if ((lp_town == 0)) {
+        return 0.0;
+    }
+
+    lv_group = UnitGroup(null, lp_owner, libGame_gv_townTownData[lp_town].lv_townRegion, UnitFilter((1 << c_targetFilterStructure), (1 << (c_targetFilterAITargetableStructure - 32)), (1 << c_targetFilterNoMinionAggro) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32))), 0);
+    auto91D39D22_g = lv_group;
+    auto91D39D22_u = UnitGroupCount(auto91D39D22_g, c_unitCountAll);
+    for (;; auto91D39D22_u -= 1) {
+        lv_itStructure = UnitGroupUnitFromEnd(auto91D39D22_g, auto91D39D22_u);
+        if (lv_itStructure == null) { break; }
+        if ((UnitHasBehavior2(lv_itStructure, "DoesNotGetTargetedByPayload") == false) && ((libGame_gf_TownGetTownStructurePresetFromUnit(lv_itStructure) == libGame_ge_TownStructureTypes_CannonTower) || (libGame_gf_TownGetTownStructurePresetFromUnit(lv_itStructure) == libGame_ge_TownStructureTypes_TownHall) || (libGame_gf_TownGetTownStructurePresetFromUnit(lv_itStructure) == libGame_ge_TownStructureTypes_Gate) || (libGame_gf_TownGetTownStructurePresetFromUnit(lv_itStructure) == libGame_ge_TownStructureTypes_Moonwell))) {
+            lv_hPTotal += libCore_gf_GetTotalHPForUnitIncludingAllShields(lv_itStructure);
+        }
+
+        if ((UnitHasBehavior2(lv_itStructure, "HanamuraPayloadStructureTarget") == true)) {
+            lv_hPTotal -= (StringToFixed(CatalogFieldValueGet(c_gameCatalogEffect, "Payload_AttackDamage", "Amount", 0)) * IntToFixed(UnitBehaviorCount(lv_itStructure, "HanamuraPayloadStructureTarget")));
+        }
+
+    }
+    return lv_hPTotal;
+}
+
+int libMHmu_gf_ReturnHigherHealthTown (int lp_owningTeam, int lp_townIndex_1, int lp_townIndex_2) {
+    // Automatic Variable Declarations
+    // Implementation
+    if ((libMHmu_gf_ReturnTownHealth(lp_townIndex_1, lp_owningTeam) > libMHmu_gf_ReturnTownHealth(lp_townIndex_2, lp_owningTeam)) && (libMHmu_gf_ReturnTownHealth(lp_townIndex_1, lp_owningTeam) > 0.0)) {
+        return lp_townIndex_1;
+    }
+    else {
+        if ((libMHmu_gf_ReturnTownHealth(lp_townIndex_2, lp_owningTeam) > libMHmu_gf_ReturnTownHealth(lp_townIndex_1, lp_owningTeam)) && (libMHmu_gf_ReturnTownHealth(lp_townIndex_2, lp_owningTeam) > 0.0)) {
+            return lp_townIndex_2;
+        }
+        else {
+            if ((libMHmu_gf_ReturnTownHealth(lp_townIndex_1, lp_owningTeam) > 0.0) && (libMHmu_gf_ReturnTownHealth(lp_townIndex_2, lp_owningTeam) > 0.0) && (libMHmu_gf_ReturnTownHealth(lp_townIndex_1, lp_owningTeam) == libMHmu_gf_ReturnTownHealth(lp_townIndex_2, lp_owningTeam))) {
+                if ((RandomInt(0, 1) == 1)) {
+                    return lp_townIndex_1;
+                }
+                else {
+                    return lp_townIndex_2;
+                }
+            }
+
+            return 0;
+        }
+    }
+}
+
+int libMHmu_gf_GetTownForPayloadAttack (int lp_ignoredTownindex, int lp_attackingTeam) {
+    // Variable Declarations
+    int lv_itTown;
+    int[5] lv_index_Town;
+    int lv_index_TownToAttack;
+    int lv_team_EnemyTeam;
+    int lv_player_Computer_EnemyTeam;
+
+    // Automatic Variable Declarations
+    const int auto72333E34_ae = 4;
+    const int auto72333E34_ai = 1;
+
+    // Variable Initialization
+    lv_team_EnemyTeam = libGame_gf_EnemyTeam(lp_attackingTeam);
+    lv_player_Computer_EnemyTeam = libGame_gf_ComputerPlayerInTeam(lv_team_EnemyTeam);
+
+    // Implementation
+    if ((lp_attackingTeam == libGame_gv_teamOrderIndex_C)) {
+        lv_index_Town[1] = 6;
+        lv_index_Town[2] = 8;
+        lv_index_Town[3] = 5;
+        lv_index_Town[4] = 7;
+    }
+    else {
+        lv_index_Town[1] = 2;
+        lv_index_Town[2] = 4;
+        lv_index_Town[3] = 1;
+        lv_index_Town[4] = 3;
+    }
+    lv_itTown = 1;
+    for ( ; ( (auto72333E34_ai >= 0 && lv_itTown <= auto72333E34_ae) || (auto72333E34_ai < 0 && lv_itTown >= auto72333E34_ae) ) ; lv_itTown += auto72333E34_ai ) {
+        if ((lv_index_Town[lv_itTown] == lp_ignoredTownindex)) {
+            lv_index_Town[lv_itTown] = 0;
+            break;
+        }
+
+    }
+    if (((libGame_gf_TownTownIsAlive(lv_index_Town[1], lv_player_Computer_EnemyTeam) == true) || (libGame_gf_TownTownIsAlive(lv_index_Town[2], lv_player_Computer_EnemyTeam) == true))) {
+        lv_index_TownToAttack = libMHmu_gf_ReturnHigherHealthTown(libGame_gf_ComputerPlayerInTeam(lv_team_EnemyTeam), lv_index_Town[1], lv_index_Town[2]);
+    }
+    else {
+        lv_index_TownToAttack = 0;
+    }
+    if ((lv_index_TownToAttack == 0)) {
+        lv_index_TownToAttack = libMHmu_gf_ReturnHigherHealthTown(libGame_gf_ComputerPlayerInTeam(lv_team_EnemyTeam), lv_index_Town[3], lv_index_Town[4]);
+    }
+
+    return lv_index_TownToAttack;
+}
+
+unit libMHmu_gf_GetTargetForPayloadAttack (unit lp_previousTarget, int lp_team_OwnedPayload, int lp_town) {
+    // Variable Declarations
+    unitgroup lv_townOuterLoop;
+    unitgroup lv_townOuterLoop2;
+    unitgroup lv_townOuterLoop4;
+    unitgroup lv_townOuterLoop3;
+    unit lv_townHall;
+    unitgroup lv_buildings;
+    unit lv_itBuilding;
+
+    // Automatic Variable Declarations
+    unitgroup autoD11A30D2_g;
+    int autoD11A30D2_u;
+    int auto249030DF_val;
+
+    // Variable Initialization
+    lv_townOuterLoop = UnitGroupEmpty();
+    lv_townOuterLoop2 = UnitGroupEmpty();
+    lv_townOuterLoop4 = UnitGroupEmpty();
+    lv_townOuterLoop3 = UnitGroupEmpty();
+    lv_buildings = UnitGroupEmpty();
+
+    // Implementation
+    if ((UnitIsAlive(libGame_gv_teams[libGame_gf_EnemyTeam(lp_team_OwnedPayload)].lv_core) == false)) {
+        return null;
+    }
+
+    lv_buildings = UnitGroup(null, libGame_gf_ComputerPlayerInTeam(libGame_gf_EnemyTeam(lp_team_OwnedPayload)), libGame_gv_townTownData[lp_town].lv_townRegion, UnitFilter(0, (1 << (c_targetFilterAITargetableStructure - 32)), (1 << c_targetFilterNoMinionAggro) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32))), 0);
+    UnitGroupRemove(lv_buildings, lp_previousTarget);
+    if ((lp_town == 0)) {
+        return null;
+    }
+
+    autoD11A30D2_g = lv_buildings;
+    autoD11A30D2_u = UnitGroupCount(autoD11A30D2_g, c_unitCountAll);
+    for (;; autoD11A30D2_u -= 1) {
+        lv_itBuilding = UnitGroupUnitFromEnd(autoD11A30D2_g, autoD11A30D2_u);
+        if (lv_itBuilding == null) { break; }
+        if ((UnitHasBehaviorWithCategoryFlag(lv_itBuilding, c_behaviorCategoryTimeStop) == false) && (UnitHasBehavior2(lv_itBuilding, "DoesNotGetTargetedByPayload") == false) && (UnitBehaviorCount(lv_itBuilding, "HanamuraPayloadStructureTarget") == 0) && ((libCore_gf_UnitStoredForUnit(lv_itBuilding, 99) != null) || (UnitHasBehaviorWithCategoryFlag(lv_itBuilding, c_behaviorCategoryDebuffStasis) == false))) {
+            auto249030DF_val = libGame_gf_TownGetTownStructurePresetFromUnit(lv_itBuilding);
+            if (auto249030DF_val == libGame_ge_TownStructureTypes_CannonTower) {
+                UnitGroupAdd(lv_townOuterLoop, lv_itBuilding);
+            }
+            else if (auto249030DF_val == libGame_ge_TownStructureTypes_Gate) {
+                UnitGroupAdd(lv_townOuterLoop4, lv_itBuilding);
+            }
+            else if (auto249030DF_val == libGame_ge_TownStructureTypes_Moonwell) {
+                UnitGroupAdd(lv_townOuterLoop3, lv_itBuilding);
+            }
+            else if (auto249030DF_val == libGame_ge_TownStructureTypes_TownHall) {
+                UnitGroupAdd(lv_townOuterLoop2, lv_itBuilding);
+            }
+            else {
+            }
+        }
+
+    }
+    if ((libNtve_gf_UnitGroupIsDead(lv_townOuterLoop) == false)) {
+        return UnitGroupRandomUnit(lv_townOuterLoop, c_unitCountAlive);
+    }
+
+    if ((libNtve_gf_UnitGroupIsDead(lv_townOuterLoop4) == false)) {
+        return UnitGroupRandomUnit(lv_townOuterLoop4, c_unitCountAlive);
+    }
+
+    if ((libNtve_gf_UnitGroupIsDead(lv_townOuterLoop3) == false)) {
+        return UnitGroupRandomUnit(lv_townOuterLoop3, c_unitCountAlive);
+    }
+
+    if ((libNtve_gf_UnitGroupIsDead(lv_townOuterLoop2) == false)) {
+        return UnitGroupRandomUnit(lv_townOuterLoop2, c_unitCountAlive);
+    }
+
+    return null;
+}
+
+void libMHmu_gf_MakePayloadAttack (int lp_attackingTeam) {
+    // Variable Declarations
+    int lv_missilesInFlight;
+    int lv_shotspervolley;
+    int lv_shotsRemaining;
+    int lv_town;
+    unit lv_target;
+    unit lv_unusableTarget;
+    int lv_unusableTown;
+    fixed lv_targetLife;
+    fixed lv_targetLife_FactoringInFlightMissiles;
+    int lv_activeTargetPing;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_shotspervolley = 3;
+    lv_shotsRemaining = libMHmu_gv_payloadShotCount_C;
+    lv_activeTargetPing = c_invalidPingId;
+
+    // Implementation
+    TextExpressionSetToken("Param/Expression/lib_MHmu_3F3D0FA8", "A", IntToText(lv_shotsRemaining));
+    libNtve_gf_SetDialogItemText(libNPLD_gv_hanamura.lv_attackingStructureLabel[lp_attackingTeam], TextExpressionAssemble("Param/Expression/lib_MHmu_3F3D0FA8"), PlayerGroupAll());
+    TextExpressionSetToken("Param/Expression/lib_MHmu_41434967", "A", IntToText(lv_shotsRemaining));
+    libNtve_gf_SetDialogItemText(libNPLD_gv_hanamura.lv_attackingStructureLabel[1], TextExpressionAssemble("Param/Expression/lib_MHmu_41434967"), PlayerGroupAll());
+    TextExpressionSetToken("Param/Expression/lib_MHmu_632A78C9", "A", IntToText(lv_shotsRemaining));
+    libNtve_gf_SetDialogItemText(libNPLD_gv_hanamura.lv_attackingStructureLabel[2], TextExpressionAssemble("Param/Expression/lib_MHmu_632A78C9"), PlayerGroupAll());
+    lv_town = libMHmu_gf_GetTownForPayloadAttack(lv_unusableTown, lp_attackingTeam);
+    lv_target = libMHmu_gf_GetTargetForPayloadAttack(lv_target, lp_attackingTeam, lv_town);
+    while ((lv_shotsRemaining > 0)) {
+        if ((libGame_gv_gameOver == true)) {
+            return ;
+        }
+
+        while (!((UnitHasBehaviorWithCategoryFlag(libNPLD_gv_neutralPayload.lv_unit, c_behaviorCategoryDebuffStasis) == false) && (UnitHasBehaviorWithCategoryFlag(libNPLD_gv_neutralPayload.lv_unit, c_behaviorCategoryTimeStop) == false))) {
+            libGame_Wait(0.625, c_timeGame);
+        }
+        if (((libGame_gf_TownTownIsAlive(lv_town, libGame_gf_ComputerPlayerInTeam(libGame_gf_EnemyTeam(lp_attackingTeam))) == false) || (lv_unusableTown == lv_town))) {
+            lv_town = libMHmu_gf_GetTownForPayloadAttack(lv_unusableTown, lp_attackingTeam);
+            lv_unusableTown = 0;
+            lv_target = null;
+            lv_target = libMHmu_gf_GetTargetForPayloadAttack(lv_target, lp_attackingTeam, lv_town);
+        }
+        else {
+            if ((lv_unusableTarget == lv_target)) {
+                lv_target = libMHmu_gf_GetTargetForPayloadAttack(lv_unusableTarget, lp_attackingTeam, lv_town);
+                lv_unusableTarget = null;
+            }
+
+            if ((lv_target == null)) {
+                lv_unusableTown = lv_town;
+                continue;
+            }
+
+        }
+        if ((lv_town == 0)) {
+            lv_target = libGame_gv_teams[libGame_gf_EnemyTeam(lp_attackingTeam)].lv_core;
+        }
+
+        lv_targetLife = libCore_gf_GetTotalHPForUnitIncludingAllShields(lv_target);
+        lv_missilesInFlight = UnitBehaviorCount(lv_target, "HanamuraPayloadStructureTarget");
+        lv_targetLife_FactoringInFlightMissiles = (lv_targetLife - (StringToFixed(CatalogFieldValueGet(c_gameCatalogEffect, "Payload_AttackDamage", "Amount", 0)) * lv_missilesInFlight));
+        if (((lv_target != libGame_gv_teams[libGame_gf_EnemyTeam(lp_attackingTeam)].lv_core) && ((UnitIsAlive(lv_target) == false) || (UnitIsValid(lv_target) == false) || (lv_target == null) || (UnitHasBehavior2(lv_target, "TownCannonTowerInvulnerable") == true) || (lv_targetLife_FactoringInFlightMissiles < 0.0) || (UnitHasBehaviorWithCategoryFlag(lv_target, c_behaviorCategoryTimeStop) == true) || ((UnitHasBehaviorWithCategoryFlag(lv_target, c_behaviorCategoryDebuffStasis) == true) && (libCore_gf_UnitStoredForUnit(lv_target, 99) == null))))) {
+            lv_unusableTarget = lv_target;
+            continue;
+        }
+        else {
+            UnitCreateEffectUnit(libNPLD_gv_neutralPayload.lv_unit, "PayloadAttackCoreModifyTurret", lv_target);
+            libGame_Wait(0.25, c_timeGame);
+        }
+        if ((lv_target == libGame_gv_teams[libGame_gf_EnemyTeam(lp_attackingTeam)].lv_core)) {
+            while (!(((UnitHasBehaviorWithCategoryFlag(lv_target, c_behaviorCategoryDebuffStasis) == false) && (UnitHasBehaviorWithCategoryFlag(lv_target, c_behaviorCategoryTimeStop) == false) && (UnitHasBehaviorWithCategoryFlag(lv_target, c_behaviorCategoryInvulnerable) == false)))) {
+                libGame_Wait(0.625, c_timeGame);
+            }
+        }
+
+        if ((libCore_gf_PingStoredForUnit(lv_target, 1) == c_invalidPingId)) {
+            libCore_gf_CreateMinimapPingStorm(PlayerGroupAll(), "StormGhostShipImpact", UnitGetPosition(lv_target), ColorWithAlpha(100.00, 0.00, 0.00, 0.00), 3.0);
+            libCore_gf_StorePingForUnit(lv_target, 1, PingLastCreated());
+        }
+
+        UnitBehaviorAdd(lv_target, ("HanamuraPayloadStructureTarget"), libNPLD_gv_neutralPayload.lv_unit, 1);
+        UnitCreateEffectUnit(libNPLD_gv_neutralPayload.lv_unit, "Payload_AttackLM", lv_target);
+        lv_shotsRemaining -= 1;
+        TextExpressionSetToken("Param/Expression/lib_MHmu_A58E51F2", "A", IntToText(lv_shotsRemaining));
+        libNtve_gf_SetDialogItemText(libNPLD_gv_hanamura.lv_attackingStructureLabel[lp_attackingTeam], TextExpressionAssemble("Param/Expression/lib_MHmu_A58E51F2"), PlayerGroupAll());
+        TextExpressionSetToken("Param/Expression/lib_MHmu_36601B3C", "A", IntToText(lv_shotsRemaining));
+        libNtve_gf_SetDialogItemText(libNPLD_gv_hanamura.lv_attackingStructureLabel[1], TextExpressionAssemble("Param/Expression/lib_MHmu_36601B3C"), PlayerGroupAll());
+        TextExpressionSetToken("Param/Expression/lib_MHmu_C22502E9", "A", IntToText(lv_shotsRemaining));
+        libNtve_gf_SetDialogItemText(libNPLD_gv_hanamura.lv_attackingStructureLabel[2], TextExpressionAssemble("Param/Expression/lib_MHmu_C22502E9"), PlayerGroupAll());
+        libGame_Wait(0.5, c_timeGame);
+        if ((ModI(lv_shotsRemaining, lv_shotspervolley) == 0)) {
+            libGame_Wait(2.0, c_timeGame);
+        }
+
+    }
+    UnitCreateEffectPoint(libNPLD_gv_neutralPayload.lv_unit, "PayloadAttackCoreClearTurret", PointWithOffsetPolar(UnitGetPosition(libNPLD_gv_neutralPayload.lv_unit), 1.0, UnitGetFacing(libNPLD_gv_neutralPayload.lv_unit)));
+    libGame_Wait(2.0, c_timeGame);
+    DialogControlSetVisible(libNPLD_gv_hanamura.lv_attackingStructureFrame[lp_attackingTeam], PlayerGroupAll(), false);
+    libGame_Wait(2.0, c_timeGame);
+    DialogControlSetVisible(libNPLD_gv_hanamura.lv_payloadPanel, PlayerGroupAll(), false);
+    TextExpressionSetToken("Param/Expression/lib_MHmu_87700DF8", "A", IntToText(libMHmu_gv_payloadShotCount_C));
+    libNtve_gf_SetDialogItemText(libNPLD_gv_hanamura.lv_attackingStructureLabel[1], TextExpressionAssemble("Param/Expression/lib_MHmu_87700DF8"), PlayerGroupAll());
+    TextExpressionSetToken("Param/Expression/lib_MHmu_47FB8954", "A", IntToText(libMHmu_gv_payloadShotCount_C));
+    libNtve_gf_SetDialogItemText(libNPLD_gv_hanamura.lv_attackingStructureLabel[2], TextExpressionAssemble("Param/Expression/lib_MHmu_47FB8954"), PlayerGroupAll());
+}
+
+trigger auto_libMHmu_gf_ElevatorAddRemoveUnpathableUnit_Trigger = null;
+bool auto_libMHmu_gf_ElevatorAddRemoveUnpathableUnit_lp_addRemove;
+
+void libMHmu_gf_ElevatorAddRemoveUnpathableUnit (bool lp_addRemove) {
+    auto_libMHmu_gf_ElevatorAddRemoveUnpathableUnit_lp_addRemove = lp_addRemove;
+
+    if (auto_libMHmu_gf_ElevatorAddRemoveUnpathableUnit_Trigger == null) {
+        auto_libMHmu_gf_ElevatorAddRemoveUnpathableUnit_Trigger = TriggerCreate("auto_libMHmu_gf_ElevatorAddRemoveUnpathableUnit_TriggerFunc");
+    }
+
+    TriggerExecute(auto_libMHmu_gf_ElevatorAddRemoveUnpathableUnit_Trigger, false, false);
+}
+
+bool auto_libMHmu_gf_ElevatorAddRemoveUnpathableUnit_TriggerFunc (bool testConds, bool runActions) {
+    bool lp_addRemove = auto_libMHmu_gf_ElevatorAddRemoveUnpathableUnit_lp_addRemove;
+
+    // Automatic Variable Declarations
+    unitgroup autoCFEAF2C8_g;
+    int autoCFEAF2C8_u;
+    unit autoCFEAF2C8_var;
+
+    // Implementation
+    if ((lp_addRemove == true)) {
+        if ((libMHmu_gv_elevator_PathingBlocker_Unit == null)) {
+            libNtve_gf_CreateUnitsWithDefaultFacing(1, "Elevator_PathingBlocker", c_unitCreateIgnorePlacement, libCore_gv_cOMPUTER_Hostile, libMHmu_gv_elevator_Point, null);
+            libMHmu_gv_elevator_PathingBlocker_Unit = UnitLastCreated();
+            autoCFEAF2C8_g = UnitGroup(null, c_playerAny, libMHmu_gv_elevator_Region, UnitFilter((1 << c_targetFilterVisible), 0, (1 << c_targetFilterAir) | (1 << c_targetFilterHeroic) | (1 << c_targetFilterUser1) | (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterMapCreature - 32))), 0);
+            autoCFEAF2C8_u = UnitGroupCount(autoCFEAF2C8_g, c_unitCountAll);
+            for (;; autoCFEAF2C8_u -= 1) {
+                autoCFEAF2C8_var = UnitGroupUnitFromEnd(autoCFEAF2C8_g, autoCFEAF2C8_u);
+                if (autoCFEAF2C8_var == null) { break; }
+                if ((UnitFilterMatch(autoCFEAF2C8_var, 0, UnitFilter(0, (1 << (c_targetFilterSummoned - 32)), 0, 0)) == true)) {
+                    UnitKill(autoCFEAF2C8_var);
+                }
+                else {
+                    UnitSetPosition(autoCFEAF2C8_var, PointWithOffsetPolar(RegionGetCenter(libMHmu_gv_elevator_Region), 3.0, libNtve_gf_RandomAngle()), false);
+                }
+            }
+            libGame_Wait(5.0, c_timeGame);
+            UnitCreateEffectPoint(libMHmu_gv_elevator_PathingBlocker_Unit, "ElevatorPayloadAttachmentDummy", libNPLD_gv_neutralPayload.lv_pathWaypoints[libGame_gv_teamOrderIndex_C][libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamOrderIndex_C]][1]);
+        }
+
+    }
+    else {
+        ActorSendTo(libNtve_gf_MainActorofUnit(libMHmu_gv_elevator_PathingBlocker_Unit), "::global.PayloadElevatorAttachment", "SetTintColor 0,255,255");
+        UnitRemove(libMHmu_gv_elevator_PathingBlocker_Unit);
+        libMHmu_gv_elevator_PathingBlocker_Unit = null;
+        libMHmu_gv_elevator_WaitingToLower = false;
+    }
+    return true;
+}
+
+trigger auto_libMHmu_gf_ElevatorAttempttoLowerMonitor_Trigger = null;
+
+void libMHmu_gf_ElevatorAttempttoLowerMonitor () {
+    if (auto_libMHmu_gf_ElevatorAttempttoLowerMonitor_Trigger == null) {
+        auto_libMHmu_gf_ElevatorAttempttoLowerMonitor_Trigger = TriggerCreate("auto_libMHmu_gf_ElevatorAttempttoLowerMonitor_TriggerFunc");
+    }
+
+    TriggerExecute(auto_libMHmu_gf_ElevatorAttempttoLowerMonitor_Trigger, false, false);
+}
+
+bool auto_libMHmu_gf_ElevatorAttempttoLowerMonitor_TriggerFunc (bool testConds, bool runActions) {
+    // Variable Declarations
+    unit lv_itUnit;
+    unit lv_itHeroUnit;
+    fixed lv_elevatorCalculatedTimer;
+
+    // Automatic Variable Declarations
+    const int auto95E1F680_n = 5;
+    int auto95E1F680_i;
+    unitgroup auto10FF810F_g;
+    int auto10FF810F_u;
+
+    // Variable Initialization
+
+    // Implementation
+    libGame_Wait(5.0, c_timeGame);
+    lv_elevatorCalculatedTimer = (libMHmu_gv_mapMechanic_CooldownTimer_Duration - libMHmu_gv_mapMechanic_WarningTimer_Duration);
+    lv_elevatorCalculatedTimer -= libMHmu_gv_elevator.lv_elevatorLowerTime;
+    libMHmu_gv_elevator_WaitingToLower = true;
+    TimerStart(libMHmu_gv_elevator_Forced_Lower_Timer, lv_elevatorCalculatedTimer, false, c_timeGame);
+    while (!(((libMHmu_gv_elevator_WaitingToLower == false) || ((UnitGroupCount(UnitGroup(null, c_playerAny, libMHmu_gv_elevator_Region, UnitFilter((1 << c_targetFilterHeroic), 0, 0, 0), 0), c_unitCountAlive) == 0) && (UnitGroupCount(UnitGroup(null, c_playerAny, libMHmu_gv_elevator_Region, UnitFilter(0, (1 << (c_targetFilterSummoned - 32)), 0, 0), 0), c_unitCountAlive) == 0) && (UnitGroupCount(UnitGroup(null, c_playerAny, libMHmu_gv_elevator_Region, UnitFilter((1 << c_targetFilterMinion), 0, 0, 0), 0), c_unitCountAlive) == 0) && (UnitGroupCount(UnitGroup(null, c_playerAny, libMHmu_gv_elevator_Region, UnitFilter((1 << c_targetFilterCreep), 0, 0, 0), 0), c_unitCountAlive) == 0))))) {
+        libGame_Wait(0.125, c_timeGame);
+    }
+    libMHmu_gv_elevator_WaitingToLower = false;
+    libMHmu_gf_ElevatorAddRemoveUnpathableUnit(true);
+    ActorSend(ActorFromDoodad(libMHmu_gv_elevator_Doodad), "Signal Down");
+    for (auto95E1F680_i = 1; auto95E1F680_i <= auto95E1F680_n; auto95E1F680_i += 1) {
+        auto10FF810F_g = UnitGroup(null, c_playerAny, libMHmu_gv_elevator_Region, libCore_gv_filtersHeroic, 0);
+        auto10FF810F_u = UnitGroupCount(auto10FF810F_g, c_unitCountAll);
+        for (;; auto10FF810F_u -= 1) {
+            lv_itHeroUnit = UnitGroupUnitFromEnd(auto10FF810F_g, auto10FF810F_u);
+            if (lv_itHeroUnit == null) { break; }
+            UnitCreateEffectUnit(lv_itHeroUnit, "HeroGenericMissileInterruptLaunchMissile", lv_itHeroUnit);
+        }
+    }
+    return true;
+}
+
+trigger auto_libMHmu_gf_PayloadSpawning_Trigger = null;
+
+void libMHmu_gf_PayloadSpawning () {
+    if (auto_libMHmu_gf_PayloadSpawning_Trigger == null) {
+        auto_libMHmu_gf_PayloadSpawning_Trigger = TriggerCreate("auto_libMHmu_gf_PayloadSpawning_TriggerFunc");
+    }
+
+    TriggerExecute(auto_libMHmu_gf_PayloadSpawning_Trigger, false, false);
+}
+
+bool auto_libMHmu_gf_PayloadSpawning_TriggerFunc (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Implementation
+    if ((libGame_gv_gameOver == true)) {
+        return true;
+    }
+
+    TriggerQueueEnter();
+    UserDataResetType("MapVOEvent");
+    ConversationDataLineResetPlayers("HanamuraVO", ("Left"));
+    ConversationDataLineResetPlayers("HanamuraVO", ("Right"));
+    ConversationDataLineResetPlayers("HanamuraVO", ("Observer"));
+    if ((libMHmu_gv_hanamura.lv_mapMechanic_FirstPayloadSpawned == false)) {
+        UserDataSetInt("MapVOEvent", "Hanamura - Payload Spawning First", "Value", 1, 1);
+        libMHmu_gv_hanamura.lv_mapMechanic_FirstPayloadSpawned = true;
+    }
+    else {
+        UserDataSetInt("MapVOEvent", "Hanamura - Payload Spawning Left", "Value", 1, 1);
+    }
+    ConversationDataRun("HanamuraVO", PlayerGroupAll(), c_conversationSkipNone, false);
+    libCore_gf_WaitForConversationToFinish();
+    TriggerQueueExit();
+    return true;
+}
+
+trigger auto_libMHmu_gf_PayloadsSpawned_Trigger = null;
+
+void libMHmu_gf_PayloadsSpawned () {
+    if (auto_libMHmu_gf_PayloadsSpawned_Trigger == null) {
+        auto_libMHmu_gf_PayloadsSpawned_Trigger = TriggerCreate("auto_libMHmu_gf_PayloadsSpawned_TriggerFunc");
+    }
+
+    TriggerExecute(auto_libMHmu_gf_PayloadsSpawned_Trigger, false, false);
+}
+
+bool auto_libMHmu_gf_PayloadsSpawned_TriggerFunc (bool testConds, bool runActions) {
+    // Variable Declarations
+    playergroup lv_groupOrder;
+    playergroup lv_groupChaos;
+    playergroup lv_groupObserver;
+    int lv_itLineIndex;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_groupOrder = PlayerGroupEmpty();
+    lv_groupChaos = PlayerGroupEmpty();
+    lv_groupObserver = PlayerGroupEmpty();
+
+    // Implementation
+    if ((libGame_gv_gameOver == true)) {
+        return true;
+    }
+
+    TriggerQueueEnter();
+    UserDataResetType("MapVOEvent");
+    ConversationDataLineResetPlayers("HanamuraVO", ("Left"));
+    ConversationDataLineResetPlayers("HanamuraVO", ("Right"));
+    ConversationDataLineResetPlayers("HanamuraVO", ("Observer"));
+    if ((libMHmu_gv_hanamura.lv_mapMechanic_FirstPayloadSpawned == false)) {
+        UserDataSetInt("MapVOEvent", "Hanamura - Payload Spawn First", "Value", 1, 1);
+    }
+    else {
+        UserDataSetInt("MapVOEvent", "Hanamura - Payload Spawn Left", "Value", 1, 1);
+    }
+    ConversationDataRun("HanamuraVO", PlayerGroupAll(), c_conversationSkipNone, false);
+    libCore_gf_WaitForConversationToFinish();
+    TriggerQueueExit();
+    return true;
+}
+
+trigger auto_libMHmu_gf_PayloadsPathCompletedOrder_Trigger = null;
+
+void libMHmu_gf_PayloadsPathCompletedOrder () {
+    if (auto_libMHmu_gf_PayloadsPathCompletedOrder_Trigger == null) {
+        auto_libMHmu_gf_PayloadsPathCompletedOrder_Trigger = TriggerCreate("auto_libMHmu_gf_PayloadsPathCompletedOrder_TriggerFunc");
+    }
+
+    TriggerExecute(auto_libMHmu_gf_PayloadsPathCompletedOrder_Trigger, false, false);
+}
+
+bool auto_libMHmu_gf_PayloadsPathCompletedOrder_TriggerFunc (bool testConds, bool runActions) {
+    // Variable Declarations
+    playergroup lv_groupOrder;
+    playergroup lv_groupChaos;
+    playergroup lv_groupObserver;
+    int lv_itLineIndex;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_groupOrder = PlayerGroupEmpty();
+    lv_groupChaos = PlayerGroupEmpty();
+    lv_groupObserver = PlayerGroupEmpty();
+
+    // Implementation
+    if ((libGame_gv_gameOver == true)) {
+        return true;
+    }
+
+    TriggerQueueEnter();
+    UserDataResetType("MapVOEvent");
+    ConversationDataLineResetPlayers("HanamuraVO", ("Left"));
+    ConversationDataLineResetPlayers("HanamuraVO", ("Right"));
+    ConversationDataLineResetPlayers("HanamuraVO", ("Observer"));
+    UserDataSetInt("MapVOEvent", "Hanamura - Payload End Left", "Value", 1, 1);
+    lv_groupOrder = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_groupChaos = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamChaosIndex_C, false);
+    lv_groupObserver = libCore_gv_playerGroupFromPlayer[libCore_gv_oBSERVER_ObserverUIPlayer];
+    ConversationDataLineSetPlayers("HanamuraVO", ("Left"), lv_groupOrder);
+    ConversationDataLineSetPlayers("HanamuraVO", ("Right"), lv_groupChaos);
+    ConversationDataLineSetPlayers("HanamuraVO", ("Observer"), lv_groupObserver);
+    ConversationDataRun("HanamuraVO", PlayerGroupAll(), c_conversationSkipNone, false);
+    libCore_gf_WaitForConversationToFinish();
+    TriggerQueueExit();
+    return true;
+}
+
+trigger auto_libMHmu_gf_PayloadsPathCompletedChaos_Trigger = null;
+
+void libMHmu_gf_PayloadsPathCompletedChaos () {
+    if (auto_libMHmu_gf_PayloadsPathCompletedChaos_Trigger == null) {
+        auto_libMHmu_gf_PayloadsPathCompletedChaos_Trigger = TriggerCreate("auto_libMHmu_gf_PayloadsPathCompletedChaos_TriggerFunc");
+    }
+
+    TriggerExecute(auto_libMHmu_gf_PayloadsPathCompletedChaos_Trigger, false, false);
+}
+
+bool auto_libMHmu_gf_PayloadsPathCompletedChaos_TriggerFunc (bool testConds, bool runActions) {
+    // Variable Declarations
+    playergroup lv_groupOrder;
+    playergroup lv_groupChaos;
+    playergroup lv_groupObserver;
+    int lv_itLineIndex;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_groupOrder = PlayerGroupEmpty();
+    lv_groupChaos = PlayerGroupEmpty();
+    lv_groupObserver = PlayerGroupEmpty();
+
+    // Implementation
+    if ((libGame_gv_gameOver == true)) {
+        return true;
+    }
+
+    TriggerQueueEnter();
+    UserDataResetType("MapVOEvent");
+    ConversationDataLineResetPlayers("HanamuraVO", ("Left"));
+    ConversationDataLineResetPlayers("HanamuraVO", ("Right"));
+    ConversationDataLineResetPlayers("HanamuraVO", ("Observer"));
+    UserDataSetInt("MapVOEvent", "Hanamura - Payload End Right", "Value", 1, 1);
+    lv_groupOrder = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamOrderIndex_C, false);
+    lv_groupChaos = libGame_gf_PlayersOnTeamHeroes(libGame_gv_teamChaosIndex_C, false);
+    lv_groupObserver = libCore_gv_playerGroupFromPlayer[libCore_gv_oBSERVER_ObserverUIPlayer];
+    ConversationDataLineSetPlayers("HanamuraVO", ("Left"), lv_groupOrder);
+    ConversationDataLineSetPlayers("HanamuraVO", ("Right"), lv_groupChaos);
+    ConversationDataLineSetPlayers("HanamuraVO", ("Observer"), lv_groupObserver);
+    ConversationDataRun("HanamuraVO", PlayerGroupAll(), c_conversationSkipNone, false);
+    libCore_gf_WaitForConversationToFinish();
+    TriggerQueueExit();
+    return true;
+}
+
+trigger auto_libMHmu_gf_ShowWarningTimer_Trigger = null;
+
+void libMHmu_gf_ShowWarningTimer () {
+    if (auto_libMHmu_gf_ShowWarningTimer_Trigger == null) {
+        auto_libMHmu_gf_ShowWarningTimer_Trigger = TriggerCreate("auto_libMHmu_gf_ShowWarningTimer_TriggerFunc");
+    }
+
+    TriggerExecute(auto_libMHmu_gf_ShowWarningTimer_Trigger, false, false);
+}
+
+bool auto_libMHmu_gf_ShowWarningTimer_TriggerFunc (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Implementation
+    DialogControlSetVisible(libNPLD_gv_hanamura.lv_warningTimerFrame, PlayerGroupAll(), true);
+    while ((TimerGetRemaining(libMHmu_gv_hanamura.lv_mapMechanic_ObjectivePreviewDelay) > 0.5)) {
+        libNtve_gf_SetDialogItemText(libNPLD_gv_hanamura.lv_warningTimerLabel, FixedToText(TimerGetRemaining(libMHmu_gv_hanamura.lv_mapMechanic_ObjectivePreviewDelay), 0), PlayerGroupAll());
+        libGame_Wait(0.0625, c_timeGame);
+    }
+    libNtve_gf_SetDialogItemText(libNPLD_gv_hanamura.lv_warningTimerLabel, FixedToText(0.0, 0), PlayerGroupAll());
+    DialogControlSendAnimationEvent(libNPLD_gv_hanamura.lv_warningTimerFrame, PlayerGroupAll(), "AnimateOut");
+    libGame_Wait(0.5, c_timeGame);
+    DialogControlSetVisible(libNPLD_gv_hanamura.lv_warningTimerFrame, PlayerGroupAll(), false);
+    return true;
+}
+
+void libMHmu_gf_ShowWarningIndicator (int lp_team) {
+    // Variable Declarations
+    int lv_pathIndex;
+    int lv_destinationIndex;
+    string lv_unitType;
+
+    // Automatic Variable Declarations
+    int autoB5A2216A_val;
+
+    // Variable Initialization
+    lv_pathIndex = libNPLD_gv_neutralPayload.lv_pathIndex_Team[lp_team];
+    lv_destinationIndex = libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[lp_team][lv_pathIndex];
+
+    // Implementation
+    autoB5A2216A_val = lv_pathIndex;
+    if (autoB5A2216A_val == 1) {
+        lv_unitType = "ControlPointMinimapPreviewIconB";
+    }
+    else if (autoB5A2216A_val == 2) {
+        lv_unitType = "ControlPointMinimapPreviewIconC";
+    }
+    else if (autoB5A2216A_val == 3) {
+        lv_unitType = "ControlPointMinimapPreviewIconA";
+    }
+    else {
+    }
+    libNtve_gf_CreateUnitsWithDefaultFacing(1, lv_unitType, c_unitCreateIgnorePlacement, libGame_gf_ComputerPlayerInTeam(lp_team), libNPLD_gv_neutralPayload.lv_pathWaypoints[lp_team][lv_pathIndex][libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[lp_team][lv_pathIndex]], null);
+    libMHmu_gv_hanamura.lv_mapMechanic_PreviewUnit[lp_team] = UnitLastCreated();
+}
+
+void libMHmu_gf_ShowDestinationIndicator (int lp_team) {
+    // Variable Declarations
+    int lv_pathIndex;
+    int lv_destinationIndex;
+    string lv_unitType;
+    fixed lv_facing;
+
+    // Automatic Variable Declarations
+    int autoCC6C6325_val;
+
+    // Variable Initialization
+    lv_pathIndex = libNPLD_gv_neutralPayload.lv_pathIndex_Team[lp_team];
+    lv_destinationIndex = libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[lp_team][lv_pathIndex];
+
+    // Implementation
+    UnitKill(libMHmu_gv_hanamura.lv_mapMechanic_PreviewUnit[lp_team]);
+    autoCC6C6325_val = lv_pathIndex;
+    if (autoCC6C6325_val == 1) {
+        lv_unitType = "ControlPointMinimapIconB";
+    }
+    else if (autoCC6C6325_val == 2) {
+        lv_unitType = "ControlPointMinimapIconC";
+    }
+    else if (autoCC6C6325_val == 3) {
+        lv_unitType = "ControlPointMinimapIconA";
+        lv_facing = 90.0;
+    }
+    else {
+    }
+    libNtve_gf_CreateUnitsWithDefaultFacing(1, lv_unitType, c_unitCreateIgnorePlacement, libGame_gf_ComputerPlayerInTeam(lp_team), libNPLD_gv_neutralPayload.lv_pathWaypoints[lp_team][lv_pathIndex][libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[lp_team][lv_pathIndex]], null);
+    libMHmu_gv_hanamura.lv_mapMechanic_DestinationUnit[lp_team] = UnitLastCreated();
+}
+
+void libMHmu_gf_DestroyDestinationIndicator (int lp_team) {
+    // Variable Declarations
+    int lv_pathIndex;
+    int lv_destinationIndex;
+    string lv_unitType;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_pathIndex = libNPLD_gv_neutralPayload.lv_pathIndex_Team[lp_team];
+    lv_destinationIndex = libNPLD_gv_neutralPayload.lv_pathWaypoints_DestinationIndex[lp_team][lv_pathIndex];
+
+    // Implementation
+    UnitKill(libMHmu_gv_hanamura.lv_mapMechanic_DestinationUnit[lp_team]);
+}
+
+void libMHmu_gf_EOMInitializeEndofMatchAward () {
+    // Variable Declarations
+    int lv_iterator;
+
+    // Automatic Variable Declarations
+    int auto7398B425_ae;
+
+    // Variable Initialization
+
+    // Implementation
+    auto7398B425_ae = libCore_gv_bALMaxPlayers;
+    lv_iterator = 1;
+    for ( ; lv_iterator <= auto7398B425_ae ; lv_iterator += 1 ) {
+        TimerStart(libMHmu_gv_eOMPusherTimer[lv_iterator], c_timerDurationInfinite, false, c_timeGame);
+        TimerPause(TimerLastStarted(), true);
+    }
+    libGame_gf_SendMapSpecificAwardInitializeEventwithUserData(null, "Generic Instance");
+}
+
+int libMHmu_gf_ppathGetPathID (string lp_inputString) {
+    // Automatic Variable Declarations
+    string autoE70FAC27_val;
+
+    // Implementation
+    autoE70FAC27_val = lp_inputString;
+    if (autoE70FAC27_val == "A") {
+        return 3;
+    }
+    else if (autoE70FAC27_val == "a") {
+        return 3;
+    }
+    else if (autoE70FAC27_val == "1") {
+        return 3;
+    }
+    else if (autoE70FAC27_val == "B") {
+        return 1;
+    }
+    else if (autoE70FAC27_val == "b") {
+        return 1;
+    }
+    else if (autoE70FAC27_val == "2") {
+        return 1;
+    }
+    else if (autoE70FAC27_val == "C") {
+        return 2;
+    }
+    else if (autoE70FAC27_val == "c") {
+        return 2;
+    }
+    else if (autoE70FAC27_val == "3") {
+        return 2;
+    }
+    else {
+        return 0;
+    }
+}
+
+// Triggers
+//--------------------------------------------------------------------------------------------------
+// Trigger: Hanamura Core - Barrage Proc
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_HanamuraCoreBarrageProc_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    point lv_p;
+    int lv_i;
+    unit lv_core;
+    int lv_coreOwner;
+
+    // Automatic Variable Declarations
+    int autoAAF3A068_ae;
+
+    // Variable Initialization
+    lv_core = EventPlayerEffectUsedUnit(c_effectUnitCaster);
+    lv_coreOwner = UnitGetOwner(lv_core);
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    autoAAF3A068_ae = libMHmu_gv_hanamuraCoreBarrageCount;
+    lv_i = 1;
+    for ( ; lv_i <= autoAAF3A068_ae ; lv_i += 1 ) {
+        lv_p = UnitTypePlacementFromPoint("HanamuraCoreAttackRadiusDummy", lv_coreOwner, RegionRandomPoint(RegionCircle(UnitGetPosition(lv_core), 10.0)), 10.0);
+        UnitCreateEffectPointWithSource(lv_core, "HanamuraCoreBarrageLaunchPersistent", lv_p, c_gameCatalogAbil, "HanamuraCoreBarrage");
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_HanamuraCoreBarrageProc_Init () {
+    libMHmu_gt_HanamuraCoreBarrageProc = TriggerCreate("libMHmu_gt_HanamuraCoreBarrageProc_Func");
+    TriggerAddEventPlayerEffectUsed(libMHmu_gt_HanamuraCoreBarrageProc, c_playerAny, "HanamuraCoreBarrageDummySet");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Map Initialization
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_MapInitialization_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libMHmu_gf_InitSwordsmanMercCampBruiserCamp1();
+    if ((libMHmu_gv_hanamuraUseVisionCamps == true)) {
+        libMHmu_gf_InitVisionMercCampBruiserCamp3();
+    }
+    else {
+        libMHmu_gf_InitKnightsMercCampBruiserCamp3();
+    }
+    libUIUI_gf_PingCreateNewPingTarget("Payload_Neutral", false, StringExternal("Param/Value/lib_MHmu_A5C3D854"), StringExternal("Param/Value/lib_MHmu_B3436071"), StringExternal("Param/Value/lib_MHmu_3DEE864E"), SoundLink("UI_Game_Ping_Defend", -1), SoundLink("UI_Game_Ping_Attack", -1));
+    libMHmu_gv_payloadPaths[libGame_gv_teamOrderIndex_C][3] = "HanamuraPayloadPath1Order";
+    libMHmu_gv_payloadPaths[libGame_gv_teamOrderIndex_C][1] = "HanamuraPayloadPath2Order";
+    libMHmu_gv_payloadPaths[libGame_gv_teamOrderIndex_C][2] = "HanamuraPayloadPath3Order";
+    libMHmu_gv_payloadPaths[libGame_gv_teamChaosIndex_C][3] = "HanamuraPayloadPath1Chaos";
+    libMHmu_gv_payloadPaths[libGame_gv_teamChaosIndex_C][1] = "HanamuraPayloadPath2Chaos";
+    libMHmu_gv_payloadPaths[libGame_gv_teamChaosIndex_C][2] = "HanamuraPayloadPath3Chaos";
+    libOVER_gv_overwatchModExtraScalingEnabled = false;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_MapInitialization_Init () {
+    libMHmu_gt_MapInitialization = TriggerCreate("libMHmu_gt_MapInitialization_Func");
+    TriggerAddEventMapInit(libMHmu_gt_MapInitialization);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Map Mechanic Initialized
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_MapMechanicInitialized_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_itPlayer;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!((libGame_gf_MapMechanicInitializationMechanicType() == libMHmu_gv_hanamuraMechanicName_C))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TriggerExecute(libMHmu_gt_InitializeMinionData, true, false);
+    TriggerExecute(libMHmu_gt_InitializeMinionScalingData, true, false);
+    libMHmu_gf_EOMInitializeEndofMatchAward();
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_MapMechanicInitialized_Init () {
+    libMHmu_gt_MapMechanicInitialized = TriggerCreate("libMHmu_gt_MapMechanicInitialized_Func");
+    libGame_gf_MapMechanicInitialization(libMHmu_gt_MapMechanicInitialized);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Open The Gates Timer Expires
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_OpenTheGatesTimerExpires_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((libMapM_gv_mMMapMechanicDisabled == false))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TimerStart(libMHmu_gv_hanamura.lv_mapMechanic_ObjectivePreviewTimer, (libMHmu_gv_mapMechanic_CooldownTimer_Duration - libMHmu_gv_mapMechanic_WarningTimer_Duration), false, c_timeGame);
+    libSond_gf_SoundtrackApplyNewDefaultSoundtrackForPlayerGroup("MX_Hanamura_GameStart", PlayerGroupAll());
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_OpenTheGatesTimerExpires_Init () {
+    libMHmu_gt_OpenTheGatesTimerExpires = TriggerCreate("libMHmu_gt_OpenTheGatesTimerExpires_Func");
+    TriggerAddEventTimer(libMHmu_gt_OpenTheGatesTimerExpires, libGame_gv_openTheGatesTimer);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Map Mechanic Timer Expires
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_MapMechanicTimerExpires_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libNPLD_gf_ShowPayloadPath_Warning();
+    libMHmu_gf_PayloadSpawning();
+    libMHmu_gf_ShowWarningIndicator(libGame_gv_teamOrderIndex_C);
+    libMHmu_gf_ShowWarningIndicator(libGame_gv_teamChaosIndex_C);
+    TimerStart(libMHmu_gv_hanamuraMM10secondcountdownTimer, (libMHmu_gv_mapMechanic_WarningTimer_Duration - 10.5), false, c_timeGame);
+    TimerStart(libMHmu_gv_hanamura.lv_mapMechanic_ObjectivePreviewDelay, libMHmu_gv_mapMechanic_WarningTimer_Duration, false, c_timeGame);
+    TimerStart(libMHmu_gv_elevator.lv_elevatorRaiseTimer, (libMHmu_gv_mapMechanic_WarningTimer_Duration - 8.0), false, c_timeGame);
+    AddPointOfInterest(libNPLD_gv_neutralPayload.lv_pathWaypoints_StartLocation, 8.0, 20.0, "PrepareForPayload", libNtve_ge_GoalTeam_Both, 0);
+    libMHmu_gf_ShowWarningTimer();
+    libSond_gf_SoundtrackApplyNewDefaultSoundtrackForPlayerGroup("MX_Hanamura_EventWarning", PlayerGroupAll());
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_MapMechanicTimerExpires_Init () {
+    libMHmu_gt_MapMechanicTimerExpires = TriggerCreate("libMHmu_gt_MapMechanicTimerExpires_Func");
+    TriggerAddEventTimer(libMHmu_gt_MapMechanicTimerExpires, libMHmu_gv_hanamura.lv_mapMechanic_ObjectivePreviewTimer);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Map Mechanic Warning Expires
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_MapMechanicWarningExpires_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libMHmu_gf_ElevatorAddRemoveUnpathableUnit(false);
+    DialogControlSetVisible(libNPLD_gv_hanamura.lv_payloadPanel, PlayerGroupAll(), true);
+    libNPLD_gf_CreateNeutralPayload();
+    libMHmu_gf_ShowDestinationIndicator(libGame_gv_teamOrderIndex_C);
+    libMHmu_gf_ShowDestinationIndicator(libGame_gv_teamChaosIndex_C);
+    libMHmu_gf_PayloadsSpawned();
+    libSond_gf_SoundtrackApplyNewDefaultSoundtrackForPlayerGroup("MX_Hanamura_Event", PlayerGroupAll());
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_MapMechanicWarningExpires_Init () {
+    libMHmu_gt_MapMechanicWarningExpires = TriggerCreate("libMHmu_gt_MapMechanicWarningExpires_Func");
+    TriggerAddEventTimer(libMHmu_gt_MapMechanicWarningExpires, libMHmu_gv_hanamura.lv_mapMechanic_ObjectivePreviewDelay);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Map Mechanic - 10 Second Countdown Timer Expires
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_MapMechanic10SecondCountdownTimerExpires_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    SoundPlayForPlayer(SoundLink("UI_Game_Payload_Countdown", -1), c_maxPlayers, PlayerGroupAll(), 100.0, 0.0);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_MapMechanic10SecondCountdownTimerExpires_Init () {
+    libMHmu_gt_MapMechanic10SecondCountdownTimerExpires = TriggerCreate("libMHmu_gt_MapMechanic10SecondCountdownTimerExpires_Func");
+    TriggerAddEventTimer(libMHmu_gt_MapMechanic10SecondCountdownTimerExpires, libMHmu_gv_hanamuraMM10secondcountdownTimer);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Henchmen - Create Vision Units
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_HenchmenCreateVisionUnits_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!(((libGame_gf_JungleCampSpawnedIndex() == 6) || (libGame_gf_JungleCampSpawnedIndex() == 5)))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UnitCreate(1, "ReconCampVisionUnit", c_unitCreateIgnorePlacement, 0, libMapM_gv_jungleCreepCamps[libGame_gf_JungleCampSpawnedIndex()].lv_mapDataCampCaptainSpawnPoint, PointGetFacing(libMapM_gv_jungleCreepCamps[libGame_gf_JungleCampSpawnedIndex()].lv_mapDataCampCaptainSpawnPoint), null);
+    libMHmu_gv_mercCamp_VisionUnit[libGame_gf_JungleCampSpawnedIndex()] = UnitLastCreated();
+    if ((UnitIsValid(libMHmu_gv_mercCamp_VisionUnit[5]) == true) && (UnitIsValid(libMHmu_gv_mercCamp_VisionUnit[6]) == true)) {
+        TriggerEnable(TriggerGetCurrent(), false);
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_HenchmenCreateVisionUnits_Init () {
+    libMHmu_gt_HenchmenCreateVisionUnits = TriggerCreate("libMHmu_gt_HenchmenCreateVisionUnits_Func");
+    libGame_gf_JungleCampSpawned(libMHmu_gt_HenchmenCreateVisionUnits);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Recon Camp Taken
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_ReconCampTaken_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_campIndex;
+    int lv_rewardPlayer;
+    int lv_rewardTeam;
+    int lv_rewardCpuPlayer;
+    point lv_captainSpawn;
+    unitgroup lv_heroesOnPoint;
+    bool[libCore_gv_bALMaxPlayers + 1] lv_isPlayerOnPoint;
+    unit lv_heroUnit;
+    int lv_player;
+
+    // Automatic Variable Declarations
+    unitgroup auto47101982_g;
+    int auto47101982_u;
+    const int auto4F86E8E4_ae = libCore_gv_bALMaxPlayers;
+    const int auto4F86E8E4_ai = 1;
+
+    // Variable Initialization
+    lv_campIndex = libGame_gf_MercCampRewardGrantedCampIndex();
+    lv_rewardPlayer = libGame_gf_MercCampRewardGrantedPlayer();
+    lv_rewardTeam = libGame_gf_TeamNumberOfPlayer(lv_rewardPlayer);
+    lv_rewardCpuPlayer = libGame_gf_ComputerPlayerInTeam(lv_rewardTeam);
+    lv_captainSpawn = libMapM_gv_jungleCreepCamps[lv_campIndex].lv_mapDataCampCaptainSpawnPoint;
+    lv_heroesOnPoint = UnitGroupEmpty();
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((libGame_gf_MercCampRewardGrantedCampIndex() == 5)) {
+        UnitSetTokenCount(libGame_gv_teams[lv_rewardTeam].lv_core, "AIMapTokenMapControlMercenaryCampVisionTop", 1.0, libGame_gv_teams[lv_rewardTeam].lv_core);
+        UnitSetTokenCount(libGame_gv_teams[libGame_gf_EnemyTeam(lv_rewardTeam)].lv_core, "AIMapTokenMapControlMercenaryCampVisionTop", 0.0, libGame_gv_teams[lv_rewardTeam].lv_core);
+    }
+
+    if ((libGame_gf_MercCampRewardGrantedCampIndex() == 6)) {
+        UnitSetTokenCount(libGame_gv_teams[lv_rewardTeam].lv_core, "AIMapTokenMapControlMercenaryCampVisionBottom", 1.0, libGame_gv_teams[lv_rewardTeam].lv_core);
+        UnitSetTokenCount(libGame_gv_teams[libGame_gf_EnemyTeam(lv_rewardTeam)].lv_core, "AIMapTokenMapControlMercenaryCampVisionBottom", 0.0, libGame_gv_teams[lv_rewardTeam].lv_core);
+    }
+
+    if (((libGame_gf_MercCampRewardGrantedCampIndex() == 5) || (libGame_gf_MercCampRewardGrantedCampIndex() == 6))) {
+        UnitRemove(libMHmu_gv_mercCamp_VisionUnit[lv_campIndex]);
+        UnitCreate(1, "ReconCampVisionUnit", c_unitCreateIgnorePlacement, lv_rewardCpuPlayer, lv_captainSpawn, PointGetFacing(lv_captainSpawn), null);
+        libMHmu_gv_mercCamp_VisionUnit[lv_campIndex] = UnitLastCreated();
+        UnitCreateEffectUnit(UnitLastCreated(), "WatchtowerRevealDummy", UnitLastCreated());
+        libMHmu_gv_mercCamp_TeamOwner[lv_campIndex] = lv_rewardTeam;
+        libMHmu_gf_HenchmenCustomRespawnCreepsForCamp(lv_campIndex, lv_rewardCpuPlayer);
+        lv_heroesOnPoint = UnitGroupAlliance(lv_rewardCpuPlayer, c_unitAllianceAlly, RegionCircle(lv_captainSpawn, libMapM_gv_bALJungleCampCaptureRadius), UnitFilter((1 << c_targetFilterHeroic), 0, 0, 0), 0);
+        auto47101982_g = lv_heroesOnPoint;
+        auto47101982_u = UnitGroupCount(auto47101982_g, c_unitCountAll);
+        for (;; auto47101982_u -= 1) {
+            lv_heroUnit = UnitGroupUnitFromEnd(auto47101982_g, auto47101982_u);
+            if (lv_heroUnit == null) { break; }
+            if (((UnitFilterMatch(lv_heroUnit, UnitGetOwner(lv_heroUnit), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterBenign - 32)))) == true) || (UnitHasBehavior2(lv_heroUnit, "CapturePointAllowed") == true)) && ((UnitBehaviorCount(lv_heroUnit, "UltimateEvolutionBuff") == 1) || (UnitBehaviorCount(lv_heroUnit, "CapturePointAllowed") == 1) || (UnitTestState(lv_heroUnit, c_unitStateHallucination) == false))) {
+                lv_isPlayerOnPoint[UnitGetOwner(lv_heroUnit)] = true;
+            }
+
+        }
+        lv_player = 1;
+        for ( ; ( (auto4F86E8E4_ai >= 0 && lv_player <= auto4F86E8E4_ae) || (auto4F86E8E4_ai < 0 && lv_player >= auto4F86E8E4_ae) ) ; lv_player += auto4F86E8E4_ai ) {
+            if ((lv_isPlayerOnPoint[lv_player] == true)) {
+                libGame_gv_scoreValues[lv_player].lv_watchTowersCaptured += 1;
+            }
+
+        }
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_ReconCampTaken_Init () {
+    libMHmu_gt_ReconCampTaken = TriggerCreate("libMHmu_gt_ReconCampTaken_Func");
+    libGame_gf_MercCampRewardGranted(libMHmu_gt_ReconCampTaken);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Initialize Minion Data
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_InitializeMinionData_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_composition;
+    int lv_group;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!((libCore_gv_sYSCustomMinionsEnabled == false))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_composition = (libCore_ge_MinionWaveCompositionsTypes_Standard);
+    lv_group = 0;
+    libCore_gv_dataMinionWaveCompositions[lv_composition].lv_name = StringExternal("Param/Value/lib_MHmu_9D807203");
+    libCore_gv_dataMinionWaveCompositions[lv_composition].lv_enabled = true;
+    lv_group += 1;
+    libCore_gv_dataMinionWaveCompositions[lv_composition].lv_groupMinionType[lv_group] = libCore_ge_MinionTypes_Footmen;
+    libCore_gv_dataMinionWaveCompositions[lv_composition].lv_groupMinionCount[lv_group] = 3;
+    lv_group += 1;
+    libCore_gv_dataMinionWaveCompositions[lv_composition].lv_groupMinionType[lv_group] = libCore_ge_MinionTypes_Wizard;
+    libCore_gv_dataMinionWaveCompositions[lv_composition].lv_groupMinionCount[lv_group] = 1;
+    lv_group += 1;
+    libCore_gv_dataMinionWaveCompositions[lv_composition].lv_groupMinionType[lv_group] = libCore_ge_MinionTypes_Ranged;
+    libCore_gv_dataMinionWaveCompositions[lv_composition].lv_groupMinionCount[lv_group] = 3;
+    lv_group += 1;
+    libCore_gv_dataMinionWaveCompositions[lv_composition].lv_groupMinionType[lv_group] = libCore_ge_MinionTypes_Catapult;
+    libCore_gv_dataMinionWaveCompositions[lv_composition].lv_groupMinionCount[lv_group] = 1;
+    libCore_gv_dataMinionWaveCompositions[lv_composition].lv_numberOfGroups = lv_group;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_InitializeMinionData_Init () {
+    libMHmu_gt_InitializeMinionData = TriggerCreate("libMHmu_gt_InitializeMinionData_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Initialize Minion Scaling Data
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_InitializeMinionScalingData_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((libCore_gv_sYSCustomMinionsEnabled == false))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libCore_gf_DataInitializeScalingDataForMinion("FootmanMinion", libCore_ge_MinionTypes_Footmen);
+    libCore_gf_DataInitializeScalingDataForMinion("WizardMinion", libCore_ge_MinionTypes_Wizard);
+    libCore_gf_DataInitializeScalingDataForMinion("RangedMinion", libCore_ge_MinionTypes_Ranged);
+    libCore_gf_DataInitializeScalingDataForMinion("CatapultMinion", libCore_ge_MinionTypes_CustomCatapult1);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_InitializeMinionScalingData_Init () {
+    libMHmu_gt_InitializeMinionScalingData = TriggerCreate("libMHmu_gt_InitializeMinionScalingData_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Payload Target On
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_PayloadTargetOn_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_team;
+
+    // Automatic Variable Declarations
+    unitgroup autoF299F3A1_g;
+    int autoF299F3A1_u;
+    unit autoF299F3A1_var;
+
+    // Variable Initialization
+    lv_team = libGame_gf_TeamNumberOfPlayer(EventPlayer());
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    autoF299F3A1_g = libGame_gv_players[EventPlayer()].lv_heroUnitGroup;
+    autoF299F3A1_u = UnitGroupCount(autoF299F3A1_g, c_unitCountAll);
+    for (;; autoF299F3A1_u -= 1) {
+        autoF299F3A1_var = UnitGroupUnitFromEnd(autoF299F3A1_g, autoF299F3A1_u);
+        if (autoF299F3A1_var == null) { break; }
+        if ((UnitIsSelected(autoF299F3A1_var, EventPlayer()) == true) && (UnitGetType(autoF299F3A1_var) != "HeroLostVikingsController")) {
+            libMHmu_gv_heroInTargetMode[EventPlayer()] = autoF299F3A1_var;
+            break;
+        }
+
+    }
+    if ((libNPLD_gv_neutralPayload.lv_unit != null)) {
+        UnitCreateEffectUnit(libMHmu_gv_heroInTargetMode[EventPlayer()], "PayloadTurretDummyEffectToMakePlaceholderImage", libNPLD_gv_neutralPayload.lv_unit);
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_PayloadTargetOn_Init () {
+    libMHmu_gt_PayloadTargetOn = TriggerCreate("libMHmu_gt_PayloadTargetOn_Func");
+    TriggerAddEventTargetModeUpdate(libMHmu_gt_PayloadTargetOn, c_playerAny, AbilityCommand("MapMechanicAbilityTarget", 0), c_targetModeStateOn);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Payload Target Off
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_PayloadTargetOff_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    unitgroup auto52F595B8_g;
+    int auto52F595B8_u;
+    unit auto52F595B8_var;
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    auto52F595B8_g = libGame_gv_players[EventPlayer()].lv_heroUnitGroup;
+    auto52F595B8_u = UnitGroupCount(auto52F595B8_g, c_unitCountAll);
+    for (;; auto52F595B8_u -= 1) {
+        auto52F595B8_var = UnitGroupUnitFromEnd(auto52F595B8_g, auto52F595B8_u);
+        if (auto52F595B8_var == null) { break; }
+        UnitCreateEffectUnit(auto52F595B8_var, "PayloadTurretDummyEffectToDestroyPlaceholderImage", auto52F595B8_var);
+    }
+    libMHmu_gv_heroInTargetMode[EventPlayer()] = null;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_PayloadTargetOff_Init () {
+    libMHmu_gt_PayloadTargetOff = TriggerCreate("libMHmu_gt_PayloadTargetOff_Func");
+    TriggerAddEventTargetModeUpdate(libMHmu_gt_PayloadTargetOff, c_playerAny, AbilityCommand("MapMechanicAbilityTarget", 0), c_targetModeStateOff);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Payload Reaches Destination
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_PayloadReachesDestination_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    unitgroup lv_bannerUnitGroup;
+    int lv_bannerPlayerID;
+    unit lv_bannerSconce;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_bannerUnitGroup = UnitGroupEmpty();
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((libNPLD_gf_UnitStopsOccupyingVehicleVehicle() == 1)) {
+        libMHmu_gf_PayloadsPathCompletedOrder();
+    }
+    else {
+        libMHmu_gf_PayloadsPathCompletedChaos();
+    }
+    libMHmu_gf_ElevatorAttempttoLowerMonitor();
+    libMHmu_gf_DestroyDestinationIndicator(libGame_gv_teamOrderIndex_C);
+    libMHmu_gf_DestroyDestinationIndicator(libGame_gv_teamChaosIndex_C);
+    RemoveUnitOfInterest(libNPLD_gv_neutralPayload.lv_unit, "EscortPayload", libNtve_ge_GoalTeam_Both);
+    TimerStart(libMHmu_gv_hanamura.lv_mapMechanic_ObjectivePreviewTimer, (libMHmu_gv_mapMechanic_CooldownTimer_Duration - libMHmu_gv_mapMechanic_WarningTimer_Duration), false, c_timeGame);
+    UnitCreateEffectUnit(libNPLD_gv_neutralPayload.lv_unit, "RegenGlobePickupSearchSet", libNPLD_gv_neutralPayload.lv_unit);
+    lv_bannerUnitGroup = UnitGroupAlliance(UnitGetOwner(libNPLD_gv_neutralPayload.lv_unit), c_unitAllianceAlly, RegionCircle(UnitGetPosition(libNPLD_gv_neutralPayload.lv_unit), 12.0), UnitFilter((1 << c_targetFilterHeroic), 0, (1 << c_targetFilterNeutral) | (1 << c_targetFilterEnemy), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32)) | (1 << (c_targetFilterSummoned - 32))), 0);
+    lv_bannerPlayerID = UnitGetOwner(UnitGroupRandomUnit(lv_bannerUnitGroup, c_unitCountAlive));
+    lv_bannerSconce = UnitGroupClosestToPoint(UnitGroup("LootBannerSconce", c_playerAny, RegionCircle(UnitGetPosition(libNPLD_gv_neutralPayload.lv_unit), 12.0), UnitFilter(0, 0, (1 << c_targetFilterMissile), (1 << (c_targetFilterDead - 32)) | (1 << (c_targetFilterHidden - 32))), 0), UnitGetPosition(libNPLD_gv_neutralPayload.lv_unit));
+    if ((lv_bannerPlayerID >= 1) && (lv_bannerPlayerID <= 10) && (lv_bannerSconce != null) && (UnitIsValid(lv_bannerSconce) == true)) {
+        libGame_gf_DropLootBannerinSconce(lv_bannerSconce, libGame_gv_players[lv_bannerPlayerID].lv_lootContent.lv_loot_Banner.lv_bannerID, lv_bannerPlayerID, true);
+    }
+
+    libNPLD_gf_PayloadPathsDestroyActivePaths();
+    libSond_gf_SoundtrackUpdateMapSoundtrackIndex();
+    libSond_gf_SoundtrackPlayMapSoundtrackAsDefaultSoundtrackForAllPlayers();
+    libGame_Wait(1.0, c_timeGame);
+    DialogControlSetVisible(libNPLD_gv_hanamura.lv_attackingStructureFrame[libNPLD_gf_UnitStopsOccupyingVehicleVehicle()], PlayerGroupAll(), true);
+    DialogControlSetVisible(libNPLD_gv_hanamura.lv_payloadPanel_ActivePayloadStatus, PlayerGroupAll(), false);
+    libGame_Wait(1.0, c_timeGame);
+    libMHmu_gf_MakePayloadAttack(libNPLD_gf_UnitStopsOccupyingVehicleVehicle());
+    libGame_Wait(1.0, c_timeGame);
+    UnitKill(libNPLD_gv_neutralPayload.lv_unit);
+    libNPLD_gf_SetNewPayloadPathForTeam(libNPLD_gf_UnitStopsOccupyingVehicleVehicle());
+    libGame_Wait(1.0, c_timeGame);
+    libNPLD_gv_neutralPayload.lv_completedReward = true;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_PayloadReachesDestination_Init () {
+    libMHmu_gt_PayloadReachesDestination = TriggerCreate("libMHmu_gt_PayloadReachesDestination_Func");
+    libNPLD_gf_PayloadReachedDestination(libMHmu_gt_PayloadReachesDestination);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Keep Or Fort Gets Taken Over
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_KeepOrFortGetsTakenOver_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    unit lv_fortBuilding;
+    unit lv_bigRag;
+    unit lv_noUnit;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_fortBuilding = EventPlayerEffectUsedUnit(c_effectUnitTarget);
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    while (!(((UnitIsAlive(lv_fortBuilding) == false) || (UnitHasBehavior2(lv_fortBuilding, "RagnarosMoltenCoreStructureStasis") == true)))) {
+        libGame_Wait(0.0625, c_timeGame);
+    }
+    if ((UnitIsAlive(lv_fortBuilding) == false)) {
+        return true;
+    }
+
+    lv_bigRag = UnitGroupUnit(libGame_gv_players[EventPlayerEffectUsedUnitOwner(c_effectPlayerCaster)].lv_cameraPlayerUnitGroupToFocusOn, 1);
+    libCore_gf_StoreUnitForUnit(lv_fortBuilding, 99, lv_bigRag);
+    libCore_gf_StoreUnitForUnit(lv_bigRag, 99, lv_fortBuilding);
+    while (!((UnitHasBehavior2(lv_fortBuilding, "RagnarosMoltenCoreStructureStasis") == false))) {
+        libGame_Wait(0.0625, c_timeGame);
+    }
+    libCore_gf_StoreUnitForUnit(lv_fortBuilding, 99, lv_noUnit);
+    libCore_gf_StoreUnitForUnit(lv_bigRag, 99, lv_noUnit);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_KeepOrFortGetsTakenOver_Init () {
+    libMHmu_gt_KeepOrFortGetsTakenOver = TriggerCreate("libMHmu_gt_KeepOrFortGetsTakenOver_Func");
+    TriggerAddEventPlayerEffectUsed(libMHmu_gt_KeepOrFortGetsTakenOver, c_playerAny, "RagnarosMoltenCoreSmokeScreenApplyBehavior");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Payload Attack Launch
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_PayloadAttackLaunch_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libMHmu_gv_missileInFlightCount += 1;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_PayloadAttackLaunch_Init () {
+    libMHmu_gt_PayloadAttackLaunch = TriggerCreate("libMHmu_gt_PayloadAttackLaunch_Func");
+    TriggerAddEventPlayerEffectUsed(libMHmu_gt_PayloadAttackLaunch, 11, "Payload_AttackLM");
+    TriggerAddEventPlayerEffectUsed(libMHmu_gt_PayloadAttackLaunch, 12, "Payload_AttackLM");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Payload Attack Impact
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_PayloadAttackImpact_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libMHmu_gv_missileInFlightCount -= 1;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_PayloadAttackImpact_Init () {
+    libMHmu_gt_PayloadAttackImpact = TriggerCreate("libMHmu_gt_PayloadAttackImpact_Func");
+    TriggerAddEventPlayerEffectUsed(libMHmu_gt_PayloadAttackImpact, 11, "Payload_AttackDamage");
+    TriggerAddEventPlayerEffectUsed(libMHmu_gt_PayloadAttackImpact, 12, "Payload_AttackDamage");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Elevator - Add Unpathable Location At Start
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_ElevatorAddUnpathableLocationAtStart_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libMHmu_gf_ElevatorAddRemoveUnpathableUnit(true);
+    libMHmu_gv_elevator_WaitingToLower = true;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_ElevatorAddUnpathableLocationAtStart_Init () {
+    libMHmu_gt_ElevatorAddUnpathableLocationAtStart = TriggerCreate("libMHmu_gt_ElevatorAddUnpathableLocationAtStart_Func");
+    TriggerAddEventTimer(libMHmu_gt_ElevatorAddUnpathableLocationAtStart, libGame_gv_openTheGatesTimer);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Elevator - Start Initial Timer
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_ElevatorStartInitialTimer_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libMHmu_gf_ElevatorAddRemoveUnpathableUnit(true);
+    TimerStart(libMHmu_gv_elevator.lv_elevatorInitialRaiseTimer, (libMHmu_gv_mapMechanic_CooldownTimer_Duration - 8.0), false, c_timeGame);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_ElevatorStartInitialTimer_Init () {
+    libMHmu_gt_ElevatorStartInitialTimer = TriggerCreate("libMHmu_gt_ElevatorStartInitialTimer_Func");
+    TriggerAddEventTimer(libMHmu_gt_ElevatorStartInitialTimer, libGame_gv_openTheGatesTimer);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Elevator Initial Timer Expires
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_ElevatorInitialTimerExpires_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    ActorSend(ActorFromDoodad(libMHmu_gv_elevator_Doodad), "Signal Up");
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_ElevatorInitialTimerExpires_Init () {
+    libMHmu_gt_ElevatorInitialTimerExpires = TriggerCreate("libMHmu_gt_ElevatorInitialTimerExpires_Func");
+    TriggerAddEventTimer(libMHmu_gt_ElevatorInitialTimerExpires, libMHmu_gv_elevator.lv_elevatorInitialRaiseTimer);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Elevator Raise Timer Expires
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_ElevatorRaiseTimerExpires_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((libMHmu_gv_elevator.lv_elevatorWasLowered == true)) {
+        ActorSend(ActorFromDoodad(libMHmu_gv_elevator_Doodad), "Signal Up");
+        PointSet(libNPLD_gv_neutralPayload.lv_pathWaypoints_StartLocation, libMHmu_gv_elevator_Point);
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_ElevatorRaiseTimerExpires_Init () {
+    libMHmu_gt_ElevatorRaiseTimerExpires = TriggerCreate("libMHmu_gt_ElevatorRaiseTimerExpires_Func");
+    TriggerAddEventTimer(libMHmu_gt_ElevatorRaiseTimerExpires, libMHmu_gv_elevator.lv_elevatorRaiseTimer);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Elevator - Forced Lower
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_ElevatorForcedLower_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libMHmu_gv_elevator_WaitingToLower = false;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_ElevatorForcedLower_Init () {
+    libMHmu_gt_ElevatorForcedLower = TriggerCreate("libMHmu_gt_ElevatorForcedLower_Func");
+    TriggerAddEventTimer(libMHmu_gt_ElevatorForcedLower, libMHmu_gv_elevator_Forced_Lower_Timer);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: EOM Initialize Pusher Behaviors
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_EOMInitializePusherBehaviors_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    unit lv_iteratorUnit;
+    int lv_iterator;
+
+    // Automatic Variable Declarations
+    int auto3D2683EB_ae;
+    unitgroup autoA14C2C83_g;
+    int autoA14C2C83_u;
+
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    auto3D2683EB_ae = libCore_gv_bALMaxPlayers;
+    lv_iterator = 1;
+    for ( ; lv_iterator <= auto3D2683EB_ae ; lv_iterator += 1 ) {
+        autoA14C2C83_g = libGame_gv_players[lv_iterator].lv_heroUnitGroup;
+        autoA14C2C83_u = UnitGroupCount(autoA14C2C83_g, c_unitCountAll);
+        for (;; autoA14C2C83_u -= 1) {
+            lv_iteratorUnit = UnitGroupUnitFromEnd(autoA14C2C83_g, autoA14C2C83_u);
+            if (lv_iteratorUnit == null) { break; }
+            UnitCreateEffectUnit(lv_iteratorUnit, "ApplyAllyPayloadPusherBehavior", lv_iteratorUnit);
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_EOMInitializePusherBehaviors_Init () {
+    libMHmu_gt_EOMInitializePusherBehaviors = TriggerCreate("libMHmu_gt_EOMInitializePusherBehaviors_Func");
+    TriggerAddEventTimer(libMHmu_gt_EOMInitializePusherBehaviors, libGame_gv_openTheGatesTimer);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: EOM Pusher Added
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_EOMPusherAdded_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_pushingPlayer;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_pushingPlayer = EventPlayer();
+
+    // Conditions
+    if (testConds) {
+        if (!((lv_pushingPlayer <= libCore_gv_bALMaxPlayers))) {
+            return false;
+        }
+
+        if (!((lv_pushingPlayer > 0))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TimerPause(libMHmu_gv_eOMPusherTimer[lv_pushingPlayer], false);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_EOMPusherAdded_Init () {
+    libMHmu_gt_EOMPusherAdded = TriggerCreate("libMHmu_gt_EOMPusherAdded_Func");
+    TriggerAddEventUnitBehaviorChange(libMHmu_gt_EOMPusherAdded, null, "AllyPayloadPusherBehavior", c_unitBehaviorChangeActivate);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: EOM Pusher Removed
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_EOMPusherRemoved_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_pushingPlayer;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_pushingPlayer = EventPlayer();
+
+    // Conditions
+    if (testConds) {
+        if (!((lv_pushingPlayer <= libCore_gv_bALMaxPlayers))) {
+            return false;
+        }
+
+        if (!((lv_pushingPlayer > 0))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TimerPause(libMHmu_gv_eOMPusherTimer[lv_pushingPlayer], true);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_EOMPusherRemoved_Init () {
+    libMHmu_gt_EOMPusherRemoved = TriggerCreate("libMHmu_gt_EOMPusherRemoved_Func");
+    TriggerAddEventUnitBehaviorChange(libMHmu_gt_EOMPusherRemoved, null, "AllyPayloadPusherBehavior", c_unitBehaviorChangeDeactivate);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: EOM Report Pushing Score
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_EOMReportPushingScore_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_iterator;
+
+    // Automatic Variable Declarations
+    int auto9692B77F_ae;
+
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    auto9692B77F_ae = libCore_gv_bALMaxPlayers;
+    lv_iterator = 1;
+    for ( ; lv_iterator <= auto9692B77F_ae ; lv_iterator += 1 ) {
+        libGame_gf_ScoreValuesReportRealValueAndLog(lv_iterator, "TimeOnPayload", TimerGetDuration(libMHmu_gv_eOMPusherTimer[lv_iterator]));
+        libGame_gf_SendMapSpecificAwardEvent(lv_iterator, TimerGetDuration(libMHmu_gv_eOMPusherTimer[lv_iterator]), false);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_EOMReportPushingScore_Init () {
+    libMHmu_gt_EOMReportPushingScore = TriggerCreate("libMHmu_gt_EOMReportPushingScore_Func");
+    libGame_gf_GameOverEvent(libMHmu_gt_EOMReportPushingScore);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: EventStart
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_EventStart_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    unitgroup auto3D243644_g;
+    int auto3D243644_u;
+    unit auto3D243644_var;
+
+    // Conditions
+    if (testConds) {
+        if (!((libCore_gv_dEBUGDebuggingEnabled == true))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((TimerGetRemaining(libGame_gv_openTheGatesTimer) > 0.0)) {
+        TriggerDebugOutput(1, StringExternal("Param/Value/lib_MHmu_0C0500FD"), true);
+        return true;
+    }
+
+    TimerStart(libMHmu_gv_hanamura.lv_mapMechanic_ObjectivePreviewTimer, 0.0625, false, c_timeGame);
+    libGame_Wait(0.125, c_timeGame);
+    TimerStart(libMHmu_gv_hanamura.lv_mapMechanic_ObjectivePreviewDelay, 8.125, false, c_timeGame);
+    if ((TimerGetRemaining(libMHmu_gv_elevator.lv_elevatorInitialRaiseTimer) > 0.125)) {
+        TimerStart(libMHmu_gv_elevator.lv_elevatorInitialRaiseTimer, 0.125, false, c_timeGame);
+    }
+    else {
+        TimerStart(libMHmu_gv_elevator.lv_elevatorRaiseTimer, 0.125, false, c_timeGame);
+    }
+    if ((TimerGetRemaining(libMHmu_gv_hanamuraMM10secondcountdownTimer) > 0.0)) {
+        libNtve_gf_StopTimer(libMHmu_gv_hanamuraMM10secondcountdownTimer);
+        SoundPlayForPlayer(SoundLink("UI_Game_Payload_Countdown", -1), c_maxPlayers, PlayerGroupAll(), 100.0, 2.0);
+    }
+
+    ActorSend(libMHmu_gv_hanamura.lv_hanamuraActorOnlyGates[0], "Signal PlayBuild");
+    ActorSend(libMHmu_gv_hanamura.lv_hanamuraActorOnlyGates[1], "Signal PlayBuild");
+    ActorSend(libMHmu_gv_hanamura.lv_hanamuraActorOnlyGates[2], "Signal PlayBuild");
+    ActorSend(libMHmu_gv_hanamura.lv_hanamuraActorOnlyGates[3], "Signal PlayBuild");
+    TriggerDebugOutput(1, StringExternal("Param/Value/lib_MHmu_39FAF074"), true);
+    libNtve_gf_StopTimer(libMHmu_gv_elevator_Forced_Lower_Timer);
+    libMHmu_gv_elevator_WaitingToLower = false;
+    ActorSend(ActorFromDoodad(libMHmu_gv_elevator_Doodad), "AnimBracketClear Morph Instant");
+    libMHmu_gf_ElevatorAddRemoveUnpathableUnit(true);
+    auto3D243644_g = UnitGroup(null, c_playerAny, libMHmu_gv_elevator_Region, libCore_gv_filtersHeroic, 0);
+    auto3D243644_u = UnitGroupCount(auto3D243644_g, c_unitCountAll);
+    for (;; auto3D243644_u -= 1) {
+        auto3D243644_var = UnitGroupUnitFromEnd(auto3D243644_g, auto3D243644_u);
+        if (auto3D243644_var == null) { break; }
+        UnitCreateEffectUnit(auto3D243644_var, "HeroGenericMissileInterruptLaunchMissile", auto3D243644_var);
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_EventStart_Init () {
+    libMHmu_gt_EventStart = TriggerCreate("libMHmu_gt_EventStart_Func");
+    TriggerAddEventChatMessage(libMHmu_gt_EventStart, c_playerAny, "eventstart", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: ppath
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_gt_ppath_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_orderPath;
+    int lv_chaosPath;
+    string lv_inputPathOrder;
+    string lv_inputPathChaos;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_inputPathOrder = "";
+    lv_inputPathChaos = "";
+
+    // Conditions
+    if (testConds) {
+        if (!((true))) {
+            return false;
+        }
+
+        if (!((libCore_gv_dEBUGDebuggingEnabled == true))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_inputPathOrder = StringWord(EventChatMessage(false), 2);
+    lv_inputPathChaos = StringWord(EventChatMessage(false), 3);
+    lv_orderPath = libMHmu_gf_ppathGetPathID(lv_inputPathOrder);
+    lv_chaosPath = libMHmu_gf_ppathGetPathID(lv_inputPathChaos);
+    if ((lv_orderPath == 0)) {
+        TriggerDebugOutput(1, StringExternal("Param/Value/lib_MHmu_01E86D63"), true);
+        return true;
+    }
+
+    if ((lv_chaosPath == 0)) {
+        lv_chaosPath = lv_orderPath;
+    }
+
+    if (((UnitIsValid(libNPLD_gv_neutralPayload.lv_warningUnit) == true) || (UnitIsValid(libNPLD_gv_neutralPayload.lv_unit) == true) || (TimerGetRemaining(libGame_gv_openTheGatesTimer) > 0.0))) {
+        TriggerDebugOutput(1, StringExternal("Param/Value/lib_MHmu_713D7A71"), true);
+        return true;
+    }
+
+    libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamOrderIndex_C] = lv_orderPath;
+    libNPLD_gv_neutralPayload.lv_pathIndex_Team[libGame_gv_teamChaosIndex_C] = lv_chaosPath;
+    TriggerDebugOutput(1, TextExpressionAssemble("Param/Expression/lib_MHmu_227B2267"), true);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void libMHmu_gt_ppath_Init () {
+    libMHmu_gt_ppath = TriggerCreate("libMHmu_gt_ppath_Func");
+    TriggerAddEventChatMessage(libMHmu_gt_ppath, c_playerAny, "ppath", false);
+}
+
+void libMHmu_InitTriggers () {
+    libMHmu_gt_HanamuraCoreBarrageProc_Init();
+    libMHmu_gt_MapInitialization_Init();
+    libMHmu_gt_MapMechanicInitialized_Init();
+    libMHmu_gt_OpenTheGatesTimerExpires_Init();
+    libMHmu_gt_MapMechanicTimerExpires_Init();
+    libMHmu_gt_MapMechanicWarningExpires_Init();
+    libMHmu_gt_MapMechanic10SecondCountdownTimerExpires_Init();
+    libMHmu_gt_HenchmenCreateVisionUnits_Init();
+    libMHmu_gt_ReconCampTaken_Init();
+    libMHmu_gt_InitializeMinionData_Init();
+    libMHmu_gt_InitializeMinionScalingData_Init();
+    libMHmu_gt_PayloadTargetOn_Init();
+    libMHmu_gt_PayloadTargetOff_Init();
+    libMHmu_gt_PayloadReachesDestination_Init();
+    libMHmu_gt_KeepOrFortGetsTakenOver_Init();
+    libMHmu_gt_PayloadAttackLaunch_Init();
+    libMHmu_gt_PayloadAttackImpact_Init();
+    libMHmu_gt_ElevatorAddUnpathableLocationAtStart_Init();
+    libMHmu_gt_ElevatorStartInitialTimer_Init();
+    libMHmu_gt_ElevatorInitialTimerExpires_Init();
+    libMHmu_gt_ElevatorRaiseTimerExpires_Init();
+    libMHmu_gt_ElevatorForcedLower_Init();
+    libMHmu_gt_EOMInitializePusherBehaviors_Init();
+    libMHmu_gt_EOMPusherAdded_Init();
+    libMHmu_gt_EOMPusherRemoved_Init();
+    libMHmu_gt_EOMReportPushingScore_Init();
+    libMHmu_gt_EventStart_Init();
+    libMHmu_gt_ppath_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+bool libMHmu_InitLib_completed = false;
+
+void libMHmu_InitLib () {
+    if (libMHmu_InitLib_completed) {
+        return;
+    }
+
+    libMHmu_InitLib_completed = true;
+
+    libMHmu_InitLibraries();
+    libMHmu_InitVariables();
+    libMHmu_InitTriggers();
+}
+
+include "LibNPLD"
+

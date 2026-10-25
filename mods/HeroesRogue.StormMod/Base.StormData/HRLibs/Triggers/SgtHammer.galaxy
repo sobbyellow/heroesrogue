@@ -1,0 +1,63 @@
+include "HRLibs/HRTriggersLib"
+
+// ============================================================
+// Machine Gunner
+// ============================================================
+bool libHRGE_SgtHammerMachineGunnerOncePerGame (bool testConds, bool runActions) {
+    libHRGE_CatalogReferenceSet("Weapon,HeroSgtHammer,Period", libHRGE_player, "0.125");
+    libHRGE_CatalogReferenceModify("Effect,SgtHammerTankAttackDamage,Amount", libHRGE_player, "0.25", c_upgradeOperationMultiply);
+
+    return true;
+}
+// ============================================================
+// Artillery
+// ============================================================
+bool libHRGE_SgtHammerArtilleryOncePerGame (bool testConds, bool runActions) {
+    libHRGE_CatalogReferenceSet("Effect,SiegeWeaponSplashSearch,AreaArray[0].Radius", libHRGE_player, "3");
+    libHRGE_CatalogReferenceSet("Effect,SiegeWeaponSplashAllySearch,AreaArray[0].Radius", libHRGE_player, "3");
+    libHRGE_CatalogReferenceSet("Behavior,SgtHammerSiegeDamageSplashDamage,DamageResponse.ModifyFraction", libHRGE_player, "0.75");
+    libHRGE_CatalogReferenceSet("Weapon,SgtHammerSiegeModeWeapon,Range", libHRGE_player, "500");
+    libHRGE_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeRangeTank,Range", libHRGE_player, FixedToString(500, 2));
+    libHRGE_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeRange,Range", libHRGE_player, FixedToString(500, 2));
+    libHRGE_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeGraduatingRange1,Range", libHRGE_player, FixedToString(500, 2));
+    libHRGE_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeGraduatingRange2,Range", libHRGE_player, FixedToString(500, 2));
+    libHRGE_CatalogReferenceSet("Actor,SgtHammerBaseSiegeModeGraduatingRange3,Range", libHRGE_player, FixedToString(500, 2));
+
+    return true;
+}
+// ============================================================
+// Big Guns
+// ============================================================
+bool libHRGE_SgtHammerBigGunsOncePerGame (bool testConds, bool runActions) {
+    libHRGE_CatalogReferenceSet("Abil,SgtHammerBluntForceGun,Cost[0].Cooldown.TimeUse", libHRGE_player, "0.5");
+    libHRGE_CatalogReferenceSet("Abil,SgtHammerBluntForceGun,Cost[0].Vital[Energy]", libHRGE_player, "0");
+    libHRGE_CatalogReferenceSet("Abil,SgtHammerBluntForceGun,Cost[0].Charge.TimeUse", libHRGE_player, "10");
+    libHRGE_CatalogReferenceSet("Abil,SgtHammerBluntForceGun,Cost[0].Charge.CountMax", libHRGE_player, "3");
+    libHRGE_CatalogReferenceSet("Abil,SgtHammerBluntForceGun,Cost[0].Charge.CountStart", libHRGE_player, "3");
+    libHRGE_CatalogReferenceSet("Abil,SgtHammerBluntForceGun,Cost[0].Charge.CountUse", libHRGE_player, "1");
+
+    return true;
+}
+// ============================================================
+// Blaster
+// ============================================================
+bool libHRGE_SgtHammerBlasterAffixAdded (bool testConds, bool runActions) {
+    if (PlayerHasTalent(libHRGE_player, "SgtHammerBarricade")) {
+        libHRGE_CatalogReferenceSet("Abil,SgtHammerConcussiveBlast,Cost[0].Cooldown.TimeUse", libHRGE_player, "0.5");
+        libHRGE_CatalogReferenceSet("Abil,SgtHammerConcussiveBlast,Cost[0].Charge.TimeUse", libHRGE_player, "8");
+    }
+
+    return true;
+}
+bool libHRGE_SgtHammerBlasterGainTalent (bool testConds, bool runActions) {
+    string talent = libGame_gf_HeroGainTalentGainedTalent();
+    if (testConds) {
+        if (talent != "SgtHammerBarricade") {
+            return false;
+        }
+    }
+    libHRGE_CatalogReferenceSet("Abil,SgtHammerConcussiveBlast,Cost[0].Cooldown.TimeUse", libHRGE_player, "0.5");
+    libHRGE_CatalogReferenceSet("Abil,SgtHammerConcussiveBlast,Cost[0].Charge.TimeUse", libHRGE_player, "8");
+
+    return true;
+}

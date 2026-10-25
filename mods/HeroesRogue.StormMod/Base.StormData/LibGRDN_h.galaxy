@@ -115,11 +115,9 @@ trigger libGRDN_gt_rainright;
 trigger libGRDN_gt_night;
 trigger libGRDN_gt_day;
 
-void libGRDN_Wait(fixed duration, int inTimeType);
 bool libGRDN_PauseTrigger_Func(bool testConds, bool runActions);
 bool libGRDN_ApplyQueenNightshadesTerrors(bool testConds, bool runActions);
 
-bool libGRDN_paused;
 timer libGRDN_WarningSlideoutTimer;
 int libGRDN_seedsNeeded_teamOrder = 3;
 int libGRDN_seedsNeeded_teamChaos = 3;

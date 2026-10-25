@@ -22,10 +22,10 @@
         <Height val="140" />
       </Frame>
       <Frame type="Label" name="ObjectiveTitle">
-        <Text val="@UI/MapLoadingScreen/LibAffx/Title1" />
+        <Text val="@UI/MapLoadingScreen/LibHRGE/Title1" />
       </Frame>
       <Frame type="Label" name="ObjectiveDescription">
-        <Text val="@UI/MapLoadingScreen/LibAffx/Description1" />
+        <Text val="@UI/MapLoadingScreen/LibHRGE/Description1" />
       </Frame>
     </Frame>
     <Frame type="Frame" name="MapObjective2">
@@ -42,10 +42,10 @@
         <Height val="200" />
       </Frame>
       <Frame type="Label" name="ObjectiveTitle">
-        <Text val="@UI/MapLoadingScreen/LibAffx/Title2" />
+        <Text val="@UI/MapLoadingScreen/LibHRGE/Title2" />
       </Frame>
       <Frame type="Label" name="ObjectiveDescription">
-        <Text val="@UI/MapLoadingScreen/LibAffx/Description2" />
+        <Text val="@UI/MapLoadingScreen/LibHRGE/Description2" />
       </Frame>
     </Frame>
     <Frame type="Frame" name="MapObjective3">
@@ -62,10 +62,10 @@
         <Height val="110" />
       </Frame>
       <Frame type="Label" name="ObjectiveTitle">
-        <Text val="@UI/MapLoadingScreen/LibAffx/Title3" />
+        <Text val="@UI/MapLoadingScreen/LibHRGE/Title3" />
       </Frame>
       <Frame type="Label" name="ObjectiveDescription">
-        <Text val="@UI/MapLoadingScreen/LibAffx/Description3" />
+        <Text val="@UI/MapLoadingScreen/LibHRGE/Description3" />
       </Frame>
     </Frame>
   </Frame>

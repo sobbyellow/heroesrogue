@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CTerrainTex id="StormHanamura1">
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormHanamura10">
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormHanamura11">
+        <HeightMapScale value="1.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormHanamura12">
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormHanamura14">
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormHanamura16">
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormHanamura2">
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormHanamura3">
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormHanamura4">
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormHanamura5">
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormHanamura6">
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormHanamura7">
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormHanamura8">
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="StormHanamura9">
+        <HeightMapScale value="5.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="storm_docks_1">
+        <HeightMapOffset value="0.500000"/>
+        <HeightMapScale value="3.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="storm_docks_2">
+        <HeightMapOffset value="0.500000"/>
+        <HeightMapScale value="3.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="storm_docks_3">
+        <HeightMapOffset value="0.500000"/>
+        <HeightMapScale value="3.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="storm_docks_4">
+        <HeightMapOffset value="0.500000"/>
+        <HeightMapScale value="3.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="storm_docks_5">
+        <HeightMapOffset value="0.500000"/>
+        <HeightMapScale value="3.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="storm_docks_6">
+        <HeightMapOffset value="0.500000"/>
+        <HeightMapScale value="3.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="storm_docks_7">
+        <HeightMapOffset value="0.500000"/>
+        <HeightMapScale value="3.000000"/>
+    </CTerrainTex>
+    <CTerrainTex id="storm_docks_8">
+        <HeightMapOffset value="0.500000"/>
+        <HeightMapScale value="3.000000"/>
+    </CTerrainTex>
+</Catalog>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CCliffDoodad id="Shafts_A_TO">
+        <Model value="Assets\TerrainObjects\Storm_Doodad_SCBraxis_Shafts_A_TO\Storm_Doodad_SCBraxis_Shafts_A_TO.m3"/>
+    </CCliffDoodad>
+</Catalog>

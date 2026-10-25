@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+  <DescFlags val="Locked" />
+  <Constant name="SectionTextOffset" val="-5" />
+  <Constant name="MapObjectiveOverlayColor" val="f76a22" />
+  <Frame type="Frame" name="ScreenMapLoading_BattlefieldOfEternity" template="LoadingShared/LoadingTemplate">
+    <Anchor relative="$parent" />
+    <Frame type="Frame" name="MapObjective1">
+      <Frame type="Image" name="BucketFrame">
+        <AdjustmentColor val="#MapObjectiveOverlayColor" />
+      </Frame>
+      <Frame type="Image" name="Icon">
+        <Anchor side="Top" relative="$parent/IconAnchorFrame" pos="Mid" offset="-10" />
+        <Anchor side="Bottom" relative="$parent/IconAnchorFrame" pos="Mid" offset="-10" />
+        <Anchor side="Left" relative="$parent/IconAnchorFrame" pos="Mid" offset="2" />
+        <Anchor side="Right" relative="$parent/IconAnchorFrame" pos="Mid" offset="2" />
+        <Texture val="Assets\Textures\ui_ingame_mapmechanic_loadscreen_lunar18_icon2.dds" />
+        <ScaleWidthToTexture val="true" />
+        <Height val="140" />
+      </Frame>
+      <Frame type="Label" name="ObjectiveTitle">
+        <Text val="@UI/MapLoadingScreen/LibHRGE/Title1" />
+        <Style val="Storm_MapLoading_SectionTitleText_Purple" />
+      </Frame>
+      <Frame type="Label" name="ObjectiveDescription">
+        <Text val="@UI/MapLoadingScreen/LibHRGE/Description1" />
+        <Style val="Storm_MapLoading_SectionText_Purple" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="MapObjective2">
+      <Frame type="Image" name="BucketFrame">
+        <AdjustmentColor val="#MapObjectiveOverlayColor" />
+      </Frame>
+      <Frame type="Image" name="Icon">
+        <Anchor side="Top" relative="$parent/IconAnchorFrame" pos="Mid" offset="-10" />
+        <Anchor side="Bottom" relative="$parent/IconAnchorFrame" pos="Mid" offset="-10" />
+        <Anchor side="Left" relative="$parent/IconAnchorFrame" pos="Mid" offset="-1" />
+        <Anchor side="Right" relative="$parent/IconAnchorFrame" pos="Mid" offset="-1" />
+        <Texture val="Assets\Textures\ui_ingame_mapmechanic_loadscreen_punisherarena_icon2.dds" />
+        <ScaleWidthToTexture val="true" />
+        <Height val="200" />
+      </Frame>
+      <Frame type="Label" name="ObjectiveTitle">
+        <Text val="@UI/MapLoadingScreen/LibHRGE/Title2" />
+        <Style val="Storm_MapLoading_SectionTitleText_Purple" />
+      </Frame>
+      <Frame type="Label" name="ObjectiveDescription">
+        <Text val="@UI/MapLoadingScreen/LibHRGE/Description2" />
+        <Style val="Storm_MapLoading_SectionText_Purple" />
+      </Frame>
+    </Frame>
+    <Frame type="Frame" name="MapObjective3">
+      <Frame type="Image" name="BucketFrame">
+        <AdjustmentColor val="#MapObjectiveOverlayColor" />
+      </Frame>
+      <Frame type="Image" name="Icon">
+        <Anchor side="Top" relative="$parent/IconAnchorFrame" pos="Mid" offset="-10" />
+        <Anchor side="Bottom" relative="$parent/IconAnchorFrame" pos="Mid" offset="-10" />
+        <Anchor side="Left" relative="$parent/IconAnchorFrame" pos="Mid" offset="3" />
+        <Anchor side="Right" relative="$parent/IconAnchorFrame" pos="Mid" offset="3" />
+        <Texture val="Assets\Textures\ui_ingame_mapmechanic_loadscreen_eternity_icon1.dds" />
+        <ScaleWidthToTexture val="true" />
+        <Height val="110" />
+      </Frame>
+      <Frame type="Label" name="ObjectiveTitle">
+        <Text val="@UI/MapLoadingScreen/LibHRGE/Title3" />
+        <Style val="Storm_MapLoading_SectionTitleText_Purple" />
+      </Frame>
+      <Frame type="Label" name="ObjectiveDescription">
+        <Text val="@UI/MapLoadingScreen/LibHRGE/Description3" />
+        <Style val="Storm_MapLoading_SectionText_Purple" />
+      </Frame>
+    </Frame>
+  </Frame>
+</Desc>

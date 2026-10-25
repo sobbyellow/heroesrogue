@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Preload>
+<Actor id="SYSTEM_ActorConfig"/>
+<Actor id="LightOmniBlueLarge"/>
+<Actor id="LightOmniCyanLarge"/>
+<Actor id="LightOmniGreen"/>
+<Actor id="LightOmniOrangeLarge"/>
+<Actor id="LightOmniPurpleLarge"/>
+<Actor id="LightOmniYellowLarge"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_A" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_AA" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_B" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_BB" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_C"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_CC"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_D"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_DD"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_E" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_EE" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_F" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_FF" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_G" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_GG" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_H" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_HH" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_I"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_J"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_JJ"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_K"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_KK"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_L"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_LL"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_M" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_MM" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_N" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_NN" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_O" Variations="0,1"/>
+<Actor id="Storm_Doodad_KCMines_Jungle_OO" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_KingsCrest_RavenCourt_CoreRange" Variations="0,1"/>
+<Actor id="GroundHoleRenderPlaneSecondary"/>
+<Actor id="Storm_Doodad_KingsCrest_MineSupportBeam" Variations="0,3,4,6"/>
+<Actor id="Storm_Doodad_KingsCrest_MineLantern" Variations="0"/>
+<Actor id="Storm_Doodad_KingsCrest_MineSupportCrossBeam" Variations="0"/>
+<Actor id="Storm_Doodad_KingsCrest_MineCrystals" Variations="0,1,2,3,4,5,6,8,9,11,12,13,16"/>
+<Actor id="Storm_Doodad_KingsCrest_BarrelOld"/>
+<Actor id="Storm_Doodad_KingsCrest_Barrel" Variations="0,3,7"/>
+<Actor id="Storm_Doodad_KingsCrest_Crates" Variations="0,2,3,4,9,10"/>
+<Actor id="Storm_Doodad_KingsCrest_Butterfly"/>
+<Actor id="Storm_Doodad_KingsCrest_Shack" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_Docks_Bushes" Variations="0,3"/>
+<Actor id="Storm_Doodad_KingsCrest_RavenCourt_Tree" Variations="0,1,2,3,4,5,6,7,8"/>
+<Actor id="Storm_Doodad_KingsCrest_TombStones" Variations="0,1,5"/>
+<Actor id="Storm_Doodad_KingsCrest_ChiseledRock_Small" Variations="0,1,2,3,4,5,6,7,8,9"/>
+<Actor id="Storm_Doodad_KingsCrest_Campfire" Variations="1"/>
+<Actor id="LuxoriaWatchTowerCaptureMarker"/>
+<Actor id="Storm_Doodad_KingsCrest_StartingPlatform"/>
+<Actor id="Storm_Doodad_KingsCrest_RavenCourt_CurtainLarge" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_Fence_Iron" Variations="4"/>
+<Actor id="Storm_Doodad_KingsCrest_Lamp" Variations="1,2"/>
+<Actor id="Storm_Doodad_KingsCrest_Flowers" Variations="0,2,3,4,8,9,11"/>
+<Actor id="Storm_Doodad_KingsCrest_DefeatedMinion" Variations="1"/>
+<Actor id="Storm_Doodad_KingsCrest_MineCart" Variations="0,1"/>
+<Actor id="Storm_Doodad_KingsCrest_MineTracks" Variations="0,1,2,3,4,5,7,8"/>
+<Actor id="Storm_Doodad_KingsCrest_RockWalls_Mine" Variations="0,1,2,3,4,5"/>
+<Actor id="Storm_Doodad_KingsCrest_SkullPiles_Mine" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_KingsCrest_Tools" Variations="1"/>
+<Actor id="Storm_Doodad_KingsCrest_BigChunkyRock" Variations="0,1,3,4,5"/>
+<Actor id="Storm_Doodad_KingsCrest_RavenBush" Variations="0,1,2,3"/>
+<Actor id="Storm_Doodad_KingsCrest_CliffStructure" Variations="0,1,4,5,12,14"/>
+<Actor id="Storm_Doodad_KingsCrest_Peasant_Male" Variations="0,1,2,3,4,7,9,14,15,16"/>
+<Actor id="Storm_Doodad_KingsCrest_WoodPiles" Variations="0,1,2,3"/>
+<Actor id="Storm_Doodad_KingsCrest_Ropes" Variations="2"/>
+<Actor id="Storm_Effect_KingsCrest_Weather_Sunrays_Small"/>
+<AnnouncerPack id="Necromancer"/>
+<Behavior id="DisableLaneTracking"/>
+<Model id="MercLanerSiegeGiantNormal"/>
+<Model id="MercSiegeGiantDeath"/>
+<Model id="UnderworldSummonedBossBetter"/>
+<Model id="JungleGraveGolemUnderground"/>
+<Model id="MercSiegeGiant"/>
+<Model id="UnderworldBoss"/>
+<Model id="JungleGraveGolemUndergroundDeath"/>
+<Sound id="Amb_3D_CampFire_Small_LP"/>
+<Sound id="Amb_3D_Rockslide_Light_LP"/>
+<Sound id="Amb_3D_Rockslide_Large_LP"/>
+<Sound id="Amb_3D_Wind_Gusts_Lp"/>
+<Sound id="Amb_3D_Wolf_Howl"/>
+<Sound id="Amb_3D_Birds_Vox_OwlHoots_LP"/>
+<Sound id="Amb_3D_Birds_Raven_Vox_Gen"/>
+<Terrain id="StormKingsCrestRavenCourt"/>
+<Unit id="XelNagaWatchTower"/>
+<Unit id="CatapultMinion"/>
+<Unit id="StormGameStartPathingBlockerDiagonal"/>
+<Unit id="GroundHoleVision"/>
+<Unit id="GroundHoleCamera"/>
+<Unit id="HoleLadderDown"/>
+<Unit id="GroundHole"/>
+<Unit id="HoleLadderUp"/>
+<Unit id="StormGameStartPathingBlocker"/>
+<Unit id="WizardMinion"/>
+<Unit id="FootmanMinion"/>
+<Unit id="TownGateL2VerticalLeftVisionBlocked" Variations="1"/>
+<Unit id="TownGateL215BLUR" Variations="2"/>
+<Unit id="TownGateL3BLURTLVisionBlocked" Variations="2"/>
+<Unit id="TownGateL3BLURBRVisionBlocked" Variations="3"/>
+<Unit id="TownGateL3BRULBLVisionBlocked" Variations="1"/>
+<Unit id="TownGateL3BRULTRVisionBlocked" Variations="2"/>
+<Unit id="TownGateL315BLURTLVisionBlocked" Variations="2"/>
+<Unit id="TownCannonTowerL2"/>
+<Unit id="TownCannonTowerL3"/>
+<Unit id="TownCannonTowerL3Standalone"/>
+<Unit id="TownMoonwellL2"/>
+<Unit id="TownMoonwellL3"/>
+<Unit id="TownTownHallL3"/>
+<Unit id="JungleCampIconUnit"/>
+<Unit id="MercLanerSiegeGiant"/>
+<Unit id="MercDefenderSiegeGiant"/>
+<Unit id="TownTownHallL2"/>
+<Unit id="HallOfStormsLocationUnit"/>
+<Unit id="RangedMinion"/>
+<Unit id="KingsCore"/>
+<Unit id="UnderworldBoss"/>
+<Unit id="TownWallRadial2L3" Variations="8"/>
+<Unit id="TownWallRadial3L3" Variations="17"/>
+<Unit id="TownWallRadial5L2" Variations="8,16"/>
+<Unit id="TownWallRadial6L2" Variations="6"/>
+<Unit id="TownWallRadial7L2" Variations="7"/>
+<Unit id="TownWallRadial8L3" Variations="16"/>
+<Unit id="TownWallRadial9L3" Variations="17"/>
+<Unit id="TownWallRadial14L3" Variations="9"/>
+<Unit id="TownWallRadial15L3" Variations="6"/>
+<Unit id="TownWallRadial17L2" Variations="8,12"/>
+<Unit id="TownWallRadial18L2" Variations="2"/>
+<Unit id="TownWallRadial19L2" Variations="6"/>
+<Unit id="TownWallRadial20L3" Variations="8"/>
+<Unit id="TownWallRadial21L3" Variations="6"/>
+<Unit id="UnderworldMinion"/>
+<Unit id="UnderworldRangedMinion"/>
+<Unit id="LootBannerSconce"/>
+</Preload>

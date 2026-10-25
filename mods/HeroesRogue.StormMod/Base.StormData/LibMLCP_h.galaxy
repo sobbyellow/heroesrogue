@@ -196,10 +196,7 @@ trigger libMLCP_gt_MMSkyTempleDebugNext;
 trigger libMLCP_gt_MMSkyTempleDebugScalingTime;
 trigger libMLCP_gt_MMSkyTempleSpawnTestTemple;
 
-void libMLCP_Wait(fixed duration, int inTimeType);
 bool libMLCP_PauseTrigger_Func(bool testConds, bool runActions);
-
-bool libMLCP_paused;
 
 fixed libMLCP_shootingSpeedModifier_teamChaos = 1;
 fixed libMLCP_shootingSpeedModifier_teamOrder = 1;

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog>
+    <CWater id="AshenvaleFelwood">
+        <State index="0">
+            <Name value="[Default]"/>
+            <Height value="7.500000"/>
+            <Color value="0.000000,0.200000,0.200000,0.300000"/>
+            <ColorFallOff value="0.058000"/>
+            <Specularity value="73.599998"/>
+            <SpecularScaler value="0.050000"/>
+            <UvRate value="-0.000031,-0.001000,0.000000,0.000000"/>
+            <MeshRoughness value="0.306000"/>
+            <TextureRoughness value="1.000000"/>
+            <ReflectionDistortion value="0.006000"/>
+            <RefractionDistortion value="0.006000"/>
+            <MinReflection value="0.000000"/>
+            <ReflectivityPower value="4.590000"/>
+        </State>
+        <ReflectionCubeMap value="Assets\Textures\Reflection_BelShir.dds"/>
+    </CWater>
+    <CWater id="BelShir">
+        <State index="0">
+            <Name value="[Default]"/>
+            <Height value="9.000000"/>
+            <Color value="0.000000,0.231373,0.239216,0.337000"/>
+            <ColorFallOff value="0.058000"/>
+            <Specularity value="73.599998"/>
+            <SpecularScaler value="0.050000"/>
+            <UvRate value="-0.000031,-0.001000,0.000000,0.000000"/>
+            <ReflectionDistortion value="0.184000"/>
+            <RefractionDistortion value="0.020000"/>
+            <MinReflection value="0.193000"/>
+            <ReflectivityPower value="8.000000"/>
+        </State>
+    </CWater>
+</Catalog>

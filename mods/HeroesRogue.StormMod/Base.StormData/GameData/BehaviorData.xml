@@ -153,7 +153,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Modification>
       <VitalRegenMultiplier index="Life" value="3" />
       <VitalRegenMultiplier index="Shields" value="3" />
-      <VitalRegenMultiplier index="Energy" value="3" />
       <VitalDamageLeechArray index="Life">
         <KindArray index="Basic" value="0.33" />
         <KindArray index="Ability" value="0.33" />
@@ -164,19 +163,11 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
       <AllArmorBonus value="25" />
     </ArmorModification>
   </CBehaviorBuff>
-  <CBehaviorBuff id="AffixSelfReliantNoManaBehavior" parent="CarryBehaviorParent">
+  <CBehaviorBuff id="AffixSelfReliantManaBehavior" parent="CarryBehaviorParent">
+    <DisableValidatorArray value="TargetIsManaUser" />
     <Modification>
-      <VitalRegenMultiplier index="Life" value="3" />
-      <VitalRegenMultiplier index="Shields" value="3" />
-      <VitalDamageLeechArray index="Life">
-        <KindArray index="Basic" value="0.33" />
-        <KindArray index="Ability" value="0.33" />
-      </VitalDamageLeechArray>
-      <VitalDamageLeechScoreArray Value="Healing" />
+      <VitalRegenMultiplier index="Energy" value="3" />
     </Modification>
-    <ArmorModification StackCount="1" >
-      <AllArmorBonus value="25" />
-    </ArmorModification>
   </CBehaviorBuff>
 
   <CBehaviorBuff id="AffixBuddyDroneController" parent="CarryBehaviorParent">
@@ -227,6 +218,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
       <DamageDealtFraction index="Basic" value="0.25" />
     </Modification>
   </CBehaviorBuff>
+
+  <CBehaviorTokenCounter id="AffixPacifismToken" parent="StormQuestToken" />
 
   <CBehaviorTokenCounter id="AffixKillContractQuestToken" parent="StormQuestToken">
     <Max value="25" />
@@ -525,10 +518,14 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 <CBehaviorBuff id="AffixMassCloakBehavior" parent="StormPersistentCloak" />
 <CBehaviorBuff id="AffixMassCloakController" parent="StormPersistentCloakController" />
 
-
-<CBehaviorBuff id="Affix60MoveSpeed" parent="CarryBehaviorParent">
+<CBehaviorBuff id="Affix60MoveSpeed">
   <Modification>
     <UnifiedMoveSpeedFactor value="0.6" />
+  </Modification>
+</CBehaviorBuff>
+<CBehaviorBuff id="Affix100MoveSpeed">
+  <Modification>
+    <UnifiedMoveSpeedFactor value="1.0" />
   </Modification>
 </CBehaviorBuff>
 
@@ -779,7 +776,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
 <CBehaviorBuff id="CursedDebuff" parent="CarryBehaviorParent">
   <MaxStackCount value="1" />
-  <ArmorModification AllArmorBonus="-5" StackCount="1" >
+  <ArmorModification AllArmorBonus="0" StackCount="1" >
     <ArmorSet index="Hero">
       <OverrideMinCap index="Splash" value="1"/>
       <OverrideMinCap index="Basic" value="1"/>
@@ -874,17 +871,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
       <ProvideCategories index="Proc" value="1" />
     </DamageResponse>
   </CBehaviorBuff>
-
-<CBehaviorBuff id="AffixCrashStressBehavior" parent="CarryBehaviorParent">
-  <Duration value="5.0"/>
-  <Modification>
-    <UnifiedMoveSpeedFactor value="-0.4" />
-    <SightMaximum value="4" />
-  </Modification>
-  <ArmorModification StackCount="1">
-    <AllArmorBonus value="-15"/>
-  </ArmorModification>
-</CBehaviorBuff>
 
 <CBehaviorBuff id="DoomedRegen" parent="CarryBehaviorParent">
   <Period value="60" />

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <Frame type="MinimapPanel" name="GameUI/UIContainer/ConsoleUIContainer/MinimapPanel" file="GameUI">
+        <Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+        <Anchor side="Bottom" relative="$parent" pos="Max" offset="10"/>
+        <Width val="450"/>
+        <Height val="430"/>
+
+        <Frame type="Minimap" name="Minimap">
+            <Anchor side="Top" relative="$parent" pos="Min" offset="-5"/>
+            <Anchor side="Left" relative="$parent" pos="Min" offset="-10"/>
+            <Width val="410"/>
+            <Height val="410"/>
+        </Frame>
+    </Frame>
+</Desc>

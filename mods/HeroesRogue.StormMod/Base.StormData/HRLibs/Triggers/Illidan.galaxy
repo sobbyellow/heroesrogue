@@ -1,0 +1,80 @@
+include "HRLibs/HRTriggersLib"
+
+int libHRGE_IllidanTalentTier16Counter;
+int[libCore_gv_talents_MaxTiers_C + 1] libHRGE_IllidanTalents;
+string libHRGE_instanceIllidanWheresIllidan = "IllidanWheresIllidan";
+
+// ============================================================
+// Illidan - Add an empty talent when all level 16 talents are unavailable
+// ============================================================
+bool libHRGE_IllidanTalent16 (bool testConds, bool runActions) {
+    libHRGE_IllidanTalents[6] += 1;
+    if (libHRGE_IllidanTalents[6] == 3) {
+        libHRGE_ShowTalent("DoNothing16", true);
+    }
+    return true;
+}
+// ============================================================
+// Illidan Evasive
+// ============================================================
+bool libHRGE_IllidanEvasiveUnitCreated (bool testConds, bool runActions) {
+    int player = UnitGetOwner(EventUnitCreatedUnit());
+    if (testConds) {
+        if (player != libHRGE_player) {
+            return false;
+        }
+    }
+    libHRGE_AddPlayerBehavior(libHRGE_player, "IllidanEvasion", 1, true);
+    libHRGE_AddPlayerBehavior(libHRGE_player, "IllidanEvasionSpellArmor", 1, true);
+    return true;
+}
+// ============================================================
+// Legally Blind
+// ============================================================
+bool libHRGE_IllidanLegallyBlindBehaviorChangeCategory (bool testConds, bool runActions) {
+    unit unitVar = EventUnit();
+    string behavior = EventUnitBehavior();
+    fixed behaviorDuration;
+    fixed newDuration;
+    fixed percentIncrease;
+    if (testConds) {
+        if (UnitGetOwner(unitVar) != libHRGE_player) {
+            return false;
+        }
+    }
+
+    UnitBehaviorRemove(unitVar, behavior, 1);
+    if ((behaviorDuration > 0.0)) {
+        UnitBehaviorSetDuration(unitVar, behavior, 0);
+    }
+    
+    return true;
+}
+// ============================================================
+// Wheres Illidan
+// ============================================================
+bool libHRGE_IllidanWheresIllidanOncePerGame (bool testConds, bool runActions) {
+    TimerStart(libHRGE_GetAffixPrimaryTimer(libHRGE_instanceIllidanWheresIllidan), RandomFixed(50, 250), false, c_timeGame);
+    return true;
+}
+bool libHRGE_IllidanWheresIllidanTimerElapsed (bool testConds, bool runActions) {
+    unit maiev;
+    unit hero = libGame_gv_players[libHRGE_player].lv_heroUnit;
+    TimerStart(libHRGE_GetCurrentAffixTimer(), RandomFixed(50, 250), false, c_timeGame);
+    libNtve_gf_SendActorMessageToUnit(hero, "Create MaievWheresIllidanWarningVO");
+    libHRGE_Wait(2.5, c_timeGame);
+    libNtve_gf_CreateUnitsAtPoint2(1, "HeroMaiev", c_unitCreateIgnorePlacement, libHRGE_teamChaos, PointWithOffsetPolar(UnitGetPosition(hero), 14, RandomFixed(0, 360)), null);
+    maiev = UnitLastCreated();
+    UnitBehaviorAdd(maiev, "Affix60MoveSpeed", maiev, 1);
+    libNtve_gf_SendActorMessageToUnit(maiev, "Signal Respawn");
+    UnitIssueOrder(maiev, OrderTargetingPoint(AbilityCommand("move", 0), UnitGetPosition(hero)), c_orderQueueReplace);
+    libHRGE_Wait(0.825, c_timeGame);
+    if (UnitIsAlive(maiev)) {
+        UnitCreateEffectPoint(maiev, "MaievContainmentDiscLaunchMissile", UnitGetPosition(hero));
+    }
+    libHRGE_Wait(0.75, c_timeGame);
+    UnitRemove(maiev);
+    UnitKill(maiev);
+    
+    return true;
+}

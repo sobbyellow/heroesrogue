@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DocInfo>
+    <Icon>
+        <Value>Storm_UI_Gamemode_MapSelect_SkyTemple.png</Value>
+    </Icon>
+    <MatchMakerTag>
+        <Value>Hero</Value>
+    </MatchMakerTag>
+    <Dependencies>
+        <Value>bnet:Sky Temple (Mod)/0.0/1283,file:Mods\heroesmapmods/battlegroundmapmods/skytemple.stormmod</Value>
+    </Dependencies>
+    <ModifiableDependencies>
+        <Value>Mods/HeroesData.StormMod</Value>
+        <Value>Mods\heroesmapmods/battlegroundmapmods/skytempledata.stormmod</Value>
+        <Value>Mods\heroesmapmods/battlegroundmapmods/skytemple.stormmod</Value>
+    </ModifiableDependencies>
+    <Preload>
+        <Value>GameLink:Model;StormDoodadLuxoriaObeliskBrokenDeath00</Value>
+    </Preload>
+</DocInfo>

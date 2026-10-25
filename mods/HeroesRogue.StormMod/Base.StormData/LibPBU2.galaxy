@@ -3,7 +3,8 @@ include "TriggerLibs/HeroesLib"
 include "TriggerLibs/GameLib"
 include "TriggerLibs/UILib"
 include "TriggerLibs/SoundLib"
-
+include "HRLibs/HeroesRogueLib"
+include "HRLibs/HeroesRogueLib_h"
 include "LibPBU2_h"
 
 //--------------------------------------------------------------------------------------------------
@@ -16,6 +17,7 @@ void libPBU2_InitLibraries () {
     libGame_InitVariables();
     libUIUI_InitVariables();
     libSond_InitVariables();
+    libHRGE_InitVariables();
 }
 
 // Variable Initialization
@@ -180,33 +182,31 @@ void libPBU2_InitVariables () {
     libPBU2_gv_curateHeroSelectionSetting.lv_countdownTimer = TimerCreate();
 }
 
-void libPBU2_SetDifficulty (int difficulty) {
-    if (difficulty == 2) {
-        libPBU2_difficulty = 2;
+void libPBU2_SetDifficulty(int difficulty) {
+    if (difficulty == libHRGE_difficultyNormal) {
+        DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), false);
+        DialogControlSetEnabled(libPBU2_difficultyDialogHeroic, PlayerGroupAll(), true);
+        DialogControlSetEnabled(libPBU2_difficultyDialogMythic, PlayerGroupAll(), true);
+    } else if (difficulty == libHRGE_difficultyHeroic) {
         DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), true);
         DialogControlSetEnabled(libPBU2_difficultyDialogHeroic, PlayerGroupAll(), false);
         DialogControlSetEnabled(libPBU2_difficultyDialogMythic, PlayerGroupAll(), true);
-    } else if (difficulty == 3) {
-        libPBU2_difficulty = 3;
+    } else if (difficulty == libHRGE_difficultyMythic) {
         DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), true);
         DialogControlSetEnabled(libPBU2_difficultyDialogHeroic, PlayerGroupAll(), true);
         DialogControlSetEnabled(libPBU2_difficultyDialogMythic, PlayerGroupAll(), false);
     } else {
-        libPBU2_difficulty = 1;
-        DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), false);
+        DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), true);
         DialogControlSetEnabled(libPBU2_difficultyDialogHeroic, PlayerGroupAll(), true);
         DialogControlSetEnabled(libPBU2_difficultyDialogMythic, PlayerGroupAll(), true);
     }
+    libHRGE_difficulty = difficulty;
 }
 
 bool libPBU2_DifficultyDialog_Func (bool testConds, bool runActions) {
-    bool test;
     int dialog = EventDialogControl();
     if (testConds) {
-        if (dialog == libPBU2_difficultyDialogNormal || dialog == libPBU2_difficultyDialogHeroic || dialog == libPBU2_difficultyDialogMythic) {
-            test = true;
-        }
-        if (!test) {
+        if (dialog != libPBU2_difficultyDialogNormal && dialog != libPBU2_difficultyDialogHeroic && dialog != libPBU2_difficultyDialogMythic) {
             return false;
         }
         if (libPBU2_heroSelected) {
@@ -216,10 +216,10 @@ bool libPBU2_DifficultyDialog_Func (bool testConds, bool runActions) {
     if (!runActions) {
         return true;
     }
-    if (dialog == libPBU2_difficultyDialogNormal) { libPBU2_SetDifficulty(1); }
-    if (dialog == libPBU2_difficultyDialogHeroic) { libPBU2_SetDifficulty(2); }
-    if (dialog == libPBU2_difficultyDialogMythic) { libPBU2_SetDifficulty(3); }
-    TriggerSendEvent("libPBU2_DifficultyChanged");
+    if (dialog == libPBU2_difficultyDialogNormal) { libPBU2_SetDifficulty(libHRGE_difficultyNormal); }
+    if (dialog == libPBU2_difficultyDialogHeroic) { libPBU2_SetDifficulty(libHRGE_difficultyHeroic); }
+    if (dialog == libPBU2_difficultyDialogMythic) { libPBU2_SetDifficulty(libHRGE_difficultyMythic); }
+    libHRGE_SaveBankSettings();
 
     return true;
 }
@@ -519,6 +519,9 @@ void libPBU2_gf_CurateHSUIInitialize () {
                 DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersEmpty[lv_itHeroRow][lv_itHeroCol], PlayerGroupAll(), true);
                 libPBU2_gf_CurateHSUIEnableDisableHeroButton(false, lv_itHeroRow, lv_itHeroCol, PlayerGroupAll(), false);
             }
+            if (libPBU2_gv_curateHeroSelectionUI.heroGolden[lv_itHeroRow][lv_itHeroCol]) {
+                DialogControlSetVisible(libPBU2_gv_curateHeroSelectionUI.lv_heroButtonBordersAffixed[lv_itHeroRow][lv_itHeroCol], PlayerGroupAll(), true);
+            }
             lv_currentPanelLayer -= 1;
         }
         lv_currentPanelLayer -= 1;
@@ -549,11 +552,12 @@ void libPBU2_gf_CurateHSUIInitialize () {
     libNtve_gf_SetDialogItemText(libPBU2_difficultyDialogMythic, StringExternal("Button/Name/Mythic"), PlayerGroupAll());
     DialogControlSetPosition(libPBU2_difficultyDialogMythic, PlayerGroupAll(), c_anchorCenter, 660, -370);
     DialogControlSetSize(libPBU2_difficultyDialogMythic, PlayerGroupAll(), 190, 90);
-    TextExpressionSetToken("Param/Expression/Mythic", "A", StringExternal("Affix/ShortTooltip/Sappers"));
-    TextExpressionSetToken("Param/Expression/Mythic", "B", StringExternal("Affix/ShortTooltip/ArmoredUp"));
-    TextExpressionSetToken("Param/Expression/Mythic", "C", StringExternal("Affix/ShortTooltip/WeakPoint"));
-    TextExpressionSetToken("Param/Expression/Mythic", "D", StringExternal("Affix/ShortTooltip/Invasion"));
-    TextExpressionSetToken("Param/Expression/Mythic", "E", StringExternal("Affix/ShortTooltip/Eternal"));
+    TextExpressionSetToken("Param/Expression/Mythic", "A", StringExternal("Affix/ShortTooltip/" + libHRGE_mythicCurse1));
+    TextExpressionSetToken("Param/Expression/Mythic", "B", StringExternal("Affix/ShortTooltip/" + libHRGE_mythicCurse2));
+    TextExpressionSetToken("Param/Expression/Mythic", "C", StringExternal("Affix/ShortTooltip/" + libHRGE_mythicCurse3));
+    TextExpressionSetToken("Param/Expression/Mythic", "D", StringExternal("Affix/ShortTooltip/" + libHRGE_mythicCurse4));
+    TextExpressionSetToken("Param/Expression/Mythic", "E", StringExternal("Affix/ShortTooltip/" + libHRGE_mythicCurse5));
+    TextExpressionSetToken("Param/Expression/Mythic", "F", StringExternal("Affix/ShortTooltip/" + libHRGE_mythicCurse6));
     libNtve_gf_SetDialogItemTooltip(libPBU2_difficultyDialogMythic, StringExternal("Button/Tooltip/Mythic") + TextExpressionAssemble("Param/Expression/Mythic"), PlayerGroupAll());
 
     DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), false);
@@ -592,8 +596,6 @@ void libPBU2_gf_CurateHSUIInitialize () {
     DialogControlSetSize(libPBU2_informationDialogClose, PlayerGroupAll(), 200, 80);
 
     DialogSetVisible(libPBU2_informationDialog, PlayerGroupAll(), false);
-
-
 }
 
 trigger auto_libPBU2_gf_CurateHSUIUpdateTimerUI_Trigger = null;
@@ -1329,6 +1331,10 @@ void libPBU2_gf_CurateHSUIAutoPickHeroOfRoleForPlayer (int lp_player, int lp_rol
     int lv_roleHeroRandomIndex;
     bool haveCho;
     bool haveGall;
+    int choRow;
+    int choColumn;
+    int gallRow;
+    int gallColumn;
 
     // Automatic Variable Declarations
     int lv_itRowEnd;
@@ -1356,11 +1362,18 @@ void libPBU2_gf_CurateHSUIAutoPickHeroOfRoleForPlayer (int lp_player, int lp_rol
                 continue;
             }
 
-            if ((libPBU2_gf_CurateHSUIHeroLocked(lv_itRow, lv_itCol) == true)) {
+            // Avoid Cho'Gall
+            if (libPBU2_gv_curateHeroSelections[lv_itRow][lv_itCol] == "Cho") {
+                choRow = lv_itRow;
+                choColumn = lv_itCol;
+                continue;
+            } else if (libPBU2_gv_curateHeroSelections[lv_itRow][lv_itCol] == "Gall") {
+                gallRow = lv_itRow;
+                gallColumn = lv_itCol;
                 continue;
             }
-            // Avoid Cho'Gall
-            if ((lv_itRow == libPBU2_ge_CurateHeroSelectionRole_Tank && lv_itCol == libPBU2_Cho) || lv_itRow == libPBU2_ge_CurateHeroSelectionRole_RangedAssassin1 && lv_itCol == libPBU2_Gall) {
+
+            if ((libPBU2_gf_CurateHSUIHeroLocked(lv_itRow, lv_itCol) == true)) {
                 continue;
             }
 
@@ -1377,14 +1390,14 @@ void libPBU2_gf_CurateHSUIAutoPickHeroOfRoleForPlayer (int lp_player, int lp_rol
 
     lv_roleHeroRandomIndex = RandomInt(1, lv_roleHeroCount);
 
-    if (libPBU2_gf_CurateHSUIHeroLocked(libPBU2_ge_CurateHeroSelectionRole_Tank, libPBU2_Cho) && !libPBU2_gf_CurateHSUIHeroLocked(libPBU2_ge_CurateHeroSelectionRole_RangedAssassin1, libPBU2_Gall)) {
-        libPBU2_gf_CurateHSUISelectHeroforPlayer(lp_player, libPBU2_ge_CurateHeroSelectionRole_RangedAssassin1, libPBU2_Gall);
-        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lp_player] = libPBU2_ge_CurateHeroSelectionRole_RangedAssassin1;
-        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lp_player] = libPBU2_Gall;
-    } else if (libPBU2_gf_CurateHSUIHeroLocked(libPBU2_ge_CurateHeroSelectionRole_RangedAssassin1, libPBU2_Gall) && !libPBU2_gf_CurateHSUIHeroLocked(libPBU2_ge_CurateHeroSelectionRole_Tank, libPBU2_Cho)) {
-        libPBU2_gf_CurateHSUISelectHeroforPlayer(lp_player, libPBU2_ge_CurateHeroSelectionRole_Tank, libPBU2_Cho);
-        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lp_player] = libPBU2_ge_CurateHeroSelectionRole_Tank;
-        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lp_player] = libPBU2_Cho;
+    if (libPBU2_gf_CurateHSUIHeroLocked(choRow, choColumn) && !libPBU2_gf_CurateHSUIHeroLocked(gallRow, gallColumn)) {
+        libPBU2_gf_CurateHSUISelectHeroforPlayer(lp_player, gallRow, gallColumn);
+        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lp_player] = gallRow;
+        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lp_player] = gallColumn;
+    } else if (libPBU2_gf_CurateHSUIHeroLocked(gallRow, gallColumn) && !libPBU2_gf_CurateHSUIHeroLocked(choRow, choColumn)) {
+        libPBU2_gf_CurateHSUISelectHeroforPlayer(lp_player, choRow, choColumn);
+        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lp_player] = choRow;
+        libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroCol[lp_player] = choColumn;
     } else {
         libPBU2_gf_CurateHSUISelectHeroforPlayer(lp_player, lv_roleHeroRow[lv_roleHeroRandomIndex], lv_roleHeroCol[lv_roleHeroRandomIndex]);
         libPBU2_gv_curateHeroSelectionSetting.lv_lockedHeroRow[lp_player] = lv_roleHeroRow[lv_roleHeroRandomIndex];
@@ -1659,6 +1672,7 @@ bool libPBU2_gt_CurateHSUICountdownTimerExpires_Func (bool testConds, bool runAc
     int lv_itPlayer2;
     sound lv_crowdSound;
     int player;
+    int i;
 
     // Automatic Variable Declarations
     playergroup autoD70C5296_g;
@@ -1678,7 +1692,6 @@ bool libPBU2_gt_CurateHSUICountdownTimerExpires_Func (bool testConds, bool runAc
         return true;
     }
 
-    TriggerExecute(libPBU2_timerExpired, false, false);
     TriggerEnable(TriggerGetCurrent(), false);
     libNtve_gf_StopTimer(libPBU2_gv_curateHeroSelectionSetting.lv_countdownTimer);
     DialogControlSetEnabled(libPBU2_gv_curateHeroSelectionUI.lv_abilitiesInfoButton, PlayerGroupAll(), false);
@@ -1771,6 +1784,15 @@ bool libPBU2_gt_CurateHSUICountdownTimerExpires_Func (bool testConds, bool runAc
     libGame_gv_heroPickDone = true;
     libGame_gv_heroSpawnReady = true;
     SetHeroLeaderPanelEnabled(true);
+
+    for (i = 2; i <= libCore_gv_bALMaxPlayers; i += 1) {
+        if (libGame_gf_TeamNumberOfPlayer(i) == libHRGE_teamOrderIndex) {
+            libHRGE_heroCounter[libHRGE_teamOrderIndex][libGame_gv_players[i].lv_heroIndex] += 1;
+        } else {
+            libHRGE_heroCounter[libHRGE_teamChaosIndex][libGame_gv_players[i].lv_heroIndex] += 1;
+        }
+    }
+
     return true;
 }
 

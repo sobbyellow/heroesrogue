@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Preload>
+<Actor id="SYSTEM_ActorConfig"/>
+<Actor id="ActorShapeCone"/>
+<Actor id="LightOmniBlue"/>
+<Actor id="Storm_Doodad_Luxoria_CorePlatform"/>
+<Actor id="Storm_Doodad_Luxoria_CoreRange" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_Luxoria_Falcon"/>
+<Actor id="Storm_Doodad_Luxoria_Falcon_Flyaway"/>
+<Actor id="Storm_Doodad_Luxoria_Male_Civilian_Moving"/>
+<Actor id="Storm_Doodad_Luxoria_Temple"/>
+<Actor id="Storm_Doodad_Luxoria_Carpet_Flying" Variations="0,2,3"/>
+<Actor id="Storm_Doodad_Luxoria_SandScarab" Variations="0,1,2,3,4"/>
+<Actor id="Storm_Doodad_LuxBazaar_Aqueducts" Variations="0,3,4,5,11,12,13,17,20,21,22,23,24,25,26,27,31,32,33,34,35,39,40,43,44,55,57,58,62,63,64,66,67"/>
+<Actor id="Storm_Doodad_LuxBazaar_Bridge"/>
+<Actor id="Storm_Doodad_LuxBazaar_Curtain" Variations="0,1,2"/>
+<Actor id="StormDoodadLuxBazaarCurtainNoVisionBlocking" Variations="2"/>
+<Actor id="Storm_Doodad_LuxBazaar_CurtainLarge" Variations="0,1"/>
+<Actor id="Storm_Doodad_LuxBazaar_StartingBase"/>
+<Actor id="Storm_Doodad_Luxoria_Balloon" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_Luxoria_Chains" Variations="0,1,2"/>
+<Actor id="Storm_Doodad_Luxoria_Curb_Slabs_Small" Variations="0,1,2,3,4,5,6,7,8,9"/>
+<Actor id="Storm_Doodad_Luxoria_Female_Civilian" Variations="0,1,2,3,4,5,6,7"/>
+<Actor id="Storm_Doodad_Luxoria_House_Bits" Variations="3"/>
+<Actor id="Storm_Doodad_Luxoria_Male_Civilian" Variations="0,1,2,3,4,5,6,7,8,9,10,11,12"/>
+<Actor id="Storm_Doodad_LuxBazaar_CliffFacades" Variations="0,1,2,3,5,8,9,10,11,12,13,14,15,16,18,19,20,21,22,26,27,28,29"/>
+<Actor id="Storm_Doodad_Luxoria_PottedTree" Variations="1,2"/>
+<Actor id="Storm_Doodad_Luxoria_SnakeBarrel" Variations="0,1"/>
+<Actor id="Storm_Doodad_Luxoria_Curb_Slabs" Variations="0,1,2,3,4,5,6,7,8,9,10,11"/>
+<Actor id="Storm_Doodad_Luxoria_PottedPlant" Variations="0,2,3,7,8"/>
+<Actor id="Storm_Doodad_Luxoria_Eye_Emblem"/>
+<Actor id="Storm_Doodad_Luxoria_Fountain" Variations="0,1"/>
+<Actor id="Storm_Doodad_Luxoria_Firepit" Variations="0,1"/>
+<Actor id="Storm_Doodad_Luxoria_Globe" Variations="0,1"/>
+<Actor id="Storm_Doodad_Luxoria_Flagpost" Variations="0,1"/>
+<Actor id="Storm_Doodad_Luxoria_Hookah" Variations="0,1,2,3,5"/>
+<Actor id="Storm_Doodad_Luxoria_Curbs_Slabs_TeamColor" Variations="2,4,5,7,9"/>
+<Actor id="Storm_Building_Luxoria_CapturePoint_PedestalSmall"/>
+<Actor id="Storm_Building_Luxoria_CapturePoint_Pedestal"/>
+<Actor id="Storm_Doodad_CyberWorld_CurtainLarge" Variations="1"/>
+<Actor id="Storm_Doodad_KingsCrest_Flowers" Variations="3,8"/>
+<Actor id="Storm_Doodad_Luxoria_Pool" Variations="2"/>
+<Actor id="Storm_Doodad_Luxoria_SmallPhysicsProps" Variations="4,5"/>
+<Actor id="Storm_Doodad_Luxoria_WeaponRack" Variations="3,6"/>
+<Actor id="Storm_Doodad_KingsCrest_Docks_RollingFog" Variations="0"/>
+<Actor id="Storm_Doodad_KingsCrest_GroundFog" Variations="0,1"/>
+<Actor id="Storm_Effect_luxoria_SandStorm"/>
+<Actor id="Storm_Doodad_Luxoria_Pyramid"/>
+<Actor id="Storm_Doodad_LuxBazaar_StartingBase_background"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_AA"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_A"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_BB"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_B"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_CC"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_C"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_DD"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_D"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_EE"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_E"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_FF"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_F"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_GG"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_G"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_HH"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_H"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_II"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_I"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_JJ"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_J"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_KK"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_K"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_LL"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_L"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_M"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_NN"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_N"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_OO"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_O"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_PP"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_P"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_QQ"/>
+<Actor id="Storm_Doodad_Luxoria_Jungle_Q"/>
+<Actor id="Storm_FX_Luxoria_ForegroundClouds"/>
+<Actor id="LuxoriaTempleCaptureBeaconRuneRing"/>
+<Actor id="LuxoriaTempleCaptureBeaconRing" Variations="0,1,2"/>
+<Behavior id="MercKnightPrepAggro"/>
+<Model id="StormDoodadLuxoriaObeliskBrokenDeath00"/>
+<Sound id="Amb_3D_Luxoria_Water_Side"/>
+<Sound id="Amb_3D_Luxoria_Water_Laps"/>
+<Sound id="Amb_3D_Luxoria_Water_Splash"/>
+<Sound id="Amb_3D_Luxoria_WaterFall"/>
+<Sound id="Amb_3D_Luxoria_Water_Fountain"/>
+<Terrain id="StormEgyptWorld"/>
+<Unit id="XelNagaWatchTower"/>
+<Unit id="StormGameStartPathingBlocker"/>
+<Unit id="TownGateL2VerticalLeftVisionBlocked" Variations="0"/>
+<Unit id="TownGateL2VerticalRightVisionBlocked" Variations="0"/>
+<Unit id="TownGateL215BLUR" Variations="0,2"/>
+<Unit id="TownGateL215BRUL" Variations="1,2"/>
+<Unit id="TownGateL3VerticalLeftVisionBlocked" Variations="0"/>
+<Unit id="TownGateL3VerticalRightVisionBlocked" Variations="1"/>
+<Unit id="TownGateL3BLURTLVisionBlocked" Variations="1"/>
+<Unit id="TownGateL3BLURBRVisionBlocked" Variations="1"/>
+<Unit id="TownGateL3BRULBLVisionBlocked" Variations="0"/>
+<Unit id="TownGateL3BRULTRVisionBlocked" Variations="1"/>
+<Unit id="TownCannonTowerL2"/>
+<Unit id="TownCannonTowerL3"/>
+<Unit id="TownCannonTowerL3Standalone"/>
+<Unit id="TownMoonwellL2"/>
+<Unit id="TownMoonwellL3"/>
+<Unit id="TownTownHallL3"/>
+<Unit id="TownTownHallL2"/>
+<Unit id="HallOfStormsLocationUnit"/>
+<Unit id="KingsCore"/>
+<Unit id="TownWallRadial2L3" Variations="4"/>
+<Unit id="TownWallRadial3L3" Variations="5"/>
+<Unit id="TownWallRadial4L2" Variations="4,7"/>
+<Unit id="TownWallRadial5L2" Variations="6,7"/>
+<Unit id="TownWallRadial5L3" Variations="7"/>
+<Unit id="TownWallRadial6L2" Variations="6"/>
+<Unit id="TownWallRadial6L3" Variations="6"/>
+<Unit id="TownWallRadial8L3" Variations="4"/>
+<Unit id="TownWallRadial9L3" Variations="5"/>
+<Unit id="TownWallRadial14L3" Variations="4"/>
+<Unit id="TownWallRadial15L3" Variations="5"/>
+<Unit id="TownWallRadial17L2" Variations="7"/>
+<Unit id="TownWallRadial17L3" Variations="7"/>
+<Unit id="TownWallRadial18L2" Variations="6,7"/>
+<Unit id="TownWallRadial18L3" Variations="6"/>
+<Unit id="TownWallRadial19L2" Variations="5"/>
+<Unit id="TownWallRadial20L3" Variations="4"/>
+<Unit id="TownWallRadial21L3" Variations="5"/>
+<Unit id="LootBannerSconce"/>
+<Unit id="HarrisonJonesWell"/>
+<Unit id="LuxoriaTemple" Variations="0,1,2"/>
+<Unit id="TempleDefenderPathingBlocker"/>
+</Preload>

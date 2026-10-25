@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Regions>
+    <region id="22">
+        <name value="Base Visibility Blue Team"/>
+        <shape type="rect">
+            <quad value="8.5,112.1337,49.5808,146.134"/>
+        </shape>
+        <shape type="rect">
+            <quad value="56.144,121.9523,64.144,136.9523"/>
+        </shape>
+        <shape type="diamond">
+            <center value="46.8012,119.2587"/>
+            <width value="28"/>
+            <height value="17.5"/>
+        </shape>
+        <shape type="diamond">
+            <center value="47.931,136.741"/>
+            <width value="19"/>
+            <height value="25"/>
+        </shape>
+        <shape type="diamond">
+            <negative/>
+            <center value="63.5646,136.6376"/>
+            <width value="3"/>
+            <height value="5"/>
+        </shape>
+        <shape type="diamond">
+            <negative/>
+            <center value="63.9716,121.9384"/>
+            <width value="5"/>
+            <height value="3"/>
+        </shape>
+    </region>
+    <region id="2">
+        <name value="Blue - Lane 2 - Town 1"/>
+        <invisible/>
+        <shape type="diamond">
+            <center value="61.1674,104.678"/>
+            <width value="29.349"/>
+            <height value="20"/>
+        </shape>
+    </region>
+    <region id="3">
+        <name value="Blue - Lane 1 - Town 1"/>
+        <invisible/>
+        <shape type="diamond">
+            <center value="62.2216,157.7917"/>
+            <width value="20"/>
+            <height value="30"/>
+        </shape>
+    </region>
+    <region id="6">
+        <name value="Blue - Lane 1 - Town 2"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="82.4912,157.2478,107.9912,187.5"/>
+        </shape>
+    </region>
+    <region id="7">
+        <name value="Blue - Lane 2 - Town 2"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="82.5,68.5,108.7502,107"/>
+        </shape>
+    </region>
+    <region id="12">
+        <name value="Orange - Lane 2 - Town 2"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="146.2502,72,172,98.438"/>
+        </shape>
+    </region>
+    <region id="15">
+        <name value="Orange - Lane 1 - Town 2"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="147.75,158.0627,173.25,183.938"/>
+        </shape>
+    </region>
+    <region id="17">
+        <name value="Orange - Lane 1 - Town 1"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="diamond">
+            <center value="195.6223,152.4365"/>
+            <width value="34.8637"/>
+            <height value="20"/>
+        </shape>
+    </region>
+    <region id="30">
+        <name value="Orange - Lane 2 - Town 1"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="diamond">
+            <center value="193.4333,98.832"/>
+            <width value="20"/>
+            <height value="30"/>
+        </shape>
+    </region>
+    <region id="4">
+        <name value="Blue Team Base Region"/>
+        <shape type="circle">
+            <center value="28.498,129.172"/>
+            <radius value="4"/>
+        </shape>
+        <shape type="diamond">
+            <center value="20.5,134"/>
+            <width value="11.8298"/>
+            <height value="16.8298"/>
+        </shape>
+        <shape type="diamond">
+            <center value="21,124.5"/>
+            <width value="16.8298"/>
+            <height value="11.8298"/>
+        </shape>
+        <shape type="rect">
+            <quad value="10.25,123.25,20.75,135.75"/>
+        </shape>
+    </region>
+    <region id="8">
+        <name value="Chaos Team Base Region"/>
+        <color value="255,255,128,0"/>
+        <shape type="circle">
+            <center value="226.5,128"/>
+            <radius value="4"/>
+        </shape>
+        <shape type="diamond">
+            <center value="234,132.5"/>
+            <width value="16.8298"/>
+            <height value="11.8298"/>
+        </shape>
+        <shape type="diamond">
+            <center value="234,123.5"/>
+            <width value="11.8298"/>
+            <height value="16.8298"/>
+        </shape>
+        <shape type="rect">
+            <quad value="234.186,121.6848,244.814,134.3146"/>
+        </shape>
+    </region>
+    <region id="11">
+        <name value="Merc Camp - Blue Henchmen Camp -  Leash Region"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="126.0002,145"/>
+            <radius value="8"/>
+        </shape>
+    </region>
+    <region id="18">
+        <name value="Merc Camp - Blue Swordsman Camp Leash Region"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="87.0002,111.5002"/>
+            <radius value="8"/>
+        </shape>
+    </region>
+    <region id="20">
+        <name value="Merc Camp - Orange Swordsman Camp - Leash Region"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="169.0002,144.5002"/>
+            <radius value="8"/>
+        </shape>
+    </region>
+    <region id="5">
+        <name value="Merc Camp - Orange Turret Camp - Leash Region"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="156.5,108"/>
+            <radius value="8"/>
+        </shape>
+    </region>
+    <region id="9">
+        <name value="Merc Camp - Blue Turret Camp - Leash Region"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="99.5,148"/>
+            <radius value="8"/>
+        </shape>
+    </region>
+    <region id="10">
+        <name value="Merc Camp - Orange Henchmen Camp - Leash Region"/>
+        <color value="255,255,128,0"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="130,111"/>
+            <radius value="8"/>
+        </shape>
+    </region>
+    <region id="13">
+        <name value="Elevator Region"/>
+        <invisible/>
+        <shape type="circle">
+            <center value="128,128.0002"/>
+            <radius value="3.3632"/>
+        </shape>
+    </region>
+    <region id="14">
+        <name value="Base Visibility Orange Team"/>
+        <color value="255,255,128,0"/>
+        <shape type="rect">
+            <quad value="205.5051,110.1877,246.586,144.188"/>
+        </shape>
+        <shape type="rect">
+            <quad value="191.2646,119.4267,199.2646,134.4267"/>
+        </shape>
+        <shape type="diamond">
+            <center value="207.814,118.5944"/>
+            <width value="17.5"/>
+            <height value="28"/>
+        </shape>
+        <shape type="diamond">
+            <center value="209.1296,135.9553"/>
+            <width value="25"/>
+            <height value="19"/>
+        </shape>
+        <shape type="diamond">
+            <negative/>
+            <center value="191.656,134.041"/>
+            <width value="5"/>
+            <height value="3"/>
+        </shape>
+        <shape type="diamond">
+            <negative/>
+            <center value="191.8876,120.03"/>
+            <width value="3"/>
+            <height value="5"/>
+        </shape>
+    </region>
+</Regions>
