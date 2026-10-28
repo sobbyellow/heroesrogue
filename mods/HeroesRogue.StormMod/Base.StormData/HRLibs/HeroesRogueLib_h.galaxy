@@ -147,6 +147,9 @@ const string libHRGE_eventPausedParam = "IsGamePaused";
 // Config
 // ============================================================
 
+const int libHRGE_hotkeyALT = c_keyAlt;
+const int libHRGE_hotkeyReroll = c_keyR;
+
 const int libHRGE_milestoneRound = 5;
 const int libHRGE_winningRound = 10;
 
@@ -159,10 +162,10 @@ const fixed libHRGE_gameStartDelay = 2.25; // Wait for Heroes to finish spawning
 const fixed libHRGE_disableHotkeysDuration = 0.25; // How long hotkeys such as picking affixes are disabled for, to prevent misclicks
 const fixed libHRGE_disableDialogControlDuration = 0.25; // How long dialog controls such as picking/banning affixes buttons are disabled for, to prevent misclicks
 
-const fixed libHRGE_mythicModifier = 0.05;
+const fixed libHRGE_mythicModifier = 0.04;
 const fixed libHRGE_mythicModifierXP = 0.02;
 const fixed libHRGE_mythicModifierPerRound = 0.0125;
-const fixed libHRGE_heroicModifier = 0.05;
+const fixed libHRGE_heroicModifier = 0.04;
 const fixed libHRGE_heroicModifierXP = 0.01;
 
 const string libHRGE_mythicCurse1 = "Sappers";
@@ -177,31 +180,39 @@ const string libHRGE_mythicCurse6 = "Eternal";
 // ============================================================
 
 const fixed libHRGE_globalTextWriteoutDuration = 1.0; 
+const int libHRGE_affixItemTalentPreviewWidth = 64;
+const int libHRGE_affixItemTalentPreviewHeight = 64;
+const int libHRGE_affixItemTalentPreviewOffsetX = 145;
+const int libHRGE_affixItemTalentPreviewOffsetY = 125;
+const int libHRGE_affixItemUnlockPreviewWidth = 64;
+const int libHRGE_affixItemUnlockPreviewHeight = 64;
+const int libHRGE_affixItemUnlockPreviewOffsetX = 145;
+const int libHRGE_affixItemUnlockPreviewOffsetY = 200;
 const int libHRGE_affixItemSpacing = 490;
 const int libHRGE_affixItemWidth = 465;
 const int libHRGE_affixItemHeight = 850;
 const int libHRGE_affixItemOffsetY = 140;
-const int libHRGE_affixItemIconWidth = 200;
-const int libHRGE_affixItemIconHeight = 200;
+const int libHRGE_affixItemIconWidth = 165;
+const int libHRGE_affixItemIconHeight = 165;
 const int libHRGE_affixItemIconOffsetX = 0;
-const int libHRGE_affixItemIconOffsetY = 120;
-const int libHRGE_affixItemIconOverlayWidth = 256;
-const int libHRGE_affixItemIconOverlayHeight = 256;
+const int libHRGE_affixItemIconOffsetY = 115;
+const int libHRGE_affixItemIconOverlayWidth = 221;
+const int libHRGE_affixItemIconOverlayHeight = 221;
 const int libHRGE_affixItemIconOverlayOffsetX = 0;
-const int libHRGE_affixItemIconOverlayOffsetY = 92;
+const int libHRGE_affixItemIconOverlayOffsetY = 87;
 const int libHRGE_affixItemNameWidth = 385;
 const int libHRGE_affixItemNameHeight = 100;
 const int libHRGE_affixItemNameOffsetX = 0;
-const int libHRGE_affixItemNameOffsetY = 305;
-const int libHRGE_affixItemTooltipWidth = 390;
+const int libHRGE_affixItemNameOffsetY = 275;
+const int libHRGE_affixItemTooltipWidth = 385;
 const int libHRGE_affixItemTooltipHeight = 600;
 const int libHRGE_affixItemTooltipOffsetX = 0;
-const int libHRGE_affixItemTooltipOffsetY = 385;
+const int libHRGE_affixItemTooltipOffsetY = 355;
 const int libHRGE_affixItemRarityWidth = 360;
 const int libHRGE_affixItemRarityHeight = 100;
 const int libHRGE_affixItemRarityOffsetX = 0;
 const int libHRGE_affixItemRarityOffsetY = 740;
-const int libHRGE_affixItemRarityBanOffsetY = 670;
+const int libHRGE_affixItemRarityBanOffsetY = 680;
 const int libHRGE_affixItemBackgroundWidth = 0;
 const int libHRGE_affixItemBackgroundHeight = 5;
 const int libHRGE_affixItemBackgroundOffsetX = 0;
@@ -212,8 +223,12 @@ const int libHRGE_affixItemAffixBackgroundOffsetX = 2;
 const int libHRGE_affixItemAffixBackgroundOffsetY = -30;
 const int libHRGE_affixItemSelectButtonOffsetX = 0;
 const int libHRGE_affixItemSelectButtonOffsetY = 12;
+const int libHRGE_affixItemSelectButtonWidth = 300;
+const int libHRGE_affixItemSelectButtonHeight = 100;
 const int libHRGE_affixItemBanButtonOffsetX = 0;
-const int libHRGE_affixItemBanButtonOffsetY = 720;
+const int libHRGE_affixItemBanButtonOffsetY = 735;
+const int libHRGE_affixItemBanButtonWidth = 300;
+const int libHRGE_affixItemBanButtonHeight = 100;
 const int libHRGE_affixSelectionTitleWidth = 1000;
 const int libHRGE_affixSelectionTitleHeight = 60;
 const int libHRGE_affixSelectionTitleOffsetX = 0;
@@ -382,6 +397,8 @@ const string libHRGE_textureAchievementNoneOverlay = "Assets/Textures/Achievemen
 const string libHRGE_textureAchievementNormalOverlay = "Assets/Textures/Achievements/icon_overlay.dds";
 const string libHRGE_textureAchievementHeroicOverlay = "Assets/Textures/Achievements/icon_overlay_heroic.dds";
 const string libHRGE_textureAchievementMythicOverlay = "Assets/Textures/Achievements/icon_overlay_mythic.dds";
+const string libHRGE_textureTalentsPreview = "Assets/Textures/affix_ui_talents_preview.dds";
+const string libHRGE_textureUnlocksPreview = "Assets/Textures/affix_ui_unlocks_preview.dds";
 
 // ============================================================
 // Affix User Data
@@ -582,6 +599,8 @@ struct libHRGE_DialogAffixSelectionItem {
     int nameLabel;
     int tooltipLabel;
     int rarityLabel;
+    int talentPreview;
+    int unlockPreview;
 };
 
 struct libHRGE_DialogAffixSelection {
@@ -780,6 +799,8 @@ fixed[libHRGE_maxScalingTriggers + 1] libHRGE_scalingModifiers;
 int[libHRGE_maxScalingTriggers + 1] libHRGE_scalingHeroes;
 int libHRGE_scalingIndex;
 
+bool libHRGE_pressingALT;
+
 bool libHRGE_mapInit = false;
 
 // ============================================================
@@ -849,6 +870,7 @@ libHRGE_DialogOptions libHRGE_dialogOptionsRestart;
 int libHRGE_dialogControlOptionsSpeedUpDeath;
 int libHRGE_dialogControlOptionsSpeedUpGates;
 int libHRGE_dialogControlOptionsDisplayPicksBans;
+int libHRGE_dialogControlOptionsAlwaysShowExtendedTooltips;
 int libHRGE_dialogControlOptionsAchievementsButton;
 int libHRGE_dialogControlOptionsRestartButton;
 int libHRGE_dialogControlOptionsReturnButton;
@@ -967,7 +989,10 @@ string libHRGE_GetRarityString(int rarity);
 text libHRGE_GetAffixTitleLabel();
 text libHRGE_GetAffixRerollLabel();
 text libHRGE_GetDifficultyLabel(int difficulty);
-text libHRGE_GetAffixTooltip(int affix, bool small);
+text libHRGE_GetTalentTooltip(string talent);
+text libHRGE_GetTalentSimpleTooltip(string talent);
+text libHRGE_GetExtendedAffixTooltip(string instance, bool onlyShowWithAlt, bool stackingValues, bool talents, bool unlockedAffixes);
+text libHRGE_GetAffixTooltip(int affix, bool smallTooltip);
 bool libHRGE_IsAffixBannable(int affix);
 bool libHRGE_IsCurrentQueueBannable();
 bool libHRGE_IsCurrentQueueRerollable();

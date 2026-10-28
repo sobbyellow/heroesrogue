@@ -322,6 +322,9 @@
             <Int Int="1">
                 <Field Id="NoRoll" />
             </Int>
+            <Int Int="1">
+                <Field Id="IgnoredForStats" />
+            </Int>
         </Instances>
         <Instances Id="NazeeboArachnophile">
             <Int Int="2">
@@ -1579,9 +1582,6 @@
             <Int Int="43">
                 <Field Id="Index" />
             </Int>
-            <Int Int="0">
-                <Field Id="Max" />
-            </Int>
             <String String="Assets/Textures/affix_icon_difficulty2.dds">
                 <Field Id="Icon" />
             </String>
@@ -1601,9 +1601,6 @@
         <Instances Id="DifficultyMythic">
             <Int Int="44">
                 <Field Id="Index" />
-            </Int>
-            <Int Int="0">
-                <Field Id="Max" />
             </Int>
             <String String="Assets/Textures/affix_icon_difficulty3.dds">
                 <Field Id="Icon" />
@@ -7202,10 +7199,7 @@
             <String String="WizardMagicMissilesMirrorball">
                 <Field Id="TalentsAdd" Index="4" />
             </String>
-            <String String="WizardFirefliesMirrorball">
-                <Field Id="TalentsAdd" Index="5" />
-            </String>
-            <Int Int="6">
+            <Int Int="5">
                 <Field Id="TalentsAddCount" />
             </Int>
             <String String="HeroLevelUp libHRGE_LiMingMissileBarrageLevelUp">
@@ -7220,7 +7214,13 @@
             <String String="1 Flat Set Effect,WizardMagicMissilesCreatePersistents,PeriodCount 20">
                 <Field Id="CatalogModification" Index="1" />
             </String>
-            <Int Int="2">
+            <String String="1 String String Unit,WizardMagicMissilesMissileLeftTA,Mover WizardMagicMissilesMissileMoverTA">
+                <Field Id="CatalogModification" Index="2" />
+            </String>
+            <String String="1 String String Unit,WizardMagicMissilesMissileRightTA,Mover WizardMagicMissilesMissileMoverTA">
+                <Field Id="CatalogModification" Index="3" />
+            </String>
+            <Int Int="4">
                 <Field Id="CatalogModificationCount" />
             </Int>
         </Instances>
@@ -11051,12 +11051,6 @@
             <String String="Auriel">
                 <Field Id="HeroSpecific" />
             </String>
-            <String String="AurielSearingLightRayOfHeavenTalent">
-                <Field Id="TalentsAdd" />
-            </String>
-            <Int Int="1">
-                <Field Id="TalentsAddCount" />
-            </Int>
             <String String="1 AurielGammaRayBurstCarry">
                 <Field Id="BehaviorsAdd" />
             </String>

@@ -552,12 +552,12 @@ void libPBU2_gf_CurateHSUIInitialize () {
     libNtve_gf_SetDialogItemText(libPBU2_difficultyDialogMythic, StringExternal("Button/Name/Mythic"), PlayerGroupAll());
     DialogControlSetPosition(libPBU2_difficultyDialogMythic, PlayerGroupAll(), c_anchorCenter, 660, -370);
     DialogControlSetSize(libPBU2_difficultyDialogMythic, PlayerGroupAll(), 190, 90);
-    TextExpressionSetToken("Param/Expression/Mythic", "A", StringExternal("Affix/ShortTooltip/" + libHRGE_mythicCurse1));
-    TextExpressionSetToken("Param/Expression/Mythic", "B", StringExternal("Affix/ShortTooltip/" + libHRGE_mythicCurse2));
-    TextExpressionSetToken("Param/Expression/Mythic", "C", StringExternal("Affix/ShortTooltip/" + libHRGE_mythicCurse3));
-    TextExpressionSetToken("Param/Expression/Mythic", "D", StringExternal("Affix/ShortTooltip/" + libHRGE_mythicCurse4));
-    TextExpressionSetToken("Param/Expression/Mythic", "E", StringExternal("Affix/ShortTooltip/" + libHRGE_mythicCurse5));
-    TextExpressionSetToken("Param/Expression/Mythic", "F", StringExternal("Affix/ShortTooltip/" + libHRGE_mythicCurse6));
+    TextExpressionSetToken("Param/Expression/Mythic", "A", StringExternal("Affix/SimpleDisplayText/" + libHRGE_mythicCurse1));
+    TextExpressionSetToken("Param/Expression/Mythic", "B", StringExternal("Affix/SimpleDisplayText/" + libHRGE_mythicCurse2));
+    TextExpressionSetToken("Param/Expression/Mythic", "C", StringExternal("Affix/SimpleDisplayText/" + libHRGE_mythicCurse3));
+    TextExpressionSetToken("Param/Expression/Mythic", "D", StringExternal("Affix/SimpleDisplayText/" + libHRGE_mythicCurse4));
+    TextExpressionSetToken("Param/Expression/Mythic", "E", StringExternal("Affix/SimpleDisplayText/" + libHRGE_mythicCurse5));
+    TextExpressionSetToken("Param/Expression/Mythic", "F", StringExternal("Affix/SimpleDisplayText/" + libHRGE_mythicCurse6));
     libNtve_gf_SetDialogItemTooltip(libPBU2_difficultyDialogMythic, StringExternal("Button/Tooltip/Mythic") + TextExpressionAssemble("Param/Expression/Mythic"), PlayerGroupAll());
 
     DialogControlSetEnabled(libPBU2_difficultyDialogNormal, PlayerGroupAll(), false);

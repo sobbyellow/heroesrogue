@@ -567,27 +567,6 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <Icon value="Assets\Textures\storm_ui_icon_wizard_criticalmass.dds" />
   </CButton>
 
-  <CTalent id="WizardFirefliesMirrorball">
-    <Face value="WizardFireflies" />
-    <AbilityModificationArray>
-      <Modifications>
-        <Type value="StringReplacement" />
-        <Catalog value="Unit" />
-        <Entry value="WizardMagicMissilesMissileLeftTA" />
-        <Field value="Mover" />
-        <StringReplacement value="WizardMagicMissilesMissileMoverTA" />
-      </Modifications>
-      <Modifications>
-        <Type value="StringReplacement" />
-        <Catalog value="Unit" />
-        <Entry value="WizardMagicMissilesMissileRightTA" />
-        <Field value="Mover" />
-        <StringReplacement value="WizardMagicMissilesMissileMoverTA" />
-      </Modifications>
-    </AbilityModificationArray>
-    <Abil value="WizardMagicMissiles" />
-  </CTalent>
-
   <CActorSound id="WizardTeleportCalamityImpactSound2" parent="SoundOneShot">
     <On Terms="Effect.WizardTeleportCalamityPvESearch.Start; At Caster" Send="Create" />
     <Host Subject="_Unit" />
