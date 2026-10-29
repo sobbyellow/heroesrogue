@@ -146,6 +146,8 @@ trigger libPBU2_gt_CurateHSUIButtonClicked;
 trigger libPBU2_gt_CurateHSUICountdownTimerExpires;
 trigger libPBU2_gt_CurateHSUIForceSelection;
 
+const int libPBU2_heroesRogueDialogsOffsetY = -440;
+
 // Library Initialization
 void libPBU2_InitVariables ();
 

@@ -26,7 +26,7 @@ Param/Expression/AffixGameoverStats2=Boon rerolls used: <c val="#TooltipNumbers"
 Param/Expression/AffixGameoverStats3=Game time: <c val="#TooltipNumbers">~L~</c><n/>Siege damage dealt: <c val="#TooltipNumbers">~M~</c><n/>Hero damage dealt: <c val="#TooltipNumbers">~N~</c><n/>Spell damage: <c val="#TooltipNumbers">~B~</c><n/>Physical damage: <c val="#TooltipNumbers">~C~</c><n/>Total damage dealt: <c val="#TooltipNumbers">~A~</c><n/>Healing: <c val="#TooltipNumbers">~D~</c><n/>Damage taken: <c val="#TooltipNumbers">~E~</c><n/>Experience: <c val="#TooltipNumbers">~F~</c><n/>Takedowns: <c val="#TooltipNumbers">~G~</c><n/>Kills: <c val="#TooltipNumbers">~H~</c><n/>Assists: <c val="#TooltipNumbers">~I~</c><n/>Deaths: <c val="#TooltipNumbers">~J~</c><n/>KDA Ratio: <c val="#TooltipNumbers">~K~</c>
 Param/Expression/AchievementEarned=Earned the achievement: <c val="FFDE36">~A~~B~</c>
 Param/Expression/InfoRun=Round ~A~ (~B~)
-Param/Expression/AffixTalentsPreview=<c val="#TooltipNumbers">Talents gained:</c>
+Param/Expression/AffixTalentsPreview=<c val="#TooltipNumbers">Talents:</c>
 Param/Expression/AffixTalentTooltip=<n/><n/><c val="FFDE36">[~A~]:</c> ~B~
 Param/Expression/AffixUnlocksPreview=<c val="#TooltipNumbers">Boons and curses requiring ~A~:</c>
 Param/Expression/AffixUnlockTooltip=<n/><n/>~A~ 
@@ -375,7 +375,7 @@ Button/Name/Normal=Normal
 Button/Name/Heroic=Heroic
 Button/Name/Mythic=Mythic
 Button/Tooltip/Normal=No changes.
-Button/Tooltip/Heroic=Enemy Heroes:<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_heroicModifier$*100" precision="2" />%</c> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration per round.<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_heroicModifierXP$*100" precision="0" />%</c> Experience Gain per round.<n/><n/><S val="TooltipSubscript">Damage, Health, and Regen stats scale multiplicatively.</S>
+Button/Tooltip/Heroic=Enemy Heroes:<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_heroicModifier$*100" precision="2" />%</c> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration per round.<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_heroicModifierXP$*100" precision="0" />%</c> Experience Gain per round.<n/><n/><S val="TooltipSubscript">Damage, Health, Mana, and Regeneration stats scale multiplicatively.</S>
 Button/Tooltip/Mythic=ALL enemies:<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_mythicModifier$*100" precision="2" />%</c> <c val="747A84">(+<d ref="$GalaxyVar:libHRGE_mythicModifierPerRound$*100" precision="2" />% per round)</c> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration, multiplied by the number of rounds.<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_mythicModifierXP$*100" precision="0" />%</c> Experience Gain per round.<n/><n/>After <c val="#TooltipNumbers">Round <d ref="$GalaxyVar:libHRGE_winningRound$" /></c>, curses will no longer swap to boons.<n/><n/>Obtain a powerful <c val="A84987">Mythic Curse</c> at the start of the game and every <c val="#TooltipNumbers">2</c> games afterwards:
 Button/Name/DoNothing=Do Nothing
 Button/SimpleDisplayText/DoNothing=Does nothing.
@@ -390,7 +390,7 @@ Affix/SimpleDisplayText/DifficultyNormal=No changes.
 Affix/Tooltip/Append/DifficultyNormal=
 
 Affix/Name/DifficultyHeroic=Heroic
-Affix/Tooltip/DifficultyHeroic=Enemy Heroes:<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_heroicModifier$*100" precision="2" />%</c> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration per round.<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_heroicModifierXP$*100" precision="0" />%</c> Experience Gain per round.<n/><n/><S val="TooltipSubscript">Damage, Health, and Regen stats scale multiplicatively.</S>
+Affix/Tooltip/DifficultyHeroic=Enemy Heroes:<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_heroicModifier$*100" precision="2" />%</c> Damage, Maximum Health, Maximum Mana, Health Regeneration, and Mana Regeneration per round.<n/><c val="#TooltipRed">+<d ref="$GalaxyVar:libHRGE_heroicModifierXP$*100" precision="0" />%</c> Experience Gain per round.<n/><n/><S val="TooltipSubscript">Damage, Health, Mana, and Regeneration stats scale multiplicatively.</S>
 Affix/SimpleDisplayText/DifficultyHeroic=Enemy Heroes become stronger over time.
 Affix/Tooltip/Append/DifficultyHeroic=<n/><n/>Current Total:<n/><c val="#TooltipRed">+<d ref="Behavior,AffixDifficultyBehavior,Modification.DamageDealtFraction[Ability]*100" precision="2"/>%</c> Stats<n/><c val="#TooltipRed">+<d ref="($GalaxyVar:libHRGE_heroicDifficultyXPModifier$)*100" precision="0"/>%</c> Experience Gain
 
@@ -2611,3 +2611,8 @@ Affix/Name/PayloadBoosters=Payload Boosters
 Affix/Tooltip/PayloadBoosters=<c val="#TooltipRed">+100%</c> Payload Movement Speed for the enemy Team.
 Affix/SimpleDisplayText/PayloadBoosters=Increases enemy Payload Movement Speed.
 Affix/Tooltip/Append/PayloadBoosters=
+
+Affix/Name/VileNests=Vile Nests
+Affix/Tooltip/VileNests=Toxic Nests summoned by <c val="#TooltipNumbers">Toxic Field</c> Slow by <c val="#TooltipNumbers">50%</c> for <c val="#TooltipNumbers">3</c> seconds.
+Affix/SimpleDisplayText/VileNests=Toxic Field Slows targets.
+Affix/Tooltip/Append/VileNests=

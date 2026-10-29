@@ -979,7 +979,7 @@ void libHRGE_Pause(bool pause); // Pauses various game systems.
 void libHRGE_PauseUnpause(); // Pauses when not paused or unpauses when paused.
 string libHRGE_GetAffixRarityLabel(int affix);
 string libHRGE_GetAffixStackLabel(int affix);
-color libHRGE_GetAffixColor(int affix);
+color libHRGE_GetAffixColor(string instance);
 string libHRGE_GetAffixTextureSuffix(int affix);
 string libHRGE_GetCountSuffix(int count, int maxCount);
 int libHRGE_GetCurrentMapPathIndex();
@@ -991,7 +991,7 @@ text libHRGE_GetAffixRerollLabel();
 text libHRGE_GetDifficultyLabel(int difficulty);
 text libHRGE_GetTalentTooltip(string talent);
 text libHRGE_GetTalentSimpleTooltip(string talent);
-text libHRGE_GetExtendedAffixTooltip(string instance, bool onlyShowWithAlt, bool stackingValues, bool talents, bool unlockedAffixes);
+text libHRGE_GetExtendedAffixTooltip(string instance, bool onlyShowWithAlt, bool addNewLines, bool stackingValues, bool talents, bool unlockedAffixes);
 text libHRGE_GetAffixTooltip(int affix, bool smallTooltip);
 bool libHRGE_IsAffixBannable(int affix);
 bool libHRGE_IsCurrentQueueBannable();
@@ -1181,6 +1181,7 @@ void libHRGE_ApplyDifficulty();
 bool libHRGE_IsCurseLevel(int level);
 bool libHRGE_IsQueueAffixNextGameLevel(int level); // Levels at which boons and curses will queue to the next game when not obtained in the current game.
 void libHRGE_BoonsCursesLevelUp_Init ();
+void libHRGE_SetupAffixes();
 void libHRGE_PrintDialogPressedTrigger_Init();
 void libHRGE_UpdateTalentDialogs(int player, int tier);
 void libHRGE_MapInitLoadBankTrigger_Init ();

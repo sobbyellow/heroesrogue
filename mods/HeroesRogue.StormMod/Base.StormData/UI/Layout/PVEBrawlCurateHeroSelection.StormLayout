@@ -122,7 +122,7 @@
       <Anchor side="Left" relative="$parent/SelectedImage1" pos="Min" offset="8" />
       <Anchor side="Right" relative="$parent/SelectedImage1" pos="Max" offset="-8" />
       <Anchor side="Bottom" relative="$parent/SelectedImage1" pos="Max" offset="-8" />
-      <Texture val="Assets\Textures\storm_ui_ranked_badge_gold_ring.dds" />
+      <Texture val="Assets\Textures\affix_icon_golden_hero.dds" />
       <DesaturateOnDisable val="false" />
       <Visible val="False" />
       <BlendMode val="Add" />

@@ -643,8 +643,7 @@ string libHRGE_GetAffixStackLabel(int affix) {
     return "Label/Name/RaritySuffixNone";
 }
 
-color libHRGE_GetAffixColor(int affix) {
-    string instance = libHRGE_GetAffixInstance(affix);
+color libHRGE_GetAffixColor(string instance) {
     int rarity = libHRGE_GetAffixRarity(instance);
     bool curse = libHRGE_AffixIsCurse(instance);
     if (rarity == libHRGE_rarityMythic) {
@@ -831,12 +830,12 @@ text libHRGE_GetTalentSimpleTooltip(string talent) {
     }
     return StringExternal("Button/SimpleDisplayText/" + talent);
 }
-text libHRGE_GetExtendedAffixTooltip(string instance, bool onlyShowWithAlt, bool stackingValues, bool talents, bool unlockedAffixes) {
+text libHRGE_GetExtendedAffixTooltip(string instance, bool onlyShowWithAlt, bool addNewLines, bool stackingValues, bool talents, bool unlockedAffixes) {
     int i;
     int j;
     int fieldCount = UserDataGetInt(libHRGE_affixUserData, instance, libHRGE_affixUserTalentsAddCount, 1);
     string talent;
-    string instanceCheck;
+    string instanceUnlocks;
     text previewTooltip;
     text stackingTooltip;
     text unlockTooltip;
@@ -850,7 +849,9 @@ text libHRGE_GetExtendedAffixTooltip(string instance, bool onlyShowWithAlt, bool
         if (libHRGE_pressingALT) {
             stackingTooltip += StringExternal("Affix/Tooltip/Append/" + instance);
         } else {
-            showAltTooltip = true;
+            if (StringExternal("Affix/Tooltip/Append/" + instance) != null) {
+                showAltTooltip = true;
+            }
         }
         previewTooltip += stackingTooltip;
     }
@@ -883,21 +884,16 @@ text libHRGE_GetExtendedAffixTooltip(string instance, bool onlyShowWithAlt, bool
 
     // Unlocked affixes
     if (unlockedAffixes) {
-        for (i = 1; i <= libHRGE_registeredAffixes; i += 1) {
-            instanceCheck = libHRGE_GetAffixInstance(i);
-            fieldCount = UserDataGetInt(libHRGE_affixUserData, instanceCheck, libHRGE_affixUserAffixesRequiredCount, 1);
-            for (j = 1; j <= fieldCount; j += 1) {
-                if (libHRGE_GetAffixRequired(instanceCheck, j) == instance) {
-                    TextExpressionSetToken("Param/Expression/AffixUnlockTooltip", "A", TextWithColor(StringToText("[") + StringExternal("Affix/Name/" + instanceCheck) + StringToText("]:"), libHRGE_GetAffixColor(i)));
-                    if (libHRGE_pressingALT) {
-                        unlockTooltip += TextExpressionAssemble("Param/Expression/AffixUnlockTooltip") + StringExternal("Affix/Tooltip/" + instanceCheck);
-                    } else {
-                        if (!onlyShowWithAlt) {
-                            unlockTooltip += TextExpressionAssemble("Param/Expression/AffixUnlockTooltip") + StringExternal("Affix/SimpleDisplayText/" + instanceCheck);
-                        }
-                        showAltTooltip = true;
-                    }
+        for (i = 1; i <= DataTableGetInt(true, instance + "UnlocksCount"); i += 1) {
+            instanceUnlocks = DataTableGetString(true, instance + "Unlocks" + IntToString(i));
+            TextExpressionSetToken("Param/Expression/AffixUnlockTooltip", "A", TextWithColor(StringToText("[") + StringExternal("Affix/Name/" + instanceUnlocks) + StringToText("]:"), libHRGE_GetAffixColor(instanceUnlocks)));
+            if (libHRGE_pressingALT) {
+                unlockTooltip += TextExpressionAssemble("Param/Expression/AffixUnlockTooltip") + StringExternal("Affix/Tooltip/" + instanceUnlocks);
+            } else {
+                if (!onlyShowWithAlt) {
+                    unlockTooltip += TextExpressionAssemble("Param/Expression/AffixUnlockTooltip") + StringExternal("Affix/SimpleDisplayText/" + instanceUnlocks);
                 }
+                showAltTooltip = true;
             }
         }
         if (unlockTooltip != null) {
@@ -911,7 +907,10 @@ text libHRGE_GetExtendedAffixTooltip(string instance, bool onlyShowWithAlt, bool
     }
     if (!libHRGE_pressingALT && showAltTooltip) {
         previewTooltip += StringExternal("Button/Tooltip/AffixShowTooltip");
+    } else if (addNewLines && stackingTooltip == null && (talentTooltip != null || unlockTooltip != null)) {
+        previewTooltip = StringToText("<n/><n/>") + previewTooltip;
     }
+
     return previewTooltip;
 }
 text libHRGE_GetAffixTooltip(int affix, bool smallTooltip) {
@@ -926,6 +925,7 @@ text libHRGE_GetAffixTooltip(int affix, bool smallTooltip) {
     int fieldCount = UserDataGetInt(libHRGE_affixUserData, instance, libHRGE_affixUserHeroTooltipCount, 1);
     string heroTooltip;
     int i;
+    text extendedTooltip;
 
     // Tooltip - Base tooltip
     for (i = 1; i <= fieldCount; i += 1) {
@@ -961,12 +961,12 @@ text libHRGE_GetAffixTooltip(int affix, bool smallTooltip) {
     }
 
     if (smallTooltip) {
-        tooltip += libHRGE_GetExtendedAffixTooltip(instance, true, true, true, true);
+        extendedTooltip += libHRGE_GetExtendedAffixTooltip(instance, true, true, true, true, true);
     } else {
-        tooltip += libHRGE_GetExtendedAffixTooltip(instance, true, true, false, false);
+        extendedTooltip += libHRGE_GetExtendedAffixTooltip(instance, true, true, true, false, false);
     }
 
-    return tooltip;
+    return tooltip + extendedTooltip;
 }
 
 bool libHRGE_IsAffixBannable(int affix) {
@@ -1678,8 +1678,8 @@ void libHRGE_UpdateAffixSelectionDialogItem(int index, int rolledCount) {
     int rarityOffsetY = libHRGE_affixItemRarityOffsetY;
     string instance = libHRGE_GetAffixInstance(affix);
     bool bannable = libHRGE_IsAffixBannable(affix);
-    text previewTalentsTooltip = libHRGE_GetExtendedAffixTooltip(instance, false, false, true, false);
-    text previewUnlocksTooltip = libHRGE_GetExtendedAffixTooltip(instance, false, false, false, true);
+    text previewTalentsTooltip = libHRGE_GetExtendedAffixTooltip(instance, false, false, false, true, false);
+    text previewUnlocksTooltip = libHRGE_GetExtendedAffixTooltip(instance, false, false, false, false, true);
 
     if (bannable) {
         rarityOffsetY = libHRGE_affixItemRarityBanOffsetY;
@@ -1689,7 +1689,7 @@ void libHRGE_UpdateAffixSelectionDialogItem(int index, int rolledCount) {
     libHRGE_SetDialogControlImage(libHRGE_dialogAffixSelection.items[index].icon, libHRGE_GetAffixIcon(instance));
     libHRGE_SetDialogControlImage(libHRGE_dialogAffixSelection.items[index].iconOverlay, "Assets/Textures/icon_overlay_large" + libHRGE_GetAffixTextureSuffix(affix) + ".dds");
     libHRGE_SetDialogControlText(libHRGE_dialogAffixSelection.items[index].nameLabel, StringExternal("Affix/Name/" + instance) + StringToText(libHRGE_GetCountSuffix(libHRGE_GetAffixCount(instance), libHRGE_GetAffixMax(instance))));
-    libHRGE_SetDialogControlColor(libHRGE_dialogAffixSelection.items[index].nameLabel, libHRGE_GetAffixColor(affix));
+    libHRGE_SetDialogControlColor(libHRGE_dialogAffixSelection.items[index].nameLabel, libHRGE_GetAffixColor(instance));
     libHRGE_SetDialogControlText(libHRGE_dialogAffixSelection.items[index].tooltipLabel, libHRGE_GetAffixTooltip(affix, false));
     libHRGE_SetDialogControlText(libHRGE_dialogAffixSelection.items[index].rarityLabel, StringExternal(libHRGE_GetAffixRarityLabel(affix)) + StringExternal(libHRGE_GetAffixStackLabel(affix)));
     libHRGE_SetDialogControlPosition(libHRGE_dialogAffixSelection.items[index].rarityLabel, c_anchorTop, offsetX + libHRGE_affixItemRarityOffsetX, libHRGE_affixItemOffsetY + rarityOffsetY);
@@ -1878,7 +1878,7 @@ void libHRGE_UpdateOwnedAffixesDialogItem(int slotIndex, int pageStart, int page
     libHRGE_SetDialogControlImage(libHRGE_dialogOwnedAffixes.items[slotIndex].iconOverlay, "Assets/Textures/icon_overlay" + libHRGE_GetAffixTextureSuffix(affix) + ".dds");
     libHRGE_SetDialogControlPosition(libHRGE_dialogOwnedAffixes.items[slotIndex].nameLabel, c_anchorCenter, offsetX + libHRGE_ownedAffixesNameOffsetX, offsetY + libHRGE_ownedAffixesNameOffsetY);
     libHRGE_SetDialogControlText(libHRGE_dialogOwnedAffixes.items[slotIndex].nameLabel, StringExternal(questIcon) + StringExternal("Affix/Name/" + instance) + StringToText(libHRGE_GetCountSuffix(libHRGE_GetAffixCount(instance), libHRGE_GetAffixMax(instance))));
-    libHRGE_SetDialogControlColor(libHRGE_dialogOwnedAffixes.items[slotIndex].nameLabel, libHRGE_GetAffixColor(affix));
+    libHRGE_SetDialogControlColor(libHRGE_dialogOwnedAffixes.items[slotIndex].nameLabel, libHRGE_GetAffixColor(instance));
     libHRGE_SetDialogControlPosition(libHRGE_dialogOwnedAffixes.items[slotIndex].cooldownLabel, c_anchorCenter, offsetX + libHRGE_ownedAffixesCooldownOffsetX, offsetY + libHRGE_ownedAffixesCooldownOffsetY);
     libHRGE_SetDialogControlVisible(libHRGE_dialogOwnedAffixes.items[slotIndex].cooldownLabel, false);
 
@@ -3757,7 +3757,7 @@ void libHRGE_BanAffix(int selectionIndex) {
     int rolledRarity;
     string instance = libHRGE_GetAffixInstance(libHRGE_rolledAffixes[selectionIndex]);
     if (libNtve_gf_DialogItemIsChecked(libHRGE_dialogControlOptionsDisplayPicksBans, libHRGE_player)) {
-        libHRGE_DisplayChatMessage(StringExternal("Message/Ban") + TextWithColor(StringExternal("Affix/Name/" + instance), libHRGE_GetAffixColor(libHRGE_rolledAffixes[selectionIndex])) + StringToText("."));
+        libHRGE_DisplayChatMessage(StringExternal("Message/Ban") + TextWithColor(StringExternal("Affix/Name/" + instance), libHRGE_GetAffixColor(instance)) + StringToText("."));
     }
     
     libHRGE_processQueueTimeElapsed = 0;
@@ -3773,7 +3773,7 @@ void libHRGE_SelectAffix(int selectionIndex) {
     int i;
     string instance = libHRGE_GetAffixInstance(libHRGE_rolledAffixes[selectionIndex]);
     if (libNtve_gf_DialogItemIsChecked(libHRGE_dialogControlOptionsDisplayPicksBans, libHRGE_player) && libHRGE_currentQueue.choiceCount > 1) {
-        libHRGE_DisplayChatMessage(StringExternal("Message/Pick") + TextWithColor(StringExternal("Affix/Name/" + instance), libHRGE_GetAffixColor(libHRGE_rolledAffixes[selectionIndex])) + StringToText("."));
+        libHRGE_DisplayChatMessage(StringExternal("Message/Pick") + TextWithColor(StringExternal("Affix/Name/" + instance), libHRGE_GetAffixColor(instance)) + StringToText("."));
     }
     
     libHRGE_ShowAffixSelectionDialog(false);
@@ -4507,6 +4507,25 @@ void libHRGE_BoonsCursesLevelUp_Init () {
     libGame_gf_HeroLevelUp(TriggerCreate("libHRGE_BoonsCursesLevelUp_Func"));
 }
 
+void libHRGE_SetupAffixes() {
+    int i;
+    int j;
+    string instance;
+    string instanceRequired;
+    int fieldCount;
+    int unlocksCount;
+    for (i = 1; i <= libHRGE_registeredAffixes; i += 1) {
+        instance = libHRGE_GetAffixInstance(i);
+        fieldCount = UserDataGetInt(libHRGE_affixUserData, instance, libHRGE_affixUserAffixesRequiredCount, 1);
+        for (j = 1; j <= fieldCount; j += 1) {
+            instanceRequired = libHRGE_GetAffixRequired(instance, j);
+            unlocksCount = DataTableGetInt(true, instanceRequired + "UnlocksCount");
+            DataTableSetString(true, instanceRequired + "Unlocks" + IntToString(unlocksCount + 1), instance);
+            DataTableSetInt(true, instanceRequired + "UnlocksCount", unlocksCount + 1);
+        }
+    }
+}
+
 // ============================================================
 // Map init
 // ============================================================
@@ -4554,6 +4573,8 @@ bool libHRGE_MapInitTrigger_Func (bool testConds, bool runActions) {
         KickFromGame(PlayerGroupAll());
         return true;
     }
+
+    libHRGE_SetupAffixes();
     
     if (libHRGE_playerSelectedHero == 0 && !libHRGE_debug_disableHeroSelection) {
         libGame_gv_pickingHeroesCallback = libHRGE_CurateHeroesTrigger;

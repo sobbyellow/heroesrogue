@@ -1,0 +1,2245 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<tree root="746F6F526F726548">
+  <node name="HeroRoot" type="Select" id="746F6F526F726548" comment="Root For Hero AI Think Tree">
+    <variable name="Actual Move Position" type="Point" comment="Position that the AI will actively try to move into" />
+    <variable name="GoalTargetPosition" type="Point" comment="Position of a goal" />
+    <variable name="Desired Movement Location" type="Point" comment="General Desired Position to goto. " />
+    <variable name="Auto Attack Target" type="Unit" comment="Current target to Attack" />
+    <variable name="Should Engage" type="Boolean" comment="Has an Advantage and should be more aggressive" />
+    <variable name="Should Flee" type="Boolean" comment="Is losing or is low enough that should run away " />
+    <variable name="In PvP Combat" type="Boolean" comment="Primary Focus is to PvP fight" />
+    <variable name="In PvE Combat" type="Boolean" comment="Primary Focus is to PvE fight" />
+    <variable name="Should Stage" type="Boolean" comment="Should prep for a fight " />
+    <variable name="Ally Hero Count" type="Integer" comment="Number of Allies in an Area" />
+    <variable name="Enemy Hero Count" type="Integer" comment="Number of Enemies" />
+    <variable name="Fight Center" type="Point" comment="Center of the Current Fight" />
+    <variable name="Avoid Range" type="Number" comment="Range at which an AI will attempt to flee from a nearby target. Melee and tanks have 0 unless they are fleeing" />
+    <variable name="Movement Type" type="Number" comment="Tank, Melee, Ranged movement types" />
+    <variable name="GoalSelected" type="Number" comment="Goal Number of the AI's current Goal" />
+    <variable name="GoalTarget" type="Unit" comment="Target unit of a goal." />
+    <variable name="Health_ReturnToSpawn" type="Number" value="0.25" comment="Health to Run awy" />
+    <variable name="Health_EndOffensive" type="Number" value="0.35" comment="Health to stop being Aggressive" />
+    <variable name="FightRange" type="Number" valueSource="intrinsic" value="AttackRange" comment="Range to Consider Attacking Target" />
+    <variable name="EnemyNearPreventionTimer" type="Time" comment="Timer used to prevent losing sight of a target for a single frame changing how many heroes are nearby" />
+    <variable name="Enemy to Peel" type="Unit" comment="Enemy that should be Peeled" />
+    <variable name="Lowest Ally" type="Unit" comment="Ally that needs to be Peeled" />
+    <variable name="Closest Enemy To Self" type="Unit" comment="Closest Enemy Target to Self" />
+    <variable name="Combat Engage Threshhold" type="Number" value="0.5" comment="Threshhold to Be Aggressive" />
+    <variable name="Combat Leash Range" type="Number" value="8" comment="Outside edge of which an AI will consider a target to be in a fight" />
+    <variable name="Mount Range" type="Number" value="24" comment="Distance an AI needs to be targeting to attempt to " />
+    <variable name="Avoid Point" type="Point" comment="Point to Run away from" />
+    <variable name="Flee Point" type="Point" comment="Point to Flee to if in Danger" />
+    <variable name="Movement Drag Range" type="Number" comment="Distance a hero will run to pickup items like Regen Globes/Potions" />
+    <variable name="Ally Wave Position" type="Point" comment="Most Pushed out Ally Wave position in current lane of sufficient threat to consider" />
+    <variable name="Enemy Wave Position" type="Point" comment="Most Pushed out Ally Wave position in current lane" />
+    <variable name="Ally Hero Center" type="Point" comment="CenterPoint of Ally Heroes Nearby" />
+    <variable name="Enemy Hero Center" type="Point" comment="Centerpoint of Enemy Heroes Nearby" />
+    <variable name="Fake Number" type="Number" comment="Number used to put in goal variables where the variable is not actually needed (eg Staging Range)" />
+    <variable name="In PvP Timer" type="Time" comment="Timer to keep PvP evaluations alive between frames to prevent stutter stepping" />
+    <variable name="In Flee Timer" type="Time" comment="Timer to keep Flee evaluation alive between frames to prevent stutter stepping" />
+    <variable name="Auto Attack Target Future Position" type="Point" />
+    <variable name="Self Distance to Core" type="Number" />
+    <variable name="Goal Distance to Core" type="Number" />
+    <variable name="Local Threat" type="Number" />
+    <variable name="FollowTimer" type="Time" />
+    <variable name="BunkerUnit" type="Unit" />
+    <variable name="MaxStagingRange" type="Number" />
+    <variable name="MinStagingRange" type="Number" />
+    <variable name="FightTarget" type="Unit" />
+    <variable name="MaxHideRange" type="Number" />
+    <variable name="StagePosition" type="Point" />
+    <variable name="AltarUnit" type="Unit" />
+    <insertChild id="FCD592221157322E" />
+    <insertChild id="65CA50483A256AA0" />
+    <insertChild id="8651E88DF719498E" />
+  </node>
+  <node name="TacticalRoot" type="Select" id="6C616369000C0E06" comment="Root For Hero Tactical AI">
+    <insertChild id="3FAD3B6CDC9F26F4" />
+    <insertChild id="A4058AA255280C17" />
+    <insertChild id="F21BCB9B06948439" />
+    <insertChild id="06E7B8EB9CB98DF9" />
+    <insertChild id="87811D772E337EB7" />
+    <insertChild id="465E82B8317A45F7" />
+    <insertChild id="93801AED1753AA9B" />
+    <insertChild id="916CBDD167D00890" />
+  </node>
+  <node name="Fallback" type="Running" id="43958E349EFFC058" />
+  <node name="Always" type="Select" id="A4058AA255280C17" comment="Highest priority branch, important general ability usage logic goes here. Examples: Critically saving yourself, critically saving an ally, cancel conditions of a channel, transient abilities." />
+  <node name="Defensive" type="Select" id="F21BCB9B06948439" comment="Defensive context for ability usage. Examples: using CC to peel for yourself and allies, using defensive abilities like shields." />
+  <node name="Go Out In A Blaze Of Glory" type="IsDoomed" id="3FAD3B6CDC9F26F4" comment="Branch for a hopeless situation. Logic here should be kept simple with no/minimal resource consideration. Pick the abilities to use to go out in a blaze of glory." />
+  <node name="Offensive" type="Select" id="87811D772E337EB7" comment="Offensive context for ability usage. For each ability, it is suggested to prioritize killing critically low enemies first then move onto general ability usage. General usage is suggested to be gated by 3 tiers of available mana: high, medium, and low. High mana (~&gt;80%) usually equates to looser restrictions and filters: requiring less targets in an area to use an AoE ability, or allowing higher health targets, for example. Low mana (~&lt;30%) usually equates to tighter restrictions and filters: you want to be a lot more picky about your targeting context." />
+  <node name="Cloak Harass" type="IsAwareOfCloakedEnemy" id="916CBDD167D00890">
+    <property name="CloakedTargetPosition" value="CloakedTargetPosition" />
+    <variable name="CloakedTargetPosition" type="Point" />
+    <insertChild id="201CBEDA82DE8CFF" />
+  </node>
+  <node name="Attemp Reveal" type="AbilityCategory" id="CA5945DAE06FC014">
+    <property name="TargetPosition" valueSource="variable" value="CloakedTargetPosition" />
+    <property name="AbilityCategories" valueSource="literal" value="Reveals" />
+  </node>
+  <node name="" type="Select" id="93801AED1753AA9B" />
+  <node name="Should use Bunker" type="UnitHasBehaviorCategory" id="06E7B8EB9CB98DF9">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Categories" valueSource="literal" value="Slow,Reveal,HealReduction,DebuffAbilityPower,DebuffRoot,DebuffStasis,DebuffSilence,DebuffBlind,DebuffAutoattackDPS" />
+    <insertChild id="53A4F84F7705697F" />
+  </node>
+  <node name="ControlNode" type="And" id="53A4F84F7705697F">
+    <insertChild id="E228E038022A5A0D" />
+    <insertChild id="C9CDC75717AC9D31" />
+  </node>
+  <node name="Bunker Nearby" type="FindBestTarget" id="E228E038022A5A0D">
+    <property name="UnitType" valueSource="literal" value="FirebatBunkerDropBunkerUnit" />
+    <property name="TargetTypes" valueSource="literal" value="Self,Player,Ally" />
+    <property name="RequiredTypes" valueSource="literal" value="" />
+    <property name="OutputTarget" value="BunkerUnit" />
+    <property name="MaxTargetDistance" valueSource="literal" value="5" />
+  </node>
+  <node name="Use Bunker" type="Ability" id="C9CDC75717AC9D31">
+    <property name="Ability" valueSource="literal" value="SmartCommandUnitInteraction" />
+    <property name="TargetUnit" valueSource="variable" value="BunkerUnit" />
+  </node>
+  <node name="FleeTactical" type="Select" id="93D883AF1FB031B1" comment="Special ability usage logic for fleeing. Examples: using CC on chasers, using movement abilities for escape." />
+  <node name="" type="Or" id="201CBEDA82DE8CFF">
+    <insertChild id="07A3A0C1CA862A5F" />
+  </node>
+  <node name="Target &lt; 8" type="Distance" id="07A3A0C1CA862A5F">
+    <property name="SourceUnit" valueSource="intrinsic" value="Self" />
+    <property name="TargetPoint" valueSource="variable" value="CloakedTargetPosition" />
+    <property name="Comparison" valueSource="literal" value="LT" />
+    <property name="Distance" valueSource="literal" value="8" />
+    <insertChild id="CA5945DAE06FC014" />
+  </node>
+  <node name="On Healing Altar" type="UnitHasBehavior" id="C269A066660F0020">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="HallOfStormsProtectionBuff" />
+    <insertChild id="A997D0593F8F4F28" />
+  </node>
+  <node name="" type="And" id="A997D0593F8F4F28">
+    <insertChild id="7CB0EC30AC046193" />
+    <insertChild id="02E6C79794CF374D" />
+    <insertChild id="4D9BB0E3BA48064D" />
+  </node>
+  <node name="No Disable Altar Healing" type="UnitHasBehavior" id="7CB0EC30AC046193">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="OneLaneMapBlockAltarHealing" />
+    <property name="StackComparison" valueSource="literal" value="Eq" />
+  </node>
+  <node name="" type="Or" id="02E6C79794CF374D">
+    <insertChild id="F373A700FEE3AF93" />
+    <insertChild id="E0ADD4A27327F540" />
+  </node>
+  <node name="&lt; 90%" type="LifeFraction" id="F373A700FEE3AF93">
+    <property name="Comparison" valueSource="literal" value="LT" />
+    <property name="LifeFraction" valueSource="literal" value="0.9" />
+    <property name="Target" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Uses Mana" type="UnitHasBehavior" id="E0ADD4A27327F540">
+    <property name="StackComparison" valueSource="literal" value="Eq" />
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="NotManaUserDummy" />
+    <insertChild id="07CD9946635AB74F" />
+  </node>
+  <node name="&lt; 90%" type="EnergyFraction" id="07CD9946635AB74F">
+    <property name="EnergyFraction" valueSource="literal" value="0.9" />
+    <property name="Comparison" valueSource="literal" value="LT" />
+    <property name="Target" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="" type="Hold" id="4D9BB0E3BA48064D" />
+  <node name="AoE Avoidance" type="And" id="7F2CFA9E367E523C">
+    <insertChild id="AF3B571AFC62D590" />
+    <insertChild id="D669F3AB9EB37124" />
+    <insertChild id="51CD9B0D120C2C79" />
+  </node>
+  <node name="&gt;= Adept" type="Difficulty" id="AF3B571AFC62D590">
+    <property name="Difficulty" valueSource="literal" value="Adept" />
+  </node>
+  <node name="" type="Or" id="D669F3AB9EB37124">
+    <insertChild id="CEC682C6F72CD238" />
+    <insertChild id="F6026AEC206BD92C" />
+  </node>
+  <node name="Self Future position" type="UnitPosition" id="CEC682C6F72CD238">
+    <property name="OutputPosition" value="Future Movement Point" />
+    <property name="InputUnit" valueSource="intrinsic" value="Self" />
+    <property name="PredictionSeconds" valueSource="literal" value="0.5" />
+    <variable name="Future Movement Point" type="Point" />
+    <insertChild id="6ADA45219E004791" />
+  </node>
+  <node name="Desired Point in AOE" type="IsInAOE" id="6ADA45219E004791">
+    <property name="TargetPoint" valueSource="variable" value="Future Movement Point" />
+  </node>
+  <node name="Standing In AoE" type="IsInAOE" id="F6026AEC206BD92C">
+    <property name="TargetPoint" valueSource="intrinsic" value="SelfPos" />
+  </node>
+  <node name="" type="And" id="51CD9B0D120C2C79">
+    <insertChild id="18B5926B7B7A2B23" />
+    <insertChild id="0333E12E24B35EE6" />
+    <insertChild id="706CEF6BE145EACA" />
+  </node>
+  <node name="Not IsRooted" type="FilterBehaviorCategory" id="18B5926B7B7A2B23">
+    <property name="ExcludeCategories" valueSource="literal" value="DebuffRoot" />
+    <insertChild id="830E20838D4034A7" />
+  </node>
+  <node name="Self" type="UnitCount" id="830E20838D4034A7">
+    <property name="TargetTypes" valueSource="literal" value="" />
+    <property name="RequiredTypes" valueSource="literal" value="Self" />
+    <property name="Comparison" valueSource="literal" value="Eq" />
+    <property name="TargetCount" valueSource="literal" value="1" />
+    <property name="MaxTargetDistance" valueSource="literal" value="1" />
+  </node>
+  <node name="" type="Or" id="0333E12E24B35EE6">
+    <insertChild id="E09A16599FD10FFD" />
+    <insertChild id="4D980E57302169AC" />
+    <insertChild id="77BA6F414B2AC085" />
+    <insertChild id="6338F655AF4468D7" />
+    <insertChild id="6DF586CB967A4771" />
+    <insertChild id="34B459795B980EAD" />
+  </node>
+  <node name="Bunker Nearby" type="FindBestTarget" id="E09A16599FD10FFD">
+    <property name="UnitType" valueSource="literal" value="FirebatBunkerDropBunkerUnit" />
+    <property name="TargetTypes" valueSource="literal" value="Self,Player,Ally" />
+    <property name="RequiredTypes" valueSource="literal" value="" />
+    <property name="OutputTarget" value="BunkerUnit" />
+    <property name="MaxTargetDistance" valueSource="literal" value="5" />
+    <property name="MinLifeFraction" valueSource="literal" value="0.25" />
+    <insertChild id="5CD1F83972AC7CEC" />
+  </node>
+  <node name="UseBunker" type="Ability" id="5CD1F83972AC7CEC">
+    <property name="Ability" valueSource="literal" value="SmartCommandUnitInteraction" />
+    <property name="TargetUnit" valueSource="variable" value="BunkerUnit" />
+  </node>
+  <node name="Living Bomb/Poly Bomb Logic" type="And" id="4D980E57302169AC">
+    <insertChild id="75CE4180F697EF6E" />
+    <insertChild id="D0CB2762BCED194D" />
+  </node>
+  <node name="" type="Or" id="75CE4180F697EF6E">
+    <insertChild id="E80824EFDFDDA9F4" />
+    <insertChild id="4005D97CE5F94513" />
+    <insertChild id="CD095EFBBD605A84" />
+    <insertChild id="1F813C4536DC8983" />
+    <insertChild id="8F6D5D1AC47019A6" />
+  </node>
+  <node name="Living Bomb" type="UnitHasBehavior" id="E80824EFDFDDA9F4">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="KaelthasLivingBombTarget" />
+  </node>
+  <node name="Living Bomb Chain" type="UnitHasBehavior" id="4005D97CE5F94513">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="KaelthasLivingBombChainBombTarget" />
+  </node>
+  <node name="PolyBomb" type="UnitHasBehavior" id="CD095EFBBD605A84">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="MedivhPolyBomb" />
+  </node>
+  <node name="Pyroblast" type="UnitHasBehavior" id="1F813C4536DC8983">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="KaelthasPyroblastCastingReveal" />
+  </node>
+  <node name="Frozen Tomb" type="UnitHasBehavior" id="8F6D5D1AC47019A6">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="KelThuzadFrozenTombCastReveal" />
+  </node>
+  <node name="" type="And" id="D0CB2762BCED194D">
+    <insertChild id="F1DB1D0E1E86336A" />
+    <insertChild id="6EC6A8575FB6D4FA" />
+    <insertChild id="498A2E766E87B715" />
+  </node>
+  <node name="" type="Or" id="6EC6A8575FB6D4FA">
+    <variable name="Close Ally" type="Unit" />
+    <insertChild id="3E21AE7EFAC48BB8" />
+    <insertChild id="FBA5B1523181F71F" />
+    <insertChild id="96E50B6873323E4A" />
+  </node>
+  <node name="Find ally to Run away from" type="FindBestTarget" id="3E21AE7EFAC48BB8">
+    <property name="TargetTypes" valueSource="literal" value="Heroic" />
+    <property name="RequiredTypes" valueSource="literal" value="Ally" />
+    <property name="OutputTarget" value="Close Ally" />
+    <property name="MaxTargetDistance" valueSource="literal" value="5" />
+    <insertChild id="DF2A8FDBDDDB435A" />
+  </node>
+  <node name="Find A point closer to Your Core to Flee Center" type="FindPointOnLine" id="DF2A8FDBDDDB435A">
+    <property name="SourceUnit" valueSource="intrinsic" value="Self" />
+    <property name="DestinationPoint" valueSource="variable" value="Close Ally" />
+    <property name="DistanceOffset" valueSource="literal" value="-5" />
+    <property name="OutputTarget" value="Desired Movement Location" />
+    <insertChild id="31001CFB0258C71B" />
+  </node>
+  <node name="Find Safe Point" type="FindSafePoint" id="31001CFB0258C71B">
+    <property name="FleeCenter" valueSource="variable" value="Desired Movement Location" />
+    <property name="FleeDistance" valueSource="literal" value="4" />
+    <property name="PreferredPoint" valueSource="intrinsic" value="SafePos" />
+    <property name="OutputTarget" value="Actual Move Position" />
+  </node>
+  <node name="Find A point closer to Your Core to Flee Center" type="FindPointOnLine" id="FBA5B1523181F71F">
+    <property name="SourceUnit" valueSource="intrinsic" value="Self" />
+    <property name="DestinationPoint" valueSource="intrinsic" value="SafePos" />
+    <property name="DistanceOffset" valueSource="literal" value="4" />
+    <property name="OutputTarget" value="Desired Movement Location" />
+    <insertChild id="4C79474E29C9E641" />
+  </node>
+  <node name="Find Safe Point" type="FindSafePoint" id="4C79474E29C9E641">
+    <property name="FleeCenter" valueSource="variable" value="Desired Movement Location" />
+    <property name="FleeDistance" valueSource="literal" value="4" />
+    <property name="PreferredPoint" valueSource="intrinsic" value="SafePos" />
+    <property name="OutputTarget" value="Actual Move Position" />
+  </node>
+  <node name="Repeat with Further Point" type="FindPointOnLine" id="96E50B6873323E4A">
+    <property name="SourceUnit" valueSource="intrinsic" value="Self" />
+    <property name="DestinationPoint" valueSource="intrinsic" value="SafePos" />
+    <property name="DistanceOffset" valueSource="literal" value="8" />
+    <property name="OutputTarget" value="Desired Movement Location" />
+    <insertChild id="11096F4024CBA040" />
+  </node>
+  <node name="Find Safe Point" type="FindSafePoint" id="11096F4024CBA040">
+    <property name="FleeCenter" valueSource="variable" value="Desired Movement Location" />
+    <property name="FleeDistance" valueSource="literal" value="8" />
+    <property name="PreferredPoint" valueSource="intrinsic" value="SafePos" />
+    <property name="OutputTarget" value="Actual Move Position" />
+  </node>
+  <node name="Ally Nearby to not blow up" type="UnitCount" id="F1DB1D0E1E86336A">
+    <property name="TargetTypes" valueSource="literal" value="Heroic" />
+    <property name="RequiredTypes" valueSource="literal" value="Ally" />
+    <property name="MaxTargetDistance" valueSource="literal" value="5" />
+    <property name="TargetCount" valueSource="literal" value="1" />
+  </node>
+  <node name="MoveToSafety" type="HeroMoveToPoint" id="498A2E766E87B715">
+    <property name="TargetPosition" valueSource="variable" value="Actual Move Position" />
+    <property name="StopRange" valueSource="literal" value="0" />
+    <property name="StartRange" valueSource="literal" value="0" />
+  </node>
+  <node name="Siege Giant Dodge Logic" type="And" id="77BA6F414B2AC085">
+    <insertChild id="AD1AAC3947D6A862" />
+  </node>
+  <node name="Find Siege Giant" type="FindBestTarget" id="AD1AAC3947D6A862">
+    <property name="UnitType" valueSource="literal" value="MercDefenderSiegeGiant" />
+    <property name="TargetTypes" valueSource="literal" value="Creep" />
+    <property name="OutputTarget" value="SiegeGiant" />
+    <property name="MaxTargetDistance" valueSource="literal" value="7" />
+    <variable name="SiegeGiant" type="Unit" />
+    <insertChild id="9CF0703BD6BB4C8B" />
+  </node>
+  <node name="Find Safe Spot With Less Flee" type="FindSafePoint" id="9CF0703BD6BB4C8B">
+    <property name="FleeDistance" valueSource="literal" value="1.5" />
+    <property name="OutputTarget" value="Actual Move Position" />
+    <property name="FleeCenter" valueSource="variable" value="SiegeGiant" />
+    <property name="PreferredPoint" valueSource="intrinsic" value="SafePos" />
+  </node>
+  <node name="" type="Or" id="6338F655AF4468D7">
+    <insertChild id="CA50B1544E3B9725" />
+    <insertChild id="E64F446B1EC53D34" />
+    <insertChild id="2911F34753F4F731" />
+    <insertChild id="8AE5EF04734E5898" />
+    <insertChild id="DA302E0D8D037AB0" />
+  </node>
+  <node name="Living Bomb" type="UnitHasBehavior" id="CA50B1544E3B9725">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="KaelthasLivingBombTarget" />
+  </node>
+  <node name="Living Bomb Chain" type="UnitHasBehavior" id="E64F446B1EC53D34">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="KaelthasLivingBombChainBombTarget" />
+  </node>
+  <node name="PolyBomb" type="UnitHasBehavior" id="2911F34753F4F731">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="MedivhPolyBomb" />
+  </node>
+  <node name="Pyroblast" type="UnitHasBehavior" id="8AE5EF04734E5898">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="KaelthasPyroblastCastingReveal" />
+  </node>
+  <node name="Frozen Tomb" type="UnitHasBehavior" id="DA302E0D8D037AB0">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="KelThuzadFrozenTombCastReveal" />
+  </node>
+  <node name="Desired" type="FindSafePoint" id="6DF586CB967A4771">
+    <property name="OutputTarget" value="Actual Move Position" />
+    <property name="FleeCenter" valueSource="variable" value="Ally Hero Center" />
+    <property name="FleeDistance" valueSource="literal" value="6" />
+  </node>
+  <node name="Fallback" type="FindSafePoint" id="34B459795B980EAD">
+    <property name="OutputTarget" value="Actual Move Position" />
+    <property name="PreferredPoint" valueSource="intrinsic" value="SafePos" />
+  </node>
+  <node name="MoveToSafety" type="HeroMoveToPoint" id="706CEF6BE145EACA">
+    <property name="TargetPosition" valueSource="variable" value="Actual Move Position" />
+    <property name="StopRange" valueSource="literal" value="0" />
+    <property name="StartRange" valueSource="literal" value="0" />
+  </node>
+  <node name="Healing Items" type="And" id="465E82B8317A45F7">
+    <variable name="Desired Unit" type="Unit" />
+    <insertChild id="288416FA2011E64B" />
+    <insertChild id="C819023318864D10" />
+    <insertChild id="7C83BB1BD73900F3" />
+  </node>
+  <node name="Not Bottomless Flask" type="FilterBehavior" id="975AAA2F329FC495">
+    <property name="Behavior" valueSource="literal" value="DeckardBottomlessFlask" />
+    <property name="StackComparison" valueSource="literal" value="Eq" />
+    <insertChild id="386E7503EFF4CD1F" />
+  </node>
+  <node name="" type="Or" id="288416FA2011E64B">
+    <insertChild id="873F8D7D2690E084" />
+    <insertChild id="B039DE5EB284FB3C" />
+    <insertChild id="66740114127486E9" />
+  </node>
+  <node name="Potion" type="And" id="873F8D7D2690E084">
+    <insertChild id="C8439C9C62128F5D" />
+    <insertChild id="3A657BE0A912A0FE" />
+  </node>
+  <node name="" type="Or" id="C8439C9C62128F5D">
+    <insertChild id="567DE81052580D5C" />
+    <insertChild id="C390F315D756EFEB" />
+  </node>
+  <node name="No Enemies Nearby" type="CompareNumber" id="C1A9C3024E529745">
+    <property name="LeftHandSide" valueSource="variable" value="Enemy Hero Count" />
+    <insertChild id="9DC8D9ED9CB3611C" />
+  </node>
+  <node name="&lt;80%" type="LifeFraction" id="9DC8D9ED9CB3611C">
+    <property name="LifeFraction" valueSource="literal" value="0.8" />
+    <property name="Comparison" valueSource="literal" value="LT" />
+    <property name="Target" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="1 Enemy" type="CompareNumber" id="567DE81052580D5C">
+    <property name="LeftHandSide" valueSource="variable" value="Enemy Hero Count" />
+    <property name="Comparison" valueSource="literal" value="LE" />
+    <property name="RightHandSide" valueSource="literal" value="1" />
+    <insertChild id="4DD6FCEA37BF7935" />
+  </node>
+  <node name="&lt;20% Health" type="LifeFraction" id="4DD6FCEA37BF7935">
+    <property name="LifeFraction" valueSource="literal" value="0.2" />
+    <property name="Comparison" valueSource="literal" value="LE" />
+    <property name="Target" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="2 Enemies" type="CompareNumber" id="5C444F730C26FDE5">
+    <property name="LeftHandSide" valueSource="variable" value="Enemy Hero Count" />
+    <property name="Comparison" valueSource="literal" value="LE" />
+    <property name="RightHandSide" valueSource="literal" value="2" />
+    <insertChild id="9DB7739E2C3D885B" />
+  </node>
+  <node name="&lt;35% Health" type="LifeFraction" id="9DB7739E2C3D885B">
+    <property name="LifeFraction" valueSource="literal" value="0.35" />
+    <property name="Comparison" valueSource="literal" value="LE" />
+    <property name="Target" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="3+ Enemies" type="CompareNumber" id="5242DA786FEAEAF9">
+    <property name="LeftHandSide" valueSource="variable" value="Enemy Hero Count" />
+    <property name="Comparison" valueSource="literal" value="GE" />
+    <property name="RightHandSide" valueSource="literal" value="3" />
+    <insertChild id="73086FEFDFF9A5F2" />
+  </node>
+  <node name="&lt;50% Health" type="LifeFraction" id="73086FEFDFF9A5F2">
+    <property name="LifeFraction" valueSource="literal" value="0.5" />
+    <property name="Comparison" valueSource="literal" value="LE" />
+    <property name="Target" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="" type="Or" id="9514DF1DB9D1BC63">
+    <insertChild id="C1A9C3024E529745" />
+    <insertChild id="5C444F730C26FDE5" />
+    <insertChild id="5242DA786FEAEAF9" />
+  </node>
+  <node name="Regen Globe" type="FindBestTarget" id="B039DE5EB284FB3C">
+    <property name="SearchCenter" valueSource="intrinsic" value="Self" />
+    <property name="TargetTypes" valueSource="literal" value="Ally" />
+    <property name="UnitType" valueSource="literal" value="RegenGlobe" />
+    <property name="FilterTargetsBehindGate" valueSource="literal" value="true" />
+    <property name="MaxTargetDistance" valueSource="variable" value="Movement Drag Range" />
+    <property name="OutputTarget" value="Desired Unit" />
+    <property name="RequiredTypes" valueSource="literal" value="" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Stasis,Dead" />
+    <property name="PreferredPoint" valueSource="intrinsic" value="SafePos" />
+  </node>
+  <node name="Neutral Regen Globe" type="FindBestTarget" id="66740114127486E9">
+    <property name="SearchCenter" valueSource="intrinsic" value="Self" />
+    <property name="TargetTypes" valueSource="literal" value="Enemy" />
+    <property name="UnitType" valueSource="literal" value="RegenGlobeNeutral" />
+    <property name="FilterTargetsBehindGate" valueSource="literal" value="true" />
+    <property name="MaxTargetDistance" valueSource="variable" value="Movement Drag Range" />
+    <property name="OutputTarget" value="Desired Unit" />
+    <property name="RequiredTypes" valueSource="literal" value="" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Stasis,Dead" />
+    <property name="PreferredPoint" valueSource="intrinsic" value="SafePos" />
+  </node>
+  <node name="" type="Not" id="C819023318864D10">
+    <insertChild id="AA291BF25899DA60" />
+  </node>
+  <node name="Item In Dangerous Area" type="IsInDanger" id="AA291BF25899DA60">
+    <property name="TargetPoint" valueSource="variable" value="Desired Unit" />
+    <property name="ForceIncludeUnit" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Pickup Potion" type="HeroMoveToUnit" id="7C83BB1BD73900F3">
+    <property name="Target" valueSource="variable" value="Desired Unit" />
+  </node>
+  <node name="" type="Or" id="3A657BE0A912A0FE">
+    <insertChild id="504B27B4C451A966" />
+    <insertChild id="975AAA2F329FC495" />
+  </node>
+  <node name="" type="Not" id="33F027AB8497D7EC">
+    <insertChild id="54302517516F5FF9" />
+  </node>
+  <node name="" type="FindBestTarget" id="54302517516F5FF9">
+    <property name="RequiredTypes" valueSource="literal" value="Ally" />
+    <property name="TargetTypes" valueSource="literal" value="Heroic" />
+    <property name="MaxTargetDistance" valueSource="variable" value="Movement Drag Range" />
+    <property name="MaxLifeFraction" valueSource="literal" value="0.25" />
+    <property name="OutputTarget" value="Low Ally" />
+    <variable name="Low Ally" type="Unit" />
+  </node>
+  <node name="" type="And" id="C390F315D756EFEB">
+    <insertChild id="33F027AB8497D7EC" />
+    <insertChild id="9514DF1DB9D1BC63" />
+  </node>
+  <node name="Not Bottomless Flask" type="FilterBehavior" id="504B27B4C451A966">
+    <property name="Behavior" valueSource="literal" value="DeckardBottomlessFlask" />
+    <property name="StackComparison" valueSource="literal" value="Eq" />
+    <insertChild id="922F9BAE35586311" />
+  </node>
+  <node name="Find Healing Potion" type="FindBestTarget" id="922F9BAE35586311">
+    <property name="SearchCenter" valueSource="intrinsic" value="Self" />
+    <property name="TargetTypes" valueSource="literal" value="Player,Ally" />
+    <property name="UnitType" valueSource="literal" value="DeckardHealingPotion" />
+    <property name="FilterTargetsBehindGate" valueSource="literal" value="true" />
+    <property name="MaxTargetDistance" valueSource="variable" value="Movement Drag Range" />
+    <property name="OutputTarget" value="Desired Unit" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Stasis,Dead" />
+    <property name="PreferredPoint" valueSource="intrinsic" value="SafePos" />
+  </node>
+  <node name="Find Lesser Healing Potion" type="FindBestTarget" id="386E7503EFF4CD1F">
+    <property name="SearchCenter" valueSource="intrinsic" value="Self" />
+    <property name="TargetTypes" valueSource="literal" value="Player,Ally" />
+    <property name="UnitType" valueSource="literal" value="DeckardLesserHealingPotion" />
+    <property name="FilterTargetsBehindGate" valueSource="literal" value="true" />
+    <property name="MaxTargetDistance" valueSource="variable" value="Movement Drag Range" />
+    <property name="OutputTarget" value="Desired Unit" />
+    <property name="RequiredTypes" valueSource="literal" value="" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Stasis,Dead" />
+    <property name="PreferredPoint" valueSource="intrinsic" value="SafePos" />
+  </node>
+  <node name="" type="GoalSelector" id="C8C1718B7484860F">
+    <insertChild id="0F7D45CFCF2CEE9C" />
+    <insertChild id="BD9E8F11794FD2DE" />
+    <insertChild id="6EE3732D3C1B54D2" />
+    <insertChild id="A0222C6FDAD26E14" />
+    <insertChild id="78C55AE74A527FBF" />
+    <insertChild id="D1394584C1551240" />
+    <insertChild id="527033629AD7B3BF" />
+    <insertChild id="E51EF502E2ABBD72" />
+    <insertChild id="47326184C4663D3D" />
+  </node>
+  <node name="Set Fight Range" type="Select" id="F9EBE56C73DD6A85" />
+  <node name="Reset Fight Range" type="SetNumber" id="0484E8D2007373DE" comment="Resets the fight range to equal this unit's attack range. This node should execute every loop and happen before the attack range is customized.">
+    <property name="Variable" value="FightRange" />
+    <property name="Value" valueSource="intrinsic" value="AttackRange" />
+  </node>
+  <node name="GoalGank" type="GoalGank" id="0F7D45CFCF2CEE9C">
+    <property name="Target" value="GoalTarget" />
+    <property name="TargetPosition" value="GoalTargetPosition" />
+    <property name="TargetRadius" value="Fake Number" />
+    <property name="SafePoint" value="Flee Point" />
+    <property name="LocalThreat" value="Fake Number" />
+    <property name="FleePoint" value="Flee Point" />
+    <insertChild id="7FCBB61786D4CC12" />
+  </node>
+  <node name="Gank" type="Select" id="7FCBB61786D4CC12" comment="Root Select for the Gank behavior. This branch activates when the Gank Goal is set. It should have logic to approach and kill a target. Shouldn't care about mana or protecting yourself. If you get in danger Flee will take over and get you out.">
+    <insertChild id="D235B9BDA48F0BC2" />
+    <insertChild id="51E23BC4A95B7F3B" />
+    <insertChild id="F46BE8A75BE5B22A" />
+    <insertChild id="3A37405D3F8AD01A" />
+    <insertChild id="9F76DEF327C1079A" />
+    <insertChild id="B435A661A27E008A" />
+    <insertChild id="6B0827CD282947BE" />
+  </node>
+  <node name="GankTactical" type="Select" id="3A37405D3F8AD01A" comment="Special ability usage logic for ganking. Examples: using CC on the gank target, using movement abilities for catch up to gank target." />
+  <node name="AttemptChase" type="And" id="9F76DEF327C1079A" comment="Attempt to chase the target unit.">
+    <insertChild id="024B79155A8900AA" />
+    <insertChild id="57A45CB661B8097D" />
+    <insertChild id="3B66CD9E080B2319" />
+  </node>
+  <node name="OutsideAttackRange" type="Distance" id="024B79155A8900AA" comment="Checks if the target is outside chase range">
+    <property name="SourceUnit" valueSource="intrinsic" value="Self" />
+    <property name="TargetUnit" valueSource="variable" value="GoalTarget" />
+    <property name="Comparison" valueSource="literal" value="GE" />
+    <property name="Distance" valueSource="intrinsic" value="AttackRange" />
+  </node>
+  <node name="TargetFleeing" type="UnitFleeing" id="57A45CB661B8097D" comment="Checks if the target is fleeing">
+    <property name="UnitTarget" valueSource="variable" value="GoalTarget" />
+    <property name="Angle" valueSource="literal" value="90" />
+  </node>
+  <node name="ChaseTarget" type="AbilityCategory" id="3B66CD9E080B2319" comment="Tries to use a chase ability if there is one">
+    <property name="AbilityCategories" valueSource="literal" value="Chase" />
+    <property name="TargetUnit" valueSource="variable" value="GoalTarget" />
+  </node>
+  <node name="AttemptStun" type="And" id="B435A661A27E008A" comment="Attempt to stun the target unit.">
+    <insertChild id="0902400DD909F031" />
+    <insertChild id="D66A6D9E0D95EDE9" />
+  </node>
+  <node name="NotAlreadyStunned" type="Not" id="0902400DD909F031" comment="Checks if the target is not already stunned">
+    <insertChild id="D9A83A09650D70A2" />
+  </node>
+  <node name="AlreadyStunned" type="UnitTargetFilter" id="D9A83A09650D70A2" comment="Checks if the target is already stunned">
+    <property name="Filters" valueSource="literal" value="OrdersPaused" />
+    <property name="Target" valueSource="variable" value="GoalTarget" />
+  </node>
+  <node name="StunTarget" type="AbilityCategory" id="D66A6D9E0D95EDE9" comment="Tries to cast a stun ability on the target if there is one">
+    <property name="AbilityCategories" valueSource="literal" value="Control" />
+    <property name="TargetUnit" valueSource="variable" value="GoalTarget" />
+  </node>
+  <node name="FightTarget" type="HeroFight" id="6B0827CD282947BE" comment="Fight the target unit, and prefer to get behind them">
+    <property name="Target" valueSource="variable" value="GoalTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+    <property name="PreferredPoint" valueSource="variable" value="Flee Point" />
+  </node>
+  <node name="GoalEscort" type="GoalEscort" id="BD9E8F11794FD2DE">
+    <property name="Target" value="GoalTarget" />
+    <property name="TargetPosition" value="GoalTargetPosition" />
+    <property name="TargetRadius" value="Fake Number" />
+    <property name="SafePoint" value="Flee Point" />
+    <property name="LocalThreat" value="Fake Number" />
+    <property name="RequiredThreat" value="Fake Number" />
+    <property name="MinStagingRange" value="MinStagingRange" />
+    <property name="MaxStagingRange" value="MaxStagingRange" />
+    <insertChild id="8EB56856E9B4BFBF" />
+  </node>
+  <node name="Escort" type="Select" id="8EB56856E9B4BFBF" comment="Root Select for the Escort behavior">
+    <insertChild id="E108765C08B33867" />
+    <insertChild id="67CCA0712F2A0987" />
+    <insertChild id="CF9685DAC59CACD7" />
+    <insertChild id="F35CDE05BEF5B690" />
+    <insertChild id="AEB0542B3743D0FC" />
+  </node>
+  <node name="Attempt to Fight" type="And" id="F35CDE05BEF5B690" comment="Disengage fights if we are far away, and fight around position if we are nearby">
+    <insertChild id="5184B3CBF9D0083C" />
+    <insertChild id="02D450ECDBCB352D" />
+  </node>
+  <node name="Find Fight Target" type="FindBestTarget" id="5184B3CBF9D0083C" comment="Find the target with the highest value to fight">
+    <property name="TargetTypes" valueSource="literal" value="Minion,Merc,Heroic,Summoned,MapCreature,AITargetableStructure" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTarget" />
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="DistanceFactor" valueSource="literal" value="0.5" />
+    <property name="OutputTarget" value="FightTarget" />
+  </node>
+  <node name="Fight Target" type="HeroFight" id="02D450ECDBCB352D" comment="Disengage fights if we are far away, and fight around position if we are nearby">
+    <property name="Target" valueSource="variable" value="FightTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+  </node>
+  <node name="Move Closer Or Pace Nearby" type="IfElse" id="AEB0542B3743D0FC" comment="Pick we should pace near the escort target, or move closer">
+    <insertChild id="5F37DDD6DCE50296" />
+    <insertChild id="208831CCDA187F76" />
+    <insertChild id="F46BE8A75BE5B22A" />
+  </node>
+  <node name="Within Max Distance" type="Distance" id="5F37DDD6DCE50296" comment="Checks if the target is outside chase range">
+    <property name="SourceUnit" valueSource="intrinsic" value="Self" />
+    <property name="TargetUnit" valueSource="variable" value="GoalTarget" />
+    <property name="Comparison" valueSource="literal" value="LE" />
+    <property name="Distance" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="PaceOrSomething" type="Select" id="208831CCDA187F76" comment="Pace or do something else. This is needed because potentially overlapping tree specializations will try to inject behavior here.">
+    <insertChild id="BBF6B4AC750902BD" />
+    <insertChild id="EB65BE46B56C9EE6" />
+  </node>
+  <node name="GoalAttackTarget" type="GoalAttackTarget" id="6EE3732D3C1B54D2">
+    <property name="Target" value="GoalTarget" />
+    <property name="TargetPosition" value="GoalTargetPosition" />
+    <property name="TargetRadius" value="Fake Number" />
+    <property name="SafePoint" value="Flee Point" />
+    <property name="LocalThreat" value="Fake Number" />
+    <property name="RequiredThreat" value="Fake Number" />
+    <property name="MinStagingRange" value="MinStagingRange" />
+    <property name="MaxStagingRange" value="MaxStagingRange" />
+    <insertChild id="8E14E0BFAD104260" />
+  </node>
+  <node name="AttackTarget" type="Select" id="8E14E0BFAD104260" comment="Root Select for the AttackTarget behavior">
+    <insertChild id="7D688F9CC295F977" />
+    <insertChild id="7CC0D9FCDAC266EE" />
+    <insertChild id="B9BD4E572B128F71" />
+    <insertChild id="BBF6B4AC750902BD" />
+    <insertChild id="73F5FB9647A234FA" />
+  </node>
+  <node name="Fight or move closer" type="IfElse" id="73F5FB9647A234FA" comment="Move towards the AttackTarget target position">
+    <insertChild id="C5A7162A952C306F" />
+    <insertChild id="0B86AEA7C6B570CE" />
+    <insertChild id="F46BE8A75BE5B22A" />
+  </node>
+  <node name="Within Max Distance" type="Distance" id="C5A7162A952C306F" comment="Checks if the target is in range">
+    <property name="SourceUnit" valueSource="intrinsic" value="Self" />
+    <property name="TargetUnit" valueSource="variable" value="GoalTarget" />
+    <property name="Comparison" valueSource="literal" value="LE" />
+    <property name="Distance" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="Attempt Fight" type="Select" id="0B86AEA7C6B570CE" comment="Decide if we fight or hide or pace near AttackTarget target">
+    <insertChild id="1B6F007026AD1A47" />
+    <insertChild id="18FD7047E9E935F9" />
+    <insertChild id="A0EE6761136812A4" />
+    <insertChild id="1C709C68413C7682" />
+  </node>
+  <node name="Fight Attack Target" type="HeroFight" id="1B6F007026AD1A47" comment="Fight AttackTarget passed to us by the goal">
+    <property name="Target" valueSource="variable" value="GoalTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+  </node>
+  <node name="Attempt to Fight" type="And" id="18FD7047E9E935F9" comment="Disengage fights if we are far away, and fight around position if we are nearby">
+    <insertChild id="F4493A4ACFEF2FFB" />
+    <insertChild id="2AF8A0223AA9D9D6" />
+  </node>
+  <node name="Find Fight Target" type="FindBestTarget" id="F4493A4ACFEF2FFB" comment="Find the target with the highest value to fight">
+    <property name="TargetTypes" valueSource="literal" value="Minion,Merc,Heroic,Summoned,MapCreature,AITargetableStructure" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTarget" />
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="DistanceFactor" valueSource="literal" value="0.5" />
+    <property name="OutputTarget" value="FightTarget" />
+  </node>
+  <node name="Fight Target" type="HeroFight" id="2AF8A0223AA9D9D6" comment="Disengage fights if we are far away, and fight around position if we are nearby">
+    <property name="Target" valueSource="variable" value="FightTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+  </node>
+  <node name="Hide" type="HeroHide" id="A0EE6761136812A4" comment="Hide in bush near AttackTarget target area if not visible to enemies">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxRange" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="Pace" type="HeroPace" id="1C709C68413C7682" comment="Pace around AttackTarget target position">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxRange" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="GoalMercenaryCamp" type="GoalMercenaryCamp" id="47326184C4663D3D">
+    <property name="Target" value="GoalTarget" />
+    <property name="TargetPosition" value="GoalTargetPosition" />
+    <property name="TargetRadius" value="Fake Number" />
+    <property name="SafePoint" value="Flee Point" />
+    <property name="LocalThreat" value="Fake Number" />
+    <property name="CampThreat" value="CampThreat" />
+    <variable name="CampThreat" type="Number" />
+    <variable name="EngageRange" type="Number" value="12" />
+    <variable name="BeaconRadius" type="Number" value="2.75" />
+    <insertChild id="B7DE50CB76F1F3AD" />
+  </node>
+  <node name="MercenaryCamp" type="Select" id="B7DE50CB76F1F3AD">
+    <insertChild id="9BFD7DC32A4B032F" />
+    <insertChild id="A67F8653BCFE809E" />
+    <insertChild id="7F6BCB1108B08DBC" />
+    <insertChild id="BBF6B4AC750902BD" />
+    <insertChild id="F46BE8A75BE5B22A" />
+    <insertChild id="F0B89C2ADC2D7A50" />
+    <insertChild id="87E69FCC572C80D8" />
+    <insertChild id="54AA637C6FD939C1" />
+    <insertChild id="B1632090840213B2" />
+    <insertChild id="F340D99CDC26C4F6" />
+  </node>
+  <node name="Mercs Dead" type="CompareNumber" id="F0B89C2ADC2D7A50">
+    <property name="LeftHandSide" valueSource="variable" value="CampThreat" />
+    <insertChild id="2E5B59ED5D585D92" />
+  </node>
+  <node name="" type="Select" id="2E5B59ED5D585D92">
+    <insertChild id="9709AE99253E488D" />
+    <insertChild id="2A60D60B566982DB" />
+    <insertChild id="A3071FCE20A713CD" />
+  </node>
+  <node name="Move On Beacon" type="HeroMoveToPoint" id="9709AE99253E488D">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="StartRange" valueSource="variable" value="BeaconRadius" />
+    <property name="StopRange" valueSource="literal" value="1" />
+  </node>
+  <node name="" type="And" id="2A60D60B566982DB">
+    <insertChild id="FFAF5D4DCA14593D" />
+    <insertChild id="69C7CC38D8BB77D9" />
+  </node>
+  <node name="" type="Or" id="FFAF5D4DCA14593D">
+    <insertChild id="315315C629CE8442" />
+    <insertChild id="C61683D3C87A13E4" />
+  </node>
+  <node name="Enemies on Beacon" type="FindBestTarget" id="315315C629CE8442">
+    <property name="TargetTypes" valueSource="literal" value="Heroic,Summoned" />
+    <property name="MaxTargetDistance" valueSource="intrinsic" value="AttackRange" />
+    <property name="DistanceFactor" valueSource="literal" value="2" />
+    <property name="OutputTarget" value="FightTarget" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+    <property name="PreferredPoint" valueSource="variable" value="GoalTargetPosition" />
+  </node>
+  <node name="Enemies on Beacon" type="FindBestTarget" id="C61683D3C87A13E4">
+    <property name="TargetTypes" valueSource="literal" value="Heroic,Summoned" />
+    <property name="MaxTargetDistance" valueSource="variable" value="BeaconRadius" />
+    <property name="DistanceFactor" valueSource="literal" value="2" />
+    <property name="OutputTarget" value="FightTarget" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTargetPosition" />
+  </node>
+  <node name="Fight Target" type="HeroFight" id="69C7CC38D8BB77D9">
+    <property name="Target" valueSource="variable" value="FightTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+  </node>
+  <node name="Pace" type="HeroPace" id="A3071FCE20A713CD">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxRange" valueSource="variable" value="BeaconRadius" />
+  </node>
+  <node name="Enemies Near" type="FindBestTarget" id="87E69FCC572C80D8">
+    <property name="TargetTypes" valueSource="literal" value="Heroic,Summoned" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxTargetDistance" valueSource="variable" value="EngageRange" />
+    <property name="DistanceFactor" valueSource="literal" value="2" />
+    <property name="OutputTarget" value="FightTarget" />
+    <property name="BumpMaxDistanceToWeaponRange" valueSource="literal" value="true" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+    <insertChild id="BEDFB89B14CE86AC" />
+  </node>
+  <node name="Fight Target" type="HeroFight" id="BEDFB89B14CE86AC" comment="Fight target on beacon">
+    <property name="Target" valueSource="variable" value="FightTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+  </node>
+  <node name="Move Close" type="HeroMoveToPoint" id="54AA637C6FD939C1" comment="Move towards the Beacon target point">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="StopRange" valueSource="literal" value="4" />
+    <property name="StartRange" valueSource="variable" value="EngageRange" />
+  </node>
+  <node name="Creeps" type="FindBestTarget" id="B1632090840213B2">
+    <property name="TargetTypes" valueSource="literal" value="Creep,Minion,Merc,MapCreature" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxTargetDistance" valueSource="variable" value="EngageRange" />
+    <property name="DistanceFactor" valueSource="literal" value="2" />
+    <property name="OutputTarget" value="FightTarget" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Stasis,Dead,Invulnerable" />
+    <insertChild id="827D618350F8A32A" />
+  </node>
+  <node name="Fight Target" type="HeroFight" id="827D618350F8A32A" comment="Fight target on beacon">
+    <property name="Target" valueSource="variable" value="FightTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+  </node>
+  <node name="Pace" type="HeroPace" id="F340D99CDC26C4F6">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxRange" valueSource="variable" value="BeaconRadius" />
+  </node>
+  <node name="GoalBeacon" type="GoalBeacon" id="A0222C6FDAD26E14">
+    <property name="Target" value="GoalTarget" />
+    <property name="TargetPosition" value="GoalTargetPosition" />
+    <property name="TargetRadius" value="Fake Number" />
+    <property name="SafePoint" value="Flee Point" />
+    <property name="LocalThreat" value="Fake Number" />
+    <property name="RequiredThreat" value="RequiredThreat" />
+    <property name="BeaconRadius" value="BeaconRadius" />
+    <property name="MinStagingRange" value="MinStagingRange" />
+    <property name="MaxStagingRange" value="MaxStagingRange" />
+    <variable name="RequiredThreat" type="Number" comment="The threat score needed prioritize the beacon." />
+    <variable name="BeaconRadius" type="Number" comment="The capture radius of this beacon." />
+    <insertChild id="770B81EEC61BA7CF" />
+  </node>
+  <node name="Beacon" type="Select" id="770B81EEC61BA7CF" comment="Default Beacon behavior">
+    <insertChild id="9CB31C4E269204DE" />
+    <insertChild id="0780311BB67EAA9D" />
+    <insertChild id="A74ECD605CDB093A" />
+    <insertChild id="BBF6B4AC750902BD" />
+    <insertChild id="DD7631349995F4DF" />
+    <insertChild id="F46BE8A75BE5B22A" />
+    <insertChild id="C474EB9167BD895A" />
+    <insertChild id="B9F7F69B29E21137" />
+    <insertChild id="FC5550237FBC296A" />
+    <insertChild id="DAF3BA74BC6110B5" />
+  </node>
+  <node name="Find Regen Globes if Not Full" type="And" id="DD7631349995F4DF">
+    <insertChild id="30200B300D88A281" />
+    <insertChild id="84F235F52ED2EAE2" />
+  </node>
+  <node name="" type="Or" id="30200B300D88A281">
+    <insertChild id="52CAC80F79BFD586" />
+    <insertChild id="BF939033913E502C" />
+  </node>
+  <node name="Health LE 80" type="LifeFraction" id="52CAC80F79BFD586">
+    <property name="LifeFraction" valueSource="literal" value="0.8" />
+    <property name="Comparison" valueSource="literal" value="LE" />
+    <property name="Target" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Mana Check" type="Validator" id="BF939033913E502C">
+    <property name="Validator" valueSource="literal" value="CasterEnergyNotFullAndIsManaUser" />
+    <property name="Target" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Find Nearby Regen Globe" type="And" id="84F235F52ED2EAE2">
+    <variable name="RegenGlobeUnit" type="Unit" />
+    <insertChild id="C346AF4A07DEADAD" />
+    <insertChild id="F81FBC21FEE77EC3" />
+    <insertChild id="002E80E06796827D" />
+  </node>
+  <node name="" type="Or" id="C346AF4A07DEADAD">
+    <insertChild id="939122B756934AD7" />
+    <insertChild id="8AE441212FF5419E" />
+  </node>
+  <node name="Find Regen Globe to Grab" type="FindBestTarget" id="939122B756934AD7">
+    <property name="SearchCenter" valueSource="intrinsic" value="Self" />
+    <property name="TargetTypes" valueSource="literal" value="Ally" />
+    <property name="UnitType" valueSource="literal" value="RegenGlobe" />
+    <property name="FilterTargetsBehindGate" valueSource="literal" value="true" />
+    <property name="MaxTargetDistance" valueSource="literal" value="6" />
+    <property name="OutputTarget" value="RegenGlobeUnit" />
+    <property name="RequiredTypes" valueSource="literal" value="" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Stasis,Dead,Benign" />
+    <property name="PreferredPoint" valueSource="intrinsic" value="SafePos" />
+    <property name="ClipCenter" valueSource="variable" value="GoalTargetPosition" />
+    <property name="ClipRadius" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="Find Neutral Regen Globe to Grab" type="FindBestTarget" id="8AE441212FF5419E">
+    <property name="SearchCenter" valueSource="intrinsic" value="Self" />
+    <property name="TargetTypes" valueSource="literal" value="Enemy" />
+    <property name="UnitType" valueSource="literal" value="RegenGlobeNeutral" />
+    <property name="FilterTargetsBehindGate" valueSource="literal" value="true" />
+    <property name="MaxTargetDistance" valueSource="literal" value="6" />
+    <property name="OutputTarget" value="RegenGlobeUnit" />
+    <property name="RequiredTypes" valueSource="literal" value="" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Stasis,Dead,Benign" />
+    <property name="PreferredPoint" valueSource="intrinsic" value="SafePos" />
+    <property name="ClipCenter" valueSource="variable" value="GoalTargetPosition" />
+    <property name="ClipRadius" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="" type="Not" id="F81FBC21FEE77EC3">
+    <insertChild id="5E94D21BE0858517" />
+  </node>
+  <node name="" type="Or" id="5E94D21BE0858517">
+    <insertChild id="BFF68D9CE068DCFA" />
+    <insertChild id="6757FCBA43BF9C71" />
+    <insertChild id="CFF2E6AC615924A4" />
+  </node>
+  <node name="Enemy Hero Near Globe" type="UnitCount" id="BFF68D9CE068DCFA">
+    <property name="TargetCount" valueSource="literal" value="1" />
+    <property name="MaxTargetDistance" valueSource="literal" value="3" />
+    <property name="TargetTypes" valueSource="literal" value="Heroic" />
+    <property name="SearchCenter" valueSource="variable" value="RegenGlobeUnit" />
+  </node>
+  <node name="2+ Enemy Heroes Near Self" type="UnitCount" id="6757FCBA43BF9C71">
+    <property name="TargetCount" valueSource="literal" value="2" />
+    <property name="MaxTargetDistance" valueSource="literal" value="8" />
+    <property name="TargetTypes" valueSource="literal" value="Heroic" />
+  </node>
+  <node name="Globe In Dangerous Area" type="IsInDanger" id="CFF2E6AC615924A4">
+    <property name="TargetPoint" valueSource="variable" value="RegenGlobeUnit" />
+    <property name="ForceIncludeUnit" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Move to Nearby Regen Globe" type="HeroMoveToUnit" id="002E80E06796827D">
+    <property name="Target" valueSource="variable" value="RegenGlobeUnit" />
+  </node>
+  <node name="Find Hero Target around MaxStagingRange" type="FindBestTarget" id="C474EB9167BD895A" comment="Find targets around MaxStagingRange">
+    <property name="TargetTypes" valueSource="literal" value="Heroic,Summoned" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="DistanceFactor" valueSource="literal" value="2" />
+    <property name="OutputTarget" value="FightTarget" />
+    <insertChild id="6D97D588373993DB" />
+  </node>
+  <node name="Fight Target" type="HeroFight" id="6D97D588373993DB" comment="Fight target on beacon">
+    <property name="Target" valueSource="variable" value="FightTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+  </node>
+  <node name="Move Into Beacon" type="HeroMoveToPoint" id="B9F7F69B29E21137" comment="Move towards the Beacon target point">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="StopRange" valueSource="variable" value="BeaconRadius" />
+    <property name="StartRange" valueSource="variable" value="BeaconRadius" />
+  </node>
+  <node name="Find Target Around Self" type="FindBestTarget" id="FC5550237FBC296A" comment="Find targets around MaxStagingRange">
+    <property name="TargetTypes" valueSource="literal" value="Creep,Minion,Merc,Heroic,Summoned,AITargetableStructure" />
+    <property name="DistanceFactor" valueSource="literal" value="2" />
+    <property name="OutputTarget" value="FightTarget" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+    <property name="MaxTargetDistance" valueSource="intrinsic" value="AttackRange" />
+    <insertChild id="8D4D04871BD7EB2E" />
+  </node>
+  <node name="Fight Target" type="HeroFight" id="8D4D04871BD7EB2E" comment="Fight target on beacon">
+    <property name="Target" valueSource="variable" value="FightTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+  </node>
+  <node name="Pace" type="HeroPace" id="DAF3BA74BC6110B5" comment="Pace near Beacon target position">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxRange" valueSource="variable" value="BeaconRadius" />
+  </node>
+  <node name="GoalCollect" type="GoalCollect" id="78C55AE74A527FBF">
+    <property name="Target" value="GoalTarget" />
+    <property name="TargetPosition" value="GoalTargetPosition" />
+    <property name="TargetRadius" value="Fake Number" />
+    <property name="SafePoint" value="Flee Point" />
+    <property name="LocalThreat" value="Fake Number" />
+    <insertChild id="050406203143C9B9" />
+  </node>
+  <node name="Collect" type="Select" id="050406203143C9B9">
+    <insertChild id="C0F542B4BCC279A8" />
+    <insertChild id="F46BE8A75BE5B22A" />
+    <insertChild id="7EDB5921627D3340" />
+  </node>
+  <node name="Pace" type="HeroPace" id="7EDB5921627D3340" comment="Pace near target position">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxRange" valueSource="literal" value="3" />
+  </node>
+  <node name="GoalInteract" type="GoalInteract" id="D1394584C1551240">
+    <property name="Target" value="GoalTarget" />
+    <property name="TargetPosition" value="GoalTargetPosition" />
+    <property name="TargetRadius" value="Fake Number" />
+    <property name="SafePoint" value="Flee Point" />
+    <property name="LocalThreat" value="Fake Number" />
+    <property name="RequiredThreat" value="RequiredThreat" />
+    <property name="MinStagingRange" value="MinStagingRange" />
+    <property name="MaxStagingRange" value="MaxStagingRange" />
+    <variable name="RequiredThreat" type="Number" comment="The threat score needed prioritize the interactable." />
+    <insertChild id="0577AB9292C58946" />
+  </node>
+  <node name="Move or Attempt Interact" type="IfElse" id="D09AF6064E67E742">
+    <insertChild id="C8BF49A5679DAE39" />
+    <insertChild id="E0687BAC967A98A1" />
+    <insertChild id="F46BE8A75BE5B22A" />
+  </node>
+  <node name="Within Max Distance" type="Distance" id="C8BF49A5679DAE39">
+    <property name="SourceUnit" valueSource="intrinsic" value="Self" />
+    <property name="TargetPoint" valueSource="variable" value="GoalTargetPosition" />
+    <property name="Comparison" valueSource="literal" value="LE" />
+    <property name="Distance" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="InteractInRange" type="Select" id="E0687BAC967A98A1">
+    <insertChild id="BBF6B4AC750902BD" />
+    <insertChild id="76C994F8141905A6" />
+    <insertChild id="58748A9E70562C20" />
+    <insertChild id="DD4013D17E0CAAF4" />
+    <insertChild id="E5387BFECB5AA51C" />
+  </node>
+  <node name="Find Regen Globes if Not Full" type="And" id="76C994F8141905A6">
+    <insertChild id="F317C842B0BBDE4D" />
+    <insertChild id="39401311571A58D9" />
+  </node>
+  <node name="" type="Or" id="F317C842B0BBDE4D">
+    <insertChild id="7A7AC331B90DD275" />
+    <insertChild id="AE8528B72856339F" />
+  </node>
+  <node name="Health LE 80" type="LifeFraction" id="7A7AC331B90DD275">
+    <property name="LifeFraction" valueSource="literal" value="0.8" />
+    <property name="Comparison" valueSource="literal" value="LE" />
+    <property name="Target" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Mana Check" type="Validator" id="AE8528B72856339F">
+    <property name="Validator" valueSource="literal" value="CasterEnergyNotFullAndIsManaUser" />
+    <property name="Target" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Find Nearby Regen Globe" type="And" id="39401311571A58D9">
+    <variable name="RegenGlobeUnit" type="Unit" />
+    <insertChild id="6F76EFBF5B59B1CA" />
+    <insertChild id="70FF1A0D84E42A61" />
+    <insertChild id="A7AFCBF217F889F2" />
+  </node>
+  <node name="" type="Or" id="6F76EFBF5B59B1CA">
+    <insertChild id="EC22B21EBF54A1DA" />
+    <insertChild id="5465A428F0F63A97" />
+  </node>
+  <node name="Find Regen Globe to Grab" type="FindBestTarget" id="EC22B21EBF54A1DA">
+    <property name="SearchCenter" valueSource="intrinsic" value="Self" />
+    <property name="TargetTypes" valueSource="literal" value="Ally" />
+    <property name="UnitType" valueSource="literal" value="RegenGlobe" />
+    <property name="FilterTargetsBehindGate" valueSource="literal" value="true" />
+    <property name="MaxTargetDistance" valueSource="literal" value="6" />
+    <property name="OutputTarget" value="RegenGlobeUnit" />
+    <property name="RequiredTypes" valueSource="literal" value="" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Stasis,Dead,Benign" />
+    <property name="PreferredPoint" valueSource="intrinsic" value="SafePos" />
+    <property name="ClipCenter" valueSource="variable" value="GoalTargetPosition" />
+    <property name="ClipRadius" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="Find Neutral Regen Globe to Grab" type="FindBestTarget" id="5465A428F0F63A97">
+    <property name="SearchCenter" valueSource="intrinsic" value="Self" />
+    <property name="TargetTypes" valueSource="literal" value="Enemy" />
+    <property name="UnitType" valueSource="literal" value="RegenGlobeNeutral" />
+    <property name="FilterTargetsBehindGate" valueSource="literal" value="true" />
+    <property name="MaxTargetDistance" valueSource="literal" value="6" />
+    <property name="OutputTarget" value="RegenGlobeUnit" />
+    <property name="RequiredTypes" valueSource="literal" value="" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Stasis,Dead,Benign" />
+    <property name="PreferredPoint" valueSource="intrinsic" value="SafePos" />
+    <property name="ClipCenter" valueSource="variable" value="GoalTargetPosition" />
+    <property name="ClipRadius" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="" type="Not" id="70FF1A0D84E42A61">
+    <insertChild id="8733E18C39DEA264" />
+  </node>
+  <node name="" type="Or" id="8733E18C39DEA264">
+    <insertChild id="42E348425EF6AD13" />
+    <insertChild id="FF8FBE6A41E4D8D8" />
+    <insertChild id="2AD760B379B5C94E" />
+  </node>
+  <node name="Enemy Hero Near Globe" type="UnitCount" id="42E348425EF6AD13">
+    <property name="TargetCount" valueSource="literal" value="1" />
+    <property name="MaxTargetDistance" valueSource="literal" value="3" />
+    <property name="TargetTypes" valueSource="literal" value="Heroic" />
+    <property name="SearchCenter" valueSource="variable" value="RegenGlobeUnit" />
+  </node>
+  <node name="2+ Enemy Heroes Near Self" type="UnitCount" id="FF8FBE6A41E4D8D8">
+    <property name="TargetCount" valueSource="literal" value="2" />
+    <property name="MaxTargetDistance" valueSource="literal" value="8" />
+    <property name="TargetTypes" valueSource="literal" value="Heroic" />
+  </node>
+  <node name="Globe In Dangerous Area" type="IsInDanger" id="2AD760B379B5C94E">
+    <property name="TargetPoint" valueSource="variable" value="RegenGlobeUnit" />
+    <property name="ForceIncludeUnit" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Move to Nearby Regen Globe" type="HeroMoveToUnit" id="A7AFCBF217F889F2">
+    <property name="Target" valueSource="variable" value="RegenGlobeUnit" />
+  </node>
+  <node name="Need to Pilot" type="UnitCount" id="58748A9E70562C20">
+    <property name="UnitType" valueSource="literal" value="VolskayaVehicle" />
+    <property name="TargetTypes" valueSource="literal" value="Self,Player,Ally" />
+    <property name="RequiredTypes" valueSource="literal" value="" />
+    <property name="MaxTargetDistance" valueSource="literal" value="5" />
+    <insertChild id="FF6F1EEC44A1C92A" />
+  </node>
+  <node name="UseVehicle" type="Ability" id="FF6F1EEC44A1C92A">
+    <property name="Ability" valueSource="literal" value="UseVehicle" />
+    <property name="TargetUnit" valueSource="variable" value="GoalTarget" />
+    <property name="DoNotThrottle" valueSource="literal" value="true" />
+  </node>
+  <node name="Fight" type="Select" id="DD4013D17E0CAAF4" comment="Before we attempt to interact see if there are hostiles near the interact unit">
+    <insertChild id="802CC3408AC2760A" />
+    <insertChild id="0AAD0E509BC834EF" />
+  </node>
+  <node name="AttemptFightAtInteractUnit" type="And" id="802CC3408AC2760A" comment="We care about enemies very close to the interact unit">
+    <insertChild id="A5202926BE601B1E" />
+    <insertChild id="2F7E1C4194385279" />
+  </node>
+  <node name="Find Fight Target" type="FindBestTarget" id="A5202926BE601B1E">
+    <property name="TargetTypes" valueSource="literal" value="Creep,Minion,Merc,Heroic,Summoned,MapCreature,AITargetableStructure" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxTargetDistance" valueSource="literal" value="5" />
+    <property name="DistanceFactor" valueSource="literal" value="1" />
+    <property name="OutputTarget" value="FightTarget" />
+  </node>
+  <node name="Fight Target" type="HeroFight" id="2F7E1C4194385279">
+    <property name="Target" valueSource="variable" value="FightTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+  </node>
+  <node name="AttemptFightInCombat" type="Validator" id="0AAD0E509BC834EF" comment="We expand our area to defend if we've been attacked recently">
+    <property name="Target" valueSource="intrinsic" value="Self" />
+    <property name="Validator" valueSource="literal" value="InCombat5" />
+    <insertChild id="51CC041E878DB466" />
+  </node>
+  <node name="Attempt to Fight MaxStagingRange" type="And" id="51CC041E878DB466" comment="Attempt fight MaxStagingRange">
+    <insertChild id="4F519288A9923685" />
+    <insertChild id="0D8A297C8F80E32B" />
+  </node>
+  <node name="Find Fight Target MaxStagingRange" type="FindBestTarget" id="4F519288A9923685" comment="Find targets MaxStagingRange">
+    <property name="TargetTypes" valueSource="literal" value="Creep,Minion,Merc,Heroic,Summoned,MapCreature,AITargetableStructure" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+    <property name="DistanceFactor" valueSource="literal" value="0.5" />
+    <property name="OutputTarget" value="FightTarget" />
+  </node>
+  <node name="Fight Target MaxStagingRange" type="HeroFight" id="0D8A297C8F80E32B" comment="Fight target MaxStagingRange">
+    <property name="Target" valueSource="variable" value="FightTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+  </node>
+  <node name="AttemptInteract" type="Select" id="E5387BFECB5AA51C">
+    <insertChild id="90158784C49BD62A" />
+    <insertChild id="CF2FDA1B23AB81B1" />
+  </node>
+  <node name="ShouldInteractCheck" type="And" id="90158784C49BD62A">
+    <insertChild id="3E99DD54B7282906" />
+    <insertChild id="FC2C0314F8CEE587" />
+    <insertChild id="01608E40F33506E9" />
+    <insertChild id="46239EA7D3DBE0D8" />
+  </node>
+  <node name="InteractUnitIsTargetable" type="Not" id="3E99DD54B7282906">
+    <insertChild id="0A7A2EFFCFFFA1DF" />
+  </node>
+  <node name="InteractUnitUnTargetable" type="UnitHasBehavior" id="0A7A2EFFCFFFA1DF">
+    <property name="Unit" valueSource="variable" value="GoalTarget" />
+    <property name="Behavior" valueSource="literal" value="MapMechanicCoolUp" />
+  </node>
+  <node name="Prefer Non-Healers" type="Or" id="FC2C0314F8CEE587">
+    <insertChild id="0D7B6DB5F3367012" />
+    <insertChild id="46C23DE8075311F5" />
+  </node>
+  <node name="Not Ally Healer" type="UnitHasPlaystyle" id="0D7B6DB5F3367012">
+    <property name="ExcludePlaystyles" valueSource="literal" value="AllyHealer" />
+  </node>
+  <node name="Non-Healers" type="FilterPlaystyle" id="46C23DE8075311F5">
+    <property name="ExcludePlaystyles" valueSource="literal" value="AllyHealer" />
+    <insertChild id="1CA7C63BB944EDEE" />
+  </node>
+  <node name="0 Non-Healers Nearby" type="UnitCount" id="1CA7C63BB944EDEE">
+    <property name="TargetTypes" valueSource="literal" value="Ally,Heroic" />
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="Comparison" valueSource="literal" value="Eq" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTarget" />
+  </node>
+  <node name="ShouldInteract" type="ShouldInteract" id="01608E40F33506E9">
+    <property name="Target" valueSource="variable" value="GoalTarget" />
+    <property name="Ability" valueSource="literal" value="CaptureMacGuffin" />
+  </node>
+  <node name="UseMacGuffin" type="Select" id="46239EA7D3DBE0D8">
+    <insertChild id="9AE08A35DBE4CDD2" />
+    <insertChild id="0C8C28CF3AAAC55B" />
+    <insertChild id="C35E513076FCC49B" />
+  </node>
+  <node name="UseCaptureMacGuffin" type="Ability" id="9AE08A35DBE4CDD2">
+    <property name="Ability" valueSource="literal" value="CaptureMacGuffin" />
+    <property name="TargetUnit" valueSource="variable" value="GoalTarget" />
+    <property name="DoNotThrottle" valueSource="literal" value="true" />
+  </node>
+  <node name="UseCaptureMacGuffinTwo" type="Ability" id="0C8C28CF3AAAC55B">
+    <property name="Ability" valueSource="literal" value="CaptureMacGuffinTwo" />
+    <property name="TargetUnit" valueSource="variable" value="GoalTarget" />
+    <property name="DoNotThrottle" valueSource="literal" value="true" />
+  </node>
+  <node name="UseVehicle" type="Ability" id="C35E513076FCC49B">
+    <property name="Ability" valueSource="literal" value="UseVehicle" />
+    <property name="TargetUnit" valueSource="variable" value="GoalTarget" />
+    <property name="DoNotThrottle" valueSource="literal" value="true" />
+  </node>
+  <node name="DefendInteractUnit" type="Select" id="CF2FDA1B23AB81B1">
+    <insertChild id="83379A2AC4B08F0A" />
+    <insertChild id="BDBA58A29F63DB07" />
+    <insertChild id="E9799ED808E425EF" />
+  </node>
+  <node name="DefendMaxStaginRange" type="And" id="83379A2AC4B08F0A" comment="Attempt fight MaxStagingRange">
+    <insertChild id="385757AE881A31CA" />
+    <insertChild id="681AC3CC18467FB3" />
+  </node>
+  <node name="Find Fight Target MaxStagingRange" type="FindBestTarget" id="385757AE881A31CA" comment="Find targets MaxStagingRange">
+    <property name="TargetTypes" valueSource="literal" value="Creep,Minion,Merc,Heroic,Summoned,MapCreature,AITargetableStructure" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+    <property name="DistanceFactor" valueSource="literal" value="0.5" />
+    <property name="OutputTarget" value="FightTarget" />
+  </node>
+  <node name="Fight Target MaxStagingRange" type="HeroFight" id="681AC3CC18467FB3" comment="Fight target MaxStagingRange">
+    <property name="Target" valueSource="variable" value="FightTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+  </node>
+  <node name="Hide" type="HeroHide" id="BDBA58A29F63DB07" comment="Hide in bush near interact target area if not visible to enemies">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxRange" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="DefendPace" type="HeroPace" id="E9799ED808E425EF">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxRange" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="GoalLaneStaging" type="GoalLaneStaging" id="E51EF502E2ABBD72">
+    <property name="Target" value="GoalTarget" />
+    <property name="TargetPosition" value="GoalTargetPosition" />
+    <property name="TargetRadius" value="Fake Number" />
+    <property name="SafePoint" value="Flee Point" />
+    <property name="LocalThreat" value="Fake Number" />
+    <property name="MinStagingRange" value="MinStagingRange" />
+    <property name="MaxStagingRange" value="MaxStagingRange" />
+    <insertChild id="D497A0D232A7FD4D" />
+  </node>
+  <node name="Staging" type="Select" id="D497A0D232A7FD4D" comment="Root for the LaneStaging goal">
+    <insertChild id="C0171B121C319B25" />
+    <insertChild id="6216638C734F9341" />
+    <insertChild id="F46BE8A75BE5B22A" />
+    <insertChild id="1764D15E57AC1ECE" />
+  </node>
+  <node name="Pace" type="HeroPace" id="1764D15E57AC1ECE" comment="Pace around the staging position">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxRange" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="GoalHealingWell" type="GoalHealingWell" id="AAEE53995A033AEB">
+    <property name="Target" value="GoalTarget" />
+    <property name="TargetPosition" value="GoalTargetPosition" />
+    <property name="TargetRadius" value="Fake Number" />
+    <property name="SafePoint" value="Flee Point" />
+    <property name="LocalThreat" value="Fake Number" />
+    <property name="MoonwellUnit" value="MoonwellUnit" />
+    <property name="WaitRadius" value="MaxStagingRange" />
+    <variable name="MoonwellUnit" type="Unit" comment="The target moonwell." />
+    <insertChild id="B8368A87C575B064" />
+  </node>
+  <node name="HealingWell" type="Select" id="B8368A87C575B064">
+    <insertChild id="60248480B58C18CA" />
+    <insertChild id="F46BE8A75BE5B22A" />
+    <insertChild id="7359664DC37E6C12" />
+    <insertChild id="45C7861D78B24E23" />
+  </node>
+  <node name="Heal" type="Ability" id="7359664DC37E6C12">
+    <property name="Ability" valueSource="literal" value="FountainDrink" />
+    <property name="TargetUnit" valueSource="variable" value="MoonwellUnit" />
+    <property name="DoNotThrottle" valueSource="literal" value="true" />
+  </node>
+  <node name="Pace" type="HeroPace" id="45C7861D78B24E23">
+    <property name="TargetPosition" valueSource="variable" value="MoonwellUnit" />
+    <property name="MaxRange" valueSource="literal" value="1" />
+  </node>
+  <node name="GoalHealingAltar" type="GoalHealingAltar" id="CCC41D857E684193">
+    <property name="Target" value="GoalTarget" />
+    <property name="TargetPosition" value="GoalTargetPosition" />
+    <property name="TargetRadius" value="Fake Number" />
+    <property name="SafePoint" value="Flee Point" />
+    <property name="LocalThreat" value="Fake Number" />
+    <property name="WaitRadius" value="MaxStagingRange" />
+    <insertChild id="5BA92E0B9284FEDB" />
+  </node>
+  <node name="HealingAltar" type="Select" id="5BA92E0B9284FEDB">
+    <insertChild id="666AC27A6C1EF4CE" />
+    <insertChild id="F46BE8A75BE5B22A" />
+    <insertChild id="7CE056CF6B97853E" />
+    <insertChild id="A7A83BA629155983" />
+  </node>
+  <node name="OnAltar" type="Distance" id="7CE056CF6B97853E">
+    <property name="Distance" valueSource="variable" value="MaxStagingRange" />
+    <property name="Comparison" valueSource="literal" value="LE" />
+    <property name="SourceUnit" valueSource="intrinsic" value="Self" />
+    <property name="TargetPoint" valueSource="variable" value="GoalTargetPosition" />
+    <insertChild id="C045DF3ED0A2E40B" />
+  </node>
+  <node name="MountUp" type="AbilityCategory" id="C045DF3ED0A2E40B">
+    <property name="AbilityCategories" valueSource="literal" value="Mount" />
+    <property name="TargetUnit" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Pace" type="HeroPace" id="A7A83BA629155983">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxRange" valueSource="literal" value="1" />
+  </node>
+  <node name="GoalFollow" type="GoalFollow" id="FCD95A3C1E540061">
+    <property name="Target" value="GoalTarget" />
+    <property name="TargetPosition" value="GoalTargetPosition" />
+    <property name="TargetRadius" value="Fake Number" />
+    <property name="SafePoint" value="Flee Point" />
+    <property name="LocalThreat" value="Fake Number" />
+    <property name="MinFollowRange" value="MinStagingRange" />
+    <property name="MaxFollowRange" value="MaxStagingRange" />
+    <property name="MaxFightTargetRange" value="MaxFightTargetRange" />
+    <variable name="MaxFightTargetRange" type="Number" />
+    <insertChild id="16832C89283AB68B" />
+  </node>
+  <node name="Follow" type="Select" id="16832C89283AB68B">
+    <insertChild id="2AE0F14DF6A9ED21" />
+    <insertChild id="4024197CCD7E28AB" />
+    <insertChild id="6C616369000C0E06" />
+    <insertChild id="5B2207063930780A" />
+    <insertChild id="BB67350CBFCB123C" />
+    <insertChild id="73C5089B41131E92" />
+    <insertChild id="FC29CB984E5CA3D9" />
+  </node>
+  <node name="Find Fight Target" type="FindBestTarget" id="5B2207063930780A">
+    <property name="OutputTarget" value="FightTarget" />
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTarget" />
+    <property name="TargetTypes" valueSource="literal" value="Creep,Minion,Merc,Heroic,Summoned,MapBoss,MapCreature,AITargetableStructure" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+    <insertChild id="8ADCDF6EB0B44686" />
+  </node>
+  <node name="FightTarget" type="HeroFight" id="8ADCDF6EB0B44686">
+    <property name="Target" valueSource="variable" value="FightTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+    <property name="PreferredPoint" valueSource="variable" value="GoalTarget" />
+  </node>
+  <node name="No Enemy Heroes" type="UnitCount" id="73C5089B41131E92">
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTarget" />
+    <property name="Comparison" valueSource="literal" value="Eq" />
+    <property name="TargetTypes" valueSource="literal" value="Heroic" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+    <insertChild id="7D3FF0DEAD57663D" />
+  </node>
+  <node name="Hide" type="HeroHide" id="7D3FF0DEAD57663D">
+    <property name="MaxRange" valueSource="literal" value="6" />
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+  </node>
+  <node name="Pace" type="HeroPace" id="FC29CB984E5CA3D9">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxRange" valueSource="literal" value="6" />
+  </node>
+  <node name="GoalDoLane" type="GoalDoLane" id="527033629AD7B3BF">
+    <property name="Target" value="GoalTarget" />
+    <property name="TargetPosition" value="GoalTargetPosition" />
+    <property name="TargetRadius" value="Fake Number" />
+    <property name="SafePoint" value="Flee Point" />
+    <property name="LocalThreat" value="Local Threat" />
+    <property name="TargetUnit" value="GoalTarget" />
+    <insertChild id="DD5C6F639ADA2856" />
+  </node>
+  <node name="Staging" type="Select" id="DD5C6F639ADA2856" comment="Root for the LaneStaging goal">
+    <insertChild id="07A225806156609B" />
+    <insertChild id="F07923550028DD52" />
+    <insertChild id="C4A1CCF5B566EC41" />
+    <insertChild id="BBF6B4AC750902BD" />
+    <insertChild id="F46BE8A75BE5B22A" />
+    <insertChild id="943C2E3CED2A9C95" />
+    <insertChild id="7914650562D944F8" />
+    <insertChild id="982BE4C325855DA7" />
+  </node>
+  <node name="Pace" type="HeroPace" id="982BE4C325855DA7" comment="Pace around the staging position">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxRange" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="Hearthlogic" type="IfElse" id="48E99A92A2A91E6A">
+    <insertChild id="366478A2082BD7C0" />
+    <insertChild id="BB9D98A22DE1664C" />
+    <insertChild id="CE0187C5997C23E4" />
+  </node>
+  <node name="StartHearth" type="ShouldHearth" id="366478A2082BD7C0">
+    <property name="TargetPosition" valueSource="intrinsic" value="HeroMoveOrGoalDestination" />
+    <property name="HearthAbility" valueSource="literal" value="Hearthstone" />
+    <insertChild id="171DA1B57F42E383" />
+  </node>
+  <node name="CheckDanger" type="IfElse" id="74DE68A0CB114D9F">
+    <insertChild id="49A024FDB2EE823E" />
+    <insertChild id="1896E9DC3F145B71" />
+    <insertChild id="B33B0FD0BC71F2CF" />
+  </node>
+  <node name="IsHearthing" type="OrderActive" id="49A024FDB2EE823E">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Ability" valueSource="literal" value="Hearthstone" />
+  </node>
+  <node name="ContinueHearth" type="Or" id="1896E9DC3F145B71">
+    <insertChild id="DB3CA5CB1B9802E6" />
+    <insertChild id="575336C2EACC1BF6" />
+  </node>
+  <node name="AlmostDone" type="OrderProgress" id="DB3CA5CB1B9802E6">
+    <property name="ProgressFraction" valueSource="literal" value="0.8" />
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="NoEnemyNear" type="UnitCount" id="5CFB415CB822EE5B" comment="This UnitCount node is needed to ensure minions and summons are not nearby.">
+    <property name="MaxTargetDistance" valueSource="literal" value="12" />
+    <property name="Comparison" valueSource="literal" value="Eq" />
+    <property name="TargetTypes" valueSource="literal" value="Creep,Minion,Merc,Structure,Heroic,Hallucination,Summoned,MapBoss,MapCreature" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Dead,Benign" />
+    <property name="RequiredTypes" valueSource="literal" value="Enemy" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="" type="Not" id="8A362648F9A2D4E6">
+    <insertChild id="DFCA54AB92E9C7A7" />
+  </node>
+  <node name="Taken Damage" type="RecentlyDamaged" id="DFCA54AB92E9C7A7">
+    <property name="Target" valueSource="intrinsic" value="Self" />
+    <property name="WithinSeconds" valueSource="literal" value="5" />
+  </node>
+  <node name="NoEnemyFar" type="UnitCount" id="76CD1BC609787D6F" comment="This UnitCount node is needed to ensure minions and summons are not nearby.">
+    <property name="Comparison" valueSource="literal" value="Eq" />
+    <property name="MaxTargetDistance" valueSource="literal" value="20" />
+    <property name="TargetTypes" valueSource="literal" value="Creep,Minion,Merc,Structure,Heroic,Hallucination,Summoned,MapBoss,MapCreature" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Dead,Benign" />
+    <property name="RequiredTypes" valueSource="literal" value="Enemy" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Hearth" type="Ability" id="BB9D98A22DE1664C">
+    <property name="Ability" valueSource="literal" value="Hearthstone" />
+  </node>
+  <node name="IsHearthing" type="OrderActive" id="CE0187C5997C23E4">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Ability" valueSource="literal" value="Hearthstone" />
+    <insertChild id="604FF1988F43C5B0" />
+  </node>
+  <node name="StopHearth" type="MoveToPoint" id="604FF1988F43C5B0">
+    <property name="Target" valueSource="intrinsic" value="SelfPos" />
+    <property name="HoldIfInRange" valueSource="literal" value="true" />
+  </node>
+  <node name="Find Hero Target around MaxStagingRange" type="FindBestTarget" id="943C2E3CED2A9C95" comment="Find targets around MaxStagingRange">
+    <property name="TargetTypes" valueSource="literal" value="Heroic,Summoned" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="DistanceFactor" valueSource="literal" value="2" />
+    <property name="OutputTarget" value="FightTarget" />
+    <insertChild id="9D66AA2295973E27" />
+  </node>
+  <node name="Fight Target" type="HeroFight" id="9D66AA2295973E27" comment="Fight target on beacon">
+    <property name="Target" valueSource="variable" value="FightTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+    <property name="PreferredPoint" valueSource="intrinsic" value="SafePos" />
+  </node>
+  <node name="Find Target Around Self" type="FindBestTarget" id="7914650562D944F8" comment="Find targets around MaxStagingRange">
+    <property name="TargetTypes" valueSource="literal" value="Creep,Minion,Merc,Heroic,Summoned,AITargetableStructure" />
+    <property name="DistanceFactor" valueSource="literal" value="2" />
+    <property name="OutputTarget" value="FightTarget" />
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTargetPosition" />
+    <insertChild id="A7A1BD69BFA1A4BA" />
+  </node>
+  <node name="Fight Target" type="HeroFight" id="A7A1BD69BFA1A4BA" comment="Fight target on beacon">
+    <property name="Target" valueSource="variable" value="FightTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+    <property name="PreferredPoint" valueSource="intrinsic" value="SafePos" />
+  </node>
+  <node name="Move To Goal" type="IfElse" id="F46BE8A75BE5B22A">
+    <insertChild id="6E8484C9737BCF3B" />
+    <insertChild id="9DD3FA34E0F60444" />
+    <insertChild id="0018DFEC9A203493" />
+  </node>
+  <node name="Conditions" type="Or" id="906181D8D6994801">
+    <insertChild id="950A2AF582A83B00" />
+    <insertChild id="7205B004C3A593DA" />
+  </node>
+  <node name="" type="And" id="950A2AF582A83B00">
+    <insertChild id="FD2CDB783E45017A" />
+    <insertChild id="273B20BAF0765DE0" />
+    <insertChild id="73AC791FAFA25B5D" />
+  </node>
+  <node name="" type="Not" id="FD2CDB783E45017A">
+    <insertChild id="1B2B09EAAA351233" />
+  </node>
+  <node name="3 seconds" type="RecentlyDamaged" id="1B2B09EAAA351233">
+    <property name="Target" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Reasons to Mount" type="Or" id="73AC791FAFA25B5D">
+    <insertChild id="30640EEF1E640114" />
+    <insertChild id="9A468B60B855BC29" />
+    <insertChild id="0E700B46414277F7" />
+    <insertChild id="540294DEB7A77754" />
+  </node>
+  <node name="Mounted Follow Target" type="UnitHasBehavior" id="30640EEF1E640114">
+    <property name="Unit" valueSource="variable" value="GoalTarget" />
+    <property name="Behavior" valueSource="literal" value="Mounted" />
+  </node>
+  <node name="Birdform" type="UnitHasBehavior" id="9A468B60B855BC29">
+    <property name="Unit" valueSource="variable" value="GoalTarget" />
+    <property name="Behavior" valueSource="literal" value="MedivhTransformRaven" />
+  </node>
+  <node name="Mounting Target" type="OrderActive" id="0E700B46414277F7">
+    <property name="Unit" valueSource="variable" value="GoalTarget" />
+    <property name="Ability" valueSource="literal" value="Mount" />
+  </node>
+  <node name="Going Raven" type="OrderActive" id="540294DEB7A77754">
+    <property name="Unit" valueSource="variable" value="GoalTarget" />
+    <property name="Ability" valueSource="literal" value="MedivhTransformRaven" />
+  </node>
+  <node name="" type="And" id="7205B004C3A593DA">
+    <insertChild id="59367863369F41F0" />
+    <insertChild id="E2948F6A8DF657D0" />
+    <insertChild id="3FFD3CDB9E24177A" />
+  </node>
+  <node name="" type="Not" id="59367863369F41F0">
+    <insertChild id="FB0332E7E48F5223" />
+  </node>
+  <node name="3 seconds" type="RecentlyDamaged" id="FB0332E7E48F5223">
+    <property name="Target" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="" type="Distance" id="3FFD3CDB9E24177A">
+    <property name="SourceUnit" valueSource="intrinsic" value="Self" />
+    <property name="TargetPoint" valueSource="variable" value="GoalTargetPosition" />
+    <property name="Distance" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="Mount" type="Or" id="9DD3FA34E0F60444">
+    <insertChild id="591CA680245FC5B5" />
+  </node>
+  <node name="" type="AbilityCategory" id="591CA680245FC5B5">
+    <property name="AbilityCategories" valueSource="literal" value="Mount" />
+    <property name="TargetUnit" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="MoveToTarget" type="HeroMoveToPoint" id="0018DFEC9A203493" comment="Move towards the Interact target point">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="StopRange" valueSource="variable" value="MinStagingRange" />
+    <property name="StartRange" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="Should Mount?" type="And" id="6E8484C9737BCF3B">
+    <insertChild id="BD1CF20782CED61C" />
+    <insertChild id="906181D8D6994801" />
+  </node>
+  <node name="No Mount Behavior" type="UnitHasBehaviorCategory" id="96B8C34177420656">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Categories" valueSource="literal" value="" />
+    <property name="ExcludeCategories" valueSource="literal" value="Mount" />
+    <insertChild id="4E52A37A8DED909F" />
+  </node>
+  <node name="Not Already Mounted" type="And" id="BD1CF20782CED61C">
+    <insertChild id="96B8C34177420656" />
+    <insertChild id="1C4A36DFF6A7D07A" />
+    <insertChild id="C3F8A96A0878DE27" />
+  </node>
+  <node name="Can Mount" type="AbilityUsable" id="1C4A36DFF6A7D07A">
+    <property name="Ability" valueSource="literal" value="Mount" />
+  </node>
+  <node name="Dismount Useable" type="AbilityUsable" id="C13006E238F27B06">
+    <property name="Ability" valueSource="literal" value="Dismount" />
+  </node>
+  <node name="" type="Not" id="C3F8A96A0878DE27">
+    <insertChild id="C13006E238F27B06" />
+  </node>
+  <node name="Should Stage" type="And" id="BBF6B4AC750902BD">
+    <insertChild id="F44F3315E69FF47D" />
+    <insertChild id="86F259E8D6212F3E" />
+  </node>
+  <node name="Wait For Backup" type="Not" id="F44F3315E69FF47D">
+    <insertChild id="3A7108254CA00290" />
+  </node>
+  <node name="" type="CheckGoalAssigneesArrived" id="3A7108254CA00290" comment="Compare ally threat with required AttackTarget threat" />
+  <node name="Actions" type="Select" id="86F259E8D6212F3E">
+    <insertChild id="5520A639121C6AA5" />
+    <insertChild id="60B9E4B744899AEA" />
+  </node>
+  <node name="Hide" type="HeroHide" id="5520A639121C6AA5">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="MaxRange" valueSource="variable" value="MaxHideRange" />
+  </node>
+  <node name="IsInStagingRange" type="Distance" id="60B9E4B744899AEA">
+    <property name="SourceUnit" valueSource="intrinsic" value="Self" />
+    <property name="TargetPoint" valueSource="variable" value="GoalTargetPosition" />
+    <property name="Comparison" valueSource="literal" value="LE" />
+    <property name="Distance" valueSource="variable" value="MaxStagingRange" />
+    <insertChild id="E71318C2F7C2E4C7" />
+  </node>
+  <node name="FindSafeStagingPoint" type="FindPointOnLine" id="E71318C2F7C2E4C7">
+    <property name="OutputTarget" value="StagePosition" />
+    <property name="SourceUnit" valueSource="literal" value="" />
+    <property name="SourcePoint" valueSource="variable" value="GoalTargetPosition" />
+    <property name="DestinationPoint" valueSource="intrinsic" value="SafePos" />
+    <property name="DistanceOffset" valueSource="variable" value="MaxStagingRange" />
+    <insertChild id="C26DE081FD4405C2" />
+  </node>
+  <node name="StagingPace" type="HeroPace" id="86F8B9BF464C108F">
+    <property name="TargetPosition" valueSource="variable" value="StagePosition" />
+    <property name="MaxRange" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="References" type="CompareBoolean" id="65CA50483A256AA0">
+    <property name="LeftHandSide" valueSource="literal" value="true" />
+    <insertChild id="3E8BD582E31391CB" />
+  </node>
+  <node name="" type="Select" id="3E8BD582E31391CB">
+    <insertChild id="F46BE8A75BE5B22A" />
+    <insertChild id="BBF6B4AC750902BD" />
+  </node>
+  <node name="Temp" type="CompareBoolean" id="8651E88DF719498E">
+    <property name="LeftHandSide" valueSource="literal" value="true" />
+    <insertChild id="C288EAD933C9CA25" />
+  </node>
+  <node name="" type="Select" id="C288EAD933C9CA25" />
+  <node name="Self Preservation" type="Or" id="171DA1B57F42E383">
+    <insertChild id="5A9E806201B63C92" />
+    <insertChild id="74DE68A0CB114D9F" />
+  </node>
+  <node name="Set MaxStaging" type="SetNumber" id="D235B9BDA48F0BC2">
+    <property name="Variable" value="MaxStagingRange" />
+    <property name="Value" valueSource="literal" value="8" />
+  </node>
+  <node name="Set MinStaging" type="SetNumber" id="51E23BC4A95B7F3B">
+    <property name="Variable" value="MinStagingRange" />
+    <property name="Value" valueSource="literal" value="3" />
+  </node>
+  <node name="Set MaxStaging" type="SetNumber" id="E108765C08B33867">
+    <property name="Variable" value="MaxStagingRange" />
+    <property name="Value" valueSource="literal" value="8" />
+  </node>
+  <node name="Set MinStaging" type="SetNumber" id="67CCA0712F2A0987">
+    <property name="Variable" value="MinStagingRange" />
+    <property name="Value" valueSource="literal" value="3" />
+  </node>
+  <node name="Set MaxStaging" type="SetNumber" id="7D688F9CC295F977">
+    <property name="Variable" value="MaxStagingRange" />
+    <property name="Value" valueSource="literal" value="8" />
+  </node>
+  <node name="Set MinStaging" type="SetNumber" id="7CC0D9FCDAC266EE">
+    <property name="Variable" value="MinStagingRange" />
+    <property name="Value" valueSource="literal" value="3" />
+  </node>
+  <node name="Set MaxStaging" type="SetNumber" id="9BFD7DC32A4B032F">
+    <property name="Variable" value="MaxStagingRange" />
+    <property name="Value" valueSource="literal" value="6" />
+  </node>
+  <node name="Set MinStaging" type="SetNumber" id="A67F8653BCFE809E">
+    <property name="Variable" value="MinStagingRange" />
+    <property name="Value" valueSource="literal" value="3" />
+  </node>
+  <node name="Set MaxStaging" type="SetNumber" id="9CB31C4E269204DE">
+    <property name="Variable" value="MaxStagingRange" />
+    <property name="Value" valueSource="literal" value="7" />
+  </node>
+  <node name="Set MinStaging" type="SetNumber" id="0780311BB67EAA9D">
+    <property name="Variable" value="MinStagingRange" />
+    <property name="Value" valueSource="literal" value="3" />
+  </node>
+  <node name="Set MaxStaging" type="SetNumber" id="C0F542B4BCC279A8">
+    <property name="Variable" value="MaxStagingRange" />
+    <property name="Value" valueSource="literal" value="2" />
+    <insertChild id="A629C5EA0B99BE0F" />
+  </node>
+  <node name="Set MaxStaging" type="SetNumber" id="07A225806156609B">
+    <property name="Variable" value="MaxStagingRange" />
+    <property name="Value" valueSource="literal" value="8" />
+  </node>
+  <node name="Set MinStaging" type="SetNumber" id="F07923550028DD52">
+    <property name="Variable" value="MinStagingRange" />
+    <property name="Value" valueSource="intrinsic" value="AttackRange" />
+  </node>
+  <node name="Set MaxStaging" type="SetNumber" id="C0171B121C319B25">
+    <property name="Variable" value="MaxStagingRange" />
+    <property name="Value" valueSource="literal" value="5" />
+  </node>
+  <node name="Set MinStaging" type="SetNumber" id="6216638C734F9341">
+    <property name="Variable" value="MinStagingRange" />
+    <property name="Value" valueSource="literal" value="2" />
+  </node>
+  <node name="Defend/Pace" type="Select" id="C26DE081FD4405C2">
+    <insertChild id="F8D07946CC824376" />
+    <insertChild id="86F8B9BF464C108F" />
+  </node>
+  <node name="Find Target Around Self" type="FindBestTarget" id="F8D07946CC824376" comment="Find targets around MaxStagingRange">
+    <property name="TargetTypes" valueSource="literal" value="Creep,Minion,Merc,Heroic,Summoned,AITargetableStructure" />
+    <property name="DistanceFactor" valueSource="literal" value="2" />
+    <property name="OutputTarget" value="FightTarget" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+    <property name="MaxTargetDistance" valueSource="intrinsic" value="AttackRange" />
+    <insertChild id="9BA24E4DD01C96B0" />
+  </node>
+  <node name="Fight Target" type="HeroFight" id="9BA24E4DD01C96B0" comment="Fight target on beacon">
+    <property name="Target" valueSource="variable" value="FightTarget" />
+    <property name="FightRange" valueSource="variable" value="FightRange" />
+    <property name="PreferredPoint" valueSource="variable" value="StagePosition" />
+  </node>
+  <node name="Pace Around Escort Target" type="HeroPace" id="EB65BE46B56C9EE6">
+    <property name="MaxRange" valueSource="variable" value="MaxStagingRange" />
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+  </node>
+  <node name="" type="And" id="575336C2EACC1BF6">
+    <insertChild id="5CFB415CB822EE5B" />
+    <insertChild id="8A362648F9A2D4E6" />
+  </node>
+  <node name="" type="And" id="B33B0FD0BC71F2CF">
+    <insertChild id="76CD1BC609787D6F" />
+    <insertChild id="F4FCE999DB0999DF" />
+  </node>
+  <node name="" type="Not" id="F4FCE999DB0999DF">
+    <insertChild id="62C2830183AEA41D" />
+  </node>
+  <node name="Taken Damage" type="RecentlyDamaged" id="62C2830183AEA41D">
+    <property name="Target" valueSource="intrinsic" value="Self" />
+    <property name="WithinSeconds" valueSource="literal" value="5" />
+  </node>
+  <node name="Set MaxStaging" type="SetNumber" id="6DDDF7355A17302D">
+    <property name="Variable" value="MaxStagingRange" />
+    <property name="Value" valueSource="literal" value="12" />
+  </node>
+  <node name="" type="Select" id="0577AB9292C58946">
+    <insertChild id="BC6249E5B05D5FBD" />
+    <insertChild id="6DDDF7355A17302D" />
+    <insertChild id="14291D3F4AC55716" />
+    <insertChild id="D09AF6064E67E742" />
+  </node>
+  <node name="Set MinStaging" type="SetNumber" id="BC6249E5B05D5FBD">
+    <property name="Variable" value="MinStagingRange" />
+    <property name="Value" valueSource="literal" value="10" />
+  </node>
+  <node name="Set MaxHide" type="SetNumber" id="14291D3F4AC55716">
+    <property name="Variable" value="MaxHideRange" />
+    <property name="Value" valueSource="literal" value="10" />
+  </node>
+  <node name="Set MaxHide" type="SetNumber" id="CF9685DAC59CACD7">
+    <property name="Variable" value="MaxHideRange" />
+    <property name="Value" valueSource="literal" value="6" />
+  </node>
+  <node name="Set MaxHide" type="SetNumber" id="B9BD4E572B128F71">
+    <property name="Variable" value="MaxHideRange" />
+    <property name="Value" valueSource="literal" value="6" />
+  </node>
+  <node name="Set MaxHide" type="SetNumber" id="7F6BCB1108B08DBC">
+    <property name="Variable" value="MaxHideRange" />
+    <property name="Value" valueSource="literal" value="5" />
+  </node>
+  <node name="Set MaxHide" type="SetNumber" id="A74ECD605CDB093A">
+    <property name="Variable" value="MaxHideRange" />
+    <property name="Value" valueSource="literal" value="6" />
+  </node>
+  <node name="Set MaxHide" type="SetNumber" id="C4A1CCF5B566EC41">
+    <property name="Variable" value="MaxHideRange" />
+    <property name="Value" valueSource="literal" value="6" />
+  </node>
+  <node name="Set MaxHide" type="SetNumber" id="4E52A37A8DED909F">
+    <property name="Variable" value="MaxHideRange" />
+    <property name="Value" valueSource="literal" value="6" />
+  </node>
+  <node name="Flee From Tower Aggro" type="Select" id="AC2BBB6587C38F1C">
+    <insertChild id="736591F830FFC031" />
+  </node>
+  <node name="Armor Shred" type="UnitHasBehavior" id="31405FC96971E749">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="TownRampingArmorShred" />
+    <property name="StackCount" valueSource="literal" value="3" />
+    <property name="StackComparison" valueSource="literal" value="GE" />
+  </node>
+  <node name="" type="HeroMoveToPoint" id="6EE7690704943622">
+    <property name="TargetPosition" valueSource="intrinsic" value="SafePos" />
+  </node>
+  <node name="Is Tank" type="UnitHasPlaystyle" id="A0040153A4A7CD4C">
+    <property name="Playstyles" valueSource="literal" value="RoleTank" />
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="" type="Or" id="4F6235F5648ECF85">
+    <insertChild id="602FBDDBA4A1E308" />
+    <insertChild id="64149C19971DC366" />
+  </node>
+  <node name="Tower Focus" type="UnitHasBehavior" id="602FBDDBA4A1E308">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="TowerCFHFocusedTarget" />
+    <property name="StackCount" valueSource="literal" value="1" />
+    <property name="StackComparison" valueSource="literal" value="GE" />
+  </node>
+  <node name="NoEnemyNear" type="UnitCount" id="273B20BAF0765DE0" comment="This UnitCount node is needed to ensure minions and summons are not nearby.">
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="Comparison" valueSource="literal" value="Eq" />
+    <property name="TargetTypes" valueSource="literal" value="Creep,Minion,Merc,Structure,Heroic,Hallucination,Summoned,MapBoss,MapCreature" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Dead,Benign" />
+    <property name="RequiredTypes" valueSource="literal" value="Enemy" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="NoEnemyNear" type="UnitCount" id="E2948F6A8DF657D0" comment="This UnitCount node is needed to ensure minions and summons are not nearby.">
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="Comparison" valueSource="literal" value="Eq" />
+    <property name="TargetTypes" valueSource="literal" value="Creep,Minion,Merc,Structure,Heroic,Hallucination,Summoned,MapBoss,MapCreature" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Dead,Benign" />
+    <property name="RequiredTypes" valueSource="literal" value="Enemy" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="" type="Or" id="19810A8A9AE53427">
+    <insertChild id="31405FC96971E749" />
+    <insertChild id="D19CEF0CBDCE2350" />
+  </node>
+  <node name="" type="And" id="D19CEF0CBDCE2350">
+    <insertChild id="8AF74685A60180FB" />
+    <insertChild id="2E24F9A9951433EB" />
+  </node>
+  <node name="Tower Focus" type="UnitHasBehavior" id="8AF74685A60180FB">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="TowerCFHFocusedTarget" />
+    <property name="StackCount" valueSource="literal" value="1" />
+    <property name="StackComparison" valueSource="literal" value="GE" />
+  </node>
+  <node name="" type="LifeFraction" id="2E24F9A9951433EB">
+    <property name="LifeFraction" valueSource="literal" value="0.35" />
+    <property name="Comparison" valueSource="literal" value="LE" />
+    <property name="Target" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Armor Shred" type="UnitHasBehavior" id="64149C19971DC366">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="TownRampingArmorShred" />
+    <property name="StackCount" valueSource="literal" value="1" />
+    <property name="StackComparison" valueSource="literal" value="GE" />
+  </node>
+  <node name="" type="And" id="0FE302A8E40483C9">
+    <insertChild id="A0040153A4A7CD4C" />
+    <insertChild id="19810A8A9AE53427" />
+  </node>
+  <node name="" type="Or" id="BCBE21627329231A">
+    <insertChild id="93D883AF1FB031B1" />
+    <insertChild id="6EE7690704943622" />
+  </node>
+  <node name="" type="Or" id="FCD592221157322E">
+    <insertChild id="0CFB598FC7FD06DC" />
+    <insertChild id="AC2BBB6587C38F1C" />
+    <insertChild id="731FDFFA858428C1" />
+    <insertChild id="890C66E8AC662702" />
+    <insertChild id="E351280A4122D4E0" />
+    <insertChild id="0404FCA4F12FA6C8" />
+  </node>
+  <node name="True AI" type="Select" id="0404FCA4F12FA6C8">
+    <insertChild id="48E99A92A2A91E6A" />
+    <insertChild id="C269A066660F0020" />
+    <insertChild id="F9EBE56C73DD6A85" />
+    <!--<insertChild id="7F2CFA9E367E523C" />-->
+    <insertChild id="84CE44909FD4D1E5" />
+    <insertChild id="C8C1718B7484860F" />
+    <insertChild id="E360BCC265AAC5A2" />
+    <insertChild id="43958E349EFFC058" />
+  </node>
+  <node name="Set Fight Range and Special Attack Abilities" type="Select" id="0CFB598FC7FD06DC">
+    <insertChild id="0484E8D2007373DE" />
+  </node>
+  <node name="Fallback" type="Running" id="39DF4472CC15FCDD" />
+  <node name="" type="GoalSelector" id="731FDFFA858428C1">
+    <insertChild id="FCD95A3C1E540061" />
+  </node>
+  <node name="Return to Altar" type="Select" id="6DF986A0ED262DC5">
+    <insertChild id="868989628EB9016E" />
+    <insertChild id="3C32917AF424B145" />
+    <insertChild id="5AB5E43A538EAD37" />
+  </node>
+  <node name="Not On Altar" type="UnitHasBehavior" id="689E36ACED4D53E5">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="HallOfStormsProtectionBuff" />
+    <property name="StackComparison" valueSource="literal" value="Eq" />
+    <insertChild id="6DF986A0ED262DC5" />
+  </node>
+  <node name="Find Altar" type="FindBestTarget" id="868989628EB9016E">
+    <property name="UnitType" valueSource="literal" value="HallOfStormsLocationUnit" />
+    <property name="OutputTarget" value="AltarUnit" />
+    <property name="SearchCenter" valueSource="intrinsic" value="SelfPos" />
+    <property name="MaxTargetDistance" valueSource="literal" value="500" />
+    <property name="TargetTypes" valueSource="literal" value="" />
+    <property name="ExcludeTypes" valueSource="literal" value="" />
+    <property name="RequiredTypes" valueSource="literal" value="Ally" />
+  </node>
+  <node name="" type="HeroMoveToPoint" id="5AB5E43A538EAD37">
+    <property name="TargetPosition" valueSource="variable" value="AltarUnit" />
+    <property name="StopRange" valueSource="literal" value="0.5" />
+    <property name="IgnoreUnitRadius" valueSource="literal" value="true" />
+  </node>
+  <node name="Not Follow Hearth" type="IfElse" id="3C32917AF424B145">
+    <insertChild id="DC12FA249BA3764C" />
+    <insertChild id="CE7E1D08E778401D" />
+    <insertChild id="F71F225D256DF3DF" />
+  </node>
+  <node name="StartHearth Altar" type="ShouldHearth" id="DC12FA249BA3764C">
+    <property name="TargetPosition" valueSource="variable" value="AltarUnit" />
+    <property name="HearthAbility" valueSource="literal" value="Hearthstone" />
+    <insertChild id="171DA1B57F42E383" />
+  </node>
+  <node name="Hearth" type="Ability" id="CE7E1D08E778401D">
+    <property name="Ability" valueSource="literal" value="Hearthstone" />
+  </node>
+  <node name="IsHearthing" type="OrderActive" id="F71F225D256DF3DF">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Ability" valueSource="literal" value="Hearthstone" />
+    <insertChild id="40944FE9188ED44C" />
+  </node>
+  <node name="StopHearth" type="MoveToPoint" id="40944FE9188ED44C">
+    <property name="Target" valueSource="intrinsic" value="SelfPos" />
+    <property name="HoldIfInRange" valueSource="literal" value="true" />
+  </node>
+  <node name="Fountain not on cooldown" type="UnitHasBehavior" id="4ED4BF822A2E8DA2">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="HealingFountainCooldown" />
+    <property name="StackComparison" valueSource="literal" value="Eq" />
+    <insertChild id="9D04AA6C0446F9F0" />
+  </node>
+  <node name="" type="And" id="9D04AA6C0446F9F0">
+    <variable name="MoonwellUnit" type="Unit" />
+    <insertChild id="10F34C32228B8812" />
+    <insertChild id="999368BA21BE279A" />
+  </node>
+  <node name="" type="Or" id="10F34C32228B8812">
+    <insertChild id="A056763F3CE881C2" />
+    <insertChild id="1507CFB0182FB141" />
+    <insertChild id="CA15F9C105103E09" />
+  </node>
+  <node name="Find Moonwell" type="FindBestTarget" id="A056763F3CE881C2">
+    <property name="UnitType" valueSource="literal" value="TownMoonwell" />
+    <property name="OutputTarget" value="MoonwellUnit" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTarget" />
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="TargetTypes" valueSource="literal" value="" />
+    <property name="ExcludeTypes" valueSource="literal" value="" />
+    <property name="RequiredTypes" valueSource="literal" value="Ally" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Find Moonwell" type="FindBestTarget" id="1507CFB0182FB141">
+    <property name="UnitType" valueSource="literal" value="TownMoonwellL2" />
+    <property name="OutputTarget" value="MoonwellUnit" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTarget" />
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="TargetTypes" valueSource="literal" value="" />
+    <property name="ExcludeTypes" valueSource="literal" value="" />
+    <property name="RequiredTypes" valueSource="literal" value="Ally" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Find Moonwell" type="FindBestTarget" id="CA15F9C105103E09">
+    <property name="UnitType" valueSource="literal" value="TownMoonwellL3" />
+    <property name="OutputTarget" value="MoonwellUnit" />
+    <property name="SearchCenter" valueSource="variable" value="GoalTarget" />
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="TargetTypes" valueSource="literal" value="" />
+    <property name="ExcludeTypes" valueSource="literal" value="" />
+    <property name="RequiredTypes" valueSource="literal" value="Ally" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Drink Fountain" type="Ability" id="999368BA21BE279A">
+    <property name="Ability" valueSource="literal" value="FountainDrink" />
+    <property name="TargetUnit" valueSource="variable" value="MoonwellUnit" />
+    <property name="DoNotThrottle" valueSource="literal" value="true" />
+  </node>
+  <node name="Proximity turnin/interact" type="Select" id="BB67350CBFCB123C">
+    <insertChild id="4ED4BF822A2E8DA2" />
+  </node>
+  <node name="Is Human Player" type="UnitHasBehavior" id="E351280A4122D4E0">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="IsHumanPlayer" />
+    <insertChild id="39DF4472CC15FCDD" />
+  </node>
+  <node name="Is Human Player" type="UnitHasBehavior" id="890C66E8AC662702">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="IsHumanPlayer" />
+    <insertChild id="689E36ACED4D53E5" />
+  </node>
+  <node name="Hearthlogic" type="IfElse" id="2AE0F14DF6A9ED21">
+    <insertChild id="96F036CA3EF0B10B" />
+    <insertChild id="F6324BFD9E32281C" />
+    <insertChild id="79200F492AAF851F" />
+  </node>
+  <node name="Goal Target Too Far" type="ShouldHearth" id="88E73A158BE7BBA4">
+    <property name="TargetPosition" valueSource="intrinsic" value="HeroMoveOrGoalDestination" />
+    <property name="HearthAbility" valueSource="literal" value="Hearthstone" />
+  </node>
+  <node name="Hearth" type="Ability" id="F6324BFD9E32281C">
+    <property name="Ability" valueSource="literal" value="Hearthstone" />
+  </node>
+  <node name="IsHearthing" type="OrderActive" id="79200F492AAF851F">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Ability" valueSource="literal" value="Hearthstone" />
+    <insertChild id="E68FD74CD6317566" />
+  </node>
+  <node name="StopHearth" type="MoveToPoint" id="E68FD74CD6317566">
+    <property name="Target" valueSource="intrinsic" value="SelfPos" />
+    <property name="HoldIfInRange" valueSource="literal" value="true" />
+  </node>
+  <node name="" type="Or" id="96F036CA3EF0B10B">
+    <insertChild id="C5FE060D93C6D86D" />
+    <insertChild id="7C2E05ECAE3592F2" />
+  </node>
+  <node name="Goal Target Hearthing" type="UnitHasBehavior" id="C5FE060D93C6D86D">
+    <property name="Unit" valueSource="variable" value="GoalTarget" />
+    <property name="Behavior" valueSource="literal" value="HearthstoneChannelingBuff" />
+  </node>
+  <node name="Goal Target in Altar" type="UnitHasBehavior" id="0E7D864815DDF098">
+    <property name="Unit" valueSource="variable" value="GoalTarget" />
+    <property name="Behavior" valueSource="literal" value="HallOfStormsProtectionBuff" />
+    <insertChild id="553762DCB894ADE2" />
+  </node>
+  <node name="Self Not On Altar" type="UnitHasBehavior" id="553762DCB894ADE2">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Behavior" valueSource="literal" value="HallOfStormsProtectionBuff" />
+    <property name="StackComparison" valueSource="literal" value="Eq" />
+    <insertChild id="2D299234CBBA2F3E" />
+  </node>
+  <node name="&gt; MaxStagingRange from Goal Target" type="UnitToUnitDistance" id="2D299234CBBA2F3E">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="UnitTarget" valueSource="variable" value="GoalTarget" />
+    <property name="Invert" valueSource="literal" value="true" />
+    <property name="MinRange" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="EnemyNear" type="UnitCount" id="5A9E806201B63C92" comment="This UnitCount node is needed to ensure minions and summons are not nearby.">
+    <property name="MaxTargetDistance" valueSource="literal" value="12" />
+    <property name="Comparison" valueSource="literal" value="GT" />
+    <property name="TargetTypes" valueSource="literal" value="Creep,Minion,Merc,Structure,Heroic,Hallucination,Summoned,MapBoss,MapCreature" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Dead,Benign" />
+    <property name="RequiredTypes" valueSource="literal" value="Enemy" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+    <insertChild id="93D883AF1FB031B1" />
+  </node>
+  <node name="" type="And" id="7C2E05ECAE3592F2">
+    <insertChild id="19A461B29F9FBDA6" />
+    <insertChild id="171DA1B57F42E383" />
+  </node>
+  <node name="" type="Or" id="19A461B29F9FBDA6">
+    <insertChild id="0E7D864815DDF098" />
+    <insertChild id="88E73A158BE7BBA4" />
+  </node>
+  <node name="Special Goals w/ FleeTactical" type="Or" id="E360BCC265AAC5A2">
+    <insertChild id="B3FFDB8C859AFFFD" />
+    <insertChild id="713B9EB15830FF9F" />
+  </node>
+  <node name="" type="And" id="B3FFDB8C859AFFFD">
+    <insertChild id="416F3E566F550101" />
+    <insertChild id="5A9E806201B63C92" />
+  </node>
+  <node name="" type="GoalSelector" id="416F3E566F550101">
+    <insertChild id="86A8F0786B31CE54" />
+    <insertChild id="2E00A581E5F03BB5" />
+  </node>
+  <node name="GoalHealingWell" type="GoalHealingWell" id="86A8F0786B31CE54">
+    <property name="Target" value="GoalTarget" />
+    <property name="TargetPosition" value="GoalTargetPosition" />
+    <property name="TargetRadius" value="Fake Number" />
+    <property name="SafePoint" value="Flee Point" />
+    <property name="LocalThreat" value="Fake Number" />
+    <property name="MoonwellUnit" value="MoonwellUnit" />
+    <property name="WaitRadius" value="MaxStagingRange" />
+    <variable name="MoonwellUnit" type="Unit" comment="The target moonwell." />
+  </node>
+  <node name="GoalHealingAltar" type="GoalHealingAltar" id="2E00A581E5F03BB5">
+    <property name="Target" value="GoalTarget" />
+    <property name="TargetPosition" value="GoalTargetPosition" />
+    <property name="TargetRadius" value="Fake Number" />
+    <property name="SafePoint" value="Flee Point" />
+    <property name="LocalThreat" value="Fake Number" />
+    <property name="WaitRadius" value="MaxStagingRange" />
+  </node>
+  <node name="" type="GoalSelector" id="713B9EB15830FF9F">
+    <insertChild id="AAEE53995A033AEB" />
+    <insertChild id="CCC41D857E684193" />
+  </node>
+  <node name="" type="And" id="736591F830FFC031">
+    <insertChild id="208A037CAD234072" />
+    <insertChild id="BCBE21627329231A" />
+  </node>
+  <node name="" type="Or" id="208A037CAD234072">
+    <insertChild id="0FE302A8E40483C9" />
+    <insertChild id="F968008EE004C1E8" />
+  </node>
+  <node name="" type="And" id="F968008EE004C1E8">
+    <insertChild id="2FBF6401D8F8E3F0" />
+    <insertChild id="4F6235F5648ECF85" />
+  </node>
+  <node name="Is Not Tank" type="UnitHasPlaystyle" id="2FBF6401D8F8E3F0">
+    <property name="Playstyles" valueSource="literal" value="" />
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="ExcludePlaystyles" valueSource="literal" value="RoleTank" />
+  </node>
+  <node name="Set MaxStaging" type="SetNumber" id="60248480B58C18CA">
+    <property name="Variable" value="MaxStagingRange" />
+    <property name="Value" valueSource="literal" value="12" />
+    <insertChild id="1250C6756D6CFA71" />
+  </node>
+  <node name="Set MaxStaging" type="SetNumber" id="666AC27A6C1EF4CE">
+    <property name="Variable" value="MaxStagingRange" />
+    <property name="Value" valueSource="literal" value="12" />
+    <insertChild id="5DE576F6ACCF3952" />
+  </node>
+  <node name="Set MinStaging" type="SetNumber" id="1250C6756D6CFA71">
+    <property name="Variable" value="MinStagingRange" />
+    <property name="Value" valueSource="literal" value="2" />
+  </node>
+  <node name="Set MinStaging" type="SetNumber" id="5DE576F6ACCF3952">
+    <property name="Variable" value="MinStagingRange" />
+    <property name="Value" valueSource="literal" value="2" />
+  </node>
+  <node name="Set MinStaging" type="SetNumber" id="A629C5EA0B99BE0F">
+    <property name="Variable" value="MinStagingRange" />
+    <property name="Value" valueSource="literal" value="1" />
+  </node>
+  <node name="Tactical Validation" type="And" id="84CE44909FD4D1E5">
+    <insertChild id="1FC2F813C12AFB5F" />
+    <insertChild id="FB293CA12C9F1ED9" />
+    <insertChild id="BC024F385080D8F5" />
+    <insertChild id="6C616369000C0E06" />
+  </node>
+  <node name="" type="Not" id="1FC2F813C12AFB5F">
+    <insertChild id="20BCBD82CF002CBA" />
+  </node>
+  <node name="" type="Not" id="FB293CA12C9F1ED9">
+    <insertChild id="DF4047E40CB56E54" />
+  </node>
+  <node name="" type="Not" id="BC024F385080D8F5">
+    <insertChild id="A87C0584488A5A0D" />
+  </node>
+  <node name="" type="OrderActive" id="20BCBD82CF002CBA">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Ability" valueSource="literal" value="CaptureMacGuffin" />
+  </node>
+  <node name="" type="OrderActive" id="DF4047E40CB56E54">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Ability" valueSource="literal" value="CaptureMacGuffinTwo" />
+  </node>
+  <node name="" type="OrderActive" id="A87C0584488A5A0D">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Ability" valueSource="literal" value="UseVehicle" />
+  </node>
+  <node name="Move To Goal" type="IfElse" id="4024197CCD7E28AB">
+    <insertChild id="3A691A4D125BEA3E" />
+    <insertChild id="612D76A9AA8A94EA" />
+    <insertChild id="9A5661DE9C2C8621" />
+  </node>
+  <node name="Should Mount?" type="And" id="3A691A4D125BEA3E">
+    <insertChild id="13FFD739588DBBA0" />
+    <insertChild id="0A9FF3E7C7009F70" />
+    <insertChild id="DD800EC81B44A1DD" />
+  </node>
+  <node name="Not Already Mounted" type="And" id="13FFD739588DBBA0">
+    <insertChild id="5CA6BFFAF91EFE4E" />
+    <insertChild id="8FDDB6275F8A4A0F" />
+    <insertChild id="80118662EC1612C2" />
+  </node>
+  <node name="No Mount Behavior" type="UnitHasBehaviorCategory" id="5CA6BFFAF91EFE4E">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Categories" valueSource="literal" value="" />
+    <property name="ExcludeCategories" valueSource="literal" value="Mount" />
+    <insertChild id="A3FB07365E14D358" />
+  </node>
+  <node name="Set MaxHide" type="SetNumber" id="A3FB07365E14D358">
+    <property name="Variable" value="MaxHideRange" />
+    <property name="Value" valueSource="literal" value="4" />
+  </node>
+  <node name="Can Mount" type="AbilityUsable" id="8FDDB6275F8A4A0F">
+    <property name="Ability" valueSource="literal" value="Mount" />
+  </node>
+  <node name="" type="Not" id="80118662EC1612C2">
+    <insertChild id="AD354EFFE94B0967" />
+  </node>
+  <node name="Dismount Useable" type="AbilityUsable" id="AD354EFFE94B0967">
+    <property name="Ability" valueSource="literal" value="Dismount" />
+  </node>
+  <node name="Conditions" type="Or" id="0A9FF3E7C7009F70">
+    <insertChild id="3A2B0A72266DA49E" />
+    <insertChild id="5A36B10FBEFD74C0" />
+  </node>
+  <node name="" type="And" id="3A2B0A72266DA49E">
+    <insertChild id="661089E1372AC0BB" />
+    <insertChild id="55185694675179B3" />
+    <insertChild id="4BEE36EA2D4956C1" />
+  </node>
+  <node name="" type="Not" id="661089E1372AC0BB">
+    <insertChild id="9E12BE8682292C6E" />
+  </node>
+  <node name="3 seconds" type="RecentlyDamaged" id="9E12BE8682292C6E">
+    <property name="Target" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="NoEnemyNear" type="UnitCount" id="55185694675179B3" comment="This UnitCount node is needed to ensure minions and summons are not nearby.">
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="Comparison" valueSource="literal" value="Eq" />
+    <property name="TargetTypes" valueSource="literal" value="Creep,Minion,Merc,Structure,Heroic,Hallucination,Summoned,MapBoss,MapCreature" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Dead,Benign" />
+    <property name="RequiredTypes" valueSource="literal" value="Enemy" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="Reasons to Mount" type="Or" id="4BEE36EA2D4956C1">
+    <insertChild id="1CC305569E16FD83" />
+    <insertChild id="B6C34BCCC823A9ED" />
+    <insertChild id="4472BD8B7941979E" />
+    <insertChild id="44BBE5B8AFAD78E8" />
+  </node>
+  <node name="Mounted Follow Target" type="UnitHasBehavior" id="1CC305569E16FD83">
+    <property name="Unit" valueSource="variable" value="GoalTarget" />
+    <property name="Behavior" valueSource="literal" value="Mounted" />
+  </node>
+  <node name="Birdform" type="UnitHasBehavior" id="B6C34BCCC823A9ED">
+    <property name="Unit" valueSource="variable" value="GoalTarget" />
+    <property name="Behavior" valueSource="literal" value="MedivhTransformRaven" />
+  </node>
+  <node name="Mounting Target" type="OrderActive" id="4472BD8B7941979E">
+    <property name="Unit" valueSource="variable" value="GoalTarget" />
+    <property name="Ability" valueSource="literal" value="Mount" />
+  </node>
+  <node name="Going Raven" type="OrderActive" id="44BBE5B8AFAD78E8">
+    <property name="Unit" valueSource="variable" value="GoalTarget" />
+    <property name="Ability" valueSource="literal" value="MedivhTransformRaven" />
+  </node>
+  <node name="" type="And" id="5A36B10FBEFD74C0">
+    <insertChild id="02C1EB0D5009E3D6" />
+    <insertChild id="15AD7561AA91E04F" />
+    <insertChild id="C956603DC7000E3E" />
+  </node>
+  <node name="" type="Not" id="02C1EB0D5009E3D6">
+    <insertChild id="D3A44F466EAFF1BB" />
+  </node>
+  <node name="3 seconds" type="RecentlyDamaged" id="D3A44F466EAFF1BB">
+    <property name="Target" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="NoEnemyNear" type="UnitCount" id="15AD7561AA91E04F" comment="This UnitCount node is needed to ensure minions and summons are not nearby.">
+    <property name="MaxTargetDistance" valueSource="variable" value="MaxStagingRange" />
+    <property name="Comparison" valueSource="literal" value="Eq" />
+    <property name="TargetTypes" valueSource="literal" value="Creep,Minion,Merc,Structure,Heroic,Hallucination,Summoned,MapBoss,MapCreature" />
+    <property name="ExcludeTypes" valueSource="literal" value="Missile,Dead,Benign" />
+    <property name="RequiredTypes" valueSource="literal" value="Enemy" />
+    <property name="AddUnitRadiusToMaxTargetDistance" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="" type="Distance" id="C956603DC7000E3E">
+    <property name="SourceUnit" valueSource="intrinsic" value="Self" />
+    <property name="TargetPoint" valueSource="variable" value="GoalTargetPosition" />
+    <property name="Distance" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="Mount" type="Or" id="612D76A9AA8A94EA">
+    <insertChild id="A3793AB023CE5BF6" />
+  </node>
+  <node name="" type="AbilityCategory" id="A3793AB023CE5BF6">
+    <property name="AbilityCategories" valueSource="literal" value="Mount" />
+    <property name="TargetUnit" valueSource="intrinsic" value="Self" />
+  </node>
+  <node name="MoveToTarget" type="HeroMoveToPoint" id="9A5661DE9C2C8621" comment="Move towards the Interact target point">
+    <property name="TargetPosition" valueSource="variable" value="GoalTargetPosition" />
+    <property name="StopRange" valueSource="variable" value="MinStagingRange" />
+    <property name="StartRange" valueSource="variable" value="MaxStagingRange" />
+  </node>
+  <node name="" type="Not" id="00C45D57D14099DE">
+    <insertChild id="58B80BF2373FE1DD" />
+  </node>
+  <node name="" type="OrderActive" id="58B80BF2373FE1DD">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Ability" valueSource="literal" value="CaptureMacGuffin" />
+  </node>
+  <node name="" type="Not" id="DCAF4EA57828E7B0">
+    <insertChild id="DC2D2349DF809C98" />
+  </node>
+  <node name="" type="OrderActive" id="DC2D2349DF809C98">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Ability" valueSource="literal" value="CaptureMacGuffinTwo" />
+  </node>
+  <node name="" type="Not" id="15206A5266102FDA">
+    <insertChild id="B76FE9A11ACD204D" />
+  </node>
+  <node name="" type="OrderActive" id="B76FE9A11ACD204D">
+    <property name="Unit" valueSource="intrinsic" value="Self" />
+    <property name="Ability" valueSource="literal" value="UseVehicle" />
+  </node>
+  <node name="No Channel MacGuffin" type="And" id="DD800EC81B44A1DD">
+    <insertChild id="00C45D57D14099DE" />
+    <insertChild id="DCAF4EA57828E7B0" />
+    <insertChild id="15206A5266102FDA" />
+  </node>
+</tree>

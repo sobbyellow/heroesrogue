@@ -531,26 +531,26 @@ void libPBU2_gf_CurateHSUIInitialize () {
     libNtve_gf_CreateDialogItemLabel(DialogLastCreated(), 270, 55, c_anchorCenter, 0, 0, StringExternal("Label/Name/Difficulty"), ColorWithAlpha(0, 0, 0, 0), false, 0);
     libPBU2_difficultyDialogLabel = DialogControlLastCreated();
     libNtve_gf_SetDialogItemStyle(libPBU2_difficultyDialogLabel, "CurateHeroSelection_Title", PlayerGroupAll());
-    DialogControlSetPosition(libPBU2_difficultyDialogLabel, PlayerGroupAll(), c_anchorCenter, 500, -430);
+    DialogControlSetPosition(libPBU2_difficultyDialogLabel, PlayerGroupAll(), c_anchorCenter, 500, libPBU2_heroesRogueDialogsOffsetY - 50);
 
     DialogControlCreateFromTemplate(DialogLastCreated(), c_triggerControlTypeButton, "StandardTemplates/StandardButtonTemplate");
     libPBU2_difficultyDialogNormal = DialogControlLastCreated();
     libNtve_gf_SetDialogItemText(libPBU2_difficultyDialogNormal, StringExternal("Button/Name/Normal"), PlayerGroupAll());
-    DialogControlSetPosition(libPBU2_difficultyDialogNormal, PlayerGroupAll(), c_anchorCenter, 340, -370);
+    DialogControlSetPosition(libPBU2_difficultyDialogNormal, PlayerGroupAll(), c_anchorCenter, 340, libPBU2_heroesRogueDialogsOffsetY);
     DialogControlSetSize(libPBU2_difficultyDialogNormal, PlayerGroupAll(), 190, 90);
     libNtve_gf_SetDialogItemTooltip(libPBU2_difficultyDialogNormal, StringExternal("Button/Tooltip/Normal"), PlayerGroupAll());
 
     DialogControlCreateFromTemplate(DialogLastCreated(), c_triggerControlTypeButton, "StandardTemplates/StandardButtonTemplate");
     libPBU2_difficultyDialogHeroic = DialogControlLastCreated();
     libNtve_gf_SetDialogItemText(libPBU2_difficultyDialogHeroic, StringExternal("Button/Name/Heroic"), PlayerGroupAll());
-    DialogControlSetPosition(libPBU2_difficultyDialogHeroic, PlayerGroupAll(), c_anchorCenter, 500, -370);
+    DialogControlSetPosition(libPBU2_difficultyDialogHeroic, PlayerGroupAll(), c_anchorCenter, 500, libPBU2_heroesRogueDialogsOffsetY);
     DialogControlSetSize(libPBU2_difficultyDialogHeroic, PlayerGroupAll(), 190, 90);
     libNtve_gf_SetDialogItemTooltip(libPBU2_difficultyDialogHeroic, StringExternal("Button/Tooltip/Heroic"), PlayerGroupAll());
 
     DialogControlCreateFromTemplate(DialogLastCreated(), c_triggerControlTypeButton, "StandardTemplates/StandardButtonTemplate");
     libPBU2_difficultyDialogMythic = DialogControlLastCreated();
     libNtve_gf_SetDialogItemText(libPBU2_difficultyDialogMythic, StringExternal("Button/Name/Mythic"), PlayerGroupAll());
-    DialogControlSetPosition(libPBU2_difficultyDialogMythic, PlayerGroupAll(), c_anchorCenter, 660, -370);
+    DialogControlSetPosition(libPBU2_difficultyDialogMythic, PlayerGroupAll(), c_anchorCenter, 660, libPBU2_heroesRogueDialogsOffsetY);
     DialogControlSetSize(libPBU2_difficultyDialogMythic, PlayerGroupAll(), 190, 90);
     TextExpressionSetToken("Param/Expression/Mythic", "A", StringExternal("Affix/SimpleDisplayText/" + libHRGE_mythicCurse1));
     TextExpressionSetToken("Param/Expression/Mythic", "B", StringExternal("Affix/SimpleDisplayText/" + libHRGE_mythicCurse2));
@@ -565,13 +565,13 @@ void libPBU2_gf_CurateHSUIInitialize () {
     DialogControlCreateFromTemplate(DialogLastCreated(), c_triggerControlTypeButton, "StandardTemplates/StandardButtonTemplate");
     libPBU2_dialogHowToPlay = DialogControlLastCreated();
     libNtve_gf_SetDialogItemText(libPBU2_dialogHowToPlay, StringExternal("Button/Name/HowToPlay"), PlayerGroupAll());
-    DialogControlSetPosition(libPBU2_dialogHowToPlay, PlayerGroupAll(), c_anchorCenter, -625, -370);
+    DialogControlSetPosition(libPBU2_dialogHowToPlay, PlayerGroupAll(), c_anchorCenter, -625, libPBU2_heroesRogueDialogsOffsetY);
     DialogControlSetSize(libPBU2_dialogHowToPlay, PlayerGroupAll(), 250, 100);
 
     DialogControlCreateFromTemplate(DialogLastCreated(), c_triggerControlTypeButton, "StandardTemplates/StandardButtonTemplate");
     libPBU2_dialogAchievements = DialogControlLastCreated();
     libNtve_gf_SetDialogItemText(libPBU2_dialogAchievements, StringExternal("Button/Name/OptionsAchievements"), PlayerGroupAll());
-    DialogControlSetPosition(libPBU2_dialogAchievements, PlayerGroupAll(), c_anchorCenter, -375, -370);
+    DialogControlSetPosition(libPBU2_dialogAchievements, PlayerGroupAll(), c_anchorCenter, -375, libPBU2_heroesRogueDialogsOffsetY);
     DialogControlSetSize(libPBU2_dialogAchievements, PlayerGroupAll(), 250, 100);
     
     DialogCreate(500, 400, c_anchorCenter, 0, 0, true);

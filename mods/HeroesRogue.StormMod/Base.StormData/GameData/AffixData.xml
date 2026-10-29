@@ -3063,8 +3063,49 @@
                 <Field Id="CatalogModificationCount" />
             </Int>
         </Instances>
-        <Instances Id="Destruction">
+        <Instances Id="VileNests">
             <Int Int="91">
+                <Field Id="Index" />
+            </Int>
+            <String String="Assets/Textures/storm_ui_icon_abathur_toxicnest.dds">
+                <Field Id="Icon" />
+            </String>
+            <String String="Rare">
+                <Field Id="Rarity" />
+            </String>
+            <Int Int="1">
+                <Field Id="Type" />
+            </Int>
+            <Int Int="1">
+                <Field Id="AffixesRequiredMax" />
+            </Int>
+            <User Type="Affix" Instance="ToxicField">
+                <Field Id="AffixesRequired" />
+            </User>
+            <Int Int="1">
+                <Field Id="AffixesRequiredCount" />
+            </Int>
+            <String String="OncePerGame libHRGE_NastyTrapsOncePerGame">
+                <Field Id="Trigger" />
+            </String>
+            <Int Int="1">
+                <Field Id="TriggerCount" />
+            </Int>
+            <String String="12 Flat Set Effect,ToxicNestApplySlowBehavior,Chance 1">
+                <Field Id="CatalogModification" />
+            </String>
+            <String String="12 Flat Set Behavior,ToxicNestSlow,Duration 3">
+                <Field Id="CatalogModification" Index="1" />
+            </String>
+            <String String="12 Flat Set Behavior,ToxicNestSlow,Modification.UnifiedMoveSpeedFactor -0.5">
+                <Field Id="CatalogModification" Index="2" />
+            </String>
+            <Int Int="3">
+                <Field Id="CatalogModificationCount" />
+            </Int>
+        </Instances>
+        <Instances Id="Destruction">
+            <Int Int="92">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_structure_quest.dds">
@@ -3102,7 +3143,7 @@
             </Int>
         </Instances>
         <Instances Id="SearingAttacks">
-            <Int Int="92">
+            <Int Int="93">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -3128,7 +3169,7 @@
             </Int>
         </Instances>
         <Instances Id="ResurgenceoftheStorm">
-            <Int Int="93">
+            <Int Int="94">
                 <Field Id="Index" />
             </Int>
             <Int Int="3">
@@ -3169,7 +3210,7 @@
             </Int>
         </Instances>
         <Instances Id="Bribery">
-            <Int Int="94">
+            <Int Int="95">
                 <Field Id="Index" />
             </Int>
             <Int Int="5">
@@ -3192,7 +3233,7 @@
             </Int>
         </Instances>
         <Instances Id="BriberyDeepPockets">
-            <Int Int="95">
+            <Int Int="96">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_talent_bribe.dds">
@@ -3233,7 +3274,7 @@
             </Int>
         </Instances>
         <Instances Id="PathoftheWizard">
-            <Int Int="96">
+            <Int Int="97">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -3280,7 +3321,7 @@
             </Int>
         </Instances>
         <Instances Id="PathoftheWarrior">
-            <Int Int="97">
+            <Int Int="98">
                 <Field Id="Index" />
             </Int>
             <Int Int="5">
@@ -3309,7 +3350,7 @@
             </Int>
         </Instances>
         <Instances Id="PathoftheAssassin">
-            <Int Int="98">
+            <Int Int="99">
                 <Field Id="Index" />
             </Int>
             <Int Int="5">
@@ -3341,7 +3382,7 @@
             </Int>
         </Instances>
         <Instances Id="OverchargedShields">
-            <Int Int="99">
+            <Int Int="100">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_fenix_shield_2.dds">
@@ -3370,7 +3411,7 @@
             </Int>
         </Instances>
         <Instances Id="ByeBye">
-            <Int Int="100">
+            <Int Int="101">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_chromie_poof.dds">
@@ -3399,7 +3440,7 @@
             </Int>
         </Instances>
         <Instances Id="AllRounder">
-            <Int Int="101">
+            <Int Int="102">
                 <Field Id="Index" />
             </Int>
             <Int Int="5">
@@ -3440,7 +3481,7 @@
             </Int>
         </Instances>
         <Instances Id="Cloned">
-            <Int Int="102">
+            <Int Int="103">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -3469,7 +3510,7 @@
             </Int>
         </Instances>
         <Instances Id="Ammunition">
-            <Int Int="103">
+            <Int Int="104">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_ammo.dds">
@@ -3495,7 +3536,7 @@
             </Int>
         </Instances>
         <Instances Id="Grenadier">
-            <Int Int="104">
+            <Int Int="105">
                 <Field Id="Index" />
             </Int>
             <Int Int="5">
@@ -3536,7 +3577,7 @@
             </Int>
         </Instances>
         <Instances Id="EmergencyMeasure">
-            <Int Int="105">
+            <Int Int="106">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tassadar_plasmashield_a.dds">
@@ -3574,7 +3615,7 @@
             </Int>
         </Instances>
         <Instances Id="LostVikingsButtonMasher">
-            <Int Int="106">
+            <Int Int="107">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lostvikings_jump.dds">
@@ -3639,7 +3680,7 @@
             </Int>
         </Instances>
         <Instances Id="LostVikingsGreatVikingHoard">
-            <Int Int="107">
+            <Int Int="108">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lostvikings_vikinghoard.dds">
@@ -3674,7 +3715,7 @@
             </Int>
         </Instances>
         <Instances Id="LostVikingsSpecializedVikings">
-            <Int Int="108">
+            <Int Int="109">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_vikings_selection_all.dds">
@@ -3712,7 +3753,7 @@
             </Int>
         </Instances>
         <Instances Id="LostVikingsTrulyLost">
-            <Int Int="109">
+            <Int Int="110">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lostvikings_64kbmarathon.dds">
@@ -3738,7 +3779,7 @@
             </Int>
         </Instances>
         <Instances Id="LostVikingsPowerofThree">
-            <Int Int="110">
+            <Int Int="111">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -3788,7 +3829,7 @@
             </Int>
         </Instances>
         <Instances Id="LostVikingsLetsGo">
-            <Int Int="111">
+            <Int Int="112">
                 <Field Id="Index" />
             </Int>
             <Int Int="2">
@@ -3811,7 +3852,7 @@
             </Int>
         </Instances>
         <Instances Id="LostVikingsRagnarokRaid">
-            <Int Int="112">
+            <Int Int="113">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lostvikings_longboatraid.dds">
@@ -3837,7 +3878,7 @@
             </Int>
         </Instances>
         <Instances Id="LostVikingsReplay">
-            <Int Int="113">
+            <Int Int="114">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lostvikings_playagain.dds">
@@ -3857,7 +3898,7 @@
             </Int>
         </Instances>
         <Instances Id="LostVikingsBigSpin">
-            <Int Int="114">
+            <Int Int="115">
                 <Field Id="Index" />
             </Int>
             <Int Int="2">
@@ -3880,7 +3921,7 @@
             </Int>
         </Instances>
         <Instances Id="LostVikingsBarrier">
-            <Int Int="115">
+            <Int Int="116">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lostvikings_norseforce.dds">
@@ -3915,7 +3956,7 @@
             </Int>
         </Instances>
         <Instances Id="LostVikingsFieryOlaf">
-            <Int Int="116">
+            <Int Int="117">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lostvikings_selectolaf.dds">
@@ -3941,7 +3982,7 @@
             </Int>
         </Instances>
         <Instances Id="LostVikingsTrilogy">
-            <Int Int="117">
+            <Int Int="118">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lostvikings_fastrestart.dds">
@@ -3967,7 +4008,7 @@
             </Int>
         </Instances>
         <Instances Id="LostVikingsBeyblade">
-            <Int Int="118">
+            <Int Int="119">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_spintowin_a.dds">
@@ -3993,7 +4034,7 @@
             </Int>
         </Instances>
         <Instances Id="SlowStart">
-            <Int Int="119">
+            <Int Int="120">
                 <Field Id="Index" />
             </Int>
             <Int Int="3">
@@ -4040,7 +4081,7 @@
             </Int>
         </Instances>
         <Instances Id="PassiveAdvantage">
-            <Int Int="120">
+            <Int Int="121">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_passive_advantage.dds">
@@ -4060,7 +4101,7 @@
             </Int>
         </Instances>
         <Instances Id="AmplifiedHealing">
-            <Int Int="121">
+            <Int Int="122">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -4089,7 +4130,7 @@
             </Int>
         </Instances>
         <Instances Id="GatheringPower">
-            <Int Int="122">
+            <Int Int="123">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -4121,7 +4162,7 @@
             </Int>
         </Instances>
         <Instances Id="ConvenientPortals">
-            <Int Int="123">
+            <Int Int="124">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_medivh_portal_a.dds">
@@ -4138,7 +4179,7 @@
             </Int>
         </Instances>
         <Instances Id="GlobeHuffer">
-            <Int Int="124">
+            <Int Int="125">
                 <Field Id="Index" />
             </Int>
             <Int Int="3">
@@ -4170,7 +4211,7 @@
             </Int>
         </Instances>
         <Instances Id="IllidanUnendingHatred">
-            <Int Int="125">
+            <Int Int="126">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_talent_seasonedmarksman.dds">
@@ -4211,7 +4252,7 @@
             </Int>
         </Instances>
         <Instances Id="IllidanBurningBlades">
-            <Int Int="126">
+            <Int Int="127">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_illidan_sweepingstrike_b.dds">
@@ -4249,7 +4290,7 @@
             </Int>
         </Instances>
         <Instances Id="IllidanDeepDive">
-            <Int Int="127">
+            <Int Int="128">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_illidan_dive_a.dds">
@@ -4296,7 +4337,7 @@
             </Int>
         </Instances>
         <Instances Id="IllidanEvasive">
-            <Int Int="128">
+            <Int Int="129">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -4337,7 +4378,7 @@
             </Int>
         </Instances>
         <Instances Id="IllidanExtendedAssault">
-            <Int Int="129">
+            <Int Int="130">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_illidan_sweepingstrike.dds">
@@ -4357,7 +4398,7 @@
             </Int>
         </Instances>
         <Instances Id="IllidanLongBlades">
-            <Int Int="130">
+            <Int Int="131">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_illidan_sweepingstrike_c.dds">
@@ -4377,7 +4418,7 @@
             </Int>
         </Instances>
         <Instances Id="IllidanUnstoppableDive">
-            <Int Int="131">
+            <Int Int="132">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_illidan_dive_a.dds">
@@ -4397,7 +4438,7 @@
             </Int>
         </Instances>
         <Instances Id="IllidanHardImpact">
-            <Int Int="132">
+            <Int Int="133">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_illidan_dive.dds">
@@ -4417,7 +4458,7 @@
             </Int>
         </Instances>
         <Instances Id="IllidanLegallyBlind">
-            <Int Int="133">
+            <Int Int="134">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_illidan_evasion_b.dds">
@@ -4443,7 +4484,7 @@
             </Int>
         </Instances>
         <Instances Id="IllidanSurpriseHunt">
-            <Int Int="134">
+            <Int Int="135">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_illidan_thehunt.dds">
@@ -4466,7 +4507,7 @@
             </Int>
         </Instances>
         <Instances Id="IllidanEfficientMorph">
-            <Int Int="135">
+            <Int Int="136">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_illidan_metamorphosis.dds">
@@ -4489,7 +4530,7 @@
             </Int>
         </Instances>
         <Instances Id="IllidanWheresIllidan">
-            <Int Int="136">
+            <Int Int="137">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_maiev_heroic_1_b.dds">
@@ -4518,7 +4559,7 @@
             </Int>
         </Instances>
         <Instances Id="IllidanUnchained">
-            <Int Int="137">
+            <Int Int="138">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_illidan_sweepingstrike_c.dds">
@@ -4556,7 +4597,7 @@
             </Int>
         </Instances>
         <Instances Id="NoMinimapDLC">
-            <Int Int="138">
+            <Int Int="139">
                 <Field Id="Index" />
             </Int>
             <Int Int="100">
@@ -4579,7 +4620,7 @@
             </Int>
         </Instances>
         <Instances Id="CameraZoom">
-            <Int Int="139">
+            <Int Int="140">
                 <Field Id="Index" />
             </Int>
             <Int Int="100">
@@ -4602,7 +4643,7 @@
             </Int>
         </Instances>
         <Instances Id="SpellShield">
-            <Int Int="140">
+            <Int Int="141">
                 <Field Id="Index" />
             </Int>
             <Int Int="3">
@@ -4652,7 +4693,7 @@
             </Int>
         </Instances>
         <Instances Id="Block">
-            <Int Int="141">
+            <Int Int="142">
                 <Field Id="Index" />
             </Int>
             <Int Int="3">
@@ -4687,7 +4728,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeElunesRanger">
-            <Int Int="142">
+            <Int Int="143">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tyrande_sentinel.dds">
@@ -4743,7 +4784,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeTheMark">
-            <Int Int="143">
+            <Int Int="144">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tyrande_huntersmark.dds">
@@ -4793,7 +4834,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeMeteorShower">
-            <Int Int="144">
+            <Int Int="145">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tyrande_lunarflare.dds">
@@ -4825,7 +4866,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeElunesGrace">
-            <Int Int="145">
+            <Int Int="146">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tyrande_lightofelune.dds">
@@ -4851,7 +4892,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeDeadlyMark">
-            <Int Int="146">
+            <Int Int="147">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tyrande_huntersmark.dds">
@@ -4871,7 +4912,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeStunningLight">
-            <Int Int="147">
+            <Int Int="148">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tyrande_lunarflare.dds">
@@ -4891,7 +4932,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeBigStar">
-            <Int Int="148">
+            <Int Int="149">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tyrande_lunarflare.dds">
@@ -4917,7 +4958,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeElunesReach">
-            <Int Int="149">
+            <Int Int="150">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tyrande_lightofelune.dds">
@@ -4946,7 +4987,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeOwling">
-            <Int Int="150">
+            <Int Int="151">
                 <Field Id="Index" />
             </Int>
             <Int Int="2">
@@ -4969,7 +5010,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeStarRain">
-            <Int Int="151">
+            <Int Int="152">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tyrande_starfall.dds">
@@ -4995,7 +5036,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeShadowstalker">
-            <Int Int="152">
+            <Int Int="153">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tyrande_shadowstalk.dds">
@@ -5045,7 +5086,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeLunarShower">
-            <Int Int="153">
+            <Int Int="154">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tyrande_lunarflare.dds">
@@ -5065,7 +5106,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeNightElfBond">
-            <Int Int="154">
+            <Int Int="155">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_night_elf_bond.dds">
@@ -5103,7 +5144,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeFlybyAttack">
-            <Int Int="155">
+            <Int Int="156">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tyrande_sentinel.dds">
@@ -5141,7 +5182,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeOverflowingLight">
-            <Int Int="156">
+            <Int Int="157">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tyrande_lightofelune.dds">
@@ -5161,7 +5202,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeElunesWrath">
-            <Int Int="157">
+            <Int Int="158">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tyrande_lightofelune_b.dds">
@@ -5187,7 +5228,7 @@
             </Int>
         </Instances>
         <Instances Id="TyrandeMoonlight">
-            <Int Int="158">
+            <Int Int="159">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_tyrande_lightofelune_a.dds">
@@ -5207,7 +5248,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinJumper">
-            <Int Int="159">
+            <Int Int="160">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_muradin_dwarftoss_a.dds">
@@ -5275,7 +5316,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinUnstoppableAvatar">
-            <Int Int="160">
+            <Int Int="161">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_muradin_avatar.dds">
@@ -5328,7 +5369,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinHammerer">
-            <Int Int="161">
+            <Int Int="162">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_muradin_stormbolt_a.dds">
@@ -5363,7 +5404,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinHeavyHammer">
-            <Int Int="162">
+            <Int Int="163">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_muradin_stormbolt.dds">
@@ -5383,7 +5424,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinElectrocution">
-            <Int Int="163">
+            <Int Int="164">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_muradin_thunderclap.dds">
@@ -5403,7 +5444,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinVeryHeavyImpact">
-            <Int Int="164">
+            <Int Int="165">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_muradin_dwarftoss.dds">
@@ -5423,7 +5464,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinFastPunch">
-            <Int Int="165">
+            <Int Int="166">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_muradin_haymaker.dds">
@@ -5458,7 +5499,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinThunderingSmash">
-            <Int Int="166">
+            <Int Int="167">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_muradin_thunderclap.dds">
@@ -5496,7 +5537,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinRAGE">
-            <Int Int="167">
+            <Int Int="168">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_talent_burningrage.dds">
@@ -5525,7 +5566,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinLightFeet">
-            <Int Int="168">
+            <Int Int="169">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_muradin_dwarftoss.dds">
@@ -5545,7 +5586,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinToyHammer">
-            <Int Int="169">
+            <Int Int="170">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_toy_hammer.dds">
@@ -5571,7 +5612,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinDualHammer">
-            <Int Int="170">
+            <Int Int="171">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_muradin_stormbolt.dds">
@@ -5600,7 +5641,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinPowerBolt">
-            <Int Int="171">
+            <Int Int="172">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -5623,7 +5664,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinClapClap">
-            <Int Int="172">
+            <Int Int="173">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -5646,7 +5687,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinDwarfImpact">
-            <Int Int="173">
+            <Int Int="174">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -5669,7 +5710,7 @@
             </Int>
         </Instances>
         <Instances Id="MuradinCheapHammer">
-            <Int Int="174">
+            <Int Int="175">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_muradin_stormbolt.dds">
@@ -5689,7 +5730,7 @@
             </Int>
         </Instances>
         <Instances Id="ExplosiveEnd">
-            <Int Int="175">
+            <Int Int="176">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_junkrat_bomb_pack.dds">
@@ -5715,7 +5756,7 @@
             </Int>
         </Instances>
         <Instances Id="DivineIntervention">
-            <Int Int="176">
+            <Int Int="177">
                 <Field Id="Index" />
             </Int>
             <Int Int="2">
@@ -5756,7 +5797,7 @@
             </Int>
         </Instances>
         <Instances Id="MassCloak">
-            <Int Int="177">
+            <Int Int="178">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_nova_personalcloaking.dds">
@@ -5779,7 +5820,7 @@
             </Int>
         </Instances>
         <Instances Id="TalentDisadvantage">
-            <Int Int="178">
+            <Int Int="179">
                 <Field Id="Index" />
             </Int>
             <Int Int="6">
@@ -5808,7 +5849,7 @@
             </Int>
         </Instances>
         <Instances Id="LeagueofHeroes">
-            <Int Int="179">
+            <Int Int="180">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_azmodan_sinsgrasp.dds">
@@ -5831,7 +5872,7 @@
             </Int>
         </Instances>
         <Instances Id="GoodOlDays">
-            <Int Int="180">
+            <Int Int="181">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_pre2020.dds">
@@ -5851,7 +5892,7 @@
             </Int>
         </Instances>
         <Instances Id="AllTalents">
-            <Int Int="181">
+            <Int Int="182">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_limitless.dds">
@@ -5883,7 +5924,7 @@
             </Int>
         </Instances>
         <Instances Id="OverwhelmingPower">
-            <Int Int="182">
+            <Int Int="183">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_all_stats_self.dds">
@@ -5912,7 +5953,7 @@
             </Int>
         </Instances>
         <Instances Id="SelfReliant">
-            <Int Int="183">
+            <Int Int="184">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_talent_resistance.dds">
@@ -5944,7 +5985,7 @@
             </Int>
         </Instances>
         <Instances Id="BelligerentGladiator">
-            <Int Int="184">
+            <Int Int="185">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_trinket_medallion.dds">
@@ -5967,7 +6008,7 @@
             </Int>
         </Instances>
         <Instances Id="Blindfolded">
-            <Int Int="185">
+            <Int Int="186">
                 <Field Id="Index" />
             </Int>
             <Int Int="2">
@@ -6002,7 +6043,7 @@
             </Int>
         </Instances>
         <Instances Id="Injury">
-            <Int Int="186">
+            <Int Int="187">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_injury.dds">
@@ -6037,7 +6078,7 @@
             </Int>
         </Instances>
         <Instances Id="Superiority">
-            <Int Int="187">
+            <Int Int="188">
                 <Field Id="Index" />
             </Int>
             <Int Int="4">
@@ -6090,7 +6131,7 @@
             </Int>
         </Instances>
         <Instances Id="MercenaryLord">
-            <Int Int="188">
+            <Int Int="189">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -6128,7 +6169,7 @@
             </Int>
         </Instances>
         <Instances Id="Demolitionist">
-            <Int Int="189">
+            <Int Int="190">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -6154,7 +6195,7 @@
             </Int>
         </Instances>
         <Instances Id="MinionKiller">
-            <Int Int="190">
+            <Int Int="191">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -6189,7 +6230,7 @@
             </Int>
         </Instances>
         <Instances Id="Relentless">
-            <Int Int="191">
+            <Int Int="192">
                 <Field Id="Index" />
             </Int>
             <Int Int="5">
@@ -6221,7 +6262,7 @@
             </Int>
         </Instances>
         <Instances Id="FirstAid">
-            <Int Int="192">
+            <Int Int="193">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -6253,7 +6294,7 @@
             </Int>
         </Instances>
         <Instances Id="Promote">
-            <Int Int="193">
+            <Int Int="194">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -6300,7 +6341,7 @@
             </Int>
         </Instances>
         <Instances Id="Dodge">
-            <Int Int="194">
+            <Int Int="195">
                 <Field Id="Index" />
             </Int>
             <Int Int="15">
@@ -6329,7 +6370,7 @@
             </Int>
         </Instances>
         <Instances Id="ExpensiveAttacks">
-            <Int Int="195">
+            <Int Int="196">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_talent_autoattack_mana.dds">
@@ -6355,7 +6396,7 @@
             </Int>
         </Instances>
         <Instances Id="AutomaticRepairs">
-            <Int Int="196">
+            <Int Int="197">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -6384,7 +6425,7 @@
             </Int>
         </Instances>
         <Instances Id="PhysicalLeech">
-            <Int Int="197">
+            <Int Int="198">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -6413,7 +6454,7 @@
             </Int>
         </Instances>
         <Instances Id="SpellLeech">
-            <Int Int="198">
+            <Int Int="199">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -6439,7 +6480,7 @@
             </Int>
         </Instances>
         <Instances Id="StormShield">
-            <Int Int="199">
+            <Int Int="200">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -6465,7 +6506,7 @@
             </Int>
         </Instances>
         <Instances Id="SpellArmor">
-            <Int Int="200">
+            <Int Int="201">
                 <Field Id="Index" />
             </Int>
             <Int Int="5">
@@ -6506,7 +6547,7 @@
             </Int>
         </Instances>
         <Instances Id="PhysicalArmor">
-            <Int Int="201">
+            <Int Int="202">
                 <Field Id="Index" />
             </Int>
             <Int Int="5">
@@ -6547,7 +6588,7 @@
             </Int>
         </Instances>
         <Instances Id="RingofRegeneration">
-            <Int Int="202">
+            <Int Int="203">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -6576,7 +6617,7 @@
             </Int>
         </Instances>
         <Instances Id="RingofMagic">
-            <Int Int="203">
+            <Int Int="204">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -6605,7 +6646,7 @@
             </Int>
         </Instances>
         <Instances Id="LastMoments">
-            <Int Int="204">
+            <Int Int="205">
                 <Field Id="Index" />
             </Int>
             <Int Int="2">
@@ -6640,7 +6681,7 @@
             </Int>
         </Instances>
         <Instances Id="ThrallLightningRod">
-            <Int Int="205">
+            <Int Int="206">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_ranged_thrall.dds">
@@ -6699,7 +6740,7 @@
             </Int>
         </Instances>
         <Instances Id="ThrallQuestsGalore">
-            <Int Int="206">
+            <Int Int="207">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_raid_boss.dds">
@@ -6761,7 +6802,7 @@
             </Int>
         </Instances>
         <Instances Id="ThrallFrostwolfFury">
-            <Int Int="207">
+            <Int Int="208">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_frostwolf_fury.dds">
@@ -6796,7 +6837,7 @@
             </Int>
         </Instances>
         <Instances Id="ThrallSlowfury">
-            <Int Int="208">
+            <Int Int="209">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_slowfury.dds">
@@ -6822,7 +6863,7 @@
             </Int>
         </Instances>
         <Instances Id="ThrallInARush">
-            <Int Int="209">
+            <Int Int="210">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -6854,7 +6895,7 @@
             </Int>
         </Instances>
         <Instances Id="ThrallPinnedDown">
-            <Int Int="210">
+            <Int Int="211">
                 <Field Id="Index" />
             </Int>
             <Int Int="2">
@@ -6877,7 +6918,7 @@
             </Int>
         </Instances>
         <Instances Id="ThrallElectricShock">
-            <Int Int="211">
+            <Int Int="212">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_thrall_chainlightning_var1.dds">
@@ -6897,7 +6938,7 @@
             </Int>
         </Instances>
         <Instances Id="ThrallQuickLightning">
-            <Int Int="212">
+            <Int Int="213">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_thrall_chainlightning.dds">
@@ -6917,7 +6958,7 @@
             </Int>
         </Instances>
         <Instances Id="ThrallBreezingWind">
-            <Int Int="213">
+            <Int Int="214">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_thrall_windfury_var1.dds">
@@ -6940,7 +6981,7 @@
             </Int>
         </Instances>
         <Instances Id="ThrallEarthShatter">
-            <Int Int="214">
+            <Int Int="215">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_thrall_earthquake.dds">
@@ -6969,7 +7010,7 @@
             </Int>
         </Instances>
         <Instances Id="ThrallCrushingSunder">
-            <Int Int="215">
+            <Int Int="216">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_thrall_sundering.dds">
@@ -6995,7 +7036,7 @@
             </Int>
         </Instances>
         <Instances Id="ThrallCriticalHealing">
-            <Int Int="216">
+            <Int Int="217">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_thrall_double_trait.dds">
@@ -7015,7 +7056,7 @@
             </Int>
         </Instances>
         <Instances Id="ThrallHealthyFrostwolf">
-            <Int Int="217">
+            <Int Int="218">
                 <Field Id="Index" />
             </Int>
             <Int Int="2">
@@ -7038,7 +7079,7 @@
             </Int>
         </Instances>
         <Instances Id="BadMannerism">
-            <Int Int="218">
+            <Int Int="219">
                 <Field Id="Index" />
             </Int>
             <Int Int="500">
@@ -7067,7 +7108,7 @@
             </Int>
         </Instances>
         <Instances Id="TowerShredder">
-            <Int Int="219">
+            <Int Int="220">
                 <Field Id="Index" />
             </Int>
             <Int Int="3">
@@ -7090,7 +7131,7 @@
             </Int>
         </Instances>
         <Instances Id="DebilitatingShots">
-            <Int Int="220">
+            <Int Int="221">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_talent_autoattack_slow.dds">
@@ -7113,7 +7154,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingTeleporter">
-            <Int Int="221">
+            <Int Int="222">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_wizard_teleport.dds">
@@ -7172,7 +7213,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingMissileBarrage">
-            <Int Int="222">
+            <Int Int="223">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_wizard_magicmissiles.dds">
@@ -7225,7 +7266,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingOrbing">
-            <Int Int="223">
+            <Int Int="224">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_wizard_arcaneorb.dds">
@@ -7257,7 +7298,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingTrueCalamity">
-            <Int Int="224">
+            <Int Int="225">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_wizard_teleport.dds">
@@ -7283,7 +7324,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingGlass">
-            <Int Int="225">
+            <Int Int="226">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_btn_d3_traits_wizard_glasscannon.dds">
@@ -7309,7 +7350,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingCriticalPower">
-            <Int Int="226">
+            <Int Int="227">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_wizard_criticalmass.dds">
@@ -7350,7 +7391,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingImprovedArchon">
-            <Int Int="227">
+            <Int Int="228">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_wizard_archon.dds">
@@ -7379,7 +7420,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingWaveofDeath">
-            <Int Int="228">
+            <Int Int="229">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_wizard_waveofforce.dds">
@@ -7405,7 +7446,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingNeedMoreMana">
-            <Int Int="229">
+            <Int Int="230">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_wizard_criticalmass.dds">
@@ -7425,7 +7466,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingSelfishPower">
-            <Int Int="230">
+            <Int Int="231">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -7463,7 +7504,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingFarshot">
-            <Int Int="231">
+            <Int Int="232">
                 <Field Id="Index" />
             </Int>
             <Int Int="2">
@@ -7513,7 +7554,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingArcaneLoop">
-            <Int Int="232">
+            <Int Int="233">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_wizard_criticalmass.dds">
@@ -7539,7 +7580,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingStormArmor">
-            <Int Int="233">
+            <Int Int="234">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_storm_armor.dds">
@@ -7565,7 +7606,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingPowerfulMissiles">
-            <Int Int="234">
+            <Int Int="235">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -7594,7 +7635,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingHurtfulOrbs">
-            <Int Int="235">
+            <Int Int="236">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -7620,7 +7661,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingCalamitous">
-            <Int Int="236">
+            <Int Int="237">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -7649,7 +7690,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingRapidMissiles">
-            <Int Int="237">
+            <Int Int="238">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_wizard_magicmissiles.dds">
@@ -7669,7 +7710,7 @@
             </Int>
         </Instances>
         <Instances Id="LiMingPiercingMissiles">
-            <Int Int="238">
+            <Int Int="239">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_wizard_magicmissiles.dds">
@@ -7695,7 +7736,7 @@
             </Int>
         </Instances>
         <Instances Id="CounterHealing">
-            <Int Int="239">
+            <Int Int="240">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -7727,7 +7768,7 @@
             </Int>
         </Instances>
         <Instances Id="SharedPower">
-            <Int Int="240">
+            <Int Int="241">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_shared_power.dds">
@@ -7756,7 +7797,7 @@
             </Int>
         </Instances>
         <Instances Id="VeryBadBargain">
-            <Int Int="241">
+            <Int Int="242">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -7785,7 +7826,7 @@
             </Int>
         </Instances>
         <Instances Id="PurificationProtocol">
-            <Int Int="242">
+            <Int Int="243">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_artanis_purifierbeam.dds">
@@ -7841,7 +7882,7 @@
             </Int>
         </Instances>
         <Instances Id="GiantKiller">
-            <Int Int="243">
+            <Int Int="244">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -7888,7 +7929,7 @@
             </Int>
         </Instances>
         <Instances Id="AncientBlessings">
-            <Int Int="244">
+            <Int Int="245">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_deckard_angelic_conduit.dds">
@@ -7914,7 +7955,7 @@
             </Int>
         </Instances>
         <Instances Id="MacGuffin">
-            <Int Int="245">
+            <Int Int="246">
                 <Field Id="Index" />
             </Int>
             <Int Int="2">
@@ -7943,7 +7984,7 @@
             </Int>
         </Instances>
         <Instances Id="DVaCrashStress">
-            <Int Int="246">
+            <Int Int="247">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_crash_stress.dds">
@@ -7966,7 +8007,7 @@
             </Int>
         </Instances>
         <Instances Id="SkullStockpile">
-            <Int Int="247">
+            <Int Int="248">
                 <Field Id="Index" />
             </Int>
             <Int Int="100000">
@@ -8004,7 +8045,7 @@
             </Int>
         </Instances>
         <Instances Id="Doomed">
-            <Int Int="248">
+            <Int Int="249">
                 <Field Id="Index" />
             </Int>
             <Int Int="100000">
@@ -8036,7 +8077,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerMachineGunner">
-            <Int Int="249">
+            <Int Int="250">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_tankmode.dds">
@@ -8062,7 +8103,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerShredderRounds">
-            <Int Int="250">
+            <Int Int="251">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_tankmode.dds">
@@ -8088,7 +8129,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerDebilitatingRounds">
-            <Int Int="251">
+            <Int Int="252">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_sgthammer_tankmode_b.dds">
@@ -8114,7 +8155,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerTrojanMines">
-            <Int Int="252">
+            <Int Int="253">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_spidermines.dds">
@@ -8143,7 +8184,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerRepairMines">
-            <Int Int="253">
+            <Int Int="254">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_spidermines.dds">
@@ -8163,7 +8204,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerLightTank">
-            <Int Int="254">
+            <Int Int="255">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_tankmode.dds">
@@ -8189,7 +8230,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerRubberBullets">
-            <Int Int="255">
+            <Int Int="256">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_tankmode.dds">
@@ -8215,7 +8256,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerExplosiveShells">
-            <Int Int="256">
+            <Int Int="257">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_tankmode.dds">
@@ -8241,7 +8282,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerArtillery">
-            <Int Int="257">
+            <Int Int="258">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_siegemode_var1.dds">
@@ -8267,7 +8308,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerBigGuns">
-            <Int Int="258">
+            <Int Int="259">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_bluntforcegun.dds">
@@ -8302,7 +8343,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerEngineBreakdown">
-            <Int Int="259">
+            <Int Int="260">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_hypercoolingengines.dds">
@@ -8328,7 +8369,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerHoverTank">
-            <Int Int="260">
+            <Int Int="261">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_siegemode.dds">
@@ -8354,7 +8395,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerPrecisionLavaStrike">
-            <Int Int="261">
+            <Int Int="262">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_napalmstrike.dds">
@@ -8389,7 +8430,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerDrillingClaws">
-            <Int Int="262">
+            <Int Int="263">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_spidermines.dds">
@@ -8409,7 +8450,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerCerberusMine">
-            <Int Int="263">
+            <Int Int="264">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_spidermines.dds">
@@ -8432,7 +8473,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerMoreMines">
-            <Int Int="264">
+            <Int Int="265">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_spidermines.dds">
@@ -8452,7 +8493,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerCryoMine">
-            <Int Int="265">
+            <Int Int="266">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_cryo_mines.dds">
@@ -8472,7 +8513,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerExplosiveMine">
-            <Int Int="266">
+            <Int Int="267">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -8498,7 +8539,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerBlaster">
-            <Int Int="267">
+            <Int Int="268">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_concussiveblast.dds">
@@ -8542,7 +8583,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerCollateralDamage">
-            <Int Int="268">
+            <Int Int="269">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_siegemode.dds">
@@ -8568,7 +8609,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerRapidActuators">
-            <Int Int="269">
+            <Int Int="270">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_siegemode_var1.dds">
@@ -8600,7 +8641,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerFuelReserves">
-            <Int Int="270">
+            <Int Int="271">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_fuel_reserves.dds">
@@ -8620,7 +8661,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerAdvancedPlating">
-            <Int Int="271">
+            <Int Int="272">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_neosteelplating.dds">
@@ -8643,7 +8684,7 @@
             </Int>
         </Instances>
         <Instances Id="SgtHammerMechanicalExpert">
-            <Int Int="272">
+            <Int Int="273">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_sgthammer_neosteelplating.dds">
@@ -8672,7 +8713,7 @@
             </Int>
         </Instances>
         <Instances Id="GlobeCollector">
-            <Int Int="273">
+            <Int Int="274">
                 <Field Id="Index" />
             </Int>
             <Int Int="2">
@@ -8707,7 +8748,7 @@
             </Int>
         </Instances>
         <Instances Id="LootBox">
-            <Int Int="274">
+            <Int Int="275">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -8727,7 +8768,7 @@
             </Int>
         </Instances>
         <Instances Id="Nimble">
-            <Int Int="275">
+            <Int Int="276">
                 <Field Id="Index" />
             </Int>
             <Int Int="3">
@@ -8780,7 +8821,7 @@
             </Int>
         </Instances>
         <Instances Id="ExperienceHoarder">
-            <Int Int="276">
+            <Int Int="277">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_exp_hoarder.dds">
@@ -8800,7 +8841,7 @@
             </Int>
         </Instances>
         <Instances Id="Pacifism">
-            <Int Int="277">
+            <Int Int="278">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_pacifism.dds">
@@ -8826,7 +8867,7 @@
             </Int>
         </Instances>
         <Instances Id="LongArmedGiants">
-            <Int Int="278">
+            <Int Int="279">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_giants.dds">
@@ -8858,7 +8899,7 @@
             </Int>
         </Instances>
         <Instances Id="Prepared">
-            <Int Int="279">
+            <Int Int="280">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -8899,7 +8940,7 @@
             </Int>
         </Instances>
         <Instances Id="Slivan">
-            <Int Int="280">
+            <Int Int="281">
                 <Field Id="Index" />
             </Int>
             <Int Int="500">
@@ -8943,7 +8984,7 @@
             </Int>
         </Instances>
         <Instances Id="SlivanReward">
-            <Int Int="281">
+            <Int Int="282">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_slivan.dds">
@@ -8963,7 +9004,7 @@
             </Int>
         </Instances>
         <Instances Id="Strength">
-            <Int Int="282">
+            <Int Int="283">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -8995,7 +9036,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusCannonRush">
-            <Int Int="283">
+            <Int Int="284">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_probius_photoncannon.dds">
@@ -9048,7 +9089,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusWarpSplit">
-            <Int Int="284">
+            <Int Int="285">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_probius_warprift.dds">
@@ -9074,7 +9115,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusWarpTechnology">
-            <Int Int="285">
+            <Int Int="286">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_recall.dds">
@@ -9172,7 +9213,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusBlackHole">
-            <Int Int="286">
+            <Int Int="287">
                 <Field Id="Index" />
             </Int>
             <Int Int="3">
@@ -9216,7 +9257,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusRapidFire">
-            <Int Int="287">
+            <Int Int="288">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_probius_photoncannon.dds">
@@ -9236,7 +9277,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusDisruptor">
-            <Int Int="288">
+            <Int Int="289">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -9262,7 +9303,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusBackupPower">
-            <Int Int="289">
+            <Int Int="290">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -9285,7 +9326,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusFirepower">
-            <Int Int="290">
+            <Int Int="291">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -9308,7 +9349,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusExplosiveRift">
-            <Int Int="291">
+            <Int Int="292">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -9334,7 +9375,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusOperationalEfficiency">
-            <Int Int="292">
+            <Int Int="293">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_probius_workerrush.dds">
@@ -9363,7 +9404,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusSolaritePowered">
-            <Int Int="293">
+            <Int Int="294">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_solarite.dds">
@@ -9392,7 +9433,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusMineralMagnet">
-            <Int Int="294">
+            <Int Int="295">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_probius_minerals.dds">
@@ -9412,7 +9453,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusLastingRift">
-            <Int Int="295">
+            <Int Int="296">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_probius_warprift.dds">
@@ -9432,7 +9473,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusCondenser">
-            <Int Int="296">
+            <Int Int="297">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_probius_warprift.dds">
@@ -9458,7 +9499,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusLongPulse">
-            <Int Int="297">
+            <Int Int="298">
                 <Field Id="Index" />
             </Int>
             <Int Int="2">
@@ -9487,7 +9528,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusWidePulse">
-            <Int Int="298">
+            <Int Int="299">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_probius_disruptionpulse.dds">
@@ -9516,7 +9557,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusPulsar">
-            <Int Int="299">
+            <Int Int="300">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_probius_disruptionpulse_a.dds">
@@ -9563,7 +9604,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusEnhancedTargeting">
-            <Int Int="300">
+            <Int Int="301">
                 <Field Id="Index" />
             </Int>
             <Int Int="2">
@@ -9589,7 +9630,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusOptimizedOrdnance">
-            <Int Int="301">
+            <Int Int="302">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_probius_photoncannon.dds">
@@ -9609,7 +9650,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusKhaydarinUpgrade">
-            <Int Int="302">
+            <Int Int="303">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_probius_photoncannon.dds">
@@ -9629,7 +9670,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusPlasmaShields">
-            <Int Int="303">
+            <Int Int="304">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_probius_shieldcapacitor.dds">
@@ -9661,7 +9702,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusPylonExpansion">
-            <Int Int="304">
+            <Int Int="305">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -9684,7 +9725,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusKhalaiIngenuity">
-            <Int Int="305">
+            <Int Int="306">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_probius_pylonphotoncannon.dds">
@@ -9725,7 +9766,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusZAP">
-            <Int Int="306">
+            <Int Int="307">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_probius_workerrush.dds">
@@ -9751,7 +9792,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusTurbo">
-            <Int Int="307">
+            <Int Int="308">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -9792,7 +9833,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusDelay">
-            <Int Int="308">
+            <Int Int="309">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_probius_warprift.dds">
@@ -9815,7 +9856,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusProtossWeapons">
-            <Int Int="309">
+            <Int Int="310">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -9850,7 +9891,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusProtossArmor">
-            <Int Int="310">
+            <Int Int="311">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -9882,7 +9923,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusPassiveIncome">
-            <Int Int="311">
+            <Int Int="312">
                 <Field Id="Index" />
             </Int>
             <Int Int="8">
@@ -9917,7 +9958,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusEfficientWarp">
-            <Int Int="312">
+            <Int Int="313">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_recall.dds">
@@ -9970,7 +10011,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusHardenedShield">
-            <Int Int="313">
+            <Int Int="314">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_immortal.dds">
@@ -9996,7 +10037,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusLongRangeDisruptors">
-            <Int Int="314">
+            <Int Int="315">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_stalker.dds">
@@ -10022,7 +10063,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusRapidDisruptors">
-            <Int Int="315">
+            <Int Int="316">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_stalker.dds">
@@ -10048,7 +10089,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusReinforcedPowerSuit">
-            <Int Int="316">
+            <Int Int="317">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_zealot.dds">
@@ -10074,7 +10115,7 @@
             </Int>
         </Instances>
         <Instances Id="ProbiusWarpConduit">
-            <Int Int="317">
+            <Int Int="318">
                 <Field Id="Index" />
             </Int>
             <Int Int="2">
@@ -10097,7 +10138,7 @@
             </Int>
         </Instances>
         <Instances Id="Reinforcements">
-            <Int Int="318">
+            <Int Int="319">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_promote_b.dds">
@@ -10120,7 +10161,7 @@
             </Int>
         </Instances>
         <Instances Id="SiegeReinforcements">
-            <Int Int="319">
+            <Int Int="320">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_catapults.dds">
@@ -10143,7 +10184,7 @@
             </Int>
         </Instances>
         <Instances Id="SecondWind">
-            <Int Int="320">
+            <Int Int="321">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_second_wind.dds">
@@ -10169,7 +10210,7 @@
             </Int>
         </Instances>
         <Instances Id="AutoMULE">
-            <Int Int="321">
+            <Int Int="322">
                 <Field Id="Index" />
             </Int>
             <Int Int="3">
@@ -10201,7 +10242,7 @@
             </Int>
         </Instances>
         <Instances Id="LesserHearthstone">
-            <Int Int="322">
+            <Int Int="323">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_hearthstone.dds">
@@ -10224,7 +10265,7 @@
             </Int>
         </Instances>
         <Instances Id="ARAM">
-            <Int Int="323">
+            <Int Int="324">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_aram.dds">
@@ -10250,7 +10291,7 @@
             </Int>
         </Instances>
         <Instances Id="NotYourGlobes">
-            <Int Int="324">
+            <Int Int="325">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_globes_3.dds">
@@ -10270,7 +10311,7 @@
             </Int>
         </Instances>
         <Instances Id="RevealingTouch">
-            <Int Int="325">
+            <Int Int="326">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_talent_autoattack_reveal.dds">
@@ -10287,7 +10328,7 @@
             </Int>
         </Instances>
         <Instances Id="UnyieldingDefense">
-            <Int Int="326">
+            <Int Int="327">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_unyielding_defense.dds">
@@ -10331,7 +10372,7 @@
             </Int>
         </Instances>
         <Instances Id="ImprovedArchery">
-            <Int Int="327">
+            <Int Int="328">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_ranged_minion.dds">
@@ -10348,7 +10389,7 @@
             </Int>
         </Instances>
         <Instances Id="DurableShields">
-            <Int Int="328">
+            <Int Int="329">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_melee_minion.dds">
@@ -10365,7 +10406,7 @@
             </Int>
         </Instances>
         <Instances Id="HealingSpell">
-            <Int Int="329">
+            <Int Int="330">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_wizard_minion.dds">
@@ -10382,7 +10423,7 @@
             </Int>
         </Instances>
         <Instances Id="Cleaver">
-            <Int Int="330">
+            <Int Int="331">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_cleaver.dds">
@@ -10426,7 +10467,7 @@
             </Int>
         </Instances>
         <Instances Id="FriendlyReinforcements">
-            <Int Int="331">
+            <Int Int="332">
                 <Field Id="Index" />
             </Int>
             <Int Int="4">
@@ -10446,7 +10487,7 @@
             </Int>
         </Instances>
         <Instances Id="ManaRegenerator">
-            <Int Int="332">
+            <Int Int="333">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_kaelthas_manaaddict.dds">
@@ -10463,7 +10504,7 @@
             </Int>
         </Instances>
         <Instances Id="PathoftheFighter">
-            <Int Int="333">
+            <Int Int="334">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_fighter_path.dds">
@@ -10507,7 +10548,7 @@
             </Int>
         </Instances>
         <Instances Id="TracerExtendedMagazine">
-            <Int Int="334">
+            <Int Int="335">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -10536,7 +10577,7 @@
             </Int>
         </Instances>
         <Instances Id="AlexstraszaTheDragonQueen">
-            <Int Int="335">
+            <Int Int="336">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_alexstrasza_dragon_queen_a.dds">
@@ -10556,7 +10597,7 @@
             </Int>
         </Instances>
         <Instances Id="AlexstraszaCurseoftheRed">
-            <Int Int="336">
+            <Int Int="337">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_alexstrasza_blessing_of_the_red.dds">
@@ -10588,7 +10629,7 @@
             </Int>
         </Instances>
         <Instances Id="AlexstraszaDeathBinder">
-            <Int Int="337">
+            <Int Int="338">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_life_binder_a.dds">
@@ -10626,7 +10667,7 @@
             </Int>
         </Instances>
         <Instances Id="AlexstraszaQuickTransformation">
-            <Int Int="338">
+            <Int Int="339">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_alexstrasza_dragon_queen.dds">
@@ -10655,7 +10696,7 @@
             </Int>
         </Instances>
         <Instances Id="AnaPoisonDart">
-            <Int Int="339">
+            <Int Int="340">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_ana_healing_dart_b.dds">
@@ -10681,7 +10722,7 @@
             </Int>
         </Instances>
         <Instances Id="AnaSmallDosage">
-            <Int Int="340">
+            <Int Int="341">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_small_dosage.dds">
@@ -10701,7 +10742,7 @@
             </Int>
         </Instances>
         <Instances Id="AnaSelfInfusion">
-            <Int Int="341">
+            <Int Int="342">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_ana_nano_bost.dds">
@@ -10739,7 +10780,7 @@
             </Int>
         </Instances>
         <Instances Id="AnaKnockOut">
-            <Int Int="342">
+            <Int Int="343">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_ana_sleep_dart.dds">
@@ -10762,7 +10803,7 @@
             </Int>
         </Instances>
         <Instances Id="AnduinHolyLightForAll">
-            <Int Int="343">
+            <Int Int="344">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_anduin_bold_strategy.dds">
@@ -10797,7 +10838,7 @@
             </Int>
         </Instances>
         <Instances Id="AnduinPrayerofDeath">
-            <Int Int="344">
+            <Int Int="345">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_anduin_desperate_prayer.dds">
@@ -10841,7 +10882,7 @@
             </Int>
         </Instances>
         <Instances Id="AnduinYoink">
-            <Int Int="345">
+            <Int Int="346">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_anduin_leap_of_faith.dds">
@@ -10867,7 +10908,7 @@
             </Int>
         </Instances>
         <Instances Id="AnduinDeepWell">
-            <Int Int="346">
+            <Int Int="347">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_anduin_lightwell.dds">
@@ -10908,7 +10949,7 @@
             </Int>
         </Instances>
         <Instances Id="AnduinHolyWordSanctify">
-            <Int Int="347">
+            <Int Int="348">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_anduin_holy_word_salvation.dds">
@@ -10949,7 +10990,7 @@
             </Int>
         </Instances>
         <Instances Id="AurielBestowDespair">
-            <Int Int="348">
+            <Int Int="349">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_auriel_bestowhope_a.dds">
@@ -10969,7 +11010,7 @@
             </Int>
         </Instances>
         <Instances Id="AurielGammaRayBurst">
-            <Int Int="349">
+            <Int Int="350">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_auriel_rayofheaven.dds">
@@ -11007,7 +11048,7 @@
             </Int>
         </Instances>
         <Instances Id="AurielSearingLight">
-            <Int Int="350">
+            <Int Int="351">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_auriel_rayofheaven.dds">
@@ -11039,7 +11080,7 @@
             </Int>
         </Instances>
         <Instances Id="AurielBurstingLight">
-            <Int Int="351">
+            <Int Int="352">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_auriel_rayofheaven.dds">
@@ -11065,7 +11106,7 @@
             </Int>
         </Instances>
         <Instances Id="AurielWingsofHope">
-            <Int Int="352">
+            <Int Int="353">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_auriel_angelicflight.dds">
@@ -11100,7 +11141,7 @@
             </Int>
         </Instances>
         <Instances Id="AurielResAll">
-            <Int Int="353">
+            <Int Int="354">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_auriel_resurrect.dds">
@@ -11150,7 +11191,7 @@
             </Int>
         </Instances>
         <Instances Id="BrightwingFaerieMist">
-            <Int Int="354">
+            <Int Int="355">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_brightwing_soothingmist.dds">
@@ -11188,7 +11229,7 @@
             </Int>
         </Instances>
         <Instances Id="BrightwingGreaterPhaseShift">
-            <Int Int="355">
+            <Int Int="356">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_brightwing_hypershift.dds">
@@ -11214,7 +11255,7 @@
             </Int>
         </Instances>
         <Instances Id="BrightwingPolymorphic">
-            <Int Int="356">
+            <Int Int="357">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_brightwing_polymorph.dds">
@@ -11240,7 +11281,7 @@
             </Int>
         </Instances>
         <Instances Id="BrightwingGlyphofCrittermorph">
-            <Int Int="357">
+            <Int Int="358">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_brightwing_polymorph.dds">
@@ -11260,7 +11301,7 @@
             </Int>
         </Instances>
         <Instances Id="BrightwingEtherealBlink">
-            <Int Int="358">
+            <Int Int="359">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_brightwing_blinkheal.dds">
@@ -11319,7 +11360,7 @@
             </Int>
         </Instances>
         <Instances Id="BrightwingArcaneBarrage">
-            <Int Int="359">
+            <Int Int="360">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_brightwing_arcaneflare.dds">
@@ -11345,7 +11386,7 @@
             </Int>
         </Instances>
         <Instances Id="DeckardPoisonousPotion">
-            <Int Int="360">
+            <Int Int="361">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_poisonous_potion.dds">
@@ -11401,7 +11442,7 @@
             </Int>
         </Instances>
         <Instances Id="DeckardPotionSeller">
-            <Int Int="361">
+            <Int Int="362">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_deckard_healing_potion.dds">
@@ -11445,7 +11486,7 @@
             </Int>
         </Instances>
         <Instances Id="DeckardLegendaryGems">
-            <Int Int="362">
+            <Int Int="363">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_deckard_perfect_gems.dds">
@@ -11525,7 +11566,7 @@
             </Int>
         </Instances>
         <Instances Id="DeckardBedTimeStory">
-            <Int Int="363">
+            <Int Int="364">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_deckard_stay_awhile_and_listen.dds">
@@ -11575,7 +11616,7 @@
             </Int>
         </Instances>
         <Instances Id="DeckardMegaHealingPotion">
-            <Int Int="364">
+            <Int Int="365">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_deckard_super_healing_potion.dds">
@@ -11610,7 +11651,7 @@
             </Int>
         </Instances>
         <Instances Id="KharazimScatteredBlows">
-            <Int Int="365">
+            <Int Int="366">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_monk_trait_transcendence.dds">
@@ -11645,7 +11686,7 @@
             </Int>
         </Instances>
         <Instances Id="KharazimCircleofScorn">
-            <Int Int="366">
+            <Int Int="367">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_monk_breath0fheaven.dds">
@@ -11680,7 +11721,7 @@
             </Int>
         </Instances>
         <Instances Id="KharazimFistsofThunder">
-            <Int Int="367">
+            <Int Int="368">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_monk_dash_a.dds">
@@ -11715,7 +11756,7 @@
             </Int>
         </Instances>
         <Instances Id="KharazimMysticAlly">
-            <Int Int="368">
+            <Int Int="369">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_mystic_ally.dds">
@@ -11735,7 +11776,7 @@
             </Int>
         </Instances>
         <Instances Id="KharazimExplodingPalm">
-            <Int Int="369">
+            <Int Int="370">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_divinepalm_a.dds">
@@ -11782,7 +11823,7 @@
             </Int>
         </Instances>
         <Instances Id="LiLiGoodBrewBadBrew">
-            <Int Int="370">
+            <Int Int="371">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lili_healingbrew.dds">
@@ -11823,7 +11864,7 @@
             </Int>
         </Instances>
         <Instances Id="LiLiJugof1000000000Cups">
-            <Int Int="371">
+            <Int Int="372">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lili_jugofathousandcups.dds">
@@ -11873,7 +11914,7 @@
             </Int>
         </Instances>
         <Instances Id="LiLiPandariasMistweaver">
-            <Int Int="372">
+            <Int Int="373">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lili_mistweaver.dds">
@@ -11914,7 +11955,7 @@
             </Int>
         </Instances>
         <Instances Id="LiLiMarathon">
-            <Int Int="373">
+            <Int Int="374">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lili_fastfeet.dds">
@@ -11946,7 +11987,7 @@
             </Int>
         </Instances>
         <Instances Id="LiLiSupportiveSerpent">
-            <Int Int="374">
+            <Int Int="375">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -11969,7 +12010,7 @@
             </Int>
         </Instances>
         <Instances Id="LtMoralesStabilizerMedpacks">
-            <Int Int="375">
+            <Int Int="376">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_medic_healingbeam.dds">
@@ -11989,7 +12030,7 @@
             </Int>
         </Instances>
         <Instances Id="LtMoralesCellularReactor">
-            <Int Int="376">
+            <Int Int="377">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -12027,7 +12068,7 @@
             </Int>
         </Instances>
         <Instances Id="LtMoralesNeurotoxinBeam">
-            <Int Int="377">
+            <Int Int="378">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_medic_healingbeam_b.dds">
@@ -12065,7 +12106,7 @@
             </Int>
         </Instances>
         <Instances Id="LtMoralesChainBeam">
-            <Int Int="378">
+            <Int Int="379">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_medic_healingbeam_c.dds">
@@ -12091,7 +12132,7 @@
             </Int>
         </Instances>
         <Instances Id="LtMoralesHighGradeStimpacks">
-            <Int Int="379">
+            <Int Int="380">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_stim_a.dds">
@@ -12129,7 +12170,7 @@
             </Int>
         </Instances>
         <Instances Id="LucioReverseAmp">
-            <Int Int="380">
+            <Int Int="381">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lucio_reverseamp.dds">
@@ -12182,7 +12223,7 @@
             </Int>
         </Instances>
         <Instances Id="LucioPopTrack">
-            <Int Int="381">
+            <Int Int="382">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lucio_crossfade_all.dds">
@@ -12208,7 +12249,7 @@
             </Int>
         </Instances>
         <Instances Id="LucioBeatDrop">
-            <Int Int="382">
+            <Int Int="383">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lucio_fineshrine.dds">
@@ -12234,7 +12275,7 @@
             </Int>
         </Instances>
         <Instances Id="LucioTalktotheHand">
-            <Int Int="383">
+            <Int Int="384">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_lucio_highfive.dds">
@@ -12275,7 +12316,7 @@
             </Int>
         </Instances>
         <Instances Id="MalfurionCenariusSpite">
-            <Int Int="384">
+            <Int Int="385">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_regrowth_a.dds">
@@ -12304,7 +12345,7 @@
             </Int>
         </Instances>
         <Instances Id="MalfurionRampantGrowth">
-            <Int Int="385">
+            <Int Int="386">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_malfurion_regrowth.dds">
@@ -12330,7 +12371,7 @@
             </Int>
         </Instances>
         <Instances Id="MalfurionEnervate">
-            <Int Int="386">
+            <Int Int="387">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_malfurion_innerrvate.dds">
@@ -12350,7 +12391,7 @@
             </Int>
         </Instances>
         <Instances Id="MalfurionStranglingVines">
-            <Int Int="387">
+            <Int Int="388">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_malfurion_entanglingroots.dds">
@@ -12370,7 +12411,7 @@
             </Int>
         </Instances>
         <Instances Id="MalfurionDreamstate">
-            <Int Int="388">
+            <Int Int="389">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_malfurion_tranquility.dds">
@@ -12420,7 +12461,7 @@
             </Int>
         </Instances>
         <Instances Id="RehgarAncestralReach">
-            <Int Int="389">
+            <Int Int="390">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_rehgar_chainheal.dds">
@@ -12449,7 +12490,7 @@
             </Int>
         </Instances>
         <Instances Id="RehgarGreaterHealingTotem">
-            <Int Int="390">
+            <Int Int="391">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_talent_healingward.dds">
@@ -12487,7 +12528,7 @@
             </Int>
         </Instances>
         <Instances Id="RehgarChainSplit">
-            <Int Int="391">
+            <Int Int="392">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_chainheal_b.dds">
@@ -12573,7 +12614,7 @@
             </Int>
         </Instances>
         <Instances Id="RehgarAncestralCurse">
-            <Int Int="392">
+            <Int Int="393">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_ancestralhealing_a.dds">
@@ -12614,7 +12655,7 @@
             </Int>
         </Instances>
         <Instances Id="StukovInfestation">
-            <Int Int="393">
+            <Int Int="394">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_healingpathogen_c.dds">
@@ -12646,7 +12687,7 @@
             </Int>
         </Instances>
         <Instances Id="StukovActivePathogen">
-            <Int Int="394">
+            <Int Int="395">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_stukov_healingpathogen.dds">
@@ -12666,7 +12707,7 @@
             </Int>
         </Instances>
         <Instances Id="StukovUnstoppableShove">
-            <Int Int="395">
+            <Int Int="396">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_stukov_massiveshove.dds">
@@ -12707,7 +12748,7 @@
             </Int>
         </Instances>
         <Instances Id="StukovLurkingDeep">
-            <Int Int="396">
+            <Int Int="397">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_stukov_lurkingarm.dds">
@@ -12745,7 +12786,7 @@
             </Int>
         </Instances>
         <Instances Id="UtherHolyShock">
-            <Int Int="397">
+            <Int Int="398">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_uther_holyshock.dds">
@@ -12774,7 +12815,7 @@
             </Int>
         </Instances>
         <Instances Id="UtherBurningLight">
-            <Int Int="398">
+            <Int Int="399">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_uther_holylight.dds">
@@ -12803,7 +12844,7 @@
             </Int>
         </Instances>
         <Instances Id="UtherSelflessHealer">
-            <Int Int="399">
+            <Int Int="400">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_uther_eternaldevotion.dds">
@@ -12823,7 +12864,7 @@
             </Int>
         </Instances>
         <Instances Id="UtherShieldBreak">
-            <Int Int="400">
+            <Int Int="401">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_shield_break.dds">
@@ -12870,7 +12911,7 @@
             </Int>
         </Instances>
         <Instances Id="UtherRetribution">
-            <Int Int="401">
+            <Int Int="402">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_uther_flashoflight.dds">
@@ -12905,7 +12946,7 @@
             </Int>
         </Instances>
         <Instances Id="WhitemaneHolySmite">
-            <Int Int="402">
+            <Int Int="403">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_whitemane_desperation.dds">
@@ -12934,7 +12975,7 @@
             </Int>
         </Instances>
         <Instances Id="WhitemaneSearingLash">
-            <Int Int="403">
+            <Int Int="404">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_whitemane_lash.dds">
@@ -12966,7 +13007,7 @@
             </Int>
         </Instances>
         <Instances Id="WhitemaneCalmPlea">
-            <Int Int="404">
+            <Int Int="405">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_whitemane_desperation_alt_1.dds">
@@ -12986,7 +13027,7 @@
             </Int>
         </Instances>
         <Instances Id="WhitemaneUnexpectedInquisition">
-            <Int Int="405">
+            <Int Int="406">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_whitemane_inquisition.dds">
@@ -13018,7 +13059,7 @@
             </Int>
         </Instances>
         <Instances Id="WhitemaneArdentZeal">
-            <Int Int="406">
+            <Int Int="407">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_whitemane_zeal.dds">
@@ -13044,7 +13085,7 @@
             </Int>
         </Instances>
         <Instances Id="WhitemaneStableLight">
-            <Int Int="407">
+            <Int Int="408">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_whitemane_zeal.dds">
@@ -13079,7 +13120,7 @@
             </Int>
         </Instances>
         <Instances Id="WhitemaneWhitemanesPunishment">
-            <Int Int="408">
+            <Int Int="409">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_whitemane_aegis.dds">
@@ -13123,7 +13164,7 @@
             </Int>
         </Instances>
         <Instances Id="PrivateMedivac">
-            <Int Int="409">
+            <Int Int="410">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_medic_medivacdropship_b.dds">
@@ -13149,7 +13190,7 @@
             </Int>
         </Instances>
         <Instances Id="DeathwingDragonStamina">
-            <Int Int="410">
+            <Int Int="411">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -13178,7 +13219,7 @@
             </Int>
         </Instances>
         <Instances Id="GazloweScrapYard">
-            <Int Int="411">
+            <Int Int="412">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -13207,7 +13248,7 @@
             </Int>
         </Instances>
         <Instances Id="SonyaSonyasFury">
-            <Int Int="412">
+            <Int Int="413">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -13236,7 +13277,7 @@
             </Int>
         </Instances>
         <Instances Id="HoggerMad">
-            <Int Int="413">
+            <Int Int="414">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -13265,7 +13306,7 @@
             </Int>
         </Instances>
         <Instances Id="ValeeraVigor">
-            <Int Int="414">
+            <Int Int="415">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -13300,7 +13341,7 @@
             </Int>
         </Instances>
         <Instances Id="ZaryaCapacitor">
-            <Int Int="415">
+            <Int Int="416">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -13329,7 +13370,7 @@
             </Int>
         </Instances>
         <Instances Id="ChenLargeBrew">
-            <Int Int="416">
+            <Int Int="417">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">
@@ -13358,7 +13399,7 @@
             </Int>
         </Instances>
         <Instances Id="SlowWalk">
-            <Int Int="417">
+            <Int Int="418">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_epicmount_a.dds">
@@ -13384,7 +13425,7 @@
             </Int>
         </Instances>
         <Instances Id="Weaken">
-            <Int Int="418">
+            <Int Int="419">
                 <Field Id="Index" />
             </Int>
             <Int Int="5">
@@ -13407,7 +13448,7 @@
             </Int>
         </Instances>
         <Instances Id="TrueStealth">
-            <Int Int="419">
+            <Int Int="420">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/storm_ui_icon_nova_personalcloaking_var1.dds">
@@ -13439,7 +13480,7 @@
             </Int>
         </Instances>
         <Instances Id="Reckless">
-            <Int Int="420">
+            <Int Int="421">
                 <Field Id="Index" />
             </Int>
             <String String="Assets/Textures/affix_icon_reckless.dds">
@@ -13465,7 +13506,7 @@
             </Int>
         </Instances>
         <Instances Id="PayloadBoosters">
-            <Int Int="421">
+            <Int Int="422">
                 <Field Id="Index" />
             </Int>
             <Int Int="0">

@@ -1106,6 +1106,14 @@ bool libHRGE_ToxicFieldTimerElapsed (bool testConds, bool runActions) {
     }
     return true;
 }
+// ============================================================
+// ToxicField
+// ============================================================
+bool libHRGE_NastyTrapsOncePerGame(bool testConds, bool runActions) {
+    libHRGE_AddTalent(12, "AbathurMasteryEnvenomedNestsToxicNest");
+    libHRGE_AddTalent(12, "AbathurMasteryVileNestsToxicNest");
+    return true;
+}
 
 // ============================================================
 // Resurgence of the Storm
