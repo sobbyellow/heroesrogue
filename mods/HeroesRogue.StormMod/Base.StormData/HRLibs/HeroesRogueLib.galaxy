@@ -3145,10 +3145,12 @@ void libHRGE_SaveBank() {
     BankValueSetFromInt(bankRogue, libHRGE_bankSectionStats, "CursesSwapped", BankValueGetAsInt(bankRogue, libHRGE_bankSectionStats, "CursesSwapped") + libHRGE_cursesSwapped);
     BankValueSetFromInt(bankRogue, libHRGE_bankSectionStats, "GameTime", BankValueGetAsInt(bankRogue, libHRGE_bankSectionStats, "GameTime") + FixedToInt(TimerGetElapsed(libGame_gv_gameTimer)));
     for (i = 1; i <= libHRGE_maxHeroes; i += 1) {
-        BankValueSetFromInt(bankRogue, libHRGE_bankSectionStats, "HeroCounterOrder_" + libCore_gf_GetHeroFromIndex(i), BankValueGetAsInt(bankRogue, libHRGE_bankSectionStats, "HeroCounterOrder_" + libCore_gf_GetHeroFromIndex(i)) + libHRGE_heroCounter[libHRGE_teamOrderIndex][i]);
-    }
-    for (i = 1; i <= libHRGE_maxHeroes; i += 1) {
-        BankValueSetFromInt(bankRogue, libHRGE_bankSectionStats, "HeroCounterChaos_" + libCore_gf_GetHeroFromIndex(i), BankValueGetAsInt(bankRogue, libHRGE_bankSectionStats, "HeroCounterChaos_" + libCore_gf_GetHeroFromIndex(i)) + libHRGE_heroCounter[libHRGE_teamChaosIndex][i]);
+        if (libHRGE_heroCounter[libHRGE_teamOrderIndex][i] > 0) {
+            BankValueSetFromInt(bankRogue, libHRGE_bankSectionStats, "HeroCounterOrder_" + libCore_gf_GetHeroFromIndex(i), BankValueGetAsInt(bankRogue, libHRGE_bankSectionStats, "HeroCounterOrder_" + libCore_gf_GetHeroFromIndex(i)) + libHRGE_heroCounter[libHRGE_teamOrderIndex][i]);
+        }
+        if (libHRGE_heroCounter[libHRGE_teamChaosIndex][i] > 0) {
+            BankValueSetFromInt(bankRogue, libHRGE_bankSectionStats, "HeroCounterChaos_" + libCore_gf_GetHeroFromIndex(i), BankValueGetAsInt(bankRogue, libHRGE_bankSectionStats, "HeroCounterChaos_" + libCore_gf_GetHeroFromIndex(i)) + libHRGE_heroCounter[libHRGE_teamChaosIndex][i]);
+        }
     }
     BankValueSetFromInt(bankRogue, libHRGE_bankSection, "Map", libHRGE_map);
     BankValueSetFromInt(bankRogue, libHRGE_bankSection, "CurrentRun", libHRGE_currentRun);
@@ -5848,11 +5850,12 @@ void libHRGE_AddScaling(string instance, int player, string reference, fixed mod
 }
 
 void libHRGE_AddGeneralBehavior(string behavior, string filter) {
-    if (filter == libHRGE_affixUserFilterAlliedHeroes || filter == libHRGE_affixUserFilterEnemyHeroes || filter == libHRGE_affixUserFilterAITeammates) {
-        return;
-    }
     if (libHRGE_generalBehaviorsIndex >= libHRGE_maxGeneralBehaviors) {
         libHRGE_DisplayDebugMessage("Warning: General behaviors have reached maximum capacity. Failed to add " + behavior);
+        return;
+    }
+    if (filter == libHRGE_affixUserFilterAlliedHeroes || filter == libHRGE_affixUserFilterEnemyHeroes || filter == libHRGE_affixUserFilterAITeammates) {
+        libHRGE_ResolveGeneralBehavior(null, behavior, filter, libHRGE_affixOperationAddToAll);
         return;
     }
     libHRGE_generalBehaviorsIndex += 1;

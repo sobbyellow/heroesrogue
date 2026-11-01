@@ -94,7 +94,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
   <CBehaviorTokenCounter id="MuradinDwarfTossTokenCounter" parent="StormQuestToken">
     <Face value="MuradinDwarfTossTokenCounter" />
-    <Max value="10000" />
+    <Max value="65535" />
     <ConditionalEvents Compare="GE" CompareValue="25">
       <Event EventId="QuestMilestone" Effect="MuradinDwarfTossTokenCounterUpgrade" />
     </ConditionalEvents>
@@ -135,7 +135,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ApplicationRule value="Add" />
     <TokenId value="MuradinDwarfTossTokenCounter" />
     <Scale value="0.1" />
-    <MaxAccumulation value="1000" />
+    <MaxAccumulation value="6553" />
   </CAccumulatorToken>
   
   <CAccumulatorVitals id="MuradinCurrentHealthAccumulator" parent="BaseVitalAccumulator">

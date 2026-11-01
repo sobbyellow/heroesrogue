@@ -54,7 +54,7 @@ bool libHRGE_IllidanLegallyBlindBehaviorChangeCategory (bool testConds, bool run
 // Wheres Illidan
 // ============================================================
 bool libHRGE_IllidanWheresIllidanOncePerGame (bool testConds, bool runActions) {
-    TimerStart(libHRGE_GetAffixPrimaryTimer(libHRGE_instanceIllidanWheresIllidan), RandomFixed(50, 250), false, c_timeGame);
+    TimerStart(libHRGE_GetAffixPrimaryTimer(libHRGE_instanceIllidanWheresIllidan), RandomFixed(50, 180), false, c_timeGame);
     return true;
 }
 bool libHRGE_IllidanWheresIllidanTimerElapsed (bool testConds, bool runActions) {

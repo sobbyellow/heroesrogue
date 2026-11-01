@@ -139,7 +139,7 @@
         <Fields Id="QuestRetain" Type="String" Count="10">
             <Flags index="Modifiable" value="1" />
         </Fields>
-        <Fields Id="QuestRetainToken" Type="Int" Count="10">
+        <Fields Id="QuestRetainToken" Type="Fixed" Count="10">
             <Flags index="Modifiable" value="1" />
         </Fields>
         <Fields Id="QuestRetainCount" Type="Int">
@@ -1575,6 +1575,9 @@
                 <Field Id="NoRoll" />
             </Int>
             <Int Int="1">
+                <Field Id="AlwaysAppendTooltip" />
+            </Int>
+            <Int Int="1">
                 <Field Id="IgnoredForStats" />
             </Int>
         </Instances>
@@ -1595,6 +1598,9 @@
                 <Field Id="NoRoll" />
             </Int>
             <Int Int="1">
+                <Field Id="AlwaysAppendTooltip" />
+            </Int>
+            <Int Int="1">
                 <Field Id="IgnoredForStats" />
             </Int>
         </Instances>
@@ -1613,6 +1619,9 @@
             </Int>
             <Int Int="1">
                 <Field Id="NoRoll" />
+            </Int>
+            <Int Int="1">
+                <Field Id="AlwaysAppendTooltip" />
             </Int>
             <Int Int="1">
                 <Field Id="IgnoredForStats" />
@@ -13527,6 +13536,47 @@
             <String String="Hanamura">
                 <Field Id="MapSpecific" />
             </String>
+        </Instances>
+        <Instances Id="YrelAvengingStomp">
+            <Int Int="423">
+                <Field Id="Index" />
+            </Int>
+            <String String="Assets/Textures/storm_ui_icon_yrel_avenging_wrath.dds">
+                <Field Id="Icon" />
+            </String>
+            <String String="Starter">
+                <Field Id="Rarity" />
+            </String>
+            <String String="Yrel">
+                <Field Id="HeroSpecific" />
+            </String>
+            <String String="1 YrelAvengingStompTokenCounter">
+                <Field Id="BehaviorsAdd" />
+            </String>
+            <Int Int="1">
+                <Field Id="BehaviorsAddCount" />
+            </Int>
+            <String String="YrelAvengingStompTokenCounter 0.33">
+                <Field Id="QuestRetain" />
+            </String>
+            <Int Int="1">
+                <Field Id="QuestRetainCount" />
+            </Int>
+            <String String="1 Flat Set Effect,YrelAvengingStompAddToken,Chance 1">
+                <Field Id="CatalogModification" />
+            </String>
+            <String String="1 Flat Set Effect,YrelAvengingStompEmpoweredSet,Chance 1">
+                <Field Id="CatalogModification" Index="1" />
+            </String>
+            <String String="1 Flat Set Effect,YrelAvengingStompDivinePurposeSet,Chance 1">
+                <Field Id="CatalogModification" Index="2" />
+            </String>
+            <String String="1 Flat Set Effect,YrelAvengingStompRemoveFreeCastSet,Chance 1">
+                <Field Id="CatalogModification" Index="3" />
+            </String>
+            <Int Int="4">
+                <Field Id="CatalogModificationCount" />
+            </Int>
         </Instances>
     </CUser>
 </Catalog>

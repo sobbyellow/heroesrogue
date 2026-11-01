@@ -632,14 +632,14 @@ Affix/SimpleDisplayText/Experienced=Increases Experience Gain for allied Heroes.
 Affix/Tooltip/Append/Experienced=<n/><n/>Current Total: <c val="#TooltipGreen">+<d ref="$GalaxyVar:libHRGE_ExperiencedCurrentModifier$*100" precision="0" />%</c>
 
 Affix/Name/KillContract=Kill Contract
-Affix/Tooltip/KillContract=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Hero Takedowns grant <c val="#TooltipNumbers">1</c> stack. Progress is lost between rounds.<n/><n/><c val="#TooltipQuest">Reward (25 Stacks):</c><n/><c val="#TooltipGreen">+1</c> <c val="ffffff">Common Boon</c><n/><c val="#TooltipGreen">+1</c> <c val="00ff55">Uncommon Boon</c>
+Affix/Tooltip/KillContract=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Takedown enemy Heroes. Progress is lost between rounds.<n/><n/><c val="#TooltipQuest">Reward (25 Stacks):</c><n/><c val="#TooltipGreen">+1</c> <c val="ffffff">Common Boon</c><n/><c val="#TooltipGreen">+1</c> <c val="00ff55">Uncommon Boon</c>
 Affix/SimpleDisplayText/KillContract=<c val="#TooltipQuest">Quest:</c> Get Hero Takedowns to obtain Boons.
 Affix/Tooltip/Append/KillContract=
 Button/Name/AffixKillContractQuestToken=Kill Contract
 Button/Tooltip/AffixKillContractQuestToken=<c val="#TooltipQuest">Takedowns: <c val="#TooltipNumbers" validator="AffixKillContractQuestNotComplete"><d ref="$BehaviorStackCount:AffixKillContractQuestToken$"/> / <d ref="Behavior,AffixKillContractQuestToken,Max"/></c>
 
 Affix/Name/Destruction=Destruction
-Affix/Tooltip/Destruction=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Destroying enemy Forts or Keeps grants <c val="#TooltipNumbers">1</c> stack.<n/><n/><c val="#TooltipQuest">Reward (6 Stacks):</c> <c val="#TooltipGreen">+1</c> <c val="ffffff">Common Boon</c><n/><n/><c val="#TooltipQuest">Reward (12 Stacks):</c> <c val="#TooltipGreen">+1</c> <c val="00ff55">Uncommon Boon</c><n/><n/><c val="#TooltipQuest">Reward (24 Stacks):</c> <c val="#TooltipGreen">+1</c> <c val="0070dd">Rare Boon</c></n></n>Retain <c val="#TooltipNumbers">100%</c> of Quest progress after winning the game.
+Affix/Tooltip/Destruction=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Destroy enemy Forts or Keeps.<n/><n/><c val="#TooltipQuest">Reward (6 Stacks):</c> <c val="#TooltipGreen">+1</c> <c val="ffffff">Common Boon</c><n/><n/><c val="#TooltipQuest">Reward (12 Stacks):</c> <c val="#TooltipGreen">+1</c> <c val="00ff55">Uncommon Boon</c><n/><n/><c val="#TooltipQuest">Reward (24 Stacks):</c> <c val="#TooltipGreen">+1</c> <c val="0070dd">Rare Boon</c></n></n>Retain <c val="#TooltipNumbers">100%</c> of Quest progress after winning the game.
 Affix/SimpleDisplayText/Destruction=<c val="#TooltipQuest">Quest:</c> Destroy enemy Structures to obtain Boons.
 Affix/Tooltip/Append/Destruction=
 Button/Name/AffixDestructionToken=Destruction
@@ -726,7 +726,7 @@ Affix/SimpleDisplayText/LostVikingsButtonMasher=Gain Viking Abilities, reduces c
 Affix/Tooltip/Append/LostVikingsButtonMasher=
 
 Affix/Name/LostVikingsGreatVikingHoard=Great Viking Hoard
-Affix/Tooltip/LostVikingsGreatVikingHoard=Enemy Heroes drop <c val="#TooltipNumbers">3</c> Regeneration Globes and enemy Structures drop <c val="#TooltipNumbers">1</c> Regeneration Globe on death. These globes do not turn Neutral.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Collect Regeneration Globes to grant <c val="#TooltipNumbers">1</c> stack.<n/><n/><c val="#TooltipQuest">Reward:</c><n/><c val="#TooltipGreen">+0.5%</c> Attack Damage, Spell Power, and Maximum Health per stack.<n/><c val="#TooltipGreen">+0.25%</c> Movement Speed per stack.<n/><c val="#TooltipGreen">+0.75%</c> Go Go Go! Movement Speed per stack.<n/><n/>Retain <c val="#TooltipNumbers">25%</c> of Viking Hoard's Quest progress after winning the game.
+Affix/Tooltip/LostVikingsGreatVikingHoard=Enemy Heroes drop <c val="#TooltipNumbers">3</c> Regeneration Globes and enemy Structures drop <c val="#TooltipNumbers">1</c> Regeneration Globe on death. These globes do not turn Neutral.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Collect Regeneration Globes.<n/><n/><c val="#TooltipQuest">Reward:</c><n/><c val="#TooltipGreen">+0.5%</c> Attack Damage, Spell Power, and Maximum Health per stack.<n/><c val="#TooltipGreen">+0.25%</c> Movement Speed per stack.<n/><c val="#TooltipGreen">+0.75%</c> Go Go Go! Movement Speed per stack.<n/><n/>Retain <c val="#TooltipNumbers">25%</c> of Viking Hoard's Quest progress after winning the game.
 Affix/SimpleDisplayText/LostVikingsGreatVikingHoard=<c val="#TooltipQuest">Quest:</c> Viking Hoard increases all stats.
 Affix/Tooltip/Append/LostVikingsGreatVikingHoard=
 
@@ -831,14 +831,14 @@ Affix/SimpleDisplayText/IllidanEvasive=Evasion is always active, take double Spe
 Affix/Tooltip/Append/IllidanEvasive=
 
 Affix/Name/TyrandeElunesRanger=Elune's Ranger
-Affix/Tooltip/TyrandeElunesRanger=Gain <c val="#TooltipNumbers">Ranger</c>, <c val="#TooltipNumbers">Harsh Moonlight</c>, <c val="#TooltipNumbers">Empower</c>, and <c val="#TooltipNumbers">Commander of Sentinels</c>.<n/><n/><c val="#TooltipGreen">+1</c> Sentinel Charge<n/><c val="#TooltipGreen">-100%</c> Sentinel Mana Cost<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Hitting enemy Heroes with Sentinel grants <c val="#TooltipNumbers">1</c> stack and increases Sentinel's damage by <c val="#TooltipNumbers">5%</c> per stack.<n/><n/><c val="#TooltipQuest">Reward (20 Stacks):</c> Sentinel pierces the first Hero hit.<n/><n/>Retain <c val="#TooltipNumbers">25%</c> of Quest progress after winning the game.
+Affix/Tooltip/TyrandeElunesRanger=Gain <c val="#TooltipNumbers">Ranger</c>, <c val="#TooltipNumbers">Harsh Moonlight</c>, <c val="#TooltipNumbers">Empower</c>, and <c val="#TooltipNumbers">Commander of Sentinels</c>.<n/><n/><c val="#TooltipGreen">+1</c> Sentinel Charge<n/><c val="#TooltipGreen">-100%</c> Sentinel Mana Cost<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Hitting enemy Heroes with Sentinel increases its damage by <c val="#TooltipNumbers">5%</c>.<n/><n/><c val="#TooltipQuest">Reward (20 Stacks):</c> Sentinel pierces the first Hero hit.<n/><n/>Retain <c val="#TooltipNumbers">25%</c> of Quest progress after winning the game.
 Affix/SimpleDisplayText/TyrandeElunesRanger=<c val="#TooltipQuest">Quest:</c> Hitting Sentinel against Heroes increases its damage.
 Affix/Tooltip/Append/TyrandeElunesRanger=
 Button/Name/TyrandeSentinelShotDamageTokenCounter=Elune's Ranger
 Button/Tooltip/TyrandeSentinelShotDamageTokenCounter=<c val="#TooltipQuest">Bonus damage: <c val="#TooltipNumbers"><d ref="$BehaviorTokenCount:TyrandeSentinelShotDamageTokenCounter$*(100*Accumulator,TyrandeSentinelShotDamageAccumulator,Scale)" precision="2"/>%</c>
 
 Affix/Name/TyrandeTheMark=Accurate Mark
-Affix/Tooltip/TyrandeTheMark=Gain <c val="#TooltipNumbers">Trueshot Aura</c>, <c val="#TooltipNumbers">Mark of Mending</c>, <c val="#TooltipNumbers">Huntress's Fury</c>, and <c val="#TooltipNumbers">Ranger's Mark</c>.<n/><n/><c val="#TooltipGreen">+4s</c> Hunter's Mark Duration<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Basic Attacks against enemy Heroes grant <c val="#TooltipNumbers">1</c> stack and increases Attack Damage by <c val="#TooltipNumbers">0.4</c> per stack.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
+Affix/Tooltip/TyrandeTheMark=Gain <c val="#TooltipNumbers">Trueshot Aura</c>, <c val="#TooltipNumbers">Mark of Mending</c>, <c val="#TooltipNumbers">Huntress's Fury</c>, and <c val="#TooltipNumbers">Ranger's Mark</c>.<n/><n/><c val="#TooltipGreen">+4s</c> Hunter's Mark Duration<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Basic Attacks against enemy Heroes increases Attack Damage by <c val="#TooltipNumbers">0.4</c>.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
 Affix/SimpleDisplayText/TyrandeTheMark=<c val="#TooltipQuest">Quest:</c> Basic Attacks increase Attack Damage.
 Affix/Tooltip/Append/TyrandeTheMark=
 Button/Name/TyrandeTheMarkTokenCounter=Accurate Mark
@@ -923,7 +923,7 @@ Affix/SimpleDisplayText/TyrandeMoonlight=Light of Elune heals in an area.
 Affix/Tooltip/Append/TyrandeMoonlight=
 
 Affix/Name/MuradinJumper=Jumper
-Affix/Tooltip/MuradinJumper=Gain <c val="#TooltipNumbers">Dwarf Block</c>, <c val="#TooltipNumbers">Heavy Impact</c>, <c val="#TooltipNumbers">Dwarf Launch</c>, and <c val="#TooltipNumbers">Mountain King</c>.<n/><n/><c val="#TooltipGreen">+100%</c> Dwarf Toss Range and Radius<n/><n/>Become Unstoppable during Dwarf Toss.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Hitting enemy Heroes with Dwarf Toss grants <c val="#TooltipNumbers">1</c> stack and increases Dwarf Toss's damage by <c val="#TooltipNumbers">10%</c> per stack.<n/><n/><c val="#TooltipQuest">Reward (25 Stacks):</c> <c val="#TooltipGreen">-4s</c> Dwarf Toss Cooldown<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
+Affix/Tooltip/MuradinJumper=Gain <c val="#TooltipNumbers">Dwarf Block</c>, <c val="#TooltipNumbers">Heavy Impact</c>, <c val="#TooltipNumbers">Dwarf Launch</c>, and <c val="#TooltipNumbers">Mountain King</c>.<n/><n/><c val="#TooltipGreen">+100%</c> Dwarf Toss Range and Radius<n/><n/>Become Unstoppable during Dwarf Toss.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Hitting enemy Heroes with Dwarf Toss increases its damage by <c val="#TooltipNumbers">10%</c> per stack.<n/><n/><c val="#TooltipQuest">Reward (25 Stacks):</c> <c val="#TooltipGreen">-4s</c> Dwarf Toss Cooldown<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
 Affix/SimpleDisplayText/MuradinJumper=<c val="#TooltipQuest">Quest:</c> Hit enemy Heroes with Dwarf Toss to increase its damage.
 Affix/Tooltip/Append/MuradinJumper=
 Button/Name/MuradinDwarfTossTokenCounter=Jumper
@@ -1217,7 +1217,7 @@ Affix/SimpleDisplayText/LiMingOrbing=Gain Arcane Orb talents, fire orbs in an ar
 Affix/Tooltip/Append/LiMingOrbing=
 
 Affix/Name/LiMingCriticalPower=Critical Power
-Affix/Tooltip/LiMingCriticalPower=Gain <c val="#TooltipNumbers">Tal Rasha's Elements</c>.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Takedowns grant <c val="#TooltipNumbers">1</c> stack and increase Spell Power by <c val="#TooltipNumbers">1.5%</c> per stack.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
+Affix/Tooltip/LiMingCriticalPower=Gain <c val="#TooltipNumbers">Tal Rasha's Elements</c>.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest:</c> Takedowns increase Spell Power by <c val="#TooltipNumbers">1.5%</c>.<n/><n/>Retain <c val="#TooltipNumbers">50%</c> of Quest progress after winning the game.
 Affix/SimpleDisplayText/LiMingCriticalPower=<c val="#TooltipQuest">Quest:</c> Takedowns increase Spell Power.
 Affix/Tooltip/Append/LiMingCriticalPower=
 Button/Name/LiMingCriticalPowerTokenCounter=Critical Power
@@ -1284,7 +1284,7 @@ Affix/SimpleDisplayText/LiMingStormArmor=Shock nearby enemies, dealing damage.
 Affix/Tooltip/Append/LiMingStormArmor=
 
 Affix/Name/NazeeboRitualofBoons=Ritual of Boons
-Affix/Tooltip/NazeeboRitualofBoons=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Gaining Voodoo Ritual stacks grants <c val="#TooltipNumbers">1</c> stack. Progress is lost between rounds.<n/><n/><c val="#TooltipQuest">Reward (250 Stacks):</c><n/><c val="#TooltipGreen">+1</c> <c val="00ff55">Uncommon Boon</c><n/><c val="#TooltipGreen">+1</c> <c val="0070dd">Rare Boon</c>
+Affix/Tooltip/NazeeboRitualofBoons=<img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Quest:</c> Gain Voodoo Ritual stacks. Progress is lost between rounds.<n/><n/><c val="#TooltipQuest">Reward (250 Stacks):</c><n/><c val="#TooltipGreen">+1</c> <c val="00ff55">Uncommon Boon</c><n/><c val="#TooltipGreen">+1</c> <c val="0070dd">Rare Boon</c>
 Affix/SimpleDisplayText/NazeeboRitualofBoons=<c val="#TooltipQuest">Quest:</c> Gain Voodoo Ritual stacks to obtain Boons.
 Affix/Tooltip/Append/NazeeboRitualofBoons=
 Button/Name/WitchDoctorRitualofBoonsQuestToken=Ritual of Boons
@@ -2145,6 +2145,14 @@ Affix/Tooltip/Weaken=<c val="#TooltipGreen">-10%</c> <c val="747A84">(-10% per s
 Affix/SimpleDisplayText/Weaken=Reduces starting Health of enemy Minions.
 Affix/Tooltip/Append/Weaken=<n/><n/>Current Total: <c val="#TooltipGreen">-<d ref="$GalaxyVar:libHRGE_WeakenCurrentModifier$*100" precision="0" />%</c> Starting Health
 
+Affix/Name/YrelAvengingStomp=Avenging Stomp
+Affix/Tooltip/YrelAvengingStomp=Using Avenging Wrath empowered by Divine Purpose grants a free empowered Avenging Wrath charge within <c val="#TooltipNumbers"><d ref="Behavior,YrelAvengingStompFreeCast,Duration" /></c> seconds.<n/><n/><img path="@UI/StormTalentInTextQuestIcon" alignment="uppermiddle" color="B48E4C" width="20" height="22"/><c val="#TooltipQuest">Repeatable Quest: </c>Hitting enemy Heroes with Avenging Wrath increases its damage by <c val="#TooltipNumbers"><d ref="Accumulator,YrelAvengingStompAccumulator,Scale" /></c>.<n/><n/><c val="#TooltipQuest">Reward (50 Stacks):</c><n/><c val="#TooltipGreen">+25%</c> Avenging Wrath Radius<n/>Become Unstoppable during Avenging Wrath's jump.<n/><n/><c val="#TooltipQuest">Mythic Reward (150 Stacks):</c> Avenging Wrath empowered by Divine Purpose triggers a fully charged Vindication upon impact.<n/><n/>Retain <c val="#TooltipNumbers">33%</c> of Quest progress after winning the game.
+Affix/SimpleDisplayText/YrelAvengingStomp=<c val="#TooltipQuest">Quest: </c>Hitting Heroes with Avenging Wrath increases its damage.
+Affix/Tooltip/Append/YrelAvengingStomp=
+Button/Name/YrelAvengingStomp=Avenging Stomp
+Button/Tooltip/YrelAvengingStomp=<c val="#TooltipQuest">Total Damage: <c val="#TooltipNumbers"><d ref="$BehaviorTokenCount:YrelAvengingStompTokenCounter$*(Accumulator,YrelAvengingStompAccumulator,Scale)" precision="0"/></c>
+Abil/Name/YrelAvengingWrathExtra=Avenging Wrath
+
 Affix/Name/MoreOptions=More Options
 Affix/Tooltip/MoreOptions=<c val="#TooltipGreen">+1</c> Option when selecting Boons or Curses.<n/><c val="#TooltipGreen">+2</c> Boon and Curse Rerolls.
 Affix/SimpleDisplayText/MoreOptions=Increased options when selecting Boons or Curses.
@@ -2420,7 +2428,7 @@ Affix/SimpleDisplayText/GoodOlDays=Enemy Minions no longer drop Experience Globe
 Affix/Tooltip/Append/GoodOlDays=
 
 Affix/Name/IllidanWheresIllidan=Where's Illidan?
-Affix/Tooltip/IllidanWheresIllidan=Maiev periodically appears for a brief moment and casts Containment Disc on you.<n/><n/><S val="TooltipSubscript">Maiev appears every 50 to 250 seconds.</S>
+Affix/Tooltip/IllidanWheresIllidan=Maiev periodically appears for a brief moment and casts Containment Disc on you.<n/><n/><S val="TooltipSubscript">Maiev appears every 50 to 180 seconds.</S>
 Affix/SimpleDisplayText/IllidanWheresIllidan=Maiev periodically appears and casts Containment Disc on you.
 Affix/Tooltip/Append/IllidanWheresIllidan=
 

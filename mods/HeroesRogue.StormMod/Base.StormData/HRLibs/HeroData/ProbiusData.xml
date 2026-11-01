@@ -892,7 +892,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CBehaviorTokenCounter id="ProbiusWarpTechnologyCounterToken" parent="StormQuestToken">
     <Face value="ProbiusWarpTechnologyCounterToken" />
     <InfoIcon value="Assets\Textures\affix_icon_probius_minerals.dds" />
-    <Max value="99999" />
+    <Max value="65535" />
     <IncreaseEvents index="0" EventId="" />
     <DecreaseEvents index="0" EventId="" />
     <AtMinEvents index="0" EventId="" />

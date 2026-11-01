@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/HeroesOfTheStorm_Gamedata/master/xsd/latest.xsd">
+  
+  <CAbilEffectTarget id="YrelAvengingWrathDivinePurpose">
+    <CmdButtonArray index="Execute" DefaultButtonFace="YrelAvengingWrath" ShowValidator="YrelDivinePurposeCasterHasBuffOrHasDivinePurposeOrderOrHasFreeCast" />
+  </CAbilEffectTarget>
+
+  <CValidatorCombine id="YrelDivinePurposeCasterHasBuffOrHasDivinePurposeOrderOrHasFreeCast">
+    <CombineArray value="YrelDivinePurposeCasterHasBuff" />
+    <CombineArray value="YrelDivinePurposeCasterHasOrder" />
+    <CombineArray value="YrelHasAvengingStompFreeCast" />
+  </CValidatorCombine>
+
+  <CEffectDamage id="YrelAvengingWrathDamage">
+    <FlatModifierArray index="YrelAvengingStomp" Accumulator="YrelAvengingStompAccumulator" />
+  </CEffectDamage>
+
+  <CEffectSet id="YrelAvengingWrathInitialSet">
+    <EffectArray value="YrelAvengingStompUnstoppableApplyBehavior" />
+  </CEffectSet>
+  <CEffectSet id="YrelAvengingWrathDivinePurposeInitialSet">
+    <ValidatorArray index="0" value="YrelDivinePurposeCasterHasBuffOrHasDivinePurposeOrderOrHasFreeCast" />
+    <EffectArray value="YrelAvengingStompFreeCastUsedApplyBehavior" />
+    <EffectArray value="YrelAvengingStompDivinePurposeSet" />
+    <EffectArray value="YrelAvengingStompUnstoppableApplyBehavior" />
+  </CEffectSet>
+  <CEffectSet id="YrelAvengingWrathImpactSet">
+    <EffectArray value="YrelAvengingStompAddToken" />
+  </CEffectSet>
+  <CEffectSet id="YrelAvengingWrathLaunchMissileImpactSet">
+    <EffectArray value="YrelAvengingStompVindicationCastSet" />
+    <EffectArray value="YrelAvengingStompEmpoweredSet" />
+    <EffectArray value="YrelAvengingStompRemoveFreeCastSet" />
+  </CEffectSet>
+  
+  <CEffectSet id="YrelAvengingStompVindicationCastSet">
+    <Chance value="0" />
+    <ValidatorArray value="YrelHasAvengingStompFreeCastUsedOrHasAvengingStompDivinePurpose" />
+    <Marker>
+      <MatchFlags index="Id" value="1" />
+    </Marker>
+    <EffectArray value="YrelVindicationChannelTokenMax" />
+    <EffectArray value="YrelVindicationSearchArea" />
+    <EffectArray value="YrelVelensChosenAbilityPowerTokenAdd" />
+    <EffectArray value="YrelVelensChosenAbilityPowerBuffApplyBehavior" />
+    <EffectArray value="YrelVelensChosenEnemyHitTokenReset" />
+    <EffectArray value="YrelVindicationCreateHealer" />
+    <EffectArray value="YrelVindicationLightOfKaraborTokenReset" />
+    <EffectArray value="YrelVindicationChannelTokenReset" />
+  </CEffectSet>
+  <CValidatorCombine id="YrelHasAvengingStompFreeCastUsedOrHasAvengingStompDivinePurpose">
+    <CombineArray value="YrelHasAvengingStompFreeCastUsed" />
+    <CombineArray value="YrelHasAvengingStompDivinePurpose" />
+  </CValidatorCombine>
+  <CEffectModifyTokenCount id="YrelVindicationChannelTokenReset">
+    <ValidatorArray value="YrelDoesNotHaveAvengingStompFreeCastUsedAndDivinePurpose" />
+  </CEffectModifyTokenCount>
+  <CEffectApplyBehavior id="YrelVindicationAldorPeacekeeperDamageReductionApplyBehavior">
+    <ValidatorArray index="1" value="YrelVindicationCasterHasMaxChargeBehaviorOrFreeCastUsedOrDivinePurpose" />
+  </CEffectApplyBehavior>
+  <CValidatorCombine id="YrelVindicationCasterHasMaxChargeBehaviorOrFreeCastUsedOrDivinePurpose">
+    <CombineArray value="YrelVindicationCasterHasMaxChargeBehavior" />
+    <CombineArray value="YrelDoesNotHaveAvengingStompFreeCastUsed" />
+    <CombineArray value="YrelDoesNotHaveAvengingStompDivinePurpose" />
+  </CValidatorCombine>
+
+  <CEffectSet id="YrelAvengingStompDivinePurposeSet">
+    <Chance value="0" />
+    <ValidatorArray value="YrelDoesNotHaveAvengingStompFreeCastUsed" />
+    <EffectArray value="YrelAvengingStompDivinePurposeApplyBehavior" />
+  </CEffectSet>
+
+  <CEffectSet id="YrelAvengingStompEmpoweredSet">
+    <Chance value="0" />
+    <ValidatorArray value="YrelHasAvengingStompDivinePurpose" />
+    <EffectArray value="YrelAvengingStompFreeCastApplyBehavior" />
+    <EffectArray value="YrelAvengingStompFreeCastModifyUnit" />
+    <EffectArray value="YrelAvengingWrathMaxChargeIconOnModifyPlayer" />
+  </CEffectSet>
+  <CEffectSet id="YrelAvengingStompRemoveFreeCastSet">
+    <Chance value="0" />
+    <ValidatorArray value="YrelDoesNotHaveAvengingStompDivinePurpose" />
+    <EffectArray value="YrelAvengingStompFreeCastRemoveBehavior" />
+  </CEffectSet>
+
+  <CEffectSet id="YrelAvengingStompFreeCastFinalSet">
+    <EffectArray value="YrelAvengingWrathMaxChargeIconOffModifyPlayer" />
+  </CEffectSet>
+  <CValidatorCombine id="AbilButtonActiveEDamage">
+    <CombineArray value="YrelHasAvengingStompFreeCastAndDoesNotHaveInFlightBehavior" />
+  </CValidatorCombine>
+  <CEffectModifyPlayer id="YrelAvengingWrathMaxChargeIconOffModifyPlayer">
+    <ValidatorArray value="YrelDoesNotHaveAvengingStompFreeCast" />
+  </CEffectModifyPlayer>
+  <CEffectModifyUnit id="YrelAvengingWrathHolyAvengerCooldownModifyUnit">
+    <ValidatorArray index="1" value="YrelAvengingWrathCasterHasMaxChargeBehaviorOrHasAvengingStompFreeCast" />
+  </CEffectModifyUnit>
+  <CValidatorCombine id="YrelAvengingWrathCasterHasMaxChargeBehaviorOrHasAvengingStompFreeCast">
+    <CombineArray value="YrelAvengingWrathCasterHasMaxChargeBehavior" />
+    <CombineArray value="YrelHasAvengingStompFreeCastUsed" />
+  </CValidatorCombine>
+  <CValidatorCombine id="YrelHasAvengingStompFreeCastAndDoesNotHaveInFlightBehavior">
+    <Type value="And" />
+    <CombineArray value="YrelHasAvengingStompFreeCast" />
+    <CombineArray value="YrelAvengingWrathCasterDoesNotHaveInFlightBehavior" />
+  </CValidatorCombine>
+  
+  <CEffectModifyUnit id="YrelAvengingStompFreeCastModifyUnit">
+    <ImpactUnit Value="Caster" />
+    <Cost Abil="YrelAvengingWrathDivinePurpose,Execute" CooldownOperation="Set" CooldownTimeUse="0" />
+  </CEffectModifyUnit>
+  
+  <CBehaviorBuff id="YrelAvengingStompFreeCastUsed">
+    <RemoveValidatorArray value="YrelAvengingWrathCasterHasInFlightBehavior" />
+  </CBehaviorBuff>
+  <CEffectApplyBehavior id="YrelAvengingStompFreeCastUsedApplyBehavior">
+    <ValidatorArray value="YrelHasAvengingStompFreeCast" />
+    <WhichUnit Value="Caster" />
+    <Behavior value="YrelAvengingStompFreeCastUsed" />
+  </CEffectApplyBehavior>
+  <CValidatorUnitCompareBehaviorCount id="YrelHasAvengingStompFreeCastUsed">
+    <WhichUnit Value="Caster" />
+    <Compare value="GT" />
+    <Behavior value="YrelAvengingStompFreeCastUsed" />
+  </CValidatorUnitCompareBehaviorCount>
+  <CValidatorUnitCompareBehaviorCount id="YrelDoesNotHaveAvengingStompFreeCastUsed">
+    <WhichUnit Value="Caster" />
+    <Behavior value="YrelAvengingStompFreeCastUsed" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  <CValidatorCombine id="YrelDoesNotHaveAvengingStompFreeCastUsedAndDivinePurpose">
+    <Type value="And" />
+    <CombineArray value="YrelDoesNotHaveAvengingStompFreeCastUsed" />
+    <CombineArray value="YrelDoesNotHaveAvengingStompDivinePurpose" />
+  </CValidatorCombine>
+
+  <CBehaviorBuff id="YrelAvengingStompFreeCast">
+    <Duration value="3" />
+    <FinalEffect value="YrelAvengingStompFreeCastFinalSet" />
+  </CBehaviorBuff>
+  <CEffectApplyBehavior id="YrelAvengingStompFreeCastApplyBehavior">
+    <WhichUnit Value="Caster" />
+    <Behavior value="YrelAvengingStompFreeCast" />
+  </CEffectApplyBehavior>
+  <CEffectRemoveBehavior id="YrelAvengingStompFreeCastRemoveBehavior">
+    <WhichUnit Value="Caster" />
+    <BehaviorLink value="YrelAvengingStompFreeCast" />
+  </CEffectRemoveBehavior>
+  <CValidatorUnitCompareBehaviorCount id="YrelHasAvengingStompFreeCast">
+    <WhichUnit Value="Caster" />
+    <Compare value="GT" />
+    <Behavior value="YrelAvengingStompFreeCast" />
+  </CValidatorUnitCompareBehaviorCount>
+  <CValidatorUnitCompareBehaviorCount id="YrelDoesNotHaveAvengingStompFreeCast">
+    <WhichUnit Value="Caster" />
+    <Behavior value="YrelAvengingStompFreeCast" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  
+  <CBehaviorBuff id="YrelAvengingStompDivinePurpose">
+    <RemoveValidatorArray value="YrelAvengingWrathCasterHasInFlightBehavior" />
+  </CBehaviorBuff>
+  <CEffectApplyBehavior id="YrelAvengingStompDivinePurposeApplyBehavior">
+    <WhichUnit Value="Caster" />
+    <Behavior value="YrelAvengingStompDivinePurpose" />
+  </CEffectApplyBehavior>
+  <CValidatorUnitCompareBehaviorCount id="YrelHasAvengingStompDivinePurpose">
+    <WhichUnit Value="Caster" />
+    <Compare value="GT" />
+    <Behavior value="YrelAvengingStompDivinePurpose" />
+  </CValidatorUnitCompareBehaviorCount>
+  <CValidatorUnitCompareBehaviorCount id="YrelDoesNotHaveAvengingStompDivinePurpose">
+    <WhichUnit Value="Caster" />
+    <Behavior value="YrelAvengingStompDivinePurpose" />
+  </CValidatorUnitCompareBehaviorCount>
+
+  <CEffectModifyTokenCount id="YrelAvengingStompAddToken" parent="BaseEffectModifyTokenCount">
+    <Chance value="0" />
+    <ValidatorArray value="TargetIsHero" />
+    <TokenId value="YrelAvengingStompTokenCounter" />
+  </CEffectModifyTokenCount>
+  <CAccumulatorToken id="YrelAvengingStompAccumulator" parent="BaseAccumulator">
+    <ApplicationRule value="Add" />
+    <TokenId value="YrelAvengingStompTokenCounter" />
+    <Scale value="2" />
+    <MaxAccumulation value="32767" />
+  </CAccumulatorToken>
+  <CBehaviorTokenCounter id="YrelAvengingStompTokenCounter" parent="StormQuestToken">
+    <Face value="YrelAvengingStomp" />
+    <Max value="65535" />
+    <ConditionalEvents Compare="GE" CompareValue="50">
+      <Event EventId="QuestMilestone" Effect="YrelAvengingStompToken1stMilestoneSet" />
+    </ConditionalEvents>
+    <ConditionalEvents Compare="GE" CompareValue="150">
+      <Event EventId="QuestMilestone" Effect="YrelAvengingStompToken2ndMilestoneSet" />
+    </ConditionalEvents>
+  </CBehaviorTokenCounter>
+
+  <CEffectSet id="YrelAvengingStompToken1stMilestoneSet">
+    <EffectArray value="YrelAvengingStompToken1stMilestoneModifyPlayer" />
+  </CEffectSet>
+  <CEffectSet id="YrelAvengingStompToken2ndMilestoneSet">
+    <EffectArray value="YrelAvengingStompToken2ndMilestoneModifyPlayer" />
+  </CEffectSet>
+  <CEffectModifyPlayer id="YrelAvengingStompToken1stMilestoneModifyPlayer">
+    <EffectArray Operation="Set" Reference="Effect,YrelAvengingStompUnstoppableApplyBehavior,Chance" Value="1" />
+    <EffectArray Operation="Multiply" Reference="Effect,YrelAvengingWrathSearchArea,AreaArray[0].Radius" Value="1.25" />
+    <EffectArray Operation="Multiply" Reference="Actor,YrelAvengingWrathImpactGroundFX,Scale" Value="1.25" />
+    <EffectArray Operation="Multiply" Reference="Actor,YrelAvengingWrathChannelCursorSplat,Scale" Value="1.25" />
+    <EffectArray Operation="Multiply" Reference="Actor,YrelAvengingWrathChannelRegionCircle,Radius" Value="1.25" />
+    <EffectArray Operation="Multiply" Reference="Actor,YrelAvengingWrathCastCursorSplat,Scale" Value="1.25" />
+    <EffectArray Operation="Multiply" Reference="Actor,YrelAvengingWrathCastGuideRegionCircle,Radius" Value="1.25" />
+    <EffectArray Operation="Multiply" Reference="Actor,YrelAvengingWrathForceNotMaxCharge,Radius" Value="1.25" />
+    <EffectArray Operation="Multiply" Reference="Actor,YrelAvengingWrathForceMaxCharge,Radius" Value="1.25" />
+  </CEffectModifyPlayer>
+  <CEffectModifyPlayer id="YrelAvengingStompToken2ndMilestoneModifyPlayer">
+    <EffectArray Operation="Set" Reference="Effect,YrelAvengingStompVindicationCastSet,Chance" Value="1" />
+  </CEffectModifyPlayer>
+
+  <CEffectApplyBehavior id="YrelAvengingStompUnstoppableApplyBehavior">
+    <Chance value="0" />
+    <WhichUnit Value="Caster" />
+    <Behavior value="YrelAvengingStompUnstoppable" />
+  </CEffectApplyBehavior>
+  <CBehaviorBuff id="YrelAvengingStompUnstoppable" parent="StormUnstoppableParent">
+    <RemoveValidatorArray value="YrelAvengingWrathCasterHasInFlightBehavior" />
+  </CBehaviorBuff>
+
+  <CButton id="YrelAvengingStomp" parent="StormButtonParent">
+    <Icon value="Assets\Textures\storm_ui_icon_yrel_avenging_wrath.dds" />
+  </CButton>
+
+  <CActorUnit id="HeroYrel">
+    <On Terms="Effect.YrelAvengingWrathInitialSet.Start; ValidateUnit YrelHasAvengingStompFreeCast" Target="YrelAvengingWrathWingsFX" Send="Destroy" />
+    <On Terms="Effect.YrelAvengingWrathInitialSet.Start; ValidateUnit YrelHasAvengingStompFreeCast" Send="Create YrelAvengingWrathWingsFX" />
+    <On Terms="Effect.YrelAvengingWrathInitialSet.Start; ValidateUnit YrelHasAvengingStompFreeCast" Target="YrelAvengingWrathWingsFX" Send="AnimPlay Custom Custom,B PlayForever" />
+    <On Terms="Behavior.YrelAvengingStompFreeCast.On" Target="_Unit" Send="ModelMaterialApply YrelDivinePurposeGlaze" />
+    <On Terms="Behavior.YrelAvengingStompFreeCast.Off" Target="YrelDivinePurposeGlaze" Send="AnimBracketStop BSD" />
+  </CActorUnit>
+
+  <CActorModel id="YrelVindicationCastFX">
+    <On Terms="Effect.YrelAvengingStompVindicationCastSet.Start" Send="Create" />
+    <On Terms="Effect.YrelAvengingStompVindicationCastSet.Start" Send="AnimBracketStart BSD Birth,B Stand Death ContentPlayOnce" />
+  </CActorModel>
+  <CActorSound id="YrelVindicationCastSoundMaxCharge">
+    <On Terms="Effect.YrelAvengingStompVindicationCastSet.Start" Send="Create" />
+  </CActorSound>
+
+</Catalog>

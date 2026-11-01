@@ -124,14 +124,14 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
 
   <CBehaviorTokenCounter id="TyrandeSentinelShotDamageTokenCounter" parent="StormQuestToken">
     <Face value="TyrandeSentinelShotDamageTokenCounter" />
-    <Max value="10000" />
+    <Max value="65535" />
     <ConditionalEvents Compare="GE" CompareValue="20">
       <Event EventId="QuestMilestone" Effect="LunarFlareQuestPierceUpgrade" />
     </ConditionalEvents>
   </CBehaviorTokenCounter>
   <CBehaviorTokenCounter id="TyrandeTheMarkTokenCounter" parent="StormQuestToken">
     <Face value="TyrandeTheMarkTokenCounter" />
-    <Max value="30300" />
+    <Max value="65535" />
   </CBehaviorTokenCounter>
   <CEffectModifyTokenCount id="TyrandeSentinelShotDamageAddToken" parent="BaseEffectModifyTokenCount">
     <Chance value="0" />
@@ -145,14 +145,14 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ApplicationRule value="Add" />
     <TokenId value="TyrandeSentinelShotDamageTokenCounter" />
     <Scale value="0.05" />
-    <MaxAccumulation value="500" />
+    <MaxAccumulation value="3276" />
   </CAccumulatorToken>
   <CAccumulatorToken id="TyrandeTheMarkAccumulator" parent="BaseAccumulator">
     <SourceEffect value="TyrandeHeroWeaponDamage" />
     <ApplicationRule value="Add" />
     <TokenId value="TyrandeTheMarkTokenCounter" />
     <Scale value="0.4" />
-    <MaxAccumulation value="9999" />
+    <MaxAccumulation value="26214" />
   </CAccumulatorToken>
 
   <CEffectModifyTokenCount id="TyrandeTheMarkAddToken" parent="BaseEffectModifyTokenCount">

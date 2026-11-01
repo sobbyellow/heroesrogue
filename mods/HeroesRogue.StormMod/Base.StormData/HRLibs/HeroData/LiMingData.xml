@@ -529,7 +529,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   </CBehaviorBuff>
   <CBehaviorTokenCounter id="LiMingCriticalPowerTokenCounter" parent="StormQuestToken">
     <Face value="LiMingCriticalPowerTokenCounter" />
-    <Max value="15000" />
+    <Max value="65535" />
   </CBehaviorTokenCounter>
 
   <CBehaviorBuff id="LiMingWaveofDoomSpellArmor" parent="StormArmor">
@@ -560,7 +560,7 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
     <ApplicationRule value="Add" />
     <TokenId value="LiMingCriticalPowerTokenCounter" />
     <Scale value="0.015" />
-    <MaxAccumulation value="100" />
+    <MaxAccumulation value="983" />
   </CAccumulatorToken>
 
   <CButton id="LiMingCriticalPowerTokenCounter" parent="StormButtonParent">

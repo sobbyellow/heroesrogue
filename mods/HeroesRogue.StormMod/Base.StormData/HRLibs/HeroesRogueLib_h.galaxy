@@ -164,7 +164,7 @@ const fixed libHRGE_disableDialogControlDuration = 0.25; // How long dialog cont
 
 const fixed libHRGE_mythicModifier = 0.04;
 const fixed libHRGE_mythicModifierXP = 0.02;
-const fixed libHRGE_mythicModifierPerRound = 0.0125;
+const fixed libHRGE_mythicModifierPerRound = 0.01;
 const fixed libHRGE_heroicModifier = 0.04;
 const fixed libHRGE_heroicModifierXP = 0.01;
 

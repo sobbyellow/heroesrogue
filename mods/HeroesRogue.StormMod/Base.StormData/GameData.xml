@@ -50,4 +50,5 @@
   <Catalog path="HRLibs/HeroData/ZaryaData.xml"/>
   <Catalog path="HRLibs/HeroData/ChenData.xml"/>
   <Catalog path="HRLibs/HeroData/DVaData.xml"/>
+  <Catalog path="HRLibs/HeroData/YrelData.xml"/>
 </Includes>
