@@ -1718,10 +1718,11 @@ void libHRGE_UpdateAffixSelectionDialogItem(int index, int rolledCount) {
         libHRGE_SetDialogControlVisible(libHRGE_dialogAffixSelection.items[index].unlockPreview, false);
     }
 
-    if (libHRGE_bans <= 0) {
+    if (libHRGE_processQueueTimeElapsed < libHRGE_disableBanDuration) {
         libHRGE_SetDialogControlEnabled(libHRGE_dialogAffixSelection.items[index].banButton, false);
-    } else {
-        libHRGE_SetDialogControlEnabled(libHRGE_dialogAffixSelection.items[index].banButton, true);
+    }
+    if (libHRGE_processQueueTimeElapsed < libHRGE_disableSelectionDuration) {
+        libHRGE_SetDialogControlEnabled(libHRGE_dialogAffixSelection.items[index].selectButton, false);
     }
 }
 
@@ -1735,10 +1736,8 @@ void libHRGE_UpdateAffixSelectionDialog() {
     libHRGE_SetDialogControlVisible(libHRGE_dialogAffixSelection.rerollLabel, libHRGE_IsCurrentQueueRerollable());
     libHRGE_SetDialogControlVisible(libHRGE_dialogAffixSelection.banLabel, libHRGE_IsAnyRolledAffixBannable());
 
-    if (libHRGE_rerolls <= 0) {
+    if (libHRGE_processQueueTimeElapsed < libHRGE_disableRerollDuration) {
         libHRGE_SetDialogControlEnabled(libHRGE_dialogAffixSelection.rerollButton, false);
-    } else {
-        libHRGE_SetDialogControlEnabled(libHRGE_dialogAffixSelection.rerollButton, true);
     }
 
     for (i = 1; i <= libHRGE_maxAffixSelection; i += 1) {
@@ -3535,18 +3534,42 @@ int libHRGE_RollAffix(int rarity, bool curse, int level, bool lockRarity) {
 }
 
 bool libHRGE_ProcessQueueTimeElapsed_Func (bool testConds, bool runActions) {
+    int i;
     if (testConds) {
         if (!libHRGE_processingQueue || libHRGE_processQueueTimeElapsed > 60) {
             return false;
         }
     }
-    
     libHRGE_processQueueTimeElapsed += 0.0625;
+
+    if (libHRGE_processQueueTimeElapsed >= libHRGE_disableSelectionDuration && !libHRGE_selectButtonsEnabled) {
+        for (i = 1; i <= libHRGE_maxAffixSelection; i += 1) {
+            libHRGE_SetDialogControlEnabled(libHRGE_dialogAffixSelection.items[i].selectButton, true);
+        }
+        libHRGE_selectButtonsEnabled = true;
+    }
+    if (libHRGE_processQueueTimeElapsed >= libHRGE_disableBanDuration && libHRGE_bans > 0 && !libHRGE_banButtonsEnabled) {
+        for (i = 1; i <= libHRGE_maxAffixSelection; i += 1) {
+            libHRGE_SetDialogControlEnabled(libHRGE_dialogAffixSelection.items[i].banButton, true);
+        }
+        libHRGE_banButtonsEnabled = true;
+    }
+    if (libHRGE_processQueueTimeElapsed >= libHRGE_disableRerollDuration && !libHRGE_rerollButtonEnabled && ((libHRGE_rerolls > 0 && !libHRGE_currentQueue.curse) || (libHRGE_rerollsCurse > 0 && libHRGE_currentQueue.curse))) {
+        libHRGE_SetDialogControlEnabled(libHRGE_dialogAffixSelection.rerollButton, true);
+        libHRGE_rerollButtonEnabled = true;
+    }
     return true;
 }
 void libHRGE_ProcessQueueTimeElapsed_Init() {
     libHRGE_ProcessQueueTimeElapsedTrigger = TriggerCreate("libHRGE_ProcessQueueTimeElapsed_Func");
     TriggerAddEventTimePeriodic(libHRGE_ProcessQueueTimeElapsedTrigger, 0.0625, c_timeGame);
+}
+
+void libHRGE_ResetQueueTime() {
+    libHRGE_processQueueTimeElapsed = 0;
+    libHRGE_selectButtonsEnabled = false;
+    libHRGE_banButtonsEnabled = false;
+    libHRGE_rerollButtonEnabled = false;
 }
 
 
@@ -3569,7 +3592,7 @@ void libHRGE_RollAffixChoices() {
     bool anyRolled = false;
     int rolledRarity;
     int i;
-    libHRGE_processQueueTimeElapsed = 0;
+    libHRGE_ResetQueueTime();
     if (libHRGE_currentQueue.overrideAffix != 0) {
         libHRGE_rolledAffixes[1] = libHRGE_currentQueue.overrideAffix;
         libHRGE_ShowRolledAffixes();
@@ -3762,7 +3785,7 @@ void libHRGE_BanAffix(int selectionIndex) {
         libHRGE_DisplayChatMessage(StringExternal("Message/Ban") + TextWithColor(StringExternal("Affix/Name/" + instance), libHRGE_GetAffixColor(instance)) + StringToText("."));
     }
     
-    libHRGE_processQueueTimeElapsed = 0;
+    libHRGE_ResetQueueTime();
     libHRGE_bans -= 1;
     libHRGE_bansUsed += 1;
     libHRGE_SetAffixBanned(instance, true);
@@ -3830,7 +3853,7 @@ bool libHRGE_AffixHotkeyRerollPressed_Func (bool testConds, bool runActions) {
         if (!libHRGE_processingQueue){
             return false;
         }
-        if (libHRGE_processQueueTimeElapsed < libHRGE_disableHotkeysDuration) {
+        if (libHRGE_processQueueTimeElapsed < libHRGE_disableHotkeysDuration || libHRGE_processQueueTimeElapsed < libHRGE_disableRerollDuration) {
             return false;
         }
         if (hotkeyPressed != c_keyR) {
@@ -3904,7 +3927,7 @@ bool libHRGE_AffixSelectedTrigger_Func (bool testConds, bool runActions) {
     int selectedButton = libHRGE_GetSelectButtonIndex(eventDialog);
 
     if (testConds) {
-        if (libHRGE_processQueueTimeElapsed < libHRGE_disableDialogControlDuration) {
+        if (libHRGE_processQueueTimeElapsed < libHRGE_disableSelectionDuration) {
             return false;
         }
         if (selectedButton == 0 || libHRGE_rolledAffixes[selectedButton] == 0) {
@@ -3938,7 +3961,7 @@ bool libHRGE_AffixBanTrigger_Func (bool testConds, bool runActions) {
     int selectedButton = libHRGE_GetBanButtonIndex(eventDialog);
 
     if (testConds) {
-        if (libHRGE_processQueueTimeElapsed < libHRGE_disableDialogControlDuration) {
+        if (libHRGE_processQueueTimeElapsed < libHRGE_disableBanDuration) {
             return false;
         }
         if (libHRGE_bans <= 0) {
@@ -3964,6 +3987,9 @@ bool libHRGE_AffixRerollTrigger_Func (bool testConds, bool runActions) {
     int eventDialog = EventDialogControl();
 
     if (testConds) {
+        if (libHRGE_processQueueTimeElapsed < libHRGE_disableRerollDuration) {
+            return false;
+        }
         if (eventDialog != libHRGE_dialogAffixSelection.rerollButton){
             return false;
         }

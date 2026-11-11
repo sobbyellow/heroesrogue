@@ -183,8 +183,8 @@ xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/jamiephan/Heroe
   <CAccumulatorToken id="YrelAvengingStompAccumulator" parent="BaseAccumulator">
     <ApplicationRule value="Add" />
     <TokenId value="YrelAvengingStompTokenCounter" />
-    <Scale value="2" />
-    <MaxAccumulation value="32767" />
+    <Scale value="3" />
+    <MaxAccumulation value="21845" />
   </CAccumulatorToken>
   <CBehaviorTokenCounter id="YrelAvengingStompTokenCounter" parent="StormQuestToken">
     <Face value="YrelAvengingStomp" />

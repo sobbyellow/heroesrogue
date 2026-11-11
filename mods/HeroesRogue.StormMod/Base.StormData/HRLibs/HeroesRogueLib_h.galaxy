@@ -159,8 +159,10 @@ const int libHRGE_bansStart = 3;
 const int libHRGE_bansPerGame = 1; 
 
 const fixed libHRGE_gameStartDelay = 2.25; // Wait for Heroes to finish spawning in
-const fixed libHRGE_disableHotkeysDuration = 0.25; // How long hotkeys such as picking affixes are disabled for, to prevent misclicks
-const fixed libHRGE_disableDialogControlDuration = 0.25; // How long dialog controls such as picking/banning affixes buttons are disabled for, to prevent misclicks
+const fixed libHRGE_disableHotkeysDuration = 0.375; // How long hotkeys such as picking affixes are disabled for, to prevent misclicks
+const fixed libHRGE_disableSelectionDuration = 0.375; // Disables affix selection for a short time to prevent misclicks
+const fixed libHRGE_disableBanDuration = 0.375; // Disables banning for a short time to prevent misclicks
+const fixed libHRGE_disableRerollDuration = 0.375; // Disables rerolling for a short time to prevent misclicks
 
 const fixed libHRGE_mythicModifier = 0.04;
 const fixed libHRGE_mythicModifierXP = 0.02;
@@ -832,6 +834,9 @@ libHRGE_QueuedAffix libHRGE_currentQueue;
 int libHRGE_queueCount; // Number of affixes in the queue.
 bool libHRGE_processingQueue;
 fixed libHRGE_processQueueTimeElapsed;
+bool libHRGE_selectButtonsEnabled;
+bool libHRGE_banButtonsEnabled;
+bool libHRGE_rerollButtonEnabled;
 
 // ============================================================
 // Other
@@ -1150,6 +1155,7 @@ int libHRGE_RollRarity(int baseRarity, bool curse); // Roll rarity to upgrade.
 bool libHRGE_AffixAlreadyRolled(int affix);
 int libHRGE_RollAffix(int rarity, bool curse, int level, bool lockRarity); // Returns an affix that matches the criteria and all requirements.
 void libHRGE_ProcessQueueTimeElapsed_Init();
+void libHRGE_ResetQueueTime();
 void libHRGE_ShowRolledAffixes();
 void libHRGE_RollForSlot(int slot);
 void libHRGE_RollAffixChoices(); // Rolls affixes and provides the player with the selection.
